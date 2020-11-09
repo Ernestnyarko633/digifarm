@@ -1,11 +1,12 @@
 import { Box, Button, Icon, Link, Text } from '@chakra-ui/core';
 import { NavLink } from 'react-router-dom';
-import { farm, home, sourcing, wallet, warehouse } from 'theme/Icons';
+import { farm, home, wallet, warehouse } from 'theme/Icons';
+import { BsBagFill } from 'react-icons/bs';
 
 const menuLink = [
   { icon: home, link: '/dashboard', name: 'Home' },
   { icon: farm, link: '/farms', name: 'Farms' },
-  { icon: sourcing, link: '/orders', name: 'Orders' },
+  { icon: BsBagFill, link: '/orders', name: 'Orders' },
   { icon: wallet, link: '/finance', name: 'Finance' },
   { icon: warehouse, link: '/market', name: 'Market' },
 ];
