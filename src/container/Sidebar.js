@@ -1,66 +1,173 @@
-import { Box, Button, Icon, Link, Text } from '@chakra-ui/core';
+import { Box, Flex, Icon, Link, Text } from '@chakra-ui/core';
 import { NavLink } from 'react-router-dom';
-import { farm, home, wallet, warehouse } from 'theme/Icons';
-import { BsBagFill } from 'react-icons/bs';
+import {
+  farm,
+  home,
+  wallet,
+  market,
+  Guide,
+  Resources,
+  logout,
+} from 'theme/Icons';
+import { MdChatBubbleOutline } from 'react-icons/md';
+import { IoIosHelpCircle } from 'react-icons/io';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
+import React from 'react';
 
 const menuLink = [
-  { icon: home, link: '/dashboard', name: 'Home' },
-  { icon: farm, link: '/farms', name: 'Farms' },
-  { icon: BsBagFill, link: '/orders', name: 'Orders' },
-  { icon: wallet, link: '/finance', name: 'Finance' },
-  { icon: warehouse, link: '/market', name: 'Market' },
+  { icon: home, path: '/dashboard', name: 'Home', size: 5 },
+  { icon: farm, path: '/farms', name: 'Farm board', size: 4 },
+  { icon: wallet, path: '/wallet', name: 'Farm Wallet', size: 4 },
+  { icon: market, path: '/finance', name: 'Marketplace', size: 4 },
+  { icon: MdChatBubbleOutline, path: '/market', name: 'Forum', size: 4 },
 ];
 
-const Sidebar = () => (
-  <Box
-    as='aside'
-    gridArea='aside'
-    pos='fixed'
-    bottom={0}
-    left={0}
-    w={{ md: 40 }}
-    h={{ lg: '100vh' }}
-    bg='white'
-    zIndex={20}
-    pt={40}
-    borderRightWidth={1}
-    borderRightColor='gray.300'
-  >
-    <Box mb={10} mx={1}>
-      <Button
-        variant='outline'
-        colorScheme='cfButton'
-        fontSize='sm'
-        rounded='none'
-      >
-        Take a quick tour
-      </Button>
+const links = [
+  {
+    title: 'Learning',
+    parent: 'learning',
+    submenu: [
+      { icon: Guide, path: '/guide', name: 'How-To-Guide', size: 5 },
+      { icon: Resources, path: '/resources', name: 'Resources', size: 5 },
+      {
+        icon: IoIosHelpCircle,
+        path: '/support',
+        name: 'Customer Support',
+        size: 5,
+      },
+    ],
+  },
+];
+
+const Sidebar = ({ currentPath }) => {
+  const [toggleMenus, setToggleMenus] = React.useState(true);
+
+  return (
+    <Box
+      as='aside'
+      gridArea='aside'
+      pos='fixed'
+      bottom={0}
+      left={0}
+      h={{ lg: '100vh' }}
+      bg='white'
+      zIndex={20}
+      pt={40}
+      boxShadow=' sm'
+      px={{ md: 2 }}
+      color='gray.600'
+      pr={{ md: 5 }}
+    >
+      <Text as='ul'>
+        {menuLink.map((item, index) => (
+          <Link
+            key={index}
+            d='flex'
+            alignItems='center'
+            pl={{ md: 4 }}
+            pr={{ md: 4 }}
+            py={{ md: 2 }}
+            rounded='lg'
+            activeClassName='activeClasName'
+            as={NavLink}
+            to={item.path}
+            cursor='pointer'
+            className='active-link'
+            transition='background-color .2s ease-in'
+            _hover={{
+              textDecor: 'none',
+              color: 'gray.700',
+              bg: 'gray.50',
+              rounded: 'md',
+            }}
+            _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
+          >
+            <Icon as={item.icon} boxSize={item.size} mr={2} />
+            <Text fontSize='sm' textAlign='center' mt={1}>
+              {item.name}
+            </Text>
+          </Link>
+        ))}
+      </Text>
+
+      <Text as='ul' mt={{ md: 24 }}>
+        {links.map((item, i) => (
+          <Flex key={i} as='li' direction='column'>
+            <Flex
+              align='center'
+              as='button'
+              role='button'
+              aria-label='Menu Button'
+              onClick={() => setToggleMenus(!toggleMenus)}
+            >
+              <Icon
+                as={toggleMenus ? BsChevronUp : BsChevronDown}
+                boxSize={4}
+                mr={1}
+              />
+              <Text>{item.title}</Text>
+            </Flex>
+            {toggleMenus && (
+              <Box as='ul' color='gray.600'>
+                {item.submenu.map((item, index) => (
+                  <Link
+                    key={index}
+                    d='flex'
+                    alignItems='center'
+                    pr={{ md: 3 }}
+                    pl={{ md: 4 }}
+                    py={{ md: 2 }}
+                    rounded='lg'
+                    activeClassName='activeClasName'
+                    as={NavLink}
+                    to={item.path}
+                    cursor='pointer'
+                    className='active-link'
+                    transition='background-color .2s ease-in'
+                    _hover={{
+                      textDecor: 'none',
+                      color: 'gray.700',
+                      bg: 'gray.50',
+                      rounded: 'md',
+                    }}
+                    _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
+                  >
+                    <Icon as={item.icon} boxSize={item.size} mr={1} />
+                    <Text fontSize='sm' textAlign='center' mt={1}>
+                      {item.name}
+                    </Text>
+                  </Link>
+                ))}
+              </Box>
+            )}
+            <Flex
+              align='center'
+              py={{ md: 2 }}
+              rounded='lg'
+              _hover={{
+                textDecor: 'none',
+                color: 'gray.700',
+                bg: 'gray.50',
+                rounded: 'md',
+              }}
+              pl={{ md: 4 }}
+              pr={{ md: 3 }}
+              color='gray.600'
+              as='button'
+              role='button'
+              aria-label='Logout Button'
+              transition='background-color .2s ease-in'
+            >
+              <Icon as={logout} boxSize={5} mr={2} />
+              <Text fontSize='sm' textAlign='center' mt={1}>
+                Logout
+              </Text>
+            </Flex>
+          </Flex>
+        ))}
+      </Text>
     </Box>
-    <Text as='ul'>
-      {menuLink.map((item) => (
-        <Link
-          activeClassName='activeClasName'
-          d='flex'
-          alignItems='center'
-          flexDirection='column'
-          as={NavLink}
-          to={item.link}
-          cursor='pointer'
-          color='gray.700'
-          py={6}
-          className='active-link'
-          transition='background-color .2s ease-in'
-          _hover={{ textDecor: 'none', color: 'cf.400', bg: 'gray.50' }}
-          _activeLink={{ color: 'white', bg: 'cf.400' }}
-        >
-          <Icon as={item.icon} boxSize={10} />
-          <Text fontSize='xs' textAlign='center' mt={1}>
-            {item.name}
-          </Text>
-        </Link>
-      ))}
-    </Text>
-  </Box>
-);
+  );
+};
 
 export default Sidebar;
