@@ -19,11 +19,12 @@ export const theme = extendTheme({
   },
   ...breakpoints,
   fonts: {
-    heading: '"SourceSansBlack" ,sans-serif',
-    display: '"SourceSansBold" ,sans-serif',
-    medium: '"SourceSansSemiBold" ,sans-serif',
-    light: '"SourceSansSemiLight" ,sans-serif',
-    body: '"SourceSans", sans-serif',
+    heading: '"CeraGRBlack" ,sans-serif',
+    display: '"CeraGRBold" ,sans-serif',
+    medium: '"CeraGRMedium" ,sans-serif',
+    light: '"CeraGRLight" ,sans-serif',
+    thin: '"CeraGRThin" ,sans-serif',
+    body: '"CeraGR", sans-serif',
   },
   fontSizes: {
     xx: '.55rem',
@@ -43,6 +44,7 @@ export const theme = extendTheme({
       600: '#d6e1c9',
       700: '#307926',
       800: '#5AA250',
+      900: 'linear-gradient(#93CF88, #5AA250)',
     },
     'cf-dark': {
       200: 'rgba(227, 231, 221, 0.2)',
@@ -51,6 +53,10 @@ export const theme = extendTheme({
     cfButton: {
       500: '#3c9130',
       600: '#307926',
+    },
+    linear: {
+      500: 'linear-gradient(#93CF88, #5AA250)',
+      600: 'linear-gradient(#93CF88, #5AA250)',
     },
     progressGreen: {
       500: '#d6e1c9',
