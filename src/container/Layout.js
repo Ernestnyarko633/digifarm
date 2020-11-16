@@ -8,6 +8,8 @@ const Layout = ({ children, height, pt, px, ...rest }) => (
     templateRows='repeat(1 1fr)'
     templateColumns='15% 63% 22%'
     pos='relative'
+    fontFamily='body'
+    fontSize={{ md: 'md' }}
   >
     <Header />
     <GridItem>
@@ -16,8 +18,6 @@ const Layout = ({ children, height, pt, px, ...rest }) => (
     <GridItem bg='gray.50'>
       <Box
         as='main'
-        fontFamily='body'
-        fontSize={{ md: 'md' }}
         gridArea='main'
         w='100%'
         color='gray.800'
