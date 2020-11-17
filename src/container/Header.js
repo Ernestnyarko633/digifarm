@@ -1,18 +1,6 @@
 import React from 'react';
-import {
-  Avatar,
-  Box,
-  Divider,
-  Flex,
-  Icon,
-  Image,
-  Link,
-  Text,
-} from '@chakra-ui/core';
-import { Button } from 'components';
+import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/core';
 import { motion } from 'framer-motion';
-import { NavLink } from 'react-router-dom';
-import { notification, support } from 'theme/Icons';
 import { Menu } from '@headlessui/react';
 import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi';
 import { BiCog, BiSupport, BiHistory } from 'react-icons/bi';
