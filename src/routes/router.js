@@ -8,6 +8,8 @@ const Router = () => (
     <Switch>
       <Route exact path='/dashboard' component={Pages.Dashboard} />
       <Redirect exact from='/' to='/dashboard' />
+      <Route exact path='/startfarm' component={Pages.StartFarm} />
+      <Route exact path='/startfarm/:id' component={Pages.StartFarmDetails} />
       <Route path='/notfound' component={Pages.NotFound} />
       <Redirect from='*' to='/404' />
     </Switch>
