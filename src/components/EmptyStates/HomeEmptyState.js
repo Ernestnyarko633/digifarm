@@ -13,6 +13,38 @@ import CropCard from 'components/Cards/CropCard';
 import React from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png';
+import PotatoImg from '../../assets/images/emptystate/potato.png';
+
+const availableFarms = [
+  {
+    id: 1,
+    title: 'Sweet Potato',
+    subtitle: 'From $ 750/acre',
+    img: PotatoImg,
+    acreage: '1000 acres left',
+    benefits: [
+      'Agyata, Eastern region, Ghana',
+      '1,200 acres available',
+      'Up to 25% Expected yield/acre',
+      'USD 150 (ROI) Projected market value of yield',
+      '10 months',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Sweet Potato',
+    subtitle: 'From $ 750/acre',
+    img: PotatoImg,
+    acreage: '1000 acres left',
+    benefits: [
+      'Agyata, Eastern region, Ghana',
+      '1,200 acres available',
+      'Up to 25% Expected yield/acre',
+      'USD 150 (ROI) Projected market value of yield',
+      '10 months',
+    ],
+  },
+];
 
 const HomeEmptyState = () => {
   return (
@@ -56,7 +88,16 @@ const HomeEmptyState = () => {
         </Flex>
 
         <Flex>
-          <CropCard />
+          {availableFarms.map((item) => (
+            <CropCard
+              title={item.title}
+              subtitle={item.subtitle}
+              image={item.img}
+              options={item.benefits}
+              btntitle='Farm this crop'
+              mr={6}
+            />
+          ))}
         </Flex>
       </Box>
 

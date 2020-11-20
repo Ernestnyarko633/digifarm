@@ -13,9 +13,19 @@ import {
 import { Link as ReachRouter } from 'react-router-dom';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import React from 'react';
-import PotatoImg from '../../assets/images/emptystate/potato.png';
+import PropTypes from 'prop-types';
 
-const CropCard = () => {
+const CropCard = ({
+  image,
+  title,
+  subtitle,
+  extra,
+  options,
+  btntitle,
+  path,
+  state,
+  mr,
+}) => {
   return (
     <Box
       w={{ md: 85 }}
@@ -28,48 +38,65 @@ const CropCard = () => {
       aria-label='crop card'
       textAlign='left'
       bg='white'
+      mr={mr}
     >
       <Box mb={3}>
-        <Image src={PotatoImg} />
+        <Image src={image} />
       </Box>
 
       <Flex align='center' justify='space-between'>
         <Box>
           <Heading as='h5' fontSize={{ md: 'lg' }}>
-            Sweet Potato
+            {title}
           </Heading>
           <Text fontSize='xs' mt={-2}>
-            From $ 750/acre
+            {subtitle}
           </Text>
         </Box>
 
-        <Text fontSize='sm'>1000 acres left</Text>
+        {extra && <Text fontSize='sm'>{extra}</Text>}
       </Flex>
 
       <List fontSize='sm' textAlign='left' my={3}>
-        <ListItem>Agyata, Eastern region, Ghana</ListItem>
-        <ListItem>1,200 acres available</ListItem>
-        <ListItem>Up to 25% Expected yield/acre</ListItem>
-        <ListItem>USD 150 (ROI) Projected market value of yield</ListItem>
-        <ListItem>10 months</ListItem>
+        {options.map((item, i) => (
+          <ListItem key={i}>{item}</ListItem>
+        ))}
       </List>
 
       <Box>
-        <Button
-          colorScheme='linear'
-          rounded='30px'
-          fontSize='xs'
-          w={32}
-          fontWeight={400}
+        <Link
+          as={ReachRouter}
+          to={{ pathname: path, state: state }}
+          _hover={{ textDecor: 'none' }}
         >
-          Farm this crop
-        </Button>
-        <Link d='block' as={ReachRouter} fontSize='xs' color='cf.400' mt={1}>
-          Learn more <Icon as={MdKeyboardArrowRight} />
+          <Button
+            colorScheme='linear'
+            rounded='30px'
+            fontSize='xs'
+            w={32}
+            fontWeight={400}
+          >
+            {btntitle}
+          </Button>
         </Link>
+        <Box d='block' fontSize='xs' color='cf.400' mt={1}>
+          Learn more <Icon as={MdKeyboardArrowRight} />
+        </Box>
       </Box>
     </Box>
   );
+};
+
+CropCard.propTypes = {
+  image: PropTypes.any.isRequired,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  extra: PropTypes.string,
+  options: PropTypes.array,
+  btntitle: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+  state: PropTypes.object,
+  mr: PropTypes.any,
 };
 
 export default CropCard;
