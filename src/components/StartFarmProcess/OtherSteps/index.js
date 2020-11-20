@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/core';
 import React from 'react';
+import AboutFarmManager from './AboutFarmManager';
 
 const OtherSteps = () => {
   return (
@@ -28,12 +29,12 @@ const OtherSteps = () => {
         mt={{ md: 20 }}
         w='70%'
         mx='auto'
-        borderWidth={1}
+        borderWidth={2}
         borderColor='gray.400'
         rounded='md'
         overflow='hidden'
       >
-        Next Step
+  <AboutFarmManager/>
       </Box>
     </Box>
   );
