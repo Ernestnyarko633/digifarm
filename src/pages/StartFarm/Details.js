@@ -1,21 +1,33 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Image,
-  Text,
-} from '@chakra-ui/core';
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { Box, Flex, Image } from '@chakra-ui/core';
+import CropSelection from 'components/StartFarmProcess/CropSelection';
+import OtherSteps from 'components/StartFarmProcess/OtherSteps';
+import React from 'react';
+
+const getSteps = ['crop selection', 'other selections'];
 
 const Details = () => {
+  const steps = getSteps;
+  const [step, setStep] = React.useState(0);
+
+  function handleNext() {
+    setStep((prevActiveStep) => prevActiveStep + 1);
+  }
+
+  function handleBack() {
+    setStep((prevActiveStep) => prevActiveStep - 1);
+  }
+
+  const getContent = (value) => {
+    switch (value) {
+      case 0:
+        return <CropSelection handleNext={handleNext} />;
+      case 1:
+        return <OtherSteps />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Box>
       <Flex
@@ -35,28 +47,8 @@ const Details = () => {
           />
         </Box>
       </Flex>
-      <Box mt={{ md: 48 }} w='90%' mx='auto'>
-        <Box textAlign='center' mb={10}>
-          <Heading as='h4' size='xl'>
-            Which Farm is right for you.
-          </Heading>
-        </Box>
-        <Grid templateColumns={{ md: '20% 30% 50%' }}>
-          <GridItem bg='gray.100'>
-            <Box bg='cf.400' color='white' p={6} w={{ md: 48 }} h={{ md: 16 }}>
-              <Text>Top-selling farm</Text>
-            </Box>
-          </GridItem>
-          <GridItem py={6}>
-            <Box>
-              <Heading as='h5' size='md'>
-                Ginger Farm
-              </Heading>
-            </Box>
-          </GridItem>
-          <GridItem bg='green.500'>hi</GridItem>
-        </Grid>
-      </Box>
+
+      {getContent(step)}
     </Box>
   );
 };
