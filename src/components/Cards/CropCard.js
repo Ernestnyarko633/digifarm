@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   Heading,
   Icon,
@@ -14,6 +13,7 @@ import { Link as ReachRouter } from 'react-router-dom';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'components';
 
 const CropCard = ({
   image,
@@ -69,15 +69,7 @@ const CropCard = ({
           to={{ pathname: path, state: state }}
           _hover={{ textDecor: 'none' }}
         >
-          <Button
-            colorScheme='linear'
-            rounded='30px'
-            fontSize='xs'
-            w={32}
-            fontWeight={400}
-          >
-            {btntitle}
-          </Button>
+          <Button btntitle={btntitle} />
         </Link>
         <Box d='block' fontSize='xs' color='cf.400' mt={1}>
           Learn more <Icon as={MdKeyboardArrowRight} />
