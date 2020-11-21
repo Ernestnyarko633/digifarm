@@ -10,8 +10,15 @@ const FarmImage = () => {
         </Heading>
       </Box>
 
-      <Box>
-        <Image src={require('../../../assets/images/farm.png').default} />
+      <Box w='444px' h='449px' backgroundColor='#cccc'>
+        <Image
+          h='100%'
+          w='100%'
+          objectFit='cover'
+          rounded='md'
+          src={require('../../../assets/images/farm.png').default}
+          alt='crop'
+        />
       </Box>
     </Box>
   );

@@ -37,7 +37,6 @@ const CropCard = ({
       role='button'
       aria-label='crop card'
       textAlign='left'
-      bg='white'
       mr={mr}
     >
       <Box mb={3}>
@@ -57,9 +56,11 @@ const CropCard = ({
         {extra && <Text fontSize='sm'>{extra}</Text>}
       </Flex>
 
-      <List fontSize='sm' textAlign='left' my={3}>
+      <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
         {options.map((item, i) => (
-          <ListItem key={i}>{item}</ListItem>
+          <ListItem key={i} py={1}>
+            {item}
+          </ListItem>
         ))}
       </List>
 
@@ -71,7 +72,7 @@ const CropCard = ({
         >
           <Button btntitle={btntitle} />
         </Link>
-        <Box d='block' fontSize='xs' color='cf.400' mt={1}>
+        <Box d='block' fontSize='xs' color='cf.400' mt={1} fontFamily='body'>
           Learn more <Icon as={MdKeyboardArrowRight} />
         </Box>
       </Box>
