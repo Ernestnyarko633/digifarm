@@ -24,6 +24,7 @@ const Layout = ({ children, height, pt, px, ...rest }) => (
         pt={pt}
         px={px}
         h={height}
+        fontFamily='body'
         {...rest}
       >
         {children}
