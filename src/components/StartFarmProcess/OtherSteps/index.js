@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/core';
 import React from 'react';
+import AboutFarmManager from './AboutFarmManager';
 
 const OtherSteps = () => {
   return (
