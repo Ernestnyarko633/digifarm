@@ -2,8 +2,11 @@ import React from 'react';
 import Layout from 'container/Layout';
 import { Box, Heading, Image, Text ,Flex} from '@chakra-ui/core';
 import WarehouseCard from 'components/Cards/WarehouseCard'
+import BuyerCard from 'components/Cards/Buyer'
 import IllustrationImage from '../assets/images/home/illustration.png';
 import SoyaBean from '../assets/images/startfarm/soya-beans.svg'
+import Oval from '../assets/images/Oval.svg'
+
 
 const warehouseGoods = [
   {
@@ -25,6 +28,39 @@ const warehouseGoods = [
     weight: '300 kg',
     bags: '30 bags',
     condition: 'Dry'
+  },
+  {
+    id:3,
+    image: SoyaBean,
+    name: 'Soya Bean Warehouse',
+    location: 'Shai Osudoku, Eastern Region',
+    quantity: '2010 tonnes',
+    weight: '300 kg',
+    bags: '30 bags',
+    condition: 'Moist'
+  }
+]
+
+const buyers = [
+  {
+    id:1,
+    image: Oval,
+    name: 'John Clinton',
+    address: 'Accra | John Clinton Company Limited',
+    amtLeft: '2100',
+    amtNeeded: '3000',
+    amtBought: '900',
+    price: '$30.00'
+  },
+  {
+    id:2,
+    image: Oval,
+    name: 'Georgina Adzorgenu',
+    address: 'Ayikuma | Approcon Enterprise Limited',
+    amtLeft: '800',
+    amtNeeded: '2000',
+    amtBought: '1200',
+    price: '$50.00'
   }
 ]
 
@@ -63,10 +99,30 @@ const Marketplace = () => {
           condition={item.condition}
           btntitle='Sell'
           mr={3}
-          ml={10}
+          ml={14}
         />
       ))}
     </Flex>
+    <Box my={4} textAlign='center' >
+      <Heading as='h4' fontSize={{md: '2xl'}}>Here's a list of available buyers</Heading>
+    </Box>
+    <Box>
+    {
+     buyers.map((buyer) => (
+      <BuyerCard
+        name={buyer.name}
+        address={buyer.address}
+        image={buyer.image}
+        amtLeft={buyer.amtLeft}
+        amtNeeded={buyer.amtNeeded}
+        amtBought={buyer.amtBought}
+        price={buyer.price}
+        btntitle='Sell to buyer'
+      />
+     ))
+    }
+    </Box>
+   
     </Layout>
   );
 };

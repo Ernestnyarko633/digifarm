@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button,Divider, Heading, Flex,ListItem, List, Grid, Text, Image } from '@chakra-ui/core'
+import { Box, Button,Divider, Heading, Flex,ListItem, List, Avatar, Text, Image } from '@chakra-ui/core'
 import PropTypes from 'prop-types'
 
 const WarehouseCard = ({ 
@@ -15,17 +15,18 @@ const WarehouseCard = ({
     mr
 }) => {
     return(
-        <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>
+        <Flex justify='center'>
+            <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>
             <Flex mb={4}>
-                <Box >
+                <Avatar bg='gray.100'>
                     <Image src={image} />
-                </Box>
-                <Box>
+                </Avatar>
+                <Box ml={2}>
                     <Heading as='h6' fontSize={{md: 'lg'}}>{name}</Heading>
-                    <Text fontSize='xs' mt={-2}>{location}</Text>
+                    <Text fontSize='xs' mt={-1}>{location}</Text>
                 </Box>
             </Flex>
-            <Divider borderColor="grey.200" />
+            <Divider borderColor="gray.300" />
             <Box>
                 <Flex>
                     <List my={3}>
@@ -45,12 +46,12 @@ const WarehouseCard = ({
                         </ListItem>
                     </List>
                 <Box ml={6} my={3}>
-                    <Box  rounded='lg' bg='cf.200' my={1} p={1}>
-                        <Text color='black' fontSize='xs'>
+                    <Box  rounded='30px' bg='cf.200' my={1} p={1}>
+                        <Text color='black' fontSize='xs' textAlign='center'>
                             Pending Order
                         </Text>
                     </Box>
-                    <Text as='h6' fontSize='xs' >80% Complete</Text>
+                    <Text as='h6' fontSize='xs'  fontWeight='bold'>80% Complete</Text>
                 </Box>
                 </Flex>
             </Box>
@@ -58,13 +59,13 @@ const WarehouseCard = ({
             colorScheme='linear'
             rounded='30px'
             fontSize='xs'
-            w={32}
-            fontWeight={400}
-            width="200px"
+            fontWeight='bold'
+            width="100%"
             >
-                {btntitle}
+            {btntitle}
             </Button>
         </Box>
+        </Flex>
     )
 }
 
