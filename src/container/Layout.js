@@ -1,31 +1,39 @@
-import { Box, Grid } from '@chakra-ui/core';
+import { Box, Grid, GridItem } from '@chakra-ui/core';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
 const Layout = ({ children, height, pt, px, ...rest }) => (
   <Grid
-    templateAreas='"header header" "aside main" "aside main"'
-    templateColumns={{ md: '7.9% 92.1%' }}
-    templateRows={{ md: '4% 90%' }}
+    templateRows='repeat(1 1fr)'
+    templateColumns='15% 63% 22%'
     pos='relative'
+    fontFamily='body'
+    fontSize={{ md: 'md' }}
   >
     <Header />
-    <Sidebar />
-    <Box
-      as='main'
-      fontFamily='body'
-      fontSize={{ md: 'md' }}
-      gridArea='main'
-      w='100%'
-      color='gray.800'
-      pt={pt || 32}
-      px={px || 32}
-      h={height}
-      {...rest}
-    >
-      {children}
-    </Box>
+    <GridItem>
+      <Sidebar />
+    </GridItem>
+    <GridItem bg='gray.50'>
+      <Box
+        as='main'
+        gridArea='main'
+        w='100%'
+        color='gray.800'
+        pt={pt}
+        px={px}
+        h={height}
+        {...rest}
+      >
+        {children}
+      </Box>
+    </GridItem>
+    <GridItem bg='white'>
+      <Box as='aside' gridArea='right'>
+        hey
+      </Box>
+    </GridItem>
   </Grid>
 );
 
