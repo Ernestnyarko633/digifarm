@@ -32,8 +32,8 @@ const BuyerCard = ({
             </Flex>
             <Box my={2}>
                 <Flex>
-                    <Box rounded='20px' bg='cf.200' p={1}>
-                        <Text color='black' fontSize='xs' textAlign='center'>
+                    <Box rounded='20px' bg='cf.200' pt={1} px={2}>
+                        <Text color='cf.400' fontSize='10px' textAlign='center'>
                             Offer 
                         </Text>
                     </Box>

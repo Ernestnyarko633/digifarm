@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from 'container/Layout';
-import { Box, Heading, Image, Text ,Flex} from '@chakra-ui/core';
+import { Box, Heading, Image,IconButton, Spacer,Text ,Flex} from '@chakra-ui/core';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import BuyerCard from 'components/Cards/Buyer'
 import IllustrationImage from '../assets/images/home/illustration.png';
@@ -86,6 +87,27 @@ const Marketplace = () => {
       <Box textAlign='center' px={{md: 10}} py={{md: 8}}>
         <Heading as='h4' fontSize={{ md:'2xl'}}>Here's how your farm(s) are doing</Heading>
       </Box>
+      <Spacer/>
+      <Flex >
+            <IconButton
+              aria-label='Left Arrow'
+              icon={<MdKeyboardArrowLeft />}
+              rounded='100%'
+              borderColor='cf.900'
+              variant='outline'
+              color='cf.900'
+              _hover={{ bg: 'transparent' }}
+              _active={{ bg: 'transparent' }}
+            />
+            <IconButton
+              aria-label='Right Arrow'
+              icon={<MdKeyboardArrowRight />}
+              ml={2}
+              rounded='100%'
+              colorScheme='linear'
+              shadow='md'
+            />
+          </Flex>
     </Box>
     <Flex my={3}>
       {warehouseGoods.map((item) => (

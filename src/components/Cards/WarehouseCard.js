@@ -46,12 +46,12 @@ const WarehouseCard = ({
                         </ListItem>
                     </List>
                 <Box ml={6} my={3}>
-                    <Box  rounded='30px' bg='cf.200' my={1} p={1}>
-                        <Text color='black' fontSize='xs' textAlign='center'>
+                    <Box  rounded='40px' bg='cf.200' my={1} pt={1} px={2}>
+                        <Text color='cf.400' fontSize='9px' textAlign='center'>
                             Pending Order
                         </Text>
                     </Box>
-                    <Text as='h6' fontSize='xs'  fontWeight='bold'>80% Complete</Text>
+                    <Text as='h6' fontSize='9px' ml={2} fontWeight='bold'>80% Complete</Text>
                 </Box>
                 </Flex>
             </Box>
