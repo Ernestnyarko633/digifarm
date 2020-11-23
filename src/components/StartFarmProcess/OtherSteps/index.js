@@ -1,6 +1,5 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/core';
+import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/core';
 import React from 'react';
-import AboutFarmManager from './AboutFarmManager';
 
 const OtherSteps = () => {
   return (
@@ -26,7 +25,7 @@ const OtherSteps = () => {
         </Flex>
       </Flex>
       <Box
-        mt={{ md: 20 }}
+        mt={{ md: 12 }}
         w='70%'
         mx='auto'
         borderWidth={1}
@@ -34,7 +33,21 @@ const OtherSteps = () => {
         rounded='md'
         overflow='hidden'
       >
-        Next Step
+        <Flex h={{ md: 120 }} pos='relative' overflow='hidden'>
+          <Box w='50%' pos='fixed' p={{ md: 10 }}>
+            Left side
+          </Box>
+          <Box
+            borderLeftWidth={1}
+            borderLeftColor='gray.300'
+            w='50%'
+            overflowY='scroll'
+            ml='50%'
+            p={{ md: 10 }}
+          >
+            Right Side
+          </Box>
+        </Flex>
       </Box>
     </Box>
   );

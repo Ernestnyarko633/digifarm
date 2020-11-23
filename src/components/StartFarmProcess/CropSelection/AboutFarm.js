@@ -70,6 +70,12 @@ const AboutFarm = () => {
             <Text>0 Acres bought</Text>
           </Flex>
         </Box>
+
+        <Box mt={{ md: 10 }}>
+          <Heading as='h6' size='sm'>
+            About crop
+          </Heading>
+        </Box>
       </Box>
     </Box>
   );

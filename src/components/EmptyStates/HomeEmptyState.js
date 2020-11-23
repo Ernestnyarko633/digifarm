@@ -96,6 +96,7 @@ const HomeEmptyState = () => {
               extra={item.acreage}
               options={item.benefits}
               btntitle='Farm this crop'
+              path='/startfarm'
               mr={6}
             />
           ))}
