@@ -118,7 +118,7 @@ const CropSelection = ({ handleNext }) => {
 
               <Box right={0} pos='absolute' bottom={0}>
                 <Button
-                  btntitle='Stat this farm'
+                  btntitle='Continue'
                   w={80}
                   h={14}
                   fontSize='md'

@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/core';
 import React from 'react';
-
+import ChooseAcreage from '../OtherSteps/ChooseAcreage';
 const OtherSteps = () => {
   return (
     <Box>
@@ -33,7 +33,7 @@ const OtherSteps = () => {
         rounded='md'
         overflow='hidden'
       >
-        Next Step
+        <ChooseAcreage />
       </Box>
     </Box>
   );
