@@ -14,9 +14,9 @@ const BuyerCard = ({
 }) => {
     return(
         <Flex justify='center'>
-            <Box py='6' my={6} w='800px' bg='white' px={8}>
+            <Box py={6} my={6} w={{md:'700px'}} bg='white' px={8}>
             <Flex>
-                <Box my={4} >
+                <Box my={1} >
                     <Flex>
                         <Avatar>
                             <Image src={image}/>
@@ -28,10 +28,10 @@ const BuyerCard = ({
                     </Flex>
                 </Box>
                 <Spacer/>
-                <Button mt={4} colorScheme='linear' rounded='30px' fontSize='xs' w='150px'>{btntitle}</Button>
+                <Button mt={4} colorScheme='linear' rounded='30px' fontSize='xs' w={{md: '150px'}}>{btntitle}</Button>
             </Flex>
-            <Box my={2}>
-                <Flex>
+            <Box mt={4}>
+                <Flex >
                     <Box rounded='20px' bg='cf.200' pt={1} px={2}>
                         <Text color='cf.400' fontSize='10px' textAlign='center'>
                             Offer 
@@ -40,7 +40,7 @@ const BuyerCard = ({
                     <Text as='h6' fontSize='xs' mt={1} ml={3}>{price} per tonne</Text>
                 </Flex>
             </Box>
-            <Progress value={60} rounded='lg' colorScheme='green' size='lg'/>
+            <Progress value={60} rounded='lg' colorScheme='cfButton' size='lg' mt={2}/>
             <Box mt={3}>
                 <Flex>
                     <Text as='h6' fontWeight='bold'fontSize='sm' >Need {amtNeeded} tonnes</Text>

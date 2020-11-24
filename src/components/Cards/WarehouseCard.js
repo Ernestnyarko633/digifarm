@@ -15,6 +15,7 @@ const WarehouseCard = ({
     mr
 }) => {
     return(
+        <Box >
         <Flex justify='center'>
             <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>
             <Flex mb={4}>
@@ -23,7 +24,7 @@ const WarehouseCard = ({
                 </Avatar>
                 <Box ml={2}>
                     <Heading as='h6' fontSize={{md: 'lg'}}>{name}</Heading>
-                    <Text fontSize='xs' mt={-1}>{location}</Text>
+                    <Text fontSize='xs' mt={{md:-2}}>{location}</Text>
                 </Box>
             </Flex>
             <Divider borderColor="gray.300" />
@@ -66,6 +67,7 @@ const WarehouseCard = ({
             </Button>
         </Box>
         </Flex>
+        </Box>
     )
 }
 

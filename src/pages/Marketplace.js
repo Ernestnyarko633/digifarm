@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from 'container/Layout';
 import { Box, Heading, Image,IconButton, Spacer,Text ,Flex} from '@chakra-ui/core';
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import ArrowButton from '../components/Button/ArrowButton'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import BuyerCard from 'components/Cards/Buyer'
 import IllustrationImage from '../assets/images/home/illustration.png';
@@ -29,17 +29,17 @@ const warehouseGoods = [
     weight: '300 kg',
     bags: '30 bags',
     condition: 'Dry'
-  },
-  {
-    id:3,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'Shai Osudoku, Eastern Region',
-    quantity: '2010 tonnes',
-    weight: '300 kg',
-    bags: '30 bags',
-    condition: 'Moist'
   }
+  // {
+  //   id:3,
+  //   image: SoyaBean,
+  //   name: 'Soya Bean Warehouse',
+  //   location: 'Shai Osudoku, Eastern Region',
+  //   quantity: '2010 tonnes',
+  //   weight: '300 kg',
+  //   bags: '30 bags',
+  //   condition: 'Moist'
+  // }
 ]
 
 const buyers = [
@@ -80,7 +80,7 @@ const Marketplace = () => {
         <Heading as='h3' fontSize={{ md: '4xl' }}>
           Welcome to your marketplace
         </Heading>
-        <Text>Sell tyour produce to the right buyer at a good price</Text>
+        <Text>Sell your produce to the right buyer at a good price</Text>
       </Box>
     </Box>
     <Box>
@@ -88,26 +88,7 @@ const Marketplace = () => {
         <Heading as='h4' fontSize={{ md:'2xl'}}>Here's how your farm(s) are doing</Heading>
       </Box>
       <Spacer/>
-      <Flex >
-            <IconButton
-              aria-label='Left Arrow'
-              icon={<MdKeyboardArrowLeft />}
-              rounded='100%'
-              borderColor='cf.900'
-              variant='outline'
-              color='cf.900'
-              _hover={{ bg: 'transparent' }}
-              _active={{ bg: 'transparent' }}
-            />
-            <IconButton
-              aria-label='Right Arrow'
-              icon={<MdKeyboardArrowRight />}
-              ml={2}
-              rounded='100%'
-              colorScheme='linear'
-              shadow='md'
-            />
-          </Flex>
+      <ArrowButton/>
     </Box>
     <Flex my={3}>
       {warehouseGoods.map((item) => (
