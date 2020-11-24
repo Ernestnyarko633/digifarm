@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   Heading,
   Icon,
@@ -14,6 +13,7 @@ import { Link as ReachRouter } from 'react-router-dom';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'components';
 
 const CropCard = ({
   image,
@@ -37,7 +37,6 @@ const CropCard = ({
       role='button'
       aria-label='crop card'
       textAlign='left'
-      bg='white'
       mr={mr}
     >
       <Box mb={3}>
@@ -57,9 +56,11 @@ const CropCard = ({
         {extra && <Text fontSize='sm'>{extra}</Text>}
       </Flex>
 
-      <List fontSize='sm' textAlign='left' my={3}>
+      <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
         {options.map((item, i) => (
-          <ListItem key={i}>{item}</ListItem>
+          <ListItem key={i} py={1}>
+            {item}
+          </ListItem>
         ))}
       </List>
 
@@ -69,17 +70,9 @@ const CropCard = ({
           to={{ pathname: path, state: state }}
           _hover={{ textDecor: 'none' }}
         >
-          <Button
-            colorScheme='linear'
-            rounded='30px'
-            fontSize='xs'
-            w={32}
-            fontWeight={400}
-          >
-            {btntitle}
-          </Button>
+          <Button btntitle={btntitle} />
         </Link>
-        <Box d='block' fontSize='xs' color='cf.400' mt={1}>
+        <Box d='block' fontSize='xs' color='cf.400' mt={1} fontFamily='body'>
           Learn more <Icon as={MdKeyboardArrowRight} />
         </Box>
       </Box>
