@@ -1,7 +1,6 @@
-import React,{useContext} from 'react'
+import React from 'react'
 import {Box, Button, Divider, Progress,Heading, Spacer ,Flex, Avatar, Text ,Image} from '@chakra-ui/core'
 import PropTypes from 'prop-types'
-import {componentContext} from 'context/componentContext'
 import ConfirmSale from 'components/Modals/ConfirmSellModal'
 
 const BuyerCard = ({ 
@@ -15,9 +14,7 @@ const BuyerCard = ({
     btntitle
 }) => {
 
-    const {handleModalOpen, modal} = useContext(componentContext)
 
-    const getModal = (currentModal) => currentModal ? <ConfirmSale/> : null
 
     return(
         <Flex justify='center'>
@@ -35,7 +32,7 @@ const BuyerCard = ({
                     </Flex>
                 </Box>
                 <Spacer/>
-                <Button mt={4} colorScheme='linear' rounded='30px' fontSize='xs' w={{md: '150px'}} onClick={handleModalOpen}>{btntitle}</Button>
+                <ConfirmSale/>
             </Flex>
             <Box mt={4}>
                 <Flex >
@@ -58,7 +55,6 @@ const BuyerCard = ({
                 </Flex>
             </Box>
         </Box>
-        {getModal(modal)}
         </Flex>
     )
 }

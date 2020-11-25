@@ -7,7 +7,6 @@ import { Provider as StyletronProvider } from 'styletron-react';
 import { LightTheme, BaseProvider } from 'baseui';
 import App from 'container/App';
 import { theme } from 'theme/theme';
-import ComponentContextProvider from './context/componentContext'
 import reportWebVitals from './reportWebVitals';
 
 const engine = new Styletron();
@@ -16,9 +15,7 @@ ReactDOM.render(
   <ChakraProvider theme={theme}>
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
-        <ComponentContextProvider>
           <App />
-        </ComponentContextProvider>
       </BaseProvider>
     </StyletronProvider>
   </ChakraProvider>,
