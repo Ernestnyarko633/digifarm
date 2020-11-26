@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar, Box, Divider, Flex, Grid, Heading, Icon, Image, ListItem, Text, UnorderedList } from '@chakra-ui/core'
 import { Button } from 'components'
-import { locationMarker } from 'theme/Icons'
+import { locationMarker, Support, Schedule, Update } from 'theme/Icons'
 import Prismic from 'prismic-javascript'
 //import { RichText, KeyText } from 'prismic-reactjs'
 
@@ -27,22 +27,6 @@ React.useEffect(() => {
   fetchData()
 }, [])
 
-console.log('data', doc)
-// // Link Resolver
-// linkResolver(doc) {
-//   // Define the url depending on the document type
-//   if (doc.type === 'page') {
-//     return '/page/' + doc.uid;
-//   } else if (doc.type === 'blog_post') {
-//     return '/blog/' + doc.uid;
-//   }
-
-//   // Default to homepage
-//   return '/';
-// }
-
-
-
 return (
     <Grid 
       templateColumns='repeat(2, 1fr)' 
@@ -55,15 +39,15 @@ return (
         <Heading pb={5} as='h5' size='md'>What is included in this farm</Heading>
         <Flex align="center" justify='space-around' fontSize="xs" >
             <Flex mx={5}>
-              <Image src={require('../../../assets/images/update.png').default} boxSize={6} alt="update icon" />
+              <Icon as={Update} color='cf.400' boxSize={5}/>
               <Text ml={1}>Farm Updates</Text>
             </Flex>
             <Flex mx={5}>
-              <Image src={require('../../../assets/images/support.png').default} boxSize={6} alt="support icon" />
+              <Icon as={Support} color='cf.400' boxSize={5}/>
               <Text ml={1}>Support</Text>
             </Flex>
             <Flex mx={5}>
-              <Image src={require('../../../assets/images/visit.png').default} boxSize={6} alt="visit icon" />
+              <Icon as={Schedule} color='cf.400' boxSize={5}/>
               <Text ml={1}>Scheduled Farm Visits</Text>
             </Flex>
           </Flex>
@@ -105,7 +89,7 @@ return (
                 <Text>Manager Profile</Text>
                 <Box>
                   <UnorderedList>
-                  {doc?.data?.manager_profile?.map((item, index) => 
+                  {doc.data.manager_profile?.map((item, index) => 
                     <ListItem key={index} fontSize='xs' textColor='gray.400'>
                       {item.text}
                     </ListItem>
