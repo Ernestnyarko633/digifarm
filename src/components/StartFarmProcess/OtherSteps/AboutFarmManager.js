@@ -8,8 +8,8 @@ import Prismic from 'prismic-javascript'
 
 const AboutFarmManager = () => {
   // In prismic-configuration.js
-  const apiEndpoint = 'https://completefarmer.cdn.prismic.io/api/v2'
-  const accessToken = 'MC5YeEo2RXhFQUFDTUF3dTVf.77-977-9CEBM77-977-9RAQG77-9ZwwhKCvvv70wB--_vRRJAGnvv73vv70RYO-_vTHvv73vv70' // This is where you would add your access token for a Private repository
+  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT
+  const accessToken = process.env.REACT_APP_ACCESS_TOKEN // This is where you would add your access token for a Private repository
 
   const Client = Prismic.client(apiEndpoint, { accessToken })
 
@@ -51,7 +51,7 @@ return (
       <Box>
       <Image h='10%' src={require('../../../assets/images/ginger.png').default}/>
       </Box>
-      <Box mt={10} pt={10} textAlign='center'>
+      <Box mt={10} pt={10} mb={-5} textAlign='center'>
         <Heading pb={5} as='h5' size='md'>What is included in this farm</Heading>
         <Flex align="center" justify='space-around' fontSize="xs" >
             <Flex mx={5}>
@@ -88,31 +88,33 @@ return (
         borderWidth={1}
         rounded='md'
       >
-      <Grid templateColumns='repeat(2, 1fr)'>
-        <Box py={10} px={2}>
-        <Avatar  src='https://bit.ly/code-beast' size={8} justify='space-around'/>
-        </Box>
-        <Box m={5}>
-          <Text fontSize='md' fontWeight='800'> Clause Agyemang</Text>
-          <Text fontSize='sm'>Farm Manager</Text>
-          <Divider  
-            orientation='horizontal'
-            borderColor='gray.300'
-            w={60}
-            my={5}
-          />
-        <Text>Manager Profile</Text>
-        <Box> 
-          <UnorderedList fontSize='xs' textColor='gray.400'>
-            <ListItem >Expertise in ginger farming for 5 years</ListItem>
-            <ListItem >Expertise in ginger farming for 5 years</ListItem>
-            <ListItem >Expertise in ginger farming for 5 years</ListItem>
-            <ListItem >Expertise in ginger farming for 5 years</ListItem>
-            <ListItem >Expertise in ginger farming for 5 years</ListItem>
-          </UnorderedList>
-        </Box>
-        </Box>
-      </Grid>
+        <React.Fragment>
+              <Grid templateColumns='repeat(2, 1fr)'>
+                <Box py={10} px={2}>
+                <Avatar  src={doc.data.manager_image.url} size={8} justify='space-around'/>
+                </Box>
+                <Box m={5}>
+                  <Text fontSize='md' fontWeight='800'>{doc.data.full_name}</Text>
+                  <Text fontSize='sm'>Farm Manager</Text>
+                  <Divider  
+                    orientation='horizontal'
+                    borderColor='gray.300'
+                    w={60}
+                    my={5}
+                  />
+                <Text>Manager Profile</Text>
+                <Box>
+                  <UnorderedList>
+                  {doc?.data?.manager_profile?.map((item, index) => 
+                    <ListItem key={index} fontSize='xs' textColor='gray.400'>
+                      {item.text}
+                    </ListItem>
+                  )}
+                  </UnorderedList>
+                </Box>
+                </Box>
+              </Grid>
+      </React.Fragment>
       </Box>
       </Box>
     </Box>
