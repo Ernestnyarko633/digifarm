@@ -33,7 +33,7 @@ const ConfirmSell = () => {
               </Box>
             <ModalCloseButton />
           </Flex>
-          <Divider orientation='horizontal'/>
+          <Divider orientation='horizontal' borderColor='gray.400'/>
           <ModalBody>
             
             <Box mt={2} p={2}  fontFamily='light' textAlign='justify' >
