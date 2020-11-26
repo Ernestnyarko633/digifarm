@@ -102,9 +102,6 @@ const Marketplace = () => {
           weight={item.weight}
           bags={item.bags}
           condition={item.condition}
-          btntitle='Sell'
-          mr={3}
-          ml={14}
         />
       ))}
     </Flex>
@@ -122,7 +119,6 @@ const Marketplace = () => {
         amtNeeded={buyer.amtNeeded}
         amtBought={buyer.amtBought}
         price={buyer.price}
-        btntitle='Sell to buyer'
       />
      ))
     }

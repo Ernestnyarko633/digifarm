@@ -6,18 +6,15 @@ const WarehouseCard = ({
     name,
     location, 
     image, 
-    btntitle, 
     weight, 
     bags, 
     quantity, 
     condition,
-    ml,
-    mr
 }) => {
     return(
         <Box >
-        <Flex justify='center'>
-            <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>
+        <Flex justify='center'> 
+            <Box rounded='lg' bg='white' mr={3}  ml={14} p={6}>
             <Flex mb={4}>
                 <Avatar bg='gray.100'>
                     <Image src={image} />
@@ -63,7 +60,7 @@ const WarehouseCard = ({
             fontWeight='bold'
             width="100%"
             >
-            {btntitle}
+            Sell
             </Button>
         </Box>
         </Flex>

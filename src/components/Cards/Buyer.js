@@ -11,7 +11,6 @@ const BuyerCard = ({
     amtBought, 
     amtNeeded, 
     price, 
-    btntitle
 }) => {
 
 
