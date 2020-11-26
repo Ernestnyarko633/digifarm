@@ -1,8 +1,6 @@
 import {
     Box,
     Flex,
-    Grid,
-    GridItem,
     Icon,
     Image,
     Text,
@@ -34,20 +32,6 @@ const Confirmation = () => {
                     <Text color='gray.400' mb={8} fontSize={20}>Hurray! you have successfully<br /> made payment to your new farm</Text>
                 </Box>
                 <Box my='0' mx={8}>
-                    {/* <Grid templateColumns="repeat(2, 2fr)" gap={0}>
-                        <GridItem colSpan={2} fontWeight="bold" fontSize={21}>Ginger Farm</GridItem>
-                        <GridItem colStart={4} colEnd={3}>$750.00</GridItem>
-
-                        <GridItem colSpan={2} borderBottomWidth={1} >Farm management fee</GridItem>
-                        <GridItem colStart={4} colEnd={3}>$100.00</GridItem>
-
-                        <GridItem colSpan={2} borderBottomWidth={1}>VAT</GridItem>
-                        <GridItem colStart={4} colEnd={3}>$20.5</GridItem>
-
-                        <GridItem colSpan={2} fontWeight="bold">Total</GridItem>
-                        <GridItem colStart={4} colEnd={3}>$870.00</GridItem>
-                    </Grid> */}
-
                     <VStack spacing="0px">
                         <Flex borderBottom='1px solid #efefef' pb={1}>
                             <Box w="400px" h="8" fontWeight="bold" fontSize={22}>Ginger Farm</Box>
