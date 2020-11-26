@@ -27,6 +27,8 @@ React.useEffect(() => {
   fetchData()
 }, [])
 
+console.log('data', doc)
+
 return (
     <Grid 
       templateColumns='repeat(2, 1fr)' 
@@ -75,10 +77,10 @@ return (
         <React.Fragment>
               <Grid templateColumns='repeat(2, 1fr)'>
                 <Box py={10} px={2}>
-                <Avatar  src={doc.data.manager_image.url} size={8} justify='space-around'/>
+                <Avatar  src={doc?.data?.manager_image.url} size={8} justify='space-around'/>
                 </Box>
                 <Box m={5}>
-                  <Text fontSize='md' fontWeight='800'>{doc.data.full_name}</Text>
+                  <Text fontSize='md' fontWeight='800'>{doc?.data?.full_name}</Text>
                   <Text fontSize='sm'>Farm Manager</Text>
                   <Divider  
                     orientation='horizontal'
@@ -89,7 +91,7 @@ return (
                 <Text>Manager Profile</Text>
                 <Box>
                   <UnorderedList>
-                  {doc.data.manager_profile?.map((item, index) => 
+                  {doc?.data?.manager_profile?.map((item, index) => 
                     <ListItem key={index} fontSize='xs' textColor='gray.400'>
                       {item.text}
                     </ListItem>
