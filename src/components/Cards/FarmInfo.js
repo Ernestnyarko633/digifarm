@@ -1,42 +1,42 @@
-import { Heading, Text, Box, Flex } from "@chakra-ui/core";
-import { QuestionIcon } from "@chakra-ui/icons";
-import React from "react";
+import { Heading, Text, Box, Flex } from '@chakra-ui/core';
+import { QuestionIcon } from '@chakra-ui/icons';
+import React from 'react';
 
 const FarmInfo = () => {
   return (
-    <Box as="table" w={108} py={6} px={10} m={4}>
-      <Box as="tr">
-        <Flex as="td" align="center" justify="space-between">
-          <Heading as="h3" fontSize="xl">
+    <Box as='table' w={108} m={4}>
+      <Box as='tr'>
+        <Flex as='td' align='center' justify='space-between'>
+          <Heading as='h3' fontSize='xl'>
             Ginger Farm
           </Heading>
           <Text>$750.00</Text>
         </Flex>
       </Box>
-      <Box borderWidth={1} borderColor="gray.100"></Box>
-      <Box as="tr">
-        <Flex as="td" align="center" justify="space-between">
-          <Flex align="center">
-            <Text mr={2} color="gray.600">
+      <Box borderWidth={1} borderColor='gray.100'></Box>
+      <Box as='tr'>
+        <Flex as='td' align='center' justify='space-between'>
+          <Flex align='center'>
+            <Text mr={2} color='gray.600'>
               Management Fee
             </Text>
-            <QuestionIcon color="cf.400" />
+            <QuestionIcon color='cf.400' />
           </Flex>
           <Text>$100.00</Text>
         </Flex>
       </Box>
-      <Box borderWidth={1} borderColor="gray.100"></Box>
-      <Box as="tr">
-        <Flex as="td" align="center" justify="space-between">
-          <Text mr={2} color="gray.600">
+      <Box borderWidth={1} borderColor='gray.100'></Box>
+      <Box as='tr'>
+        <Flex as='td' align='center' justify='space-between'>
+          <Text mr={2} color='gray.600'>
             VAT
           </Text>
           <Text>$20.5</Text>
         </Flex>
       </Box>
-      <Box borderWidth={1} borderColor="gray.100"></Box>
-      <Box as="tr">
-        <Flex as="td" align="center" justify="space-between">
+      <Box borderWidth={1} borderColor='gray.100'></Box>
+      <Box as='tr'>
+        <Flex as='td' align='center' justify='space-between'>
           <Text fontWeight={500} mr={2}>
             Total
           </Text>

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Flex,
   Text,
@@ -8,10 +8,10 @@ import {
   useDisclosure,
   Collapse,
   Icon,
-} from "@chakra-ui/core";
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import visa from "../../assets/images/startfarm/visa.png";
-import BankDetails from "./BankDetails";
+} from '@chakra-ui/core';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import visa from '../../assets/images/startfarm/visa.png';
+import BankDetails from './BankDetails';
 
 const PayOption = ({
   icon,
@@ -26,59 +26,59 @@ const PayOption = ({
 
   return (
     <Flex
-      as="button"
-      _focus={{ outline: "none", borderColor: "cf.400" }}
-      textAlign="left"
-      direction="column"
+      as='button'
+      _focus={{ outline: 'none', borderColor: 'cf.400' }}
+      textAlign='left'
+      direction='column'
       borderWidth={1}
-      borderColor="gray.400"
-      rounded="md"
-      overflow="hidden"
+      borderColor='gray.400'
+      rounded='md'
+      overflow='hidden'
       py={6}
       px={10}
       m={4}
       w={108}
     >
-      <Flex align="center">
-        <Image src={icon} alt="Card Image" />
-        <Text fontSize="lg" fontWeight={500} ml={4}>
+      <Flex align='center'>
+        <Image src={icon} alt='Card Image' />
+        <Text fontSize='lg' fontWeight={500} ml={4} fontFamily='body'>
           {title}
         </Text>
       </Flex>
       <Box
         borderWidth={1}
-        borderColor="gray.100"
-        w={{ md: "80%" }}
+        borderColor='gray.100'
+        w={{ md: '80%' }}
         mt={2}
       ></Box>
-      <Flex direction="column">
-        <Heading as="h6" fontSize="sm">
+      <Flex direction='column'>
+        <Heading as='h6' fontSize='sm'>
           {theme}
         </Heading>
-        <Text w={{ md: 72 }} fontSize="sm" fontWeight={500}>
+        <Text w={{ md: 72 }} fontSize='sm' fontWeight={500} fontFamily='body'>
           {description}
         </Text>
-        <Text mt={4} fontSize="sm" fontWeight={500}>
-          {notice}{" "}
-          <Text as="span" color="cf.400">
-            {percent}{" "}
+        <Text mt={4} fontSize='sm' fontWeight={500} fontFamily='body'>
+          {notice}{' '}
+          <Text as='span' color='cf.400' fontFamily='body'>
+            {percent}{' '}
           </Text>
         </Text>
       </Flex>
       {dropDown && (
         <>
           <Flex
-            align="center"
-            as="button"
+            align='center'
+            as='button'
             onClick={onToggle}
-            _focus={{ outline: "none" }}
+            _focus={{ outline: 'none' }}
           >
-            <Heading as="h6" fontSize="sm" color="cf.400" mr={1}>
+            <Heading as='h6' fontSize='sm' color='cf.400' mr={1}>
               View bank details
             </Heading>
             <Icon
               as={isOpen ? ChevronUpIcon : ChevronDownIcon}
-              color="cf.400"
+              color='cf.400'
               boxSize={6}
             />
           </Flex>
