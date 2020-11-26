@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/core';
 import React from 'react';
+import Confirmation from './Confirmation';
 
 const OtherSteps = () => {
   return (
@@ -29,11 +30,11 @@ const OtherSteps = () => {
         w='70%'
         mx='auto'
         borderWidth={1}
-        borderColor='gray.400'
+        borderColor='gray.200'
         rounded='md'
         overflow='hidden'
       >
-        Next Step
+        <Confirmation />
       </Box>
     </Box>
   );
