@@ -31,7 +31,7 @@ const OtherSteps = () => {
         h={{ md: 123 }}
         mx='auto'
         borderWidth={1}
-        borderColor='gray.400'
+        borderColor='gray.200'
         rounded='md'
         overflow='hidden'
       >
