@@ -93,6 +93,7 @@ const HomeEmptyState = () => {
               title={item.title}
               subtitle={item.subtitle}
               image={item.img}
+              extra={item.acreage}
               options={item.benefits}
               btntitle='Farm this crop'
               mr={6}

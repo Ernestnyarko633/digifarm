@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/core";
 import React from "react";
 import PaymentOption from "./PaymentOption";
+import Confirmation from "./Confirmation";
 
 const OtherSteps = () => {
   return (
@@ -35,6 +36,8 @@ const OtherSteps = () => {
         overflow="hidden"
       >
         <PaymentOption />
+        borderColor='gray.200' rounded='md' overflow='hidden' >
+        <Confirmation />
       </Box>
     </Box>
   );
