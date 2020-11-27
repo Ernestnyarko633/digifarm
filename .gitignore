@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 .env
+cf_digital_farmer_dashboard.env
 
 # dependencies
 /node_modules
