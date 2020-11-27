@@ -102,6 +102,8 @@ const Marketplace = () => {
           weight={item.weight}
           bags={item.bags}
           condition={item.condition}
+          mr={3}
+          ml={14}
         />
       ))}
     </Flex>
