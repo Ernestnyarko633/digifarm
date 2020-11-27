@@ -13,7 +13,7 @@ http.interceptors.request.use(
   function (config) {
     // TODO: Delete Token at all cost.
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWZmNGNjYjAzZTEyOTAwMTI4NzQxMmYiLCJlbWFpbCI6ImdhYnNjbzIwODMwOUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRETEplaDd0SGFrSlpEOWFlQ0pvT3FPYzFTYk1DaFdlTnRiUkQ0dkpUYkFPaGkuR0pHMGlxVyIsImlhdCI6MTYwMzk4MjY0MywiZXhwIjoxNjA2NTc0NjQzfQ.f6haex2BPUDJI5X6RIOCpaXCJrn3EZSXm6UXdpzUV50';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJiODkzMTdiNTBhYzAwMTEyYWYxN2UiLCJlbWFpbCI6ImdhYnNjbzIwODMwOUBnbWFpbC5jb20iLCJpYXQiOjE2MDY0MjMzNDQsImV4cCI6MTYwOTAxNTM0NH0.XyNtaQTJf3YnbrbwTq9LHbh7-s_uI2CQTCY94rZca64';
     // const token = JSON.parse(
     //   window.sessionStorage.getItem('_cft') || window.localStorage.getItem('_cft')
     // )

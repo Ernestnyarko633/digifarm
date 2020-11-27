@@ -21,6 +21,7 @@ const PayOption = ({
   notice,
   percent,
   dropDown,
+  onClick,
 }) => {
   const { isOpen, onToggle } = useDisclosure();
 
@@ -38,6 +39,7 @@ const PayOption = ({
       px={10}
       m={4}
       w={108}
+      onClick={onClick}
     >
       <Flex align='center'>
         <Image src={icon} alt='Card Image' />
