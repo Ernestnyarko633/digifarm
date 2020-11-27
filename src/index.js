@@ -15,7 +15,7 @@ ReactDOM.render(
   <ChakraProvider theme={theme}>
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
-        <App />
+          <App />
       </BaseProvider>
     </StyletronProvider>
   </ChakraProvider>,

@@ -1,4 +1,47 @@
-/* .activeClasName {
-  color: #fff;
-  background-color: #3c9130;
-} */
+@font-face {
+  font-family: 'CeraGRBold';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/Cera\ GR\ Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'CeraGRBlack';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../fonts/Cera\ GR\ Black.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'CeraGRThin';
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url('../fonts/Cera\ GR\ Thin.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'CeraGRLight';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/Cera\ GR\ Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'CeraGR';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Cera\ GR.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'CeraGRMedium';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/Cera\ GR\ Medium.woff') format('woff');
+}
