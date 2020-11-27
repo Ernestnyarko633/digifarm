@@ -29,12 +29,12 @@ const OtherSteps = () => {
         mt={{ md: 20 }}
         w='70%'
         mx='auto'
-        borderWidth={1}
+        borderWidth={2}
         borderColor='gray.400'
         rounded='md'
         overflow='hidden'
       >
-        Next Step
+  <AboutFarmManager/>
       </Box>
     </Box>
   );
