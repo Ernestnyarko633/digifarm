@@ -10,11 +10,13 @@ const WarehouseCard = ({
     bags, 
     quantity, 
     condition,
+    mr,
+    ml
 }) => {
     return(
         <Box >
         <Flex justify='center'> 
-            <Box rounded='lg' bg='white' mr={3}  ml={14} p={6}>
+            <Box rounded='lg' bg='white' mr={mr}  ml={ml} p={6}>
             <Flex mb={4}>
                 <Avatar bg='gray.100'>
                     <Image src={image} />

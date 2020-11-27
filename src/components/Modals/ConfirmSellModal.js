@@ -22,7 +22,7 @@ const ConfirmSell = () => {
   return (
     <>
     <Button mt={4} colorScheme='linear' rounded='30px' fontSize='xs' w={{md: '150px'}} onClick={onOpen}>Sell to buyer</Button>
-   <Modal isOpen={isOpen} onClose={onClose} mt={10} variant='outline' borderColor='black' colorScheme='white' isCentered >
+   <Modal isOpen={isOpen} onClose={onClose} mt={10} variant='outline' borderColor='black' borderWidth={5} colorScheme='white' isCentered >
         <ModalOverlay />
         <ModalContent >
           <Flex mt={2}>
