@@ -14,8 +14,31 @@ import FarmInfo from 'components/Cards/FarmInfo';
 import { Support, Schedule, Update } from 'theme/Icons';
 import PayOption from 'components/Cards/PayOption';
 import visa from '../../../assets/images/startfarm/visa.png';
+import { useMutation, useQueryCache } from 'react-query';
+import useAPI from 'context/apiContext';
 
 const PaymentOption = () => {
+  const { payment } = useAPI();
+  const queryCache = useQueryCache();
+
+  const [cardData, setCardData] = React.useState({
+    orderId: '5225013d1c4b4034',
+    amount: 750.5,
+    purpose: 'FARM_PURCHASE',
+    transaction_type: 'CARD',
+  });
+
+  const [mutate] = useMutation(payment);
+
+  const paymentlick = async () => {
+    try {
+      const res = await mutate(cardData);
+      console.log('result', res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem p={{ md: 10 }}>
@@ -68,6 +91,7 @@ const PaymentOption = () => {
               description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
               notice='All transactions are charged a transaction fee of'
               percent='1.95%'
+              onClick={paymentlick}
             />
             <PayOption
               icon={visa}

@@ -9,6 +9,7 @@ import {
   Link,
   Text,
 } from '@chakra-ui/core';
+import { Link as ReachLink } from 'react-router-dom';
 import CropCard from 'components/Cards/CropCard';
 import React from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
@@ -96,7 +97,6 @@ const HomeEmptyState = () => {
               extra={item.acreage}
               options={item.benefits}
               btntitle='Farm this crop'
-              path='/startfarm'
               mr={6}
             />
           ))}
@@ -120,9 +120,17 @@ const HomeEmptyState = () => {
             Learn more <Icon as={MdKeyboardArrowRight} />
           </Link>
 
-          <Button colorScheme='linear' rounded='30px' w={64} h={12} shadow='md'>
-            Get me started now
-          </Button>
+          <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/startfarm'>
+            <Button
+              colorScheme='linear'
+              rounded='30px'
+              w={64}
+              h={12}
+              shadow='md'
+            >
+              Get me started now
+            </Button>
+          </Link>
         </Box>
 
         <Box mx='auto' w='80%' my={{ md: 16 }}>
