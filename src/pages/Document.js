@@ -1,49 +1,44 @@
 import React, {useState} from 'react'
-import Layout from 'container/Layout';
+import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/DocumentCard'
-import {Box} from '@chakra-ui/core'
-import Tabs from 'components/Tabs/Tabs'
+import {Box, Grid} from '@chakra-ui/core'
 
 const Document = () => {
-
-    const [activeStep, setActiveStep] = useState(0)
-
-    const handleStep = () => {
-        setActiveStep((activeStep)=> activeStep + 1)
-    }
-    
-    const getContent = ( step) ? <DocumentCard handleStep={handleStep}/> : null
 
     const data = [
         {
             id:1,
-            title: 'Receipt',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tempor tellus et nulla mattis cursus.'
+            title: 'Receipts',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tempor tellus et .'
         },
         {
             id:2,
-            title: 'Contract',
+            title: 'Contracts',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tempor tellus et nulla mattis cursus.'
         }
 
     ]
 
     return (
-      <Layout>
-          <Box>
-              {
-                  data.map((item) => (
-                      <DocumentCard
-                      key={item.id}
-                        title={item.title}
-                        description={item.description}
-                        img={require('assets/images/Receipt.svg')}
-                      />
-                  ))
-              }
-          </Box>
-          {getContent(activeStep)}
-      </Layout>
+            <Layout>
+
+                <Box bg='cf.200' p={{ md: 32 }}>
+                
+                        <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} gap={{ md: 8}}>
+                    {
+                    data.map((item) => (
+                        <DocumentCard
+                        key={item.id}
+                            title={item.title}
+                            description={item.description}
+                            img={require('assets/images/Receipt.svg')}
+                        />
+                    ))
+                    }
+                        </Grid>
+                </Box>
+
+            </Layout>
     )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Box,Text,Flex, Link, Image} from '@chakra-ui/core'
+import {Box,Text,Flex,Icon, Link, Image} from '@chakra-ui/core'
 import Receipt from 'assets/images/Receipt.svg'
 import Contract from 'assets/images/Contract.svg'
 import {arrowDown} from 'theme/Icons'
@@ -9,9 +9,9 @@ const DocumentCard = ({ title,description, link}) => {
 
     const images = (image) => {
         switch(image){
-            case 'Receipt' :
+            case 'Receipts' :
                 return Receipt
-            case 'Contract' :
+            case 'Contracts' :
                 return Contract
             default : 
             return null
@@ -19,38 +19,49 @@ const DocumentCard = ({ title,description, link}) => {
     }
 
     return(
-        <Box>
             <Box w={64}>
-                <Text textAlign='center' mb={4} fontFamily='heading' fontWeight={200} fontSize='lg'>
+                <Text textAlign='center' mb={3} fontFamily='heading' fontWeight={200} fontSize='lg'>
                     {title} 
                 </Text>
 
-                <Flex align='center' justify='center' pos='relative' bg='white' p={6} w={64} h={64}>
-                    <Link href='{link}' target='_blank'>
+                <Flex 
+                  align='center'
+                  justify='center'
+                  direction='column'
+                  bg='white'
+                  rounded='md'
+                  w={64}
+                  h={64}
+                  p={6}
+                  shadow='sm'
+                  pos='relative'
+                >
+                    <Link  href={link} target='_blank'>
                         <Flex 
-                        as='button' 
-                        align='center' 
-                        pos='absolute' 
-                        justify='center' 
-                        right={4} 
+                        as='button'
+                        align='center'
+                        justify='center'
+                        pos='absolute'
+                        right={4}
+                        top={4}
                         w={5}
                         h={5}
-                        color='white'
+                        rounded='100%'
                         bg='cf.400'
+                        color='white'
+                        boxShadow='lg'
                         aria-labelledby='download button'
                         >
                             <Icon as={arrowDown}/>
                         </Flex>
                     </Link>
                     
-                    <Image src={images(title)}/>
+                    <Image src={images(title)} />
                     <Text fontSize='sm' mt={2} textAlign='center'>
-                        {description}
+                    {description}
                     </Text>
                 </Flex>
-
             </Box>
-        </Box>
     )
 }
 
