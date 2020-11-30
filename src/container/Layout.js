@@ -31,7 +31,7 @@ const Layout = ({ children, height, pt, px, ...rest }) => (
       </Box>
     </GridItem>
     <GridItem bg='white'>
-      <Box as='aside' gridArea='right'>
+      <Box as='aside' gridArea='right' mt={{md: 32}}>
         hey
       </Box>
     </GridItem>
