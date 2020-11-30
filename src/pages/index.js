@@ -8,6 +8,7 @@ const StartFarm = React.lazy(() => import('./StartFarm/index'));
 const StartFarmDetails = React.lazy(() => import('./StartFarm/Details'));
 const Forum = React.lazy(() => import('./Forum'));
 const NotFound = React.lazy(() => import('./NotFound'));
+const Document = React.lazy(()=> import('./Document'));
 
 const Pages = {
   Dashboard,
@@ -18,6 +19,7 @@ const Pages = {
   StartFarmDetails,
   Forum,
   NotFound,
+  Document
 };
 
 export default Pages;
