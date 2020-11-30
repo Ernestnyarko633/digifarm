@@ -8,20 +8,18 @@ const Button = ({
   width = 32,
   fontSize = 'xs',
   ...rest
-}) => {
-  return (
-    <ChakraButton
-      colorScheme={colorScheme}
-      rounded={rounded}
-      fontSize={fontSize}
-      w={width}
-      fontWeight={400}
-      shadow='lg'
-      {...rest}
-    >
-      {btntitle}
-    </ChakraButton>
-  );
-};
+}) => (
+  <ChakraButton
+    colorScheme={colorScheme}
+    rounded={rounded}
+    fontSize={fontSize}
+    w={width}
+    fontWeight={400}
+    shadow='lg'
+    {...rest}
+  >
+    {btntitle}
+  </ChakraButton>
+);
 
 export default Button;

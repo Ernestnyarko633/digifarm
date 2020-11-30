@@ -10,14 +10,14 @@ const Forum = React.lazy(() => import('./Forum'));
 const NotFound = React.lazy(() => import('./NotFound'));
 
 const Pages = {
-  Dashboard,
-  FarmBoard,
-  FarmWallet,
-  Marketplace,
-  StartFarm,
-  StartFarmDetails,
-  Forum,
-  NotFound,
+        Dashboard,
+        FarmBoard,
+        FarmWallet,
+        Marketplace,
+        StartFarm,
+        StartFarmDetails,
+        Forum,
+        NotFound,
 };
 
 export default Pages;

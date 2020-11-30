@@ -1,27 +1,11 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Icon,
-  Image,
-  Progress,
-  Text,
-} from '@chakra-ui/core';
-import { Button } from 'components';
+import { Box, Heading } from '@chakra-ui/core';
 import Tabs from 'components/Tabs/Tabs';
 import React from 'react';
-import AboutFarm from './AboutFarm';
 import FarmDetails from './FarmDetails';
-import FarmImage from './FarmImage';
 
 const CropSelection = ({ handleNext }) => {
-  const [activeKey, setActiveKey] = React.useState(0);
-
   return (
-    <Box mt={{ md: 48 }} w='90%' mx='auto'>
+    <Box mt={{ md: 32 }} w='90%' mx='auto'>
       <Box textAlign='center' mb={10}>
         <Heading as='h4' size='xl'>
           Which Farm is right for you.

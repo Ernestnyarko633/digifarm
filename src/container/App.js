@@ -7,16 +7,16 @@ import Router from 'routes/router';
 const queryCache = new QueryCache();
 
 function App() {
-  return (
-    <ReactQueryCacheProvider queryCache={queryCache}>
-      <APIProvider>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
-      </APIProvider>
-      <ReactQueryDevtools initialIsOpen />
-    </ReactQueryCacheProvider>
-  );
+        return (
+                <ReactQueryCacheProvider queryCache={queryCache}>
+                        <APIProvider>
+                                <BrowserRouter>
+                                        <Router />
+                                </BrowserRouter>
+                        </APIProvider>
+                        <ReactQueryDevtools initialIsOpen />
+                </ReactQueryCacheProvider>
+        );
 }
 
 export default App;

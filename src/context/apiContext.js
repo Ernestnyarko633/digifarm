@@ -5,17 +5,13 @@ import http from 'utils/httpFacade';
 const APIContext = React.createContext({});
 
 export const APIProvider = ({ children }) => {
-  const PAYMENT_API = configs().PAYMENT_API;
+  const { PAYMENT_API } = configs();
 
   const payment = async (payload) => {
-    try {
-      return http.post({
-        url: `${PAYMENT_API}/payment/`,
-        body: JSON.stringify(payload),
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    return await http.post({
+      url: `${PAYMENT_API}/payment/`,
+      body: JSON.stringify(payload),
+    });
   };
 
   return (

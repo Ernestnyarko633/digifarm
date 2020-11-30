@@ -12,7 +12,7 @@ export const theme = extendTheme({
     global: () => ({
       body: {
         fontSize: 'md',
-        fontFamily: '"SourceSans", sans-serif',
+        fontFamily: '"CeraGR", sans-serif',
         lineHeight: 'tall',
       },
     }),

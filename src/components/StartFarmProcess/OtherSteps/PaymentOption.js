@@ -9,22 +9,21 @@ import {
   Grid,
   GridItem,
 } from '@chakra-ui/core';
-import ginger from '../../../assets/images/startfarm/ginger.png';
 import FarmInfo from 'components/Cards/FarmInfo';
 import { Support, Schedule, Update } from 'theme/Icons';
 import PayOption from 'components/Cards/PayOption';
-import visa from '../../../assets/images/startfarm/visa.png';
-import { useMutation, useQueryCache } from 'react-query';
+import { useMutation } from 'react-query';
 import useAPI from 'context/apiContext';
+import visa from '../../../assets/images/startfarm/visa.png';
+import ginger from '../../../assets/images/startfarm/ginger.png';
 
 const PaymentOption = () => {
   const { payment } = useAPI();
-  const queryCache = useQueryCache();
 
-  const [cardData, setCardData] = React.useState({
-    orderId: '5225013d1c4b4034',
-    amount: 750.5,
+  const [cardData] = React.useState({
+    amount: 100,
     purpose: 'FARM_PURCHASE',
+    order_id: '5fbba7e2dd7f2d24059ffca2',
     transaction_type: 'CARD',
   });
 
@@ -34,6 +33,7 @@ const PaymentOption = () => {
     try {
       const res = await mutate(cardData);
       console.log('result', res);
+      window.location.assign(res.url);
     } catch (error) {
       console.log(error);
     }

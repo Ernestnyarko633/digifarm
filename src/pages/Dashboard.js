@@ -4,10 +4,10 @@ import Layout from 'container/Layout';
 import React from 'react';
 
 const Dashboard = () => (
-  <Layout>
-    <Greetings />
-    <HomeEmptyState />
-  </Layout>
+        <Layout>
+                <Greetings />
+                <HomeEmptyState />
+        </Layout>
 );
 
 export default Dashboard;

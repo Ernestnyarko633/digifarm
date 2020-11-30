@@ -12,14 +12,14 @@ import reportWebVitals from './reportWebVitals';
 const engine = new Styletron();
 
 ReactDOM.render(
-  <ChakraProvider theme={theme}>
-    <StyletronProvider value={engine}>
-      <BaseProvider theme={LightTheme}>
-        <App />
-      </BaseProvider>
-    </StyletronProvider>
-  </ChakraProvider>,
-  document.getElementById('root')
+        <ChakraProvider theme={theme}>
+                <StyletronProvider value={engine}>
+                        <BaseProvider theme={LightTheme}>
+                                <App />
+                        </BaseProvider>
+                </StyletronProvider>
+        </ChakraProvider>,
+        document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
