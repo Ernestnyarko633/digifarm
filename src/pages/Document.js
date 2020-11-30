@@ -12,7 +12,7 @@ const Document = () => {
         setActiveStep((activeStep)=> activeStep + 1)
     }
     
-    const getContent = ( step) ? <DocumentCard/> : null
+    const getContent = ( step) ? <DocumentCard handleStep={handleStep}/> : null
 
     const data = [
         {
@@ -42,6 +42,7 @@ const Document = () => {
                   ))
               }
           </Box>
+          {getContent(activeStep)}
       </Layout>
     )
 }
