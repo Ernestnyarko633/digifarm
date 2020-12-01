@@ -557,6 +557,97 @@ export const chevronRight = createIcon({
     />
   ),
 });
+export const Schedule = createIcon({
+  displayName: "Schedule",
+  viewBox: "0 0 20 18",
+  path: (
+    <>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M3 14C3 12.159 4.159 11 6 11C7.841 11 9 12.159 9 14H3Z"
+      />
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8 8C8 9.104 7.104 10 6 10C4.896 10 4 9.104 4 8C4 6.896 4.896 6 6 6C7.104 6 8 6.896 8 8Z"
+      />
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M17 9.99951H11V7.99951H17V9.99951Z"
+      />
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M17 13.9995H11V11.9995H17V13.9995Z"
+      />
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2 16V4H7.185C7.599 5.162 8.698 6 10 6C11.302 6 12.401 5.162 12.815 4H18L18.001 16H2ZM10 2C10.551 2 11 2.449 11 3C11 3.551 10.551 4 10 4C9.449 4 9 3.551 9 3C9 2.449 9.449 2 10 2ZM18 2H12.815C12.401 0.838 11.302 0 10 0C8.698 0 7.599 0.838 7.185 2H2C0.897 2 0 2.896 0 4V16C0 17.103 0.897 18 2 18H18C19.103 18 20 17.103 20 16V4C20 2.896 19.103 2 18 2Z"
+      />
+    </>
+  ),
+});
+export const Update = createIcon({
+  displayName: "Update",
+  viewBox: "0 0 24 22",
+  path: (
+    <>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M11.9982 10.1255L16.3362 7.52349C15.9812 7.20249 15.5152 7.00049 14.9982 7.00049H8.99816C8.48116 7.00049 8.01516 7.20249 7.66016 7.52349L11.9982 10.1255Z"
+      />
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12.386 11.644C12.267 11.715 12.134 11.75 12 11.75C11.866 11.75 11.733 11.715 11.615 11.644L7.012 8.88202C7.01 8.92302 7 8.96002 7 9.00002V13C7 14.105 7.896 15 9 15H15C16.105 15 17 14.105 17 13V9.00002C17 8.96002 16.991 8.92302 16.989 8.88202L12.386 11.644Z"
+      />
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M20.768 13.0005C19.855 17.0025 16.274 20.0005 12 20.0005C7.945 20.0005 4.511 17.3045 3.389 13.6115L6 11.0005H0V17.0005L1.827 15.1735C3.474 19.1745 7.412 22.0005 12 22.0005C17.382 22.0005 21.865 18.1125 22.809 13.0005H20.768Z"
+      />
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M22.1734 6.82761C20.5264 2.82761 16.5884 0.000610352 12.0004 0.000610352C6.61841 0.000610352 2.13541 3.88861 1.19141 9.00061H3.23241C4.14541 4.99761 7.72641 2.00061 12.0004 2.00061C16.0554 2.00061 19.4894 4.69661 20.6114 8.38961L18.0004 11.0006H24.0004V5.00061L22.1734 6.82761Z"
+      />
+    </>
+  ),
+});
+export const Support = createIcon({
+  displayName: "Support",
+  viewBox: "0 0 24 24",
+  path: (
+    <>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2 6.00049V18.0005H6V20.0005L8.667 18.0005H18V6.00049H2ZM4 24.0005V20.0005H2C0.897 20.0005 0 19.1035 0 18.0005V6.00049C0 4.89749 0.897 4.00049 2 4.00049H18C19.103 4.00049 20 4.89749 20 6.00049V18.0005C20 19.1035 19.103 20.0005 18 20.0005H9.333L4 24.0005Z"
+      />
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M15 14C14.848 14 14.694 13.965 14.553 13.895C14.214 13.726 14 13.379 14 13V11H13V9H15C15.552 9 16 9.448 16 10V11L18.4 9.2C18.573 9.07 18.784 9 19 9H22V2H12V5H10V2C10 0.896 10.897 0 12 0H22C23.103 0 24 0.896 24 2V9C24 10.103 23.103 11 22 11H19.333L15.6 13.8C15.423 13.932 15.212 14 15 14Z"
+      />
+    </>
+  ),
+});
+
 
 export const document = createIcon({
   displayName: 'document',
@@ -899,6 +990,22 @@ export const Resources = createIcon({
     />
   ),
 });
+
+export const locationMarker = createIcon({
+  displayName: 'locationMarker',
+  viewBox: '0 0 20 20',
+  path: (
+    <path
+      width='24'
+      height='24'
+      fillRule='evenodd'
+      clipRule='evenodd'
+      d='M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z'
+      fill='currentColor'
+    />
+  ),
+});
+
 
 export const Guide = createIcon({
   displayName: 'Guide',
