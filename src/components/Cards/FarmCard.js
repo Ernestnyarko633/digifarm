@@ -49,7 +49,7 @@ const FarmCard = ({
               <Image src={image} />
             </Avatar>
             <Box ml={2}>
-              <Heading as="h6" fontSize={25}>
+              <Heading as="h6" fontSize={{xs: 18, md: 25}}>
                 {name || "Task of the day"}
               </Heading>
               <Text fontSize="xs" color="#9b9b9b" mt={{ md: -2 }}>
