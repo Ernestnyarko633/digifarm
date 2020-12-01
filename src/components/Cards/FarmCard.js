@@ -1,12 +1,9 @@
 import React from "react";
 import {
   Box,
-  Button,
   Divider,
   Heading,
   Flex,
-  ListItem,
-  List,
   Avatar,
   Text,
   Image,
