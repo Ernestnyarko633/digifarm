@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Text } from '@chakra-ui/core';
 
-const Tab = ({ activeTab, label, onClick }) => {
+const Tab = ({ activeTab, label, onClick, width=64 }) => {
   const handleClick = () => {
     onClick(label);
   };
   return (
     <Box
       as='li'
-      w={64}
+      w={width}
       textAlign='center'
       py={4}
+      mt={14}
       cursor='pointer'
       onClick={handleClick}
       bg='white'

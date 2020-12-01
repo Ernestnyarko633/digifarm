@@ -6,14 +6,14 @@ import { motion } from 'framer-motion';
 
 const MotionBox = motion.custom(Box);
 
-const Tabs = ({ children, width, borderWidth, px, pt }) => {
+const Tabs = ({ children, width, borderWidth, px, pt, display ,boxWidth=130,mt, direction='column'}) => {
   const [activeTab, setActiveTab] = React.useState(children[0].props.label);
 
   const handleClickTabItem = React.useCallback((tab) => setActiveTab(tab), []);
 
   return (
-    <Flex>
-      <Box as='ol' listStyleType='none' w={width} mx='auto'>
+    <Flex direction={direction} mt={mt}> 
+      <Box display={display} as='ol' listStyleType='none' w={width} mx='auto'>
         {children.map((child) => {
           const { label } = child.props;
 
@@ -31,7 +31,7 @@ const Tabs = ({ children, width, borderWidth, px, pt }) => {
       <MotionBox
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}
-        w={140}
+        w={boxWidth}
         mx='auto'
         px={px || 16}
         py={10}

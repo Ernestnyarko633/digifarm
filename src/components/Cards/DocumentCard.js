@@ -20,15 +20,12 @@ const DocumentCard = ({ title,description, link}) => {
 
     return(
             <Box w={64}>
-                <Text textAlign='center' mb={3} fontFamily='heading' fontWeight={200} fontSize='lg'>
-                    {title} 
-                </Text>
-
+              
                 <Flex 
                   align='center'
                   justify='center'
                   direction='column'
-                  bg='white'
+                  bg='cf.400'
                   rounded='md'
                   w={64}
                   h={64}
