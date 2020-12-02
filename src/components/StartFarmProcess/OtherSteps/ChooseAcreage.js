@@ -1,30 +1,61 @@
-import React from 'react'
-import { Box, Grid, Stack, Heading, Divider, Select, Button, Text, Radio, Input} from '@chakra-ui/core';
-import GoogleMapReact from 'google-map-react';
+import React, { useState, useEffect} from 'react'
+import { Box, Grid, Stack, Heading, Divider, Select, Button, Text, Radio, Input, HStack} from '@chakra-ui/core';
 
+// google-maps configuration
+import GoogleMapReact from 'google-map-react';
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const handleApiLoaded = (map, maps) => {
     // use map and maps objects
 };
+import ReactMapGL from 'react-map-gl';
+import data from '../OtherSteps/data.geojson';
 const ChooseAcreage = () => {
-    
+
+    const [viewport, setViewport] = useState({
+        latitude: 9.7267833,
+        longitude: -122.41669,
+        width: "36vw",
+        height: "70vh",
+        zoom: 10
+      });
+
+
     return (
-       
             <Grid templateColumns="repeat(2, 1fr)" gap={6} padding={10}>
                 <Box>
-                <GoogleMapReact
-                    bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API }}
-                    defaultZoom={8}
-                    defaultCenter={{ lat: -34.397, lng: 150.644 }}
-                    yesIWantToUseGoogleMapApiInternals
-                    onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-                    >
-                    <AnyReactComponent
-                        lat={59.955413}
-                        lng={30.337844}
-                        text="My Marker"
-                    />
-                    </GoogleMapReact>
+                    <ReactMapGL
+                        {...viewport}
+                        latitude={9.7267833} 
+                        longitude={-0.49975} 
+                        zoom={10}
+                        mapboxApiAccessToken='pk.eyJ1Ijoia25pZ2h0c2hlbGwzMDEiLCJhIjoiY2l6dmVtbWMyMDAwZTJxcGZ5ajBseTE1OSJ9.C099DGKt-Xv90HMAuOGQaw'
+                        onViewportChange={viewport => {
+                            setViewport(viewport);
+                          }}
+                        >
+                    </ReactMapGL>
+
+            
+                    <Box textAlign="center" paddingTop="20px">
+                        <Heading as="h6" size="xs">
+                            <Text>What is included in this farm</Text>
+                        </Heading>
+                        <HStack spacing="24px">
+                            <Box>
+                                Icon 
+                                <Text>Farm Updates</Text>
+                            </Box>
+                            <Box>
+                                Icon
+                                <Text>Support</Text>
+                            </Box>
+                            <Box>
+                                Icon
+                                <Text>Schduled farm visits</Text>
+                            </Box>
+                        </HStack>
+
+                    </Box>
                 </Box>
                 <Box>
                     <Heading as="h6" size="xs" paddingBottom="4">
@@ -51,7 +82,7 @@ const ChooseAcreage = () => {
                                 <option value="option1">Option 1</option>
                                 <option value="option1">Option 1</option>
                             </Select>
-                            <Text>
+                            <Text marginLeft="10">
                                 $ 750.000
                             </Text>
                         </Grid>
