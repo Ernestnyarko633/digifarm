@@ -21,16 +21,16 @@ const FarmDetails = ({ handleNext }) => (
       }}
     >
       <AboutFarm />
+      <Box my={10}>
+        <Button
+          btntitle='Start this farm'
+          w={80}
+          h={14}
+          fontSize='md'
+          onClick={handleNext}
+        />
+      </Box>
     </GridItem>
-    <Box pos='absolute' bottom={3} right={14} zIndex={10}>
-      <Button
-        btntitle='Start this farm'
-        w={80}
-        h={14}
-        fontSize='md'
-        onClick={handleNext}
-      />
-    </Box>
   </Grid>
 );
 

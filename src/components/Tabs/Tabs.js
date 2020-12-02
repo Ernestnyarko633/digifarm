@@ -33,7 +33,7 @@ const Tabs = ({ children, width, borderWidth, px, pt }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}
         w={{ md: 140 }}
-        h={{ md: 125 }}
+        h={{ md: 122 }}
         mx='auto'
         // px={px || 16}
         // py={10}
