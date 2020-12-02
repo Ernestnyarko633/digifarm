@@ -5,13 +5,15 @@ import Receipt from 'assets/images/Receipt.svg'
 import Contract from 'assets/images/Contract.svg'
 import {arrowDown} from 'theme/Icons'
 
-const DocumentCard = ({ title,description, link}) => {
+const DocumentCard = ({ title,description, link, mt }) => {
 
     const images = (image) => {
         switch(image){
-            case 'Receipts' :
+            case 'Receipt' :
                 return Receipt
-            case 'Contracts' :
+            case 'Contract' :
+                return Contract
+            case 'Invoice':
                 return Contract
             default : 
             return null
@@ -19,17 +21,21 @@ const DocumentCard = ({ title,description, link}) => {
     }
 
     return(
-            <Box w={64}>
-              
+            <Box w={60} mt={mt} p={5}>
+              <Box>
+              <Text textAlign='center' mb={4} fontWeight={900} fontFamily='heading' fontSize='lg'>
+                {title} 
+            </Text>
+              </Box>
                 <Flex 
                   align='center'
                   justify='center'
                   direction='column'
                   bg='cf.400'
                   rounded='md'
-                  w={64}
-                  h={64}
-                  p={6}
+                  w={60}
+                  h={60}
+                  p={1}
                   shadow='sm'
                   pos='relative'
                 >
@@ -49,12 +55,12 @@ const DocumentCard = ({ title,description, link}) => {
                         boxShadow='lg'
                         aria-labelledby='download button'
                         >
-                            <Icon as={arrowDown}/>
+                            <Icon as={arrowDown} bg='white' rounded='lg' color='cf.400' pl='1'/>
                         </Flex>
                     </Link>
                     
                     <Image src={images(title)} />
-                    <Text fontSize='sm' mt={2} textAlign='center'>
+                    <Text fontSize='sm' mt={2} color='white' textAlign='center'>
                     {description}
                     </Text>
                 </Flex>

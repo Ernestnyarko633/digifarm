@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const MotionBox = motion.custom(Box);
 
-const Tabs = ({ children, width, borderWidth, px, pt, display ,boxWidth=130,mt, direction='column'}) => {
+const Tabs = ({ children, width, borderWidth, px, pt, display ,boxWidth,mt, mx,direction='column'}) => {
   const [activeTab, setActiveTab] = React.useState(children[0].props.label);
 
   const handleClickTabItem = React.useCallback((tab) => setActiveTab(tab), []);
@@ -32,8 +32,8 @@ const Tabs = ({ children, width, borderWidth, px, pt, display ,boxWidth=130,mt, 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}
         w={boxWidth}
-        mx='auto'
-        px={px || 16}
+        mx={ mx || 'auto'}
+        px={px || 4}
         py={10}
         pt={pt}
         bg='white'
