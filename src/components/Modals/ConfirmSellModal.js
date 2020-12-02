@@ -111,6 +111,7 @@ const ConfirmSell = () => {
                   onClose();
                   toast({
                     position: "top-right",
+                    duration: 9000,
                     render: () => <Notification />,
                   });
                 }}

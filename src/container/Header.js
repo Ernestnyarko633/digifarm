@@ -22,7 +22,6 @@ const MotionBox = motion.custom(Box);
 
 const Header = () => {
   return (
-    // <Flex direction="column">
     <Flex
       as="header"
       gridArea="header"
@@ -122,8 +121,6 @@ const Header = () => {
         </Menu>
       </Flex>
     </Flex>
-    // <Notification />
-    // </Flex>
   );
 };
 
