@@ -8,7 +8,6 @@ import { LightTheme, BaseProvider } from "baseui";
 import App from "container/App";
 import { theme } from "theme/theme";
 import reportWebVitals from "./reportWebVitals";
-import { Notifications } from "react-push-notification";
 
 const engine = new Styletron();
 
@@ -17,7 +16,6 @@ ReactDOM.render(
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
         <App />
-        <Notifications />
       </BaseProvider>
     </StyletronProvider>
   </ChakraProvider>,
