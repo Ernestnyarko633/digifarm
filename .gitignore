@@ -24,4 +24,8 @@ cf_digital_farmer_dashboard.env
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
+.env
+=======
 yarn.lock
+>>>>>>> 68b9597e521a75e22bdc3b7980c173c284f806b5
