@@ -1,0 +1,89 @@
+import React, { useEffect, useState, useRef } from 'react'
+import PropTypes from 'prop-types'
+
+import { IoMdClose } from 'react-icons/io'
+import { Text } from '@chakra-ui/core'
+
+const Preview = ({
+  type,
+  fileData,
+  src,
+  alt,
+  className,
+  innerClassName,
+  style,
+  fieldName,
+  setFieldValue
+}) => {
+  const [loading, setLoading] = useState(false)
+  const [file, setFile] = useState(undefined)
+
+  const prevIFileRef = useRef()
+
+  useEffect(() => {
+    if (fileData && fileData !== prevIFileRef.current) {
+      prevIFileRef.current = fileData
+      setLoading(true)
+      const reader = new window.FileReader()
+      reader.onloadend = () => {
+        setLoading(false)
+        setFile(reader.result)
+      }
+      reader.readAsDataURL(fileData)
+    }
+  }, [fileData])
+
+  if (!fileData && !src) return null
+  if (loading) return <p>loading...</p>
+
+  const handleRemove = () => {
+    setFieldValue(fieldName, undefined)
+  }
+
+  return (
+    <div
+      className={`w-full bg-blue rounded shadow p-16 bg-cf-200 flex flex-col justify-center items-center relative ${className}`}
+    >
+      {type === 'image' ? (
+        <img
+          src={file || src}
+          alt={(fileData && fileData.name) || alt}
+          className={innerClassName}
+          style={{ style }}
+        />
+      ) : (
+        <iframe
+          width='100%'
+          src={file || src}
+          title={(fileData && fileData.name) || alt}
+          className={innerClassName}
+          style={{ style }}
+        />
+      )}
+      <div className='overlay hidden rounded'>
+        <div onClick={handleRemove}>
+          <div>
+            <IoMdClose size={20} />
+            <Text as='span' fontSize='small' fontWeight='bold'>
+              Remove
+            </Text>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+Preview.propTypes = {
+  type: PropTypes.string,
+  fieldName: PropTypes.string,
+  style: PropTypes.object,
+  fileData: PropTypes.any,
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  className: PropTypes.string,
+  innerClassName: PropTypes.string,
+  setFieldValue: PropTypes.func
+}
+
+export default Preview

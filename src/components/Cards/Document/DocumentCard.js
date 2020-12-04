@@ -1,13 +1,15 @@
 import React,{useState} from 'react'
 import PropTypes from 'prop-types'
-import {Box,Text,Flex,Icon, Link, Image, IconButton} from '@chakra-ui/core'
+import {Box,Text,Flex,Icon, Link, Image, useDisclosure} from '@chakra-ui/core'
 import Receipt from 'assets/images/Receipt.svg'
 import Contract from 'assets/images/Contract.svg'
 import {arrowDown} from 'theme/Icons'
+import DocumentPreview from './DocumentPreview'
 
 const DocumentCard = ({ title,description, link, mt }) => {
 
-    const [shown, setShown] = useState(false)
+    const {isOpen, onClose, onOpen} = useDisclosure()
+
 
     const images = (image) => {
         switch(image){
@@ -22,45 +24,15 @@ const DocumentCard = ({ title,description, link, mt }) => {
         }
     }
 
-    const previewModal = () => (
-        <Box
-            bg='white'
-            position='fixed'  
-            top='50%'
-            left='50%' 
-            transform = 'translate(-50%,-50%)'
-            m='auto'
-            height='500px'
-            width={{md: '80%'}}
-            zIndex= '9999px'
-            overflow = 'auto' 
-        >
-            <Box pos='relative'>
-                <Box pos='absolute' right={0} pr={{md: 6}}>
-                    <IconButton
-                    variantColor = '#3c9130'
-                    aria-label ='Close Preview'
-                    size = 'lg'
-                    icon ='close'
-                    onClick={()=> {
-                        setShown(false)
-                    }}
-                    />
-                </Box>
-                <iframe src={link + '#toolbar=0'} w='100%' h='500px'  />
-            </Box>
-        </Box>
-    )
 
     return(
-        <Box>
-            <a href={link}>
-                 <Box w={60} 
+        <Box w={60} 
                     mt={mt}  
                     as='button' 
-                    onClick={()=>setShown(true)} 
                     borderWidth={1} 
-                    rounded='md'>
+                    rounded='md'
+                    onClick={onOpen}>
+                <DocumentPreview isOpen={isOpen} onClose={onClose} link={link}/>
                 <Box>
                 <Text 
                     textAlign='center'  
@@ -98,7 +70,7 @@ const DocumentCard = ({ title,description, link, mt }) => {
                             color='white'
                             boxShadow='lg'
                             aria-labelledby='download button'
-                            onClick={(e)=> e.preventDefault() }
+                            click={(e)=> e.preventDefault() }
                         >
                             <Icon as={arrowDown} bg='white' rounded='lg' color='cf.400' pl='1'/>
                         </Flex>
@@ -108,11 +80,8 @@ const DocumentCard = ({ title,description, link, mt }) => {
                     <Text fontSize='sm' mt={2} color='white' textAlign='center'>
                         {description}
                     </Text>
-                    { shown && previewModal()}
                 </Flex>
             </Box>
-            </a>
-        </Box>
     )
 }
 
