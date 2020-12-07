@@ -1,7 +1,9 @@
-import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/core';
+import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import Button from 'components/Button';
 import React from 'react';
 import AboutFarmManager from './AboutFarmManager';
+import ChooseAcreage from './ChooseAcreage';
+import Contract from './Contract';
 import PaymentOption from './PaymentOption';
 
 const OtherSteps = ({ handlePrev }) => {
@@ -20,6 +22,10 @@ const OtherSteps = ({ handlePrev }) => {
       case 0:
         return <AboutFarmManager />;
       case 1:
+        return <ChooseAcreage />;
+      case 2:
+        return <Contract />;
+      case 3:
         return <PaymentOption />;
       default:
         return null;

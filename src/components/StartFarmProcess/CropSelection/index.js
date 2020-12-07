@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/core';
+import { Box, Heading } from '@chakra-ui/react';
 import Tabs from 'components/Tabs/Tabs';
 import React from 'react';
 import FarmDetails from './FarmDetails';

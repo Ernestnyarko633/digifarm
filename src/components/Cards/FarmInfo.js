@@ -1,4 +1,4 @@
-import { Heading, Text, Box, Flex } from '@chakra-ui/core';
+import { Heading, Text, Box, Flex } from '@chakra-ui/react';
 import { QuestionIcon } from '@chakra-ui/icons';
 import React from 'react';
 

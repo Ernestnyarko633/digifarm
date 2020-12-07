@@ -11,9 +11,8 @@ import {
   ListItem,
   Text,
   UnorderedList,
-} from '@chakra-ui/core';
-import { Button } from 'components';
-import { location, Support, Schedule, Update } from 'theme/Icons';
+} from '@chakra-ui/react';
+import { Support, Schedule, Update, location } from 'theme/Icons';
 import Prismic from 'prismic-javascript';
 //import { RichText, KeyText } from 'prismic-reactjs'
 
@@ -49,25 +48,30 @@ const AboutFarmManager = () => {
             src={require('../../../assets/images/ginger.png').default}
           />
         </Box>
-        <Box mt={10} pt={10} mb={-5} textAlign='center'>
-          <Heading pb={5} as='h5' size='md'>
+        <Flex
+          direction='column'
+          align='center'
+          justify='space-between'
+          mt={{ md: 20 }}
+        >
+          <Heading as='h6' fontSize='md' mb={3}>
             What is included in this farm
           </Heading>
-          <Flex align='center' justify='space-around' fontSize='xs'>
-            <Flex mx={5}>
+          <Flex justify='space-between' align='center' fontSize='sm'>
+            <Flex align='center'>
               <Icon as={Update} color='cf.400' boxSize={5} />
               <Text ml={1}>Farm Updates</Text>
             </Flex>
-            <Flex mx={5}>
+            <Flex align='center' mx={6}>
               <Icon as={Support} color='cf.400' boxSize={5} />
               <Text ml={1}>Support</Text>
             </Flex>
-            <Flex mx={5}>
+            <Flex align='center'>
               <Icon as={Schedule} color='cf.400' boxSize={5} />
               <Text ml={1}>Scheduled Farm Visits</Text>
             </Flex>
           </Flex>
-        </Box>
+        </Flex>
       </Box>
       <Box>
         <Box pt={10} px={20} bor>

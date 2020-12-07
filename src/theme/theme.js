@@ -1,4 +1,4 @@
-import { extendTheme } from '@chakra-ui/core';
+import { extendTheme } from '@chakra-ui/react';
 
 const breakpoints = ['30em', '48em', '62em', '80em'];
 // aliases

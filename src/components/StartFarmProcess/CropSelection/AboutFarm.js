@@ -7,7 +7,7 @@ import {
   Image,
   Progress,
   Text,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import React from 'react';
 import { BsInfoCircleFill } from 'react-icons/bs';
 import { MdLocationOn } from 'react-icons/md';

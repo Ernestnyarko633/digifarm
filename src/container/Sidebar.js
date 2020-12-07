@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Link, Text } from '@chakra-ui/core';
+import { Box, Flex, Icon, Link, Text } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import {
   farm,

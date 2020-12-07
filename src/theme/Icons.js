@@ -557,6 +557,7 @@ export const chevronRight = createIcon({
     />
   ),
 });
+
 export const Schedule = createIcon({
   displayName: 'Schedule',
   viewBox: '0 0 20 18',
@@ -987,6 +988,33 @@ export const Resources = createIcon({
       fillRule='evenodd'
       clipRule='evenodd'
       d='M17.0017 1.01L7.00172 1C5.90172 1 5.01172 1.9 5.01172 3V21C5.01172 22.1 5.90172 23 7.00172 23H17.0017C18.1017 23 19.0017 22.1 19.0017 21V3C19.0017 1.9 18.1017 1.01 17.0017 1.01ZM17.0017 19H7.00172V5H17.0017V19Z'
+      fill='currentColor'
+    />
+  ),
+});
+
+export const SelectArrows = createIcon({
+  displayName: 'SelectArrows',
+  viewBox: '0 0 24 24',
+  path: (
+    <path
+      d='M7 7l3-3 3 3m0 6l-3 3-3-3'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      fill='currentColor'
+    />
+  ),
+});
+
+export const Check = createIcon({
+  displayName: 'Check',
+  viewBox: '0 0 24 24',
+  path: (
+    <path
+      fillRule='evenodd'
+      d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+      clipRule='evenodd'
       fill='currentColor'
     />
   ),

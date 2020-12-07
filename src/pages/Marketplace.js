@@ -8,7 +8,7 @@ import {
   Spacer,
   Text,
   Flex,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import ArrowButton from '../components/Button/ArrowButton';
 import WarehouseCard from 'components/Cards/WarehouseCard';
 import BuyerCard from 'components/Cards/Buyer';

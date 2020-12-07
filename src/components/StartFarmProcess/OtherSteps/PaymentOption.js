@@ -8,14 +8,14 @@ import {
   Text,
   Grid,
   GridItem,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import FarmInfo from 'components/Cards/FarmInfo';
 import { Support, Schedule, Update } from 'theme/Icons';
 import PayOption from 'components/Cards/PayOption';
 import { useMutation } from 'react-query';
 import useAPI from 'context/apiContext';
-import visa from '../../../assets/images/startfarm/visa.png';
-import ginger from '../../../assets/images/startfarm/ginger.png';
+import visa from '../../../assets/images/visa.png';
+import ginger from '../../../assets/images/ginger.png';
 
 const PaymentOption = () => {
   const { payment } = useAPI();
@@ -48,7 +48,7 @@ const PaymentOption = () => {
 
         <Flex align='center' justify='space-between' mt={{ md: 20 }}>
           <Box textAlign='center' w={{ md: '100%' }} px={8}>
-            <Heading as='h6' fontSize='md'>
+            <Heading as='h6' fontSize='md' mb={3}>
               What is included in this farm
             </Heading>
             <Flex justify='space-between' align='center' fontSize='sm'>

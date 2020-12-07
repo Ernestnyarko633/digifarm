@@ -1,13 +1,19 @@
-import { Box, Grid, GridItem } from '@chakra-ui/core';
+import { Box, Grid, GridItem } from '@chakra-ui/react';
 import { Button } from 'components';
 import React from 'react';
 import AboutFarm from './AboutFarm';
-import FarmImage from './FarmImage';
+import SelectCrop from './SelectCrop';
+
+const crops = [
+  { id: 1, title: 'Ginger Farm', acres: '100' },
+  { id: 2, title: 'Soy bean Farm' },
+  { id: 3, title: 'Sweet Potato Farm' },
+];
 
 const FarmDetails = ({ handleNext }) => (
-  <Grid templateColumns={{ md: '35% 55%' }} gap={{ md: '10%' }}>
-    <GridItem p={{ md: 10 }}>
-      <FarmImage />
+  <Grid templateColumns={{ md: '45% 55%' }}>
+    <GridItem>
+      <SelectCrop crops={crops} />
     </GridItem>
     <GridItem
       overflowY='scroll'

@@ -1,4 +1,4 @@
-import { Button as ChakraButton } from '@chakra-ui/core';
+import { Button as ChakraButton } from '@chakra-ui/react';
 import React from 'react';
 
 const Button = ({

@@ -1,4 +1,4 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/core';
+import { Box, Heading, Image, Text } from '@chakra-ui/react';
 import React from 'react';
 import IllustrationImage from '../../assets/images/home/illustration.png';
 

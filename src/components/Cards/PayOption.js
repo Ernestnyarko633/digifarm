@@ -8,9 +8,9 @@ import {
   useDisclosure,
   Collapse,
   Icon,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
-import visa from '../../assets/images/startfarm/visa.png';
+import visa from '../../assets/images/visa.png';
 import BankDetails from './BankDetails';
 
 const PayOption = ({

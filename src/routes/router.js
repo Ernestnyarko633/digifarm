@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/core';
+import { Text } from '@chakra-ui/react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import React from 'react';
 import Pages from 'pages';

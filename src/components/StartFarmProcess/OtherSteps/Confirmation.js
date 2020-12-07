@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Image, Text, VStack } from '@chakra-ui/core';
+import { Box, Flex, Icon, Image, Text, VStack } from '@chakra-ui/react';
 import { Button } from 'components';
 import React from 'react';
 import { BsQuestionCircleFill } from 'react-icons/bs';

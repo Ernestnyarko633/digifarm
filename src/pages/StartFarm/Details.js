@@ -1,4 +1,4 @@
-import { Box, Flex, Image } from '@chakra-ui/core';
+import { Box, Flex, Image } from '@chakra-ui/react';
 import CropSelection from 'components/StartFarmProcess/CropSelection';
 import OtherSteps from 'components/StartFarmProcess/OtherSteps';
 import React from 'react';
