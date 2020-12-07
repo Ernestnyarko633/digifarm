@@ -10,11 +10,11 @@ import { BsBell, BsStar, BsPlus } from 'react-icons/bs';
 import Logo from '../assets/images/logo.png';
 
 const menuLinks = [
-  { name: 'Profile', icon: FiUser, link: '/profile' },
-  { name: 'History', icon: BiHistory, link: '/history' },
-  { name: 'Settings', icon: BiCog, link: '/settings' },
-  { name: 'Help Center', icon: BiSupport, link: '/help' },
-  { name: 'Log out', icon: HiOutlineLogout },
+  { name: "Profile", icon: FiUser, link: "/profile" },
+  { name: "History", icon: BiHistory, link: "/history" },
+  { name: "Settings", icon: BiCog, link: "/settings" },
+  { name: "Help Center", icon: BiSupport, link: "/help" },
+  { name: "Log out", icon: HiOutlineLogout },
 ];
 
 const MotionBox = motion.custom(Box);

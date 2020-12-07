@@ -1,13 +1,12 @@
-import React from 'react';
 import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
   Button,
   Box,
   Text,
@@ -18,6 +17,7 @@ import {
 
 const ConfirmSell = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const toast = useToast();
 
   return (
     <>

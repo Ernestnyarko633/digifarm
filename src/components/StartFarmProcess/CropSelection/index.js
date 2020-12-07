@@ -14,16 +14,16 @@ const CropSelection = ({ handleNext }) => {
 
       <Box>
         <Tabs>
-          <Box label='Top-selling farm'>
+          <Box label="Top-selling farm">
             <FarmDetails handleNext={handleNext} />
           </Box>
-          <Box label='Grains & Cereals'>
+          <Box label="Grains & Cereals">
             <FarmDetails handleNext={handleNext} />
           </Box>
-          <Box label='Roots & Tubers'>
+          <Box label="Roots & Tubers">
             <FarmDetails handleNext={handleNext} />
           </Box>
-          <Box label='Vegetables & Spices'>
+          <Box label="Vegetables & Spices">
             <FarmDetails handleNext={handleNext} />
           </Box>
         </Tabs>
