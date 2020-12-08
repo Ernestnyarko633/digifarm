@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
-import {Box, Grid, Flex} from '@chakra-ui/core'
+import {Box, Grid, Flex, Button} from '@chakra-ui/core'
+import Upload from 'components/Form/upload'
 import {Formik,Field} from 'formik'
 
 const data = [
@@ -44,8 +45,20 @@ const Document = () => {
                 <Box>
                     <Formik
                         initialValues={initialValues}
+                        onSubmit={onSubmit}
                     >
-
+                        {({handleSubmit,...rest})=> (
+                            <form onSubmit={handleSubmit}>
+                                <Field
+                                    component={Upload}
+                                    label='You can upload payment details'
+                                    accept='image/jpeg, image/jpg, application/pdf'
+                                    values={values.bank_transfer_receipt}
+                                    name='bank_transfer_receipt'
+                                />
+                
+                            </form>
+                        )}
                     </Formik>
                 </Box>
                 <Box pb={10} mx={6} > 
