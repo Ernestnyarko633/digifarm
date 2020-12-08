@@ -10,46 +10,35 @@ import {
   Link,
   Text,
 } from "@chakra-ui/core";
-
-
-
-import FarmCard from "../Cards/FarmCard";
+import CorporateIllustration from "../../assets/images/emptystate/corporate.png";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 const FarmsEmptyState = () => {
-  
-
   return (
     <Box bg="rgba(155, 155, 155, 0.1)">
-      <Box p={{ md: 8 }} mt={{ md: 20 }}>
-        <Box>
-          <Flex direction="row" w="100%">
-            <Box w="50%">
-              <Flex p={5} direction="column" w="100%">
-                <Box >
-                  <Heading as="h6" fontSize={18} letterSpacing={2}>
-                    {"Welcome to your farm board"}
-                  </Heading>
-                  <Text fontSize="xs" color="#9b9b9b" mt={{ md: -2 }}>
-                    {
-                      "Here's where you view, share and like all the news from your farm(s)"
-                    }
-                  </Text>
-                </Box>
-                <Flex position="absolute" bottom={250} w={"220px"}>
-                  <Text text>
-                    Gain points to increase your chances of getting stars
-                  </Text>
-                </Flex>
-              </Flex>
-            </Box>
-            <Box w="50%">
-              <FarmCard
-                minWidth="50%"
-                w={{ xs: "70%", md: "90%" }}
-                h={{ xs: "340px", md: "340px" }}
-              />
-            </Box>
-          </Flex>
+      <Box bg="rgba(155, 155, 155, 0.1)" p={{ md: 10 }} mt={{ md: 32 }}>
+        <Box textAlign="center">
+          <Heading as="h3" fontSize={{ md: "3xl" }} mt={{ md: 6 }} mb={4}>
+            You currently have no farm(s)
+          </Heading>
+          <Text>
+            Start a farm as an individual or a cooperative and earn long term
+            rewards
+          </Text>
+        </Box>
+
+        <Box my={{ md: 10 }} textAlign="center">
+          <Link _hover={{ textDecor: "none" }} color="cf.400" d="block" mb={4}>
+            Learn more <Icon as={MdKeyboardArrowRight} />
+          </Link>
+
+          <Button colorScheme="linear" rounded="30px" w={64} h={12} shadow="md">
+            Start a farm
+          </Button>
+        </Box>
+
+        <Box mx="auto" w={{md: "50%"}} my={{ md: 16 }}>
+          <Image src={CorporateIllustration} />
         </Box>
       </Box>
     </Box>

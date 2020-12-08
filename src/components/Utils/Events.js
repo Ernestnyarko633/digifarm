@@ -2,13 +2,13 @@ import React from "react";
 import { Box, Heading, Flex, Text } from "@chakra-ui/core";
 import AnnouncementCard from "../Cards/AnnouncementCard";
 
-const Annoucement = () => {
+const Events = () => {
   return (
     <Box>
       <Flex direction="column" p={3}>
         <Box>
           <Heading as="h6" fontSize={15}>
-            ANNOUNCEMENT
+            EVENTS
           </Heading>
         </Box>
         <Box mb={4}>
@@ -25,4 +25,4 @@ const Annoucement = () => {
   );
 };
 
-export default Annoucement;
+export default Events;

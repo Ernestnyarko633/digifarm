@@ -2,10 +2,8 @@ import { Box, Grid, GridItem } from "@chakra-ui/core";
 import PropTypes from "prop-types";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import Annoucement from "../components/Utils/Annoucement";
+import Events from "../components/Utils/Events";
 import Cooperatives from "../components/Utils/Cooperatives";
-
-
 import React, { Fragment } from "react";
 
 const Layout = ({
@@ -18,11 +16,11 @@ const Layout = ({
 }) => {
   const showRightSideContent = (value) => {
     switch (value) {
-      case "annoucement":
+      case "events":
         return (
           <Fragment>
             <Box>
-              <Annoucement />
+              <Events />
             </Box>
             <Box>
              <Cooperatives/>
