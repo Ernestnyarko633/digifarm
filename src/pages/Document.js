@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
 import {Box, Grid, Flex} from '@chakra-ui/core'
+import {Formik,Field} from 'formik'
 
 const data = [
     {
@@ -26,9 +27,27 @@ const data = [
 ]
 
 const Document = () => {
+
+    const initialValues = {
+        order_id: '5fcd57463ea90617aa45ae10',
+        bank_transfer_receipt:''
+    }
+
+    const onSubmit = ({values})=> {
+        console.log('hiii')
+        console.log(values)
+    }
+
     return (
         
             <Layout>
+                <Box>
+                    <Formik
+                        initialValues={initialValues}
+                    >
+
+                    </Formik>
+                </Box>
                 <Box pb={10} mx={6} > 
                         <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} gap={{ md: 1}} mt={10}>
                             {
