@@ -11,6 +11,7 @@ const Router = () => (
       <Route exact path='/startfarm' component={Pages.StartFarm} />
       <Route exact path='/startfarm/:id' component={Pages.StartFarmDetails} />
       <Route path='/marketplace' component={Pages.Marketplace} />
+      <Route path='/farms' component={Pages.FarmBoard} />
       <Route path='/notfound' component={Pages.NotFound} />
       <Redirect from='*' to='/404' />
     </Switch>

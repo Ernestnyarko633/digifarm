@@ -35,7 +35,7 @@ const AboutFarmManager = () => {
       }
     }
     fetchData()
-  }, [])
+  }, [Client])
 
   return (
     <Grid templateColumns='repeat(2, 1fr)'>
