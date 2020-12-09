@@ -49,7 +49,7 @@ const EventsCard = ({
                   <Image src={image} />
                 </Box>
               </Box>
-              <Box pb={10}>
+              <Box pb={4}>
                 <Heading as="h6" fontSize={"md"} color="white">
                   {"Soya Bean Farm"}
                 </Heading>

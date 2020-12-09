@@ -64,7 +64,7 @@ const HomeEmptyState = () => (
         <Heading as="h5" fontSize={{ md: '2xl' }}>
           Choose a crop to start farming
         </Heading>
-        <Flex align="center">
+        {/* <Flex align="center">
           <IconButton
             aria-label="Left Arrow"
             icon={<MdKeyboardArrowLeft />}
@@ -83,10 +83,10 @@ const HomeEmptyState = () => (
             colorScheme="linear"
             shadow="md"
           />
-        </Flex>
+        </Flex> */}
       </Flex>
 
-      <Flex>
+      {/* <Flex>
         {availableFarms.map((item) => (
           <CropCard
             title={item.title}
@@ -98,7 +98,7 @@ const HomeEmptyState = () => (
             mr={6}
           />
         ))}
-      </Flex>
+      </Flex> */}
     </Box>
 
     <Box bg="rgba(155, 155, 155, 0.1)" p={{ md: 10 }} mt={{ md: 32 }}>
