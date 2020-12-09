@@ -1,39 +1,35 @@
-import React from 'react';
-import { Flex, Box } from '@chakra-ui/react';
-import PropTypes from 'prop-types';
-import { motion } from 'framer-motion';
-import Tab from './Tab';
+import React from 'react'
+import { Flex, Box } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
+import { motion } from 'framer-motion'
+import Tab from './Tab'
 
-const MotionBox = motion.custom(Box);
-const MotionFlex = motion.custom(Flex);
+const MotionFlex = motion.custom(Flex)
 
 const Tabs = ({ children, width, borderWidth, px, pt }) => {
-  const [activeTab, setActiveTab] = React.useState(children[0].props.label);
+  const [ activeTab, setActiveTab ] = React.useState(children[0].props.label)
 
-  const handleClickTabItem = React.useCallback((tab) => setActiveTab(tab), []);
+  const handleClickTabItem = React.useCallback((tab) => setActiveTab(tab), [])
 
   return (
     <Flex>
       <Box as='ol' listStyleType='none' w={width} mx='auto'>
         {children.map((child) => {
-          const { label } = child.props;
+          const { label } = child.props
 
           return (
-            <Tab
-              activeTab={activeTab}
+            <Tab activeTab={activeTab}
               key={label}
               label={label}
-              onClick={handleClickTabItem}
-            />
-          );
+              onClick={handleClickTabItem} />
+          )
         })}
       </Box>
 
-      <MotionFlex
-        initial={{ opacity: 0 }}
+      <MotionFlex initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}
         w={{ md: 140 }}
-        h={{ md: 122 }}
+        h={{ md: 121 }}
         mx='auto'
         // px={px || 16}
         // py={10}
@@ -43,20 +39,19 @@ const Tabs = ({ children, width, borderWidth, px, pt }) => {
         pos='relative'
         borderWidth={borderWidth || 1}
         borderColor='gray.300'
-        rounded='md'
-      >
+        rounded='md'>
         {children.map((child) => {
-          if (child.props.label !== activeTab) return undefined;
-          return child.props.children;
+          if (child.props.label !== activeTab) return undefined
+          return child.props.children
         })}
       </MotionFlex>
     </Flex>
-  );
-};
+  )
+}
 
 Tabs.propTypes = {
   children: PropTypes.instanceOf(Array).isRequired,
-  width: PropTypes.any,
-};
+  width   : PropTypes.any,
+}
 
-export default Tabs;
+export default Tabs

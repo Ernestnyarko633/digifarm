@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
 const FarmBoard = () => (
-        <div>
-                <p>Farm Board</p>
-        </div>
-);
+  <div>
+    <p>Farm Board</p>
+  </div>
+)
 
-export default FarmBoard;
+export default FarmBoard

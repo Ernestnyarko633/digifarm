@@ -1,8 +1,8 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react'
-import { Button } from 'components'
-import CropSelectionCard from 'components/Cards/CropSelectionCard'
+import Button from 'components/Button'
+import AboutFarm from 'components/StartFarmProcess/CropSelection/AboutFarm'
 import React from 'react'
-import AboutFarm from './AboutFarm'
+import CropSelectionCard from './CropSelectionCard'
 
 const crops = [
   { id: 1, title: 'Ginger Farm', acres: '100' },
@@ -10,11 +10,14 @@ const crops = [
   { id: 3, title: 'Sweet Potato Farm' },
 ]
 
-const FarmDetails = ({ handleNext }) => {
+const CropCategorySelection = () => {
   const [ state, setState ] = React.useState('Ginger Farm')
 
   return (
-    <Grid templateColumns={{ md: '45% 55%' }} h={121}>
+    <Grid templateColumns={{ md: '45% 55%' }}
+      borderWidth={1}
+      borderColor='gray.300'
+      h={121}>
       <GridItem>
         {crops.map((item) => (
           <CropSelectionCard onClick={() => setState(item.title)}
@@ -36,15 +39,11 @@ const FarmDetails = ({ handleNext }) => {
           {crops.map((item) => state === item.title && <AboutFarm />)}
         </Box>
         <Box my={10}>
-          <Button btntitle='Start this farm'
-            w={80}
-            h={14}
-            fontSize='md'
-            onClick={handleNext} />
+          <Button btntitle='Start this farm' w={80} h={14} fontSize='md' />
         </Box>
       </GridItem>
     </Grid>
   )
 }
 
-export default FarmDetails
+export default CropCategorySelection

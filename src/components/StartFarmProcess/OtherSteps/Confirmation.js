@@ -1,20 +1,18 @@
-import { Box, Flex, Icon, Image, Text, VStack } from '@chakra-ui/react';
-import { Button } from 'components';
-import React from 'react';
-import { BsQuestionCircleFill } from 'react-icons/bs';
+import { Box, Flex, Icon, Image, Text, VStack } from '@chakra-ui/react'
+import { Button } from 'components'
+import React from 'react'
+import { BsQuestionCircleFill } from 'react-icons/bs'
 
-const saved = true;
+const saved = true
 
 const Confirmation = () => (
   <Flex>
     <Box width='80vh' textAlign='center' overflow='hidden'>
       <Flex>
-        <Image
-          src={require('../../../assets/images/payment.svg').default}
+        <Image src={require('../../../assets/images/payment.svg').default}
           w={300}
           mt='25%'
-          ml='25%'
-        />
+          ml='25%' />
       </Flex>
     </Box>
     <Box py={10} borderLeftWidth={1} borderLeftColor='gray.200' width='80vh'>
@@ -65,25 +63,21 @@ const Confirmation = () => (
         </VStack>
         <Box ml={330} mt={10}>
           {saved ? (
-            <Button
-              btntitle='Continue to my dashboard'
+            <Button btntitle='Continue to my dashboard'
               fontSize='md'
               px='130px'
-              py='26px'
-            />
+              py='26px' />
           ) : (
-            <Button
-              btntitle='Save and view receipt'
+            <Button btntitle='Save and view receipt'
               fontSize='md'
               px='130px'
               py='26px'
-              variant='outline'
-            />
+              variant='outline' />
           )}
         </Box>
       </Box>
     </Box>
   </Flex>
-);
+)
 
-export default Confirmation;
+export default Confirmation

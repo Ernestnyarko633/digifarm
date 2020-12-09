@@ -1,6 +1,6 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/react';
-import React from 'react';
-import IllustrationImage from '../../assets/images/home/illustration.png';
+import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import React from 'react'
+import IllustrationImage from '../../assets/images/home/illustration.png'
 
 const Greetings = () => (
   <Box pos='relative'>
@@ -12,6 +12,6 @@ const Greetings = () => (
       <Text>Get started by farming individually or with a group.</Text>
     </Box>
   </Box>
-);
+)
 
-export default Greetings;
+export default Greetings

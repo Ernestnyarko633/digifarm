@@ -1,22 +1,21 @@
-import { InfoIcon } from '@chakra-ui/icons';
-import { Box, Button, Heading, Icon, Stack } from '@chakra-ui/react';
+import { InfoIcon } from '@chakra-ui/icons'
+import { Box, Button, Heading, Icon, Stack } from '@chakra-ui/react'
+import React from 'react'
 
 const FormRadio = ({ state, onChange, icon, title, options, width }) => {
   const updateStateChange = (item) => {
-    onChange(item);
-  };
+    onChange(item)
+  }
 
   const Type = ({ children, ...rest }) => (
-    <Button
-      colorScheme={state.includes(children) ? 'cfButton' : 'gray'}
+    <Button colorScheme={state.includes(children) ? 'cfButton' : 'gray'}
       width={width || 16}
       rounded='md'
       onClick={() => updateStateChange(children)}
-      {...rest}
-    >
+      {...rest}>
       {children}
     </Button>
-  );
+  )
 
   return (
     <Box>
@@ -26,12 +25,12 @@ const FormRadio = ({ state, onChange, icon, title, options, width }) => {
         </Heading>
       )}
       <Stack isInline>
-        {options.map((item, index) => (
-          <Type key={index}>{item}</Type>
+        {options.map((item) => (
+          <Type key={item}>{item}</Type>
         ))}
       </Stack>
     </Box>
-  );
-};
+  )
+}
 
-export default FormRadio;
+export default FormRadio

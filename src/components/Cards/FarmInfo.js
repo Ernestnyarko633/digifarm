@@ -1,6 +1,6 @@
-import { Heading, Text, Box, Flex } from '@chakra-ui/react';
-import { QuestionIcon } from '@chakra-ui/icons';
-import React from 'react';
+import { Heading, Text, Box, Flex } from '@chakra-ui/react'
+import { QuestionIcon } from '@chakra-ui/icons'
+import React from 'react'
 
 const FarmInfo = () => (
   <Box as='table' w={108} m={4}>
@@ -43,6 +43,6 @@ const FarmInfo = () => (
       </Flex>
     </Box>
   </Box>
-);
+)
 
-export default FarmInfo;
+export default FarmInfo

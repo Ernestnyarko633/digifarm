@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Flex } from '@chakra-ui/react';
-import PropTypes from 'prop-types';
-import FormInput from './Input';
+import React from 'react'
+import { Box, Flex } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
+import FormInput from './Input'
 
 const ThirdPartyInput = ({
   name,
@@ -17,8 +17,7 @@ const ThirdPartyInput = ({
     switch (title) {
       case 'KPIs':
         return (
-          <FormInput
-            type='text'
+          <FormInput type='text'
             id={`${name}kpis`}
             name={`${name}kpis`}
             placeholder={label}
@@ -28,14 +27,12 @@ const ThirdPartyInput = ({
             error={errors && errors.kpis}
             touched={touched && touched.kpis}
             inputType
-            value={reference}
-          />
-        );
+            value={reference} />
+        )
       case 'Inputs':
         return (
           <Flex align='center' justify='space-between'>
-            <FormInput
-              type='text'
+            <FormInput type='text'
               id={`${name}item`}
               name={`${name}item`}
               placeholder='Item'
@@ -45,12 +42,10 @@ const ThirdPartyInput = ({
               error={errors && errors.item}
               touched={touched && touched.item}
               inputType
-              value={reference.item}
-            />
+              value={reference.item} />
 
             <Box ml={2}>
-              <FormInput
-                type='number'
+              <FormInput type='number'
                 width='90px'
                 id={`${name}quantity`}
                 name={`${name}quantity`}
@@ -61,26 +56,25 @@ const ThirdPartyInput = ({
                 error={errors && errors.quantity}
                 touched={touched && touched.quantity}
                 inputType
-                value={reference.quantity}
-              />
+                value={reference.quantity} />
             </Box>
           </Flex>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
-  return <Box>{getForm(title)}</Box>;
-};
+  return <Box>{getForm(title)}</Box>
+}
 
 ThirdPartyInput.propTypes = {
-  reference: PropTypes.any,
+  reference   : PropTypes.any,
   handleChange: PropTypes.func.isRequired,
-  handleBlur: PropTypes.func.isRequired,
-  errors: PropTypes.any,
-  touched: PropTypes.any,
-  name: PropTypes.string.isRequired,
-};
+  handleBlur  : PropTypes.func.isRequired,
+  errors      : PropTypes.any,
+  touched     : PropTypes.any,
+  name        : PropTypes.string.isRequired,
+}
 
-export default ThirdPartyInput;
+export default ThirdPartyInput

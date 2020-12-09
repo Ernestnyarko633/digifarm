@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, FormControl, FormLabel } from '@chakra-ui/react';
-import { Dropdown } from 'carbon-components-react';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, FormControl, FormLabel } from '@chakra-ui/react'
+import { Dropdown } from 'carbon-components-react'
 
 const FormDropdown = ({
   label,
@@ -19,27 +19,22 @@ const FormDropdown = ({
   ...props
 }) => (
   <Box mt={mt}>
-    <FormControl
-      isRequired
+    <FormControl isRequired
       bg={bg || 'cf.300'}
       w={width}
       pos='relative'
       pt={4}
       borderBottomWidth={1}
       borderBottomColor='cf.400'
-      mt={{ md: marginTop }}
-    >
-      <FormLabel
-        fontSize={{ md: fontSize || 'sm' }}
+      mt={{ md: marginTop }}>
+      <FormLabel fontSize={{ md: fontSize || 'sm' }}
         pos='absolute'
         px={{ md: 4 }}
         top={-2}
-        color='gray.600'
-      >
+        color='gray.600'>
         {label}
       </FormLabel>
-      <Dropdown
-        {...props}
+      <Dropdown {...props}
         id={id}
         name={id}
         items={items}
@@ -47,24 +42,23 @@ const FormDropdown = ({
         titleText={titleText}
         itemToString={mappedItem}
         onChange={onChange}
-        light
-      />
+        light />
     </FormControl>
   </Box>
-);
+)
 
 FormDropdown.propTypes = {
-  titleText: PropTypes.any,
-  label: PropTypes.any,
-  items: PropTypes.any,
-  mappedItem: PropTypes.any,
+  titleText  : PropTypes.any,
+  label      : PropTypes.any,
+  items      : PropTypes.any,
+  mappedItem : PropTypes.any,
   placeholder: PropTypes.any,
-  onChange: PropTypes.any,
-  marginTop: PropTypes.any,
-  bg: PropTypes.any,
-  mt: PropTypes.any,
-  fontSize: PropTypes.any,
-  id: PropTypes.any,
-};
+  onChange   : PropTypes.any,
+  marginTop  : PropTypes.any,
+  bg         : PropTypes.any,
+  mt         : PropTypes.any,
+  fontSize   : PropTypes.any,
+  id         : PropTypes.any,
+}
 
-export default FormDropdown;
+export default FormDropdown

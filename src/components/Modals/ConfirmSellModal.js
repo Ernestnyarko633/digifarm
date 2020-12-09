@@ -6,41 +6,36 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  useToast,
   Button,
   Box,
   Text,
   Heading,
   Flex,
-  Divider,
-} from '@chakra-ui/react';
+  Divider
+} from '@chakra-ui/react'
+import React from 'react'
 
 const ConfirmSell = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const toast = useToast();
+  const { isOpen, onClose, onOpen } = useDisclosure()
 
   return (
     <>
-      <Button
-        mt={4}
+      <Button mt={4}
         colorScheme='linear'
         rounded='30px'
         fontSize='xs'
         w={{ md: '150px' }}
-        onClick={onOpen}
-      >
+        onClick={onOpen}>
         Sell to buyer
       </Button>
-      <Modal
-        isOpen={isOpen}
+      <Modal isOpen={isOpen}
         onClose={onClose}
         mt={10}
         variant='outline'
         borderColor='black'
         borderWidth={5}
         colorScheme='white'
-        isCentered
-      >
+        isCentered>
         <ModalOverlay />
         <ModalContent>
           <Flex mt={2}>
@@ -79,27 +74,23 @@ const ConfirmSell = () => {
                 </Text>
               </Text>
             </Box>
-            <Text
-              fontSize={{ md: 'sm' }}
+            <Text fontSize={{ md: 'sm' }}
               pl={2}
               fontWeight='thin'
-              color='red.600'
-            >
+              color='red.600'>
               Are you sure you want to sell this crop? This action is
               irreversible{' '}
             </Text>
           </ModalBody>
           <ModalFooter>
             <Flex>
-              <Button
-                mr={5}
+              <Button mr={5}
                 onClick={onClose}
                 rounded='30px'
                 fontWeight='thin'
                 variant='outline'
                 borderColor='black'
-                w={{ md: '90px' }}
-              >
+                w={{ md: '90px' }}>
                 No
               </Button>
               <Button colorScheme='linear' rounded='30px' w={{ md: '90px' }}>
@@ -110,6 +101,6 @@ const ConfirmSell = () => {
         </ModalContent>
       </Modal>
     </>
-  );
-};
-export default ConfirmSell;
+  )
+}
+export default ConfirmSell

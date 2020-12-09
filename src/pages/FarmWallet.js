@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
 const FarmWallet = () => (
-        <div>
-                <p>Farm Wallet</p>
-        </div>
-);
+  <div>
+    <p>Farm Wallet</p>
+  </div>
+)
 
-export default FarmWallet;
+export default FarmWallet

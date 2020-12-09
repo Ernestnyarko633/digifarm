@@ -1,10 +1,11 @@
-import { APIProvider } from 'context/apiContext';
-import { BrowserRouter } from 'react-router-dom';
-import { ReactQueryDevtools } from 'react-query-devtools';
-import { QueryCache, ReactQueryCacheProvider } from 'react-query';
-import Router from 'routes/router';
+import { APIProvider } from 'context/apiContext'
+import { BrowserRouter } from 'react-router-dom'
+import { ReactQueryDevtools } from 'react-query-devtools'
+import { QueryCache, ReactQueryCacheProvider } from 'react-query'
+import Router from 'routes/router'
+import React from 'react'
 
-const queryCache = new QueryCache();
+const queryCache = new QueryCache()
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       </APIProvider>
       <ReactQueryDevtools initialIsOpen />
     </ReactQueryCacheProvider>
-  );
+  )
 }
 
-export default App;
+export default App

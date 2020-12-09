@@ -1,47 +1,40 @@
-import React from 'react';
-import { Box } from '@chakra-ui/react';
+import React from 'react'
+import { Box } from '@chakra-ui/react'
 import ReactMapGL, {
   Layer,
   Source,
   FullscreenControl,
   GeolocateControl,
   NavigationControl,
-  ScaleControl,
-} from 'react-map-gl';
-import { dataJS, layer } from 'assets/data/mapdata';
+  ScaleControl
+} from 'react-map-gl'
+import { dataJS, layer } from 'assets/data/mapdata'
 
 const Map = () => {
-  const [viewport, setViewport] = React.useState({
-    latitude: 6.840278,
+  const [ viewport, setViewport ] = React.useState({
+    latitude : 6.840278,
     longitude: -0.398889,
-    width: '36vw',
-    height: '70vh',
-    zoom: 15.9,
-  });
-  const sourceRef = React.useRef(null);
+    width    : '36vw',
+    height   : '70vh',
+    zoom     : 15.9,
+  })
+  const sourceRef = React.useRef(null)
 
   return (
-    <ReactMapGL
-      {...viewport}
+    <ReactMapGL {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API}
       onViewportChange={(viewport) => {
-        setViewport(viewport);
-      }}
-    >
+        setViewport(viewport)
+      }}>
       <Box style={{ position: 'absolute', bottom: 20, right: 20 }}>
-        <ScaleControl maxWidth={100} unit={'metric'} />
+        <ScaleControl maxWidth={100} unit='metric' />
       </Box>
       <Box style={{ position: 'absolute', top: 5, left: 5 }}>
-        <GeolocateControl
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
-        />
+        <GeolocateControl positionOptions={{ enableHighAccuracy: true }}
+          trackUserLocation />
       </Box>
       <Box style={{ position: 'absolute', top: 35, left: 5 }}>
-        <FullscreenControl
-        // container={document.querySelector('body')}
-        // pass a map container insted of body
-        />
+        <FullscreenControl />
       </Box>
       <Box style={{ position: 'absolute', top: 65, left: 5 }}>
         <NavigationControl />
@@ -50,7 +43,7 @@ const Map = () => {
         <Layer {...layer} />
       </Source>
     </ReactMapGL>
-  );
-};
+  )
+}
 
-export default Map;
+export default Map

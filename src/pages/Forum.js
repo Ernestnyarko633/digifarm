@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
 const Forum = () => (
-        <div>
-                <p>Forum</p>
-        </div>
-);
+  <div>
+    <p>Forum</p>
+  </div>
+)
 
-export default Forum;
+export default Forum

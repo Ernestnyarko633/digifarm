@@ -1,6 +1,6 @@
-import React from 'react';
-import { PhoneInput, COUNTRIES } from 'baseui/phone-input';
-import { FormControl, FormLabel } from '@chakra-ui/react';
+import React from 'react'
+import { PhoneInput, COUNTRIES } from 'baseui/phone-input'
+import { FormControl, FormLabel } from '@chakra-ui/react'
 
 const BasePhone = ({
   setFieldValue,
@@ -13,29 +13,26 @@ const BasePhone = ({
   touched,
   placeholder,
 }) => (
-  <FormControl
-    bg='cf.300'
+  <FormControl bg='cf.300'
     pos='relative'
     pt={2}
     borderBottomWidth={1}
-    borderBottomColor='cf.400'
-  >
+    borderBottomColor='cf.400'>
     <FormLabel fontSize='xs' pos='absolute' left={3} top={-1} color='gray.600'>
       Phone number
     </FormLabel>
-    <PhoneInput
-      name={phoneNumber}
+    <PhoneInput name={phoneNumber}
       country={countryList || COUNTRIES.GH}
       placeholder={placeholder}
       onCountryChange={({ option }) => {
-        setFieldValue(country, option);
-        setFieldTouched(country, true);
+        setFieldValue(country, option)
+        setFieldTouched(country, true)
       }}
       text={value}
       error={error}
       onTextChange={(e) => {
-        setFieldValue(phoneNumber, e.currentTarget.value);
-        setFieldTouched(phoneNumber, true);
+        setFieldValue(phoneNumber, e.currentTarget.value)
+        setFieldTouched(phoneNumber, true)
       }}
       overrides={{
         Input: {
@@ -49,9 +46,8 @@ const BasePhone = ({
             },
           },
         },
-      }}
-    />
+      }} />
   </FormControl>
-);
+)
 
-export default BasePhone;
+export default BasePhone

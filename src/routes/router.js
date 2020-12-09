@@ -1,7 +1,7 @@
-import { Text } from '@chakra-ui/react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import React from 'react';
-import Pages from 'pages';
+import { Text } from '@chakra-ui/react'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import React from 'react'
+import Pages from 'pages'
 
 const Router = () => (
   <React.Suspense fallback={<Text>Loading....</Text>}>
@@ -15,6 +15,6 @@ const Router = () => (
       <Redirect from='*' to='/404' />
     </Switch>
   </React.Suspense>
-);
+)
 
-export default Router;
+export default Router

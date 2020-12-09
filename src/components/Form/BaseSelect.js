@@ -1,7 +1,6 @@
-import { Select } from 'baseui/select';
-import React from 'react';
-import _get from 'lodash/get';
-import { Box, FormLabel } from '@chakra-ui/react';
+import { Select } from 'baseui/select'
+import React from 'react'
+import { Box, FormLabel } from '@chakra-ui/react'
 
 const BaseSelect = ({
   options,
@@ -19,34 +18,34 @@ const BaseSelect = ({
   title,
   width,
 }) => {
-  const isArrayOfObj = !!(valueKey && labelKey);
+  const isArrayOfObj = !!(valueKey && labelKey)
   const getValue = (value) =>
-    Object.keys(value).map((key) => ({ id: value[key], label: value[key] }));
+    Object.keys(value).map((key) => ({ id: value[key], label: value[key] }))
 
   const getOptions = (options) => {
     if (isArrayOfObj) {
-      return options;
+      return options
     }
     return Object.keys(options).map((key) => ({
-      id: options[key],
+      id   : options[key],
       label: options[key],
-    }));
-  };
+    }))
+  }
 
   // const error = _get(errors, name);
   // const touch = _get(touched, name);
-  const inputValue = getValue(value);
+  const inputValue = getValue(value)
 
   const handleChange = (value) => {
-    let item;
+    let item
     // setFieldTouched(fieldName, true);
     if (!multi) {
-      item = value ? value.value.map((e) => e.label) : '';
+      item = value ? value.value.map((e) => e.label) : ''
     } else {
-      item = value ? value.value.map((e) => e.label) : [];
+      item = value ? value.value.map((e) => e.label) : []
     }
-    setFieldValue(name, item);
-  };
+    setFieldValue(name, item)
+  }
 
   // const handleBlur = () => {
   //   if (value) {
@@ -57,17 +56,14 @@ const BaseSelect = ({
 
   return (
     <Box bg='cf.100' pos='relative' borderBottom='2px solid #3c9130'>
-      <FormLabel
-        pos='absolute'
+      <FormLabel pos='absolute'
         top={-1}
         left={3}
         fontSize='xs'
-        color='gray.600'
-      >
+        color='gray.600'>
         {title}
       </FormLabel>
-      <Select
-        options={getOptions(options)}
+      <Select options={getOptions(options)}
         value={inputValue}
         multi={multi}
         name={name}
@@ -77,16 +73,16 @@ const BaseSelect = ({
         overrides={{
           Root: {
             style: {
-              marginTop: '7px',
+              marginTop  : '7px',
               borderColor: '#3c9130',
-              fontSize: '14px',
-              width: width,
+              fontSize   : '14px',
+              width,
             },
           },
           ControlContainer: {
             style: {
-              outline: 'none',
-              borderWidth: '0px',
+              outline        : 'none',
+              borderWidth    : '0px',
               backgroundColor: 'transparent',
             },
           },
@@ -102,14 +98,13 @@ const BaseSelect = ({
           },
           Tag: {
             style: {
-              color: '#fff',
+              color          : '#fff',
               backgroundColor: '#3c9130',
             },
           },
-        }}
-      />
+        }} />
     </Box>
-  );
-};
+  )
+}
 
-export default BaseSelect;
+export default BaseSelect

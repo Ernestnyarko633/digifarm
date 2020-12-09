@@ -1,5 +1,6 @@
-import { Button as ChakraButton } from '@chakra-ui/react';
-import React from 'react';
+import { Button as ChakraButton } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const Button = ({
   btntitle,
@@ -9,17 +10,24 @@ const Button = ({
   fontSize = 'xs',
   ...rest
 }) => (
-  <ChakraButton
-    colorScheme={colorScheme}
+  <ChakraButton colorScheme={colorScheme}
     rounded={rounded}
     fontSize={fontSize}
     w={width}
     fontWeight={400}
     shadow='lg'
-    {...rest}
-  >
+    {...rest}>
     {btntitle}
   </ChakraButton>
-);
+)
 
-export default Button;
+Button.propTypes = {
+  btntitle   : PropTypes.string,
+  rounded    : PropTypes.any,
+  colorScheme: PropTypes.string,
+  width      : PropTypes.any,
+  fontSize   : PropTypes.any,
+  rest       : PropTypes.any,
+}
+
+export default Button
