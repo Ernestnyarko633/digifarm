@@ -78,7 +78,7 @@ const AboutFarm = () => (
       </Box>
     </Box>
 
-    <Box>
+    <Box textAlign='left'>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
       maiores, perferendis dolores nulla iusto voluptatum earum enim esse, fuga
       ut maxime quo eaque obcaecati distinctio quisquam. Similique natus
