@@ -3,7 +3,7 @@ import Layout from "container/Layout";
 import FarmsEmptyState from "components/EmptyStates/FarmsEmptyState";
 import Greetings from "components/Utils/FarmBoardGreetings";
 
-const FarmBoard = () => {
+const FarmBoard = ({}) => {
   return (
     <Layout showRightSideContentType="events">
       <Greetings />
@@ -11,5 +11,4 @@ const FarmBoard = () => {
     </Layout>
   );
 };
-
 export default FarmBoard;

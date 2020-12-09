@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Heading, Flex, Text } from "@chakra-ui/core";
-import AnnouncementCard from "../Cards/AnnouncementCard";
+import EventsCard from "../Cards/EventsCard";
 
 const Events = () => {
   return (
@@ -18,7 +18,7 @@ const Events = () => {
           </Text>
         </Box>
         <Box>
-            <AnnouncementCard/>
+            <EventsCard/>
         </Box>
       </Flex>
     </Box>
