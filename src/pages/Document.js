@@ -34,20 +34,24 @@ const Document = () => {
         bank_transfer_receipt:''
     }
 
-    const onSubmit = ({values})=> {
-        console.log('hiii')
-        console.log(values)
+    const onSubmit = async (values)=> {
+        try {
+            console.log('hiii')
+            console.log(values)
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
     return (
-        
             <Layout>
-                <Box>
+                <Box mt='120px' w={{md: '400px'}} ml={10}>
                     <Formik
                         initialValues={initialValues}
                         onSubmit={onSubmit}
                     >
-                        {({handleSubmit,...rest})=> (
+                        {({handleSubmit,values,...rest})=> (
                             <form onSubmit={handleSubmit}>
                                 <Field
                                     component={Upload}
@@ -78,7 +82,6 @@ const Document = () => {
                         </Grid>
                     </Box>
         </Layout>
-            
     )
 }
 

@@ -6,6 +6,7 @@ import Pages from 'pages';
 const Router = () => (
   <React.Suspense fallback={<Text>Loading....</Text>}>
     <Switch>
+      <Redirect exact from='/' to='/dashboard' />
       <Route exact path='/dashboard' component={Pages.Dashboard} />
       <Redirect exact from='/' to='/dashboard' />
       <Route exact path='/startfarm' component={Pages.StartFarm} />
