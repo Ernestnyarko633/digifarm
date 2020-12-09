@@ -64,6 +64,7 @@ export const theme = extendTheme({
     },
   },
   space: {
+    5: '1.5rem',
     14: '3.5rem',
     60: '15rem',
     66: '17.5rem',

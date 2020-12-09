@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
+import Layout from "container/Layout";
+import FarmsEmptyState from "components/EmptyStates/FarmsEmptyState";
+import Greetings from "components/Utils/FarmBoardGreetings";
 
-const FarmBoard = () => {
+const FarmBoard = ({}) => {
   return (
-    <div>
-      <p>Farm Board</p>
-    </div>
+    <Layout showRightSideContentType="events">
+      <Greetings />
+      <FarmsEmptyState />
+    </Layout>
   );
 };
-
 export default FarmBoard;
