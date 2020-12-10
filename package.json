@@ -20,6 +20,7 @@
     "carbon-components-react": "7.24.0",
     "carbon-icons": "7.0.7",
     "framer-motion": "^2.9.5",
+    "immer": "^8.0.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
     "node-sass": "5.0.0",
@@ -37,6 +38,7 @@
     "react-scripts": "4.0.1",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7",
+    "use-immer": "^0.4.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

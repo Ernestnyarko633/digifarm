@@ -18,6 +18,10 @@ const OtherSteps = ({ handlePrev }) => {
     setStep((prevActiveStep) => prevActiveStep - 1)
   }
 
+  function goHome() {
+    return (window.location.pathname = '/dashboard')
+  }
+
   const getSteps = (value) => {
     switch (value) {
       case 0:
@@ -74,13 +78,13 @@ const OtherSteps = ({ handlePrev }) => {
           fontSize='md'
           h={12}
           onClick={step <= 0 ? handlePrev : handleBack} />
-        <Button btntitle='Next'
+        <Button btntitle={step === 4 ? 'Continue to my Dashboard' : 'Next'}
           ml={6}
-          width={56}
+          width={step === 4 ? 70 : 56}
           fontSize='lg'
           md
           h={12}
-          onClick={handleNext} />
+          onClick={step === 4 ? goHome : handleNext} />
       </Flex>
     </Box>
   )

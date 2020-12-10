@@ -2,8 +2,8 @@ import { Heading, Text, Box, Flex } from '@chakra-ui/react'
 import { QuestionIcon } from '@chakra-ui/icons'
 import React from 'react'
 
-const FarmInfo = () => (
-  <Box as='table' w={108} m={4}>
+const FarmInfo = ({ width = 108, margin = 4 }) => (
+  <Box as='table' w={width} m={margin}>
     <Box as='tr'>
       <Flex as='td' align='center' justify='space-between' pb={2}>
         <Heading as='h3' fontSize='xl'>
