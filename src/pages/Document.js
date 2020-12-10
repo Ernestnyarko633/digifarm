@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
 import {Box, Grid, Flex, Button} from '@chakra-ui/core'
 import Upload from 'components/Form/upload'
 import {Formik,Field} from 'formik'
+import { PaymentContext } from 'context/paymentContext'
 
 const data = [
     {
@@ -29,6 +30,8 @@ const data = [
 
 const Document = () => {
 
+    const {uploadPaymentDetails} = useContext(PaymentContext)
+
     const initialValues = {
         order_id: '5fcd57463ea90617aa45ae10',
         bank_transfer_receipt:''
@@ -38,6 +41,14 @@ const Document = () => {
         try {
             console.log('hiii')
             console.log(values)
+            const formData = new FormData()
+
+            Object.keys(values).forEach(key => {
+                 formData.append(key, values[key])
+              })
+            
+              await uploadPaymentDetails(formData)
+        
         } catch (error) {
             console.log(error)
         }
@@ -56,10 +67,17 @@ const Document = () => {
                                 <Field
                                     component={Upload}
                                     label='You can upload payment details'
-                                    accept='image/jpeg, image/jpg, application/pdf'
+                                    accept='image/jpeg, image/jpg'
                                     values={values.bank_transfer_receipt}
                                     name='bank_transfer_receipt'
                                 />
+                                <Button
+                                type='submit'
+                                colorScheme='linear'
+                                width='20%'
+                                >
+                                    Submit
+                                </Button>
                 
                             </form>
                         )}

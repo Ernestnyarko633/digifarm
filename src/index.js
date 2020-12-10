@@ -18,9 +18,9 @@ ReactDOM.render(
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
         <PaymentContextProvider>
-        <AuthContextProvider>
-            <App />
-        </AuthContextProvider>
+          <AuthContextProvider>
+              <App />
+          </AuthContextProvider>
         </PaymentContextProvider>
       </BaseProvider>
     </StyletronProvider>
