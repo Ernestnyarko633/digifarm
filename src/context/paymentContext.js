@@ -1,40 +1,43 @@
 import React ,{createContext} from 'react'
-import PropType from 'prop-types'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import getConfig from '../utils/configs'
-
-const PAYMENT_API = getConfig().PAYMENT_API
 
 export const PaymentContext = createContext()
 
 const PaymentContextProvider = ({children}) => {
 
-    const addPaymentDetails = async payload => {
-        
-        try {
+    const PAYMENT_API = getConfig().PAYMENT_API
+
+    const uploadPaymentDetails = async payload=> {
+        try{
             await axios({
                 method: 'post',
-                url: `${PAYMENT_API}y/payment/receipt-upload`,
+                url:`${PAYMENT_API}/payment/receipt-upload`,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${JSON.parse(window.localStorage.getItem('auth'))}`
+                },
                 body: payload
             })
-        } catch (error) {
+        }catch(error){
             return error
         }
     }
 
     return(
         <PaymentContext.Provider
-            value={{
-                addPaymentDetails
-            }}
+         value={{
+             uploadPaymentDetails
+         }}
         >
-            
+            {children}
         </PaymentContext.Provider>
     )
 }
 
-PaymentContextProvider.propType = {
-    children: PropType.node.isRequired
+PaymentContextProvider.propTypes= {
+    children: PropTypes.node.isRequired
 }
 
 export default PaymentContextProvider

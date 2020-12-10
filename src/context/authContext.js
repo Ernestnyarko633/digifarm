@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react'
 import PropTypes from 'prop-types'
 
 import http from '../utils/httpFacade'
-import { replaceURI } from '../helpers/misc'
+// import { replaceURI } from '../helpers/misc'
 import configs from '../utils/configs'
 // Setup Config
 const AUTH_API = configs().AUTH_API
@@ -48,7 +48,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       clearRemote && http.get({ url: `${AUTH_API}/user/logout` })
       window.sessionStorage.clear()
-      replaceURI('AUTH', '/redirects?from=OPERATION&off=true')
+      // replaceURI('AUTH', '/redirects?from=OPERATION&off=true')
     } catch (error) {
       console.debug(error)
     }
