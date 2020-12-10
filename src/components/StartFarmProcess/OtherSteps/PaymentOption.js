@@ -79,7 +79,7 @@ const PaymentOption = () => {
         }}>
         <Box css={{ direction: 'ltr' }}>
           <Flex direction='column'>
-            <Heading as='h6' fontSize='2xl' ml={5}>
+            <Heading as='h6' fontSize='xl' ml={5}>
               Choose your payment Option
             </Heading>
             <PayOption icon={visa}

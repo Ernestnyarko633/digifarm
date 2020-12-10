@@ -1,9 +1,9 @@
+import React from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import OtherSteps from 'components/StartFarmProcess/OtherSteps'
-import React from 'react'
 
-const Details = () => {
+const Cooperative = () => {
   const [ step, setStep ] = React.useState(0)
 
   function handleNext() {
@@ -46,4 +46,4 @@ const Details = () => {
   )
 }
 
-export default Details
+export default Cooperative

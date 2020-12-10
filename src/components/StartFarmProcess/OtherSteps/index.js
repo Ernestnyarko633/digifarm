@@ -3,6 +3,7 @@ import Button from 'components/Button'
 import React from 'react'
 import AboutFarmManager from './AboutFarmManager'
 import ChooseAcreage from './ChooseAcreage'
+import Confirmation from './Confirmation'
 import Contract from './Contract'
 import PaymentOption from './PaymentOption'
 
@@ -27,6 +28,8 @@ const OtherSteps = ({ handlePrev }) => {
         return <Contract />
       case 3:
         return <PaymentOption />
+      case 4:
+        return <Confirmation />
       default:
         return null
     }

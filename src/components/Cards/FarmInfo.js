@@ -5,7 +5,7 @@ import React from 'react'
 const FarmInfo = () => (
   <Box as='table' w={108} m={4}>
     <Box as='tr'>
-      <Flex as='td' align='center' justify='space-between'>
+      <Flex as='td' align='center' justify='space-between' pb={2}>
         <Heading as='h3' fontSize='xl'>
           Ginger Farm
         </Heading>
@@ -14,7 +14,7 @@ const FarmInfo = () => (
     </Box>
     <Box borderWidth={1} borderColor='gray.100' />
     <Box as='tr'>
-      <Flex as='td' align='center' justify='space-between'>
+      <Flex as='td' align='center' justify='space-between' py={2}>
         <Flex align='center'>
           <Text mr={2} color='gray.600'>
             Management Fee
@@ -26,7 +26,7 @@ const FarmInfo = () => (
     </Box>
     <Box borderWidth={1} borderColor='gray.100' />
     <Box as='tr'>
-      <Flex as='td' align='center' justify='space-between'>
+      <Flex as='td' align='center' justify='space-between' py={2}>
         <Text mr={2} color='gray.600'>
           VAT
         </Text>
@@ -35,7 +35,7 @@ const FarmInfo = () => (
     </Box>
     <Box borderWidth={1} borderColor='gray.100' />
     <Box as='tr'>
-      <Flex as='td' align='center' justify='space-between'>
+      <Flex as='td' align='center' justify='space-between' pt={2}>
         <Text fontWeight={500} mr={2}>
           Total
         </Text>

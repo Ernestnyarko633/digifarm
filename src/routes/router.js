@@ -9,7 +9,10 @@ const Router = () => (
       <Route exact path='/dashboard' component={Pages.Dashboard} />
       <Redirect exact from='/' to='/dashboard' />
       <Route exact path='/startfarm' component={Pages.StartFarm} />
-      <Route exact path='/startfarm/:id' component={Pages.StartFarmDetails} />
+      <Route exact path='/startfarm/individual' component={Pages.Individual} />
+      <Route exact
+        path='/startfarm/cooperative'
+        component={Pages.Cooperative} />
       <Route path='/marketplace' component={Pages.Marketplace} />
       <Route path='/farms' component={Pages.FarmBoard} />
       <Route path='/notfound' component={Pages.NotFound} />
