@@ -1,4 +1,3 @@
 {
-  //"extends": ["wesbos"],
-  "parser": "babel-eslint"
+  "extends": ["@1f8/eslint-config-react"]
 }

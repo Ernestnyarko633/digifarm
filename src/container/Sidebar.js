@@ -1,5 +1,5 @@
-import { Box, Flex, Icon, Link, Text } from '@chakra-ui/core';
-import { NavLink } from 'react-router-dom';
+import { Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
+import { NavLink } from 'react-router-dom'
 import {
   farm,
   home,
@@ -7,12 +7,12 @@ import {
   market,
   Guide,
   Resources,
-  logout,
-} from 'theme/Icons';
-import { MdChatBubbleOutline } from 'react-icons/md';
-import { IoIosHelpCircle } from 'react-icons/io';
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import React from 'react';
+  logout
+} from 'theme/Icons'
+import { MdChatBubbleOutline } from 'react-icons/md'
+import { IoIosHelpCircle } from 'react-icons/io'
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+import React from 'react'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
@@ -20,12 +20,12 @@ const menuLink = [
   { icon: wallet, path: '/wallet', name: 'Farm Wallet', size: 4 },
   { icon: market, path: '/marketplace', name: 'Marketplace', size: 4 },
   { icon: MdChatBubbleOutline, path: '/market', name: 'Forum', size: 4 },
-];
+]
 
 const links = [
   {
-    title: 'Learning',
-    parent: 'learning',
+    title  : 'Learning',
+    parent : 'learning',
     submenu: [
       { icon: Guide, path: '/guide', name: 'How-To-Guide', size: 5 },
       { icon: Resources, path: '/resources', name: 'Resources', size: 5 },
@@ -37,14 +37,13 @@ const links = [
       },
     ],
   },
-];
+]
 
 const Sidebar = ({ currentPath }) => {
-  const [toggleMenus, setToggleMenus] = React.useState(true);
+  const [ toggleMenus, setToggleMenus ] = React.useState(true)
 
   return (
-    <Box
-      as='aside'
+    <Box as='aside'
       gridArea='aside'
       pos='fixed'
       bottom={0}
@@ -56,12 +55,10 @@ const Sidebar = ({ currentPath }) => {
       boxShadow=' sm'
       px={{ md: 2 }}
       color='gray.600'
-      pr={{ md: 5 }}
-    >
+      pr={{ md: 5 }}>
       <Text as='ul'>
-        {menuLink.map((item, index) => (
-          <Link
-            key={index}
+        {menuLink.map((item) => (
+          <Link key={item.name}
             d='flex'
             alignItems='center'
             pl={{ md: 4 }}
@@ -76,12 +73,11 @@ const Sidebar = ({ currentPath }) => {
             transition='background-color .2s ease-in'
             _hover={{
               textDecor: 'none',
-              color: 'gray.700',
-              bg: 'gray.50',
-              rounded: 'md',
+              color    : 'gray.700',
+              bg       : 'gray.50',
+              rounded  : 'md',
             }}
-            _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
-          >
+            _activeLink={{ color: 'cf.400', bg: 'cf.300' }}>
             <Icon as={item.icon} boxSize={item.size} mr={2} />
             <Text fontSize='sm' textAlign='center' mt={1}>
               {item.name}
@@ -91,27 +87,22 @@ const Sidebar = ({ currentPath }) => {
       </Text>
 
       <Text as='ul' mt={{ md: 24 }}>
-        {links.map((item, i) => (
-          <Flex key={i} as='li' direction='column'>
-            <Flex
-              align='center'
+        {links.map((item) => (
+          <Flex key={item.title} as='li' direction='column'>
+            <Flex align='center'
               as='button'
               role='button'
               aria-label='Menu Button'
-              onClick={() => setToggleMenus(!toggleMenus)}
-            >
-              <Icon
-                as={toggleMenus ? BsChevronUp : BsChevronDown}
+              onClick={() => setToggleMenus(!toggleMenus)}>
+              <Icon as={toggleMenus ? BsChevronUp : BsChevronDown}
                 boxSize={4}
-                mr={1}
-              />
+                mr={1} />
               <Text>{item.title}</Text>
             </Flex>
             {toggleMenus && (
               <Box as='ul' color='gray.600'>
-                {item.submenu.map((item, index) => (
-                  <Link
-                    key={index}
+                {item.submenu.map((item) => (
+                  <Link key={item.name}
                     d='flex'
                     alignItems='center'
                     pr={{ md: 3 }}
@@ -126,12 +117,14 @@ const Sidebar = ({ currentPath }) => {
                     transition='background-color .2s ease-in'
                     _hover={{
                       textDecor: 'none',
-                      color: 'gray.700',
-                      bg: 'gray.50',
-                      rounded: 'md',
+                      color    : 'gray.700',
+                      bg       : 'gray.50',
+                      rounded  : 'md',
                     }}
-                    _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
-                  >
+                    _activeLink={{
+                      color: 'cf.400',
+                      bg   : 'cf.300',
+                    }}>
                     <Icon as={item.icon} boxSize={item.size} mr={1} />
                     <Text fontSize='sm' textAlign='center' mt={1}>
                       {item.name}
@@ -140,15 +133,14 @@ const Sidebar = ({ currentPath }) => {
                 ))}
               </Box>
             )}
-            <Flex
-              align='center'
+            <Flex align='center'
               py={{ md: 2 }}
               rounded='lg'
               _hover={{
                 textDecor: 'none',
-                color: 'gray.700',
-                bg: 'gray.50',
-                rounded: 'md',
+                color    : 'gray.700',
+                bg       : 'gray.50',
+                rounded  : 'md',
               }}
               pl={{ md: 4 }}
               pr={{ md: 3 }}
@@ -156,8 +148,7 @@ const Sidebar = ({ currentPath }) => {
               as='button'
               role='button'
               aria-label='Logout Button'
-              transition='background-color .2s ease-in'
-            >
+              transition='background-color .2s ease-in'>
               <Icon as={logout} boxSize={5} mr={2} />
               <Text fontSize='sm' textAlign='center' mt={1}>
                 Logout
@@ -167,7 +158,7 @@ const Sidebar = ({ currentPath }) => {
         ))}
       </Text>
     </Box>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

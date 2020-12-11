@@ -1,38 +1,50 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Icon,
-  Image,
-  Progress,
-  Text,
-} from '@chakra-ui/core';
-import { Button } from 'components';
-import Tabs from 'components/Tabs/Tabs';
-import React from 'react';
-import AboutFarm from './AboutFarm';
-import FarmImage from './FarmImage';
+import { Box, Grid, GridItem } from '@chakra-ui/react'
+import { Button } from 'components'
+import CropSelectionCard from 'components/Cards/CropSelectionCard'
+import React from 'react'
+import AboutFarm from './AboutFarm'
+
+const crops = [
+  { id: 1, title: 'Ginger Farm', acres: '100' },
+  { id: 2, title: 'Soy bean Farm' },
+  { id: 3, title: 'Sweet Potato Farm' },
+]
 
 const FarmDetails = ({ handleNext }) => {
+  const [ state, setState ] = React.useState('Ginger Farm')
+
   return (
-    <Grid templateColumns={{ md: '40% 50%' }} gap={{ md: '10%' }}>
-      <FarmImage />
-
-      <AboutFarm />
-      <Box pos='absolute' bottom={3} right={14}>
-        <Button
-          btntitle='Stat this farm'
-          w={80}
-          h={14}
-          fontSize='md'
-          onClick={handleNext}
-        />
-      </Box>
+    <Grid templateColumns={{ md: '45% 55%' }} h={121}>
+      <GridItem>
+        {crops.map((item) => (
+          <CropSelectionCard onClick={() => setState(item.title)}
+            key={item.id}
+            title={item.title}
+            acres={item.acres} />
+        ))}
+      </GridItem>
+      <GridItem overflowY='scroll'
+        borderLeftWidth={1}
+        borderLeftColor='gray.300'
+        p={{ md: 10 }}
+        css={{
+          direction     : 'rtl',
+          scrollbarColor: 'rebeccapurple',
+          scrollBehavior: 'smooth',
+        }}>
+        <Box css={{ direction: 'ltr' }}>
+          {crops.map((item) => state === item.title && <AboutFarm />)}
+        </Box>
+        <Box my={10}>
+          <Button btntitle='Start this farm'
+            w={80}
+            h={14}
+            fontSize='md'
+            onClick={handleNext} />
+        </Box>
+      </GridItem>
     </Grid>
-  );
-};
+  )
+}
 
-export default FarmDetails;
+export default FarmDetails

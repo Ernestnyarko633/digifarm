@@ -1,6 +1,6 @@
-import React from "react";
-import { Box, Flex, Avatar, Image, Heading, Text } from "@chakra-ui/core";
-import Button from "components/Button";
+import React from 'react'
+import { Box, Flex, Avatar, Image, Heading, Text } from '@chakra-ui/core'
+import Button from 'components/Button'
 
 const EventsCard = ({
   bg,
@@ -19,56 +19,50 @@ const EventsCard = ({
 }) => {
   return (
     <Box>
-      <Flex justify="center">
-        <Box
-          {...rest}
-          boxShadow={boxShadow || "0px 0px 15px 5px #ccc"}
+      <Flex justify='center'>
+        <Box {...rest}
+          boxShadow={boxShadow || '0px 0px 15px 5px #ccc'}
           rounded={rounded || 15}
           bg={
             bg ||
-            "linear-gradient(to right, rgba(147, 207, 136, 1) 0%, rgba(120, 186, 109, 1) 100%, rgba(190, 162, 80, 1) 100%)"
+            'linear-gradient(to right, rgba(147, 207, 136, 1) 0%, rgba(120, 186, 109, 1) 100%, rgba(190, 162, 80, 1) 100%)'
           }
-          colorScheme="linear"
-          w={w || "100%"}
-          h={h || "100%"}
+          colorScheme='linear'
+          w={w || '100%'}
+          h={h || '100%'}
           mr={mr}
           ml={ml}
-          p={8}
-        >
+          p={8}>
           <Box>
-            <Flex mb={4} direction="row" align="center">
+            <Flex mb={4} direction='row' align='center'>
               <Box>
-                <Box
-                  as={Avatar}
+                <Box as={Avatar}
                   boxSize={boxSize}
                   mr={3}
                   bgSize={avatarBgSize}
                   size={avatarSize}
-                  bg="gray.100"
-                >
+                  bg='gray.100'>
                   <Image src={image} />
                 </Box>
               </Box>
               <Box pb={4}>
-                <Heading as="h6" fontSize={"md"} color="white">
-                  {"Soya Bean Farm"}
+                <Heading as='h6' fontSize='md' color='white'>
+                  Soya Bean Farm
                 </Heading>
-                <Text mb={1} pb={4} fontSize="xs" color="#fff" mt={{ md: -2 }}>
-                  {"Agyata, Eastern Region"}
+                <Text mb={1} pb={4} fontSize='xs' color='#fff' mt={{ md: -2 }}>
+                  Agyata, Eastern Region
                 </Text>
 
-                <Button
-                  borderColor="#fff"
+                <Button borderColor='#fff'
                   borderWidth={3}
-                  btntitle="Check it out"
-                />
+                  btntitle='Check it out' />
               </Box>
             </Flex>
           </Box>
         </Box>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
-export default EventsCard;
+export default EventsCard
