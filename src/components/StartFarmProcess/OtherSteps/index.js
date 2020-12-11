@@ -1,5 +1,7 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
+import useComponents from 'context/ComponentContext'
+import { AnimateSharedLayout, motion } from 'framer-motion'
 import React from 'react'
 import AboutFarmManager from './AboutFarmManager'
 import ChooseAcreage from './ChooseAcreage'
@@ -7,16 +9,10 @@ import Confirmation from './Confirmation'
 import Contract from './Contract'
 import PaymentOption from './PaymentOption'
 
-const OtherSteps = ({ handlePrev }) => {
-  const [ step, setStep ] = React.useState(0)
+const MotionFlex = motion.custom(Flex)
 
-  function handleNext() {
-    setStep((prevActiveStep) => prevActiveStep + 1)
-  }
-
-  function handleBack() {
-    setStep((prevActiveStep) => prevActiveStep - 1)
-  }
+const OtherSteps = () => {
+  const { otherStep, handlePrev, handleNextStep, handleBack } = useComponents()
 
   function goHome() {
     return (window.location.pathname = '/dashboard')
@@ -59,16 +55,19 @@ const OtherSteps = ({ handlePrev }) => {
         </Flex>
       </Flex>
 
-      <Flex mt={{ md: 12 }}
-        w={{ md: 143 }}
-        h={{ md: 120 }}
-        mx='auto'
-        borderWidth={1}
-        borderColor='gray.400'
-        rounded='md'
-        overflow='hidden'>
-        {getSteps(step)}
-      </Flex>
+      <AnimateSharedLayout>
+        <MotionFlex layout
+          mt={{ md: 12 }}
+          w={{ md: 143 }}
+          h={{ md: 120 }}
+          mx='auto'
+          borderWidth={1}
+          borderColor='gray.400'
+          rounded='md'
+          overflow='hidden'>
+          {getSteps(otherStep)}
+        </MotionFlex>
+      </AnimateSharedLayout>
 
       <Flex align='center' justify='center' mt={6}>
         <Button btntitle='Prev'
@@ -77,14 +76,14 @@ const OtherSteps = ({ handlePrev }) => {
           width={56}
           fontSize='md'
           h={12}
-          onClick={step <= 0 ? handlePrev : handleBack} />
-        <Button btntitle={step === 4 ? 'Continue to my Dashboard' : 'Next'}
+          onClick={otherStep <= 0 ? handleBack : handlePrev} />
+        <Button btntitle={otherStep === 4 ? 'Continue to my Dashboard' : 'Next'}
           ml={6}
-          width={step === 4 ? 70 : 56}
+          width={otherStep === 4 ? 70 : 56}
           fontSize='lg'
           md
           h={12}
-          onClick={step === 4 ? goHome : handleNext} />
+          onClick={otherStep === 4 ? goHome : handleNextStep} />
       </Flex>
     </Box>
   )

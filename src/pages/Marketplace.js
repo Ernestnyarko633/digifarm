@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from 'container/Layout'
-import { Box, Heading, Image, Spacer, Text, Flex } from '@chakra-ui/react'
+import { Box, Heading, Image, Text, Flex } from '@chakra-ui/react'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import BuyerCard from 'components/Cards/Buyer'
 import ArrowButton from '../components/Button/ArrowButton'
@@ -82,15 +82,12 @@ const Marketplace = () => {
           <Text>Sell your produce to the right buyer at a good price</Text>
         </Box>
       </Box>
-      <Box>
-        <Box textAlign='center' px={{ md: 10 }} py={{ md: 8 }}>
-          <Heading as='h4' fontSize={{ md: '2xl' }}>
-            Here's how your farm(s) are doing
-          </Heading>
-        </Box>
-        <Spacer />
+      <Flex align='center' justify='space-between' p={{ md: 16 }}>
+        <Heading as='h4' fontSize={{ md: '2xl' }}>
+          Here's how your farm(s) are doing
+        </Heading>
         <ArrowButton />
-      </Box>
+      </Flex>
       <Flex my={3}>
         {warehouseGoods.map((item) => (
           <WarehouseCard name={item.name}

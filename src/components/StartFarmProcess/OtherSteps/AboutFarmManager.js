@@ -14,7 +14,10 @@ import {
 } from '@chakra-ui/react'
 import { Support, Schedule, Update, location } from 'theme/Icons'
 import Prismic from 'prismic-javascript'
+import { motion } from 'framer-motion'
 // import { RichText, KeyText } from 'prismic-reactjs'
+
+const MotionGrid = motion.custom(Grid)
 
 const AboutFarmManager = () => {
   // In prismic-configuration.js
@@ -38,7 +41,7 @@ const AboutFarmManager = () => {
   }, [Client])
 
   return (
-    <Grid templateColumns='repeat(2, 1fr)'>
+    <MotionGrid layout templateColumns='repeat(2, 1fr)'>
       <Box px={20} pt={20} borderRightColor='gray.400' borderRightWidth={2}>
         <Box>
           <Image h='10%'
@@ -123,7 +126,7 @@ const AboutFarmManager = () => {
           </Box>
         </Box>
       </Box>
-    </Grid>
+    </MotionGrid>
   )
 }
 

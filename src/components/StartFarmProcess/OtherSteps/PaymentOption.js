@@ -16,6 +16,9 @@ import { useMutation } from 'react-query'
 import useAPI from 'context/apiContext'
 import visa from '../../../assets/images/visa.png'
 import ginger from '../../../assets/images/ginger.png'
+import { motion } from 'framer-motion'
+
+const MotionGrid = motion.custom(Grid)
 
 const PaymentOption = () => {
   const { payment } = useAPI()
@@ -40,7 +43,7 @@ const PaymentOption = () => {
   }
 
   return (
-    <Grid templateColumns={{ md: 'repeat(2, 1fr)' }}>
+    <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem p={{ md: 10 }}>
         <Box py={{ md: 10 }} m={8}>
           <Image src={ginger} alt='ginger' />
@@ -100,7 +103,7 @@ const PaymentOption = () => {
           <FarmInfo />
         </Box>
       </GridItem>
-    </Grid>
+    </MotionGrid>
   )
 }
 

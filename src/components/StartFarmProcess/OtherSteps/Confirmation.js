@@ -3,12 +3,15 @@ import FarmInfo from 'components/Cards/FarmInfo'
 import { Button } from 'components'
 import React from 'react'
 import useComponents from 'context/ComponentContext'
+import { motion } from 'framer-motion'
 // import { BsQuestionCircleFill } from 'react-icons/bs';
+
+const MotionFlex = motion.custom(Flex)
 
 const Confirmation = () => {
   const { handleModalClick } = useComponents()
   return (
-    <Flex w='100%'>
+    <MotionFlex layout w='100%'>
       <Box w='50%'>Left</Box>
       <Box w='50%'
         borderLeftWidth={1}
@@ -47,7 +50,7 @@ const Confirmation = () => {
             onClick={() => handleModalClick('contract')} />
         </Flex>
       </Box>
-    </Flex>
+    </MotionFlex>
   )
 }
 

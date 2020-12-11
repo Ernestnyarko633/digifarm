@@ -1,13 +1,16 @@
 import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
 import FormRadio from 'components/Form/FormRadio'
+import { motion } from 'framer-motion'
 import React from 'react'
+
+const MotionGrid = motion.custom(Grid)
 
 const Contract = () => {
   const options = [ 'Accept', 'Decline' ]
   const [ contract, setContract ] = React.useState('')
 
   return (
-    <Grid templateColumns={{ md: 'repeat(2, 1fr)' }}>
+    <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem>Left</GridItem>
       <GridItem borderLeftWidth={1}
         borderLeftColor='gray.300'
@@ -101,7 +104,7 @@ const Contract = () => {
           </Box>
         </Box>
       </GridItem>
-    </Grid>
+    </MotionGrid>
   )
 }
 
