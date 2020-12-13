@@ -13,23 +13,24 @@ const Upload = props => {
   }
 
   return (
-    <Box mt={6}>
-      <FormControl position='relative' bg='cf.200'>
-        <FormLabel mb={1} fontSize={{ md: 'sm' }} position='absolute' pl={4} pt={2}>
+    <Box>
+       <Text fontSize={{ md: 'sm' }} fontWeight='bold' pl={1} pt={2}>
           {label}
-        </FormLabel>
+        </Text>
+    <Box mt={4} >
+      <FormControl position='relative' borderWidth={1}>
         <FormLabel
           w='100%'
           d='flex'
           alignItems='center'
           justifyContent='center'
           flexDir='column'
-          py={3}
+          pt={3}
           px={4}
-          rounded='md'
           cursor='pointer'
-          borderBottomWidth={4}
+          borderBottomWidth={1}
           borderBottomColor='cf.400'
+          mb={0}
         >
           <Flex
             align='center'
@@ -48,9 +49,9 @@ const Upload = props => {
             color='gray.400'
             letterSpacing='normal'
             mt={2}
+            pb={8}
           >
-            Click to upload here or <br />
-            drag image here to upload
+            Upload image here
           </Text>
           <Input
             type='file'
@@ -62,6 +63,7 @@ const Upload = props => {
           />
         </FormLabel>
       </FormControl>
+    </Box>
     </Box>
   )
 }
