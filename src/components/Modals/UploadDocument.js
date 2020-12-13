@@ -99,29 +99,28 @@ import ConfirmDocUpload from './ConfirmDocUpload'
                                     values={values.bank_transfer_receipt}
                                     name='bank_transfer_receipt'
                                 />
-                                
+                                 <Flex pb={8} justify='center' pt={3}>
+                                    <Button
+                                      type='submit'
+                                      colorScheme="linear"
+                                      rounded="30px"
+                                      w={{ md: "50%" }}
+                                      onClick={() => {
+                                        onClose();
+                                        // toast({
+                                        //   render: () => <ConfirmDocUpload />,
+                                        // });
+                                      }}
+                                    >
+                                      Submit
+                                    </Button>
+                                </Flex>
                             </form>
                         )}
                     </Formik>
                 </Box>
             </ModalBody>
-            <Flex pb={8} justify='center' pt={3}>
-                <Button
-                  colorScheme="linear"
-                  rounded="30px"
-                  w={{ md: "50%" }}
-                  onClick={() => {
-                    onClose();
-                    toast({
-                      position: "top-right",
-                      duration: 9000,
-                      render: () => <ConfirmDocUpload />,
-                    });
-                  }}
-                >
-                  Submit
-                </Button>
-            </Flex>
+           
           </ModalContent>
         </Modal>
       </>
