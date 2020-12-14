@@ -38,7 +38,7 @@ const YourFarmCard = () => {
                   <Box w='120px' h='120px' rounded='120px'>
                     <Image w='100%' h='100%' rounded='100%' src={Bitmap} />
                     <Badge position='absolute'
-                      top={780}
+                      top={735}
                       bg={farm.color}
                       rounded='25px'
                       w='25px'
