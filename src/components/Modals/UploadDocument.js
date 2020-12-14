@@ -25,8 +25,8 @@ import ConfirmDocUpload from './ConfirmDocUpload'
     const {uploadPaymentDetails} = useContext(PaymentContext)
 
     const initialValues = {
-        order_id: '5fcd57463ea90617aa45ae10',
-        bank_transfer_receipt:''
+        order_id: '5fbba7e2dd7f2d24059ffca8',
+        file: undefined
     }
 
     const { isOpen, onClose, onOpen } = useDisclosure();
@@ -35,15 +35,10 @@ import ConfirmDocUpload from './ConfirmDocUpload'
 
     const onSubmit = async (values)=> {
       try {
-          console.log('hiii')
-          console.log(values)
           const formData = new FormData()
-
-          Object.keys(values).forEach(key => {
-               formData.append(key, values[key])
-            })
-          
-            await uploadPaymentDetails(formData)
+          formData.append('bank_transfer_receipt', values.file)
+          const res = await uploadPaymentDetails(values.order_id, formData)
+          console.log(res)
       
       } catch (error) {
           console.log(error)
@@ -96,8 +91,7 @@ import ConfirmDocUpload from './ConfirmDocUpload'
                                     component={Upload}
                                     label='Upload an image of your bank payslip here'
                                     accept='image/jpeg, image/jpg'
-                                    values={values.bank_transfer_receipt}
-                                    name='bank_transfer_receipt'
+                                    name='file'
                                 />
                                  <Flex pb={8} justify='center' pt={3}>
                                     <Button

@@ -21,7 +21,7 @@ const AuthContextProvider = ({ children }) => {
   }
 
   const auth = data => {
-    window.sessionStorage.setItem('_cft', JSON.stringify(data.token))
+    window.sessionStorage.setItem('_cft', data.token)
     window.sessionStorage.setItem('_cfu', JSON.stringify(data.user))
   }
 

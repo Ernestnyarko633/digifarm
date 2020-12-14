@@ -2,23 +2,18 @@ import React ,{createContext} from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import getConfig from '../utils/configs'
-
+import http from '../utils/httpFacade'
 export const PaymentContext = createContext()
 
 const PaymentContextProvider = ({children}) => {
 
     const PAYMENT_API = getConfig().PAYMENT_API
 
-    const uploadPaymentDetails = async payload=> {
+    const uploadPaymentDetails = async (id, formData)=> {
         try{
-            await axios({
-                method: 'post',
-                url:`${PAYMENT_API}/payment/receipt-upload`,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${JSON.parse(window.localStorage.getItem('auth'))}`
-                },
-                body: payload
+            return await http.patch({
+                url:`${PAYMENT_API}/payment/receipt-upload?order_id=${id}`,
+                body: formData
             })
         }catch(error){
             return error
