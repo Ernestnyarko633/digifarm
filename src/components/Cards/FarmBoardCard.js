@@ -10,7 +10,7 @@ import {
   Image,
   Grid
 } from '@chakra-ui/react'
-//import Bitmap from 'assets/images/Bitmap.png'
+
 
 import { MdFavoriteBorder } from 'react-icons/md'
 import { RiShareForwardLine } from 'react-icons/ri'
