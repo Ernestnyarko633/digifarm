@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Heading, Flex } from '@chakra-ui/react'
 import FarmBoardCard from '../Cards/FarmBoardCard'
+import YourFarmCard from '../Cards/YourFarm'
 import Bitmap from 'assets/images/Bitmap.png'
 import Crop from 'assets/images/crop.png'
 import SoyaBeanImg from 'assets/images/soya.png'
@@ -10,6 +11,7 @@ const FarmBoardContent = () => {
   return (
     <Box p={10} w='100%'>
       <Flex w='100%' align='center' direction='column'>
+        <YourFarmCard />
         <Heading as='h3' fontSize={{ md: 'xl' }} mb={5}>
           See what's happening in your farm(s)
         </Heading>
