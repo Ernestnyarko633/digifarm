@@ -18,33 +18,32 @@ import {
 import corporate from '../../assets/images/emptystate/corporate.png'
 
 const ConfirmDocUpload = () => {
-    const { isOpen, onClose, onOpen } = useDisclosure(true);
+    const { isOpen, onClose, onOpen } = useDisclosure();
 
     return (
         <>
-         <Button
-          mt={4}
+        <Button
+          type='submit'
+          w={{ md: "50%" }}
           colorScheme="linear"
           rounded="30px"
           fontSize="xs"
-          w={{ md: "150px" }}
-          onClick={onOpen}
+          onClick={()=> {
+            onClose();
+            onOpen()
+          }}
         >
-         Complete order
+          Submit
         </Button>
         <Modal
           isOpen={isOpen}
           onClose={onClose}
-          mt='200px'
+          mt={10}
           variant="outline"
           borderColor="black"
           borderWidth={5}
           colorScheme="white"
-          right={10}
-          zIndex={10}
-          pos='fixed'
-          bg='black'
-          
+          isCentered
         >
           <ModalOverlay />
           <ModalContent>

@@ -25,7 +25,7 @@ import ConfirmDocUpload from './ConfirmDocUpload'
     const {uploadPaymentDetails} = useContext(PaymentContext)
 
     const initialValues = {
-        order_id: '5fbba7e2dd7f2d24059ffca8',
+        payment_id: '5fd79e7c6d80ce789ab140be',
         file: undefined
     }
 
@@ -37,7 +37,7 @@ import ConfirmDocUpload from './ConfirmDocUpload'
       try {
           const formData = new FormData()
           formData.append('bank_transfer_receipt', values.file)
-          const res = await uploadPaymentDetails(values.order_id, formData)
+          const res = await uploadPaymentDetails(values.payment_id, formData)
           console.log(res)
       
       } catch (error) {
@@ -94,20 +94,7 @@ import ConfirmDocUpload from './ConfirmDocUpload'
                                     name='file'
                                 />
                                  <Flex pb={8} justify='center' pt={3}>
-                                    <Button
-                                      type='submit'
-                                      colorScheme="linear"
-                                      rounded="30px"
-                                      w={{ md: "50%" }}
-                                      onClick={() => {
-                                        onClose();
-                                        // toast({
-                                        //   render: () => <ConfirmDocUpload />,
-                                        // });
-                                      }}
-                                    >
-                                      Submit
-                                    </Button>
+                                 <ConfirmDocUpload/>
                                 </Flex>
                             </form>
                         )}

@@ -12,7 +12,7 @@ const PaymentContextProvider = ({children}) => {
     const uploadPaymentDetails = async (id, formData)=> {
         try{
             return await http.patch({
-                url:`${PAYMENT_API}/payment/receipt-upload?order_id=${id}`,
+                url:`${PAYMENT_API}/payment/receipt-upload?payment_id=${id}`,
                 body: formData
             })
         }catch(error){
@@ -20,10 +20,22 @@ const PaymentContextProvider = ({children}) => {
         }
     }
 
+
+    const deleteBankTransfer = async (id)=> {
+        try {
+            return await http.patch({
+                url:`${PAYMENT_API}/payment/receipt-delete?payment_id=${id}`
+            })
+        } catch (error) {
+            return error
+        }
+    }
+
     return(
         <PaymentContext.Provider
          value={{
-             uploadPaymentDetails
+             uploadPaymentDetails,
+             deleteBankTransfer
          }}
         >
             {children}

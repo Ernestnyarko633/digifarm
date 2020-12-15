@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Text, Icon, FormLabel, FormControl, Input } from '@chakra-ui/core'
 import { Add } from '../../theme/Icons'
+import {VscEdit, VscAdd} from 'react-icons/vsc'
+
 const Upload = props => {
   const { field, form, accept, label, multiple, name } = props
 
@@ -41,7 +43,7 @@ const Upload = props => {
             bg='cf.400'
             mt={4}
           >
-            <Icon name='Add' color='white' size={6} />
+            <Icon as={VscAdd} color='white' size={6} />
           </Flex>
           <Text
             textAlign='center'

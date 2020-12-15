@@ -1,9 +1,10 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React  from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
-import {Box, Grid, Flex, Button} from '@chakra-ui/core'
+import {Box, Grid } from '@chakra-ui/core'
 import UploadDocument from 'components/Modals/UploadDocument'
-import ConfirmDocUpload from 'components/Modals/ConfirmDocUpload'
+import ConfirmReceiptDelete from 'components/Modals/ConfirmReceiptDelete'
+
 
 const data = [
     {
@@ -29,14 +30,13 @@ const data = [
 
 const Document = () => {
 
-  
-
 
     return (
             <Layout>
                 <Box mt='200px' mx='80px'>
                     <UploadDocument/>
                     {/* <ConfirmDocUpload/> */}
+                 <ConfirmReceiptDelete/>
                 </Box>
                 <Box pb={10} mx={6} > 
                         <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} gap={{ md: 1}} mt={10}>
