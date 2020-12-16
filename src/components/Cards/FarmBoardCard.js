@@ -10,7 +10,7 @@ import {
   Image,
   Grid
 } from '@chakra-ui/react'
-
+import PropTypes from 'prop-types'
 
 import { MdFavoriteBorder } from 'react-icons/md'
 import { RiShareForwardLine } from 'react-icons/ri'
@@ -21,11 +21,11 @@ const FarmBoardCard = ({
   w,
   mr,
   ml,
+  buttonMl,
+  buttonMr,
   btntitle,
   buttonColor,
   buttonWidth,
-  buttonMl,
-  buttonMr,
   buttonColorScheme,
   likeCount,
   levelColor,
@@ -181,6 +181,35 @@ const FarmBoardCard = ({
       </Flex>
     </Box>
   )
+}
+
+FarmBoardCard.propTypes = {
+  w                : PropTypes.any,
+  mr               : PropTypes.any,
+  ml               : PropTypes.any,
+  buttonMl         : PropTypes.any,
+  buttonMr         : PropTypes.any,
+  btntitle         : PropTypes.string.isRequired,
+  buttonWidth      : PropTypes.any,
+  buttonColor      : PropTypes.any,
+  buttonColorScheme: PropTypes.any,
+  buttonLabel      : PropTypes.string.isRequired,
+  likeCount        : PropTypes.number.isRequired,
+  level            : PropTypes.number.isRequired,
+  levelColor       : PropTypes.any.isRequired,
+  postImage        : PropTypes.any.isRequired,
+  headingImageAlt  : PropTypes.string.isRequired,
+  headingImage     : PropTypes.any.isRequired,
+  whoseFarm        : PropTypes.string.isRequired,
+  datePosted       : PropTypes.any.isRequired,
+  farmLocation     : PropTypes.string.isRequired,
+  AvatarSRC        : PropTypes.any.isRequired,
+  headingIcon      : PropTypes.any.isRequired,
+  headingText      : PropTypes.string.isRequired,
+  postType         : PropTypes.string.isRequired,
+  postContentText  : PropTypes.string.isRequired,
+  redesign         : PropTypes.bool.isRequired,
+  children         : PropTypes.node.isRequired
 }
 
 export default FarmBoardCard

@@ -32,7 +32,7 @@ const WarehouseCard = ({
             <Image src={image} />
           </Avatar>
           <Box ml={2}>
-            <Heading as='h6' fontSize={{ md: 'lg' }}>
+            <Heading as='h6' mb={{ md: 2 }}fontSize={{ md: 'lg' }}>
               {name}
             </Heading>
             <Text fontSize='xs' mt={{ md: -2 }}>
@@ -66,7 +66,7 @@ const WarehouseCard = ({
               <ListItem fontSize='xs'>
                 Yeild conditions -
                 <span fontSize='sm' pl={2}>
-                  {condition}
+                  {' '}{condition}
                 </span>
               </ListItem>
             </List>
