@@ -17,6 +17,25 @@ node {
        
     }
 
+     stage('SonarQube Analysis'){
+        withSonarQubeEnv('Sonarqube'){
+            sh "sonar-scanner \
+                -Dsonar.projectKey=cf-digital-farmer-dashboard \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=${env.SONARQUBE_URL} \
+                -Dsonar.login=${env.SONAR_API_LOGIN}"
+            }
+    }
+    stage('Quality Gateway'){
+        timeout(time: 1, unit: 'HOURS'){
+            def qualityGate = waitForQualityGate()
+            if (qualityGate.status != 'OK'){
+                slackSend(color: '#F01717', message: "Quality gate failed for ${env.JOB_NAME}")
+                error "Pipeline aborted due to quality gate failure: ${qualityGate.status}"
+            }
+        }
+    }
+
     stage('Build image') {
         /**
         * Choose deployment environment variable for run command in dockerfile
