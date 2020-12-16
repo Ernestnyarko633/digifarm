@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import {
     Modal,
     ModalOverlay,
@@ -11,18 +11,23 @@ import {
     Box,
     Heading,
     Flex,
-    Divider
+    Divider,
+    Image,
+    Text,
+    Spacer
 
   } from "@chakra-ui/core";
   import {Formik,Field} from 'formik'
 import { PaymentContext } from 'context/paymentContext'
 import Upload from 'components/Form/upload'
-import ConfirmDocUpload from './ConfirmDocUpload'
+import corporate from '../../assets/images/emptystate/corporate.png'
 
 
   const UploadDocument = () => {
 
     const {uploadPaymentDetails} = useContext(PaymentContext)
+    const [modal, setmodal] = useState(true)
+
 
     const initialValues = {
         payment_id: '5fd79e7c6d80ce789ab140be',
@@ -39,6 +44,7 @@ import ConfirmDocUpload from './ConfirmDocUpload'
           formData.append('bank_transfer_receipt', values.file)
           const res = await uploadPaymentDetails(values.payment_id, formData)
           console.log(res)
+          setmodal(false)
       
       } catch (error) {
           console.log(error)
@@ -46,7 +52,7 @@ import ConfirmDocUpload from './ConfirmDocUpload'
       
   }
 
-    return (
+    return ( 
       <>
         <Button
           mt={4}
@@ -69,8 +75,9 @@ import ConfirmDocUpload from './ConfirmDocUpload'
           isCentered
         >
           <ModalOverlay />
+          { modal ? (
           <ModalContent>
-            <Flex mt={2}>
+              <Flex mt={2}>
               <Box ml={10} textAlign='center'>
                 <Heading as="h4" fontWeight="bold" fontSize={{ md: "xl" }}>
                   Complete your order
@@ -94,18 +101,52 @@ import ConfirmDocUpload from './ConfirmDocUpload'
                                     name='file'
                                 />
                                  <Flex pb={8} justify='center' pt={3}>
-                                 <ConfirmDocUpload/>
+                                 <Button
+                                  type='submit'
+                                  w={{ md: "50%" }}
+                                  colorScheme="linear"
+                                  rounded="30px"
+                                  fontSize="xs"
+                                >
+                                  Submit
+                                </Button>
                                 </Flex>
                             </form>
                         )}
                     </Formik>
                 </Box>
             </ModalBody>
-           
+            </ModalContent>
+
+          ):(
+            <ModalContent>
+            <Flex mt={2} justify='center'>
+              <Box ml={10} j>
+                <Heading as="h4" fontWeight="bold" fontSize={{ md: "xl" }}>
+                  Upload successful
+                </Heading>
+              </Box>
+              <Spacer/>
+              <ModalCloseButton color='cf.400'/>
+            </Flex>
+            <Divider orientation="horizontal" borderColor="gray.400" />
+            <ModalBody>
+            <Box my='20px' mx={1} textAlign='center' >
+                   <Text>Thank  you uploading your bank payslip </Text>
+                   <Text>Confirmation takes 1-2 weeks for us to get back to you </Text>
+                   <Text mx={10} mt='30px'>In the meantime, why dont you learn a few insights about farming</Text>
+                <Flex justify='center' mt={3}>
+                  <Image src={corporate} w={{md:'180px'}} h={{md:'110px'}}/>
+                </Flex>
+                <Button  as='a' href='/dashboard' colorScheme='linear' rounded='30px'my={6} w={{md:'60%'}}>Go to farmboard</Button>
+                </Box>
+            </ModalBody>
           </ModalContent>
+          )
+          }
+           
         </Modal>
       </>
     );
   };
   export default UploadDocument;
-  

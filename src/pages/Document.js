@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
 import {Box, Grid } from '@chakra-ui/core'
@@ -29,8 +29,7 @@ const data = [
 ]
 
 const Document = () => {
-
-
+  
     return (
             <Layout>
                 <Box mt='200px' mx='80px'>
