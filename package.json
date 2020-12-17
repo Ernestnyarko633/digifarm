@@ -21,6 +21,7 @@
     "carbon-components": "10.24.0",
     "carbon-components-react": "7.24.0",
     "carbon-icons": "7.0.7",
+    "emotion-theming": "^11.0.0",
     "formik": "^2.2.5",
     "framer-motion": "^2.9.5",
     "google-map-react": "^2.1.9",
