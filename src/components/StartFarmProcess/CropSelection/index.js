@@ -1,21 +1,10 @@
 import {
   Box,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
   Heading,
-  Icon,
-  Image,
-  Progress,
-  Text,
 } from "@chakra-ui/core";
-import { Button } from "components";
 import Tabs from "components/Tabs/Tabs";
 import React from "react";
-import AboutFarm from "./AboutFarm";
 import FarmDetails from "./FarmDetails";
-import FarmImage from "./FarmImage";
 
 const CropSelection = ({ handleNext }) => {
   const [activeKey, setActiveKey] = React.useState(0);

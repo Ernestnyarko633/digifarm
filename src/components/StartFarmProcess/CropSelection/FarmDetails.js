@@ -1,17 +1,9 @@
 import {
   Box,
-  Divider,
-  Flex,
   Grid,
-  GridItem,
-  Heading,
-  Icon,
-  Image,
-  Progress,
-  Text,
+  Button
 } from '@chakra-ui/core';
 import { Button } from 'components';
-import Tabs from 'components/Tabs/Tabs';
 import React from 'react';
 import AboutFarm from './AboutFarm';
 import FarmImage from './FarmImage';

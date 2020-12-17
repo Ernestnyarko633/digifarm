@@ -1,6 +1,5 @@
 import { Select } from 'baseui/select';
 import React from 'react';
-import _get from 'lodash/get';
 import { Box, FormLabel } from '@chakra-ui/core';
 
 const BaseSelect = ({
