@@ -1,17 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import Layout from "container/Layout";
 import {
   Box,
   Heading,
   Image,
-  IconButton,
   Spacer,
   Text,
   Flex,
 } from "@chakra-ui/core";
 import ArrowButton from "../components/Button/ArrowButton";
 import WarehouseCard from "components/Cards/WarehouseCard";
-import BuyerCard from "components/Cards/Buyer";
+import BuyerCard from "components/Cards/BuyerCard";
 
 import IllustrationImage from "../assets/images/home/illustration.png";
 import SoyaBean from "../assets/images/startfarm/soya-beans.svg";

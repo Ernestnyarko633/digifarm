@@ -1,7 +1,7 @@
 import React from 'react'
-import {Box, Button, Divider, Progress,Heading, Spacer ,Flex, Avatar, Text ,Image} from '@chakra-ui/core'
+import {Box, Divider, Progress,Heading, Spacer ,Flex, Avatar, Text ,Image} from '@chakra-ui/core'
 import PropTypes from 'prop-types'
-import ConfirmSale from 'components/Modals/ConfirmSellModal'
+import ConfirmSale from 'components/Modals/ConfirmSale'
 
 const BuyerCard = ({ 
     image, 

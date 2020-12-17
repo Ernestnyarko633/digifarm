@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/core";
 import Notification from "components/Notifications";
 
-const ConfirmSell = () => {
+const ConfirmSale = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast();
 
@@ -125,4 +125,4 @@ const ConfirmSell = () => {
     </>
   );
 };
-export default ConfirmSell;
+export default ConfirmSale;
