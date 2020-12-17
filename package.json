@@ -19,15 +19,11 @@
     "carbon-components": "10.24.0",
     "carbon-components-react": "7.24.0",
     "carbon-icons": "7.0.7",
-<<<<<<< HEAD
-    "formik": "^2.2.5",
-    "framer-motion": "^2.9.4",
-    "google-map-react": "^2.1.9",
-=======
     "framer-motion": "^2.9.5",
+    "formik": "^2.2.5",
     "immer": "^8.0.0",
     "jwt-decode": "^3.1.2",
->>>>>>> bfb2431bc900b516cd8b09833c412adc9fba702d
+    "google-map-react": "^2.1.9",
     "lodash": "^4.17.20",
     "node-sass": "5.0.0",
     "prismic-javascript": "^3.0.2",
