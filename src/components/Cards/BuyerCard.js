@@ -1,19 +1,5 @@
 import React from 'react'
-<<<<<<< HEAD:src/components/Cards/BuyerCard.js
 import {Box, Divider, Progress,Heading, Spacer ,Flex, Avatar, Text ,Image} from '@chakra-ui/core'
-=======
-import {
-  Box,
-  Divider,
-  Progress,
-  Heading,
-  Spacer,
-  Flex,
-  Avatar,
-  Text,
-  Image
-} from '@chakra-ui/react'
->>>>>>> bfb2431bc900b516cd8b09833c412adc9fba702d:src/components/Cards/Buyer.js
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 
