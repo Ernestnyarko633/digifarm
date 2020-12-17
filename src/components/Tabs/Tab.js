@@ -1,38 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Text } from '@chakra-ui/core';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Text } from '@chakra-ui/react'
 
 const Tab = ({ activeTab, label, onClick, width=64 }) => {
   const handleClick = () => {
-    onClick(label);
-  };
+    onClick(label)
+  }
   return (
-    <Box
-      as='li'
-      w={width}
+    <Box as='li'
+      w={64}
       textAlign='center'
       py={4}
       mt={14}
       cursor='pointer'
       onClick={handleClick}
-      bg='white'
+      // bg='white'
       bg={activeTab === label ? 'cf.400' : 'white'}
       borderWidth={1}
       borderColor={activeTab === label ? 'cf.400' : 'gray.400'}
       borderBottomWidth={activeTab === label ? 3 : 1}
       borderBottomColor={activeTab === label ? 'brand.dark' : ''}
       color={activeTab === label ? 'white' : 'gray.700'}
-      fontWeight={activeTab === label ? 900 : 'normal'}
-    >
+      fontWeight={activeTab === label ? 900 : 'normal'}>
       <Text fontFamily='medium'>{label}</Text>
     </Box>
-  );
-};
+  )
+}
 
 Tab.propTypes = {
   activeTab: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
+  label    : PropTypes.string.isRequired,
+  onClick  : PropTypes.func.isRequired,
+}
 
-export default Tab;
+export default Tab
