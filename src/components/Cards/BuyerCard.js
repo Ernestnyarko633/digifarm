@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, Divider, Progress,Heading, Spacer ,Flex, Avatar, Text ,Image} from '@chakra-ui/core'
+import { Box, Divider, Progress, Heading, Spacer, Flex, Avatar, Text, Image } from '@chakra-ui/core'
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 

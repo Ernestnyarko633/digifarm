@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from 'container/Layout'
 import { Box, Heading, Image, Text, Flex } from '@chakra-ui/react'
 import WarehouseCard from 'components/Cards/WarehouseCard'
-import BuyerCard from 'components/Cards/Buyer'
+import BuyerCard from 'components/Cards/BuyerCard'
 import ArrowButton from '../components/Button/ArrowButton'
 
 import IllustrationImage from '../assets/images/home/illustration.png'
