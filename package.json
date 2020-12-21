@@ -4,10 +4,10 @@
   "private": true,
   "dependencies": {
     "@1f8/eslint-config-react": "1.2.0",
-    "@carbon/icons-react": "10.21.0",
+    "@carbon/icons-react": "^10.21.0",
     "@chakra-ui/icon": "^1.0.1",
     "@chakra-ui/icons": "^1.0.1",
-    "@chakra-ui/react": "^1.0.2",
+    "@chakra-ui/react": "^1.0.3",
     "@emotion/react": "^11.1.2",
     "@emotion/styled": "^11.0.0",
     "@headlessui/react": "^0.2.0",
