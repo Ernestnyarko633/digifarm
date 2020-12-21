@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import useComponents from 'context/ComponentContext'
 import { AnimateSharedLayout, motion } from 'framer-motion'
@@ -55,9 +55,33 @@ const OtherSteps = () => {
         </Flex>
       </Flex>
 
+      <Flex align='center'
+        justify='space-between'
+        w={{ md: 143 }}
+        mx='auto'
+        mt={{ md: 12 }}
+        mb={4}>
+        <Text fontSize='sm' color='red.600'>
+          Farm starts : 2nd September, 2020
+        </Text>
+        <Flex align='center'
+          rounded='30px'
+          px={4}
+          py={1}
+          borderWidth={1}
+          borderColor='cf.400'>
+          <Image h={4}
+            src={
+              require('../../../assets/images/startfarm/insurance.png').default
+            } />
+          <Text fontSize='sm' ml={2} color='cf.400'>
+            Farm is insured
+          </Text>
+        </Flex>
+      </Flex>
+
       <AnimateSharedLayout>
         <MotionFlex layout
-          mt={{ md: 12 }}
           w={{ md: 143 }}
           h={{ md: 120 }}
           mx='auto'

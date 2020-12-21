@@ -2,24 +2,17 @@ import React from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import OtherSteps from 'components/StartFarmProcess/OtherSteps'
+import useComponents from 'context/ComponentContext'
 
 const Cooperative = () => {
-  const [ step, setStep ] = React.useState(0)
-
-  function handleNext() {
-    setStep((prevActiveStep) => prevActiveStep + 1)
-  }
-
-  function handleBack() {
-    setStep((prevActiveStep) => prevActiveStep - 1)
-  }
+  const { step } = useComponents()
 
   const getContent = (value) => {
     switch (value) {
       case 0:
-        return <CropSelection handleNext={handleNext} />
+        return <CropSelection />
       case 1:
-        return <OtherSteps handlePrev={handleBack} />
+        return <OtherSteps />
       default:
         return null
     }
