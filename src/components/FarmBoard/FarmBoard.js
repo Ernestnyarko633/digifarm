@@ -22,13 +22,11 @@ const FarmBoardContent = () => {
       headingImageAlt: 'crop',
       whoseFarm      : "John's Farm",
       farmLocation   : 'Agyata, Eastern Region',
-      level          : 1,
       postContentText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
     },
     {
       avatarSrc      : SoyaBeanImg,
-      levelColor     : '#ff0000',
       datePosted     : '3m ago',
       likeCount      : 20,
       headingText    : 'CROP HEALTH',
@@ -37,13 +35,11 @@ const FarmBoardContent = () => {
       whoseFarm      : "John's Farm",
       postType       : 'FARM UPDATE',
       farmLocation   : 'Agyata, Eastern Region',
-      level          : 1,
       postContentText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
     },
     {
-      avatarSrc      : SoyaBeanImg,
-      levelColor     : '#ff0000',
+      avatarSrc      : SoyaBeanImg,  
       datePosted     : '3m ago',
       likeCount      : 20,
       headingText    : 'INVOICE DEPOSIT',
@@ -52,14 +48,12 @@ const FarmBoardContent = () => {
       buttonColor    : '#fff',
       whoseFarm      : "John's Farm",
       farmLocation   : 'Agyata, Eastern Region',
-      level          : 1,
       headingIcon    : AiOutlineCreditCard,
       postContentText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
     },
     {
       avatarSrc      : SoyaBeanImg,
-      levelColor     : '#ff0000',
       datePosted     : '3m ago',
       likeCount      : 20,
       headingText    : 'INVOICE DEPOSIT',
@@ -68,14 +62,12 @@ const FarmBoardContent = () => {
       buttonColor    : '#fff',
       whoseFarm      : "John's Farm",
       farmLocation   : 'Agyata, Eastern Region',
-      level          : 1,
       headingIcon    : AiOutlineCreditCard,
       postContentText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
     },
     {
       avatarSrc      : SoyaBeanImg,
-      levelColor     : '#ff0000',
       datePosted     : '3m ago',
       likeCount      : 20,
       headingText    : 'INVOICE DEPOSIT',
@@ -84,14 +76,12 @@ const FarmBoardContent = () => {
       buttonColor    : '#fff',
       whoseFarm      : "John's Farm",
       farmLocation   : 'Agyata, Eastern Region',
-      level          : 1,
       headingIcon    : AiOutlineCreditCard,
       postContentText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
     },
     {
       avatarSrc      : SoyaBeanImg,
-      levelColor     : '#ff0000',
       datePosted     : '3m ago',
       likeCount      : 20,
       headingText    : 'INVOICE DEPOSIT',
@@ -100,14 +90,27 @@ const FarmBoardContent = () => {
       buttonColor    : '#fff',
       whoseFarm      : "John's Farm",
       farmLocation   : 'Agyata, Eastern Region',
-      level          : 1,
+      headingIcon    : AiOutlineCreditCard,
+      postContentText:
+        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
+    },
+    {
+      avatarSrc   : SoyaBeanImg,
+      datePosted  : '3m ago',
+      likeCount   : 20,
+      headingText : 'INVOICE DEPOSIT',
+      btntitle    : 'Payout',
+      buttonWidth : '120px',
+      buttonColor : '#fff',
+      whoseFarm   : "John's Farm",
+      farmLocation: 'Agyata, Eastern Region',
+      
       headingIcon    : AiOutlineCreditCard,
       postContentText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
     },
     {
       avatarSrc      : SoyaBeanImg,
-      levelColor     : '#ff0000',
       datePosted     : '3m ago',
       likeCount      : 20,
       headingText    : 'INVOICE DEPOSIT',
@@ -116,23 +119,6 @@ const FarmBoardContent = () => {
       buttonColor    : '#fff',
       whoseFarm      : "John's Farm",
       farmLocation   : 'Agyata, Eastern Region',
-      level          : 1,
-      headingIcon    : AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
-    },
-    {
-      avatarSrc      : SoyaBeanImg,
-      levelColor     : '#ff0000',
-      datePosted     : '3m ago',
-      likeCount      : 20,
-      headingText    : 'INVOICE DEPOSIT',
-      btntitle       : 'Payout',
-      buttonWidth    : '120px',
-      buttonColor    : '#fff',
-      whoseFarm      : "John's Farm",
-      farmLocation   : 'Agyata, Eastern Region',
-      level          : 1,
       headingIcon    : AiOutlineCreditCard,
       postContentText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
@@ -161,7 +147,7 @@ const FarmBoardContent = () => {
                   headingImageAlt={farm.headingImageAlt}
                   whoseFarm={farm.whoseFarm}
                   farmLocation={farm.farmLocation}
-                  level={farm.level}
+                  level={farm.level ? farm.level : null}
                   mb={5}
                   btntitle={farm.btntitle ? farm.btntitle : null}
                   levelColor={farm.levelColor ? farm.levelColor : null}
