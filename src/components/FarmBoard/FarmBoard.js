@@ -150,7 +150,7 @@ const FarmBoardContent = () => {
           {farms.map((farm) => {
             return (
               <Fade bottom>
-                <FarmBoardCard datePosted='3m ago'
+                <FarmBoardCard datePosted={farm.datePosted}
                   AvatarSRC={farm.avatarSrc}
                   likeCount={farm.likeCount}
                   postImage={farm.postImage}
