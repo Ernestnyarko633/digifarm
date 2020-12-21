@@ -213,7 +213,7 @@ const FarmBoardCard = ({
                             <Box as={TwitterShareButton} boxSize={50} title={postContentText} url={shareUrl} via={postContentText}>
                               <Icon boxSize={8} as={AiFillTwitterCircle} />
                             </Box>
-                            <Box as={LinkedinShareButton} boxSize={50} title={postContentText} url={shareUrl} via={postContentText}>
+                            <Box as={LinkedinShareButton} source={shareUrl} boxSize={50} title={postContentText} url={shareUrl} via={postContentText}>
                               <Icon boxSize={8} as={AiFillLinkedin} />
                             </Box>
                             <Box as={FacebookShareButton} boxSize={50} title={postContentText} url={shareUrl} via={postContentText}>
