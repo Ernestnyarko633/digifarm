@@ -18,7 +18,11 @@ import {
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { MdFavoriteBorder } from 'react-icons/md'
-import { AiFillTwitterCircle, AiFillFacebook, AiFillLinkedin } from 'react-icons/ai'
+import {
+  AiFillTwitterCircle,
+  AiFillFacebook,
+  AiFillLinkedin
+} from 'react-icons/ai'
 import { RiShareForwardLine } from 'react-icons/ri'
 import Button from 'components/Button'
 import { Fragment } from 'react'
@@ -58,8 +62,6 @@ const FarmBoardCard = ({
   AvatarSRC,
   ...rest
 }) => {
-
- 
   const { isOpen, onClose, onOpen } = useDisclosure()
   const shareUrl = 'http://completefarmer.com'
 
@@ -188,41 +190,59 @@ const FarmBoardCard = ({
                       </Text>
                     </Flex>
                     {/*  */}
-                    <Icon boxSize={8} as={RiShareForwardLine} onClick={onOpen} />  
+                    <Icon boxSize={8}
+                      as={RiShareForwardLine}
+                      onClick={onOpen} />
                     <Modal isOpen={isOpen}
-        onClose={onClose}
-        mt={10}
-        variant='outline'
-        borderColor='black'
-        borderWidth={5}
-        colorScheme='white'
-        isCentered>
+                      onClose={onClose}
+                      mt={10}
+                      variant='outline'
+                      borderColor='black'
+                      borderWidth={5}
+                      colorScheme='white'
+                      isCentered>
                       <ModalOverlay />
                       <ModalContent>
                         <Flex mt={2} mb={3}>
                           <Box ml={10}>
-                            <Heading as='h4' fontWeight='bold' fontSize={{ md: 'xl' }}>
+                            <Heading as='h4'
+                              fontWeight='bold'
+                              fontSize={{ md: 'xl' }}>
                               Share
                             </Heading>
                           </Box>
                           <ModalCloseButton />
                         </Flex>
-                        <Divider orientation='horizontal' borderColor='gray.400' />
+                        <Divider orientation='horizontal'
+                          borderColor='gray.400' />
                         <ModalBody>
                           <Flex direction='row' justify='center' align='center'>
-                            <Box as={TwitterShareButton} boxSize={50} title={postContentText} url={shareUrl} via={postContentText}>
+                            <Box as={TwitterShareButton}
+                              boxSize={50}
+                              title={postContentText}
+                              url={shareUrl}
+                              via={postContentText}>
                               <Icon boxSize={8} as={AiFillTwitterCircle} />
                             </Box>
-                            <Box as={LinkedinShareButton} source={shareUrl} boxSize={50} title={postContentText} url={shareUrl} via={postContentText}>
+                            <Box as={LinkedinShareButton}
+                              source={shareUrl}
+                              boxSize={50}
+                              title={postContentText}
+                              url={shareUrl}
+                              via={postContentText}>
                               <Icon boxSize={8} as={AiFillLinkedin} />
                             </Box>
-                            <Box as={FacebookShareButton} boxSize={50} title={postContentText} url={shareUrl} via={postContentText}>
+                            <Box as={FacebookShareButton}
+                              boxSize={50}
+                              title={postContentText}
+                              url={shareUrl}
+                              via={postContentText}>
                               <Icon boxSize={8} as={AiFillFacebook} />
                             </Box>
                           </Flex>
                         </ModalBody>
                       </ModalContent>
-                    </Modal> 
+                    </Modal>
                   </Flex>
                 </Box>
               </Box>
@@ -260,7 +280,7 @@ FarmBoardCard.propTypes = {
   postType         : PropTypes.string.isRequired,
   postContentText  : PropTypes.string.isRequired,
   redesign         : PropTypes.bool.isRequired,
-  children         : PropTypes.node.isRequired
+  children         : PropTypes.node.isRequired,
 }
 
 export default FarmBoardCard
