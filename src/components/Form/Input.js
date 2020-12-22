@@ -22,6 +22,7 @@ const FormInput = ({
   touched,
   width,
   mr,
+  bg = 'cf.300',
   ...rest
 }) => (
   <FormControl mr={mr}
@@ -29,7 +30,7 @@ const FormInput = ({
     pt={2}
     isRequired={isRequired}
     isInvalid={error && touched}>
-    <Box bg='cf.300'
+    <Box bg={bg}
       border='2px solid #3c9130'
       borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
       borderLeftWidth={0}
