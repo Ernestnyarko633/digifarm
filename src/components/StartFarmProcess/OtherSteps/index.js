@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import useComponents from 'context/ComponentContext'
 import { AnimateSharedLayout, motion } from 'framer-motion'
@@ -7,6 +7,7 @@ import AboutFarmManager from './AboutFarmManager'
 import ChooseAcreage from './ChooseAcreage'
 import Confirmation from './Confirmation'
 import Contract from './Contract'
+import InviteLink from './InviteLink'
 import PaymentOption from './PaymentOption'
 
 const MotionFlex = motion.custom(Flex)
@@ -29,6 +30,8 @@ const OtherSteps = () => {
       case 3:
         return <PaymentOption />
       case 4:
+        return <InviteLink />
+      case 5:
         return <Confirmation />
       default:
         return null
@@ -55,9 +58,33 @@ const OtherSteps = () => {
         </Flex>
       </Flex>
 
+      <Flex align='center'
+        justify='space-between'
+        w={{ md: 143 }}
+        mx='auto'
+        mt={{ md: 12 }}
+        mb={4}>
+        <Text fontSize='sm' color='red.600'>
+          Farm starts : 2nd September, 2020
+        </Text>
+        <Flex align='center'
+          rounded='30px'
+          px={4}
+          py={1}
+          borderWidth={1}
+          borderColor='cf.400'>
+          <Image h={4}
+            src={
+              require('../../../assets/images/startfarm/insurance.png').default
+            } />
+          <Text fontSize='sm' ml={2} color='cf.400'>
+            Farm is insured
+          </Text>
+        </Flex>
+      </Flex>
+
       <AnimateSharedLayout>
         <MotionFlex layout
-          mt={{ md: 12 }}
           w={{ md: 143 }}
           h={{ md: 120 }}
           mx='auto'
@@ -77,13 +104,13 @@ const OtherSteps = () => {
           fontSize='md'
           h={12}
           onClick={otherStep <= 0 ? handleBack : handlePrev} />
-        <Button btntitle={otherStep === 4 ? 'Continue to my Dashboard' : 'Next'}
+        <Button btntitle={otherStep === 5 ? 'Continue to my Dashboard' : 'Next'}
           ml={6}
-          width={otherStep === 4 ? 70 : 56}
+          width={otherStep === 5 ? 70 : 56}
           fontSize='lg'
           md
           h={12}
-          onClick={otherStep === 4 ? goHome : handleNextStep} />
+          onClick={otherStep === 5 ? goHome : handleNextStep} />
       </Flex>
     </Box>
   )
