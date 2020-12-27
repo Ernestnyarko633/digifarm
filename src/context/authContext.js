@@ -10,7 +10,7 @@ const AUTH_API = configs().AUTH_API
 export const authContext = createContext()
 
 const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+  const [ user, setUser ] = useState(null)
 
   const getUser = async token => {
     try {
@@ -30,10 +30,10 @@ const AuthContextProvider = ({ children }) => {
     // const _cfu = window.sessionStorage.getItem('_cfu')
     const _cft = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmQwOTlkNjNlNDY1YzAwMTEzM2ZiZWIiLCJlbWFpbCI6ImdhZHpvcmdlbnVAZ21haWwuY29tIiwiaWF0IjoxNjA3NTA4MTQ2LCJleHAiOjE2MTAxMDAxNDZ9.cvI_etpzPV5mTqinISwlINGXMjOauEhg1EjgEQRAR2E'
     const _cfu = {
-      _id: '1',
+      _id      : '1',
       firstName: 'Georgina',
-      lastName: 'Adzorgenu',
-      email: 'gadzorgenu@gmail.com'
+      lastName : 'Adzorgenu',
+      email    : 'gadzorgenu@gmail.com'
     }
 
     if (_cft && _cfu) {
@@ -50,6 +50,7 @@ const AuthContextProvider = ({ children }) => {
       window.sessionStorage.clear()
       // replaceURI('AUTH', '/redirects?from=OPERATION&off=true')
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.debug(error)
     }
   }
@@ -57,7 +58,7 @@ const AuthContextProvider = ({ children }) => {
   const updatePassword = async body => {
     try {
       return await http.patch({
-        url: `${AUTH_API}/password-setting`,
+        url : `${AUTH_API}/password-setting`,
         body: JSON.stringify(body)
       })
     } catch (error) {
@@ -66,8 +67,7 @@ const AuthContextProvider = ({ children }) => {
   }
 
   return (
-    <authContext.Provider
-      value={{
+    <authContext.Provider value={{
         getUser,
         logout,
         isAuthenticated,
@@ -75,8 +75,7 @@ const AuthContextProvider = ({ children }) => {
         setUser,
         user,
         updatePassword
-      }}
-    >
+      }}>
       {children}
     </authContext.Provider>
   )

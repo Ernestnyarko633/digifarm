@@ -18,7 +18,7 @@ export const getFormattedMoney = (val, withCurrecy) => {
     number = 0
   }
   const newFMondy = new Intl.NumberFormat('en-US', {
-    style: 'currency',
+    style   : 'currency',
     currency: 'USD'
   }).format(number)
   return !withCurrecy ? newFMondy.split('$')[1] : newFMondy

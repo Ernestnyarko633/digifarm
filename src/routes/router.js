@@ -15,7 +15,8 @@ const Router = () => (
         path='/startfarm/cooperative'
         component={Pages.Cooperative} />
       <Route path='/marketplace' component={Pages.Marketplace} />
-      <Route path='/document' component={Pages.Document}/>
+      <Route path='/warehouse' component={Pages.Warehouse} />
+      <Route path='/document' component={Pages.Document} />
       <Route path='/farms' component={Pages.FarmBoard} />
       <Route path='/notfound' component={Pages.NotFound} />
       <Redirect from='*' to='/404' />

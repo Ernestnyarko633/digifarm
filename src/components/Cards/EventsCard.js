@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Avatar, Image, Heading, Text } from '@chakra-ui/core'
+import { Box, Flex, Avatar, Image, Heading, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 
 const EventsCard = ({

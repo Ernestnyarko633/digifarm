@@ -6,6 +6,7 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
   Button,
   Box,
   Text,
@@ -14,15 +15,11 @@ import {
   Divider
 } from '@chakra-ui/react'
 import React from 'react'
+import Notification from 'components/Notifications'
 
-<<<<<<< HEAD:src/components/Modals/ConfirmSale.js
-const ConfirmSale = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const toast = useToast();
-=======
-const ConfirmSell = () => {
+const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
->>>>>>> bfb2431bc900b516cd8b09833c412adc9fba702d:src/components/Modals/ConfirmSellModal.js
+  const toast = useToast()
 
   return (
     <>
@@ -44,7 +41,7 @@ const ConfirmSell = () => {
         isCentered>
         <ModalOverlay />
         <ModalContent>
-          <Flex mt={2}>
+          <Flex m={3}>
             <Box ml={10}>
               <Heading as='h4' fontWeight='bold' fontSize={{ md: 'xl' }}>
                 Confirm Sale
@@ -59,22 +56,22 @@ const ConfirmSell = () => {
                 You're about to sell
                 <Text as='span' fontWeight='bold'>
                   {' '}
-                  2000 tonnes{' '}
+                  {amtBought} tonnes{' '}
                 </Text>
                 of your produce worth
                 <Text as='span' fontWeight='bold'>
                   {' '}
-                  $540.00{' '}
+                  {price}{' '}
                 </Text>
                 to{' '}
                 <Text as='span' fontWeight='bold'>
-                  John Clinton
+                  {name}
                 </Text>
                 .
                 <Text as='span' fontSize={{ md: 'sm' }} pl={1}>
                   You would have{' '}
                   <Text as='span' fontWeight='bold'>
-                    500 tonnes
+                    {amtLeft} tonnes
                   </Text>{' '}
                   left to sell.
                 </Text>
@@ -99,7 +96,17 @@ const ConfirmSell = () => {
                 w={{ md: '90px' }}>
                 No
               </Button>
-              <Button colorScheme='linear' rounded='30px' w={{ md: '90px' }}>
+              <Button colorScheme='linear'
+                rounded='30px'
+                w={{ md: '90px' }}
+                onClick={() => {
+                  onClose()
+                  toast({
+                    position: 'top-right',
+                    duration: 9000,
+                    render  : () => <Notification />,
+                  })
+                }}>
                 Yes
               </Button>
             </Flex>
@@ -107,12 +114,6 @@ const ConfirmSell = () => {
         </ModalContent>
       </Modal>
     </>
-<<<<<<< HEAD:src/components/Modals/ConfirmSale.js
-  );
-};
-export default ConfirmSale;
-=======
   )
 }
-export default ConfirmSell
->>>>>>> bfb2431bc900b516cd8b09833c412adc9fba702d:src/components/Modals/ConfirmSellModal.js
+export default ConfirmSale

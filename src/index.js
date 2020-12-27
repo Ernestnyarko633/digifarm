@@ -1,13 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./assets/styles/index.css";
-import { ChakraProvider } from "@chakra-ui/core";
-import { Client as Styletron } from "styletron-engine-atomic";
-import { Provider as StyletronProvider } from "styletron-react";
-import { LightTheme, BaseProvider } from "baseui";
-import App from "container/App";
-import { theme } from "theme/theme";
-import reportWebVitals from "./reportWebVitals";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './assets/styles/index.css'
+import { ChakraProvider } from '@chakra-ui/react'
+import { Client as Styletron } from 'styletron-engine-atomic'
+import { Provider as StyletronProvider } from 'styletron-react'
+import { LightTheme, BaseProvider } from 'baseui'
+import App from 'container/App'
+import { theme } from 'theme/theme'
+import reportWebVitals from './reportWebVitals'
 import PaymentContextProvider from 'context/paymentContext'
 import AuthContextProvider from 'context/authContext'
 
@@ -19,7 +19,7 @@ ReactDOM.render(
       <BaseProvider theme={LightTheme}>
         <PaymentContextProvider>
           <AuthContextProvider>
-              <App />
+            <App />
           </AuthContextProvider>
         </PaymentContextProvider>
       </BaseProvider>

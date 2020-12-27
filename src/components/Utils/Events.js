@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Heading, Flex, Text } from '@chakra-ui/core'
+import { Box, Heading, Flex, Text } from '@chakra-ui/react'
 import EventsCard from '../Cards/EventsCard'
 
 const Events = () => {

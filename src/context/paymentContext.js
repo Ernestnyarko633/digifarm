@@ -1,19 +1,18 @@
-import React ,{createContext} from 'react'
+import React, { createContext } from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import getConfig from '../utils/configs'
 import http from '../utils/httpFacade'
 
 export const PaymentContext = createContext()
 
-const PaymentContextProvider = ({children}) => {
+const PaymentContextProvider = ({ children }) => {
 
     const PAYMENT_API = getConfig().PAYMENT_API
 
     const uploadPaymentDetails = async (id, formData)=> {
         try{
             return await http.patch({
-                url:`${PAYMENT_API}/payment/receipt-upload?payment_id=${id}`,
+                url : `${PAYMENT_API}/payment/receipt-upload?payment_id=${id}`,
                 body: formData
             })
         }catch(error){
@@ -25,7 +24,7 @@ const PaymentContextProvider = ({children}) => {
     const deleteBankTransfer = async (id)=> {
         try {
             return await http.patch({
-                url:`${PAYMENT_API}/payment/receipt-delete?payment_id=${id}`
+                url: `${PAYMENT_API}/payment/receipt-delete?payment_id=${id}`
             })
         } catch (error) {
             return error
@@ -33,14 +32,12 @@ const PaymentContextProvider = ({children}) => {
     }
 
     return(
-        <PaymentContext.Provider
-         value={{
+      <PaymentContext.Provider value={{
              uploadPaymentDetails,
              deleteBankTransfer
-         }}
-        >
-            {children}
-        </PaymentContext.Provider>
+         }}>
+        {children}
+      </PaymentContext.Provider>
     )
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Divider, Progress, Heading, Spacer, Flex, Avatar, Text, Image } from '@chakra-ui/core'
+import { Box, Divider, Progress, Heading, Spacer, Flex, Avatar, Text, Image } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 
@@ -31,7 +31,7 @@ const BuyerCard = ({
           </Flex>
         </Box>
         <Spacer />
-        <ConfirmSale />
+        <ConfirmSale amtLeft={amtLeft} name={name} amtBought={amtBought} price={price} />
       </Flex>
       <Box mt={4}>
         <Flex>

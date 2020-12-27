@@ -9,7 +9,8 @@ const Individual = React.lazy(() => import('./StartFarm/Individual'))
 const Cooperative = React.lazy(() => import('./StartFarm/Cooperative'))
 const Forum = React.lazy(() => import('./Forum'))
 const NotFound = React.lazy(() => import('./NotFound'))
-const Document = React.lazy(()=> import('./Document'));
+const Document = React.lazy(()=> import('./Document'))
+const Warehouse = React.lazy(()=> import('./Warehouse'))
 
 const Pages = {
   Dashboard,
@@ -21,7 +22,8 @@ const Pages = {
   Cooperative,
   Forum,
   NotFound,
-  Document
-};
+  Document,
+  Warehouse
+}
 
 export default Pages
