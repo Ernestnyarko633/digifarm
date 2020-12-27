@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import FarmInfo from 'components/Cards/FarmInfo'
 import { Button } from 'components'
 import React from 'react'
@@ -12,14 +12,16 @@ const Confirmation = () => {
   const { handleModalClick } = useComponents()
   return (
     <MotionFlex layout w='100%'>
-      <Box w='50%'>Left</Box>
-      <Box w='50%'
-        borderLeftWidth={1}
-        borderLeftColor='gray.300'
-        p={20}
-        pos='relative'>
+      <Box w='50%'>
+        <Flex align='center' justify='center' h='100%'>
+          <Image w={80}
+            h={80}
+            src={require('../../../assets/images/congratulatioins.svg').default} />
+        </Flex>
+      </Box>
+      <Box w='50%' p={14} pos='relative'>
         <Flex direction='column' align='center' justify='center'>
-          <Box textAlign='center' m='auto' mt={10}>
+          <Box textAlign='center' m='auto' mt={6}>
             <Text mb={1} fontSize={22} fontWeight='bold'>
               Confirmation
             </Text>
@@ -29,7 +31,7 @@ const Confirmation = () => {
           </Box>
           <FarmInfo />
         </Flex>
-        <Flex align='center' pos='absolute' bottom={4} left={0} right={0}>
+        <Flex align='center' pos='absolute' bottom={5} left={0} right={0}>
           <Button btntitle='View farm receipt'
             rounded='30px'
             borderColor='cf.900'
