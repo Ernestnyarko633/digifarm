@@ -4,13 +4,14 @@ import {
     ModalOverlay,
     ModalContent,
     Box,
-    IconButton
+    // IconButton,
+    ModalCloseButton
   } from '@chakra-ui/react'
 
 
   const DocumentPreview = ({ link, isOpen, onClose }) => {
 
-    const [ shown, setShown ] = useState(true)
+    const [shown] = useState(true)
 
 
     const previewModal = () => (
@@ -26,14 +27,8 @@ import {
         overflow='auto'>
         <Box pos='relative'>
           <Box position='absolute' right={0} pr={{ md: 6 }}>
-            <IconButton variantColor='#3c9130'
-                color='black'
-                aria-label='Close Preview'
-                size='lg'
-                icon='close'
-                onClick={() => {
-                setShown(false)
-                }} />
+            <ModalCloseButton  color='white' />
+            
           </Box>
           {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
           <iframe src={link + '#toolbar=0'} width='100%' height='500px' />

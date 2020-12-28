@@ -2,7 +2,7 @@ import { Box, Text, Heading, Flex, Tag } from '@chakra-ui/react'
 import { Button } from 'components'
 import React from 'react'
 
-const Notification = () => (
+const Notification = ({ amtBought, name }) => (
   <Box pos='fixed'
     top={24}
     right={10}
@@ -43,7 +43,7 @@ const Notification = () => (
           Transaction Successful
         </Text>
         <Text fontSize='10px' color='gray.500'>
-          You have sold 200 tonnes of your produce to a Buyer
+          You have sold {amtBought} tonnes of your produce to a {name}
         </Text>
       </Flex>
       <Box>

@@ -21,7 +21,7 @@ const BuyerCard = ({
               <Image src={image} />
             </Avatar>
             <Box ml={4}>
-              <Heading as='h6' mt={-2} fontSize={{ md: 'md' }}>
+              <Heading as='h6' mt={1} fontSize={{ md: 'md' }}>
                 {name}
               </Heading>
               <Text fontSize='xs' mt={-1}>

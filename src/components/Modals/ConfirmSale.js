@@ -21,6 +21,20 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const toast = useToast()
 
+  const handleKeyPress = (e) => {
+    const key = e.keyCode || e.charCode
+    if (key === 13 || e.key === 'Enter'){
+      e.preventDefault()
+      e.stopPropagation()
+      toast({
+        position: 'top-right',
+        duration: 9000,
+        render  : () => <Notification amtBought={amtBought} name={name} />,
+      })
+    }
+  }
+  
+
   return (
     <>
       <Button mt={4}
@@ -99,12 +113,13 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
               <Button colorScheme='linear'
                 rounded='30px'
                 w={{ md: '90px' }}
+                onKeyPress={handleKeyPress}
                 onClick={() => {
                   onClose()
                   toast({
                     position: 'top-right',
                     duration: 9000,
-                    render  : () => <Notification />,
+                    render  : () => <Notification amtBought={amtBought} name={name} />,
                   })
                 }}>
                 Yes

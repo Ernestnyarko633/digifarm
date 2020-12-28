@@ -30,6 +30,15 @@ const ConfirmReceiptDelete = () => {
 
     }
 
+    const handleKeyPress = (e) => {
+      const key = e.keyCode || e.charCode
+      if (key === 13 || e.key === 'Enter'){
+        e.preventDefault()
+        e.stopPropagation()
+        deleteReceipt(payment_id)
+      }
+    }
+
     return (
       <>
         <Button colorScheme='linear'
@@ -65,6 +74,7 @@ const ConfirmReceiptDelete = () => {
                   <Button colorScheme='linear'
                             rounded='30px'
                             w={{ md: '90px' }}
+                            onKeyPress={handleKeyPress}
                             onClick={async => {
                                 deleteReceipt(payment_id)
                                onClose()

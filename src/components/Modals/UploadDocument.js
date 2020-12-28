@@ -27,7 +27,7 @@ import corporate from '../../assets/images/emptystate/corporate.png'
 
     const { uploadPaymentDetails } = useContext(PaymentContext)
     const [ modal, setmodal ] = useState(true)
-
+    // const [ doc, setDoc ] = useState(true)
 
     const initialValues = {
         payment_id: '5fd79e7c6d80ce789ab140be',
@@ -36,8 +36,6 @@ import corporate from '../../assets/images/emptystate/corporate.png'
 
     const { isOpen, onClose, onOpen } = useDisclosure()
     const onSubmit = async (values)=> {
-      // eslint-disable-next-line no-console
-      console.log(values)
       try {
           const formData = new FormData()
           formData.append('bank_transfer_receipt', values.file)
@@ -85,24 +83,23 @@ import corporate from '../../assets/images/emptystate/corporate.png'
                         onSubmit={onSubmit}>
                     {({ handleSubmit, values, ...rest })=> (
                       <form onSubmit={handleSubmit}>
-                        {!values.file ? (
+                        {!values.file  ? (
                           <Field component={Upload}
-                                      label='Upload an image of your bank payslip here'
-                                      accept='image/jpeg, image/jpg'
-                                      name='file' />
+                              label='Upload an image of your bank payslip here'
+                              accept='image/jpeg, image/jpg'
+                              name='file' />
                         ) : (
                           <Flex w='130px' mt={4} as='button' bgColor='cf.200' p={2} rounded='30px'>
                             <Text pt={1}>{values.file.name}</Text>
                             <CloseButton _hover={{ textDecoration: 'none' }} bg='none' color='cf.400' />
                           </Flex>
-
                         )}
                         <Flex pb={8} justify='center' pt={3}>
                           <Button type='submit'
-                                  w={{ md: '50%' }}
-                                  colorScheme='linear'
-                                  rounded='30px'
-                                  fontSize='xs'>
+                              w={{ md: '50%' }}
+                              colorScheme='linear'
+                              rounded='30px'
+                              fontSize='xs'>
                             Submit
                           </Button>
                         </Flex>
