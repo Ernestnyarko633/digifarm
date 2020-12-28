@@ -1,10 +1,9 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
-import { Box, Text, Flex, Icon, Image, useDisclosure } from '@chakra-ui/react'
-import Receipt from 'assets/images/Receipt.svg'
-import Contract from 'assets/images/Contract.svg'
+import { Box, Text, Flex, Icon, useDisclosure } from '@chakra-ui/react'
 import { arrowDown } from 'theme/Icons'
 import DocumentPreview from './DocumentPreview'
+import { FaCreditCard, FaFileInvoice, FaFileContract } from  'react-icons/fa'
 
 const DocumentCard = ({ title, description, link, mt }) => {
 
@@ -14,11 +13,11 @@ const DocumentCard = ({ title, description, link, mt }) => {
     const images = (image) => {
         switch(image){
             case 'Receipt' :
-                return Receipt
+                return FaCreditCard
             case 'Contract' :
-                return Contract
+                return FaFileContract
             case 'Invoice':
-                return Contract
+                return FaFileInvoice
             default : 
             return null
         }
@@ -67,11 +66,11 @@ const DocumentCard = ({ title, description, link, mt }) => {
                             boxShadow='lg'
                             aria-labelledby='download button'
                             click={(e)=> e.preventDefault()}>
+
               <Icon as={arrowDown} bg='white' rounded='lg' color='cf.400' pl='1' />
             </Flex>
           </a>
-                    
-          <Image src={images(title)} />
+          <Icon as={images(title)} color='white' w='100px' h='100px' />    
           <Text fontSize='sm' mt={2} color='white' textAlign='center'>
             {description}
           </Text>
