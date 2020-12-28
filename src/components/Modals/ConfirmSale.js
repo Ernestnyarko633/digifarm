@@ -6,6 +6,7 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
   Button,
   Box,
   Text,
@@ -14,9 +15,25 @@ import {
   Divider
 } from '@chakra-ui/react'
 import React from 'react'
+import Notification from 'components/Notifications'
 
-const ConfirmSell = () => {
+const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
+  const toast = useToast()
+
+  const handleKeyPress = (e) => {
+    const key = e.keyCode || e.charCode
+    if (key === 13 || e.key === 'Enter'){
+      e.preventDefault()
+      e.stopPropagation()
+      toast({
+        position: 'top-right',
+        duration: 9000,
+        render  : () => <Notification amtBought={amtBought} name={name} />,
+      })
+    }
+  }
+  
 
   return (
     <>
@@ -38,7 +55,7 @@ const ConfirmSell = () => {
         isCentered>
         <ModalOverlay />
         <ModalContent>
-          <Flex mt={2}>
+          <Flex m={3}>
             <Box ml={10}>
               <Heading as='h4' fontWeight='bold' fontSize={{ md: 'xl' }}>
                 Confirm Sale
@@ -53,22 +70,22 @@ const ConfirmSell = () => {
                 You're about to sell
                 <Text as='span' fontWeight='bold'>
                   {' '}
-                  2000 tonnes{' '}
+                  {amtBought} tonnes{' '}
                 </Text>
                 of your produce worth
                 <Text as='span' fontWeight='bold'>
                   {' '}
-                  $540.00{' '}
+                  {price}{' '}
                 </Text>
                 to{' '}
                 <Text as='span' fontWeight='bold'>
-                  John Clinton
+                  {name}
                 </Text>
                 .
                 <Text as='span' fontSize={{ md: 'sm' }} pl={1}>
                   You would have{' '}
                   <Text as='span' fontWeight='bold'>
-                    500 tonnes
+                    {amtLeft} tonnes
                   </Text>{' '}
                   left to sell.
                 </Text>
@@ -93,7 +110,18 @@ const ConfirmSell = () => {
                 w={{ md: '90px' }}>
                 No
               </Button>
-              <Button colorScheme='linear' rounded='30px' w={{ md: '90px' }}>
+              <Button colorScheme='linear'
+                rounded='30px'
+                w={{ md: '90px' }}
+                onKeyPress={handleKeyPress}
+                onClick={() => {
+                  onClose()
+                  toast({
+                    position: 'top-right',
+                    duration: 9000,
+                    render  : () => <Notification amtBought={amtBought} name={name} />,
+                  })
+                }}>
                 Yes
               </Button>
             </Flex>
@@ -103,4 +131,4 @@ const ConfirmSell = () => {
     </>
   )
 }
-export default ConfirmSell
+export default ConfirmSale

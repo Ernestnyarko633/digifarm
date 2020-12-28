@@ -6,6 +6,7 @@ import Pages from 'pages'
 const Router = () => (
   <React.Suspense fallback={<Text>Loading....</Text>}>
     <Switch>
+      <Redirect exact from='/' to='/dashboard' />
       <Route exact path='/dashboard' component={Pages.Dashboard} />
       <Redirect exact from='/' to='/dashboard' />
       <Route exact path='/startfarm' component={Pages.StartFarm} />
@@ -14,6 +15,8 @@ const Router = () => (
         path='/startfarm/cooperative'
         component={Pages.Cooperative} />
       <Route path='/marketplace' component={Pages.Marketplace} />
+      <Route path='/warehouse' component={Pages.Warehouse} />
+      <Route path='/document' component={Pages.Document} />
       <Route path='/farms' component={Pages.FarmBoard} />
       <Route path='/notfound' component={Pages.NotFound} />
       <Redirect from='*' to='/404' />

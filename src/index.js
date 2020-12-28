@@ -8,6 +8,8 @@ import { LightTheme, BaseProvider } from 'baseui'
 import App from 'container/App'
 import { theme } from 'theme/theme'
 import reportWebVitals from './reportWebVitals'
+import PaymentContextProvider from 'context/paymentContext'
+import AuthContextProvider from 'context/authContext'
 
 const engine = new Styletron()
 
@@ -15,7 +17,11 @@ ReactDOM.render(
   <ChakraProvider theme={theme}>
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
-        <App />
+        <PaymentContextProvider>
+          <AuthContextProvider>
+            <App />
+          </AuthContextProvider>
+        </PaymentContextProvider>
       </BaseProvider>
     </StyletronProvider>
   </ChakraProvider>,
