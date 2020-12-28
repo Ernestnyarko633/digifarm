@@ -26,15 +26,8 @@ const AuthContextProvider = ({ children }) => {
   }
 
   const isAuthenticated = () => {
-    // const _cft = window.sessionStorage.getItem('_cft')
-    // const _cfu = window.sessionStorage.getItem('_cfu')
-    const _cft = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmQwOTlkNjNlNDY1YzAwMTEzM2ZiZWIiLCJlbWFpbCI6ImdhZHpvcmdlbnVAZ21haWwuY29tIiwiaWF0IjoxNjA3NTA4MTQ2LCJleHAiOjE2MTAxMDAxNDZ9.cvI_etpzPV5mTqinISwlINGXMjOauEhg1EjgEQRAR2E'
-    const _cfu = {
-      _id      : '1',
-      firstName: 'Georgina',
-      lastName : 'Adzorgenu',
-      email    : 'gadzorgenu@gmail.com'
-    }
+    const _cft = window.sessionStorage.getItem('_cft')
+    const _cfu = window.sessionStorage.getItem('_cfu')
 
     if (_cft && _cfu) {
       return { token: _cft, user: _cfu }
