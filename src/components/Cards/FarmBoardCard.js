@@ -98,9 +98,9 @@ const FarmBoardCard = ({
                         minW={10}
                         align='center'
                         justify='center'>
-                        <Text color={levelColor || 'cf.400'} fontSize='sm'>
+                        {level  ? <Text color={levelColor || 'cf.400'} fontSize='sm'>
                           Lv {level}
-                        </Text>
+                        </Text> : null}
                       </Flex>
                     </Flex>
                   </Box>
