@@ -1,46 +1,10 @@
 import React from 'react'
 import Layout from 'container/Layout'
-import { Box, Heading, Image, Text, Flex } from '@chakra-ui/react'
-import WarehouseCard from 'components/Cards/WarehouseCard'
-import BuyerCard from 'components/Cards/Buyer'
-import ArrowButton from '../components/Button/ArrowButton'
+import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import BuyerCard from 'components/Cards/BuyerCard'
 
 import IllustrationImage from '../assets/images/home/illustration.png'
-import SoyaBean from '../assets/images/startfarm/soya-beans.svg'
 import Oval from '../assets/images/Oval.svg'
-
-const warehouseGoods = [
-  {
-    id       : 1,
-    image    : SoyaBean,
-    name     : 'Soya Bean Warehouse',
-    location : 'AgyaAtta, Eastern Region',
-    quantity : '2000 tonnes',
-    weight   : '200 kg',
-    bags     : '20 bags',
-    condition: 'Moist',
-  },
-  {
-    id       : 2,
-    image    : SoyaBean,
-    name     : 'Soya Bean Warehouse',
-    location : 'AgyaAtta, Eastern Region',
-    quantity : '2010 tonnes',
-    weight   : '300 kg',
-    bags     : '30 bags',
-    condition: 'Dry',
-  },
-  // {
-  //   id:3,
-  //   image: SoyaBean,
-  //   name: 'Soya Bean Warehouse',
-  //   location: 'Shai Osudoku, Eastern Region',
-  //   quantity: '2010 tonnes',
-  //   weight: '300 kg',
-  //   bags: '30 bags',
-  //   condition: 'Moist'
-  // }
-]
 
 const buyers = [
   {
@@ -66,7 +30,7 @@ const buyers = [
 ]
 
 const Marketplace = () => {
-  document.title = 'COMPLETE FARMER | MARKETPLACE'
+  document.title = 'Complete Farmer | marketplace'
 
   return (
     <Layout>
@@ -82,26 +46,7 @@ const Marketplace = () => {
           <Text>Sell your produce to the right buyer at a good price</Text>
         </Box>
       </Box>
-      <Flex align='center' justify='space-between' p={{ md: 16 }}>
-        <Heading as='h4' fontSize={{ md: '2xl' }}>
-          Here's how your farm(s) are doing
-        </Heading>
-        <ArrowButton />
-      </Flex>
-      <Flex my={3}>
-        {warehouseGoods.map((item) => (
-          <WarehouseCard name={item.name}
-            location={item.location}
-            image={item.image}
-            quantity={item.quantity}
-            weight={item.weight}
-            bags={item.bags}
-            condition={item.condition}
-            mr={3}
-            ml={14} />
-        ))}
-      </Flex>
-      <Box my={4} textAlign='center'>
+      <Box my={6} textAlign='center'>
         <Heading as='h4' fontSize={{ md: '2xl' }}>
           Here's a list of available buyers
         </Heading>

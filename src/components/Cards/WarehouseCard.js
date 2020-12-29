@@ -85,6 +85,8 @@ const WarehouseCard = ({
         <Button colorScheme='linear'
           rounded='30px'
           fontSize='xs'
+          as='a'
+          href='/marketplace'
           fontWeight='bold'
           width='100%'>
           Sell
