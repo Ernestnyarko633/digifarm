@@ -31,7 +31,7 @@ node {
             def qualityGate = waitForQualityGate()
             if (qualityGate.status != 'OK'){
                 slackSend(color: '#F01717', message: "Quality gate failed for ${env.JOB_NAME}")
-                error "Pipeline aborted due to quality gate failure: ${qualityGate.status}"
+                //error "Pipeline aborted due to quality gate failure: ${qualityGate.status}"
             }
         }
     }
