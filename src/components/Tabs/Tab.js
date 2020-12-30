@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Text } from '@chakra-ui/react'
 
-const Tab = ({ activeTab, label, onClick, width=64 }) => {
+const Tab = ({ activeTab, label, onClick, width = 64 }) => {
   const handleClick = () => {
     onClick(label)
   }
@@ -11,7 +11,7 @@ const Tab = ({ activeTab, label, onClick, width=64 }) => {
       w={64}
       textAlign='center'
       py={4}
-      mt={14}
+      mr={10}
       cursor='pointer'
       onClick={handleClick}
       // bg='white'

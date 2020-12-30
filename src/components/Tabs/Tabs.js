@@ -6,13 +6,24 @@ import Tab from './Tab'
 
 const MotionFlex = motion.custom(Flex)
 
-const Tabs = ({ children, width, borderWidth, px, pt, display, boxWidth, mt, mx, direction='column' }) => {
+const Tabs = ({
+  children,
+  width,
+  borderWidth,
+  px,
+  pt,
+  display = 'block',
+  boxWidth,
+  mt,
+  mx,
+  direction = 'column',
+}) => {
   const [ activeTab, setActiveTab ] = React.useState(children[0].props.label)
 
   const handleClickTabItem = React.useCallback((tab) => setActiveTab(tab), [])
 
   return (
-    <Flex direction={direction} mt={mt}> 
+    <Flex direction={direction} mt={mt}>
       <Box display={display} as='ol' listStyleType='none' w={width} mx='auto'>
         {children.map((child) => {
           const { label } = child.props
@@ -36,8 +47,7 @@ const Tabs = ({ children, width, borderWidth, px, pt, display, boxWidth, mt, mx,
         bg='white'
         pos='relative'
         borderWidth={borderWidth || 1}
-        borderColor='gray.300'
-        rounded='md'>
+        borderColor='gray.300'>
         {children.map((child) => {
           if (child.props.label !== activeTab) return undefined
           return child.props.children

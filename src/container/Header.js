@@ -1,31 +1,30 @@
-import React from 'react';
-import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { Menu } from '@headlessui/react';
-import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi';
-import { BiCog, BiSupport, BiHistory } from 'react-icons/bi';
-import { HiOutlineLogout } from 'react-icons/hi';
-import { BsBell, BsStar, BsPlus } from 'react-icons/bs';
+import React from 'react'
+import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+import { Menu } from '@headlessui/react'
+import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
+import { BiCog, BiSupport, BiHistory } from 'react-icons/bi'
+import { HiOutlineLogout } from 'react-icons/hi'
+import { BsBell, BsStar, BsPlus } from 'react-icons/bs'
 
-import Logo from '../assets/images/logo.png';
-import useAuth from 'context/authContext';
+import Logo from '../assets/images/logo.png'
+import useAuth from 'context/authContext'
 
 const menuLinks = [
   { name: 'Profile', icon: FiUser, link: '/profile' },
   { name: 'History', icon: BiHistory, link: '/history' },
   { name: 'Settings', icon: BiCog, link: '/settings' },
   { name: 'Help Center', icon: BiSupport, link: '/help' },
-];
+]
 
-const MotionBox = motion.custom(Box);
+const MotionBox = motion.custom(Box)
 
 const Header = () => {
-  const { isAuthenticated, logout } = useAuth();
-  const { user } = isAuthenticated();
+  const { isAuthenticated, logout } = useAuth()
+  const { user } = isAuthenticated()
 
   return (
-    <Flex
-      as='header'
+    <Flex as='header'
       gridArea='header'
       align='center'
       justify='space-between'
@@ -37,8 +36,7 @@ const Header = () => {
       zIndex={50}
       borderBottomWidth={1}
       borderBottomColor='gray.300'
-      px={{ md: 24 }}
-    >
+      px={{ md: 24 }}>
       <Box>
         <Image src={Logo} w={{ md: 12 }} />
       </Box>
@@ -59,31 +57,26 @@ const Header = () => {
         <Menu as={Box} ml={2}>
           {({ open }) => (
             <Box>
-              <Menu.Button
-                as={Box}
+              <Menu.Button as={Box}
                 _focus={{ outline: 'none' }}
-                cursor='pointer'
-              >
+                cursor='pointer'>
                 <Flex align='center'>
                   <Avatar size='sm' src={user?.avatar} name={user?.firstName} />
                   <Text ml={2}>Hi {user?.firstName}</Text>
                   <Box>
-                    <Icon
-                      ml={2}
+                    <Icon ml={2}
                       as={open ? FiChevronUp : FiChevronDown}
-                      boxSize={6}
-                    />
+                      boxSize={6} />
                   </Box>
                 </Flex>
               </Menu.Button>
               {open && (
-                <Menu.Items
-                  static
+                <Menu.Items static
                   as={MotionBox}
                   initial={{ opacity: 0, height: 0 }}
                   animate={{
-                    opacity: 1,
-                    height: 'auto',
+                    opacity   : 1,
+                    height    : 'auto',
                     transition: { duration: 0.6 },
                   }}
                   exit={{ opacity: 0, height: 0 }}
@@ -93,13 +86,11 @@ const Header = () => {
                   right={10}
                   rounded='sm'
                   mt={2}
-                  color='gray.600'
-                >
+                  color='gray.600'>
                   {menuLinks.map((item) => (
                     <Menu.Item key={item.name}>
                       {({ active }) => (
-                        <Link
-                          py={2}
+                        <Link py={2}
                           px={6}
                           _hover={{
                             textDecor: 'none',
@@ -107,8 +98,7 @@ const Header = () => {
                           bg={active && 'cf.400'}
                           color={active && 'white'}
                           d='block'
-                          href={item.link}
-                        >
+                          href={item.link}>
                           <Icon as={item.icon} boxSize={4} mr={2} /> {item.name}
                         </Link>
                       )}
@@ -116,8 +106,7 @@ const Header = () => {
                   ))}
                   <Menu.Item>
                     {({ active }) => (
-                      <Link
-                        py={2}
+                      <Link py={2}
                         px={6}
                         _hover={{
                           textDecor: 'none',
@@ -125,8 +114,7 @@ const Header = () => {
                         bg={active && 'cf.400'}
                         color={active && 'white'}
                         d='block'
-                        onClick={logout}
-                      >
+                        onClick={logout}>
                         <Icon as={HiOutlineLogout} boxSize={4} mr={2} /> Logout
                       </Link>
                     )}
@@ -138,7 +126,7 @@ const Header = () => {
         </Menu>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
