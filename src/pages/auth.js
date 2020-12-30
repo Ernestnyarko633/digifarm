@@ -1,91 +1,95 @@
-import React, { useState, useEffect, useContext } from 'react'
-import PropTypes from 'prop-types'
-import QueryString from 'query-string'
-import { Flex, Text, Button } from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import QueryString from 'query-string';
 
-import { authContext } from 'context/authContext'
-import { replaceURI } from 'helpers/misc'
-
-const InvalidToken = ({ replace }) => (
-  <Flex direction='column'
-    align='center'
-    justify='center'
-    mx='auto'
-    h='100vh'
-    w={90}>
-    <Flex textAlign='center' direction='column' justify='center'>
-      <Text fontSize='lg'>Looks like the link is broken or has expired.</Text>
-      <Text fontSize='lg'>You can contact support or login to continue.</Text>
-    </Flex>
-    <Flex justify='space-between' w='100%' padding={5}>
-      <Button>Contact Support</Button>
-      <Button onClick={() => replace('/login')}>Login</Button>
-    </Flex>
-  </Flex>
-)
-
-InvalidToken.propTypes = {
-  replace: PropTypes.func.isRequired,
-}
+import { replaceURI } from 'helpers/misc';
+import FetchCard from 'components/FetchCard';
+import useAuth from 'context/authContext';
 
 const Auth = ({
   history: { replace },
   match: { params },
   location: { search },
 }) => {
-  document.title = 'Authenticating...'
-  const { getUser, auth, isAuthenticated } = useContext(authContext)
-  const { to } = QueryString.parse(search, { parseBooleans: true })
-  const { token } = params
-  const [ invalidToken, setInvalidToken ] = useState(false)
+  document.title = 'Authenticating...';
+  const { getUser, store, isAuthenticated } = useAuth();
+  const [reload, setReload] = useState(0);
+  const [error, setError] = useState(false);
+
+  const { to } = QueryString.parse(search, { parseBooleans: true });
+  const { token } = params;
+
+  const triggerReload = () => setReload((prevState) => prevState + 1);
 
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
     if (mounted) {
+      // Check if user is authenticated and redirect to db
       if (isAuthenticated()) {
-        return replace('/dashboard')
+        return replace('/dashboard');
       } else {
+        // Check to see if a token exist then use token to fetch user data else return user to auth service app
+        console.log('getting data.....');
         if (token) {
-          (async () => {
+          // store token in session storage for immediate use
+          store({ token });
+          console.log('getting data.....');
+          // Delay for half a seconds to make sure that token is stored
+          setTimeout(async () => {
             try {
-              const res = await getUser(token)
-              if (res.user) {
-                auth({ user: res.user, token })
-                setTimeout(() => {
-                  replace(JSON.parse(to || null) || '/dashboard')
-                }, 500)
-              } else {
-                // TODO: what should happen when this fails
-                if (res.status === 404) {
-                  setInvalidToken(true)
+              console.log('fetching');
+              // fetch user data
+              const { data: user } = await getUser();
+              console.log('user', user);
+              // store user data
+              store({ user });
+              // fetch user business data
+
+              setTimeout(() => {
+                replace(JSON.parse(to || null) || '/dashboard');
+              }, 500);
+            } catch (error) {
+              if (error?.response) {
+                const res = error.response;
+                if ([401, 403].includes(res.status)) {
+                  replaceURI(
+                    'AUTH',
+                    '/redirects?from=DIGITAL_FARMER&off=false'
+                  );
                 } else {
-                  // console.log(res)
+                  setError(error?.message);
                 }
+              } else {
+                setError(error?.message);
               }
-            } catch (err) {
-              // TODO: what should happen when this fails
-              // console.log(err)
             }
-          })()
+          }, 500);
         } else {
-          replaceURI('AUTH', '/redirects?from=BUYER&off=false')
+          replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=false');
         }
       }
     }
-    return () => (mounted = false)
-  }, [ auth, getUser, isAuthenticated, replace, token, to ])
+    return () => (mounted = false);
+  }, [store, getUser, isAuthenticated, replace, token, to, reload]);
 
-  return invalidToken ? (
-    <InvalidToken replace={replace} />
+  return error ? (
+    <FetchCard
+      direction='column'
+      align='center'
+      justify='center'
+      reload={triggerReload}
+      loading={false}
+      error={error}
+    />
   ) : (
     <div className='loading-text'>Authenticating</div>
-  )
-}
+  );
+};
 
 Auth.propTypes = {
-  history : PropTypes.object.isRequired,
-  match   : PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-}
+};
 
-export default Auth
+export default Auth;

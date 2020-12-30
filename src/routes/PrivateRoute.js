@@ -1,23 +1,23 @@
-import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
-import { authContext } from '../context/authContext'
-import { replaceURI } from '../helpers/misc'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
+import { replaceURI } from '../helpers/misc';
+import useAuth from 'context/authContext';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { isAuthenticated } = useContext(authContext)
+  const { isAuthenticated } = useAuth();
 
   const getPage = (props) => {
     if (isAuthenticated()) {
-      return <Component {...props} />
+      return <Component {...props} />;
     }
-    return replaceURI('AUTH', "/redirects?from='BUYER'")
-  }
-  return <Route {...rest} render={getPage} />
-}
+    return replaceURI('AUTH', "/redirects?from='DIGITAL_FARMER'");
+  };
+  return <Route {...rest} render={getPage} />;
+};
 
 PrivateRoute.propTypes = {
   component: PropTypes.any,
-}
+};
 
-export default PrivateRoute
+export default PrivateRoute;
