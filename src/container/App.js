@@ -6,8 +6,8 @@ import Router from 'routes/router';
 import React from 'react';
 import { ComponentProvider } from 'context/ComponentContext';
 import { ModalsProvider } from 'context/ModalsContext';
-import { AuthProvider } from 'context/authContext';
 import PaymentContextProvider from 'context/paymentContext';
+import { AuthProvider } from 'context/authContext';
 
 const queryCache = new QueryCache();
 

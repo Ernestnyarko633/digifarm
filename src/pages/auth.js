@@ -29,21 +29,17 @@ const Auth = ({
         return replace('/dashboard');
       } else {
         // Check to see if a token exist then use token to fetch user data else return user to auth service app
-        console.log('getting data.....');
         if (token) {
           // store token in session storage for immediate use
           store({ token });
-          console.log('getting data.....');
           // Delay for half a seconds to make sure that token is stored
           setTimeout(async () => {
             try {
-              console.log('fetching');
               // fetch user data
               const { data: user } = await getUser();
-              console.log('user', user);
+
               // store user data
               store({ user });
-              // fetch user business data
 
               setTimeout(() => {
                 replace(JSON.parse(to || null) || '/dashboard');
