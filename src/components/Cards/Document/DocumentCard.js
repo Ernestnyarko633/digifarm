@@ -1,50 +1,45 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Text, Flex, Icon, useDisclosure } from '@chakra-ui/react';
-import { arrowDown } from 'theme/Icons';
-import DocumentPreview from './DocumentPreview';
-import { FaCreditCard, FaFileInvoice, FaFileContract } from 'react-icons/fa';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Text, Flex, Icon, useDisclosure } from '@chakra-ui/react'
+import { arrowDown } from 'theme/Icons'
+import DocumentPreview from './DocumentPreview'
+import { FaCreditCard, FaFileInvoice, FaFileContract } from 'react-icons/fa'
 
 const DocumentCard = ({ title, description, link, mt }) => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { isOpen, onClose, onOpen } = useDisclosure()
 
   const images = (image) => {
     switch (image) {
       case 'Receipt':
-        return FaCreditCard;
+        return FaCreditCard
       case 'Contract':
-        return FaFileContract;
+        return FaFileContract
       case 'Invoice':
-        return FaFileInvoice;
+        return FaFileInvoice
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
-    <Box
-      w={60}
+    <Box w={60}
       mt={mt}
       as='button'
       borderWidth={1}
       rounded='md'
-      onClick={onOpen}
-    >
+      onClick={onOpen}>
       <DocumentPreview isOpen={isOpen} onClose={onClose} link={link} />
       <Box>
-        <Text
-          textAlign='center'
+        <Text textAlign='center'
           w={60}
           py={1}
           fontWeight={900}
           fontFamily='heading'
-          fontSize='lg'
-        >
+          fontSize='lg'>
           {title}
         </Text>
       </Box>
-      <Flex
-        align='center'
+      <Flex align='center'
         justify='center'
         direction='column'
         bg='cf.400'
@@ -52,11 +47,9 @@ const DocumentCard = ({ title, description, link, mt }) => {
         h={60}
         p={1}
         shadow='sm'
-        pos='relative'
-      >
+        pos='relative'>
         <a href={link} download>
-          <Flex
-            as='button'
+          <Flex as='button'
             align='center'
             justify='center'
             pos='absolute'
@@ -69,15 +62,12 @@ const DocumentCard = ({ title, description, link, mt }) => {
             color='white'
             boxShadow='lg'
             aria-labelledby='download button'
-            click={(e) => e.preventDefault()}
-          >
-            <Icon
-              as={arrowDown}
+            click={(e) => e.preventDefault()}>
+            <Icon as={arrowDown}
               bg='white'
               rounded='lg'
               color='cf.400'
-              pl='1'
-            />
+              pl='1' />
           </Flex>
         </a>
         <Icon as={images(title)} color='white' w='100px' h='100px' />
@@ -86,14 +76,14 @@ const DocumentCard = ({ title, description, link, mt }) => {
         </Text>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
 DocumentCard.propTypes = {
-  title: PropTypes.string,
+  title      : PropTypes.string,
   description: PropTypes.string,
-  link: PropTypes.string,
-  mr: PropTypes.string,
-};
+  link       : PropTypes.string,
+  mr         : PropTypes.string,
+}
 
-export default DocumentCard;
+export default DocumentCard

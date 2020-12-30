@@ -24,7 +24,7 @@ const FarmDetails = ({ handleNext }) => {
   })
 
   return (
-    <Grid templateColumns={{ md: '45% 55%' }} h={121} pos='relative'>
+    <Grid templateColumns={{ md: '45% 55%' }} h={120} pos='relative'>
       <GridItem>
         {crops.map((item) => (
           <CropSelectionCard onClick={() => setState(item.title)}
