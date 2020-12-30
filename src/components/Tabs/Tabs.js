@@ -16,6 +16,7 @@ const Tabs = ({
   boxWidth,
   mt,
   mx,
+  py = 10,
   direction = 'column',
 }) => {
   const [ activeTab, setActiveTab ] = React.useState(children[0].props.label)
@@ -42,7 +43,7 @@ const Tabs = ({
         w={boxWidth}
         mx={mx || 'auto'}
         px={px || 4}
-        py={10}
+        py={py}
         pt={pt}
         bg='white'
         pos='relative'

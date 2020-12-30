@@ -16,7 +16,7 @@ const CropSelection = () => {
       </Box>
 
       <Box>
-        <Tabs direction='row'>
+        <Tabs direction='row' py={0} px={0}>
           <Box label='Top-selling farm'>
             <FarmDetails handleNext={handleNext} />
           </Box>
