@@ -29,7 +29,7 @@ const data = [
 ]
 
 const Document = () => {
-  
+  document.title = 'Complete Farmer | Documents'
     return (
       <Layout>
         <Box mt='200px' mx='80px'>
