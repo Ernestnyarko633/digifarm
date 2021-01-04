@@ -5,6 +5,7 @@ import Greetings from 'components/Utils/FarmBoardGreetings'
 import FarmBoardContent from 'components/FarmBoard/FarmBoard'
 
 const FarmBoard = () => {
+  document.title = 'Complete Farmer | Farmboard'
   return (
     <Layout showRightSideContentType='events'>
       <Greetings />

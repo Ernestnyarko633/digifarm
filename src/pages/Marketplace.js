@@ -30,7 +30,7 @@ const buyers = [
 ]
 
 const Marketplace = () => {
-  document.title = 'Complete Farmer | marketplace'
+  document.title = 'Complete Farmer | Marketplace'
 
   return (
     <Layout>
