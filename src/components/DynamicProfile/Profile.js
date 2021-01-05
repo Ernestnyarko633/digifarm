@@ -17,7 +17,7 @@ import { FormInput, FormTextArea } from 'components/Form';
 import useAuth from 'context/authContext';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, patchUser } = useAuth();
   const toast = useToast();
 
   console.log('user', user);
@@ -25,9 +25,13 @@ const Profile = () => {
   const initialValues = {
     firstName: user?.firstName,
     lastName: user?.lastName,
-    location: '',
+    address: {
+      street: '',
+      state: '',
+      country: user?.address?.country,
+    },
+    dateOfBirth: '',
     email: user?.email,
-    country: user?.address?.country,
     phoneNumber: user?.phoneNumber,
     IdType: '',
     IDNumber: '',
@@ -42,35 +46,47 @@ const Profile = () => {
     { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
-      // const res = await updateProfile(values);
-      // if (res.statusCode === 201) {
-      //   toast({
-      //     title: 'Activity created.',
-      //     description: res.message,
-      //     status: 'success',
-      //     duration: 9000,
-      //     isClosable: true,
-      //   });
-      resetForm({});
-      setStatus({ success: true });
-      window.location.reload();
-      // } else if (res.statusCode === 400) {
-      //   toast({
-      //     title: 'Error occured',
-      //     description: res.message,
-      //     status: 'error',
-      //     duration: 9000,
-      //     isClosable: true,
-      //   });
-      // }
+      const data = {
+        firstName: values?.firstName,
+        lastName: values?.lastName,
+        address: {
+          street: values.address.street,
+          state: values.address.state,
+          country: values.address.country,
+        },
+        dateOfBirth: values.dateOfBirth,
+        phoneNumber: values?.phoneNumber,
+      };
+      const res = await patchUser(user?._id, data);
+      console.log('res', res);
+      if (res.statusCode === 200) {
+        toast({
+          title: 'User successfully updated.',
+          description: res.message,
+          status: 'success',
+          duration: 5000,
+          position: 'top-right',
+        });
+        resetForm({});
+        setStatus({ success: true });
+        window.location.reload();
+      } else if (res.statusCode === 400) {
+        toast({
+          title: 'Error occured',
+          description: res.message,
+          status: 'error',
+          duration: 5000,
+          position: 'top-right',
+        });
+      }
     } catch (error) {
       setStatus({ success: false });
       toast({
         title: 'Error occured',
         description: error.message,
         status: 'error',
-        duration: 9000,
-        isClosable: true,
+        duration: 5000,
+        position: 'top-right',
       });
       setSubmitting(false);
       setErrors({ submit: error.message });
@@ -84,8 +100,15 @@ const Profile = () => {
         initialValues={initialValues}
         onSubmit={onSubmit}
       >
-        {({ values, handleChange, handleBlur, isSubmitting, errors }) => (
-          <form>
+        {({
+          values,
+          handleChange,
+          handleBlur,
+          isSubmitting,
+          handleSubmit,
+          errors,
+        }) => (
+          <form onSubmit={handleSubmit}>
             <Box p={10} rounded='md' bg='white'>
               <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
                 Profile
@@ -172,24 +195,45 @@ const Profile = () => {
                     isRequired
                     bg='white'
                   />
-                </Grid>
-                <FormTextArea bg='white' label='About you' mb={6} />
 
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                  mb={6}
-                >
                   <FormInput
-                    label='Location'
-                    name='location'
-                    value={values.location}
+                    label='Date of birth'
+                    name='dateOfBirth'
+                    value={values.dateOfBirth}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                    type='date'
+                  />
+                  <FormInput
+                    label='Street'
+                    name='address.street'
+                    value={values.address.street}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     isRequired
                     bg='white'
                   />
+                  <FormInput
+                    label='State'
+                    name='address.state'
+                    value={values.address.state}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                  />
+                  <FormInput
+                    label='Country'
+                    name='address.country'
+                    value={values.address.country}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                  />
+
                   <FormInput
                     label='Phone number'
                     name='phoneNumber'
@@ -199,15 +243,21 @@ const Profile = () => {
                     isRequired
                     bg='white'
                   />
+
+                  <FormInput
+                    label='Email'
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                    disabled
+                  />
                 </Grid>
-                <FormInput
-                  label='Email'
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isRequired
-                  bg='white'
-                />
+
+                <Box>
+                  <FormTextArea bg='white' label='About you' />
+                </Box>
               </Box>
             </Box>
             <Box rounded='xl' shadow='md' mt={12} bg='white' p={10}>
@@ -238,7 +288,7 @@ const Profile = () => {
                 </Grid>
                 <FormInput
                   label='Country'
-                  value={values.country}
+                  value={values.address.country}
                   isRequired
                   bg='white'
                 />
