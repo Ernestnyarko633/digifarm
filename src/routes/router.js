@@ -12,6 +12,7 @@ const Router = () => (
       <Route path='/auth/:token' component={Auth} />
       <Route path='/auth' component={Auth} />
       <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
+      <PrivateRoute exact path='/profile' component={Pages.Profile} />
       <PrivateRoute exact path='/startfarm' component={Pages.StartFarm} />
       <PrivateRoute exact
         path='/startfarm/individual'
