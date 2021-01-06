@@ -1,10 +1,11 @@
-import React from 'react'
+import React,{} from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
 import { Box, Grid } from '@chakra-ui/react'
 import UploadDocument from 'components/Modals/UploadDocument'
 import ConfirmReceiptDelete from 'components/Modals/ConfirmReceiptDelete'
-
+import Prismic from 'prismic-javascript'
+import getConfig from 'utils/configs';
 
 const data = [
     {
@@ -30,6 +31,10 @@ const data = [
 
 const Document = () => {
   document.title = 'Complete Farmer | Documents'
+
+  const prismic_api = getConfig().PRISMIC_API
+  const prismic_key = getConfig().PRISMIC_KEY
+
     return (
       <Layout>
         <Box mt='200px' mx='80px'>
