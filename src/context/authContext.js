@@ -1,79 +1,85 @@
-import React, { useState, useEffect, createContext, useContext } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import PropTypes from 'prop-types';
 
-import http from 'utils/httpFacade'
-import { replaceURI } from 'helpers/misc'
-import configs from 'utils/configs'
+import http from 'utils/httpFacade';
+import { replaceURI } from 'helpers/misc';
+import configs from 'utils/configs';
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   // Setup Config
-  const AUTH_API = configs().AUTH_API
-  const [ session, setSession ] = useState(true)
-  const [ user, setUser ] = useState(null)
+  const AUTH_API = configs().AUTH_API;
+  const [session, setSession] = useState(true);
+  const [user, setUser] = useState(null);
 
   const store = ({ token, user }) => {
-    if (token) window.sessionStorage.setItem('_cft', token)
-    if (user) window.sessionStorage.setItem('_cfu', JSON.stringify(user))
-  }
+    if (token) window.sessionStorage.setItem('_cft', token);
+    if (user) window.sessionStorage.setItem('_cfu', JSON.stringify(user));
+  };
 
   const isAuthenticated = () => {
-    const _cft = window.sessionStorage.getItem('_cft')
-    const _cfu = window.sessionStorage.getItem('_cfu')
+    const _cft = window.sessionStorage.getItem('_cft');
+    const _cfu = window.sessionStorage.getItem('_cfu');
     if (_cft && _cfu) {
-      return { token: _cft, user: JSON.parse(_cfu) }
+      return { token: _cft, user: JSON.parse(_cfu) };
     } else {
-      return false
+      return false;
     }
-  }
+  };
 
   const getUser = async () => {
-    return await http.get({ url: `${AUTH_API}/users/profile` })
-  }
+    const { data } = await http.get({ url: `${AUTH_API}/users/profile` });
+    setUser(data);
+  };
+
+  React.useEffect(() => {
+    getUser();
+  }, []);
 
   const patchUser = async (id, data) =>
     await http.patch({
-      url : `${AUTH_API}/users/${id}`,
+      url: `${AUTH_API}/users/${id}`,
       body: JSON.stringify(data),
-    })
+    });
 
   const logout = (clearRemote = false) => {
     try {
-      clearRemote && http.get({ url: `${AUTH_API}/user/logout` })
-      window.sessionStorage.clear()
-      replaceURI('AUTH', '/redirects?from=BUYER&off=true')
+      clearRemote && http.get({ url: `${AUTH_API}/user/logout` });
+      window.sessionStorage.clear();
+      replaceURI('AUTH', '/redirects?from=BUYER&off=true');
     } catch (error) {
       // console.debug(error);
     }
-  }
+  };
 
   useEffect(() => {
-    if (!session) return logout(true)
-  }, [session])
+    if (!session) return logout(true);
+  }, [session]);
 
   return (
-    <AuthContext.Provider value={{
+    <AuthContext.Provider
+      value={{
         user,
         store,
         setUser,
         session,
         setSession,
         isAuthenticated,
-        getUser,
         patchUser,
         logout,
-      }}>
+      }}
+    >
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
 export default function useAuth() {
-  const context = useContext(AuthContext)
-  return context
+  const context = useContext(AuthContext);
+  return context;
 }
