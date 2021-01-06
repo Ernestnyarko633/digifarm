@@ -17,10 +17,9 @@ import { FormInput, FormTextArea } from 'components/Form';
 import useAuth from 'context/authContext';
 
 const Profile = () => {
-  const { user, patchUser } = useAuth();
+  const { isAuthenticated, patchUser } = useAuth();
+  const { user } = isAuthenticated();
   const toast = useToast();
-
-  console.log('user', user);
 
   const initialValues = {
     firstName: user?.firstName,
@@ -58,7 +57,6 @@ const Profile = () => {
         phoneNumber: values?.phoneNumber,
       };
       const res = await patchUser(user?._id, data);
-      console.log('res', res);
       if (res.statusCode === 200) {
         toast({
           title: 'User successfully updated.',
@@ -115,7 +113,7 @@ const Profile = () => {
               </Heading>
               <Flex align='center'>
                 <Text fontSize='md'>
-                  Set your login preferences, help us personalize your
+                  Set your login preferences, help us personalize your <br />
                   experience and make big account changes here
                 </Text>
                 <Flex align='center' ml={10}>

@@ -1,4 +1,4 @@
-import React,{} from 'react'
+import React,{ useEffect} from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
 import { Box, Grid } from '@chakra-ui/react'
@@ -32,8 +32,11 @@ const data = [
 const Document = () => {
   document.title = 'Complete Farmer | Documents'
 
-  const prismic_api = getConfig().PRISMIC_API
-  const prismic_key = getConfig().PRISMIC_KEY
+  // const prismic_api = getConfig().PRISMIC_API
+  // const prismic_key = getConfig().PRISMIC_KEY
+
+  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT
+  const accessToken = process.env.REACT_APP_ACCESS_TOKEN
 
     return (
       <Layout>
