@@ -49,12 +49,14 @@ const PrivacyAndData = () => {
 
       <Box>
         <Box>
-          <Heading>Search privacy </Heading>
+          <Heading as='h5' fontSize={{ md: '2xl' }} fontFamily='display' mb={2}>
+            Search privacy{' '}
+          </Heading>
           <Flex align='center'>
             <Checkbox size='lg' colorScheme='cfButton' borderColor='black' />{' '}
             <Text ml={3}>
-              Hide your profile from search engines{' '}
-              <Link _hover={{ textDecor: 'none' }} color='cf.400'>
+              Hide your profile from search engines.{' '}
+              <Link _hover={{ textDecor: 'none' }} color='cf.400' ml={6}>
                 Learn more <Icon as={chevronRight} />
               </Link>
             </Text>
