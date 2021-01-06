@@ -55,12 +55,7 @@ const AccountSettings = () => {
               </Flex>
             </Box>
 
-            <Divider
-              orientation='vertical'
-              borderBottomWidth={1}
-              borderBottomColor='gray.200'
-              my={12}
-            />
+            <Divider orientation='horizontal' my={12} />
 
             <Box>
               <Box>
