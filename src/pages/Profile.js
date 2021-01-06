@@ -58,7 +58,7 @@ const Profile = () => {
             </Text>
           </Box>
         </Flex>
-        <Grid templateColumns={{ md: '18% 82%' }} mt={16}>
+        <Grid templateColumns={{ md: '18% 82%' }} my={16}>
           <Flex
             align='center'
             justify='center'
