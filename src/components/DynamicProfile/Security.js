@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Heading,
@@ -9,39 +9,39 @@ import {
   Container,
   Grid,
   Switch,
-  useToast,
-} from '@chakra-ui/react';
-import { Formik } from 'formik';
-import { FormInput } from 'components/Form';
-import useAuth from 'context/authContext';
-import { ChangePassword } from 'helpers/validation';
+  useToast
+} from '@chakra-ui/react'
+import { Formik } from 'formik'
+import { FormInput } from 'components/Form'
+import useAuth from 'context/authContext'
+import { ChangePassword } from 'helpers/validation'
 
 const Security = () => {
-  const { changePassword } = useAuth();
-  const toast = useToast();
+  const { changePassword } = useAuth()
+  const toast = useToast()
 
   const onSubmit = async (
     values,
     { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
-      const res = await changePassword(values);
+      const res = await changePassword(values)
       if (res.statusCode === 200) {
         toast({
           description: res.message,
-          status: 'success',
-          duration: 5000,
-          position: 'top-right',
-        });
+          status     : 'success',
+          duration   : 5000,
+          position   : 'top-right',
+        })
       }
-      resetForm({});
-      setStatus({ success: true });
+      resetForm({})
+      setStatus({ success: true })
     } catch (error) {
-      setStatus({ success: false });
-      setSubmitting(false);
-      setErrors({ submit: error.message });
+      setStatus({ success: false })
+      setSubmitting(false)
+      setErrors({ submit: error.message })
     }
-  };
+  }
 
   return (
     <Container maxW='4xl'>
@@ -58,15 +58,13 @@ const Security = () => {
             <Button rounded='30px' w={40} h={12} shadow='sm'>
               Cancel
             </Button>
-            <Button
-              colorScheme='linear'
+            <Button colorScheme='linear'
               rounded='30px'
               w={40}
               h={12}
               shadow='sm'
               ml={4}
-              type='submit'
-            >
+              type='submit'>
               Save
             </Button>
           </Flex>
@@ -82,11 +80,9 @@ const Security = () => {
             Turn notification on to receive notification in your dashboard
           </Text>
         </Box>
-        <Formik
-          initialValues={{ oldPassword: '', newPassword: '' }}
+        <Formik initialValues={{ oldPassword: '', newPassword: '' }}
           onSubmit={onSubmit}
-          validationSchema={ChangePassword}
-        >
+          validationSchema={ChangePassword}>
           {({
             values,
             handleBlur,
@@ -96,29 +92,24 @@ const Security = () => {
           }) => (
             <form onSubmit={handleSubmit}>
               <Grid gap={6} w={80} mt={12}>
-                <FormInput
-                  label='Old Password'
+                <FormInput label='Old Password'
                   placeholder='At least 8 characters'
                   type='password'
                   name='oldPassword'
                   value={values.oldPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  bg='white'
-                />
-                <FormInput
-                  label='New Password'
+                  bg='white' />
+                <FormInput label='New Password'
                   placeholder='At least 8 characters'
                   type='password'
                   name='newPassword'
                   value={values.newPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  bg='white'
-                />
+                  bg='white' />
 
-                <Button
-                  rounded='30px'
+                <Button rounded='30px'
                   mt={4}
                   w={40}
                   h={12}
@@ -130,8 +121,7 @@ const Security = () => {
                   _hover={{ bg: 'transparent' }}
                   _active={{ bg: 'transparent' }}
                   type='submit'
-                  isLoading={isSubmitting}
-                >
+                  isLoading={isSubmitting}>
                   Save changes
                 </Button>
               </Grid>
@@ -154,7 +144,7 @@ const Security = () => {
       </Flex>
       <Divider orientation='horizontal' my={12} />
     </Container>
-  );
-};
+  )
+}
 
-export default Security;
+export default Security

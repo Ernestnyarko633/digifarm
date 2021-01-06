@@ -6,9 +6,9 @@ import {
   Button,
   Divider,
   Container,
-  Switch,
-} from '@chakra-ui/react';
-import React from 'react';
+  Switch
+} from '@chakra-ui/react'
+import React from 'react'
 
 const Notifications = () => {
   return (
@@ -26,15 +26,13 @@ const Notifications = () => {
             <Button rounded='30px' w={40} h={12} shadow='sm'>
               Cancel
             </Button>
-            <Button
-              colorScheme='linear'
+            <Button colorScheme='linear'
               rounded='30px'
               w={40}
               h={12}
               shadow='sm'
               ml={4}
-              type='submit'
-            >
+              type='submit'>
               Save
             </Button>
           </Flex>
@@ -92,7 +90,7 @@ const Notifications = () => {
         <Divider orientation='horizontal' my={6} />
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default Notifications;
+export default Notifications
