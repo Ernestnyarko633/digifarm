@@ -38,9 +38,9 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify(data),
     })
 
-  const logout = (clearRemote = false) => {
+  const logout = async(clearRemote = false) => {
     try {
-      clearRemote && http.get({ url: `${AUTH_API}/user/logout` })
+      clearRemote && await http.get({ url: `${AUTH_API}/user/logout` })
       window.sessionStorage.clear()
       replaceURI('AUTH', '/redirects?from=BUYER&off=true')
     } catch (error) {
@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (!session) return logout(true)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
 
   return (
