@@ -28,13 +28,27 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const getUser = async () => {
+  const getUser = async () =>
+    await http.get({ url: `${AUTH_API}/users/profile` });
+
+  const getProfile = async () => {
     const { data } = await http.get({ url: `${AUTH_API}/users/profile` });
     setUser(data);
   };
 
+  const changePassword = async (payload) => {
+    try {
+      await http.patch({
+        url: `${AUTH_API}/change-password`,
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      // console.debug(error);
+    }
+  };
+
   React.useEffect(() => {
-    getUser();
+    getProfile();
   }, []);
 
   const patchUser = async (id, data) =>
@@ -66,7 +80,9 @@ export const AuthProvider = ({ children }) => {
         session,
         setSession,
         isAuthenticated,
+        changePassword,
         patchUser,
+        getUser,
         logout,
       }}
     >

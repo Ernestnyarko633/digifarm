@@ -23,6 +23,7 @@ const FormInput = ({
   width,
   mr,
   bg = 'cf.300',
+  w,
   ...rest
 }) => (
   <FormControl
@@ -38,6 +39,7 @@ const FormInput = ({
       borderColor='gray.100'
       borderBottomColor='gray.400'
       borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
+      w={w}
     >
       <FormLabel
         fontSize={{ md: 'xs' }}

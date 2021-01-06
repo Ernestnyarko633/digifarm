@@ -46,7 +46,8 @@
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7",
     "use-immer": "^0.4.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.8"
   },
   "scripts": {
     "start": "react-scripts start",

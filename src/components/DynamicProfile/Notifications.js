@@ -19,8 +19,8 @@ const Notifications = () => {
         </Heading>
         <Flex align='center'>
           <Text fontSize='md'>
-            Set your login preferences, help us personalize your experience and
-            make big account changes here
+            Set your login preferences, help us personalize your <br />
+            experience and make big account changes here
           </Text>
           <Flex align='center' ml={10}>
             <Button rounded='30px' w={40} h={12} shadow='sm'>
