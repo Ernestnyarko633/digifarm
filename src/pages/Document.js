@@ -1,4 +1,4 @@
-import React,{ useEffect} from 'react'
+import React,{ useEffect, useState} from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
 import { Box, Grid } from '@chakra-ui/react'
@@ -32,11 +32,37 @@ const data = [
 const Document = () => {
   document.title = 'Complete Farmer | Documents'
 
-  // const prismic_api = getConfig().PRISMIC_API
-  // const prismic_key = getConfig().PRISMIC_KEY
+  const prismic_api = getConfig().PRISMIC_API
+  const prismic_key = getConfig().PRISMIC_KEY
 
-  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT
-  const accessToken = process.env.REACT_APP_ACCESS_TOKEN
+  const Client = Prismic.client(prismic_api, { prismic_key })
+
+  const [ newsData, setNewsData ] = useState(null)
+  const [announcement, setAnnouncement ] = useState(null)
+
+  useEffect(() => {
+    const announcements = async () => {
+      const response = await Client.query(
+        Prismic.Predicates.at('document.type', 'announcements')
+      )
+      if (response) {
+        setAnnouncement(response.results[0])
+      }
+    }
+    announcements()
+  }, [])
+
+  useEffect(() => {
+    const news = async () => {
+      const response = await Client.query(
+        Prismic.Predicates.at('document.type', 'news')
+      )
+      if (response) {
+        setNewsData(response.results[0])
+      }
+    }
+    news()
+  }, [])
 
     return (
       <Layout>
