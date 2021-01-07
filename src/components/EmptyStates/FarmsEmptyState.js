@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  Button,
-  Heading,
-  Icon,
-  Image,
-  Link,
-  Text
-} from '@chakra-ui/react'
+import { Box, Button, Heading, Icon, Image, Link, Text } from '@chakra-ui/react'
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 

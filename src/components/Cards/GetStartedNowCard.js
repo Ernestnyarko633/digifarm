@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  Button,
-  Heading,
-  Icon,
-  Image,
-  Link,
-  Text
-} from '@chakra-ui/react'
+import { Box, Button, Heading, Icon, Image, Link, Text } from '@chakra-ui/react'
 import { Link as ReachLink } from 'react-router-dom'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
@@ -30,7 +22,7 @@ const GetStartedNowCard = () => (
         Learn more <Icon as={MdKeyboardArrowRight} />
       </Link>
 
-      <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/startfarm'>
+      <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/start-farm'>
         <Button colorScheme='linear' rounded='30px' w={64} h={12} shadow='md'>
           Get me started now
         </Button>

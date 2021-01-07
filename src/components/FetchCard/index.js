@@ -7,10 +7,12 @@ import Loader from 'react-loader-spinner'
 const FetchCard = ({ loading, error, reload, ...rest }) => {
   return (
     <Flex {...rest} mx='auto' h='10vh' w={90}>
-      <Flex textAlign='center'
+      <Flex
+        textAlign='center'
         align='center'
         justify='center'
-        direction='column'>
+        direction='column'
+      >
         <>
           {loading && (
             <Loader type='Oval' color='#417505' height={40} width={40} />
@@ -20,7 +22,8 @@ const FetchCard = ({ loading, error, reload, ...rest }) => {
               <Text fontSize='md' ml={2}>
                 Something went wrong.
               </Text>
-              <Button bg='cf.800'
+              <Button
+                bg='cf.800'
                 variant='solid'
                 color='white'
                 size='md'
@@ -28,7 +31,8 @@ const FetchCard = ({ loading, error, reload, ...rest }) => {
                 fontSize={30}
                 onClick={() => reload()}
                 leftIcon={<IoIosRefresh />}
-                _hover={{ bg: 'cf.800' }}>
+                _hover={{ bg: 'cf.800' }}
+              >
                 <Text fontSize='md'>Try again</Text>
               </Button>
             </>
@@ -40,9 +44,9 @@ const FetchCard = ({ loading, error, reload, ...rest }) => {
 }
 
 FetchCard.propTypes = {
-  reload : PropTypes.func.isRequired,
+  reload: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  error  : PropTypes.any,
+  error: PropTypes.any
 }
 
 export default FetchCard

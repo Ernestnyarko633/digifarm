@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Flex,
@@ -9,28 +9,32 @@ import {
   Grid,
   GridItem
 } from '@chakra-ui/react'
-import FarmInfo from 'components/Cards/FarmInfo'
-import { Support, Schedule, Update } from 'theme/Icons'
-import PayOption from 'components/Cards/PayOption'
 import { useMutation } from 'react-query'
-import useAPI from 'context/apiContext'
+import { motion } from 'framer-motion'
+
+import usePayment from 'context/payment'
+
+import { Support, Schedule, Update } from 'theme/Icons'
+
+import FarmInfo from 'components/Cards/FarmInfo'
+import PayOption from 'components/Cards/PayOption'
+
 import visa from '../../../assets/images/visa.png'
 import ginger from '../../../assets/images/ginger.png'
-import { motion } from 'framer-motion'
 
 const MotionGrid = motion.custom(Grid)
 
 const PaymentOption = () => {
-  const { payment } = useAPI()
+  const { initiatePayment } = usePayment()
 
-  const [cardData] = React.useState({
-    amount          : 100,
-    purpose         : 'FARM_PURCHASE',
-    order_id        : '5fbba7e2dd7f2d24059ffca2',
-    transaction_type: 'CARD',
+  const [cardData] = useState({
+    amount: 100,
+    purpose: 'FARM_PURCHASE',
+    order_id: '5fbba7e2dd7f2d24059ffca2',
+    transaction_type: 'CARD'
   })
 
-  const [mutate] = useMutation(payment)
+  const [mutate] = useMutation(initiatePayment)
 
   const paymentlick = async () => {
     try {
@@ -71,33 +75,39 @@ const PaymentOption = () => {
           </Box>
         </Flex>
       </GridItem>
-      <GridItem borderLeftWidth={1}
+      <GridItem
+        borderLeftWidth={1}
         borderLeftColor='gray.300'
         overflowY='scroll'
         p={{ md: 10 }}
         css={{
-          direction     : 'rtl',
+          direction: 'rtl',
           scrollbarColor: 'rebeccapurple',
-          scrollBehavior: 'smooth',
-        }}>
+          scrollBehavior: 'smooth'
+        }}
+      >
         <Box css={{ direction: 'ltr' }}>
           <Flex direction='column'>
             <Heading as='h6' fontSize='xl' ml={5}>
               Choose your payment Option
             </Heading>
-            <PayOption icon={visa}
+            <PayOption
+              icon={visa}
               title='Card'
               theme='For card payments'
               description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
               notice='All transactions are charged a transaction fee of'
               percent='1.95%'
-              onClick={paymentlick} />
-            <PayOption icon={visa}
+              onClick={paymentlick}
+            />
+            <PayOption
+              icon={visa}
               title='Bank Payment'
               theme='For bank payment'
               description='Please note that bank transfer will take at most 2 weeks before money is transferred'
               notice='Contact support for any help'
-              dropDown />
+              dropDown
+            />
           </Flex>
 
           <FarmInfo />

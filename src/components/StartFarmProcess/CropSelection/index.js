@@ -1,11 +1,11 @@
 import { Box, Heading } from '@chakra-ui/react'
 import Tabs from 'components/Tabs/Tabs'
-import useComponents from 'context/ComponentContext'
+import useComponent from 'context/component'
 import React from 'react'
 import FarmDetails from './FarmDetails'
 
 const CropSelection = () => {
-  const { handleNext } = useComponents()
+  const { handleNext } = useComponent()
 
   return (
     <Box mt={{ md: 32 }} w='90%' mx='auto'>

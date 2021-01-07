@@ -1,13 +1,14 @@
-import { APIProvider } from 'context/apiContext'
+import React from 'react'
+import Router from 'routes/router'
 import { BrowserRouter } from 'react-router-dom'
+
 import { ReactQueryDevtools } from 'react-query-devtools'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
-import Router from 'routes/router'
-import React from 'react'
-import { ComponentProvider } from 'context/ComponentContext'
-import { ModalsProvider } from 'context/ModalsContext'
-import PaymentContextProvider from 'context/paymentContext'
-import { AuthProvider } from 'context/authContext'
+
+import { ComponentContextProvider } from 'context/component'
+import { ModalContextProvider } from 'context/modal'
+import { PaymentContextProvider } from 'context/payment'
+import { AuthContextProvider } from 'context/auth'
 
 const queryCache = new QueryCache()
 
@@ -15,17 +16,15 @@ function App() {
   return (
     <BrowserRouter>
       <ReactQueryCacheProvider queryCache={queryCache}>
-        <AuthProvider>
-          <APIProvider>
+        <ComponentContextProvider>
+          <AuthContextProvider>
             <PaymentContextProvider>
-              <ComponentProvider>
-                <ModalsProvider>
-                  <Router />
-                </ModalsProvider>
-              </ComponentProvider>
+              <ModalContextProvider>
+                <Router />
+              </ModalContextProvider>
             </PaymentContextProvider>
-          </APIProvider>
-        </AuthProvider>
+          </AuthContextProvider>
+        </ComponentContextProvider>
         <ReactQueryDevtools initialIsOpen />
       </ReactQueryCacheProvider>
     </BrowserRouter>

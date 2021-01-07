@@ -1,8 +1,10 @@
-import { Flex, Text } from '@chakra-ui/react'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Flex, Text } from '@chakra-ui/react'
 
 const CropSelectionCard = ({ acres, title, onClick }) => (
-  <Flex align='center'
+  <Flex
+    align='center'
     direction='column'
     justify='center'
     w='100%'
@@ -12,7 +14,8 @@ const CropSelectionCard = ({ acres, title, onClick }) => (
     as='button'
     role='button'
     onClick={onClick}
-    aria-label='crop card button'>
+    aria-label='crop card button'
+  >
     {acres && (
       <Text color='red.600' fontSize='xs'>
         {acres} 100 acres left
@@ -21,5 +24,11 @@ const CropSelectionCard = ({ acres, title, onClick }) => (
     <Text>{title}</Text>
   </Flex>
 )
+
+CropSelectionCard.propTypes = {
+  title: PropTypes.string,
+  acres: PropTypes.string,
+  onClick: PropTypes.func
+}
 
 export default CropSelectionCard

@@ -6,17 +6,20 @@ import React from 'react'
 
 const Layout = ({ children, height, pt, px, ...rest }) => {
   return (
-    <Grid templateRows='repeat(1 1fr)'
+    <Grid
+      templateRows='repeat(1 1fr)'
       templateColumns='15% 63% 22%'
       pos='relative'
       fontFamily='body'
-      fontSize={{ md: 'md' }}>
+      fontSize={{ md: 'md' }}
+    >
       <Header />
       <GridItem>
         <Sidebar />
       </GridItem>
       <GridItem bg='gray.50'>
-        <Box as='main'
+        <Box
+          as='main'
           gridArea='main'
           w='100%'
           color='gray.800'
@@ -24,7 +27,8 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
           px={px}
           h={height}
           fontFamily='body'
-          {...rest}>
+          {...rest}
+        >
           {children}
         </Box>
       </GridItem>
@@ -39,10 +43,10 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  height  : PropTypes.any,
-  pt      : PropTypes.any,
-  px      : PropTypes.any,
-  rest    : PropTypes.any,
+  height: PropTypes.any,
+  pt: PropTypes.any,
+  px: PropTypes.any,
+  rest: PropTypes.any
 }
 
 export default Layout

@@ -1,79 +1,75 @@
-/* eslint-disable space-before-function-paren */
 import axios from 'axios'
 import QueryString from 'query-string'
 import isEmpty from 'lodash/isEmpty'
 
-const http = axios.create({
-  headers: { 'Content-Type': 'application/json' },
-})
+class HttpFacade {
+  constructor() {
+    this.http = axios.create({
+      headers: { 'Content-Type': 'application/json' }
+    })
 
-http.interceptors.request.use(
-  function (config) {
-    const token = window.sessionStorage.getItem('_cft')
-    if (token) config.headers.Authorization = 'Bearer ' + token
-    return config
-  },
-  function (error) {
-    return Promise.reject(error)
-  }
-)
-
-http.interceptors.response.use(
-  function (response) {
-    return response
-  },
-  function (error) {
-    return Promise.reject(error)
-  }
-)
-
-const HttpFacade = () => {
-  return {
-    post: async (options) => {
-      const { url, body } = options
-      const response = await http.post(url, body)
-      return response.data
-    },
-
-    patch: async (options) => {
-      const { url, body } = options
-      const response = await http.patch(url, body)
-      return response.data
-    },
-
-    get: async (options) => {
-      const { url, query } = options
-      let _url = null
-      if (!isEmpty(query)) {
-        const queryString = QueryString.stringify(query)
-        _url = `${url}?${queryString}`
-      } else {
-        _url = `${url}`
-      }
-      const response = await http.get(_url)
-      return response.data
-    },
-
-    delete: async (options) => {
-      const { url } = options
-      const response = await http.delete(url)
-      return response.data
-    },
-
-    put: async (options) => {
-      const { url, body } = options
-      const response = await http.put(url, body)
-      return response.data
-    },
-
-    token: (token) => {
-      http.interceptors.request.use(function (config) {
-        config.headers.Authorization = `Bearer ${token}`
+    this.http.interceptors.request.use(
+      function (config) {
+        const token = window.sessionStorage.getItem('_cft')
+        if (token) config.headers.Authorization = 'Bearer ' + token
         return config
-      })
-      return HttpFacade()
-    },
+      },
+      function (error) {
+        return Promise.reject(error)
+      }
+    )
+
+    this.http.interceptors.response.use(
+      function (response) {
+        return response
+      },
+      function (error) {
+        return Promise.reject(error.response)
+      }
+    )
+  }
+
+  post = async options => {
+    const { url, body } = options
+    const response = await this.http.post(url, body)
+    return response.data
+  }
+
+  patch = async options => {
+    const { url, body } = options
+    const response = await this.http.patch(url, body)
+    return response.data
+  }
+
+  get = async options => {
+    const { url, query } = options
+    let _url = null
+    if (!isEmpty(query)) {
+      const queryString = QueryString.stringify(query)
+      _url = `${url}?${queryString}`
+    } else {
+      _url = `${url}`
+    }
+    const response = await this.http.get(_url)
+    return response.data
+  }
+
+  delete = async options => {
+    const { url } = options
+    const response = await this.http.delete(url)
+    return response.data
+  }
+
+  put = async options => {
+    const { url, body } = options
+    const response = await this.http.put(url, body)
+    return response.data
+  }
+
+  headers = headers => {
+    this.http.defaults.headers = headers
+    return this
   }
 }
 
-export default HttpFacade()
+export default HttpFacade

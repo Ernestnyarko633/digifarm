@@ -1,17 +1,19 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import http from 'utils/httpFacade'
+import httpFacade from 'utils/httpFacade'
 import { replaceURI } from 'helpers/misc'
 import configs from 'utils/configs'
 
 const AuthContext = createContext()
 
-export const AuthProvider = ({ children }) => {
+const http = new httpFacade()
+
+export const AuthContextProvider = ({ children }) => {
   // Setup Config
   const AUTH_API = configs().AUTH_API
-  const [ session, setSession ] = useState(true)
-  const [ user, setUser ] = useState(null)
+  const [session, setSession] = useState(true)
+  const [user, setUser] = useState(null)
 
   const store = ({ token, user }) => {
     if (token) window.sessionStorage.setItem('_cft', token)
@@ -28,33 +30,33 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const getUser = async () => {
-    return await http.get({ url: `${AUTH_API}/users/profile` })
-  }
+  const getUser = async () =>
+    await http.get({ url: `${AUTH_API}/users/profile` })
 
   const patchUser = async (id, data) =>
     await http.patch({
-      url : `${AUTH_API}/users/${id}`,
-      body: JSON.stringify(data),
+      url: `${AUTH_API}/users/${id}`,
+      body: JSON.stringify(data)
     })
 
-  const logout = async(clearRemote = false) => {
+  const logout = async (clearRemote = false) => {
     try {
-      clearRemote && await http.get({ url: `${AUTH_API}/user/logout` })
+      clearRemote && (await http.get({ url: `${AUTH_API}/user/logout` }))
       window.sessionStorage.clear()
       replaceURI('AUTH', '/redirects?from=BUYER&off=true')
     } catch (error) {
-      // console.debug(error);
+      logout()
     }
   }
 
   useEffect(() => {
     if (!session) return logout(true)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
 
   return (
-    <AuthContext.Provider value={{
+    <AuthContext.Provider
+      value={{
         user,
         store,
         setUser,
@@ -63,18 +65,18 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         getUser,
         patchUser,
-        logout,
-      }}>
+        logout
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )
 }
 
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+AuthContextProvider.propTypes = {
+  children: PropTypes.node.isRequired
 }
 
-export default function useAuth() {
-  const context = useContext(AuthContext)
-  return context
-}
+const useAuth = () => useContext(AuthContext)
+
+export default useAuth
