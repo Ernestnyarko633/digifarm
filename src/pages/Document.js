@@ -63,6 +63,8 @@ const Document = () => {
     }
     news()
   }, [])
+  console.log(_newsData)
+  console.log(_announcement)
 
     return (
       <Layout>
