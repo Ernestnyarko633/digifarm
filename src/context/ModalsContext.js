@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import useComponents from './ComponentContext'
 import FarmReceiptModal from 'components/Modals/FarmReceiptModal'
-import FarmContractModal from 'components/Modals/FarmContract'
+import FarmContractModal from 'components/Modals/FarmContractModal'
 
 const ModalsContext = React.createContext({})
 

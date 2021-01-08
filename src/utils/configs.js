@@ -1,7 +1,7 @@
 /**
  * Method to return backend services urls based on the environment
  * */
-const getConfig = () => {
+const config = () => {
   // Get REACT ENV
   const ENV = process.env.REACT_APP_ENVIRONMENT
 
@@ -22,4 +22,4 @@ const getConfig = () => {
   }
 }
 
-export default getConfig
+export default config
