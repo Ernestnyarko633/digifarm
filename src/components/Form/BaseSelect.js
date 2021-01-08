@@ -25,13 +25,13 @@ const BaseSelect = ({
       label: _value[key] 
     }))
 
-  const getOptions = (options) => {
+  const getOptions = (_options) => {
     if (isArrayOfObj) {
-      return options
+      return _options
     }
-    return Object.keys(options).map((key) => ({
-      id   : options[key],
-      label: options[key],
+    return Object.keys(_options).map((key) => ({
+      id   : _options[key],
+      label: _options[key],
     }))
   }
 
