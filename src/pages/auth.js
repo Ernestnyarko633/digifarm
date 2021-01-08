@@ -44,19 +44,19 @@ const Auth = ({
               setTimeout(() => {
                 replace(JSON.parse(to || null) || '/dashboard')
               }, 500)
-            } catch (error) {
-              if (error?.response) {
-                const res = error.response
+            } catch (_error) {
+              if (_error?.response) {
+                const res = _error.response
                 if ([ 401, 403 ].includes(res.status)) {
                   replaceURI(
                     'AUTH',
                     '/redirects?from=DIGITAL_FARMER&off=false'
                   )
                 } else {
-                  setError(error?.message)
+                  setError(_error?.message)
                 }
               } else {
-                setError(error?.message)
+                setError(_error?.message)
               }
             }
           }, 500)
