@@ -1,10 +1,11 @@
-import React from 'react'
+import React,{ useEffect, useState} from 'react'
 import Layout from 'container/Layout'
 import DocumentCard  from 'components/Cards/Document/DocumentCard'
 import { Box, Grid } from '@chakra-ui/react'
 import UploadDocument from 'components/Modals/UploadDocument'
 import ConfirmReceiptDelete from 'components/Modals/ConfirmReceiptDelete'
-
+import Prismic from 'prismic-javascript'
+import getConfig from 'utils/configs';
 
 const data = [
     {
@@ -30,6 +31,39 @@ const data = [
 
 const Document = () => {
   document.title = 'Complete Farmer | Documents'
+
+  const prismic_api = getConfig().PRISMIC_API
+  const prismic_key = getConfig().PRISMIC_KEY
+
+  const Client = Prismic.client(prismic_api, { prismic_key })
+
+  const [_newsData, setNewsData ] = useState(null)
+  const [_announcement, setAnnouncement ] = useState(null)
+
+  useEffect(() => {
+    const announcements = async () => {
+      const response = await Client.query(
+        Prismic.Predicates.at('document.type', 'announcements')
+      )
+      if (response) {
+        setAnnouncement(response.results[0])
+      }
+    }
+    announcements()
+  }, [])
+
+  useEffect(() => {
+    const news = async () => {
+      const response = await Client.query(
+        Prismic.Predicates.at('document.type', 'news')
+      )
+      if (response) {
+        setNewsData(response.results[0])
+      }
+    }
+    news()
+  }, [])
+
     return (
       <Layout>
         <Box mt='200px' mx='80px'>
