@@ -37,8 +37,8 @@ const Document = () => {
 
   const Client = Prismic.client(prismic_api, { prismic_key })
 
-  const [ newsData, setNewsData ] = useState(null)
-  const [announcement, setAnnouncement ] = useState(null)
+  const [_newsData, setNewsData ] = useState(null)
+  const [_announcement, setAnnouncement ] = useState(null)
 
   useEffect(() => {
     const announcements = async () => {
