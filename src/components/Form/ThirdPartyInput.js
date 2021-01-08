@@ -13,8 +13,8 @@ const ThirdPartyInput = ({
   label,
   title,
 }) => {
-  const getForm = (title) => {
-    switch (title) {
+  const getForm = (heading) => {
+    switch (heading) {
       case 'KPIs':
         return (
           <FormInput type='text'
