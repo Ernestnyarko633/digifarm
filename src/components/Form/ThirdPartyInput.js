@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-import FormInput from './Input'
+import FormInput from './FormInput'
 
 const ThirdPartyInput = ({
   name,

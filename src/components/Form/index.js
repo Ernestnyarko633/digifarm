@@ -1,5 +1,5 @@
 export { default as FormSelect } from './BaseSelect'
 export { default as FormPhone } from './BasePhone'
 export { default as FormDropDown } from './FormDropdown'
-export { default as FormInput } from './Input'
+export { default as FormInput } from './FormInput'
 export { default as FormTextArea } from './TextArea'
