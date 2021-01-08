@@ -19,8 +19,8 @@ const BaseSelect = ({
   width,
 }) => {
   const isArrayOfObj = !!(valueKey && labelKey)
-  const getValue = (value) =>
-    Object.keys(value).map((key) => ({ id: value[key], label: value[key] }))
+  const getValue = (_value) =>
+    Object.keys(_value).map((key) => ({ id: _value[key], label: _value[key] }))
 
   const getOptions = (options) => {
     if (isArrayOfObj) {
@@ -36,13 +36,13 @@ const BaseSelect = ({
   // const touch = _get(touched, name);
   const inputValue = getValue(value)
 
-  const handleChange = (value) => {
+  const handleChange = (val) => {
     let item
     // setFieldTouched(fieldName, true);
     if (!multi) {
-      item = value ? value.value.map((e) => e.label) : ''
+      item = val ? val.value.map((e) => e.label) : ''
     } else {
-      item = value ? value.value.map((e) => e.label) : []
+      item = val ? value.value.map((e) => e.label) : []
     }
     setFieldValue(name, item)
   }
@@ -69,7 +69,7 @@ const BaseSelect = ({
         name={name}
         id={id}
         placeholder={placeholder}
-        onChange={(value) => handleChange(value)}
+        onChange={(e) => handleChange(e)}
         overrides={{
           Root: {
             style: {
