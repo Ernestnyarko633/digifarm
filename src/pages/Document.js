@@ -5,7 +5,7 @@ import { Box, Grid } from '@chakra-ui/react'
 import UploadDocument from 'components/Modals/UploadDocument'
 import ConfirmReceiptDelete from 'components/Modals/ConfirmReceiptDelete'
 import Prismic from 'prismic-javascript'
-import config from 'utils/configs';
+import configs from 'utils/configs';
 
 const data = [
     {
@@ -32,8 +32,8 @@ const data = [
 const Document = () => {
   document.title = 'Complete Farmer | Documents'
 
-  const prismic_api = config().PRISMIC_API
-  const prismic_key = config().PRISMIC_KEY
+  const prismic_api = configs().PRISMIC_API
+  const prismic_key = configs().PRISMIC_KEY
 
   const Client = Prismic.client(prismic_api, { prismic_key })
 

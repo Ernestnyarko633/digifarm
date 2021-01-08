@@ -1,13 +1,13 @@
 import React, { createContext } from 'react'
 import PropTypes from 'prop-types'
-import config from '../utils/configs'
+import configs from '../utils/configs'
 import http from '../utils/httpFacade'
 
 export const PaymentContext = createContext()
 
 const PaymentContextProvider = ({ children }) => {
 
-    const PAYMENT_API = config().PAYMENT_API
+    const PAYMENT_API = configs().PAYMENT_API
 
     const uploadPaymentDetails = async (id, formData)=> {
         try{
