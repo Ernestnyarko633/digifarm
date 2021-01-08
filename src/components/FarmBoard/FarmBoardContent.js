@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Heading, Flex } from '@chakra-ui/react'
 import FarmBoardCard from '../Cards/FarmBoardCard'
-import YourFarmCard from '../Cards/YourFarm'
+import YourFarmCard from '../Cards/YourFarmCard'
 import Bitmap from 'assets/images/Bitmap.png'
 import Crop from 'assets/images/crop.png'
 import SoyaBeanImg from 'assets/images/soya.png'
