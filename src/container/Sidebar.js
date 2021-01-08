@@ -101,8 +101,8 @@ const Sidebar = ({ currentPath }) => {
             </Flex>
             {toggleMenus && (
               <Box as='ul' color='gray.600'>
-                {item.submenu.map((item) => (
-                  <Link key={item.name}
+                {item.submenu.map((element) => (
+                  <Link key={element.name}
                     d='flex'
                     alignItems='center'
                     pr={{ md: 3 }}
@@ -111,7 +111,7 @@ const Sidebar = ({ currentPath }) => {
                     rounded='lg'
                     activeClassName='activeClasName'
                     as={NavLink}
-                    to={item.path}
+                    to={element.path}
                     cursor='pointer'
                     className='active-link'
                     transition='background-color .2s ease-in'
