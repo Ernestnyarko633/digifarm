@@ -13,16 +13,16 @@ export const AuthProvider = ({ children }) => {
   const [ session, setSession ] = useState(true)
   const [ user, setUser ] = useState(null)
 
-  const store = ({ token, user }) => {
+  const store = ({ token, _user }) => {
     if (token) window.sessionStorage.setItem('_cft', token)
-    if (user) window.sessionStorage.setItem('_cfu', JSON.stringify(user))
+    if (_user) window.sessionStorage.setItem('_cfu', JSON.stringify(_user))
   }
 
   const isAuthenticated = () => {
     const _cft = window.sessionStorage.getItem('_cft')
     const _cfu = window.sessionStorage.getItem('_cfu')
     if (_cft && _cfu) {
-      return { token: _cft, user: JSON.parse(_cfu) }
+      return { token: _cft, _user: JSON.parse(_cfu) }
     } else {
       return false
     }
