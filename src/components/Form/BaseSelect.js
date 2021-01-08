@@ -13,14 +13,17 @@ const BaseSelect = ({
   valueKey,
   labelKey,
   errors,
-  touched,
+  touched, 
   placeholder,
   title,
   width,
 }) => {
   const isArrayOfObj = !!(valueKey && labelKey)
   const getValue = (_value) =>
-    Object.keys(_value).map((key) => ({ id: _value[key], label: _value[key] }))
+    Object.keys(_value).map((key) => ({ 
+      id: _value[key], 
+      label: _value[key] 
+    }))
 
   const getOptions = (options) => {
     if (isArrayOfObj) {
