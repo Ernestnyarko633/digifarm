@@ -1,6 +1,5 @@
 import axios from 'axios'
 import QueryString from 'query-string'
-import isEmpty from 'lodash/isEmpty'
 
 class HttpFacade {
   constructor() {
@@ -29,39 +28,28 @@ class HttpFacade {
     )
   }
 
-  post = async options => {
-    const { url, body } = options
+  post = async ({ url, body }) => {
     const response = await this.http.post(url, body)
     return response.data
   }
 
-  patch = async options => {
-    const { url, body } = options
+  patch = async ({ url, body }) => {
     const response = await this.http.patch(url, body)
     return response.data
   }
 
-  get = async options => {
-    const { url, query } = options
-    let _url = null
-    if (!isEmpty(query)) {
-      const queryString = QueryString.stringify(query)
-      _url = `${url}?${queryString}`
-    } else {
-      _url = `${url}`
-    }
-    const response = await this.http.get(_url)
+  get = async ({ url, query }) => {
+    const queryString = QueryString.stringify(query)
+    const response = await this.http.get(`${url}?${queryString}`)
     return response.data
   }
 
-  delete = async options => {
-    const { url } = options
+  delete = async ({ url }) => {
     const response = await this.http.delete(url)
     return response.data
   }
 
-  put = async options => {
-    const { url, body } = options
+  put = async ({ url, body }) => {
     const response = await this.http.put(url, body)
     return response.data
   }

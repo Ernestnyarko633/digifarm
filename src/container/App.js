@@ -9,6 +9,8 @@ import { ComponentContextProvider } from 'context/component'
 import { ModalContextProvider } from 'context/modal'
 import { PaymentContextProvider } from 'context/payment'
 import { AuthContextProvider } from 'context/auth'
+import { ProductContextProvider } from 'context/product'
+import { CategoryContextProvider } from 'context/category'
 
 const queryCache = new QueryCache()
 
@@ -19,9 +21,13 @@ function App() {
         <ComponentContextProvider>
           <AuthContextProvider>
             <PaymentContextProvider>
-              <ModalContextProvider>
-                <Router />
-              </ModalContextProvider>
+              <ProductContextProvider>
+                <CategoryContextProvider>
+                  <ModalContextProvider>
+                    <Router />
+                  </ModalContextProvider>
+                </CategoryContextProvider>
+              </ProductContextProvider>
             </PaymentContextProvider>
           </AuthContextProvider>
         </ComponentContextProvider>

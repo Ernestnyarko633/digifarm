@@ -1,12 +1,17 @@
+import React, { useState } from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import CropCard from 'components/Cards/CropCard'
-import React from 'react'
+
+import useAuth from 'context/auth'
 
 // json
 import data from '../../data/farm.json'
 
 const StartFarm = () => {
-  const [farms] = React.useState(data)
+  const [farms] = useState(data)
+  const { isAuthenticate } = useAuth()
+
+  const { firstName } = isAuthenticate().user
 
   return (
     <Flex
@@ -19,7 +24,7 @@ const StartFarm = () => {
     >
       <Box textAlign='center' mb={{ md: 12 }}>
         <Text fontFamily='light' fontSize={{ md: '3xl' }}>
-          Welcome Louisa
+          Welcome {firstName}
         </Text>
         <Heading as='h4' size='xl'>
           How would you like to farm with us
