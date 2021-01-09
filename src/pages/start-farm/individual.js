@@ -5,6 +5,7 @@ import OtherSteps from 'components/StartFarmProcess/OtherSteps'
 import useComponent from 'context/component'
 
 const Individual = () => {
+  document.title = 'Complete Farmer | Individual'
   const { step } = useComponent()
 
   const getContent = value => {

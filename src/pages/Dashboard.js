@@ -5,13 +5,17 @@ import Greetings from 'components/Utils/Greetings'
 import Layout from 'container/Layout'
 import React from 'react'
 
-const Dashboard = () => (
-  <Layout>
-    <Greetings />
-    <OrdersCard />
-    <HomeEmptyState />
-    <GetStartedNowCard />
-  </Layout>
-)
+const Dashboard = () => {
+  document.title = 'Complete Farmer | Dashboard'
+
+  return (
+    <Layout>
+      <Greetings />
+      <OrdersCard />
+      <HomeEmptyState />
+      <GetStartedNowCard />
+    </Layout>
+  )
+}
 
 export default Dashboard

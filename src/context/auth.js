@@ -33,6 +33,21 @@ export const AuthContextProvider = ({ children }) => {
   const getUser = async () =>
     await http.get({ url: `${AUTH_API}/users/profile` })
 
+  const getProfile = async () => {
+    const { data } = await http.get({ url: `${AUTH_API}/users/profile` })
+    setUser(data)
+  }
+
+  const changePassword = async payload =>
+    await http.patch({
+      url: `${AUTH_API}/change-password`,
+      body: JSON.stringify(payload)
+    })
+
+  React.useEffect(() => {
+    getProfile()
+  }, [])
+
   const patchUser = async (id, data) =>
     await http.patch({
       url: `${AUTH_API}/users/${id}`,
@@ -63,8 +78,9 @@ export const AuthContextProvider = ({ children }) => {
         session,
         setSession,
         isAuthenticated,
-        getUser,
+        changePassword,
         patchUser,
+        getUser,
         logout
       }}
     >

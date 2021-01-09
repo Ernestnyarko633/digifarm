@@ -9,9 +9,9 @@ import data from '../../data/farm.json'
 
 const StartFarm = () => {
   const [farms] = useState(data)
-  const { isAuthenticate } = useAuth()
+  const { isAuthenticated } = useAuth()
 
-  const { firstName } = isAuthenticate().user
+  const { user } = isAuthenticated()
 
   return (
     <Flex
@@ -24,7 +24,7 @@ const StartFarm = () => {
     >
       <Box textAlign='center' mb={{ md: 12 }}>
         <Text fontFamily='light' fontSize={{ md: '3xl' }}>
-          Welcome {firstName}
+          Welcome {user.firstName}
         </Text>
         <Heading as='h4' size='xl'>
           How would you like to farm with us

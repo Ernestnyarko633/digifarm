@@ -23,6 +23,7 @@ const Router = () => (
         component={Pages.Cooperative}
       />
       <PrivateRoute path='/marketplace' component={Pages.Marketplace} />
+      <PrivateRoute path='/document' component={Pages.Document} />
       <PrivateRoute path='/farms' component={Pages.FarmBoard} />
       <PrivateRoute path='/notfound' component={Pages.NotFound} />
       <Redirect from='*' to='/404' />

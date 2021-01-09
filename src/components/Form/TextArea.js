@@ -11,22 +11,22 @@ const FormTextArea = ({
   placeholder,
   name,
   error,
-  touched
+  touched,
+  bg,
+  ...rest
 }) => (
-  <FormControl pos='relative' pt={2} isInvalid={error && touched}>
+  <FormControl pos='relative' pt={2} isInvalid={error && touched} {...rest}>
     <Box
-      bg='gray.200'
-      border='2px solid #3c9130'
+      bg={bg}
+      borderWidth={1}
+      borderColor='gray.100'
       borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
-      borderLeftWidth={0}
-      borderRightWidth={0}
-      borderTopWidth={0}
     >
       <FormLabel
-        fontSize={{ md: 'sm' }}
+        fontSize={{ md: 'xs' }}
         pos='absolute'
         left={{ md: 4 }}
-        top={-1}
+        top={3}
         color='gray.600'
       >
         {label}
@@ -49,7 +49,8 @@ const FormTextArea = ({
           Input: {
             style: {
               backgroundColor: 'transparent',
-              borderWidth: '0px'
+              borderWidth: '0px',
+              marginTop: '8px'
             }
           },
           InputContainer: {
@@ -76,6 +77,7 @@ FormTextArea.propTypes = {
   onChange: PropTypes.any.isRequired,
   error: PropTypes.any,
   touched: PropTypes.any,
+  bg: PropTypes.any,
   onBlur: PropTypes.any.isRequired
 }
 

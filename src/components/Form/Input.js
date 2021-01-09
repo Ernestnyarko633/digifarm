@@ -18,6 +18,7 @@ const FormInput = ({
   width,
   mr,
   bg = 'cf.300',
+  w,
   ...rest
 }) => (
   <FormControl
@@ -29,17 +30,16 @@ const FormInput = ({
   >
     <Box
       bg={bg}
-      border='2px solid #3c9130'
+      borderWidth={1}
+      borderColor='gray.100'
       borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
-      borderLeftWidth={0}
-      borderRightWidth={0}
-      borderTopWidth={0}
+      w={w}
     >
       <FormLabel
-        fontSize={{ md: 'sm' }}
+        fontSize={{ md: 'xs' }}
         pos='absolute'
         left={{ md: 4 }}
-        top={-1}
+        top={2}
         color='gray.600'
       >
         {label} {titleAddon}
@@ -66,7 +66,8 @@ const FormInput = ({
             style: {
               backgroundColor: 'transparent',
               borderWidth: '0px',
-              height: '50px'
+              height: '50px',
+              marginTop: '8px'
             }
           },
           InputContainer: {
@@ -96,6 +97,7 @@ FormInput.propTypes = {
   placeholder: PropTypes.any,
   label: PropTypes.any,
   width: PropTypes.any,
+  w: PropTypes.any,
   my: PropTypes.any,
   mr: PropTypes.any,
   id: PropTypes.any,
