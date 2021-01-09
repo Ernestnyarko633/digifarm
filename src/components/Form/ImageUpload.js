@@ -61,7 +61,7 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
 
   React.useEffect(
     () => () => {
-      files?.forEach((file) => URL.revokeObjectURL(file.preview))
+      files?.forEach((file) => ( URL.revokeObjectURL(file.preview)))
     },
     [files]
   )
