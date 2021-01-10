@@ -37,6 +37,7 @@ const OtherSteps = () => {
         return null
     }
   }
+
   return (
     <Box>
       <Flex
@@ -59,6 +60,14 @@ const OtherSteps = () => {
           <Text px={6}>Sorghum</Text>
         </Flex>
       </Flex>
+
+      {/* <Flex align='center' justify='center' w='100%'>
+        <Box textAlign='center' mt={40}>
+          <Heading as='h4' size='xl'>
+            Farm details and Manager
+          </Heading>
+        </Box>
+      </Flex> */}
 
       <Flex
         align='center'

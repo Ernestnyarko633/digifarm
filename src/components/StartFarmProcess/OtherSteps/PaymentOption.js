@@ -12,7 +12,7 @@ import {
 import { useMutation } from 'react-query'
 import { motion } from 'framer-motion'
 
-import usePayment from 'context/payment'
+import useApi from 'context/api'
 
 import { Support, Schedule, Update } from 'theme/Icons'
 
@@ -25,7 +25,7 @@ import ginger from '../../../assets/images/ginger.png'
 const MotionGrid = motion.custom(Grid)
 
 const PaymentOption = () => {
-  const { initiatePayment } = usePayment()
+  const { initiatePayment } = useApi()
 
   const [cardData] = useState({
     amount: 100,

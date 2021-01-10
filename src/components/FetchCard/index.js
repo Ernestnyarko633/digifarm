@@ -6,7 +6,7 @@ import Loader from 'react-loader-spinner'
 
 const FetchCard = ({ loading, error, reload, ...rest }) => {
   return (
-    <Flex {...rest} mx='auto' h='10vh' w={90}>
+    <Flex {...rest}>
       <Flex
         textAlign='center'
         align='center'

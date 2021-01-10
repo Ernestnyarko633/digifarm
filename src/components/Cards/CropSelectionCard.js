@@ -9,8 +9,8 @@ const CropSelectionCard = ({ acres, title, onClick }) => (
     justify='center'
     w='100%'
     h={48}
-    borderWidth={1}
-    borderColor='gray.300'
+    borderTopWidth={1}
+    borderTopColor='gray.300'
     as='button'
     role='button'
     onClick={onClick}
@@ -18,7 +18,7 @@ const CropSelectionCard = ({ acres, title, onClick }) => (
   >
     {acres && (
       <Text color='red.600' fontSize='xs'>
-        {acres} 100 acres left
+        {acres} acres left
       </Text>
     )}
     <Text>{title}</Text>

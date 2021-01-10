@@ -4,12 +4,18 @@ import PropTypes from 'prop-types'
 import getConfig from '../utils/configs'
 import httpFacade from '../utils/httpFacade'
 
-const PaymentContext = createContext()
+const ApiContext = createContext()
 
 const http = new httpFacade()
 
-export const PaymentContextProvider = ({ children }) => {
-  const PAYMENT_API = getConfig().PAYMENT_API
+export const ApiContextProvider = ({ children }) => {
+  const { FMS_API, PAYMENT_API } = getConfig()
+
+  const getCropCategories = async () =>
+    await http.get({ url: `${FMS_API}/crop-categories` })
+
+  const getFarms = async query =>
+    await http.get({ url: `${FMS_API}/farms`, query })
 
   const initiatePayment = async payload =>
     await http.post({
@@ -29,22 +35,24 @@ export const PaymentContextProvider = ({ children }) => {
     })
 
   return (
-    <PaymentContext.Provider
+    <ApiContext.Provider
       value={{
+        getCropCategories,
+        getFarms,
         initiatePayment,
         uploadPaymentDetails,
         deleteBankTransfer
       }}
     >
       {children}
-    </PaymentContext.Provider>
+    </ApiContext.Provider>
   )
 }
 
-PaymentContextProvider.propTypes = {
+ApiContextProvider.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-const usePayment = () => useContext(PaymentContext)
+const useApi = () => useContext(ApiContext)
 
-export default usePayment
+export default useApi

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Text } from '@chakra-ui/react'
 
-const Tab = ({ activeTab, label, onClick, width = 64 }) => {
+const Tab = ({ activeTab, label, onClick }) => {
   const handleClick = () => {
     onClick(label)
   }
@@ -15,7 +15,6 @@ const Tab = ({ activeTab, label, onClick, width = 64 }) => {
       mr={10}
       cursor='pointer'
       onClick={handleClick}
-      // bg='white'
       bg={activeTab === label ? 'cf.400' : 'white'}
       borderWidth={1}
       borderColor={activeTab === label ? 'cf.400' : 'gray.400'}
@@ -32,8 +31,7 @@ const Tab = ({ activeTab, label, onClick, width = 64 }) => {
 Tab.propTypes = {
   activeTab: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  width: PropTypes.any
+  onClick: PropTypes.func.isRequired
 }
 
 export default Tab

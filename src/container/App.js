@@ -7,10 +7,8 @@ import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 
 import { ComponentContextProvider } from 'context/component'
 import { ModalContextProvider } from 'context/modal'
-import { PaymentContextProvider } from 'context/payment'
 import { AuthContextProvider } from 'context/auth'
-import { ProductContextProvider } from 'context/product'
-import { CategoryContextProvider } from 'context/category'
+import { ApiContextProvider } from 'context/api'
 
 const queryCache = new QueryCache()
 
@@ -20,15 +18,11 @@ function App() {
       <ReactQueryCacheProvider queryCache={queryCache}>
         <ComponentContextProvider>
           <AuthContextProvider>
-            <PaymentContextProvider>
-              <ProductContextProvider>
-                <CategoryContextProvider>
-                  <ModalContextProvider>
-                    <Router />
-                  </ModalContextProvider>
-                </CategoryContextProvider>
-              </ProductContextProvider>
-            </PaymentContextProvider>
+            <ApiContextProvider>
+              <ModalContextProvider>
+                <Router />
+              </ModalContextProvider>
+            </ApiContextProvider>
           </AuthContextProvider>
         </ComponentContextProvider>
         <ReactQueryDevtools initialIsOpen />

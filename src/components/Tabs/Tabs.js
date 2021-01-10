@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Box } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
@@ -10,7 +10,6 @@ const MotionFlex = motion.custom(Flex)
 const Tabs = ({
   children,
   width,
-  borderWidth,
   px,
   pt,
   display = 'block',
@@ -20,14 +19,14 @@ const Tabs = ({
   py = 10,
   direction = 'column'
 }) => {
-  const [activeTab, setActiveTab] = React.useState(children[0].props.label)
+  const [activeTab, setActiveTab] = useState(children[0]?.props?.label)
 
-  const handleClickTabItem = React.useCallback(tab => setActiveTab(tab), [])
+  const handleClickTabItem = useCallback(tab => setActiveTab(tab), [])
 
   return (
     <Flex direction={direction} mt={mt}>
-      <Box display={display} as='ol' listStyleType='none' w={width} mx='auto'>
-        {children.map(child => {
+      <Box display={display} as='ol' listStyleType='none' w={width}>
+        {children?.map(child => {
           const { label } = child.props
 
           return (
@@ -51,8 +50,6 @@ const Tabs = ({
         pt={pt}
         bg='white'
         pos='relative'
-        borderWidth={borderWidth || 1}
-        borderColor='gray.300'
       >
         {children.map(child => {
           if (child.props.label !== activeTab) return undefined
@@ -73,8 +70,7 @@ Tabs.propTypes = {
   width: PropTypes.any,
   display: PropTypes.any,
   boxWidth: PropTypes.any,
-  direction: PropTypes.any,
-  borderWidth: PropTypes.any
+  direction: PropTypes.any
 }
 
 export default Tabs

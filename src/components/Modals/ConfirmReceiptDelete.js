@@ -11,12 +11,12 @@ import {
   Button,
   Icon
 } from '@chakra-ui/react'
-import usePayment from 'context/payment'
+import useApi from 'context/api'
 import { VscTrash } from 'react-icons/vsc'
 
 const ConfirmReceiptDelete = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
-  const { deleteBankTransfer } = usePayment()
+  const { deleteBankTransfer } = useApi()
 
   let payment_id = '5fd79e7c6d80ce789ab140be'
 

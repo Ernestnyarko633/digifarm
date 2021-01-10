@@ -17,12 +17,12 @@ import {
   CloseButton
 } from '@chakra-ui/react'
 import { Formik, Field } from 'formik'
-import usePayment from 'context/payment'
+import useApi from 'context/api'
 import Upload from 'components/Form/upload'
 import corporate from '../../assets/images/emptystate/corporate.png'
 
 const UploadDocument = () => {
-  const { uploadPaymentDetails } = usePayment()
+  const { uploadPaymentDetails } = useApi()
   const [modal, setmodal] = useState(true)
   // const [ doc, setDoc ] = useState(true)
 

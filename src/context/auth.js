@@ -46,6 +46,7 @@ export const AuthContextProvider = ({ children }) => {
 
   React.useEffect(() => {
     getProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const patchUser = async (id, data) =>

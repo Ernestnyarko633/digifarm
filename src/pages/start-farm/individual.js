@@ -1,11 +1,14 @@
 import React from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
+
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import OtherSteps from 'components/StartFarmProcess/OtherSteps'
+
 import useComponent from 'context/component'
 
 const Individual = () => {
   document.title = 'Complete Farmer | Individual'
+
   const { step } = useComponent()
 
   const getContent = value => {

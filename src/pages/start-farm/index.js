@@ -13,6 +13,10 @@ const StartFarm = () => {
 
   const { user } = isAuthenticated()
 
+  // clear cache data in session storage
+  sessionStorage.removeItem('categories')
+  sessionStorage.removeItem('farms')
+
   return (
     <Flex
       align='center'

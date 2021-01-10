@@ -24,3 +24,11 @@ export const getFormattedMoney = (val, withCurrecy) => {
   }).format(number)
   return !withCurrecy ? newFMondy.split('$')[1] : newFMondy
 }
+
+export const getformattedDate = date => {
+  return new Date(date).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  })
+}
