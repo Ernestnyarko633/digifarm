@@ -40,6 +40,12 @@ const Document = () => {
   const [_newsData, setNewsData ] = useState(null)
   const [_announcement, setAnnouncement ] = useState(null)
 
+  const Nothing =()=>{
+    let n = _newsData
+    let m = _announcement
+    return null
+  }
+
   useEffect(() => {
     const announcements = async () => {
       const response = await Client.query(
@@ -47,6 +53,7 @@ const Document = () => {
       )
       if (response) {
         setAnnouncement(response.results[0])
+        Nothing()
       }
     }
     announcements()
@@ -63,8 +70,8 @@ const Document = () => {
     }
     news()
   }, [])
-  console.log(_newsData)
-  console.log(_announcement)
+  
+
 
     return (
       <Layout>
