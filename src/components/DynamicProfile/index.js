@@ -16,7 +16,7 @@ const components = {
 
 const DynamicProfile = ({ page }) => {
   const SelectedPage = components[page]
-  return <SelectedPage />
+  return SelectedPage 
 }
 
 export default DynamicProfile
