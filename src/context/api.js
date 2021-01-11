@@ -2,11 +2,11 @@ import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
 import getConfig from '../utils/configs'
-import httpFacade from '../utils/httpFacade'
+import HttpFacade from '../utils/httpFacade'
 
 const ApiContext = createContext()
 
-const http = new httpFacade()
+const http = new HttpFacade()
 
 export const ApiContextProvider = ({ children }) => {
   const { FMS_API, PAYMENT_API } = getConfig()

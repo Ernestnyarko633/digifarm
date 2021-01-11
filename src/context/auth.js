@@ -1,13 +1,13 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import httpFacade from 'utils/httpFacade'
+import HttpFacade from 'utils/httpFacade'
 import { replaceURI } from 'helpers/misc'
 import configs from 'utils/configs'
 
 const AuthContext = createContext()
 
-const http = new httpFacade()
+const http = new HttpFacade()
 
 export const AuthContextProvider = ({ children }) => {
   // Setup Config
