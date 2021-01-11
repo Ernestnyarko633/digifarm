@@ -43,7 +43,7 @@ const Document = () => {
   const Nothing =()=>{
     let n = _newsData
     let m = _announcement
-    return null
+    return { n,m }
   }
 
   useEffect(() => {
