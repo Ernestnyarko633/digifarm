@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Box, Flex, Avatar, Image, Heading, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 
@@ -20,7 +21,8 @@ const EventsCard = ({
   return (
     <Box>
       <Flex justify='center'>
-        <Box {...rest}
+        <Box
+          {...rest}
           boxShadow={boxShadow || '0px 0px 15px 5px #ccc'}
           rounded={rounded || 15}
           bg={
@@ -32,16 +34,19 @@ const EventsCard = ({
           h={h || '100%'}
           mr={mr}
           ml={ml}
-          p={8}>
+          p={8}
+        >
           <Box>
             <Flex mb={4} direction='row' align='center'>
               <Box>
-                <Box as={Avatar}
+                <Box
+                  as={Avatar}
                   boxSize={boxSize}
                   mr={3}
                   bgSize={avatarBgSize}
                   size={avatarSize}
-                  bg='gray.100'>
+                  bg='gray.100'
+                >
                   <Image src={image} />
                 </Box>
               </Box>
@@ -53,9 +58,11 @@ const EventsCard = ({
                   Agyata, Eastern Region
                 </Text>
 
-                <Button borderColor='#fff'
+                <Button
+                  borderColor='#fff'
                   borderWidth={3}
-                  btntitle='Check it out' />
+                  btntitle='Check it out'
+                />
               </Box>
             </Flex>
           </Box>
@@ -63,6 +70,21 @@ const EventsCard = ({
       </Flex>
     </Box>
   )
+}
+
+EventsCard.propTypes = {
+  bg: PropTypes.any,
+  rounded: PropTypes.any,
+  boxShadow: PropTypes.any,
+  w: PropTypes.any,
+  h: PropTypes.any,
+  mr: PropTypes.any,
+  ml: PropTypes.any,
+  p: PropTypes.any,
+  image: PropTypes.any,
+  avatarSize: PropTypes.any,
+  avatarBgSize: PropTypes.any,
+  boxSize: PropTypes.any
 }
 
 export default EventsCard

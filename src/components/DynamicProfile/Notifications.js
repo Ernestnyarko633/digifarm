@@ -26,13 +26,15 @@ const Notifications = () => {
             <Button rounded='30px' w={40} h={12} shadow='sm'>
               Cancel
             </Button>
-            <Button colorScheme='linear'
+            <Button
+              colorScheme='linear'
               rounded='30px'
               w={40}
               h={12}
               shadow='sm'
               ml={4}
-              type='submit'>
+              type='submit'
+            >
               Save
             </Button>
           </Flex>

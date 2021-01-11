@@ -23,7 +23,7 @@ import { Schedule, Support, Update } from 'theme/Icons'
 const MotionGrid = motion.custom(Grid)
 
 const InviteLink = () => {
-  const [ files, setFiles ] = React.useState([])
+  const [files, setFiles] = React.useState([])
   const [value] = React.useState('http://completefarmer.com//djjgo49950-2')
   const { hasCopied, onCopy } = useClipboard(value)
 
@@ -31,14 +31,18 @@ const InviteLink = () => {
     <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem>
         <Flex align='center' justify='center' mt={16}>
-          <Image w={108}
-            src={require('../../../assets/images/invite.png').default} />
+          <Image
+            w={108}
+            src={require('../../../assets/images/invite.png').default}
+          />
         </Flex>
 
-        <Flex align='center'
+        <Flex
+          align='center'
           justify='space-between'
           mt={{ md: 20 }}
-          px={{ md: 10 }}>
+          px={{ md: 10 }}
+        >
           <Box textAlign='center' w={{ md: '100%' }} px={8}>
             <Heading as='h6' fontSize='md' mb={3}>
               What is included in this farm
@@ -60,15 +64,17 @@ const InviteLink = () => {
           </Box>
         </Flex>
       </GridItem>
-      <GridItem borderLeftWidth={1}
+      <GridItem
+        borderLeftWidth={1}
         borderLeftColor='gray.300'
         overflowY='scroll'
         css={{
-          direction     : 'rtl',
+          direction: 'rtl',
           scrollbarColor: 'rebeccapurple',
-          scrollBehavior: 'smooth',
+          scrollBehavior: 'smooth'
         }}
-        mb={10}>
+        mb={10}
+      >
         <Box css={{ direction: 'ltr' }} py={{ md: 10 }} px={{ md: 16 }}>
           <Box py={4}>
             <Heading as='h5' size='sm'>
@@ -76,9 +82,11 @@ const InviteLink = () => {
             </Heading>
 
             <Box mt={6}>
-              <FormInput bg='white'
+              <FormInput
+                bg='white'
                 label='Farm name'
-                placeholder='For eg: Ashesi2020' />
+                placeholder='For eg: Ashesi2020'
+              />
             </Box>
 
             <Box mt={16}>
@@ -96,17 +104,23 @@ const InviteLink = () => {
               </Heading>
 
               <Box mt={6}>
-                <FormInput bg='white'
-                  placeholder='Add people (Max of 5 and min of 2)' />
+                <FormInput
+                  bg='white'
+                  placeholder='Add people (Max of 5 and min of 2)'
+                />
               </Box>
 
               <Flex align='center' mt={6}>
-                <Avatar pos='relative'
-                  src={require('../../../assets/images/Oval.png').default}>
-                  <AvatarBadge pos='absolute'
+                <Avatar
+                  pos='relative'
+                  src={require('../../../assets/images/Oval.png').default}
+                >
+                  <AvatarBadge
+                    pos='absolute'
                     top={-2}
                     boxSize='1em'
-                    bg='cf.600' />
+                    bg='cf.600'
+                  />
                 </Avatar>
 
                 <Box ml={4}>
@@ -127,16 +141,19 @@ const InviteLink = () => {
 
               <Flex align='center' mt={6}>
                 <Box>
-                  <Input rounded='30px'
+                  <Input
+                    rounded='30px'
                     h={12}
                     bg='gray.100'
                     borderWidth='0px'
                     value={value}
                     color='gray.400'
                     w={80}
-                    isReadOnly />
+                    isReadOnly
+                  />
                 </Box>
-                <Button btntitle={hasCopied ? 'Link copied' : 'Share link'}
+                <Button
+                  btntitle={hasCopied ? 'Link copied' : 'Share link'}
                   rounded='30px'
                   borderWidth={1}
                   borderColor='gray.800'
@@ -147,7 +164,8 @@ const InviteLink = () => {
                   w={40}
                   ml={3}
                   onClick={onCopy}
-                  shadow='none' />
+                  shadow='none'
+                />
               </Flex>
             </Box>
           </Box>

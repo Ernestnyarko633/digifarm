@@ -9,25 +9,25 @@ import SoyaBean from '../assets/images/startfarm/soya-beans.svg'
 
 const warehouseGoods = [
   {
-    id       : 1,
-    image    : SoyaBean,
-    name     : 'Soya Bean Warehouse',
-    location : 'AgyaAtta, Eastern Region',
-    quantity : '2000 tonnes',
-    weight   : '200 kg',
-    bags     : '20 bags',
-    condition: 'Moist',
+    id: 1,
+    image: SoyaBean,
+    name: 'Soya Bean Warehouse',
+    location: 'AgyaAtta, Eastern Region',
+    quantity: '2000 tonnes',
+    weight: '200 kg',
+    bags: '20 bags',
+    condition: 'Moist'
   },
   {
-    id       : 2,
-    image    : SoyaBean,
-    name     : 'Soya Bean Warehouse',
-    location : 'AgyaAtta, Eastern Region',
-    quantity : '2010 tonnes',
-    weight   : '300 kg',
-    bags     : '30 bags',
-    condition: 'Dry',
-  },
+    id: 2,
+    image: SoyaBean,
+    name: 'Soya Bean Warehouse',
+    location: 'AgyaAtta, Eastern Region',
+    quantity: '2010 tonnes',
+    weight: '300 kg',
+    bags: '30 bags',
+    condition: 'Dry'
+  }
   // {
   //   id:3,
   //   image: SoyaBean,
@@ -46,10 +46,12 @@ const Warehouse = () => {
   return (
     <Layout>
       <Box pos='relative'>
-        <Image src={IllustrationImage}
+        <Image
+          src={IllustrationImage}
           h={{ md: 115 }}
           w='100%'
-          objectFit='cover' />
+          objectFit='cover'
+        />
         <Box pos='absolute' top={{ md: 40 }} left={{ md: 16 }}>
           <Heading as='h3' fontSize={{ md: '4xl' }}>
             Welcome to your warehouse
@@ -63,8 +65,10 @@ const Warehouse = () => {
         <ArrowButton />
       </Flex>
       <Flex my={3}>
-        {warehouseGoods.map((item) => (
-          <WarehouseCard name={item.name}
+        {warehouseGoods.map(item => (
+          <WarehouseCard
+            key={item.name}
+            name={item.name}
             location={item.location}
             image={item.image}
             quantity={item.quantity}
@@ -72,7 +76,8 @@ const Warehouse = () => {
             bags={item.bags}
             condition={item.condition}
             mr={3}
-            ml={14} />
+            ml={14}
+          />
         ))}
       </Flex>
     </Layout>

@@ -10,7 +10,7 @@ export const StartFarmProvider = ({ children }) => {
 }
 
 StartFarmProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default function useStartFarm() {

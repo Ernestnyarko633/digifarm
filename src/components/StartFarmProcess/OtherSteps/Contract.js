@@ -6,21 +6,23 @@ import React from 'react'
 const MotionGrid = motion.custom(Grid)
 
 const Contract = () => {
-  const options = [ 'Accept', 'Decline' ]
-  const [ contract, setContract ] = React.useState('')
+  const options = ['Accept', 'Decline']
+  const [contract, setContract] = React.useState('')
 
   return (
     <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem>Left</GridItem>
-      <GridItem borderLeftWidth={1}
+      <GridItem
+        borderLeftWidth={1}
         borderLeftColor='gray.300'
         overflowY='scroll'
         css={{
-          direction     : 'rtl',
+          direction: 'rtl',
           scrollbarColor: 'rebeccapurple',
-          scrollBehavior: 'smooth',
+          scrollBehavior: 'smooth'
         }}
-        mb={10}>
+        mb={10}
+      >
         <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
           <Heading as='h3' size='lg' mb={6} color='cf.400'>
             Complete Farmer Crowd Farming User Agreement
@@ -97,10 +99,12 @@ const Contract = () => {
           </Text>
 
           <Box mt={10}>
-            <FormRadio state={contract}
+            <FormRadio
+              state={contract}
               onChange={setContract}
               options={options}
-              width={24} />
+              width={24}
+            />
           </Box>
         </Box>
       </GridItem>

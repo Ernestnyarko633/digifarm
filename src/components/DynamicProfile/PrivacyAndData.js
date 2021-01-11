@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Heading,
@@ -10,9 +10,9 @@ import {
   Checkbox,
   Link,
   Icon,
-  Stack,
-} from '@chakra-ui/react';
-import { chevronRight } from 'theme/Icons';
+  Stack
+} from '@chakra-ui/react'
+import { chevronRight } from 'theme/Icons'
 
 const PrivacyAndData = () => {
   return (
@@ -98,7 +98,7 @@ const PrivacyAndData = () => {
         </Box>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default PrivacyAndData;
+export default PrivacyAndData
