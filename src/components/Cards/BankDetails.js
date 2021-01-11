@@ -2,19 +2,23 @@ import { Box, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 
 const BankDetails = () => (
-  <Box as='table'
+  <Box
+    as='table'
     p='40px'
     mt='4'
     bg='cf.300'
     rounded='md'
     shadow='md'
-    fontSize='sm'>
+    fontSize='sm'
+  >
     <Box as='tr'>
-      <Flex as='td'
+      <Flex
+        as='td'
         align='center'
         justify='space-between'
         w={{ md: 80 }}
-        p={{ md: 4 }}>
+        p={{ md: 4 }}
+      >
         <Text color='gray.400' w={{ md: 40 }}>
           Bank:
         </Text>
@@ -25,11 +29,13 @@ const BankDetails = () => (
     </Box>
     <Box borderWidth={1} borderColor='gray.100' />
     <Box as='tr'>
-      <Flex as='td'
+      <Flex
+        as='td'
         align='center'
         justify='space-between'
         w={{ md: 80 }}
-        p={{ md: 4 }}>
+        p={{ md: 4 }}
+      >
         <Text color='gray.400' w={{ md: 40 }}>
           Branch:
         </Text>
@@ -40,11 +46,13 @@ const BankDetails = () => (
     </Box>
     <Box borderWidth={1} borderColor='gray.100' />
     <Box as='tr'>
-      <Flex as='td'
+      <Flex
+        as='td'
         align='center'
         justify='space-between'
         w={{ md: 80 }}
-        p={{ md: 4 }}>
+        p={{ md: 4 }}
+      >
         <Text color='gray.400' w={{ md: 40 }}>
           Account no:
         </Text>
@@ -55,11 +63,13 @@ const BankDetails = () => (
     </Box>
     <Box borderWidth={1} borderColor='gray.100' />
     <Box as='tr'>
-      <Flex as='td'
+      <Flex
+        as='td'
         align='center'
         justify='space-between'
         w={{ md: 80 }}
-        p={{ md: 4 }}>
+        p={{ md: 4 }}
+      >
         <Text color='gray.400' w={{ md: 40 }}>
           Swift code:
         </Text>
@@ -70,11 +80,13 @@ const BankDetails = () => (
     </Box>
     <Box borderWidth={1} borderColor='gray.100' />
     <Box as='tr'>
-      <Flex as='td'
+      <Flex
+        as='td'
         align='center'
         justify='space-between'
         w={{ md: 80 }}
-        p={{ md: 4 }}>
+        p={{ md: 4 }}
+      >
         <Text color='gray.400' w={{ md: 40 }}>
           Account name:
         </Text>

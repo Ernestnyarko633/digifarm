@@ -34,6 +34,7 @@
 
 .bx--list-box {
   background-color: transparent;
+  border-bottom: 1.5px solid rgb(60, 145, 48);
 }
 
 .bx--dropdown {
@@ -59,8 +60,4 @@
 
 .bx--list-box:hover {
   background-color: transparent;
-}
-
-.bx--list-box {
-  border-bottom: 1.5px solid rgb(60, 145, 48);
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Box,
   Button,
@@ -11,7 +12,6 @@ import {
   Text,
   Image
 } from '@chakra-ui/react'
-import PropTypes from 'prop-types'
 
 const WarehouseCard = ({
   name,
@@ -22,7 +22,7 @@ const WarehouseCard = ({
   quantity,
   condition,
   mr,
-  ml,
+  ml
 }) => (
   <Box>
     <Flex justify='center'>
@@ -32,7 +32,7 @@ const WarehouseCard = ({
             <Image src={image} />
           </Avatar>
           <Box ml={2}>
-            <Heading as='h6' mb={{ md: 2 }}fontSize={{ md: 'lg' }}>
+            <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
               {name}
             </Heading>
             <Text fontSize='xs' mt={{ md: -2 }}>
@@ -66,7 +66,8 @@ const WarehouseCard = ({
               <ListItem fontSize='xs'>
                 Yeild conditions -
                 <span fontSize='sm' pl={2}>
-                  {' '}{condition}
+                  {' '}
+                  {condition}
                 </span>
               </ListItem>
             </List>
@@ -82,13 +83,15 @@ const WarehouseCard = ({
             </Box>
           </Flex>
         </Box>
-        <Button colorScheme='linear'
+        <Button
+          colorScheme='linear'
           rounded='30px'
           fontSize='xs'
           as='a'
           href='/marketplace'
           fontWeight='bold'
-          width='100%'>
+          width='100%'
+        >
           Sell
         </Button>
       </Box>
@@ -97,14 +100,16 @@ const WarehouseCard = ({
 )
 
 WarehouseCard.propTypes = {
-  name       : PropTypes.string.isRequired,
-  location   : PropTypes.string.isRequired,
-  image      : PropTypes.any.isRequired,
+  name: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  image: PropTypes.any.isRequired,
   buttontitle: PropTypes.string.isRequired,
-  weight     : PropTypes.string.isRequired,
-  bags       : PropTypes.string.isRequired,
-  quantity   : PropTypes.string.isRequired,
-  condition  : PropTypes.string.isRequired,
-  mr         : PropTypes.any,
+  weight: PropTypes.string.isRequired,
+  bags: PropTypes.string.isRequired,
+  quantity: PropTypes.string.isRequired,
+  condition: PropTypes.string.isRequired,
+  mr: PropTypes.any,
+  ml: PropTypes.any
 }
+
 export default WarehouseCard

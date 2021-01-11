@@ -1,11 +1,13 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/react';
-import useAuth from 'context/authContext';
-import React from 'react';
-import IllustrationImage from '../../assets/images/home/illustration.png';
+import React from 'react'
+import { Box, Heading, Image, Text } from '@chakra-ui/react'
+
+import useAuth from 'context/auth'
+
+import IllustrationImage from '../../assets/images/home/illustration.png'
 
 const Greetings = () => {
-  const { isAuthenticated } = useAuth();
-  const { user } = isAuthenticated();
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
   return (
     <Box pos='relative'>
       <Image
@@ -21,7 +23,7 @@ const Greetings = () => {
         <Text>Get started by farming individually or with a group.</Text>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default Greetings;
+export default Greetings

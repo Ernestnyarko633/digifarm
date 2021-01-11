@@ -4,22 +4,22 @@ import QueryString from 'query-string'
 
 import { replaceURI } from 'helpers/misc'
 import FetchCard from 'components/FetchCard'
-import useAuth from 'context/authContext'
+import useAuth from 'context/auth'
 
 const Auth = ({
   history: { replace },
   match: { params },
-  location: { search },
+  location: { search }
 }) => {
   document.title = 'Authenticating...'
   const { getUser, store, isAuthenticated } = useAuth()
-  const [ reload, setReload ] = useState(0)
-  const [ error, setError ] = useState(false)
+  const [reload, setReload] = useState(0)
+  const [error, setError] = useState(false)
 
   const { to } = QueryString.parse(search, { parseBooleans: true })
   const { token } = params
 
-  const triggerReload = () => setReload((prevState) => prevState + 1)
+  const triggerReload = () => setReload(prevState => prevState + 1)
 
   useEffect(() => {
     let mounted = true
@@ -44,19 +44,16 @@ const Auth = ({
               setTimeout(() => {
                 replace(JSON.parse(to || null) || '/dashboard')
               }, 500)
-            } catch (error) {
-              if (error?.response) {
-                const res = error.response
-                if ([ 401, 403 ].includes(res.status)) {
-                  replaceURI(
-                    'AUTH',
-                    '/redirects?from=DIGITAL_FARMER&off=false'
-                  )
+            } catch (_error) {
+              if (_error?.response) {
+                const res = _error.response
+                if ([401, 403].includes(res.status)) {
+                  replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=false')
                 } else {
-                  setError(error?.message)
+                  setError(_error?.message)
                 }
               } else {
-                setError(error?.message)
+                setError(_error?.message)
               }
             }
           }, 500)
@@ -66,24 +63,26 @@ const Auth = ({
       }
     }
     return () => (mounted = false)
-  }, [ store, getUser, isAuthenticated, replace, token, to, reload ])
+  }, [store, getUser, isAuthenticated, replace, token, to, reload])
 
   return error ? (
-    <FetchCard direction='column'
+    <FetchCard
+      direction='column'
       align='center'
       justify='center'
       reload={triggerReload}
       loading={false}
-      error={error} />
+      error={error}
+    />
   ) : (
     <div className='loading-text'>Authenticating</div>
   )
 }
 
 Auth.propTypes = {
-  history : PropTypes.object.isRequired,
-  match   : PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 export default Auth

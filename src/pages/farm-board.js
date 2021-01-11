@@ -9,7 +9,7 @@ const FarmBoard = () => {
   return (
     <Layout showRightSideContentType='events'>
       <Greetings />
-      {/* <GetStartedNowCard /> */}
+      {false && <GetStartedNowCard />}
       <FarmBoardContent />
     </Layout>
   );

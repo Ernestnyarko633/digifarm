@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Heading,
@@ -10,16 +10,16 @@ import {
   Container,
   Divider,
   Avatar,
-  Input,
-} from '@chakra-ui/react';
-import { Formik } from 'formik';
-import { FormInput, FormTextArea } from 'components/Form';
-import useAuth from 'context/authContext';
+  Input
+} from '@chakra-ui/react'
+import { Formik } from 'formik'
+import { FormInput, FormTextArea } from 'components/Form'
+import useAuth from 'context/auth'
 
 const Profile = () => {
-  const { isAuthenticated, patchUser } = useAuth();
-  const { user } = isAuthenticated();
-  const toast = useToast();
+  const { isAuthenticated, patchUser } = useAuth()
+  const { user } = isAuthenticated()
+  const toast = useToast()
 
   const initialValues = {
     firstName: user?.firstName,
@@ -27,7 +27,7 @@ const Profile = () => {
     address: {
       street: '',
       state: '',
-      country: user?.address?.country,
+      country: user?.address?.country
     },
     dateOfBirth: '',
     email: user?.email,
@@ -37,8 +37,8 @@ const Profile = () => {
     bankName: '',
     bankBranch: '',
     accountName: '',
-    accountNumber: '',
-  };
+    accountNumber: ''
+  }
 
   const onSubmit = async (
     values,
@@ -51,45 +51,45 @@ const Profile = () => {
         address: {
           street: values.address.street,
           state: values.address.state,
-          country: values.address.country,
+          country: values.address.country
         },
         dateOfBirth: values.dateOfBirth,
-        phoneNumber: values?.phoneNumber,
-      };
-      const res = await patchUser(user?._id, data);
+        phoneNumber: values?.phoneNumber
+      }
+      const res = await patchUser(user?._id, data)
       if (res.statusCode === 200) {
         toast({
           title: 'User successfully updated.',
           description: res.message,
           status: 'success',
           duration: 5000,
-          position: 'top-right',
-        });
-        resetForm({});
-        setStatus({ success: true });
-        window.location.reload();
+          position: 'top-right'
+        })
+        resetForm({})
+        setStatus({ success: true })
+        window.location.reload()
       } else if (res.statusCode === 400) {
         toast({
           title: 'Error occured',
           description: res.message,
           status: 'error',
           duration: 5000,
-          position: 'top-right',
-        });
+          position: 'top-right'
+        })
       }
     } catch (error) {
-      setStatus({ success: false });
+      setStatus({ success: false })
       toast({
         title: 'Error occured',
         description: error.message,
         status: 'error',
         duration: 5000,
-        position: 'top-right',
-      });
-      setSubmitting(false);
-      setErrors({ submit: error.message });
+        position: 'top-right'
+      })
+      setSubmitting(false)
+      setErrors({ submit: error.message })
     }
-  };
+  }
 
   return (
     <Container maxW='4xl'>
@@ -104,7 +104,7 @@ const Profile = () => {
           handleBlur,
           isSubmitting,
           handleSubmit,
-          errors,
+          errors
         }) => (
           <form onSubmit={handleSubmit}>
             <Box p={10} rounded='md' bg='white'>
@@ -345,7 +345,7 @@ const Profile = () => {
         )}
       </Formik>
     </Container>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

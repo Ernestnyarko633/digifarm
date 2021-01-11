@@ -1,3 +1,5 @@
+import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Modal,
   ModalOverlay,
@@ -14,45 +16,47 @@ import {
   Flex,
   Divider
 } from '@chakra-ui/react'
-import React from 'react'
 import Notification from 'components/Notifications'
 
 const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const toast = useToast()
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = e => {
     const key = e.keyCode || e.charCode
-    if (key === 13 || e.key === 'Enter'){
+    if (key === 13 || e.key === 'Enter') {
       e.preventDefault()
       e.stopPropagation()
       toast({
         position: 'top-right',
         duration: 9000,
-        render  : () => <Notification amtBought={amtBought} name={name} />,
+        render: () => <Notification amtBought={amtBought} name={name} />
       })
     }
   }
-  
 
   return (
     <>
-      <Button mt={4}
+      <Button
+        mt={4}
         colorScheme='linear'
         rounded='30px'
         fontSize='xs'
         w={{ md: '150px' }}
-        onClick={onOpen}>
+        onClick={onOpen}
+      >
         Sell to buyer
       </Button>
-      <Modal isOpen={isOpen}
+      <Modal
+        isOpen={isOpen}
         onClose={onClose}
         mt={10}
         variant='outline'
         borderColor='black'
         borderWidth={5}
         colorScheme='white'
-        isCentered>
+        isCentered
+      >
         <ModalOverlay />
         <ModalContent>
           <Flex m={3}>
@@ -91,26 +95,31 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
                 </Text>
               </Text>
             </Box>
-            <Text fontSize={{ md: 'sm' }}
+            <Text
+              fontSize={{ md: 'sm' }}
               pl={2}
               fontWeight='thin'
-              color='red.600'>
+              color='red.600'
+            >
               Are you sure you want to sell this crop? This action is
               irreversible{' '}
             </Text>
           </ModalBody>
           <ModalFooter>
             <Flex>
-              <Button mr={5}
+              <Button
+                mr={5}
                 onClick={onClose}
                 rounded='30px'
                 fontWeight='thin'
                 variant='outline'
                 borderColor='black'
-                w={{ md: '90px' }}>
+                w={{ md: '90px' }}
+              >
                 No
               </Button>
-              <Button colorScheme='linear'
+              <Button
+                colorScheme='linear'
                 rounded='30px'
                 w={{ md: '90px' }}
                 onKeyPress={handleKeyPress}
@@ -119,9 +128,12 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
                   toast({
                     position: 'top-right',
                     duration: 9000,
-                    render  : () => <Notification amtBought={amtBought} name={name} />,
+                    render: () => (
+                      <Notification amtBought={amtBought} name={name} />
+                    )
                   })
-                }}>
+                }}
+              >
                 Yes
               </Button>
             </Flex>
@@ -131,4 +143,12 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
     </>
   )
 }
+
+ConfirmSale.propTypes = {
+  amtLeft: PropTypes.any,
+  name: PropTypes.any,
+  amtBought: PropTypes.any,
+  price: PropTypes.any
+}
+
 export default ConfirmSale

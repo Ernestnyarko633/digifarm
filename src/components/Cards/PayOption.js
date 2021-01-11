@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Flex,
   Text,
@@ -20,12 +21,13 @@ const PayOption = ({
   notice,
   percent,
   dropDown,
-  onClick,
+  onClick
 }) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
-    <Flex as='button'
+    <Flex
+      as='button'
       _focus={{ outline: 'none', borderColor: 'cf.400' }}
       textAlign='left'
       direction='column'
@@ -37,7 +39,8 @@ const PayOption = ({
       px={10}
       m={4}
       w={108}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       <Flex align='center'>
         <Image src={icon} alt='Card Image' />
         <Text fontSize='lg' fontWeight={500} ml={4} fontFamily='body'>
@@ -61,16 +64,20 @@ const PayOption = ({
       </Flex>
       {dropDown && (
         <>
-          <Flex align='center'
+          <Flex
+            align='center'
             as='button'
             onClick={onToggle}
-            _focus={{ outline: 'none' }}>
+            _focus={{ outline: 'none' }}
+          >
             <Heading as='h6' fontSize='sm' color='cf.400' mr={1}>
               View bank details
             </Heading>
-            <Icon as={isOpen ? ChevronUpIcon : ChevronDownIcon}
+            <Icon
+              as={isOpen ? ChevronUpIcon : ChevronDownIcon}
               color='cf.400'
-              boxSize={6} />
+              boxSize={6}
+            />
           </Flex>
           <Collapse initialScale={0.9} in={isOpen}>
             <BankDetails />
@@ -79,6 +86,17 @@ const PayOption = ({
       )}
     </Flex>
   )
+}
+
+PayOption.propTypes = {
+  icon: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  theme: PropTypes.any.isRequired,
+  description: PropTypes.string.isRequired,
+  notice: PropTypes.string.isRequired,
+  dropDown: PropTypes.string.isRequired,
+  percent: PropTypes.any,
+  onClick: PropTypes.any
 }
 
 export default PayOption

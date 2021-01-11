@@ -19,18 +19,20 @@ const ModalWrapper = ({
   isCentered,
   image,
   alt,
-  children,
+  children
 }) => {
   return (
-    <Modal isOpen={isOpen}
+    <Modal
+      isOpen={isOpen}
       onClose={onClose}
       size={size}
-      isCentered={isCentered}>
+      isCentered={isCentered}
+    >
       <ModalOverlay />
       <ModalContent rounded='2xl'>
         <ModalHeader>
           <Box>
-            {title && title}
+            {title}
             {image && <Image width={12} src={image} alt={alt} />}
           </Box>
         </ModalHeader>
@@ -44,14 +46,14 @@ const ModalWrapper = ({
 }
 
 ModalWrapper.propTypes = {
-  isOpen    : PropTypes.bool.isRequired,
-  onClose   : PropTypes.bool.isRequired,
-  title     : PropTypes.string,
-  size      : PropTypes.string,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.bool.isRequired,
+  title: PropTypes.string,
+  size: PropTypes.string,
   isCentered: PropTypes.bool,
-  image     : PropTypes.string,
-  alt       : PropTypes.string,
-  children  : PropTypes.node,
+  image: PropTypes.string,
+  alt: PropTypes.string,
+  children: PropTypes.node
 }
 
 export default ModalWrapper

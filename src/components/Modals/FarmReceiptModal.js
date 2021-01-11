@@ -1,18 +1,20 @@
 import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import FarmInfo from 'components/Cards/FarmInfo'
-import useComponents from 'context/ComponentContext'
+import useComponent from 'context/component'
 import React from 'react'
 import ModalWrapper from './ModalWrapper'
 
 const FarmReceiptModal = () => {
-  const { isOpen, onClose } = useComponents()
+  const { isOpen, onClose } = useComponent()
   return (
-    <ModalWrapper image={require('../../assets/images/logo.png').default}
+    <ModalWrapper
+      image={require('../../assets/images/logo.png').default}
       isCentered
       alt='Complete Farmer Logo'
       isOpen={isOpen}
-      onClose={onClose}>
+      onClose={onClose}
+    >
       <Divider orientation='horizontal' my={3} />
       <Heading as='h3' fontSize={{ md: '3xl' }}>
         Farm receipt
@@ -28,7 +30,8 @@ const FarmReceiptModal = () => {
 
       <Flex align='center' justify='space-between' my={8}>
         <Text fontSize='xs'>Have an issue with your farm receipt?</Text>
-        <Button btntitle='Contact support'
+        <Button
+          btntitle='Contact support'
           fontSize='xs'
           borderWidth={1}
           borderColor='cf.400'
@@ -39,16 +42,19 @@ const FarmReceiptModal = () => {
           w={32}
           _hover={{ bg: 'white' }}
           _active={{ bg: 'white' }}
-          shadow='none' />
+          shadow='none'
+        />
       </Flex>
 
       <Box w={56} mx='auto' my={6}>
-        <Button btntitle='Download receipt'
+        <Button
+          btntitle='Download receipt'
           width='100%'
           h={12}
           mx='auto'
           fontSize='md'
-          rounded='30px' />
+          rounded='30px'
+        />
       </Box>
     </ModalWrapper>
   )

@@ -1,9 +1,12 @@
-import { Box, Text, Heading, Flex, Tag } from '@chakra-ui/react'
-import { Button } from 'components'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Text, Heading, Flex, Tag } from '@chakra-ui/react'
+
+import { Button } from 'components'
 
 const Notification = ({ amtBought, name }) => (
-  <Box pos='fixed'
+  <Box
+    pos='fixed'
     top={24}
     right={10}
     w={{ md: '27%' }}
@@ -12,18 +15,21 @@ const Notification = ({ amtBought, name }) => (
     rounded='md'
     zIndex={10}
     bg='#fff'
-    py={2}>
+    py={2}
+  >
     <Flex direction='column'>
       <Flex align='center' justify='space-between' w={{ md: '90%' }} mx='auto'>
         <Flex align='center' w={{ md: '50%' }} justify='space-between'>
           <Heading as='h6' fontSize='10px'>
             INVOICE DEPOSIT
           </Heading>
-          <Tag as='tag'
+          <Tag
+            as='tag'
             color='cf.400'
             fontSize='10px'
             bg='cf.200'
-            borderRadius='none'>
+            borderRadius='none'
+          >
             FINALIZE
           </Tag>
         </Flex>
@@ -31,10 +37,12 @@ const Notification = ({ amtBought, name }) => (
           3min ago
         </Box>
       </Flex>
-      <Box borderBottomWidth={1}
+      <Box
+        borderBottomWidth={1}
         borderColor='gray.200'
         w={{ md: '90%' }}
-        mx='auto' />
+        mx='auto'
+      />
     </Flex>
 
     <Flex w={{ md: '90%' }} mx='auto' justify='space-between' align='center'>
@@ -52,5 +60,10 @@ const Notification = ({ amtBought, name }) => (
     </Flex>
   </Box>
 )
+
+Notification.propTypes = {
+  amtBought: PropTypes.any,
+  name: PropTypes.any
+}
 
 export default Notification

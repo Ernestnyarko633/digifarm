@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from 'prop-types'
 
 import AccountSettings from './AccountSettings'
 import Notifications from './Notifications'
@@ -11,12 +11,16 @@ const components = {
   compB: AccountSettings,
   compC: Notifications,
   compD: Security,
-  compE: PrivacyAndData,
+  compE: PrivacyAndData
 }
 
 const DynamicProfile = ({ page }) => {
   const SelectedPage = components[page]
-  return <SelectedPage />
+  return SelectedPage
+}
+
+DynamicProfile.propTypes = {
+  page: PropTypes.any
 }
 
 export default DynamicProfile

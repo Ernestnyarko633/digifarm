@@ -30,7 +30,7 @@ const GetStartedNowCard = () => (
         Learn more <Icon as={MdKeyboardArrowRight} />
       </Link>
 
-      <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/startfarm'>
+      <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/start-farm'>
         <Button colorScheme='linear' rounded='30px' w={64} h={12} shadow='md'>
           Get me started now
         </Button>
