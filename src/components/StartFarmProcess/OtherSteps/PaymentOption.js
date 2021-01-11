@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Box,
-  Flex,
-  Image,
-  Heading,
-  Icon,
-  Text,
-  Grid,
-  GridItem
-} from '@chakra-ui/react'
+import { Box, Flex, Image, Heading, Icon, Text, Grid, GridItem } from '@chakra-ui/react'
 import { useMutation } from 'react-query'
 import { motion } from 'framer-motion'
 

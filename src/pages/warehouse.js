@@ -46,12 +46,7 @@ const Warehouse = () => {
   return (
     <Layout>
       <Box pos='relative'>
-        <Image
-          src={IllustrationImage}
-          h={{ md: 115 }}
-          w='100%'
-          objectFit='cover'
-        />
+        <Image src={IllustrationImage} h={{ md: 115 }} w='100%' objectFit='cover' />
         <Box pos='absolute' top={{ md: 40 }} left={{ md: 16 }}>
           <Heading as='h3' fontSize={{ md: '4xl' }}>
             Welcome to your warehouse

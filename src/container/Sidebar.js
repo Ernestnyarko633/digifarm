@@ -2,15 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
-import {
-  farm,
-  home,
-  wallet,
-  market,
-  Guide,
-  Resources,
-  logout
-} from 'theme/Icons'
+import { farm, home, wallet, market, Guide, Resources, logout } from 'theme/Icons'
 import { MdChatBubbleOutline } from 'react-icons/md'
 import { IoIosHelpCircle } from 'react-icons/io'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
@@ -101,11 +93,7 @@ const Sidebar = ({ currentPath }) => {
               aria-label='Menu Button'
               onClick={() => setToggleMenus(!toggleMenus)}
             >
-              <Icon
-                as={toggleMenus ? BsChevronUp : BsChevronDown}
-                boxSize={4}
-                mr={1}
-              />
+              <Icon as={toggleMenus ? BsChevronUp : BsChevronDown} boxSize={4} mr={1} />
               <Text>{item.title}</Text>
             </Flex>
             {toggleMenus && (

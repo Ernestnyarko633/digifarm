@@ -1,28 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Flex,
-  Text,
-  Image,
-  Heading,
-  Box,
-  useDisclosure,
-  Collapse,
-  Icon
-} from '@chakra-ui/react'
+import { Flex, Text, Image, Heading, Box, useDisclosure, Collapse, Icon } from '@chakra-ui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import BankDetails from './BankDetails'
 
-const PayOption = ({
-  icon,
-  title,
-  theme,
-  description,
-  notice,
-  percent,
-  dropDown,
-  onClick
-}) => {
+const PayOption = ({ icon, title, theme, description, notice, percent, dropDown, onClick }) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
@@ -64,20 +46,11 @@ const PayOption = ({
       </Flex>
       {dropDown && (
         <>
-          <Flex
-            align='center'
-            as='button'
-            onClick={onToggle}
-            _focus={{ outline: 'none' }}
-          >
+          <Flex align='center' as='button' onClick={onToggle} _focus={{ outline: 'none' }}>
             <Heading as='h6' fontSize='sm' color='cf.400' mr={1}>
               View bank details
             </Heading>
-            <Icon
-              as={isOpen ? ChevronUpIcon : ChevronDownIcon}
-              color='cf.400'
-              boxSize={6}
-            />
+            <Icon as={isOpen ? ChevronUpIcon : ChevronDownIcon} color='cf.400' boxSize={6} />
           </Flex>
           <Collapse initialScale={0.9} in={isOpen}>
             <BankDetails />

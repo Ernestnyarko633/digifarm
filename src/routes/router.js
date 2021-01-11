@@ -12,16 +12,8 @@ const Router = () => (
       <Route path='/auth' component={Pages.Auth} />
       <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
       <PrivateRoute exact path='/start-farm' component={Pages.StartFarm} />
-      <PrivateRoute
-        exact
-        path='/start-farm/individual'
-        component={Pages.Individual}
-      />
-      <PrivateRoute
-        exact
-        path='/start-farm/cooperative'
-        component={Pages.Cooperative}
-      />
+      <PrivateRoute exact path='/start-farm/individual' component={Pages.Individual} />
+      <PrivateRoute exact path='/start-farm/cooperative' component={Pages.Cooperative} />
       <PrivateRoute path='/marketplace' component={Pages.Marketplace} />
       <PrivateRoute path='/document' component={Pages.Document} />
       <PrivateRoute path='/farms' component={Pages.FarmBoard} />

@@ -20,10 +20,7 @@ const Security = () => {
   const { changePassword } = useAuth()
   const toast = useToast()
 
-  const onSubmit = async (
-    values,
-    { setSubmitting, setErrors, setStatus, resetForm }
-  ) => {
+  const onSubmit = async (values, { setSubmitting, setErrors, setStatus, resetForm }) => {
     try {
       const res = await changePassword(values)
       if (res.statusCode === 200) {
@@ -78,22 +75,14 @@ const Security = () => {
       <Box>
         <Box>
           <Text>Change your password</Text>
-          <Text>
-            Turn notification on to receive notification in your dashboard
-          </Text>
+          <Text>Turn notification on to receive notification in your dashboard</Text>
         </Box>
         <Formik
           initialValues={{ oldPassword: '', newPassword: '' }}
           onSubmit={onSubmit}
           validationSchema={ChangePassword}
         >
-          {({
-            values,
-            handleBlur,
-            handleChange,
-            handleSubmit,
-            isSubmitting
-          }) => (
+          {({ values, handleBlur, handleChange, handleSubmit, isSubmitting }) => (
             <form onSubmit={handleSubmit}>
               <Grid gap={6} w={80} mt={12}>
                 <FormInput

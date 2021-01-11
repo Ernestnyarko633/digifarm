@@ -56,35 +56,20 @@ const AccountSettings = () => {
             <Box>
               <Box>
                 <Box>
-                  <Heading
-                    as='h5'
-                    fontFamily='display'
-                    fontSize={{ md: '2xl' }}
-                    mb={2}
-                  >
+                  <Heading as='h5' fontFamily='display' fontSize={{ md: '2xl' }} mb={2}>
                     Language
                   </Heading>
                   <Text>English (US)</Text>
                 </Box>
                 <Box my={8}>
-                  <Heading
-                    as='h5'
-                    fontFamily='display'
-                    fontSize={{ md: '2xl' }}
-                    mb={2}
-                  >
+                  <Heading as='h5' fontFamily='display' fontSize={{ md: '2xl' }} mb={2}>
                     Time zone
                   </Heading>
                   <Text>GMT</Text>
                 </Box>
 
                 <Box>
-                  <Heading
-                    as='h5'
-                    fontFamily='display'
-                    fontSize={{ md: '2xl' }}
-                    mb={2}
-                  >
+                  <Heading as='h5' fontFamily='display' fontSize={{ md: '2xl' }} mb={2}>
                     Gender
                   </Heading>
                   <RadioGroup>
@@ -112,12 +97,7 @@ const AccountSettings = () => {
 
               <Box>
                 <Box>
-                  <Heading
-                    as='h5'
-                    fontSize={{ md: '2xl' }}
-                    fontFamily='display'
-                    mb={2}
-                  >
+                  <Heading as='h5' fontSize={{ md: '2xl' }} fontFamily='display' mb={2}>
                     Log in options
                   </Heading>
                   <Text>
@@ -127,32 +107,16 @@ const AccountSettings = () => {
                 </Box>
 
                 <Stack mt={6}>
-                  <Checkbox
-                    size='lg'
-                    colorScheme='cfButton'
-                    borderColor='black'
-                  >
+                  <Checkbox size='lg' colorScheme='cfButton' borderColor='black'>
                     Use your Google account to log in
                   </Checkbox>
-                  <Checkbox
-                    size='lg'
-                    colorScheme='cfButton'
-                    borderColor='black'
-                  >
+                  <Checkbox size='lg' colorScheme='cfButton' borderColor='black'>
                     Use your Twitter account to log in
                   </Checkbox>
-                  <Checkbox
-                    size='lg'
-                    colorScheme='cfButton'
-                    borderColor='black'
-                  >
+                  <Checkbox size='lg' colorScheme='cfButton' borderColor='black'>
                     Use your Facebook account to log in
                   </Checkbox>
-                  <Checkbox
-                    size='lg'
-                    colorScheme='cfButton'
-                    borderColor='black'
-                  >
+                  <Checkbox size='lg' colorScheme='cfButton' borderColor='black'>
                     Use your LinkedIn account to log in
                   </Checkbox>
                 </Stack>

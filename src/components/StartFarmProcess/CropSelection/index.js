@@ -18,11 +18,7 @@ const CropSelection = () => {
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
-  const { data, isLoading, error } = useFetch(
-    'categories',
-    getCropCategories,
-    reload
-  )
+  const { data, isLoading, error } = useFetch('categories', getCropCategories, reload)
 
   let categories = []
 

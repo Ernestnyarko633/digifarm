@@ -55,14 +55,7 @@ const DocumentCard = ({ title, description, link, mt }) => {
   return (
     <Box>
       <a href={link}>
-        <Box
-          w={60}
-          mt={mt}
-          as='button'
-          onClick={() => setShown(true)}
-          borderWidth={1}
-          rounded='md'
-        >
+        <Box w={60} mt={mt} as='button' onClick={() => setShown(true)} borderWidth={1} rounded='md'>
           <Box>
             <Text
               textAlign='center'
@@ -103,13 +96,7 @@ const DocumentCard = ({ title, description, link, mt }) => {
                 aria-labelledby='download button'
                 onClick={e => e.preventDefault()}
               >
-                <Icon
-                  as={arrowDown}
-                  bg='white'
-                  rounded='lg'
-                  color='cf.400'
-                  pl='1'
-                />
+                <Icon as={arrowDown} bg='white' rounded='lg' color='cf.400' pl='1' />
               </Flex>
             </a>
 

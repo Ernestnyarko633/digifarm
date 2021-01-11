@@ -90,14 +90,7 @@ const UploadDocument = () => {
                           name='file'
                         />
                       ) : (
-                        <Flex
-                          w='130px'
-                          mt={4}
-                          as='button'
-                          bgColor='cf.200'
-                          p={2}
-                          rounded='30px'
-                        >
+                        <Flex w='130px' mt={4} as='button' bgColor='cf.200' p={2} rounded='30px'>
                           <Text pt={1}>{values.file.name}</Text>
                           <CloseButton
                             _hover={{ textDecoration: 'none' }}
@@ -138,19 +131,12 @@ const UploadDocument = () => {
             <ModalBody>
               <Box my='20px' mx={1} textAlign='center'>
                 <Text>Thank you uploading your bank payslip </Text>
-                <Text>
-                  Confirmation takes 1-2 weeks for us to get back to you{' '}
-                </Text>
+                <Text>Confirmation takes 1-2 weeks for us to get back to you </Text>
                 <Text mx={10} mt='30px'>
-                  In the meantime, why dont you learn a few insights about
-                  farming
+                  In the meantime, why dont you learn a few insights about farming
                 </Text>
                 <Flex justify='center' mt={3}>
-                  <Image
-                    src={corporate}
-                    w={{ md: '180px' }}
-                    h={{ md: '110px' }}
-                  />
+                  <Image src={corporate} w={{ md: '180px' }} h={{ md: '110px' }} />
                 </Flex>
                 <Button
                   as='a'

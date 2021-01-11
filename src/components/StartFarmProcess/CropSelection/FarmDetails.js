@@ -97,10 +97,7 @@ const FarmDetails = ({ query, handleNext }) => {
                 <MotionBox
                   initial={{ opacity: 0, y: -20 }}
                   animate={{
-                    opacity:
-                      intersection && intersection.intersectionRatio < 1
-                        ? 0
-                        : 1,
+                    opacity: intersection && intersection.intersectionRatio < 1 ? 0 : 1,
                     y: 0
                   }}
                 >

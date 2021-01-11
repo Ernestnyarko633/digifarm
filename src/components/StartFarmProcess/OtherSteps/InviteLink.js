@@ -31,18 +31,10 @@ const InviteLink = () => {
     <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem>
         <Flex align='center' justify='center' mt={16}>
-          <Image
-            w={108}
-            src={require('../../../assets/images/invite.png').default}
-          />
+          <Image w={108} src={require('../../../assets/images/invite.png').default} />
         </Flex>
 
-        <Flex
-          align='center'
-          justify='space-between'
-          mt={{ md: 20 }}
-          px={{ md: 10 }}
-        >
+        <Flex align='center' justify='space-between' mt={{ md: 20 }} px={{ md: 10 }}>
           <Box textAlign='center' w={{ md: '100%' }} px={8}>
             <Heading as='h6' fontSize='md' mb={3}>
               What is included in this farm
@@ -82,11 +74,7 @@ const InviteLink = () => {
             </Heading>
 
             <Box mt={6}>
-              <FormInput
-                bg='white'
-                label='Farm name'
-                placeholder='For eg: Ashesi2020'
-              />
+              <FormInput bg='white' label='Farm name' placeholder='For eg: Ashesi2020' />
             </Box>
 
             <Box mt={16}>
@@ -104,23 +92,12 @@ const InviteLink = () => {
               </Heading>
 
               <Box mt={6}>
-                <FormInput
-                  bg='white'
-                  placeholder='Add people (Max of 5 and min of 2)'
-                />
+                <FormInput bg='white' placeholder='Add people (Max of 5 and min of 2)' />
               </Box>
 
               <Flex align='center' mt={6}>
-                <Avatar
-                  pos='relative'
-                  src={require('../../../assets/images/Oval.png').default}
-                >
-                  <AvatarBadge
-                    pos='absolute'
-                    top={-2}
-                    boxSize='1em'
-                    bg='cf.600'
-                  />
+                <Avatar pos='relative' src={require('../../../assets/images/Oval.png').default}>
+                  <AvatarBadge pos='absolute' top={-2} boxSize='1em' bg='cf.600' />
                 </Avatar>
 
                 <Box ml={4}>

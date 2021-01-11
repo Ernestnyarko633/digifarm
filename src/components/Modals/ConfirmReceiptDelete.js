@@ -39,13 +39,7 @@ const ConfirmReceiptDelete = () => {
 
   return (
     <>
-      <Button
-        colorScheme='linear'
-        rounded='30px'
-        ml={2}
-        mt={4}
-        onClick={onOpen}
-      >
+      <Button colorScheme='linear' rounded='30px' ml={2} mt={4} onClick={onOpen}>
         <Icon as={VscTrash} size={6} />
       </Button>
       <Modal
@@ -62,10 +56,7 @@ const ConfirmReceiptDelete = () => {
         <ModalContent>
           <ModalBody>
             <Box my='30px' mx={1} textAlign='center'>
-              <Text>
-                Are you sure you want to delete the bank&lsquo;s transfer
-                receipt?
-              </Text>
+              <Text>Are you sure you want to delete the bank&lsquo;s transfer receipt?</Text>
               <Flex mt={4} justify='center'>
                 <Button
                   mr={4}
