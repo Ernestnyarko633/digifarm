@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'CeraGRBold';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -7,7 +7,7 @@
 }
 
 @font-face {
-  font-family: 'CeraGRBlack';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
@@ -15,7 +15,7 @@
 }
 
 @font-face {
-  font-family: 'CeraGRThin';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 100;
   font-display: swap;
@@ -23,7 +23,7 @@
 }
 
 @font-face {
-  font-family: 'CeraGRLight';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
@@ -39,7 +39,7 @@
 }
 
 @font-face {
-  font-family: 'CeraGRMedium';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 600;
   font-display: swap;

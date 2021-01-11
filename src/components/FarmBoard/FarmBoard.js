@@ -1,165 +1,87 @@
-import React from 'react'
-import { Box, Heading, Flex } from '@chakra-ui/react'
-import FarmBoardCard from '../Cards/FarmBoardCard'
-import YourFarmCard from '../Cards/YourFarm'
-import Bitmap from 'assets/images/Bitmap.png'
-import Crop from 'assets/images/crop.png'
-import SoyaBeanImg from 'assets/images/soya.png'
-import { AiOutlineCreditCard } from 'react-icons/ai'
-import { Fragment } from 'react'
-import Fade from 'react-reveal/Fade'
+import React from 'react';
+import { Box, Heading, Flex, Grid, Container } from '@chakra-ui/react';
+import FarmBoardCard from '../Cards/FarmBoardCard';
+import YourFarmCard from '../Cards/YourFarm';
+import Bitmap from 'assets/images/Bitmap.png';
+import Crop from 'assets/images/crop.png';
+import SoyaBeanImg from 'assets/images/soya.png';
+import { AiOutlineCreditCard } from 'react-icons/ai';
+import { Fragment } from 'react';
+import Fade from 'react-reveal/Fade';
 
 const FarmBoardContent = () => {
   const farms = [
     {
-      avatarSrc      : SoyaBeanImg,
-      datePosted     : '3m ago',
-      likeCount      : 20,
-      postImage      : Bitmap,
-      postImageAlt   : 'bitmap',
-      headingText    : 'CROP HEALTH',
-      headingImage   : Crop,
-      headingImageAlt: 'crop',
-      whoseFarm      : "John's Farm",
-      farmLocation   : 'Agyata, Eastern Region',
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
-    },
-    {
-      avatarSrc      : SoyaBeanImg,
-      datePosted     : '3m ago',
-      likeCount      : 20,
-      headingText    : 'CROP HEALTH',
-      headingImage   : Crop,
-      headingImageAlt: 'crop',
-      whoseFarm      : "John's Farm",
-      postType       : 'FARM UPDATE',
-      farmLocation   : 'Agyata, Eastern Region',
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
-    },
-    {
-      avatarSrc      : SoyaBeanImg,  
-      datePosted     : '3m ago',
-      likeCount      : 20,
-      headingText    : 'INVOICE DEPOSIT',
-      btntitle       : 'Payout',
-      buttonWidth    : '120px',
-      buttonColor    : '#fff',
-      whoseFarm      : "John's Farm",
-      farmLocation   : 'Agyata, Eastern Region',
-      headingIcon    : AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
-    },
-    {
-      avatarSrc      : SoyaBeanImg,
-      datePosted     : '3m ago',
-      likeCount      : 20,
-      headingText    : 'INVOICE DEPOSIT',
-      btntitle       : 'Payout',
-      buttonWidth    : '120px',
-      buttonColor    : '#fff',
-      whoseFarm      : "John's Farm",
-      farmLocation   : 'Agyata, Eastern Region',
-      headingIcon    : AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
-    },
-    {
-      avatarSrc      : SoyaBeanImg,
-      datePosted     : '3m ago',
-      likeCount      : 20,
-      headingText    : 'INVOICE DEPOSIT',
-      btntitle       : 'Payout',
-      buttonWidth    : '120px',
-      buttonColor    : '#fff',
-      whoseFarm      : "John's Farm",
-      farmLocation   : 'Agyata, Eastern Region',
-      headingIcon    : AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
-    },
-    {
-      avatarSrc      : SoyaBeanImg,
-      datePosted     : '3m ago',
-      likeCount      : 20,
-      headingText    : 'INVOICE DEPOSIT',
-      btntitle       : 'Payout',
-      buttonWidth    : '120px',
-      buttonColor    : '#fff',
-      whoseFarm      : "John's Farm",
-      farmLocation   : 'Agyata, Eastern Region',
-      headingIcon    : AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
-    },
-    {
-      avatarSrc   : SoyaBeanImg,
-      datePosted  : '3m ago',
-      likeCount   : 20,
-      headingText : 'INVOICE DEPOSIT',
-      btntitle    : 'Payout',
-      buttonWidth : '120px',
-      buttonColor : '#fff',
-      whoseFarm   : "John's Farm",
+      id: 1,
+      avatar: SoyaBeanImg,
+      timestamp: '3m ago',
+      level: 'LVL 1',
+      actionTitle: 'CROP HEALTH',
+      status: 'farm',
+      firstName: 'John',
       farmLocation: 'Agyata, Eastern Region',
-      
-      headingIcon    : AiOutlineCreditCard,
-      postContentText:
+      actionText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
     },
     {
-      avatarSrc      : SoyaBeanImg,
-      datePosted     : '3m ago',
-      likeCount      : 20,
-      headingText    : 'INVOICE DEPOSIT',
-      btntitle       : 'Payout',
-      buttonWidth    : '120px',
-      buttonColor    : '#fff',
-      whoseFarm      : "John's Farm",
-      farmLocation   : 'Agyata, Eastern Region',
-      headingIcon    : AiOutlineCreditCard,
-      postContentText:
+      id: 2,
+      avatar: SoyaBeanImg,
+      timestamp: '3m ago',
+      level: 'LVL 1',
+      actionTitle: 'CROP HEALTH',
+      actionTag: 'FARM UPDATE',
+      headingImage: Crop,
+      status: 'news',
+      firstName: 'John',
+      postType: 'FARM UPDATE',
+      farmLocation: 'Agyata, Eastern Region',
+      actionText:
         'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
     },
-  ]
+    {
+      id: 3,
+      avatar: SoyaBeanImg,
+      timestamp: '3m ago',
+      level: 'LVL 1',
+      actionTitle: 'INVOICE DEPOSIT',
+      actionTag: 'FINALIZE',
+      status: 'action',
+      btntitle: 'Payout',
+      firstName: 'John',
+      farmLocation: 'Agyata, Eastern Region',
+      actionText:
+        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
+    },
+  ];
 
   return (
-    <Box p={10} w='100%'>
+    <Box w='100%'>
       <Flex w='100%' align='center' direction='column'>
         <YourFarmCard />
-        <Heading as='h3' fontSize={{ md: 'xl' }} mb={5}>
+        <Heading as='h3' fontSize={{ md: '2xl' }} my={14}>
           See what's happening in your farm(s)
         </Heading>
-        <Fragment>
-          {farms.map((farm) => {
-            return (
-              <Fade bottom>
-                <FarmBoardCard datePosted={farm.datePosted}
-                  AvatarSRC={farm.avatarSrc}
-                  likeCount={farm.likeCount}
-                  postImage={farm.postImage}
-                  postImageAlt={farm.postImageAlt}
-                  headingText={farm.headingText}
-                  headingIcon={farm.headingIcon ? farm.headingIcon : null}
-                  headingImage={farm.headingImage}
-                  headingImageAlt={farm.headingImageAlt}
-                  whoseFarm={farm.whoseFarm}
-                  farmLocation={farm.farmLocation}
-                  level={farm.level ? farm.level : null}
-                  mb={5}
-                  btntitle={farm.btntitle ? farm.btntitle : null}
-                  levelColor={farm.levelColor ? farm.levelColor : null}
-                  buttonWidth={farm.buttonWidth ? farm.buttonWidth : null}
-                  postContentText={farm.postContentText} />
-              </Fade>
-            )
-          })}
-        </Fragment>
+        <Container maxW={{ md: '4xl' }}>
+          {farms.map((farm) => (
+            <Fade bottom>
+              <FarmBoardCard
+                key={farm.id}
+                firstName={farm.firstName}
+                status={farm.status}
+                avatar={farm.avatar}
+                actionBtnTitle={farm.btntitle}
+                actionTitle={farm.actionTitle}
+                actionText={farm.actionText}
+                location={farm.farmLocation}
+                level={farm.level}
+                actionTag={farm.actionTag}
+              />
+            </Fade>
+          ))}
+        </Container>
       </Flex>
     </Box>
-  )
-}
+  );
+};
 
-export default FarmBoardContent
+export default FarmBoardContent;
