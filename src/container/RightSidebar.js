@@ -6,7 +6,6 @@ const RightSidebar = () => {
   return (
     <Box
       as='aside'
-      gridArea='right'
       px={{ md: 10 }}
       pos='fixed'
       bottom={0}
@@ -14,6 +13,7 @@ const RightSidebar = () => {
       h={{ lg: '100vh' }}
       bg='white'
       zIndex={20}
+      w={{ md: '22%' }}
       pt={40}
     >
       <Heading

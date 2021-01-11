@@ -21,7 +21,6 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
       <GridItem bg='gray.50'>
         <Box
           as='main'
-          gridArea='main'
           w='100%'
           color='gray.800'
           pt={pt}
@@ -33,7 +32,7 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
           {children}
         </Box>
       </GridItem>
-      <GridItem bg='white'>
+      <GridItem>
         <RightSidebar />
       </GridItem>
     </Grid>
