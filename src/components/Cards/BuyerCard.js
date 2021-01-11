@@ -1,5 +1,15 @@
 import React from 'react'
-import { Box, Divider, Progress, Heading, Spacer, Flex, Avatar, Text, Image } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Progress,
+  Heading,
+  Spacer,
+  Flex,
+  Avatar,
+  Text,
+  Image
+} from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 
@@ -10,7 +20,7 @@ const BuyerCard = ({
   amtLeft,
   amtBought,
   amtNeeded,
-  price,
+  price
 }) => (
   <Flex justify='center'>
     <Box py={6} my={6} w={{ md: '700px' }} bg='white' px={8}>
@@ -31,7 +41,12 @@ const BuyerCard = ({
           </Flex>
         </Box>
         <Spacer />
-        <ConfirmSale amtLeft={amtLeft} name={name} amtBought={amtBought} price={price} />
+        <ConfirmSale
+          amtLeft={amtLeft}
+          name={name}
+          amtBought={amtBought}
+          price={price}
+        />
       </Flex>
       <Box mt={4}>
         <Flex>
@@ -45,11 +60,13 @@ const BuyerCard = ({
           </Text>
         </Flex>
       </Box>
-      <Progress value={60}
+      <Progress
+        value={60}
         rounded='lg'
         colorScheme='cfButton'
         size='lg'
-        mt={2} />
+        mt={2}
+      />
       <Box mt={3}>
         <Flex>
           <Text as='h6' fontWeight='bold' fontSize='sm'>
@@ -70,14 +87,14 @@ const BuyerCard = ({
 )
 
 BuyerCard.propTypes = {
-  name     : PropTypes.string.isRequired,
-  address  : PropTypes.string.isRequired,
-  image    : PropTypes.any.isRequired,
-  btntitle : PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  image: PropTypes.any.isRequired,
+  btntitle: PropTypes.string.isRequired,
   amtNeeded: PropTypes.string.isRequired,
   amtBought: PropTypes.string.isRequired,
-  amtLeft  : PropTypes.string.isRequired,
-  price    : PropTypes.string.isRequired,
+  amtLeft: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired
 }
 
 export default BuyerCard

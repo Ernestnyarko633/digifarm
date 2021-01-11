@@ -1,5 +1,6 @@
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { Box, Flex, Icon, Image, Input, Text } from '@chakra-ui/react'
-import React from 'react'
 import { useDropzone } from 'react-dropzone'
 import { BsX } from 'react-icons/bs'
 import { Add } from 'theme/Icons'
@@ -7,37 +8,38 @@ import { Add } from 'theme/Icons'
 const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
-    onDrop: (acceptedFiles) => {
-      acceptedFiles.forEach(async (file) => {
+    onDrop: acceptedFiles => {
+      acceptedFiles.forEach(async file => {
         const formData = new FormData()
         formData.append('file', file, file?.name)
         setFieldValue('name', formData)
       })
       setFiles(
-        acceptedFiles.map((file) =>
+        acceptedFiles.map(file =>
           Object.assign(file, {
-            preview: URL.createObjectURL(file),
+            preview: URL.createObjectURL(file)
           })
         )
       )
-    },
+    }
   })
 
-  const removeImage = (id) => {
-    const newImages = files?.filter((item) => item.name !== id)
+  const removeImage = id => {
+    const newImages = files?.filter(item => item.name !== id)
     setFiles(newImages)
   }
 
-  const thumbs = files?.map((file) => (
-    <Box d='inline-block'
-      // mb={4}
+  const thumbs = files?.map(file => (
+    <Box
+      d='inline-block'
       mr={4}
       w='100%'
-      // p={4}
       boxSizing='border-box'
       key={file.name}
-      pos='relative'>
-      <Flex align='center'
+      pos='relative'
+    >
+      <Flex
+        align='center'
         justify='center'
         as='button'
         role='button'
@@ -50,7 +52,8 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
         pos='absolute'
         top={2}
         right={2}
-        onClick={() => removeImage(file.name)}>
+        onClick={() => removeImage(file.name)}
+      >
         <Icon as={BsX} />
       </Flex>
       <Flex minW={0} overflow='hidden'>
@@ -59,9 +62,9 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
     </Box>
   ))
 
-  React.useEffect(
+  useEffect(
     () => () => {
-      if(files){
+      if (files) {
         files.forEach(file => {
           URL.revokeObjectURL(file.preview)
         })
@@ -73,24 +76,28 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
   return (
     <Box>
       {files?.length === 1 ? null : (
-        <Flex direction='column'
+        <Flex
+          direction='column'
           justify='center'
           align='center'
           h={32}
           borderWidth={1}
           borderBottomWidth={2}
           borderBottomColor='cf.400'
-          {...getRootProps({ className: 'dropzone' })}>
+          {...getRootProps({ className: 'dropzone' })}
+        >
           <Input {...getInputProps()} />
           {files?.length === 0 && (
             <>
-              <Flex align='center'
+              <Flex
+                align='center'
                 justify='center'
                 w={8}
                 h={8}
                 rounded='100%'
                 bg='cf.400'
-                color='white'>
+                color='white'
+              >
                 <Icon as={Add} />
               </Flex>
               <Text color='gray.400' mt={1} fontSize='sm'>
@@ -105,6 +112,13 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
       </Box>
     </Box>
   )
+}
+
+ImageUpload.propTypes = {
+  files: PropTypes.any,
+  setFiles: PropTypes.any,
+  setFieldValue: PropTypes.any,
+  values: PropTypes.any
 }
 
 export default ImageUpload

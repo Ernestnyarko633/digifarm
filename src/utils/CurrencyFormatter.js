@@ -8,5 +8,3 @@ export function formatDollar(num) {
       return numb === '-' ? acc : numb + (i && !(i % 3) ? ',' : '') + acc
     }, '')}.${p[1]}`
 }
-
-

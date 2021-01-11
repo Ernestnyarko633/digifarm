@@ -30,12 +30,14 @@ const FarmCard = () => (
         </Box>
       </Flex>
 
-      <Tag bg='cf.200'
+      <Tag
+        bg='cf.200'
         color='cf.400'
         rounded='3xl'
         fontSize='sm'
         px={4}
-        textAlign='center'>
+        textAlign='center'
+      >
         Lvl 1
       </Tag>
     </Flex>

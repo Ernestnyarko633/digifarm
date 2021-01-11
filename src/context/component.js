@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useState, createContext, useContext, useCallback } from 'react'
+import PropTypes from 'prop-types'
 import { useDisclosure } from '@chakra-ui/react'
 import { useImmer } from 'use-immer'
-import PropTypes from 'prop-types'
 
-const ComponentContext = React.createContext({})
+const ComponentContext = createContext({})
 
-export const ComponentProvider = ({ children }) => {
+export const ComponentContextProvider = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [modal, setModal] = React.useState('')
-  const [data, setData] = React.useState([])
-  const [id, setId] = React.useState('')
-  const [mode, setMode] = React.useState('')
+  const [modal, setModal] = useState('')
+  const [data, setData] = useState([])
+  const [id, setId] = useState('')
+  const [mode, setMode] = useState('')
   const [step, setStep] = useImmer(0)
   const [otherStep, setOtherStep] = useImmer(0)
 
@@ -30,12 +30,12 @@ export const ComponentProvider = ({ children }) => {
     setOtherStep(draft => draft - 1)
   }
 
-  const handleModalClick = React.useCallback(
-    (_modal, _data, _id, _mode) => {
-      setModal(_modal)
-      setData(_data)
-      setId(_id)
-      setMode(_mode)
+  const handleModalClick = useCallback(
+    (modal, data, id, mode) => {
+      setModal(modal)
+      setData(data)
+      setId(id)
+      setMode(mode)
       onOpen()
     },
     [onOpen]
@@ -64,11 +64,10 @@ export const ComponentProvider = ({ children }) => {
   )
 }
 
-ComponentProvider.propTypes = {
+ComponentContextProvider.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default function useComponents() {
-  const context = React.useContext(ComponentContext)
-  return context
-}
+const useComponent = () => useContext(ComponentContext)
+
+export default useComponent

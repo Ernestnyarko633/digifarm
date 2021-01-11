@@ -1,14 +1,16 @@
-import LearnMoreModal from 'components/Modals/LearnMoreModal'
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import useComponents from './ComponentContext'
+
+import useComponent from './component'
+
+import LearnMoreModal from 'components/Modals/LearnMoreModal'
 import FarmReceiptModal from 'components/Modals/FarmReceiptModal'
 import FarmContractModal from 'components/Modals/FarmContractModal'
 
-const ModalsContext = React.createContext({})
+const ModalContext = React.createContext({})
 
-export const ModalsProvider = ({ children }) => {
-  const { modal } = useComponents()
+export const ModalContextProvider = ({ children }) => {
+  const { modal } = useComponent()
 
   function getModals(value) {
     switch (value) {
@@ -22,14 +24,19 @@ export const ModalsProvider = ({ children }) => {
         return null
     }
   }
+
   return (
-    <ModalsContext.Provider>
+    <ModalContext.Provider value={{}}>
       {getModals(modal)}
       {children}
-    </ModalsContext.Provider>
+    </ModalContext.Provider>
   )
 }
 
-ModalsProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+ModalContextProvider.propTypes = {
+  children: PropTypes.node.isRequired
 }
+
+const useModal = () => useContext(ModalContext)
+
+export default useModal

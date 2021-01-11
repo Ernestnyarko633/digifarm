@@ -1,7 +1,8 @@
-import React from 'react'
-import { Flex, Box } from '@chakra-ui/react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { Flex, Box } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
+
 import Tab from './Tab'
 
 const MotionFlex = motion.custom(Flex)
@@ -9,7 +10,6 @@ const MotionFlex = motion.custom(Flex)
 const Tabs = ({
   children,
   width,
-  borderWidth,
   px,
   pt,
   display = 'block',
@@ -17,28 +17,31 @@ const Tabs = ({
   mt,
   mx,
   py = 10,
-  direction = 'column',
+  direction = 'column'
 }) => {
-  const [ activeTab, setActiveTab ] = React.useState(children[0].props.label)
+  const [activeTab, setActiveTab] = useState(children[0]?.props?.label)
 
-  const handleClickTabItem = React.useCallback((tab) => setActiveTab(tab), [])
+  const handleClickTabItem = useCallback(tab => setActiveTab(tab), [])
 
   return (
     <Flex direction={direction} mt={mt}>
-      <Box display={display} as='ol' listStyleType='none' w={width} mx='auto'>
-        {children.map((child) => {
+      <Box display={display} as='ol' listStyleType='none' w={width}>
+        {children?.map(child => {
           const { label } = child.props
 
           return (
-            <Tab activeTab={activeTab}
+            <Tab
+              activeTab={activeTab}
               key={label}
               label={label}
-              onClick={handleClickTabItem} />
+              onClick={handleClickTabItem}
+            />
           )
         })}
       </Box>
 
-      <MotionFlex initial={{ opacity: 0 }}
+      <MotionFlex
+        initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.5 } }}
         w={boxWidth}
         mx={mx || 'auto'}
@@ -47,9 +50,8 @@ const Tabs = ({
         pt={pt}
         bg='white'
         pos='relative'
-        borderWidth={borderWidth || 1}
-        borderColor='gray.300'>
-        {children.map((child) => {
+      >
+        {children.map(child => {
           if (child.props.label !== activeTab) return undefined
           return child.props.children
         })}
@@ -60,7 +62,15 @@ const Tabs = ({
 
 Tabs.propTypes = {
   children: PropTypes.instanceOf(Array).isRequired,
-  width   : PropTypes.any,
+  px: PropTypes.any,
+  pt: PropTypes.any,
+  mt: PropTypes.any,
+  mx: PropTypes.any,
+  py: PropTypes.any,
+  width: PropTypes.any,
+  display: PropTypes.any,
+  boxWidth: PropTypes.any,
+  direction: PropTypes.any
 }
 
 export default Tabs

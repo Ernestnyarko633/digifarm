@@ -1,15 +1,17 @@
 import { Box, Divider, Image, List, ListItem, Text } from '@chakra-ui/react'
-import useComponents from 'context/ComponentContext'
+import useComponents from 'context/component'
 import React from 'react'
 import ModalWrapper from './ModalWrapper'
 
 const LearnMoreModal = () => {
   const { isOpen, onClose } = useComponents()
   return (
-    <ModalWrapper isOpen={isOpen}
+    <ModalWrapper
+      isOpen={isOpen}
       onClose={onClose}
       title='Discover agriculture as a Digital farmer'
-      isCentered>
+      isCentered
+    >
       <Box>
         <Image src={require('../../assets/images/video-img.png').default} />
       </Box>

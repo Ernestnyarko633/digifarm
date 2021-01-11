@@ -1,19 +1,21 @@
 import React from 'react'
 
-const Dashboard = React.lazy(() => import('./Dashboard'))
-const FarmBoard = React.lazy(() => import('./FarmBoard'))
-const FarmWallet = React.lazy(() => import('./FarmWallet'))
-const Marketplace = React.lazy(() => import('./Marketplace'))
-const StartFarm = React.lazy(() => import('./StartFarm/index'))
-const Individual = React.lazy(() => import('./StartFarm/Individual'))
-const Cooperative = React.lazy(() => import('./StartFarm/Cooperative'))
-const Forum = React.lazy(() => import('./Forum'))
-const NotFound = React.lazy(() => import('./NotFound'))
-const Document = React.lazy(() => import('./Document'))
-const Warehouse = React.lazy(() => import('./Warehouse'))
-const Profile = React.lazy(() => import('./Profile'))
+const Cooperative = React.lazy(() => import('./start-farm/cooperative'))
+const Individual = React.lazy(() => import('./start-farm/individual'))
+const StartFarm = React.lazy(() => import('./start-farm/index'))
+const Marketplace = React.lazy(() => import('./market-place'))
+const FarmWallet = React.lazy(() => import('./farm-wallet'))
+const FarmBoard = React.lazy(() => import('./farm-board'))
+const Dashboard = React.lazy(() => import('./dashboard'))
+const Warehouse = React.lazy(() => import('./warehouse'))
+const NotFound = React.lazy(() => import('./not-found'))
+const Document = React.lazy(() => import('./document'))
+const Profile = React.lazy(() => import('./profile'))
+const Forum = React.lazy(() => import('./forum'))
+const Auth = React.lazy(() => import('./auth'))
 
 const Pages = {
+  Auth,
   Dashboard,
   FarmBoard,
   FarmWallet,
@@ -25,7 +27,7 @@ const Pages = {
   NotFound,
   Document,
   Warehouse,
-  Profile,
+  Profile
 }
 
 export default Pages

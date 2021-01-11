@@ -1,15 +1,17 @@
 import React from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
+
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import OtherSteps from 'components/StartFarmProcess/OtherSteps'
-import useComponents from 'context/ComponentContext'
 
-const Cooperative = () => {
-  document.title = 'Complete Farmer | Cooperative'
-  
-  const { step } = useComponents()
+import useComponent from 'context/component'
 
-  const getContent = (value) => {
+const Individual = () => {
+  document.title = 'Complete Farmer | Individual'
+
+  const { step } = useComponent()
+
+  const getContent = value => {
     switch (value) {
       case 0:
         return <CropSelection />
@@ -22,17 +24,21 @@ const Cooperative = () => {
 
   return (
     <Box>
-      <Flex align='center'
+      <Flex
+        align='center'
         w='100vw'
         h={{ md: 20 }}
         pos='fixed'
         top={0}
         bg='white'
         shadow='md'
-        px={{ md: 20 }}>
+        px={{ md: 20 }}
+      >
         <Box h={{ md: 12 }}>
-          <Image h='100%'
-            src={require('../../assets/images/logo.png').default} />
+          <Image
+            h='100%'
+            src={require('../../assets/images/logo.png').default}
+          />
         </Box>
       </Flex>
 
@@ -41,4 +47,4 @@ const Cooperative = () => {
   )
 }
 
-export default Cooperative
+export default Individual

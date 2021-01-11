@@ -1,6 +1,8 @@
-import { Heading, Text, Box, Flex } from '@chakra-ui/react'
-import { QuestionIcon } from '@chakra-ui/icons'
 import React from 'react'
+import PropTypes from 'prop-types'
+
+import { QuestionIcon } from '@chakra-ui/icons'
+import { Heading, Text, Box, Flex } from '@chakra-ui/react'
 
 const FarmInfo = ({ width = 108, margin = 4 }) => (
   <Box as='table' w={width} m={margin}>
@@ -44,5 +46,10 @@ const FarmInfo = ({ width = 108, margin = 4 }) => (
     </Box>
   </Box>
 )
+
+FarmInfo.propTypes = {
+  width: PropTypes.any,
+  margin: PropTypes.any
+}
 
 export default FarmInfo

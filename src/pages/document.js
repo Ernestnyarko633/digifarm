@@ -5,7 +5,7 @@ import { Box, Grid } from '@chakra-ui/react'
 import UploadDocument from 'components/Modals/UploadDocument'
 import ConfirmReceiptDelete from 'components/Modals/ConfirmReceiptDelete'
 import Prismic from 'prismic-javascript'
-import configs from 'utils/configs'
+import getConfig from 'utils/configs'
 
 const data = [
   {
@@ -37,19 +37,18 @@ const data = [
 const Document = () => {
   document.title = 'Complete Farmer | Documents'
 
-  const prismic_api = configs().PRISMIC_API
-  const prismic_key = configs().PRISMIC_KEY
+  const prismic_api = getConfig().PRISMIC_API
+  const prismic_key = getConfig().PRISMIC_KEY
 
   const Client = Prismic.client(prismic_api, { prismic_key })
 
   const [_newsData, setNewsData] = useState(null)
   const [_announcement, setAnnouncement] = useState(null)
 
-  const Nothing = () => {
-    let n = _newsData
-    let m = _announcement
-    return { n, m }
-  }
+  // eslint-disable-next-line no-console
+  console.log(_newsData)
+  // eslint-disable-next-line no-console
+  console.log(_announcement)
 
   useEffect(() => {
     const announcements = async () => {
@@ -58,7 +57,6 @@ const Document = () => {
       )
       if (response) {
         setAnnouncement(response.results[0])
-        Nothing()
       }
     }
     announcements()

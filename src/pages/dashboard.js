@@ -6,7 +6,6 @@ import Layout from 'container/Layout'
 import React from 'react'
 
 const Dashboard = () => {
-
   document.title = 'Complete Farmer | Dashboard'
 
   return (

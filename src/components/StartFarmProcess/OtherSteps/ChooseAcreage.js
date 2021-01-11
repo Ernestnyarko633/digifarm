@@ -17,13 +17,13 @@ import Map from './Map'
 import { motion } from 'framer-motion'
 
 const array = [...Array(500).keys()]
-const options = [ 'Yes', 'No' ]
+const options = ['Yes', 'No']
 
 const MotionGrid = motion.custom(Grid)
 
 const ChooseAcreage = () => {
-  const [ selectedAcreage, setSelectedAcreage ] = React.useState('')
-  const [ cycle, setCycle ] = React.useState('yes')
+  const [selectedAcreage, setSelectedAcreage] = React.useState('')
+  const [cycle, setCycle] = React.useState('yes')
 
   return (
     <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
@@ -31,26 +31,30 @@ const ChooseAcreage = () => {
         <Map />
       </GridItem>
 
-      <GridItem borderLeftWidth={1}
+      <GridItem
+        borderLeftWidth={1}
         borderLeftColor='gray.300'
         overflowY='scroll'
         css={{
-          direction     : 'rtl',
+          direction: 'rtl',
           scrollbarColor: 'rebeccapurple',
-          scrollBehavior: 'smooth',
+          scrollBehavior: 'smooth'
         }}
-        mb={10}>
+        mb={10}
+      >
         <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
           <Heading as='h6' size='md' mb={2}>
             About Location{' '}
             <Icon as={InfoIcon} color='cf.400' boxSize={4} mx={2} />
           </Heading>
 
-          <Box borderWidth={1}
+          <Box
+            borderWidth={1}
             borderColor='gray.300'
             rounded='md'
             overflow='hidden'
-            padding={10}>
+            padding={10}
+          >
             <Box paddingBottom='5'>
               <Heading as='h6' size='md'>
                 Ecological zone
@@ -74,14 +78,16 @@ const ChooseAcreage = () => {
               Choose number of acres to farm
             </Heading>
             <Flex align='center'>
-              <BaseSelect options={array}
+              <BaseSelect
+                options={array}
                 id='acres'
                 name='acres'
                 setFieldValue={setSelectedAcreage}
                 value={selectedAcreage || ''}
                 title='How many acres?'
                 placeholder='1 Acre'
-                width='250px' />
+                width='250px'
+              />
               <Box ml={6}>
                 <Text color='red.600' fontSize='xs'>
                   +$800.00
@@ -91,24 +97,28 @@ const ChooseAcreage = () => {
             </Flex>
           </Box>
           <Box marginTop={10}>
-            <FormRadio state={cycle}
+            <FormRadio
+              state={cycle}
               onChange={setCycle}
               title='Do you want allow cycle for this farm?'
               options={options}
-              icon />
+              icon
+            />
           </Box>
           <Box my={10}>
             <Heading as='h5' size='sm' mb={2}>
               Choose number of acres to farm
             </Heading>
             <Box w='250px'>
-              <BaseSelect options={array}
+              <BaseSelect
+                options={array}
                 id='acres'
                 name='acres'
                 setFieldValue={setSelectedAcreage}
                 value={selectedAcreage || ''}
                 title='Choose number of cycle(s)'
-                placeholder='1 cycle' />
+                placeholder='1 cycle'
+              />
             </Box>
           </Box>
         </Box>

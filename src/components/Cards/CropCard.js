@@ -14,7 +14,7 @@ import { MdKeyboardArrowRight } from 'react-icons/md'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'components'
-import useComponents from 'context/ComponentContext'
+import useComponent from 'context/component'
 
 const CropCard = ({
   image,
@@ -25,18 +25,20 @@ const CropCard = ({
   btntitle,
   path,
   state,
-  mr,
+  mr
 }) => {
-  const { handleModalClick } = useComponents()
+  const { handleModalClick } = useComponent()
 
   return (
-    <Box w={{ md: 85 }}
+    <Box
+      w={{ md: 85 }}
       p={8}
       borderWidth={1}
       borderColor='gray.300'
       rounded='lg'
       textAlign='left'
-      mr={mr}>
+      mr={mr}
+    >
       <Box mb={3}>
         <Image src={image} />
       </Box>
@@ -55,7 +57,7 @@ const CropCard = ({
       </Flex>
 
       <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
-        {options.map((item) => (
+        {options.map(item => (
           <ListItem key={item} py={1}>
             {item}
           </ListItem>
@@ -63,12 +65,15 @@ const CropCard = ({
       </List>
 
       <Box>
-        <Link as={ReachRouter}
+        <Link
+          as={ReachRouter}
           to={{ pathname: path, state }}
-          _hover={{ textDecor: 'none' }}>
+          _hover={{ textDecor: 'none' }}
+        >
           <Button btntitle={btntitle} />
         </Link>
-        <Box d='block'
+        <Box
+          d='block'
           fontSize='xs'
           color='cf.400'
           mt={1}
@@ -76,7 +81,8 @@ const CropCard = ({
           as='button'
           role='button'
           aria-label='learn more button'
-          onClick={() => handleModalClick('learnmore')}>
+          onClick={() => handleModalClick('learnmore')}
+        >
           Learn more <Icon as={MdKeyboardArrowRight} />
         </Box>
       </Box>
@@ -85,15 +91,15 @@ const CropCard = ({
 }
 
 CropCard.propTypes = {
-  image   : PropTypes.any.isRequired,
-  title   : PropTypes.string.isRequired,
+  image: PropTypes.any.isRequired,
+  title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
-  extra   : PropTypes.string,
-  options : PropTypes.array,
+  extra: PropTypes.string,
+  options: PropTypes.array,
   btntitle: PropTypes.string.isRequired,
-  path    : PropTypes.string.isRequired,
-  state   : PropTypes.object,
-  mr      : PropTypes.any,
+  path: PropTypes.string.isRequired,
+  state: PropTypes.object,
+  mr: PropTypes.any
 }
 
 export default CropCard
