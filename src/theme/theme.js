@@ -1,11 +1,11 @@
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme } from '@chakra-ui/react'
 
-const breakpoints = ['30em', '48em', '62em', '80em'];
+const breakpoints = ['30em', '48em', '62em', '80em']
 // aliases
-breakpoints.sm = breakpoints[0];
-breakpoints.md = breakpoints[1];
-breakpoints.lg = breakpoints[2];
-breakpoints.xl = breakpoints[3];
+breakpoints.sm = breakpoints[0]
+breakpoints.md = breakpoints[1]
+breakpoints.lg = breakpoints[2]
+breakpoints.xl = breakpoints[3]
 
 export const theme = extendTheme({
   styles: {
@@ -14,9 +14,9 @@ export const theme = extendTheme({
         fontSize: 'md',
         fontFamily: '"CeraGR", sans-serif',
         lineHeight: 'tall',
-        fontWeight: 400,
-      },
-    }),
+        fontWeight: 400
+      }
+    })
   },
   ...breakpoints,
   fonts: {
@@ -25,13 +25,13 @@ export const theme = extendTheme({
     medium: '"CeraGR" ,sans-serif',
     light: '"CeraGR" ,sans-serif',
     thin: '"CeraGR" ,sans-serif',
-    body: '"CeraGR", sans-serif',
+    body: '"CeraGR", sans-serif'
   },
   fontSizes: {
     xx: '.55rem',
     tiny: '.68rem',
     '7xl': '5rem',
-    '8xl': '6rem',
+    '8xl': '6rem'
   },
   colors: {
     cf: {
@@ -45,24 +45,24 @@ export const theme = extendTheme({
       600: '#d6e1c9',
       700: '#307926',
       800: '#5AA250',
-      900: 'linear-gradient(#93CF88, #5AA250)',
+      900: 'linear-gradient(#93CF88, #5AA250)'
     },
     'cf-dark': {
       200: 'rgba(227, 231, 221, 0.2)',
-      250: 'rgba(97, 111, 57, 0.1)',
+      250: 'rgba(97, 111, 57, 0.1)'
     },
     cfButton: {
       500: '#3c9130',
-      600: '#307926',
+      600: '#307926'
     },
     linear: {
       500: 'linear-gradient(#93CF88, #5AA250)',
-      600: 'linear-gradient(#93CF88, #5AA250)',
+      600: 'linear-gradient(#93CF88, #5AA250)'
     },
     progressGreen: {
       500: '#d6e1c9',
-      600: '#3c9130',
-    },
+      600: '#3c9130'
+    }
   },
   space: {
     14: '3.5rem',
@@ -89,7 +89,7 @@ export const theme = extendTheme({
     137: '65rem',
     140: '70rem',
     143: '72rem',
-    145: '76rem',
+    145: '76rem'
   },
   sizes: {
     14: '3.5rem',
@@ -116,10 +116,10 @@ export const theme = extendTheme({
     137: '65rem',
     140: '70rem',
     143: '72rem',
-    145: '76rem',
+    145: '76rem'
   },
   shadows: {
     1000: '0 10px 20px 0 rgba(97, 111, 57, 0.5)',
-    2000: '10px 10px 20px 0 rgba(0, 0, 0, 0.1);',
-  },
-});
+    2000: '10px 10px 20px 0 rgba(0, 0, 0, 0.1);'
+  }
+})

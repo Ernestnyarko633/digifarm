@@ -1,16 +1,8 @@
-import React from 'react';
-import {
-  Box,
-  Button,
-  Heading,
-  Icon,
-  Image,
-  Link,
-  Text,
-} from '@chakra-ui/react';
-import { Link as ReachLink } from 'react-router-dom';
-import { MdKeyboardArrowRight } from 'react-icons/md';
-import CorporateIllustration from '../../assets/images/emptystate/corporate.png';
+import React from 'react'
+import { Box, Button, Heading, Icon, Image, Link, Text } from '@chakra-ui/react'
+import { Link as ReachLink } from 'react-router-dom'
+import { MdKeyboardArrowRight } from 'react-icons/md'
+import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
 
 const GetStartedNowCard = () => (
   <Box p={{ md: 10 }} mt={{ md: 32 }}>
@@ -41,6 +33,6 @@ const GetStartedNowCard = () => (
       <Image src={CorporateIllustration} />
     </Box>
   </Box>
-);
+)
 
-export default GetStartedNowCard;
+export default GetStartedNowCard

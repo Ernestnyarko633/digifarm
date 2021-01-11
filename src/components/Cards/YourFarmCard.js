@@ -1,15 +1,15 @@
-import { Box, Flex, Heading, Text, Image, Badge } from '@chakra-ui/react';
-import React from 'react';
-import Button from 'components/Button/index';
-import Bitmap from 'assets/images/Bitmap.png';
+import { Box, Flex, Heading, Text, Image, Badge } from '@chakra-ui/react'
+import React from 'react'
+import Button from 'components/Button/index'
+import Bitmap from 'assets/images/Bitmap.png'
 
 const YourFarmCard = () => {
   const dummyFarms = [
     { name: 'FarmX', color: '#FF9F9F' },
     { name: 'FarmY', color: '#76B1F6' },
     { name: 'FarmZ', color: '#EEE463' },
-    { name: 'FarmT', color: '#AED033' },
-  ];
+    { name: 'FarmT', color: '#AED033' }
+  ]
   return (
     <Box bg='white' w='100%' mb={5}>
       <Box w='100%'>
@@ -27,8 +27,14 @@ const YourFarmCard = () => {
             <Button rounded='30px' btntitle='Start a farm' />
           </Flex>
           <Flex direction='row' align='center' justify='center' my={10}>
-            {dummyFarms.map((farm) => (
-              <Flex direction='column' align='center' justify='center' m={4}>
+            {dummyFarms.map(farm => (
+              <Flex
+                direction='column'
+                align='center'
+                justify='center'
+                m={4}
+                key={farm}
+              >
                 <Text fontSize='sm' mb={3}>
                   {farm.name}
                 </Text>
@@ -51,7 +57,7 @@ const YourFarmCard = () => {
         </Flex>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default YourFarmCard;
+export default YourFarmCard

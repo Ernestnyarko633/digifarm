@@ -1,6 +1,6 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/react';
-import React from 'react';
-import IllustrationImage from '../../assets/images/home/illustration.png';
+import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import React from 'react'
+import IllustrationImage from '../../assets/images/home/illustration.png'
 
 const FarmBoardGreetings = () => {
   return (
@@ -21,7 +21,7 @@ const FarmBoardGreetings = () => {
         </Text>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default FarmBoardGreetings;
+export default FarmBoardGreetings

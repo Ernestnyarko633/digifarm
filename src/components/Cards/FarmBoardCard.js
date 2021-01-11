@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Flex,
@@ -7,13 +7,13 @@ import {
   Text,
   Icon,
   Image,
-  Tag,
-} from '@chakra-ui/react';
-import PropTypes from 'prop-types';
-import { Flower, CreditCard } from 'theme/Icons';
-import { BsHeart } from 'react-icons/bs';
-import { RiShareForwardLine } from 'react-icons/ri';
-import Button from 'components/Button';
+  Tag
+} from '@chakra-ui/react'
+import PropTypes from 'prop-types'
+import { Flower, CreditCard } from 'theme/Icons'
+import { BsHeart } from 'react-icons/bs'
+import { RiShareForwardLine } from 'react-icons/ri'
+import Button from 'components/Button'
 
 const FarmBoardCard = ({
   status,
@@ -25,7 +25,7 @@ const FarmBoardCard = ({
   actionTitle,
   actionTag,
   actionText,
-  actionBtnTitle,
+  actionBtnTitle
 }) => {
   return (
     <Box rounded='xl' w='100%' bg='white' mb={{ md: 10 }} shadow='sm'>
@@ -241,8 +241,8 @@ const FarmBoardCard = ({
         </Box>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
 FarmBoardCard.propTypes = {
   status: PropTypes.string.isRequired,
@@ -254,7 +254,7 @@ FarmBoardCard.propTypes = {
   actionTitle: PropTypes.string.isRequired,
   actionTag: PropTypes.string,
   actionText: PropTypes.string,
-  actionBtnTitle: PropTypes.string,
-};
+  actionBtnTitle: PropTypes.string
+}
 
-export default FarmBoardCard;
+export default FarmBoardCard
