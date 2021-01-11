@@ -24,8 +24,8 @@ const Map = () => {
     <ReactMapGL
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API}
-      onViewportChange={viewport => {
-        setViewport(viewport)
+      onViewportChange={_viewport => {
+        setViewport(_viewport)
       }}
     >
       <Box style={{ position: 'absolute', bottom: 20, right: 20 }}>
@@ -45,6 +45,7 @@ const Map = () => {
       </Box>
       <Source type='geojson' data={dataJS} ref={sourceRef} cluster={false}>
         <Layer {...layer} />
+        Type
       </Source>
     </ReactMapGL>
   )

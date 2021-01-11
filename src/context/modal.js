@@ -5,7 +5,7 @@ import useComponent from './component'
 
 import LearnMoreModal from 'components/Modals/LearnMoreModal'
 import FarmReceiptModal from 'components/Modals/FarmReceiptModal'
-import FarmContractModal from 'components/Modals/FarmContract'
+import FarmContractModal from 'components/Modals/FarmContractModal'
 
 const ModalContext = React.createContext({})
 

@@ -32,7 +32,7 @@ const ModalWrapper = ({
       <ModalContent rounded='2xl'>
         <ModalHeader>
           <Box>
-            {title && title}
+            {title}
             {image && <Image width={12} src={image} alt={alt} />}
           </Box>
         </ModalHeader>

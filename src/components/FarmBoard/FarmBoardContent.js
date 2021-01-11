@@ -4,8 +4,7 @@ import Fade from 'react-reveal/Fade'
 import { AiOutlineCreditCard } from 'react-icons/ai'
 
 import FarmBoardCard from '../Cards/FarmBoardCard'
-import YourFarmCard from '../Cards/YourFarm'
-
+import YourFarmCard from '../Cards/YourFarmCard'
 import Bitmap from 'assets/images/Bitmap.png'
 import Crop from 'assets/images/crop.png'
 import SoyaBeanImg from 'assets/images/soya.png'

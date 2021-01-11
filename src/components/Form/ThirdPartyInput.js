@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-import FormInput from './Input'
+import FormInput from './FormInput'
 
 const ThirdPartyInput = ({
   name,
@@ -13,8 +13,8 @@ const ThirdPartyInput = ({
   label,
   title
 }) => {
-  const getForm = title => {
-    switch (title) {
+  const getForm = heading => {
+    switch (heading) {
       case 'KPIs':
         return (
           <FormInput

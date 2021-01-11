@@ -64,7 +64,11 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
 
   useEffect(
     () => () => {
-      files?.forEach(file => URL.revokeObjectURL(file.preview))
+      if (files) {
+        files.forEach(file => {
+          URL.revokeObjectURL(file.preview)
+        })
+      }
     },
     [files]
   )

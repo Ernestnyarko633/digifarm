@@ -31,11 +31,11 @@ export const ComponentContextProvider = ({ children }) => {
   }
 
   const handleModalClick = useCallback(
-    (modal, data, id, mode) => {
-      setModal(modal)
-      setData(data)
-      setId(id)
-      setMode(mode)
+    (_modal, _data, _id, _mode) => {
+      setModal(_modal)
+      setData(_data)
+      setId(_id)
+      setMode(_mode)
       onOpen()
     },
     [onOpen]

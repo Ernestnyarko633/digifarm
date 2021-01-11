@@ -1,14 +1,14 @@
 import React from 'react'
 import Layout from 'container/Layout'
 import FarmsEmptyState from 'components/EmptyStates/FarmsEmptyState'
-import Greetings from 'components/Utils/FarmBoardGreetings'
-import FarmBoardContent from 'components/FarmBoard/FarmBoard'
+import FarmBoardGreetings from 'components/Utils/FarmBoardGreetings'
+import FarmBoardContent from 'components/FarmBoard/FarmBoardContent'
 
 const FarmBoard = () => {
   document.title = 'Complete Farmer | Farmboard'
   return (
     <Layout showRightSideContentType='events'>
-      <Greetings />
+      <FarmBoardGreetings />
       {false && <FarmsEmptyState />}
       <FarmBoardContent />
     </Layout>
