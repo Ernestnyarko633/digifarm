@@ -4,13 +4,7 @@ import { createIcon } from '@chakra-ui/icons'
 export const Shape = createIcon({
   displayName: 'Shape',
   viewBox: '0 0 24 24',
-  path: (
-    <polygon
-      preserveAspectRatio='none'
-      fill='currentColor'
-      points='50,0 100,0 50,100 0,100'
-    />
-  )
+  path: <polygon preserveAspectRatio='none' fill='currentColor' points='50,0 100,0 50,100 0,100' />
 })
 
 export const menuOpen = createIcon({
@@ -210,21 +204,9 @@ export const home = createIcon({
           />
           <feOffset dy='4' />
           <feGaussianBlur stdDeviation='2' />
-          <feColorMatrix
-            type='matrix'
-            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0'
-          />
-          <feBlend
-            mode='normal'
-            in2='BackgroundImageFix'
-            result='effect1_dropShadow'
-          />
-          <feBlend
-            mode='normal'
-            in='SourceGraphic'
-            in2='effect1_dropShadow'
-            result='shape'
-          />
+          <feColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0' />
+          <feBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow' />
+          <feBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow' result='shape' />
         </filter>
       </defs>
     </>
@@ -636,10 +618,7 @@ export const mail = createIcon({
         fill='currentColor'
         d='M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z'
       />
-      <path
-        fill='currentColor'
-        d='M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z'
-      />
+      <path fill='currentColor' d='M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z' />
     </>
   )
 })
@@ -780,14 +759,7 @@ export const circle = createIcon({
 export const closeIcon = createIcon({
   displayName: 'closeIcon',
   viewBox: '0 0 24 24',
-  path: (
-    <path
-      fill='none'
-      stroke='currentColor'
-      strokeWidth={2}
-      d='M6 18L18 6M6 6l12 12'
-    />
-  )
+  path: <path fill='none' stroke='currentColor' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
 })
 
 export const Add = createIcon({
@@ -1034,12 +1006,7 @@ export const Guide = createIcon({
         width='24'
         height='26'
       >
-        <path
-          fillRule='evenodd'
-          clipRule='evenodd'
-          d='M0 0H24V26H0V0Z'
-          fill='white'
-        />
+        <path fillRule='evenodd' clipRule='evenodd' d='M0 0H24V26H0V0Z' fill='white' />
       </mask>
       <g mask='url(#mask0)'>
         <path

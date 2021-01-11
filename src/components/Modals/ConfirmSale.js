@@ -95,14 +95,8 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
                 </Text>
               </Text>
             </Box>
-            <Text
-              fontSize={{ md: 'sm' }}
-              pl={2}
-              fontWeight='thin'
-              color='red.600'
-            >
-              Are you sure you want to sell this crop? This action is
-              irreversible{' '}
+            <Text fontSize={{ md: 'sm' }} pl={2} fontWeight='thin' color='red.600'>
+              Are you sure you want to sell this crop? This action is irreversible{' '}
             </Text>
           </ModalBody>
           <ModalFooter>
@@ -128,9 +122,7 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
                   toast({
                     position: 'top-right',
                     duration: 9000,
-                    render: () => (
-                      <Notification amtBought={amtBought} name={name} />
-                    )
+                    render: () => <Notification amtBought={amtBought} name={name} />
                   })
                 }}
               >

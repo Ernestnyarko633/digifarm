@@ -59,20 +59,12 @@ const Header = () => {
         <Menu as={Box} ml={2}>
           {({ open }) => (
             <Box>
-              <Menu.Button
-                as={Box}
-                _focus={{ outline: 'none' }}
-                cursor='pointer'
-              >
+              <Menu.Button as={Box} _focus={{ outline: 'none' }} cursor='pointer'>
                 <Flex align='center'>
                   <Avatar size='sm' src={user?.avatar} name={user?.firstName} />
                   <Text ml={2}>Hi {user?.firstName}</Text>
                   <Box>
-                    <Icon
-                      ml={2}
-                      as={open ? FiChevronUp : FiChevronDown}
-                      boxSize={6}
-                    />
+                    <Icon ml={2} as={open ? FiChevronUp : FiChevronDown} boxSize={6} />
                   </Box>
                 </Flex>
               </Menu.Button>

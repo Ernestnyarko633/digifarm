@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  Box,
-  ModalCloseButton
-} from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, Box, ModalCloseButton } from '@chakra-ui/react'
 
 const DocumentPreview = ({ link, isOpen, onClose }) => {
   const [shown] = useState(true)
@@ -29,12 +23,7 @@ const DocumentPreview = ({ link, isOpen, onClose }) => {
           <ModalCloseButton color='white' />
         </Box>
 
-        <iframe
-          title='nothing'
-          src={link + '#toolbar=0'}
-          width='100%'
-          height='500px'
-        />
+        <iframe title='nothing' src={link + '#toolbar=0'} width='100%' height='500px' />
       </Box>
     </Box>
   )

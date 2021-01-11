@@ -32,10 +32,7 @@ const Map = () => {
         <ScaleControl maxWidth={100} unit='metric' />
       </Box>
       <Box style={{ position: 'absolute', top: 5, left: 5 }}>
-        <GeolocateControl
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation
-        />
+        <GeolocateControl positionOptions={{ enableHighAccuracy: true }} trackUserLocation />
       </Box>
       <Box style={{ position: 'absolute', top: 35, left: 5 }}>
         <FullscreenControl />

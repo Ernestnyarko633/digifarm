@@ -14,12 +14,7 @@ const CropCategorySelection = () => {
   const [state, setState] = React.useState('Ginger Farm')
 
   return (
-    <Grid
-      templateColumns={{ md: '45% 55%' }}
-      borderWidth={1}
-      borderColor='gray.300'
-      h={121}
-    >
+    <Grid templateColumns={{ md: '45% 55%' }} borderWidth={1} borderColor='gray.300' h={121}>
       <GridItem>
         {crops.map(item => (
           <CropSelectionCard

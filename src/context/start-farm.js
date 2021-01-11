@@ -4,9 +4,7 @@ import React from 'react'
 const StartFarmContext = React.createContext({})
 
 export const StartFarmProvider = ({ children }) => {
-  return (
-    <StartFarmContext.Provider value={{}}>{children}</StartFarmContext.Provider>
-  )
+  return <StartFarmContext.Provider value={{}}>{children}</StartFarmContext.Provider>
 }
 
 StartFarmProvider.propTypes = {

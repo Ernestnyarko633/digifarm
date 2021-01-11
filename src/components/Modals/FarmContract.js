@@ -22,9 +22,7 @@ const FarmContractModal = () => {
       <Box mb={8}>
         <Text fontWeight='bold'>Description</Text>
         <Divider orientation='horizontal' my={3} />
-        <Text fontSize='xs'>
-          Here’s a cofirmation of your payment and a receipt for your farm
-        </Text>
+        <Text fontSize='xs'>Here’s a cofirmation of your payment and a receipt for your farm</Text>
       </Box>
       <FarmInfo width='100%' margin={0} />
 

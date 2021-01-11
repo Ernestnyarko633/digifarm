@@ -23,13 +23,7 @@ const Notification = ({ amtBought, name }) => (
           <Heading as='h6' fontSize='10px'>
             INVOICE DEPOSIT
           </Heading>
-          <Tag
-            as='tag'
-            color='cf.400'
-            fontSize='10px'
-            bg='cf.200'
-            borderRadius='none'
-          >
+          <Tag as='tag' color='cf.400' fontSize='10px' bg='cf.200' borderRadius='none'>
             FINALIZE
           </Tag>
         </Flex>
@@ -37,12 +31,7 @@ const Notification = ({ amtBought, name }) => (
           3min ago
         </Box>
       </Flex>
-      <Box
-        borderBottomWidth={1}
-        borderColor='gray.200'
-        w={{ md: '90%' }}
-        mx='auto'
-      />
+      <Box borderBottomWidth={1} borderColor='gray.200' w={{ md: '90%' }} mx='auto' />
     </Flex>
 
     <Flex w={{ md: '90%' }} mx='auto' justify='space-between' align='center'>
