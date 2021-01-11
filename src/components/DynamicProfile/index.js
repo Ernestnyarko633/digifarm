@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
 import AccountSettings from './AccountSettings'
@@ -17,7 +16,7 @@ const components = {
 
 const DynamicProfile = ({ page }) => {
   const SelectedPage = components[page]
-  return SelectedPage 
+  return SelectedPage
 }
 
 DynamicProfile.propTypes = {
