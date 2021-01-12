@@ -13,7 +13,6 @@ export const AuthContextProvider = ({ children }) => {
   // Setup Config
   const AUTH_API = configs().AUTH_API
   const [session, setSession] = useState(true)
-  const [user, setUser] = useState(null)
 
   const store = ({ token, user }) => {
     if (token) window.sessionStorage.setItem('_cft', token)
@@ -30,30 +29,13 @@ export const AuthContextProvider = ({ children }) => {
     }
   }
 
-  const getUser = async () =>
-    await http.get({ url: `${AUTH_API}/users/profile` })
-
-  const getProfile = async () => {
-    const { data } = await http.get({ url: `${AUTH_API}/users/profile` })
-    setUser(data)
-  }
+  const getUser = async () => await http.get({ url: `${AUTH_API}/users/profile` })
 
   const changePassword = async payload =>
-    await http.patch({
-      url: `${AUTH_API}/change-password`,
-      body: JSON.stringify(payload)
-    })
-
-  React.useEffect(() => {
-    getProfile()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    await http.patch({ url: `${AUTH_API}/change-password`, body: JSON.stringify(payload) })
 
   const patchUser = async (id, data) =>
-    await http.patch({
-      url: `${AUTH_API}/users/${id}`,
-      body: JSON.stringify(data)
-    })
+    await http.patch({ url: `${AUTH_API}/users/${id}`, body: JSON.stringify(data) })
 
   const logout = async (clearRemote = false) => {
     try {
@@ -73,9 +55,7 @@ export const AuthContextProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user,
         store,
-        setUser,
         session,
         setSession,
         isAuthenticated,

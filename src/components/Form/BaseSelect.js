@@ -60,13 +60,7 @@ const BaseSelect = ({
 
   return (
     <Box bg='cf.100' pos='relative' borderBottom='2px solid #3c9130'>
-      <FormLabel
-        pos='absolute'
-        top={-1}
-        left={3}
-        fontSize='xs'
-        color='gray.600'
-      >
+      <FormLabel pos='absolute' top={-1} left={3} fontSize='xs' color='gray.600'>
         {title}
       </FormLabel>
       <Select

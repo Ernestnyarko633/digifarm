@@ -40,10 +40,7 @@ const Profile = () => {
     accountNumber: ''
   }
 
-  const onSubmit = async (
-    values,
-    { setSubmitting, setErrors, setStatus, resetForm }
-  ) => {
+  const onSubmit = async (values, { setSubmitting, setErrors, setStatus, resetForm }) => {
     try {
       const data = {
         firstName: values?.firstName,
@@ -93,19 +90,8 @@ const Profile = () => {
 
   return (
     <Container maxW='4xl'>
-      <Formik
-        enableReinitialize
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-      >
-        {({
-          values,
-          handleChange,
-          handleBlur,
-          isSubmitting,
-          handleSubmit,
-          errors
-        }) => (
+      <Formik enableReinitialize initialValues={initialValues} onSubmit={onSubmit}>
+        {({ values, handleChange, handleBlur, isSubmitting, handleSubmit, errors }) => (
           <form onSubmit={handleSubmit}>
             <Box p={10} rounded='md' bg='white'>
               <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
@@ -169,12 +155,7 @@ const Profile = () => {
                   Personal Info
                 </Heading>
 
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                  mb={6}
-                >
+                <Grid templateColumns='repeat(2, 1fr)' w={{ md: '100%' }} gap={6} mb={6}>
                   <FormInput
                     label='First Name'
                     name='firstName'
@@ -263,12 +244,7 @@ const Profile = () => {
                 <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
                   Identification Info
                 </Heading>
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                  mb={6}
-                >
+                <Grid templateColumns='repeat(2, 1fr)' w={{ md: '100%' }} gap={6} mb={6}>
                   <FormInput
                     label='ID Type'
                     name='IdType'
@@ -284,12 +260,7 @@ const Profile = () => {
                     bg='white'
                   />
                 </Grid>
-                <FormInput
-                  label='Country'
-                  value={values.address.country}
-                  isRequired
-                  bg='white'
-                />
+                <FormInput label='Country' value={values.address.country} isRequired bg='white' />
               </Box>
             </Box>
 
@@ -298,11 +269,7 @@ const Profile = () => {
                 <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
                   Bank details
                 </Heading>
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                >
+                <Grid templateColumns='repeat(2, 1fr)' w={{ md: '100%' }} gap={6}>
                   <FormInput
                     label='Bank name'
                     name='bankName'
@@ -318,12 +285,7 @@ const Profile = () => {
                     bg='white'
                   />
                 </Grid>
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                  py={{ md: 10 }}
-                >
+                <Grid templateColumns='repeat(2, 1fr)' w={{ md: '100%' }} gap={6} py={{ md: 10 }}>
                   <FormInput
                     label='Account name'
                     name='accountName'

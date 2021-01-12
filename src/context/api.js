@@ -11,17 +11,12 @@ const http = new HttpFacade()
 export const ApiContextProvider = ({ children }) => {
   const { FMS_API, PAYMENT_API } = getConfig()
 
-  const getCropCategories = async () =>
-    await http.get({ url: `${FMS_API}/crop-categories` })
+  const getCropCategories = async () => await http.get({ url: `${FMS_API}/crop-categories` })
 
-  const getFarms = async query =>
-    await http.get({ url: `${FMS_API}/farms`, query })
+  const getFarms = async query => await http.get({ url: `${FMS_API}/farms`, query })
 
   const initiatePayment = async payload =>
-    await http.post({
-      url: `${PAYMENT_API}/payment/`,
-      body: JSON.stringify(payload)
-    })
+    await http.post({ url: `${PAYMENT_API}/payment/`, body: JSON.stringify(payload) })
 
   const uploadPaymentDetails = async (id, formData) =>
     await http.patch({

@@ -1,14 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Box,
-  Flex,
-  Text,
-  Icon,
-  FormLabel,
-  FormControl,
-  Input
-} from '@chakra-ui/react'
+import { Box, Flex, Text, Icon, FormLabel, FormControl, Input } from '@chakra-ui/react'
 import { VscAdd } from 'react-icons/vsc'
 
 const Upload = props => {

@@ -30,14 +30,7 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
   }
 
   const thumbs = files?.map(file => (
-    <Box
-      d='inline-block'
-      mr={4}
-      w='100%'
-      boxSizing='border-box'
-      key={file.name}
-      pos='relative'
-    >
+    <Box d='inline-block' mr={4} w='100%' boxSizing='border-box' key={file.name} pos='relative'>
       <Flex
         align='center'
         justify='center'

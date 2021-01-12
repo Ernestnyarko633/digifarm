@@ -22,13 +22,7 @@ const FormTextArea = ({
       borderColor='gray.100'
       borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
     >
-      <FormLabel
-        fontSize={{ md: 'xs' }}
-        pos='absolute'
-        left={{ md: 4 }}
-        top={3}
-        color='gray.600'
-      >
+      <FormLabel fontSize={{ md: 'xs' }} pos='absolute' left={{ md: 4 }} top={3} color='gray.600'>
         {label}
       </FormLabel>
       <Textarea
@@ -63,9 +57,7 @@ const FormTextArea = ({
       />
     </Box>
 
-    {error && touched && (
-      <FormErrorMessage fontSize='xs'>{error}</FormErrorMessage>
-    )}
+    {error && touched && <FormErrorMessage fontSize='xs'>{error}</FormErrorMessage>}
   </FormControl>
 )
 

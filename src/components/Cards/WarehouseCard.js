@@ -13,17 +13,7 @@ import {
   Image
 } from '@chakra-ui/react'
 
-const WarehouseCard = ({
-  name,
-  location,
-  image,
-  weight,
-  bags,
-  quantity,
-  condition,
-  mr,
-  ml
-}) => (
+const WarehouseCard = ({ name, location, image, weight, bags, quantity, condition, mr, ml }) => (
   <Box>
     <Flex justify='center'>
       <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>
