@@ -13,17 +13,18 @@ export const theme = extendTheme({
       body: {
         fontSize: 'md',
         fontFamily: '"CeraGR", sans-serif',
-        lineHeight: 'tall'
+        lineHeight: 'tall',
+        fontWeight: 400
       }
     })
   },
   ...breakpoints,
   fonts: {
-    heading: '"CeraGRBlack" ,sans-serif',
-    display: '"CeraGRBold" ,sans-serif',
-    medium: '"CeraGRMedium" ,sans-serif',
-    light: '"CeraGRLight" ,sans-serif',
-    thin: '"CeraGRThin" ,sans-serif',
+    heading: '"CeraGR" ,sans-serif',
+    display: '"CeraGR" ,sans-serif',
+    medium: '"CeraGR" ,sans-serif',
+    light: '"CeraGR" ,sans-serif',
+    thin: '"CeraGR" ,sans-serif',
     body: '"CeraGR", sans-serif'
   },
   fontSizes: {
