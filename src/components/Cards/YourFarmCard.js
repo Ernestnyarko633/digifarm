@@ -13,13 +13,7 @@ const YourFarmCard = () => {
   return (
     <Box bg='white' w='100%' mb={5}>
       <Box w='100%'>
-        <Flex
-          align='center'
-          justify='center'
-          direction='column'
-          py={24}
-          w='100%'
-        >
+        <Flex align='center' justify='center' direction='column' py={24} w='100%'>
           <Flex align='center' direction='row' justify='space-around' w='100%'>
             <Heading as='h6' fontSize='lg'>
               Your Farm(s)
@@ -28,26 +22,13 @@ const YourFarmCard = () => {
           </Flex>
           <Flex direction='row' align='center' justify='center' my={10}>
             {dummyFarms.map(farm => (
-              <Flex
-                direction='column'
-                align='center'
-                justify='center'
-                m={4}
-                key={farm}
-              >
+              <Flex direction='column' align='center' justify='center' m={4} key={farm}>
                 <Text fontSize='sm' mb={3}>
                   {farm.name}
                 </Text>
                 <Box w={24} h={24} rounded='100%'>
                   <Image w='100%' h='100%' rounded='100%' src={Bitmap} />
-                  <Badge
-                    position='absolute'
-                    top={745}
-                    bg={farm.color}
-                    rounded='25px'
-                    w={5}
-                    h={5}
-                  >
+                  <Badge position='absolute' top={745} bg={farm.color} rounded='25px' w={5} h={5}>
                     <Box rounded='25px' w='25px' h='25px'></Box>
                   </Badge>
                 </Box>
