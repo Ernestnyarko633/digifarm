@@ -187,7 +187,7 @@ const FarmBoardCard = ({
       <Flex
         align='center'
         py={{ md: status === 'farm' && 6 }}
-        pb={{ md: status === 'news' || status === 'action' ? 6 : 6 }}
+        pb={{ md: status === 'news' || status === 'action' ? 6 : 8 }}
         px={{ md: 16 }}
       >
         <Flex>
