@@ -26,31 +26,6 @@ const YourFarmCard = () => {
             </Heading>
             <Button rounded='30px' btntitle='Start a farm' />
           </Flex>
-<<<<<<< HEAD
-          <Flex direction='row' align='center' justify='center' m={10}>
-            {dummyFarms.map(farm => {
-              return (
-                <Flex key={farm.name} direction='column' align='center' justify='center' m={4}>
-                  <Text fontSize='md' mb={3}>
-                    {farm.name}
-                  </Text>
-                  <Box w='120px' h='120px' rounded='120px'>
-                    <Image w='100%' h='100%' rounded='100%' src={Bitmap} />
-                    <Badge
-                      position='absolute'
-                      top={735}
-                      bg={farm.color}
-                      rounded='25px'
-                      w='25px'
-                      h='25px'
-                    >
-                      <Box rounded='25px' w='25px' h='25px'></Box>
-                    </Badge>
-                  </Box>
-                </Flex>
-              )
-            })}
-=======
           <Flex direction='row' align='center' justify='center' my={10}>
             {dummyFarms.map(farm => (
               <Flex
@@ -78,7 +53,6 @@ const YourFarmCard = () => {
                 </Box>
               </Flex>
             ))}
->>>>>>> 32ecce01557f64799e44a88bffbeb31f1804b545
           </Flex>
         </Flex>
       </Box>

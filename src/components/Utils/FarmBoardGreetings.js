@@ -11,8 +11,7 @@ const FarmBoardGreetings = () => {
           Welcome to your farm booard
         </Heading>
         <Text fontFamily='body'>
-          Here's where you view, share and like all <br /> the news from your
-          farm(s)
+          Here's where you view, share and like all <br /> the news from your farm(s)
         </Text>
       </Box>
     </Box>
