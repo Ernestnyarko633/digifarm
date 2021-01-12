@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import React from 'react'
+import RightSidebar from './RightSidebar'
 
 const Layout = ({ children, height, pt, px, ...rest }) => {
   return (
@@ -20,7 +21,6 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
       <GridItem bg='gray.50'>
         <Box
           as='main'
-          gridArea='main'
           w='100%'
           color='gray.800'
           pt={pt}
@@ -32,10 +32,8 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
           {children}
         </Box>
       </GridItem>
-      <GridItem bg='white'>
-        <Box as='aside' gridArea='right'>
-          hey
-        </Box>
+      <GridItem>
+        <RightSidebar />
       </GridItem>
     </Grid>
   )

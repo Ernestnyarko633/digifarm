@@ -38,7 +38,6 @@ const Sidebar = ({ currentPath }) => {
   return (
     <Box
       as='aside'
-      gridArea='aside'
       pos='fixed'
       bottom={0}
       left={0}

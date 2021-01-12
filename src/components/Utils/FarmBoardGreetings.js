@@ -1,5 +1,5 @@
-import React from 'react'
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import React from 'react'
 import IllustrationImage from '../../assets/images/home/illustration.png'
 
 const FarmBoardGreetings = () => {
@@ -10,8 +10,9 @@ const FarmBoardGreetings = () => {
         <Heading as='h3' fontSize={{ md: '4xl' }} mb={5}>
           Welcome to your farm booard
         </Heading>
-        <Text letterSpacing={3}>
-          Here's where you view, share and like all <br /> the news from your farm(s)
+        <Text fontFamily='body'>
+          Here's where you view, share and like all <br /> the news from your
+          farm(s)
         </Text>
       </Box>
     </Box>
