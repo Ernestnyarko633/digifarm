@@ -43,7 +43,7 @@ const Security = () => {
   return (
     <Container maxW='4xl'>
       <Headings title='Security' />
-
+      <Divider orientation='horizontal' my={12} />
       <Box>
         <Box>
           <Text>Change your password</Text>

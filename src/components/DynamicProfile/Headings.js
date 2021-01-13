@@ -1,4 +1,4 @@
-import { Box, Heading, Flex, Text, Button, Divider } from '@chakra-ui/react'
+import { Box, Heading, Flex, Text, Button } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -32,7 +32,6 @@ const Headings = ({ title }) => {
           </Flex>
         </Flex>
       </Box>
-      <Divider orientation='horizontal' my={12} />
     </Box>
   )
 }

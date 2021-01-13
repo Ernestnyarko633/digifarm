@@ -18,6 +18,7 @@ const PrivacyAndData = () => {
   return (
     <Container maxW='4xl'>
       <Headings title='Privacy &amp; Data' />
+      <Divider orientation='horizontal' my={12} />
       <Box>
         <Box>
           <Heading as='h5' fontSize={{ md: '2xl' }} fontFamily='display' mb={2}>

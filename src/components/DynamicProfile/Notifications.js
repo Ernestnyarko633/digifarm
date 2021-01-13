@@ -5,6 +5,7 @@ const Notifications = () => {
   return (
     <Container maxW='4xl'>
       <Headings title='Notifications' />
+      <Divider orientation='horizontal' my={12} />
       <Box p={10}>
         <Flex justify='space-between'>
           <Box>
