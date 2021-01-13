@@ -40,7 +40,7 @@ const FarmBoardContent = () => {
     },
     {
       avatarSrc: SoyaBeanImg,
-      datePosted: '3m ago',
+      datePosted: '5m ago',
       likeCount: 20,
       headingText: 'INVOICE DEPOSIT',
       btntitle: 'Payout',
@@ -50,78 +50,7 @@ const FarmBoardContent = () => {
       farmLocation: 'Agyata, Eastern Region',
       headingIcon: AiOutlineCreditCard,
       postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
-    },
-    {
-      avatarSrc: SoyaBeanImg,
-      datePosted: '3m ago',
-      likeCount: 20,
-      headingText: 'INVOICE DEPOSIT',
-      btntitle: 'Payout',
-      buttonWidth: '120px',
-      buttonColor: '#fff',
-      whoseFarm: "John's Farm",
-      farmLocation: 'Agyata, Eastern Region',
-      headingIcon: AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
-    },
-    {
-      avatarSrc: SoyaBeanImg,
-      datePosted: '3m ago',
-      likeCount: 20,
-      headingText: 'INVOICE DEPOSIT',
-      btntitle: 'Payout',
-      buttonWidth: '120px',
-      buttonColor: '#fff',
-      whoseFarm: "John's Farm",
-      farmLocation: 'Agyata, Eastern Region',
-      headingIcon: AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
-    },
-    {
-      avatarSrc: SoyaBeanImg,
-      datePosted: '3m ago',
-      likeCount: 20,
-      headingText: 'INVOICE DEPOSIT',
-      btntitle: 'Payout',
-      buttonWidth: '120px',
-      buttonColor: '#fff',
-      whoseFarm: "John's Farm",
-      farmLocation: 'Agyata, Eastern Region',
-      headingIcon: AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
-    },
-    {
-      avatarSrc: SoyaBeanImg,
-      datePosted: '3m ago',
-      likeCount: 20,
-      headingText: 'INVOICE DEPOSIT',
-      btntitle: 'Payout',
-      buttonWidth: '120px',
-      buttonColor: '#fff',
-      whoseFarm: "John's Farm",
-      farmLocation: 'Agyata, Eastern Region',
-
-      headingIcon: AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
-    },
-    {
-      avatarSrc: SoyaBeanImg,
-      datePosted: '3m ago',
-      likeCount: 20,
-      headingText: 'INVOICE DEPOSIT',
-      btntitle: 'Payout',
-      buttonWidth: '120px',
-      buttonColor: '#fff',
-      whoseFarm: "John's Farm",
-      farmLocation: 'Agyata, Eastern Region',
-      headingIcon: AiOutlineCreditCard,
-      postContentText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
+        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week.'
     }
   ]
 
