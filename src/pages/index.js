@@ -7,7 +7,6 @@ const Marketplace = React.lazy(() => import('./market-place'))
 const FarmWallet = React.lazy(() => import('./farm-wallet'))
 const FarmBoard = React.lazy(() => import('./farm-board'))
 const Dashboard = React.lazy(() => import('./dashboard'))
-const Warehouse = React.lazy(() => import('./warehouse'))
 const NotFound = React.lazy(() => import('./not-found'))
 const Document = React.lazy(() => import('./document'))
 const Profile = React.lazy(() => import('./profile'))
@@ -26,7 +25,6 @@ const Pages = {
   Forum,
   NotFound,
   Document,
-  Warehouse,
   Profile
 }
 
