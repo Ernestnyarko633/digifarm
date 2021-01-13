@@ -12,7 +12,7 @@ import SoyaBeanImg from 'assets/images/soya.png'
 const FarmBoardContent = () => {
   const farms = [
     {
-      avatarSrc: SoyaBeanImg,
+      avatar: SoyaBeanImg,
       datePosted: '3m ago',
       likeCount: 20,
       postImage: Bitmap,
