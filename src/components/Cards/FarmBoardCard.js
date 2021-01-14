@@ -18,11 +18,19 @@ import {
   Grid
 } from '@chakra-ui/react'
 import { MdFavoriteBorder } from 'react-icons/md'
-import { AiFillTwitterCircle, AiFillFacebook, AiFillLinkedin } from 'react-icons/ai'
+import {
+  AiFillTwitterCircle,
+  AiFillFacebook,
+  AiFillLinkedin
+} from 'react-icons/ai'
 import { RiShareForwardLine } from 'react-icons/ri'
 import Button from 'components/Button'
 import { Fragment } from 'react'
-import { TwitterShareButton, LinkedinShareButton, FacebookShareButton } from 'react-share'
+import {
+  TwitterShareButton,
+  LinkedinShareButton,
+  FacebookShareButton
+} from 'react-share'
 
 const FarmBoardCard = ({
   w,
@@ -113,12 +121,23 @@ const FarmBoardCard = ({
               </Box>
               <Divider borderColor='gray.300' w />
               <Box p={5}>
-                <Flex pr={25} pl={25} direction='column' align='center' w='100%'>
+                <Flex
+                  pr={25}
+                  pl={25}
+                  direction='column'
+                  align='center'
+                  w='100%'
+                >
                   <Box pl={10}>
                     <Flex justify='space-between' w='70%'>
                       <Flex direction='row'>
                         {headingImage ? (
-                          <Image src={headingImage} alt={headingImageAlt} boxSize={5} mr={5} />
+                          <Image
+                            src={headingImage}
+                            alt={headingImageAlt}
+                            boxSize={5}
+                            mr={5}
+                          />
                         ) : (
                           <Icon as={headingIcon} mr={5} boxSize={5} />
                         )}
@@ -176,7 +195,12 @@ const FarmBoardCard = ({
               ) : null}
               <Box>
                 <Box p={15}>
-                  <Flex direction='row' align='center' justify='flex-start' pl={10}>
+                  <Flex
+                    direction='row'
+                    align='center'
+                    justify='flex-start'
+                    pl={10}
+                  >
                     <Flex align='center' justify='center' mr={2}>
                       <Icon boxSize={8} as={MdFavoriteBorder} mr={2} />
                       <Text fontSize='xs' color='gray.500'>
@@ -184,7 +208,11 @@ const FarmBoardCard = ({
                       </Text>
                     </Flex>
                     {/*  */}
-                    <Icon boxSize={8} as={RiShareForwardLine} onClick={onOpen} />
+                    <Icon
+                      boxSize={8}
+                      as={RiShareForwardLine}
+                      onClick={onOpen}
+                    />
                     <Modal
                       isOpen={isOpen}
                       onClose={onClose}
@@ -199,13 +227,20 @@ const FarmBoardCard = ({
                       <ModalContent>
                         <Flex mt={2} mb={3}>
                           <Box ml={10}>
-                            <Heading as='h4' fontWeight='bold' fontSize={{ md: 'xl' }}>
+                            <Heading
+                              as='h4'
+                              fontWeight='bold'
+                              fontSize={{ md: 'xl' }}
+                            >
                               Share
                             </Heading>
                           </Box>
                           <ModalCloseButton />
                         </Flex>
-                        <Divider orientation='horizontal' borderColor='gray.400' />
+                        <Divider
+                          orientation='horizontal'
+                          borderColor='gray.400'
+                        />
                         <ModalBody>
                           <Flex direction='row' justify='center' align='center'>
                             <Box

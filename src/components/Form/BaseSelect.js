@@ -20,7 +20,8 @@ const BaseSelect = ({
   width
 }) => {
   const isArrayOfObj = !!(valueKey && labelKey)
-  const getValue = value => Object.keys(value).map(key => ({ id: value[key], label: value[key] }))
+  const getValue = value =>
+    Object.keys(value).map(key => ({ id: value[key], label: value[key] }))
 
   const getOptions = options => {
     if (isArrayOfObj) {
@@ -56,7 +57,13 @@ const BaseSelect = ({
 
   return (
     <Box bg='cf.100' pos='relative' borderBottom='2px solid #3c9130'>
-      <FormLabel pos='absolute' top={-1} left={3} fontSize='xs' color='gray.600'>
+      <FormLabel
+        pos='absolute'
+        top={-1}
+        left={3}
+        fontSize='xs'
+        color='gray.600'
+      >
         {title}
       </FormLabel>
       <Select

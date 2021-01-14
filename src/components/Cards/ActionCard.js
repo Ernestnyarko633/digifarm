@@ -17,7 +17,11 @@ const ActionCard = ({ title, text, btnText }) => {
         <Heading as='h6' size='md' fontFamily='display' mb={2}>
           {title}
         </Heading>
-        <Text lineHeight='normal' fontSize='sm' dangerouslySetInnerHTML={{ __html: text }} />
+        <Text
+          lineHeight='normal'
+          fontSize='sm'
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
       </Box>
 
       <Box>

@@ -1,6 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Divider, Flex, Heading, Icon, Image, Progress, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Icon,
+  Image,
+  Progress,
+  Text
+} from '@chakra-ui/react'
 import { BsInfoCircleFill } from 'react-icons/bs'
 import { MdLocationOn } from 'react-icons/md'
 
@@ -11,7 +20,8 @@ const AboutFarm = ({ farm }) => (
     <Box>
       <Box>
         <Heading as='h5' size='md'>
-          {farm?.cropVariety?.crop?.name}({farm?.cropVariety?.name}) #{farm?.name}
+          {farm?.cropVariety?.crop?.name}({farm?.cropVariety?.name}) #
+          {farm?.name}
         </Heading>
         <Text fontSize='xs'>
           <Icon as={MdLocationOn} color='gray.400' /> {farm?.location?.name},{' '}
@@ -64,9 +74,19 @@ const AboutFarm = ({ farm }) => (
         />
         <Flex align='center' justify='center' fontSize='sm'>
           <Text>{farm?.acreage} Acres left</Text>
-          <Divider orientation='vertical' height={4} mx={4} borderColor='gray.400' />
+          <Divider
+            orientation='vertical'
+            height={4}
+            mx={4}
+            borderColor='gray.400'
+          />
           <Text>{farm?.acreage} Acres available</Text>
-          <Divider orientation='vertical' height={4} mx={4} borderColor='gray.400' />
+          <Divider
+            orientation='vertical'
+            height={4}
+            mx={4}
+            borderColor='gray.400'
+          />
           <Text>{farm?.acreageSold} Acres bought</Text>
         </Flex>
       </Box>

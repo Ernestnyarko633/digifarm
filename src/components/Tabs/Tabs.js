@@ -30,7 +30,12 @@ const Tabs = ({
           const { label } = child.props
 
           return (
-            <Tab activeTab={activeTab} key={label} label={label} onClick={handleClickTabItem} />
+            <Tab
+              activeTab={activeTab}
+              key={label}
+              label={label}
+              onClick={handleClickTabItem}
+            />
           )
         })}
       </Box>

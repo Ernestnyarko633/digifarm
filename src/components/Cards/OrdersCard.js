@@ -13,7 +13,11 @@ const OrdersCard = () => {
           Here’s how your farm(s) are doing
         </Heading>
         <Grid templateColumns={{ md: '70% 20%' }} gap={{ md: '10%' }}>
-          <Flex align='center' borderBottomWidth={1} borderBottomColor='gray.200'>
+          <Flex
+            align='center'
+            borderBottomWidth={1}
+            borderBottomColor='gray.200'
+          >
             <Box
               color={state === 'current' ? 'cf.400' : 'gray.700'}
               onClick={() => setState('current')}

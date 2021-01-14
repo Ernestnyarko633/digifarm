@@ -11,7 +11,8 @@ const HomeEmptyState = () => (
         </Heading>
         <Text fontSize='sm'>
           With over 7 crops farmed and over 2,000 trusted
-          <br /> digital farmers, we continue to change the world together with you
+          <br /> digital farmers, we continue to change the world together with
+          you
         </Text>
       </Box>
 

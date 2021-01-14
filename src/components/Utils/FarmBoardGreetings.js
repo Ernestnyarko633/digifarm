@@ -5,13 +5,19 @@ import IllustrationImage from '../../assets/images/home/illustration.png'
 const Greetings = () => {
   return (
     <Box pos='relative'>
-      <Image src={IllustrationImage} h={{ md: 115 }} w='100%' objectFit='cover' />
+      <Image
+        src={IllustrationImage}
+        h={{ md: 115 }}
+        w='100%'
+        objectFit='cover'
+      />
       <Box pos='absolute' top={{ md: 40 }} left={{ md: 16 }}>
         <Heading as='h3' fontSize={{ md: '4xl' }} mb={5}>
           Welcome to your farm booard
         </Heading>
         <Text letterSpacing={3}>
-          Here's where you view, share and like all <br /> the news from your farm(s)
+          Here's where you view, share and like all <br /> the news from your
+          farm(s)
         </Text>
       </Box>
     </Box>

@@ -5,10 +5,16 @@ import QueryString from 'query-string'
 import { replaceURI } from 'helpers/misc'
 import FetchCard from 'components/FetchCard'
 import useAuth from 'context/auth'
+import useApi from 'context/api'
 
-const Auth = ({ history: { replace }, match: { params }, location: { search } }) => {
+const Auth = ({
+  history: { replace },
+  match: { params },
+  location: { search }
+}) => {
   document.title = 'Authenticating...'
-  const { getUser, store, isAuthenticated } = useAuth()
+  const { getUser } = useApi()
+  const { store, isAuthenticated } = useAuth()
   const [reload, setReload] = useState(0)
   const [error, setError] = useState(false)
 

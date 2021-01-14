@@ -35,7 +35,10 @@ const Individual = () => {
         px={{ md: 20 }}
       >
         <Box h={{ md: 12 }}>
-          <Image h='100%' src={require('../../assets/images/logo.png').default} />
+          <Image
+            h='100%'
+            src={require('../../assets/images/logo.png').default}
+          />
         </Box>
       </Flex>
 
