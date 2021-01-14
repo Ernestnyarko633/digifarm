@@ -30,7 +30,7 @@ node {
             timeout(time: 1, unit: 'HOURS'){
                 def qualityGate = waitForQualityGate()
                 if (qualityGate.status != 'OK'){
-                    error "Pipeline aborted due to quality gate failure: ${qualityGate.status}"
+                    error "Digital Farmer: Pipeline aborted due to quality gate failure: ${qualityGate.status}"
                 }
             }
         }
