@@ -18,38 +18,43 @@ const FarmBoardCard = ({
   actionText,
   actionBtnTitle
 }) => {
+  const Detail = () => {
+    return (
+      <Flex
+        justify='space-between'
+        align='center'
+        borderBottomWidth={1}
+        borderBottomColor='gray.200'
+        pb={5}
+      >
+        <Flex align='center'>
+          <Avatar size='lg' src={avatar} />
+          <Box ml={4}>
+            <Heading as='h4' fontSize={{ md: '2xl' }} fontWeight={700}>
+              {firstName}’s Farm
+            </Heading>
+            <Text color='gray.600'>{location}</Text>
+          </Box>
+          <Box ml={12}>
+            <Tag bg='cf.200' color='cf.400' rounded='xl' px={6} fontWeight='bold'>
+              {level}
+            </Tag>
+          </Box>
+        </Flex>
+
+        <Box>
+          <Text color='gray.500'>{timestamp}</Text>
+        </Box>
+      </Flex>
+    )
+  }
+
   return (
     <Box rounded='xl' w='100%' bg='white' mb={{ md: 10 }} shadow='sm'>
       {status === 'farm' && (
         <>
           <Box py={{ md: status === 'news' || status === 'action' ? 8 : 10 }} px={{ md: 16 }}>
-            <Flex
-              justify='space-between'
-              align='center'
-              borderBottomWidth={1}
-              borderBottomColor='gray.200'
-              pb={5}
-            >
-              <Flex align='center'>
-                <Avatar size='lg' src={avatar} />
-                <Box ml={4}>
-                  <Heading as='h4' fontSize={{ md: '2xl' }} fontWeight={700}>
-                    {firstName}’s Farm
-                  </Heading>
-                  <Text color='gray.600'>{location}</Text>
-                </Box>
-                <Box ml={12}>
-                  <Tag bg='cf.200' color='cf.400' rounded='xl' px={6} fontWeight='bold'>
-                    {level}
-                  </Tag>
-                </Box>
-              </Flex>
-
-              <Box>
-                <Text color='gray.500'>{timestamp}</Text>
-              </Box>
-            </Flex>
-
+            <Detail />
             <Box mt={6}>
               <Text textTransform='uppercase' fontWeight='bold'>
                 <Icon as={Flower} /> {actionTitle}
@@ -68,33 +73,7 @@ const FarmBoardCard = ({
 
       {status === 'news' && (
         <Box py={{ md: status === 'news' || status === 'action' ? 8 : 10 }} px={{ md: 16 }}>
-          <Flex
-            justify='space-between'
-            align='center'
-            borderBottomWidth={1}
-            borderBottomColor='gray.200'
-            pb={5}
-          >
-            <Flex align='center'>
-              <Avatar size='lg' src={avatar} />
-              <Box ml={4}>
-                <Heading as='h4' fontSize={{ md: '2xl' }} fontWeight={700}>
-                  {firstName}’s Farm
-                </Heading>
-                <Text color='gray.600'>{location}</Text>
-              </Box>
-              <Box ml={12}>
-                <Tag bg='red.100' color='red.400' rounded='xl' px={6} fontWeight='bold'>
-                  {level}
-                </Tag>
-              </Box>
-            </Flex>
-
-            <Box>
-              <Text color='gray.500'>{timestamp}</Text>
-            </Box>
-          </Flex>
-
+          <Detail />
           <Box mt={6}>
             <Flex>
               <Text textTransform='uppercase' fontWeight='bold'>
@@ -123,32 +102,7 @@ const FarmBoardCard = ({
 
       {status === 'action' && (
         <Box py={{ md: status === 'news' || status === 'action' ? 8 : 10 }} px={{ md: 16 }}>
-          <Flex
-            justify='space-between'
-            align='center'
-            borderBottomWidth={1}
-            borderBottomColor='gray.200'
-            pb={5}
-          >
-            <Flex align='center'>
-              <Avatar size='lg' src={avatar} />
-              <Box ml={4}>
-                <Heading as='h4' fontSize={{ md: '2xl' }} fontWeight={700}>
-                  {firstName}’s Farm
-                </Heading>
-                <Text color='gray.600'>{location}</Text>
-              </Box>
-              <Box ml={12}>
-                <Tag bg='cf.200' color='cf.400' rounded='xl' px={6} fontWeight='bold'>
-                  {level}
-                </Tag>
-              </Box>
-            </Flex>
-
-            <Box>
-              <Text color='gray.500'>{timestamp}</Text>
-            </Box>
-          </Flex>
+          <Detail />
 
           <Box mt={6}>
             <Flex>
