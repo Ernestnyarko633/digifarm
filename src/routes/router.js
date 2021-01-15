@@ -18,6 +18,7 @@ const Router = () => (
       <PrivateRoute path='/document' component={Pages.Document} />
       <PrivateRoute path='/farms' component={Pages.FarmBoard} />
       <PrivateRoute path='/notfound' component={Pages.NotFound} />
+      <PrivateRoute path='/profile' component={Pages.Profile} />
       <Redirect from='*' to='/404' />
     </Switch>
   </React.Suspense>
