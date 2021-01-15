@@ -135,9 +135,9 @@ const Sidebar = ({ currentPath }) => {
                       bg: 'cf.300'
                     }}
                   >
-                    <Icon as={item.icon} boxSize={item.size} mr={1} />
+                    <Icon as={element.icon} boxSize={element.size} mr={1} />
                     <Text fontSize='sm' textAlign='center' mt={1}>
-                      {item.name}
+                      {element.name}
                     </Text>
                   </Link>
                 ))}
