@@ -60,4 +60,4 @@ class HttpFacade {
   }
 }
 
-export default HttpFacade
+export default new HttpFacade()

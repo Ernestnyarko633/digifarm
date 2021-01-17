@@ -1,6 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Divider, Heading, Flex, ListItem, List, Avatar, Text, Image } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Heading,
+  Flex,
+  ListItem,
+  List,
+  Avatar,
+  Text,
+  Image
+} from '@chakra-ui/react'
 
 const WarehouseCard = ({
   name,

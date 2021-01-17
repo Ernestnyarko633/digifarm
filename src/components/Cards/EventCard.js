@@ -11,7 +11,10 @@ const EventCard = () => {
       color='white'
     >
       <Flex align='center'>
-        <Avatar size='xl' src={require('../../assets/images/pepper.png').default} />
+        <Avatar
+          size='xl'
+          src={require('../../assets/images/pepper.png').default}
+        />
         <Box ml={2}>
           <Heading as='h5' fontSize={{ md: 'xl' }}>
             Soy bean Farm

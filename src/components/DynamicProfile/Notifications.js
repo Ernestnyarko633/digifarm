@@ -1,13 +1,4 @@
-import {
-  Box,
-  Heading,
-  Flex,
-  Text,
-  Button,
-  Divider,
-  Container,
-  Switch
-} from '@chakra-ui/react'
+import { Box, Flex, Text, Divider, Container, Switch } from '@chakra-ui/react'
 import React from 'react'
 import Headings from './Headings'
 const Notifications = () => {

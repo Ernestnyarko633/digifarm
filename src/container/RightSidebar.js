@@ -29,7 +29,8 @@ const RightSidebar = () => {
       </Heading>
 
       <Text fontSize='sm' color='gray.500' mt={3}>
-        Growing conditions are currently perfect. Some irriagation work is being performed
+        Growing conditions are currently perfect. Some irriagation work is being
+        performed
       </Text>
 
       <Box mt={{ md: 4 }}>

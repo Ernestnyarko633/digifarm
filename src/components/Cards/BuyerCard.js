@@ -8,7 +8,8 @@ import {
   Flex,
   Avatar,
   Text,
-  Image
+  Image,
+  Spacer
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
