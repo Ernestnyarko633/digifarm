@@ -1,11 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
-import { replaceURI } from '../helpers/misc'
+import { Route, Redirect } from 'react-router-dom'
+
 import useAuth from 'context/auth'
 
+import { replaceURI } from 'helpers/misc'
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, session } = useAuth()
+
+  React.useEffect(() => {
+    if (!session) {
+      return <Redirect to='/logout' />
+    }
+  }, [session])
 
   const getPage = props => {
     if (isAuthenticated()) {
@@ -13,6 +21,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     }
     return replaceURI('AUTH', "/redirects?from='DIGITAL_FARMER'")
   }
+
   return <Route {...rest} render={getPage} />
 }
 

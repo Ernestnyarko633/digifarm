@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Box, Heading } from '@chakra-ui/react'
 
-import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
-
 import useComponent from 'context/component'
+import useApi from 'context/api'
+
+import useFetch from 'hooks/useFetch'
 
 import Tabs from 'components/Tabs/Tabs'
 import FetchCard from 'components/FetchCard'

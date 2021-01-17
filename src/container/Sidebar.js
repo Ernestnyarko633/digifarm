@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 import {
@@ -40,7 +39,7 @@ const links = [
   }
 ]
 
-const Sidebar = ({ currentPath }) => {
+const Sidebar = () => {
   const [toggleMenus, setToggleMenus] = React.useState(true)
 
   return (
@@ -144,38 +143,39 @@ const Sidebar = ({ currentPath }) => {
                 ))}
               </Box>
             )}
-            <Flex
-              align='center'
+            <Link
+              d='flex'
+              alignItems='center'
+              pr={{ md: 3 }}
+              pl={{ md: 4 }}
               py={{ md: 2 }}
               rounded='lg'
+              as={NavLink}
+              to='/logout'
+              cursor='pointer'
+              className='active-link'
+              transition='background-color .2s ease-in'
               _hover={{
                 textDecor: 'none',
                 color: 'gray.700',
                 bg: 'gray.50',
                 rounded: 'md'
               }}
-              pl={{ md: 4 }}
-              pr={{ md: 3 }}
-              color='gray.600'
-              as='button'
-              role='button'
-              aria-label='Logout Button'
-              transition='background-color .2s ease-in'
+              _activeLink={{
+                color: 'cf.400',
+                bg: 'cf.300'
+              }}
             >
-              <Icon as={logout} boxSize={5} mr={2} />
+              <Icon as={logout} boxSize={5} mr={1} />
               <Text fontSize='sm' textAlign='center' mt={1}>
                 Logout
               </Text>
-            </Flex>
+            </Link>
           </Flex>
         ))}
       </Text>
     </Box>
   )
-}
-
-Sidebar.propTypes = {
-  currentPath: PropTypes.string.isRequired
 }
 
 export default Sidebar

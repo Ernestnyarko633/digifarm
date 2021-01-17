@@ -1,9 +1,8 @@
 import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import getConfig from '../utils/configs'
-import HttpFacade from '../utils/httpFacade'
-import { replaceURI } from 'helpers/misc'
+import getConfig from 'utils/configs'
+import HttpFacade from 'utils/httpFacade'
 
 const ApiContext = createContext()
 
@@ -23,16 +22,14 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const logout = async (clearRemote = false) => {
-    try {
-      clearRemote && (await http.get({ url: `${AUTH_API}/user/logout` }))
-    } catch (error) {
-      logout()
-    } finally {
-      replaceURI('AUTH', '/redirects?from=BUYER&off=true')
-      window.sessionStorage.clear()
-    }
+  const changePassword = async payload => {
+    return await http.patch({
+      url: `${AUTH_API}/users`,
+      body: JSON.stringify(payload)
+    })
   }
+
+  const logout = async () => await http.post({ url: `${AUTH_API}/logout` })
 
   const getCropCategories = async () => {
     return await http.get({ url: `${FMS_API}/crop-categories` })
@@ -69,6 +66,7 @@ export const ApiContextProvider = ({ children }) => {
         getUser,
         getFarms,
         patchUser,
+        changePassword,
         initiatePayment,
         getCropCategories,
         deleteBankTransfer,

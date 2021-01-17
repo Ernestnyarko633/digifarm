@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import QueryString from 'query-string'
 
 import { replaceURI } from 'helpers/misc'
+
+import Splash from 'components/Loading/Splash'
 import FetchCard from 'components/FetchCard'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
@@ -44,7 +46,7 @@ const Auth = ({
               store({ user })
 
               setTimeout(() => {
-                replace(JSON.parse(to || null) || '/dashboard')
+                replace(JSON.parse(to) || '/dashboard')
               }, 500)
             } catch (error) {
               if (error?.response) {
@@ -77,7 +79,7 @@ const Auth = ({
       error={error}
     />
   ) : (
-    <div className='loading-text'>Authenticating</div>
+    <Splash text={`Welcome Farmer ${isAuthenticated().user?.firstName}`} />
   )
 }
 

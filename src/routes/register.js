@@ -1,28 +1,20 @@
-import React, { useEffect } from 'react'
-import { Text } from '@chakra-ui/react'
+import React from 'react'
 import { Switch, Redirect, Route } from 'react-router-dom'
 
-import useAuth from 'context/auth'
-import useApi from 'context/api'
+import Splash from 'components/Loading/Splash'
 
 import Pages from 'pages'
 
 import PrivateRoute from './private'
 
 const Router = () => {
-  const { session } = useAuth()
-  const { logout } = useApi()
-
-  useEffect(() => {
-    if (!session) return logout(true)
-  }, [session, logout])
-
   return (
-    <React.Suspense fallback={<Text>Loading....</Text>}>
+    <React.Suspense fallback={<Splash />}>
       <Switch>
         <Redirect exact from='/' to='/auth' />
         <Route path='/auth/:token' component={Pages.Auth} />
         <Route path='/auth' component={Pages.Auth} />
+        <PrivateRoute path='/logout' component={Pages.Logout} />
         <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
         <PrivateRoute exact path='/start-farm' component={Pages.StartFarm} />
         <PrivateRoute

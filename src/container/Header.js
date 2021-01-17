@@ -20,7 +20,8 @@ const menuLinks = [
 const MotionBox = motion.custom(Box)
 
 const Header = () => {
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated } = useAuth()
+
   const { user } = isAuthenticated()
 
   return (
@@ -125,7 +126,7 @@ const Header = () => {
                         bg={active && 'cf.400'}
                         color={active && 'white'}
                         d='block'
-                        onClick={logout}
+                        href='/logout'
                       >
                         <Icon as={HiOutlineLogout} boxSize={4} mr={2} /> Logout
                       </Link>

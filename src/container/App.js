@@ -4,10 +4,10 @@ import { BrowserRouter } from 'react-router-dom'
 import { ReactQueryDevtools } from 'react-query-devtools'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 
+import { ApiContextProvider } from 'context/api'
 import { ComponentContextProvider } from 'context/component'
 import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
-import { ApiContextProvider } from 'context/api'
 
 import Router from 'routes/register'
 

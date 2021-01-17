@@ -16,18 +16,16 @@ const CropSelectionCard = ({ acres, title, onClick }) => (
     onClick={onClick}
     aria-label='crop card button'
   >
-    {acres && (
-      <Text color='red.600' fontSize='xs'>
-        {acres} acres left
-      </Text>
-    )}
+    <Text color='red.600' fontSize='xs'>
+      {acres} acres left
+    </Text>
     <Text>{title}</Text>
   </Flex>
 )
 
 CropSelectionCard.propTypes = {
   title: PropTypes.string,
-  acres: PropTypes.string,
+  acres: PropTypes.number,
   onClick: PropTypes.func
 }
 

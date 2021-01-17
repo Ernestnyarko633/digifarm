@@ -46,28 +46,23 @@ const useFetch = (key, func, reload, ...rest) => {
           }
         }
       } catch (error) {
-        if (mounted) {
-          if (error?.response) {
-            const res = error.response
-            if (res.status === 400) {
-              dispatch({ type: 'error', payload: res.data.message })
-            } else if (res.status === 401 || res.status === 403) {
-              setSession(false)
-            } else {
-              dispatch({ type: 'error', payload: error.message })
-            }
-          } else if (error?.message) {
-            dispatch({ type: 'error', payload: error.message })
+        if (error) {
+          if (error.status === 400) {
+            dispatch({ type: 'error', payload: error.data.message })
+          } else if (error.status === 401 || error.status === 403) {
+            setSession(false)
           } else {
-            dispatch({ type: 'error', payload: 'Network connection error' })
+            dispatch({ type: 'error', payload: error.message })
           }
+        } else {
+          dispatch({ type: 'error', payload: 'Network connection error' })
         }
       }
     })()
 
     return () => (mounted = false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [func, reload, setSession])
+  }, [key, func, reload, setSession])
 
   return state
 }

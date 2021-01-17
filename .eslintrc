@@ -37,6 +37,7 @@
       "error",
       "never"
     ],
+    "no-extra-semi": "off",
     "react/display-name": "off",
     "react/jsx-first-prop-new-line": "off",
     "react/jsx-closing-bracket-location": "off",

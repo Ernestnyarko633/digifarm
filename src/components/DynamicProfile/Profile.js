@@ -13,11 +13,16 @@ import {
   Input
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
+
 import { FormInput, FormTextArea } from 'components/Form'
+
 import useAuth from 'context/auth'
+import useApi from 'context/api'
 
 const Profile = () => {
-  const { isAuthenticated, patchUser } = useAuth()
+  const { isAuthenticated } = useAuth()
+  const { patchUser } = useApi()
+
   const { user } = isAuthenticated()
   const toast = useToast()
 

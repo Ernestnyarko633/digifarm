@@ -13,11 +13,13 @@ import {
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import { FormInput } from 'components/Form'
-import useAuth from 'context/auth'
+
+import useApi from 'context/api'
+
 import { ChangePassword } from 'helpers/validation'
 
 const Security = () => {
-  const { changePassword } = useAuth()
+  const { changePassword } = useApi()
   const toast = useToast()
 
   const onSubmit = async (

@@ -1,11 +1,18 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
-import CropCategorySelection from 'components/Cards/CropCategorySelection'
 import React from 'react'
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { useHistory } from 'react-router-dom'
 
-const HomeEmptyState = () => (
-  <Box>
+import useComponent from 'context/component'
+
+import FarmDetails from 'components/StartFarmProcess/CropSelection/FarmDetails'
+
+const HomeEmptyState = () => {
+  const { step, handleNext } = useComponent()
+  const history = useHistory()
+
+  return (
     <Box textAlign='center' px={{ md: 16 }}>
-      <Box py={{ md: 20 }}>
+      <Box py={{ md: 16 }}>
         <Heading as='h4' fontSize={{ md: 'xl' }}>
           New and exciting crops to start with
         </Heading>
@@ -20,9 +27,15 @@ const HomeEmptyState = () => (
         <Text fontSize={{ md: '2xl' }}>Choose a crop to start farming</Text>
       </Flex>
 
-      <CropCategorySelection />
+      <FarmDetails
+        handleNext={() => {
+          handleNext()
+          !step && history.push('/start-farm/individual')
+        }}
+        query={{}}
+      />
     </Box>
-  </Box>
-)
+  )
+}
 
 export default HomeEmptyState
