@@ -1,6 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Divider, Flex, Heading, Icon, Image, Progress, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Icon,
+  Image,
+  Progress,
+  Text
+} from '@chakra-ui/react'
 import { BsInfoCircleFill } from 'react-icons/bs'
 import { MdLocationOn } from 'react-icons/md'
 
@@ -11,11 +20,11 @@ const AboutFarm = ({ farm }) => (
     <Box>
       <Box>
         <Heading as='h5' size='md'>
-          {farm?.cropVariety?.crop?.name}({farm?.cropVariety?.name}) #{farm?.name}
+          {farm.cropVariety?.crop?.name}({farm.cropVariety?.name}) #{farm.name}
         </Heading>
         <Text fontSize='xs'>
-          <Icon as={MdLocationOn} color='gray.400' /> {farm?.location?.name},{' '}
-          {farm?.location?.state} <Icon as={BsInfoCircleFill} color='cf.400' />
+          <Icon as={MdLocationOn} color='gray.400' /> {farm.location?.name},{' '}
+          {farm.location?.state} <Icon as={BsInfoCircleFill} color='cf.400' />
         </Text>
         <Divider orientation='horizontal' borderColor='gray.300' my={6} />
       </Box>
@@ -26,7 +35,7 @@ const AboutFarm = ({ farm }) => (
           w='100%'
           objectFit='cover'
           rounded='md'
-          src={farm?.cropVariety?.imageUrl || farm?.cropVariety?.crop?.imageUrl}
+          src={farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl}
           alt='crop'
         />
       </Box>
@@ -48,8 +57,8 @@ const AboutFarm = ({ farm }) => (
         mt={4}
       >
         <Flex align='center' justify='space-between' fontSize='sm'>
-          <Text>Farm starts: {getformattedDate(farm?.startDate)} </Text>
-          <Text>Farm duration: {farm?.duration} months </Text>
+          <Text>Farm starts: {getformattedDate(farm.startDate)} </Text>
+          <Text>Farm duration: {farm.duration} months </Text>
         </Flex>
         <Divider orientation='horizontal' mt={4} />
         <Progress
@@ -63,18 +72,28 @@ const AboutFarm = ({ farm }) => (
           my={{ md: 8 }}
         />
         <Flex align='center' justify='center' fontSize='sm'>
-          <Text>{farm?.acreage} Acres left</Text>
-          <Divider orientation='vertical' height={4} mx={4} borderColor='gray.400' />
-          <Text>{farm?.acreage} Acres available</Text>
-          <Divider orientation='vertical' height={4} mx={4} borderColor='gray.400' />
-          <Text>{farm?.acreageSold} Acres bought</Text>
+          <Text>{farm.acreage} Acres left</Text>
+          <Divider
+            orientation='vertical'
+            height={4}
+            mx={4}
+            borderColor='gray.400'
+          />
+          <Text>{farm.acreage} Acres available</Text>
+          <Divider
+            orientation='vertical'
+            height={4}
+            mx={4}
+            borderColor='gray.400'
+          />
+          <Text>{farm.acreageSold} Acres bought</Text>
         </Flex>
       </Box>
     </Box>
 
     <Box textAlign='left'>
-      <Text>{farm?.cropVariety?.description}</Text>
-      <Text>{farm?.cropVariety?.crop?.description}</Text>
+      <Text>{farm.cropVariety?.description}</Text>
+      <Text>{farm.cropVariety?.crop?.description}</Text>
     </Box>
   </Box>
 )

@@ -15,7 +15,13 @@ const BasePhone = ({
   touched,
   placeholder
 }) => (
-  <FormControl bg='cf.300' pos='relative' pt={2} borderBottomWidth={1} borderBottomColor='cf.400'>
+  <FormControl
+    bg='cf.300'
+    pos='relative'
+    pt={2}
+    borderBottomWidth={1}
+    borderBottomColor='cf.400'
+  >
     <FormLabel fontSize='xs' pos='absolute' left={3} top={-1} color='gray.600'>
       Phone number
     </FormLabel>

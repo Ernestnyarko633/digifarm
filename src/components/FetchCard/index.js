@@ -7,9 +7,16 @@ import Loader from 'react-loader-spinner'
 const FetchCard = ({ loading, error, reload, ...rest }) => {
   return (
     <Flex {...rest}>
-      <Flex textAlign='center' align='center' justify='center' direction='column'>
+      <Flex
+        textAlign='center'
+        align='center'
+        justify='center'
+        direction='column'
+      >
         <>
-          {loading && <Loader type='Oval' color='#417505' height={40} width={40} />}
+          {loading && (
+            <Loader type='Oval' color='#417505' height={40} width={40} />
+          )}
           {error && (
             <>
               <Text fontSize='md' ml={2}>

@@ -58,7 +58,11 @@ const EventsCard = ({
                   Agyata, Eastern Region
                 </Text>
 
-                <Button borderColor='#fff' borderWidth={3} btntitle='Check it out' />
+                <Button
+                  borderColor='#fff'
+                  borderWidth={3}
+                  btntitle='Check it out'
+                />
               </Box>
             </Flex>
           </Box>

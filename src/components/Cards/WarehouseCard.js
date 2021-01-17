@@ -2,7 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Divider, Heading, Flex, ListItem, List, Avatar, Text, Image } from '@chakra-ui/react'
 
-const WarehouseCard = ({ name, location, image, weight, bags, quantity, condition, mr, ml }) => (
+const WarehouseCard = ({
+  name,
+  location,
+  image,
+  weight,
+  bags,
+  quantity,
+  condition,
+  mr,
+  ml
+}) => (
   <Box>
     <Flex justify='center'>
       <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>

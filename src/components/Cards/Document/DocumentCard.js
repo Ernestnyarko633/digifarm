@@ -22,10 +22,24 @@ const DocumentCard = ({ title, description, link, mt }) => {
   }
 
   return (
-    <Box w={60} mt={mt} as='button' borderWidth={1} rounded='md' onClick={onOpen}>
+    <Box
+      w={60}
+      mt={mt}
+      as='button'
+      borderWidth={1}
+      rounded='md'
+      onClick={onOpen}
+    >
       <DocumentPreview isOpen={isOpen} onClose={onClose} link={link} />
       <Box>
-        <Text textAlign='center' w={60} py={1} fontWeight={900} fontFamily='heading' fontSize='lg'>
+        <Text
+          textAlign='center'
+          w={60}
+          py={1}
+          fontWeight={900}
+          fontFamily='heading'
+          fontSize='lg'
+        >
           {title}
         </Text>
       </Box>
@@ -57,7 +71,13 @@ const DocumentCard = ({ title, description, link, mt }) => {
             aria-labelledby='download button'
             click={e => e.preventDefault()}
           >
-            <Icon as={arrowDown} bg='white' rounded='lg' color='cf.400' pl='1' />
+            <Icon
+              as={arrowDown}
+              bg='white'
+              rounded='lg'
+              color='cf.400'
+              pl='1'
+            />
           </Flex>
         </a>
         <Icon as={images(title)} color='white' w='100px' h='100px' />

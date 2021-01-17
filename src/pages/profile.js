@@ -33,7 +33,14 @@ const Profile = () => {
     <Box>
       <Header />
       <Container maxW='7xl'>
-        <Flex align='center' justify='center' h={70} w='100%' bg='gray.100' mt={20}>
+        <Flex
+          align='center'
+          justify='center'
+          h={70}
+          w='100%'
+          bg='gray.100'
+          mt={20}
+        >
           <Box
             as='label'
             rounded='30px'

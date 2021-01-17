@@ -3,12 +3,20 @@ import PropTypes from 'prop-types'
 import QueryString from 'query-string'
 
 import { replaceURI } from 'helpers/misc'
+
+import Splash from 'components/Loading/Splash'
 import FetchCard from 'components/FetchCard'
 import useAuth from 'context/auth'
+import useApi from 'context/api'
 
-const Auth = ({ history: { replace }, match: { params }, location: { search } }) => {
+const Auth = ({
+  history: { replace },
+  match: { params },
+  location: { search }
+}) => {
   document.title = 'Authenticating...'
-  const { getUser, store, isAuthenticated } = useAuth()
+  const { getUser } = useApi()
+  const { store, isAuthenticated } = useAuth()
   const [reload, setReload] = useState(0)
   const [error, setError] = useState(false)
 
@@ -71,7 +79,9 @@ const Auth = ({ history: { replace }, match: { params }, location: { search } })
       error={error}
     />
   ) : (
-    <div className='loading-text'>Authenticating</div>
+    <Splash
+      text={`Welcome Farmer ${isAuthenticated().user?.firstName || ''}`}
+    />
   )
 }
 

@@ -13,9 +13,17 @@ import {
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 
-const BuyerCard = ({ image, name, address, amtLeft, amtBought, amtNeeded, price }) => (
-  <Flex py={6} my={6} w={{ md: '730px' }} bg='white' ml={14} px={6}>
-    <Box>
+const BuyerCard = ({
+  image,
+  name,
+  address,
+  amtLeft,
+  amtBought,
+  amtNeeded,
+  price
+}) => (
+  <Flex justify='center'>
+    <Box py={6} my={6} w={{ md: '700px' }} bg='white' px={8}>
       <Flex>
         <Box my={1}>
           <Flex>
@@ -32,6 +40,13 @@ const BuyerCard = ({ image, name, address, amtLeft, amtBought, amtNeeded, price 
             </Box>
           </Flex>
         </Box>
+        <Spacer />
+        <ConfirmSale
+          amtLeft={amtLeft}
+          name={name}
+          amtBought={amtBought}
+          price={price}
+        />
       </Flex>
       <Box mt={4}>
         <Flex>
@@ -45,7 +60,13 @@ const BuyerCard = ({ image, name, address, amtLeft, amtBought, amtNeeded, price 
           </Text>
         </Flex>
       </Box>
-      <Progress value={60} rounded='lg' colorScheme='cfButton' size='sm' mt={4} />
+      <Progress
+        value={60}
+        rounded='lg'
+        colorScheme='cfButton'
+        size='lg'
+        mt={2}
+      />
       <Box mt={3}>
         <Flex>
           <Text as='h6' fontWeight='bold' fontSize='sm'>
@@ -75,7 +96,12 @@ const BuyerCard = ({ image, name, address, amtLeft, amtBought, amtNeeded, price 
       >
         About buyer
       </Button>
-      <ConfirmSale amtLeft={amtLeft} name={name} amtBought={amtBought} price={price} />
+      <ConfirmSale
+        amtLeft={amtLeft}
+        name={name}
+        amtBought={amtBought}
+        price={price}
+      />
     </Flex>
   </Flex>
 )

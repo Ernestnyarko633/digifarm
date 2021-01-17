@@ -37,7 +37,14 @@ const Receipt = ({ title, description, buttonTitle, label, text }) => {
       </Flex>
 
       <Box w={56} mx='auto' my={6}>
-        <Button btntitle={buttonTitle} width='100%' h={12} mx='auto' fontSize='md' rounded='30px' />
+        <Button
+          btntitle={buttonTitle}
+          width='100%'
+          h={12}
+          mx='auto'
+          fontSize='md'
+          rounded='30px'
+        />
       </Box>
     </Box>
   )

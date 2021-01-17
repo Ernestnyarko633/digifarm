@@ -21,7 +21,13 @@ const FormInput = ({
   w,
   ...rest
 }) => (
-  <FormControl mr={mr} pos='relative' pt={2} isRequired={isRequired} isInvalid={error && touched}>
+  <FormControl
+    mr={mr}
+    pos='relative'
+    pt={2}
+    isRequired={isRequired}
+    isInvalid={error && touched}
+  >
     <Box
       bg={bg}
       borderWidth={1}
@@ -29,7 +35,13 @@ const FormInput = ({
       borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
       w={w}
     >
-      <FormLabel fontSize={{ md: 'xs' }} pos='absolute' left={{ md: 4 }} top={2} color='gray.600'>
+      <FormLabel
+        fontSize={{ md: 'xs' }}
+        pos='absolute'
+        left={{ md: 4 }}
+        top={2}
+        color='gray.600'
+      >
         {label} {titleAddon}
       </FormLabel>
       <Input
@@ -73,7 +85,9 @@ const FormInput = ({
         }}
       />
     </Box>
-    {error && touched && <FormErrorMessage fontSize='xs'>{error}</FormErrorMessage>}
+    {error && touched && (
+      <FormErrorMessage fontSize='xs'>{error}</FormErrorMessage>
+    )}
   </FormControl>
 )
 

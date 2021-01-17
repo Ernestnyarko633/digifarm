@@ -39,7 +39,12 @@ const PrivacyAndData = () => {
 
         <Box>
           <Box>
-            <Heading as='h5' fontSize={{ md: '2xl' }} fontFamily='display' mb={2}>
+            <Heading
+              as='h5'
+              fontSize={{ md: '2xl' }}
+              fontFamily='display'
+              mb={2}
+            >
               Personalization
             </Heading>
             <Text>
