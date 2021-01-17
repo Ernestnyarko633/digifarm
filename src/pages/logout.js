@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import Splash from 'components/Loading/Splash'
 
 import { replaceURI } from 'helpers/misc'
@@ -6,7 +8,7 @@ import { replaceURI } from 'helpers/misc'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 
-const Logout = () => {
+const LogOut = ({ location: { state } }) => {
   const { isAuthenticated } = useAuth()
   const { logout } = useApi()
 
@@ -23,10 +25,15 @@ const Logout = () => {
       } catch (_) {
         replaceURI(APP, PATH)
       }
+      sessionStorage.clear()
     }, 200)
   }, [logout])
 
-  return <Splash text={`Bye Farmer ${user.firstName}`} />
+  return <Splash text={state?.mgs || `Bye Farmer ${user.firstName}`} />
 }
 
-export default Logout
+LogOut.propTypes = {
+  location: PropTypes.object
+}
+
+export default LogOut

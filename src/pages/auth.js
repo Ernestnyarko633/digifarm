@@ -46,7 +46,7 @@ const Auth = ({
               store({ user })
 
               setTimeout(() => {
-                replace(JSON.parse(to) || '/dashboard')
+                replace(JSON.parse(to || null) || '/dashboard')
               }, 500)
             } catch (error) {
               if (error?.response) {
@@ -79,7 +79,9 @@ const Auth = ({
       error={error}
     />
   ) : (
-    <Splash text={`Welcome Farmer ${isAuthenticated().user?.firstName}`} />
+    <Splash
+      text={`Welcome Farmer ${isAuthenticated().user?.firstName || ''}`}
+    />
   )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, useHistory } from 'react-router-dom'
 
 import useAuth from 'context/auth'
 
@@ -8,12 +8,16 @@ import { replaceURI } from 'helpers/misc'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { isAuthenticated, session } = useAuth()
+  const history = useHistory()
 
   React.useEffect(() => {
     if (!session) {
-      return <Redirect to='/logout' />
+      return history.push({
+        pathname: '/logout',
+        state: { mgs: 'Session expired' }
+      })
     }
-  }, [session])
+  }, [session, history])
 
   const getPage = props => {
     if (isAuthenticated()) {
