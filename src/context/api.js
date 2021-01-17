@@ -9,7 +9,7 @@ const ApiContext = createContext()
 const http = new HttpFacade()
 
 export const ApiContextProvider = ({ children }) => {
-  const { AUTH_API, FMS_API, PAYMENT_API } = getConfig()
+  const { AUTH_API, FMS_API, PAYMENT_API, DIGITAL_FARMER_API } = getConfig()
 
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
@@ -59,6 +59,22 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const getMyFarms = async query => {
+    return await http.get({ url: `${DIGITAL_FARMER_API}/farms`, query })
+  }
+
+  const getMyFarm = async id => {
+    return await http.get({ url: `${DIGITAL_FARMER_API}/farms/${id}` })
+  }
+
+  const getMyOrders = async query => {
+    return await http.get({ url: `${DIGITAL_FARMER_API}/orders`, query })
+  }
+
+  const getMyOrder = async id => {
+    return await http.get({ url: `${DIGITAL_FARMER_API}/orders/${id}` })
+  }
+
   return (
     <ApiContext.Provider
       value={{
@@ -66,6 +82,10 @@ export const ApiContextProvider = ({ children }) => {
         getUser,
         getFarms,
         patchUser,
+        getMyFarm,
+        getMyFarms,
+        getMyOrder,
+        getMyOrders,
         changePassword,
         initiatePayment,
         getCropCategories,

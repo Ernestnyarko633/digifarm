@@ -1,11 +1,13 @@
-import { Box, Flex, Grid, Heading } from '@chakra-ui/react'
-import ArrowButton from 'components/Button/ArrowButton'
 import React from 'react'
-import FarmCard from './FarmCard'
+import PropTypes from 'prop-types'
+import { Box, Flex, Grid, Heading } from '@chakra-ui/react'
 
-const OrdersCard = () => {
-  const [state, setState] = React.useState('current')
+import ArrowButton from 'components/Button/ArrowButton'
+import FarmCard from 'components/Cards/FarmCard'
+// import OrderCard from './OrderCard'
 
+const FarmOrderSection = ({ farms, orders }) => {
+  const [state, setState] = React.useState('farms')
   return (
     <Box p={20}>
       <Box mb={10}>
@@ -19,11 +21,11 @@ const OrdersCard = () => {
             borderBottomColor='gray.200'
           >
             <Box
-              color={state === 'current' ? 'cf.400' : 'gray.700'}
-              onClick={() => setState('current')}
-              fontWeight={state === 'current' ? 'bold' : 'normal'}
+              color={state === 'farms' ? 'cf.400' : 'gray.700'}
+              onClick={() => setState('farms')}
+              fontWeight={state === 'farms' ? 'bold' : 'normal'}
               cursor='pointer'
-              borderBottomWidth={state === 'current' && 2}
+              borderBottomWidth={state === 'farms' && 2}
               borderBottomColor='cf.400'
               pb={3}
             >
@@ -50,19 +52,18 @@ const OrdersCard = () => {
       </Box>
 
       <Box>
-        {state === 'current' && (
-          <Flex>
-            <FarmCard />
-          </Flex>
-        )}
-        {state === 'orders' && (
-          <Flex>
-            <FarmCard />
-          </Flex>
-        )}
+        <Flex>
+          {state === 'farms' && <FarmCard data={farms} />}
+          {state === 'orders' && <FarmCard data={orders} />}
+        </Flex>
       </Box>
     </Box>
   )
 }
 
-export default OrdersCard
+FarmOrderSection.propTypes = {
+  farms: PropTypes.array.isRequired,
+  orders: PropTypes.array.isRequired
+}
+
+export default FarmOrderSection
