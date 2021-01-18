@@ -1,10 +1,12 @@
 import React from 'react'
 import Layout from 'container/Layout'
-import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import { Box, Heading, Image, Text, Flex } from '@chakra-ui/react'
 import BuyerCard from 'components/Cards/BuyerCard'
-
+import SoyaBean from '../assets/images/startfarm/soya-beans.svg'
 import IllustrationImage from '../assets/images/home/illustration.png'
 import Oval from '../assets/images/Oval.svg'
+import WarehouseCard from 'components/Cards/WarehouseCard'
+import ArrowButton from '../components/Button/ArrowButton'
 
 const buyers = [
   {
@@ -29,6 +31,39 @@ const buyers = [
   }
 ]
 
+const warehouseGoods = [
+  {
+    id: 1,
+    image: SoyaBean,
+    name: 'Soya Bean Warehouse',
+    location: 'AgyaAtta, Eastern Region',
+    quantity: '2000 tonnes',
+    weight: '200 kg',
+    bags: '20 bags',
+    condition: 'Moist'
+  },
+  {
+    id: 2,
+    image: SoyaBean,
+    name: 'Soya Bean Warehouse',
+    location: 'AgyaAtta, Eastern Region',
+    quantity: '2010 tonnes',
+    weight: '300 kg',
+    bags: '30 bags',
+    condition: 'Dry'
+  }
+  // {
+  //   id:3,
+  //   image: SoyaBean,
+  //   name: 'Soya Bean Warehouse',
+  //   location: 'Shai Osudoku, Eastern Region',
+  //   quantity: '2010 tonnes',
+  //   weight: '300 kg',
+  //   bags: '30 bags',
+  //   condition: 'Moist'
+  // }
+]
+
 const Marketplace = () => {
   document.title = 'Complete Farmer | Marketplace'
 
@@ -48,9 +83,30 @@ const Marketplace = () => {
           <Text>Sell your produce to the right buyer at a good price</Text>
         </Box>
       </Box>
-      <Box my={6} textAlign='center'>
+      <Flex align='center' justify='space-between' p={{ md: 16 }}>
         <Heading as='h4' fontSize={{ md: '2xl' }}>
-          Here's a list of available buyers
+          Here are the crops in your warehouse
+        </Heading>
+        <ArrowButton />
+      </Flex>
+      <Flex my={3}>
+        {warehouseGoods.map(item => (
+          <WarehouseCard
+            key={item.name}
+            name={item.name}
+            location={item.location}
+            image={item.image}
+            quantity={item.quantity}
+            weight={item.weight}
+            bags={item.bags}
+            condition={item.condition}
+            ml={14}
+          />
+        ))}
+      </Flex>
+      <Box my={10} mx={14} px={14}>
+        <Heading as='h4' fontSize={{ md: '2xl' }}>
+          Buyers you can sell to
         </Heading>
       </Box>
       <Box>

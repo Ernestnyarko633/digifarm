@@ -36,13 +36,10 @@ const BaseSelect = ({
     }))
   }
 
-  // const error = _get(errors, name);
-  // const touch = _get(touched, name);
   const inputValue = getValue(value)
 
   const handleChange = val => {
     let item
-    // setFieldTouched(fieldName, true);
     if (!multi) {
       item = val ? val.value.map(e => e.label) : ''
     } else {
@@ -50,13 +47,6 @@ const BaseSelect = ({
     }
     setFieldValue(name, item)
   }
-
-  // const handleBlur = () => {
-  //   if (value) {
-  //     setFieldValue(name, value);
-  //   }
-  //   setFieldTouched(name, true);
-  // };
 
   return (
     <Box bg='cf.100' pos='relative' borderBottom='2px solid #3c9130'>

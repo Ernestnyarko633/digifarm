@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
-  Button,
   Divider,
   Heading,
   Flex,
@@ -27,16 +26,28 @@ const WarehouseCard = ({
   <Box>
     <Flex justify='center'>
       <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>
-        <Flex mb={4}>
-          <Avatar bg='gray.100'>
-            <Image src={image} />
-          </Avatar>
-          <Box ml={2}>
-            <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
-              {name}
-            </Heading>
-            <Text fontSize='xs' mt={{ md: -2 }}>
-              {location}
+        <Flex>
+          <Flex mb={4}>
+            <Avatar bg='gray.100'>
+              <Image src={image} />
+            </Avatar>
+            <Box ml={2}>
+              <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
+                {name}
+              </Heading>
+              <Text fontSize='xs' mt={{ md: -2 }}>
+                {location}
+              </Text>
+            </Box>
+          </Flex>
+          <Box ml={6}>
+            <Box rounded='40px' bg='cf.200' my={1} pt={1} px={2}>
+              <Text color='cf.400' fontSize='9px' textAlign='center'>
+                Pending Order
+              </Text>
+            </Box>
+            <Text as='h6' fontSize='9px' ml={2} fontWeight='bold'>
+              80% Complete
             </Text>
           </Box>
         </Flex>
@@ -71,29 +82,8 @@ const WarehouseCard = ({
                 </span>
               </ListItem>
             </List>
-            <Box ml={6} my={3}>
-              <Box rounded='40px' bg='cf.200' my={1} pt={1} px={2}>
-                <Text color='cf.400' fontSize='9px' textAlign='center'>
-                  Pending Order
-                </Text>
-              </Box>
-              <Text as='h6' fontSize='9px' ml={2} fontWeight='bold'>
-                80% Complete
-              </Text>
-            </Box>
           </Flex>
         </Box>
-        <Button
-          colorScheme='linear'
-          rounded='30px'
-          fontSize='xs'
-          as='a'
-          href='/marketplace'
-          fontWeight='bold'
-          width='100%'
-        >
-          Sell
-        </Button>
       </Box>
     </Flex>
   </Box>

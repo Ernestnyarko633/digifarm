@@ -22,6 +22,14 @@ const Individual = () => {
     }
   }
 
+  React.useEffect(() => {
+    return () => {
+      // clear cache data in session storage
+      sessionStorage.removeItem('categories')
+      sessionStorage.removeItem('farms')
+    }
+  }, [])
+
   return (
     <Box>
       <Flex

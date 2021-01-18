@@ -4,11 +4,12 @@ import {
   Divider,
   Progress,
   Heading,
-  Spacer,
+  Button,
   Flex,
   Avatar,
   Text,
-  Image
+  Image,
+  Spacer
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
@@ -83,6 +84,26 @@ const BuyerCard = ({
         </Flex>
       </Box>
     </Box>
+    <Flex>
+      <Button
+        mr={5}
+        mt={4}
+        rounded='30px'
+        fontWeight='thin'
+        fontSize='xs'
+        variant='outline'
+        borderColor='cf.400'
+        w={{ md: '120px' }}
+      >
+        About buyer
+      </Button>
+      <ConfirmSale
+        amtLeft={amtLeft}
+        name={name}
+        amtBought={amtBought}
+        price={price}
+      />
+    </Flex>
   </Flex>
 )
 

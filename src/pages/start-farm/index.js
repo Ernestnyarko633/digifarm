@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import CropCard from 'components/Cards/CropCard'
 
@@ -8,14 +8,10 @@ import useAuth from 'context/auth'
 import data from '../../data/farm.json'
 
 const StartFarm = () => {
-  const [farms] = useState(data)
+  const [farms] = React.useState(data)
   const { isAuthenticated } = useAuth()
 
   const { user } = isAuthenticated()
-
-  // clear cache data in session storage
-  sessionStorage.removeItem('categories')
-  sessionStorage.removeItem('farms')
 
   return (
     <Flex

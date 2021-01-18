@@ -1,20 +1,9 @@
 import React, { useState } from 'react'
-import {
-  Box,
-  Flex,
-  Image,
-  Heading,
-  Icon,
-  Text,
-  Grid,
-  GridItem
-} from '@chakra-ui/react'
+import { Box, Flex, Image, Heading, Grid, GridItem } from '@chakra-ui/react'
 import { useMutation } from 'react-query'
 import { motion } from 'framer-motion'
 
 import useApi from 'context/api'
-
-import { Support, Schedule, Update } from 'theme/Icons'
 
 import FarmInfo from 'components/Cards/FarmInfo'
 import PayOption from 'components/Cards/PayOption'
@@ -39,7 +28,6 @@ const PaymentOption = () => {
   const paymentlick = async () => {
     try {
       const res = await mutate(cardData)
-      // console.log('result', res);
       window.location.assign(res?.url)
     } catch (error) {
       // console.log(error);
@@ -52,28 +40,6 @@ const PaymentOption = () => {
         <Box py={{ md: 10 }} m={8}>
           <Image src={ginger} alt='ginger' />
         </Box>
-
-        <Flex align='center' justify='space-between' mt={{ md: 20 }}>
-          <Box textAlign='center' w={{ md: '100%' }} px={8}>
-            <Heading as='h6' fontSize='md' mb={3}>
-              What is included in this farm
-            </Heading>
-            <Flex justify='space-between' align='center' fontSize='sm'>
-              <Flex align='center'>
-                <Icon as={Update} color='cf.400' boxSize={5} />
-                <Text ml={1}>Farm Updates</Text>
-              </Flex>
-              <Flex align='center'>
-                <Icon as={Support} color='cf.400' boxSize={5} />
-                <Text ml={1}>Support</Text>
-              </Flex>
-              <Flex align='center'>
-                <Icon as={Schedule} color='cf.400' boxSize={5} />
-                <Text ml={1}>Scheduled Farm Visits</Text>
-              </Flex>
-            </Flex>
-          </Box>
-        </Flex>
       </GridItem>
       <GridItem
         borderLeftWidth={1}

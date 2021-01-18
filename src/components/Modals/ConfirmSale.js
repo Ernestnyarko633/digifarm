@@ -42,10 +42,10 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
         colorScheme='linear'
         rounded='30px'
         fontSize='xs'
-        w={{ md: '150px' }}
+        w={{ md: '120px' }}
         onClick={onOpen}
       >
-        Sell to buyer
+        Sell crop
       </Button>
       <Modal
         isOpen={isOpen}
