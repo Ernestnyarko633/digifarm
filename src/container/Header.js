@@ -20,7 +20,8 @@ const menuLinks = [
 const MotionBox = motion.custom(Box)
 
 const Header = () => {
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated } = useAuth()
+
   const { user } = isAuthenticated()
 
   return (
@@ -59,12 +60,20 @@ const Header = () => {
         <Menu as={Box} ml={2}>
           {({ open }) => (
             <Box>
-              <Menu.Button as={Box} _focus={{ outline: 'none' }} cursor='pointer'>
+              <Menu.Button
+                as={Box}
+                _focus={{ outline: 'none' }}
+                cursor='pointer'
+              >
                 <Flex align='center'>
                   <Avatar size='sm' src={user?.avatar} name={user?.firstName} />
                   <Text ml={2}>Hi {user?.firstName}</Text>
                   <Box>
-                    <Icon ml={2} as={open ? FiChevronUp : FiChevronDown} boxSize={6} />
+                    <Icon
+                      ml={2}
+                      as={open ? FiChevronUp : FiChevronDown}
+                      boxSize={6}
+                    />
                   </Box>
                 </Flex>
               </Menu.Button>
@@ -117,7 +126,7 @@ const Header = () => {
                         bg={active && 'cf.400'}
                         color={active && 'white'}
                         d='block'
-                        onClick={logout}
+                        href='/logout'
                       >
                         <Icon as={HiOutlineLogout} boxSize={4} mr={2} /> Logout
                       </Link>

@@ -40,7 +40,14 @@ const OtherSteps = () => {
 
   return (
     <Box>
-      <Flex align='center' justify='center' bg='gray.100' w='100%' h={20} mt={20}>
+      <Flex
+        align='center'
+        justify='center'
+        bg='gray.100'
+        w='100%'
+        h={20}
+        mt={20}
+      >
         <Heading as='h5' size='md' mr={{ md: 20 }}>
           Roots / Tubers
         </Heading>
@@ -62,12 +69,31 @@ const OtherSteps = () => {
         </Box>
       </Flex> */}
 
-      <Flex align='center' justify='space-between' w={{ md: 143 }} mx='auto' mt={{ md: 12 }} mb={4}>
+      <Flex
+        align='center'
+        justify='space-between'
+        w={{ md: 143 }}
+        mx='auto'
+        mt={{ md: 12 }}
+        mb={4}
+      >
         <Text fontSize='sm' color='red.600'>
           Farm starts : 2nd September, 2020
         </Text>
-        <Flex align='center' rounded='30px' px={4} py={1} borderWidth={1} borderColor='cf.400'>
-          <Image h={4} src={require('../../../assets/images/startfarm/insurance.png').default} />
+        <Flex
+          align='center'
+          rounded='30px'
+          px={4}
+          py={1}
+          borderWidth={1}
+          borderColor='cf.400'
+        >
+          <Image
+            h={4}
+            src={
+              require('../../../assets/images/startfarm/insurance.png').default
+            }
+          />
           <Text fontSize='sm' ml={2} color='cf.400'>
             Farm is insured
           </Text>

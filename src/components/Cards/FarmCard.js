@@ -1,4 +1,14 @@
-import { Avatar, Box, Divider, Flex, Grid, Heading, Image, Tag, Text } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  Divider,
+  Flex,
+  Grid,
+  Heading,
+  Image,
+  Tag,
+  Text
+} from '@chakra-ui/react'
 import Step from 'components/Form/Step'
 import React from 'react'
 
@@ -20,7 +30,14 @@ const FarmCard = () => (
         </Box>
       </Flex>
 
-      <Tag bg='cf.200' color='cf.400' rounded='3xl' fontSize='sm' px={4} textAlign='center'>
+      <Tag
+        bg='cf.200'
+        color='cf.400'
+        rounded='3xl'
+        fontSize='sm'
+        px={4}
+        textAlign='center'
+      >
         Lvl 1
       </Tag>
     </Flex>

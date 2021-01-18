@@ -1,7 +1,8 @@
 // configs
 import configs from '../utils/configs'
 
-export const replaceURI = (APP, path) => window.location.replace(configs()[`${APP}_SERVICE`] + path)
+export const replaceURI = (APP, path) =>
+  window.location.replace(configs()[`${APP}_SERVICE`] + path)
 
 export const fileToBase64 = async file => {
   return new Promise((resolve, reject) => {

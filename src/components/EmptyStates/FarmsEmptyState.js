@@ -11,7 +11,10 @@ const FarmsEmptyState = () => {
           <Heading as='h3' fontSize={{ md: '3xl' }} mt={{ md: 6 }} mb={4}>
             You currently have no farm(s)
           </Heading>
-          <Text>Start a farm as an individual or a cooperative and earn long term rewards</Text>
+          <Text>
+            Start a farm as an individual or a cooperative and earn long term
+            rewards
+          </Text>
         </Box>
 
         <Box my={{ md: 10 }} textAlign='center'>

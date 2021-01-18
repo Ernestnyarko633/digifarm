@@ -25,9 +25,23 @@ const Step = () => (
         </Text>
       </Box>
     </Flex>
-    <Box pos='absolute' borderLeftWidth={1} borderColor='gray.300' h={5} ml={4} top={10} />
+    <Box
+      pos='absolute'
+      borderLeftWidth={1}
+      borderColor='gray.300'
+      h={5}
+      ml={4}
+      top={10}
+    />
     <Box textAlign='right'>
-      <Tag bg='cf.200' color='cf.400' rounded='3xl' fontSize='sm' px={4} textAlign='center'>
+      <Tag
+        bg='cf.200'
+        color='cf.400'
+        rounded='3xl'
+        fontSize='sm'
+        px={4}
+        textAlign='center'
+      >
         Completed
       </Tag>
       <Text fontSize='xs' color='gray.500' mt={-1}>

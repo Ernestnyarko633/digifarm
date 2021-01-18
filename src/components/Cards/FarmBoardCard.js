@@ -1,5 +1,14 @@
 import React from 'react'
-import { Box, Flex, Avatar, Heading, Text, Icon, Image, Tag } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Avatar,
+  Heading,
+  Text,
+  Icon,
+  Image,
+  Tag
+} from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { Flower, CreditCard } from 'theme/Icons'
 import { BsHeart } from 'react-icons/bs'
@@ -36,7 +45,13 @@ const FarmBoardCard = ({
             <Text color='gray.600'>{location}</Text>
           </Box>
           <Box ml={12}>
-            <Tag bg='cf.200' color='cf.400' rounded='xl' px={6} fontWeight='bold'>
+            <Tag
+              bg='cf.200'
+              color='cf.400'
+              rounded='xl'
+              px={6}
+              fontWeight='bold'
+            >
               {level}
             </Tag>
           </Box>
@@ -53,7 +68,10 @@ const FarmBoardCard = ({
     <Box rounded='xl' w='100%' bg='white' mb={{ md: 10 }} shadow='sm'>
       {status === 'farm' && (
         <>
-          <Box py={{ md: status === 'news' || status === 'action' ? 8 : 10 }} px={{ md: 16 }}>
+          <Box
+            py={{ md: status === 'news' || status === 'action' ? 8 : 10 }}
+            px={{ md: 16 }}
+          >
             <Detail />
             <Box mt={6}>
               <Text textTransform='uppercase' fontWeight='bold'>
@@ -66,13 +84,19 @@ const FarmBoardCard = ({
           </Box>
 
           <Box>
-            <Image w='100%' src={require('../../assets/images/Bitmap.png').default} />
+            <Image
+              w='100%'
+              src={require('../../assets/images/Bitmap.png').default}
+            />
           </Box>
         </>
       )}
 
       {status === 'news' && (
-        <Box py={{ md: status === 'news' || status === 'action' ? 8 : 10 }} px={{ md: 16 }}>
+        <Box
+          py={{ md: status === 'news' || status === 'action' ? 8 : 10 }}
+          px={{ md: 16 }}
+        >
           <Detail />
           <Box mt={6}>
             <Flex>
@@ -101,7 +125,10 @@ const FarmBoardCard = ({
       )}
 
       {status === 'action' && (
-        <Box py={{ md: status === 'news' || status === 'action' ? 8 : 10 }} px={{ md: 16 }}>
+        <Box
+          py={{ md: status === 'news' || status === 'action' ? 8 : 10 }}
+          px={{ md: 16 }}
+        >
           <Detail />
 
           <Box mt={6}>

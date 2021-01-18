@@ -1,5 +1,14 @@
 import React from 'react'
-import { Box, Grid, Heading, Divider, Text, GridItem, Icon, Flex } from '@chakra-ui/react'
+import {
+  Box,
+  Grid,
+  Heading,
+  Divider,
+  Text,
+  GridItem,
+  Icon,
+  Flex
+} from '@chakra-ui/react'
 
 import BaseSelect from 'components/Form/BaseSelect'
 import { InfoIcon } from '@chakra-ui/icons'
@@ -35,10 +44,17 @@ const ChooseAcreage = () => {
       >
         <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
           <Heading as='h6' size='md' mb={2}>
-            About Location <Icon as={InfoIcon} color='cf.400' boxSize={4} mx={2} />
+            About Location{' '}
+            <Icon as={InfoIcon} color='cf.400' boxSize={4} mx={2} />
           </Heading>
 
-          <Box borderWidth={1} borderColor='gray.300' rounded='md' overflow='hidden' padding={10}>
+          <Box
+            borderWidth={1}
+            borderColor='gray.300'
+            rounded='md'
+            overflow='hidden'
+            padding={10}
+          >
             <Box paddingBottom='5'>
               <Heading as='h6' size='md'>
                 Ecological zone
@@ -50,9 +66,10 @@ const ChooseAcreage = () => {
               Weather
             </Heading>
             <Text mb={6}>
-              Weather Sandy loam soil is one of the most preferable types of soil for many types of
-              plants. Planting in loam soil with a high percentage of sand is the same as planting
-              in normal loam soil, but extra amendments may be made to compensate for slightly lower
+              Weather Sandy loam soil is one of the most preferable types of
+              soil for many types of plants. Planting in loam soil with a high
+              percentage of sand is the same as planting in normal loam soil,
+              but extra amendments may be made to compensate for slightly lower
               water
             </Text>
           </Box>

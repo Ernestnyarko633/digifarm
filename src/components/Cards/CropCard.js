@@ -1,4 +1,14 @@
-import { Box, Flex, Heading, Icon, Image, Link, List, ListItem, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Heading,
+  Icon,
+  Image,
+  Link,
+  List,
+  ListItem,
+  Text
+} from '@chakra-ui/react'
 import { Link as ReachRouter } from 'react-router-dom'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import React from 'react'
@@ -6,7 +16,17 @@ import PropTypes from 'prop-types'
 import { Button } from 'components'
 import useComponent from 'context/component'
 
-const CropCard = ({ image, title, subtitle, extra, options, btntitle, path, state, mr }) => {
+const CropCard = ({
+  image,
+  title,
+  subtitle,
+  extra,
+  options,
+  btntitle,
+  path,
+  state,
+  mr
+}) => {
   const { handleModalClick } = useComponent()
 
   return (
@@ -45,7 +65,11 @@ const CropCard = ({ image, title, subtitle, extra, options, btntitle, path, stat
       </List>
 
       <Box>
-        <Link as={ReachRouter} to={{ pathname: path, state }} _hover={{ textDecor: 'none' }}>
+        <Link
+          as={ReachRouter}
+          to={{ pathname: path, state }}
+          _hover={{ textDecor: 'none' }}
+        >
           <Button btntitle={btntitle} />
         </Link>
         <Box

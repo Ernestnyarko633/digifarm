@@ -46,10 +46,8 @@
   src: url('../fonts/Cera\ GR\ Medium.woff') format('woff');
 }
 
-
 .loading-text {
   display: inline-block;
-  left: calc(50% - 30px);
   top: calc(50% + 20px);
   position: fixed;
   z-index: 1;
@@ -59,18 +57,6 @@
 .loading-text:after {
   content: '.';
   animation: dots 1s steps(5, end) infinite;
-}
-
-@keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-  }
 }
 
 @keyframes dots {

@@ -53,7 +53,9 @@ const Document = () => {
 
   useEffect(() => {
     const announcements = async () => {
-      const response = await Client.query(Prismic.Predicates.at('document.type', 'announcements'))
+      const response = await Client.query(
+        Prismic.Predicates.at('document.type', 'announcements')
+      )
       if (response) {
         setAnnouncement(response.results[0])
         Nothing()
@@ -64,7 +66,9 @@ const Document = () => {
 
   useEffect(() => {
     const news = async () => {
-      const response = await Client.query(Prismic.Predicates.at('document.type', 'news'))
+      const response = await Client.query(
+        Prismic.Predicates.at('document.type', 'news')
+      )
       if (response) {
         setNewsData(response.results[0])
       }
@@ -80,7 +84,11 @@ const Document = () => {
         <ConfirmReceiptDelete />
       </Box>
       <Box pb={10} mx={6}>
-        <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} gap={{ md: 1 }} mt={10}>
+        <Grid
+          templateColumns={{ md: 'repeat(3, 1fr)' }}
+          gap={{ md: 1 }}
+          mt={10}
+        >
           {data.map(item => (
             <DocumentCard
               key={item.id}

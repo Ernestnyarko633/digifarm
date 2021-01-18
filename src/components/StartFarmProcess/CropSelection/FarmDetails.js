@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+
 import { Box, Grid, GridItem } from '@chakra-ui/react'
 import { useIntersection } from 'react-use'
 import { Button } from 'components'
@@ -15,8 +16,8 @@ import AboutFarm from './AboutFarm'
 const MotionBox = motion.custom(Box)
 
 const FarmDetails = ({ query, handleNext }) => {
-  const { getFarms } = useApi()
   const [reload, setReload] = useState(0)
+  const { getFarms } = useApi()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -68,10 +69,10 @@ const FarmDetails = ({ query, handleNext }) => {
       >
         {data.map(farm => (
           <CropSelectionCard
-            key={farm.id}
+            key={farm._id}
             onClick={() => setSeletedFarm(farm)}
-            title={farm.name}
-            acres={farm.acres}
+            title={`${farm.cropVariety?.crop?.name}(${farm.cropVariety?.name}) #${farm.name}`}
+            acres={farm.acreage}
           />
         ))}
       </GridItem>
@@ -97,7 +98,10 @@ const FarmDetails = ({ query, handleNext }) => {
                 <MotionBox
                   initial={{ opacity: 0, y: -20 }}
                   animate={{
-                    opacity: intersection && intersection.intersectionRatio < 1 ? 0 : 1,
+                    opacity:
+                      intersection && intersection.intersectionRatio < 1
+                        ? 0
+                        : 1,
                     y: 0
                   }}
                 >

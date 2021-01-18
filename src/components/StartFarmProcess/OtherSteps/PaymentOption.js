@@ -28,7 +28,6 @@ const PaymentOption = () => {
   const paymentlick = async () => {
     try {
       const res = await mutate(cardData)
-      // console.log('result', res);
       window.location.assign(res?.url)
     } catch (error) {
       // console.log(error);

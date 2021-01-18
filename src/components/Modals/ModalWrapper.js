@@ -11,9 +11,23 @@ import {
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
-const ModalWrapper = ({ isOpen, onClose, title, size, isCentered, image, alt, children }) => {
+const ModalWrapper = ({
+  isOpen,
+  onClose,
+  title,
+  size,
+  isCentered,
+  image,
+  alt,
+  children
+}) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered={isCentered}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size={size}
+      isCentered={isCentered}
+    >
       <ModalOverlay />
       <ModalContent rounded='2xl'>
         <ModalHeader>
