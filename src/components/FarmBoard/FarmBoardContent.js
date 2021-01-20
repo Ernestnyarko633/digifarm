@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import { Box, Heading, Flex } from '@chakra-ui/react';
-import Fade from 'react-reveal/Fade';
+import React, { Fragment } from 'react'
+import { Box, Heading, Flex } from '@chakra-ui/react'
+import Fade from 'react-reveal/Fade'
 
-import FarmBoardCard from '../Cards/FarmBoardCard';
-import YourFarmCard from '../Cards/YourFarmCard';
-import Crop from 'assets/images/crop.png';
-import SoyaBeanImg from 'assets/images/soya.png';
+import FarmBoardCard from '../Cards/FarmBoardCard'
+import YourFarmCard from '../Cards/YourFarmCard'
+import Crop from 'assets/images/crop.png'
+import SoyaBeanImg from 'assets/images/soya.png'
 
 const FarmBoardContent = () => {
   const farms = [
@@ -19,7 +19,7 @@ const FarmBoardContent = () => {
       firstName: 'John',
       location: 'Agyata, Eastern Region',
       actionText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
+        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ const FarmBoardContent = () => {
       location: 'Agyata, Eastern Region',
       tag: 'FARM UPDATE',
       actionText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
+        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
     },
     {
       id: 3,
@@ -47,9 +47,9 @@ const FarmBoardContent = () => {
       location: 'Agyata, Eastern Region',
       tag: 'FINALIZE',
       actionText:
-        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...',
-    },
-  ];
+        'Growing conditons are currently perfect. Some irrigation work is being performed over the next week, but harvest schedule will not be affected...'
+    }
+  ]
 
   return (
     <Box p={10} w='100%'>
@@ -59,7 +59,7 @@ const FarmBoardContent = () => {
           See what's happening in your farm(s)
         </Heading>
         <Fragment>
-          {farms.map((farm) => {
+          {farms.map(farm => {
             return (
               <Fade bottom key={farm.id}>
                 <FarmBoardCard
@@ -75,12 +75,12 @@ const FarmBoardContent = () => {
                   actionTitle={farm.actionTitle}
                 />
               </Fade>
-            );
+            )
           })}
         </Fragment>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
-export default FarmBoardContent;
+export default FarmBoardContent

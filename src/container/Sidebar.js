@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box, Flex, Icon, Link, Text } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import { Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
+import { NavLink } from 'react-router-dom'
 import {
   farm,
   home,
@@ -8,19 +8,19 @@ import {
   market,
   Guide,
   Resources,
-  logout,
-} from 'theme/Icons';
-import { MdChatBubbleOutline } from 'react-icons/md';
-import { IoIosHelpCircle } from 'react-icons/io';
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
+  logout
+} from 'theme/Icons'
+import { MdChatBubbleOutline } from 'react-icons/md'
+import { IoIosHelpCircle } from 'react-icons/io'
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
   { icon: farm, path: '/farms', name: 'Farm board', size: 4 },
   { icon: wallet, path: '/wallet', name: 'Farm Wallet', size: 4 },
   { icon: market, path: '/marketplace', name: 'Marketplace', size: 4 },
-  { icon: MdChatBubbleOutline, path: '/market', name: 'Forum', size: 4 },
-];
+  { icon: MdChatBubbleOutline, path: '/market', name: 'Forum', size: 4 }
+]
 
 const links = [
   {
@@ -33,14 +33,14 @@ const links = [
         icon: IoIosHelpCircle,
         path: '/support',
         name: 'Customer Support',
-        size: 5,
-      },
-    ],
-  },
-];
+        size: 5
+      }
+    ]
+  }
+]
 
 const Sidebar = () => {
-  const [toggleMenus, setToggleMenus] = React.useState(true);
+  const [toggleMenus, setToggleMenus] = React.useState(true)
 
   return (
     <Box
@@ -58,7 +58,7 @@ const Sidebar = () => {
       pr={{ md: 5 }}
     >
       <Text as='ul'>
-        {menuLink.map((item) => (
+        {menuLink.map(item => (
           <Link
             key={item.name}
             d='flex'
@@ -77,7 +77,7 @@ const Sidebar = () => {
               textDecor: 'none',
               color: 'gray.700',
               bg: 'gray.50',
-              rounded: 'md',
+              rounded: 'md'
             }}
             _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
           >
@@ -90,7 +90,7 @@ const Sidebar = () => {
       </Text>
 
       <Text as='ul' mt={{ md: 24 }}>
-        {links.map((item) => (
+        {links.map(item => (
           <Flex key={item.title} as='li' direction='column'>
             <Flex
               align='center'
@@ -108,9 +108,9 @@ const Sidebar = () => {
             </Flex>
             {toggleMenus && (
               <Box as='ul' color='gray.600'>
-                {item.submenu.map((ele) => (
+                {item.submenu.map(element => (
                   <Link
-                    key={ele.name}
+                    key={element.name}
                     d='flex'
                     alignItems='center'
                     pr={{ md: 3 }}
@@ -119,7 +119,7 @@ const Sidebar = () => {
                     rounded='lg'
                     activeClassName='activeClasName'
                     as={NavLink}
-                    to={ele.path}
+                    to={element.path}
                     cursor='pointer'
                     className='active-link'
                     transition='background-color .2s ease-in'
@@ -127,11 +127,11 @@ const Sidebar = () => {
                       textDecor: 'none',
                       color: 'gray.700',
                       bg: 'gray.50',
-                      rounded: 'md',
+                      rounded: 'md'
                     }}
                     _activeLink={{
                       color: 'cf.400',
-                      bg: 'cf.300',
+                      bg: 'cf.300'
                     }}
                   >
                     <Icon as={element.icon} boxSize={element.size} mr={1} />
@@ -158,11 +158,11 @@ const Sidebar = () => {
                 textDecor: 'none',
                 color: 'gray.700',
                 bg: 'gray.50',
-                rounded: 'md',
+                rounded: 'md'
               }}
               _activeLink={{
                 color: 'cf.400',
-                bg: 'cf.300',
+                bg: 'cf.300'
               }}
             >
               <Icon as={logout} boxSize={5} mr={1} />
@@ -174,7 +174,7 @@ const Sidebar = () => {
         ))}
       </Text>
     </Box>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar
