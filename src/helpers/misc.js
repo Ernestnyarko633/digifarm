@@ -32,3 +32,18 @@ export const getformattedDate = date => {
     year: 'numeric'
   })
 }
+
+export const getCurrentDayParting = () => {
+  const splitAfternoon = 12 // 24hr time to split the afternoon
+  const splitEvening = 17 // 24hr time to split the evening
+  const currentHour = parseFloat(new Date().getHours())
+
+  if (currentHour >= splitAfternoon && currentHour <= splitEvening) {
+    // Between 12 PM and 5PM
+    return { message: 'Good Afternoon', skyColor: '#FEEEC2' }
+  } else if (currentHour >= splitEvening) {
+    // Between 5PM and Midnight
+    return { message: 'Good Evening', skyColor: '#0B1026', textColor: 'white' }
+  }
+  return { message: 'Good Morning', skyColor: '#D7E8FD' }
+}
