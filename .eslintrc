@@ -1,42 +1,27 @@
 {
-  "plugins": [
-    "react",
-    "prettier"
-  ],
+  "plugins": ["react", "prettier"],
   "rules": {
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ],
     "space-before-function-paren": "off",
     "react/no-unescaped-entities": [
       "error",
       {
-        "forbid": [
-          ">",
-          "}"
-        ]
+        "forbid": [">", "}"]
       }
     ],
-    "react/jsx-indent": [
-      "error",
-      2
-    ],
+    "react/jsx-indent": ["error", 2],
     "key-spacing": [
       "error",
       {
         "afterColon": true
       }
     ],
-    "array-bracket-spacing": [
-      "error",
-      "never"
-    ],
+    "array-bracket-spacing": ["error", "never"],
     "no-extra-semi": "off",
     "react/display-name": "off",
     "react/jsx-first-prop-new-line": "off",
