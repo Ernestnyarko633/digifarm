@@ -43,7 +43,7 @@ const useFetch = (key, func, reload, ...rest) => {
           dispatch({ type: 'fetch' })
           const dataFromStorage = JSON.parse(sessionStorage.getItem(key))
           if (dataFromStorage) {
-            dispatch({ type: 'success', payload: dataFromStorage })
+            dispatch({ type: 'success', payload: { data: dataFromStorage } })
           } else {
             const res = await func(...rest)
             if (mounted) {
