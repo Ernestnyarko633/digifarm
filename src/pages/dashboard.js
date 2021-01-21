@@ -1,4 +1,6 @@
 import React from 'react'
+import { Box } from '@chakra-ui/react'
+
 import Layout from 'container/Layout'
 
 import useApi from 'context/api'
@@ -43,19 +45,21 @@ const Dashboard = () => {
     <Layout>
       <Greetings />
       {isLoading || hasError ? (
-        <FetchCard
-          direction='column'
-          align='center'
-          justify='center'
-          mx='auto'
-          w={90}
-          reload={() => {
-            !myFarms?.length && triggerReloadMyFarms()
-            !myOrder?.length && triggerReloadMyOrders()
-          }}
-          loading={isLoading}
-          error={hasError}
-        />
+        <Box p={16}>
+          <FetchCard
+            direction='column'
+            align='center'
+            justify='center'
+            mx='auto'
+            reload={() => {
+              !myFarms?.length && triggerReloadMyFarms()
+              !myOrder?.length && triggerReloadMyOrders()
+            }}
+            loading={isLoading}
+            error={hasError}
+            text='Standby as we load your current farms and pending orders'
+          />
+        </Box>
       ) : myFarms?.length && myOrder?.length ? (
         <FarmOrderSection farms={myFarms} orders={myOrder} />
       ) : (

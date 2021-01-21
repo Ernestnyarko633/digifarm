@@ -79,9 +79,7 @@ const Auth = ({
       error={error}
     />
   ) : (
-    <Splash
-      text={`Welcome Farmer ${isAuthenticated().user?.firstName || ''}`}
-    />
+    <Splash text='Welcome Farmer' />
   )
 }
 

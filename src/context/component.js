@@ -6,13 +6,14 @@ import { useImmer } from 'use-immer'
 const ComponentContext = createContext({})
 
 export const ComponentContextProvider = ({ children }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [modal, setModal] = useState('')
-  const [data, setData] = useState([])
   const [id, setId] = useState('')
-  const [mode, setMode] = useState('')
   const [step, setStep] = useImmer(0)
+  const [data, setData] = useState([])
+  const [mode, setMode] = useState('')
+  const [modal, setModal] = useState('')
   const [otherStep, setOtherStep] = useImmer(0)
+  const [isSellOn, setIsSellOn] = useState(true)
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   function handleNext() {
     setStep(draft => draft + 1)
@@ -44,19 +45,21 @@ export const ComponentContextProvider = ({ children }) => {
   return (
     <ComponentContext.Provider
       value={{
+        id,
+        step,
+        mode,
+        data,
+        modal,
         isOpen,
         onClose,
-        modal,
-        data,
-        id,
-        mode,
-        handleModalClick,
-        step,
-        handleNext,
-        handleBack,
+        isSellOn,
         otherStep,
+        handleNext,
+        handlePrev,
+        handleBack,
+        setIsSellOn,
         handleNextStep,
-        handlePrev
+        handleModalClick
       }}
     >
       {children}
