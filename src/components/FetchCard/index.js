@@ -4,7 +4,7 @@ import { IoIosRefresh } from 'react-icons/io'
 import { Flex, Text, Button } from '@chakra-ui/react'
 import Loader from 'react-loader-spinner'
 
-const FetchCard = ({ loading, error, reload, ...rest }) => {
+const FetchCard = ({ loading, error, text, reload, ...rest }) => {
   return (
     <Flex {...rest}>
       <Flex
@@ -15,12 +15,17 @@ const FetchCard = ({ loading, error, reload, ...rest }) => {
       >
         <>
           {loading && (
-            <Loader type='Oval' color='#417505' height={40} width={40} />
+            <>
+              <Loader type='Oval' color='#417505' height={30} width={30} />
+              {text && (
+                <Text className='loading-text loading-text-b'>{text}</Text>
+              )}
+            </>
           )}
           {error && (
             <>
-              <Text fontSize='md' ml={2}>
-                Something went wrong.
+              <Text fontSize='md' ml={2} color='cf.400'>
+                Something went wrong
               </Text>
               <Button
                 bg='cf.800'
@@ -46,7 +51,8 @@ const FetchCard = ({ loading, error, reload, ...rest }) => {
 FetchCard.propTypes = {
   reload: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.any
+  error: PropTypes.any,
+  text: PropTypes.any
 }
 
 export default FetchCard

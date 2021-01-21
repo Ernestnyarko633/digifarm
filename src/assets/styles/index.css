@@ -59,6 +59,12 @@
   animation: dots 1s steps(5, end) infinite;
 }
 
+.loading-text-b{
+  display: unset;
+  top: unset;
+  position: unset;
+}
+
 @keyframes dots {
   0%,
   20% {
