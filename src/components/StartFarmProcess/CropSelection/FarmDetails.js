@@ -15,7 +15,7 @@ import AboutFarm from './AboutFarm'
 
 const MotionBox = motion.custom(Box)
 
-const FarmDetails = ({ query, handleNext }) => {
+const FarmDetails = ({ query, handleNext, setIsSellOn }) => {
   const [reload, setReload] = useState(0)
   const { getFarms } = useApi()
 
@@ -27,9 +27,16 @@ const FarmDetails = ({ query, handleNext }) => {
 
   useEffect(() => {
     let mounted = true
-    if (mounted && data) setSeletedFarm(data[0])
+    if (mounted && data) {
+      if (data.length) {
+        setIsSellOn(true)
+        setSeletedFarm(data[0])
+      } else {
+        setIsSellOn(false)
+      }
+    }
     return () => (mounted = false)
-  }, [data])
+  }, [data, setIsSellOn])
 
   const intersectionRef = useRef(null)
   const intersection = useIntersection(intersectionRef, {
@@ -39,16 +46,18 @@ const FarmDetails = ({ query, handleNext }) => {
   })
 
   return isLoading || error ? (
-    <FetchCard
-      direction='column'
-      align='center'
-      justify='center'
-      mx='auto'
-      w={90}
-      reload={triggerReload}
-      loading={isLoading}
-      error={error}
-    />
+    <Box p={16}>
+      <FetchCard
+        direction='column'
+        align='center'
+        justify='center'
+        mx='auto'
+        reload={triggerReload}
+        loading={isLoading}
+        error={error}
+        text='Getting farms'
+      />
+    </Box>
   ) : (
     <Grid
       templateColumns={{ md: '45% 55%' }}
@@ -67,7 +76,7 @@ const FarmDetails = ({ query, handleNext }) => {
           scrollBehavior: 'smooth'
         }}
       >
-        {data.map(farm => (
+        {data?.map(farm => (
           <CropSelectionCard
             key={farm._id}
             onClick={() => setSeletedFarm(farm)}
@@ -124,7 +133,8 @@ const FarmDetails = ({ query, handleNext }) => {
 
 FarmDetails.propTypes = {
   query: PropTypes.object.isRequired,
-  handleNext: PropTypes.func.isRequired
+  handleNext: PropTypes.func.isRequired,
+  setIsSellOn: PropTypes.func.isRequired
 }
 
 export default FarmDetails
