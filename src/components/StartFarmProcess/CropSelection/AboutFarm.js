@@ -11,7 +11,8 @@ import {
   Text
 } from '@chakra-ui/react'
 import { BsInfoCircleFill } from 'react-icons/bs'
-import { MdLocationOn } from 'react-icons/md'
+// import { MdLocationOn } from 'react-icons/md'
+import { IoLocation } from 'react-icons/io5'
 
 import { getformattedDate } from 'helpers/misc'
 
@@ -19,12 +20,19 @@ const AboutFarm = ({ farm }) => (
   <Box css={{ direction: 'ltr' }}>
     <Box>
       <Box>
-        <Heading as='h5' size='md'>
-          {farm.cropVariety?.crop?.name}({farm.cropVariety?.name}) #{farm.name}
-        </Heading>
+        <Flex alignItems='center'>
+          <Heading as='h5' size='md' textTransform='uppercase'>
+            {farm.cropVariety?.crop?.name}
+          </Heading>
+          <Text ml={2} as='span' fontSize='xs' textColor='gray.500'>
+            ({farm.cropVariety?.name}) #{farm.name}
+          </Text>
+        </Flex>
         <Text fontSize='xs'>
-          <Icon as={MdLocationOn} color='gray.400' /> {farm.location?.name},{' '}
-          {farm.location?.state} <Icon as={BsInfoCircleFill} color='cf.400' />
+          <Icon as={IoLocation} color='cf.400' />
+          {farm.location?.name}, {farm.location?.state},{' '}
+          {farm.location?.country}
+          <Icon as={BsInfoCircleFill} color='cf.400' mx={2} />
         </Text>
         <Divider orientation='horizontal' borderColor='gray.300' my={6} />
       </Box>

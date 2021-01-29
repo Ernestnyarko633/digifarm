@@ -7,6 +7,8 @@ import { Button } from 'components'
 import { motion } from 'framer-motion'
 
 import useApi from 'context/api'
+import useStartFarm from 'context/start-farm'
+
 import useFetch from 'hooks/useFetch'
 
 import CropSelectionCard from 'components/Cards/CropSelectionCard'
@@ -15,28 +17,33 @@ import AboutFarm from './AboutFarm'
 
 const MotionBox = motion.custom(Box)
 
-const FarmDetails = ({ query, handleNext, setIsSellOn }) => {
+const FarmDetails = ({ query, catName, handleNext, setIsSellOn }) => {
   const [reload, setReload] = useState(0)
+
+  const { selectedFarm, setSelectedFarm } = useStartFarm()
   const { getFarms } = useApi()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const { data, isLoading, error } = useFetch('farms', getFarms, reload, query)
 
-  const [seletedFarm, setSeletedFarm] = useState(null)
-
   useEffect(() => {
     let mounted = true
     if (mounted && data) {
       if (data.length) {
         setIsSellOn(true)
-        setSeletedFarm(data[0])
+        setSelectedFarm(data[0])
       } else {
         setIsSellOn(false)
       }
+
+      if (catName) {
+        sessionStorage.setItem('cat_name', catName)
+      }
     }
+
     return () => (mounted = false)
-  }, [data, setIsSellOn])
+  }, [data, catName, setIsSellOn, setSelectedFarm])
 
   const intersectionRef = useRef(null)
   const intersection = useIntersection(intersectionRef, {
@@ -46,18 +53,18 @@ const FarmDetails = ({ query, handleNext, setIsSellOn }) => {
   })
 
   return isLoading || error ? (
-    <Box p={16}>
-      <FetchCard
-        direction='column'
-        align='center'
-        justify='center'
-        mx='auto'
-        reload={triggerReload}
-        loading={isLoading}
-        error={error}
-        text='Getting farms'
-      />
-    </Box>
+    <FetchCard
+      p={16}
+      w='100%'
+      mx='auto'
+      align='center'
+      justify='center'
+      direction='column'
+      text='Getting farms'
+      error={error}
+      loading={isLoading}
+      reload={triggerReload}
+    />
   ) : (
     <Grid
       templateColumns={{ md: '45% 55%' }}
@@ -71,7 +78,7 @@ const FarmDetails = ({ query, handleNext, setIsSellOn }) => {
         overflowY='scroll'
         pos='relative'
         css={{
-          direction: 'ltl',
+          direction: 'ltr',
           scrollbarColor: 'rebeccapurple',
           scrollBehavior: 'smooth'
         }}
@@ -79,9 +86,12 @@ const FarmDetails = ({ query, handleNext, setIsSellOn }) => {
         {data?.map(farm => (
           <CropSelectionCard
             key={farm._id}
-            onClick={() => setSeletedFarm(farm)}
-            title={`${farm.cropVariety?.crop?.name}(${farm.cropVariety?.name}) #${farm.name}`}
+            farmName={farm.name}
             acres={farm.acreage}
+            varietyName={farm.cropVariety?.name}
+            onClick={() => setSelectedFarm(farm)}
+            cropName={farm.cropVariety?.crop?.name}
+            selected={farm._id === selectedFarm?._id}
           />
         ))}
       </GridItem>
@@ -97,9 +107,9 @@ const FarmDetails = ({ query, handleNext, setIsSellOn }) => {
           scrollBehavior: 'smooth'
         }}
       >
-        {seletedFarm && (
+        {selectedFarm && (
           <>
-            <AboutFarm farm={seletedFarm} />
+            <AboutFarm farm={selectedFarm} />
             <Box my={10} ref={intersectionRef}>
               {intersection && intersection.intersectionRatio < 1 ? (
                 <Box>&nbsp;</Box>
@@ -132,7 +142,8 @@ const FarmDetails = ({ query, handleNext, setIsSellOn }) => {
 }
 
 FarmDetails.propTypes = {
-  query: PropTypes.object.isRequired,
+  query: PropTypes.any,
+  catName: PropTypes.string.isRequired,
   handleNext: PropTypes.func.isRequired,
   setIsSellOn: PropTypes.func.isRequired
 }

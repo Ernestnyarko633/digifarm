@@ -15,7 +15,7 @@ const LogOut = ({ location: { state } }) => {
   const { user } = isAuthenticated()
 
   const APP = 'AUTH'
-  const PATH = '/redirects?from=BUYER&off=true'
+  const PATH = '/redirects?from=DIGITAL_FARMER&off=true'
 
   React.useEffect(() => {
     setTimeout(async () => {

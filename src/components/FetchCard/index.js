@@ -15,12 +15,10 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
       >
         <>
           {loading && (
-            <>
-              <Loader type='Oval' color='#417505' height={30} width={30} />
-              {text && (
-                <Text className='loading-text loading-text-b'>{text}</Text>
-              )}
-            </>
+            <Loader type='Oval' color='#417505' height={30} width={30} />
+          )}
+          {text && !error && (
+            <Text className='loading-text loading-text-b'>{text}</Text>
           )}
           {error && (
             <>

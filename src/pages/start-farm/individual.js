@@ -6,7 +6,7 @@ import OtherSteps from 'components/StartFarmProcess/OtherSteps'
 
 import useComponent from 'context/component'
 
-const Individual = () => {
+const Individual = props => {
   document.title = 'Complete Farmer | Individual'
 
   const { step } = useComponent()
@@ -16,7 +16,7 @@ const Individual = () => {
       case 0:
         return <CropSelection />
       case 1:
-        return <OtherSteps />
+        return <OtherSteps {...props} />
       default:
         return null
     }

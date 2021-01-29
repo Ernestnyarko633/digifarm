@@ -7,8 +7,13 @@ import useComponent from 'context/component'
 import FarmDetails from 'components/StartFarmProcess/CropSelection/FarmDetails'
 
 const HomeEmptyState = () => {
-  const { step, handleNext, isSellOn, setIsSellOn } = useComponent()
+  const { handleNext, isSellOn, setIsSellOn } = useComponent()
   const history = useHistory()
+
+  const handleGoToNext = () => {
+    handleNext()
+    history.push('/start-farm/individual')
+  }
 
   return (
     isSellOn && (
@@ -29,12 +34,9 @@ const HomeEmptyState = () => {
         </Flex>
 
         <FarmDetails
-          query={{}}
+          catName='Top Selling'
           setIsSellOn={setIsSellOn}
-          handleNext={() => {
-            handleNext()
-            !step && history.push('/start-farm/individual')
-          }}
+          handleNext={handleGoToNext}
         />
       </Box>
     )

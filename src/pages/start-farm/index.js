@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
-import CropCard from 'components/Cards/CropCard'
+import FarmingTypeCard from 'components/Cards/FarmingTypeCard'
 
 import useAuth from 'context/auth'
 
@@ -8,7 +8,6 @@ import useAuth from 'context/auth'
 import data from '../../data/farm.json'
 
 const StartFarm = () => {
-  const [farms] = React.useState(data)
   const { isAuthenticated } = useAuth()
 
   const { user } = isAuthenticated()
@@ -32,16 +31,17 @@ const StartFarm = () => {
       </Box>
 
       <Flex>
-        {farms.farms.map(item => (
-          <CropCard
-            key={item.id}
-            title={item.name}
-            subtitle={item.subtitle}
-            btntitle='Select'
-            options={item.benefits}
-            image={require(`../../assets/images/startfarm/${item.img}`).default}
-            path={`/start-farm/${item.id}`}
+        {data.map((item, idx) => (
+          <FarmingTypeCard
             state={item}
+            key={item.id}
+            btntitle='Select'
+            title={item.name}
+            options={item.benefits}
+            subtitle={item.subtitle}
+            path={`/start-farm/${item.id}`}
+            mr={idx ? 0 : 5}
+            image={require(`../../assets/images/startfarm/${item.img}`).default}
           />
         ))}
       </Flex>

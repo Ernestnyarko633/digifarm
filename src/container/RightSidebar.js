@@ -5,16 +5,15 @@ import React from 'react'
 const RightSidebar = () => {
   return (
     <Box
-      as='aside'
-      px={{ md: 10 }}
-      pos='fixed'
-      bottom={0}
-      right={0}
-      h={{ lg: '100vh' }}
-      bg='white'
-      zIndex={20}
-      w={{ md: '22%' }}
       pt={40}
+      right={0}
+      bg='white'
+      as='aside'
+      bottom={0}
+      pos='fixed'
+      px={{ md: 10 }}
+      h={{ lg: '100vh' }}
+      w={{ md: '22%' }}
     >
       <Heading
         as='h4'
