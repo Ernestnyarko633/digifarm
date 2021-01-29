@@ -48,36 +48,34 @@ const OtherSteps = ({ history: { push } }) => {
 
   return (
     <Box>
-      <Flex
-        align='center'
-        justify='center'
-        bg='gray.100'
-        w='100%'
-        h={20}
-        mt={20}
-      >
-        <Heading as='h5' size='md' mr={{ md: 20 }}>
-          {catName}
-        </Heading>
-
-        <Flex align='center' justify='space-between'>
-          {catFarms
-            ?.filter(farm => farm._id !== selectedFarm._id)
-            ?.map(farm => (
-              <Text key={farm._id} px={6}>
-                {farm.cropVariety?.crop.name}
-              </Text>
+      <Flex bg='cf-dark.400' h={20} mt={20}>
+        <Flex justify='space-between' mx='auto' w={{ md: 145 }}>
+          <Flex align='center'>
+            <Heading as='h5' size='md' mr={{ md: 40 }}>
+              {catName}
+            </Heading>
+          </Flex>
+          <Flex justify='space-between'>
+            {catFarms?.slice(0, 4)?.map(farm => (
+              <Flex
+                key={farm._id}
+                align='center'
+                justify='center'
+                direction='column'
+                borderBottomWidth={farm._id === selectedFarm._id && 2}
+                borderBottomColor={farm._id === selectedFarm._id && 'cf.400'}
+              >
+                <Text px={6} textTransform='uppercase'>
+                  {farm.cropVariety?.crop.name}
+                </Text>
+                <Text px={6} fontSize='tiny'>
+                  ({farm.cropVariety?.name}) #{farm?.name}
+                </Text>
+              </Flex>
             ))}
+          </Flex>
         </Flex>
       </Flex>
-
-      {/* <Flex align='center' justify='center' w='100%'>
-        <Box textAlign='center' mt={40}>
-          <Heading as='h4' size='xl'>
-            Farm details and Manager
-          </Heading>
-        </Box>
-      </Flex> */}
 
       <Flex
         align='center'

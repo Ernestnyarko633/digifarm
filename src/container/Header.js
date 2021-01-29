@@ -32,10 +32,10 @@ const Header = () => {
       pos='fixed'
       as='header'
       shadow='lg'
-      zIndex={50}
+      zIndex={100}
+      align='center'
       h={{ md: 20 }}
       gridArea='header'
-      align='center'
       justify='space-between'
       borderBottomWidth={1}
       borderBottomColor='gray.300'
