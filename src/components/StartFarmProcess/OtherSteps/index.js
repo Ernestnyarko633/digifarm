@@ -1,38 +1,46 @@
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
-import Button from 'components/Button'
-import useComponent from 'context/component'
-import { AnimateSharedLayout, motion } from 'framer-motion'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
+import { AnimateSharedLayout, motion } from 'framer-motion'
+
+import useComponent from 'context/component'
+import useStartFarm from 'context/start-farm'
+
+import Button from 'components/Button'
+
 import AboutFarmManager from './AboutFarmManager'
 import ChooseAcreage from './ChooseAcreage'
-import Confirmation from './Confirmation'
-import Contract from './Contract'
-import InviteLink from './InviteLink'
 import PaymentOption from './PaymentOption'
+import Confirmation from './Confirmation'
+import InviteLink from './InviteLink'
+import Contract from './Contract'
+import { getformattedDate } from 'helpers/misc'
 
 const MotionFlex = motion.custom(Flex)
 
-const OtherSteps = () => {
+const OtherSteps = ({ history: { push } }) => {
   const { otherStep, handlePrev, handleNextStep, handleBack } = useComponent()
+  const { selectedFarm } = useStartFarm()
 
-  function goHome() {
-    return (window.location.pathname = '/dashboard')
-  }
+  const catName = sessionStorage.getItem('cat_name')
+  const catFarms = JSON.parse(sessionStorage.getItem('farms'))
+
+  // const goHome = () => (window.location.pathname = '/dashboard')
 
   const getSteps = value => {
     switch (value) {
       case 0:
-        return <AboutFarmManager />
+        return <AboutFarmManager farm={selectedFarm} />
       case 1:
-        return <ChooseAcreage />
+        return <ChooseAcreage farm={selectedFarm} />
       case 2:
-        return <Contract />
+        return <Contract farm={selectedFarm} />
       case 3:
-        return <PaymentOption />
+        return <PaymentOption farm={selectedFarm} />
       case 4:
-        return <InviteLink />
+        return <InviteLink farm={selectedFarm} />
       case 5:
-        return <Confirmation />
+        return <Confirmation farm={selectedFarm} />
       default:
         return null
     }
@@ -49,15 +57,17 @@ const OtherSteps = () => {
         mt={20}
       >
         <Heading as='h5' size='md' mr={{ md: 20 }}>
-          Roots / Tubers
+          {catName}
         </Heading>
 
         <Flex align='center' justify='space-between'>
-          <Text px={6}>Ginger</Text>
-          <Text px={6}>Chilli pepper</Text>
-          <Text px={6}>Tiger nut</Text>
-          <Text px={6}>Sweet potato</Text>
-          <Text px={6}>Sorghum</Text>
+          {catFarms
+            ?.filter(farm => farm._id !== selectedFarm._id)
+            ?.map(farm => (
+              <Text key={farm._id} px={6}>
+                {farm.cropVariety?.crop.name}
+              </Text>
+            ))}
         </Flex>
       </Flex>
 
@@ -78,7 +88,13 @@ const OtherSteps = () => {
         mb={4}
       >
         <Text fontSize='sm' color='red.600'>
-          Farm starts : 2nd September, 2020
+          Farm starts :{' '}
+          {getformattedDate(selectedFarm.startDate, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
         </Text>
         <Flex
           align='center'
@@ -102,10 +118,10 @@ const OtherSteps = () => {
 
       <AnimateSharedLayout>
         <MotionFlex
-          layout
           w={{ md: 143 }}
           h={{ md: 120 }}
           mx='auto'
+          layout='true'
           borderWidth={1}
           borderColor='gray.400'
           rounded='md'
@@ -130,13 +146,16 @@ const OtherSteps = () => {
           ml={6}
           width={otherStep === 5 ? 70 : 56}
           fontSize='lg'
-          md
           h={12}
-          onClick={otherStep === 5 ? goHome : handleNextStep}
+          onClick={otherStep === 5 ? () => push('/dashboard') : handleNextStep}
         />
       </Flex>
     </Box>
   )
+}
+
+OtherSteps.propTypes = {
+  history: PropTypes.object.isRequired
 }
 
 export default OtherSteps

@@ -6,6 +6,7 @@ import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 
 import { ApiContextProvider } from 'context/api'
 import { ComponentContextProvider } from 'context/component'
+import { StartFarmProvider } from 'context/start-farm'
 import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
 
@@ -19,11 +20,13 @@ function App() {
       <ReactQueryCacheProvider queryCache={queryCache}>
         <ComponentContextProvider>
           <AuthContextProvider>
-            <ApiContextProvider>
-              <ModalContextProvider>
-                <Router />
-              </ModalContextProvider>
-            </ApiContextProvider>
+            <StartFarmProvider>
+              <ApiContextProvider>
+                <ModalContextProvider>
+                  <Router />
+                </ModalContextProvider>
+              </ApiContextProvider>
+            </StartFarmProvider>
           </AuthContextProvider>
         </ComponentContextProvider>
         <ReactQueryDevtools initialIsOpen />

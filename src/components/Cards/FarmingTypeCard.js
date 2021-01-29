@@ -16,15 +16,14 @@ import PropTypes from 'prop-types'
 import { Button } from 'components'
 import useComponent from 'context/component'
 
-const CropCard = ({
+const FarmingTypeCard = ({
+  btntitle,
+  subtitle,
+  options,
   image,
   title,
-  subtitle,
-  extra,
-  options,
-  btntitle,
-  path,
   state,
+  path,
   mr
 }) => {
   const { handleModalClick } = useComponent()
@@ -52,8 +51,6 @@ const CropCard = ({
             {subtitle}
           </Text>
         </Box>
-
-        {extra && <Text fontSize='sm'>{extra}</Text>}
       </Flex>
 
       <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
@@ -90,16 +87,15 @@ const CropCard = ({
   )
 }
 
-CropCard.propTypes = {
-  image: PropTypes.any.isRequired,
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string,
-  extra: PropTypes.string,
-  options: PropTypes.array,
+FarmingTypeCard.propTypes = {
   btntitle: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
+  image: PropTypes.any.isRequired,
+  subtitle: PropTypes.string,
+  options: PropTypes.array,
   state: PropTypes.object,
   mr: PropTypes.any
 }
 
-export default CropCard
+export default FarmingTypeCard

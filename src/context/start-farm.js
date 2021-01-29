@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const StartFarmContext = React.createContext({})
 
 export const StartFarmProvider = ({ children }) => {
+  const [selectedFarm, setSelectedFarm] = React.useState(null)
+
   return (
-    <StartFarmContext.Provider value={{}}>{children}</StartFarmContext.Provider>
+    <StartFarmContext.Provider value={{ selectedFarm, setSelectedFarm }}>
+      {children}
+    </StartFarmContext.Provider>
   )
 }
 
@@ -13,7 +17,6 @@ StartFarmProvider.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default function useStartFarm() {
-  const context = React.useContext(StartFarmContext)
-  return context
-}
+const useStartFarm = () => React.useContext(StartFarmContext)
+
+export default useStartFarm

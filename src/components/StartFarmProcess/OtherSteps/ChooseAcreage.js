@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import {
   Box,
   Grid,
@@ -9,24 +11,24 @@ import {
   Icon,
   Flex
 } from '@chakra-ui/react'
+import { InfoIcon } from '@chakra-ui/icons'
+import { motion } from 'framer-motion'
 
 import BaseSelect from 'components/Form/BaseSelect'
-import { InfoIcon } from '@chakra-ui/icons'
 import FormRadio from 'components/Form/FormRadio'
 import Map from './Map'
-import { motion } from 'framer-motion'
 
 const array = [...Array(500).keys()]
 const options = ['Yes', 'No']
 
 const MotionGrid = motion.custom(Grid)
 
-const ChooseAcreage = () => {
+const ChooseAcreage = ({ farm }) => {
   const [selectedAcreage, setSelectedAcreage] = React.useState('')
   const [cycle, setCycle] = React.useState('yes')
 
   return (
-    <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
+    <MotionGrid layout='true' templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem>
         <Map />
       </GridItem>
@@ -125,6 +127,10 @@ const ChooseAcreage = () => {
       </GridItem>
     </MotionGrid>
   )
+}
+
+ChooseAcreage.propTypes = {
+  farm: PropTypes.object.isRequired
 }
 
 export default ChooseAcreage

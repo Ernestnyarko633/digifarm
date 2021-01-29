@@ -25,12 +25,15 @@ export const getFormattedMoney = (val, withCurrecy) => {
   return !withCurrecy ? newFMondy.split('$')[1] : newFMondy
 }
 
-export const getformattedDate = date => {
-  return new Date(date).toLocaleDateString('en-GB', {
+export const getformattedDate = (
+  date,
+  options = {
     day: 'numeric',
     month: 'short',
     year: 'numeric'
-  })
+  }
+) => {
+  return new Date(date).toLocaleDateString('en-GB', options)
 }
 
 export const getCurrentDayParting = () => {
