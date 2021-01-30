@@ -28,7 +28,7 @@ const options = ['Yes', 'No']
 const MotionGrid = motion.custom(Grid)
 
 const ChooseAcreage = ({ farm }) => {
-  const [wantCycle, setWantCycle] = React.useState('no')
+  const [wantCycle, setWantCycle] = React.useState('No')
 
   const { cycle, acreage, setCycle, setAcreage } = useStartFarm()
 
@@ -127,7 +127,7 @@ const ChooseAcreage = ({ farm }) => {
               title='Do you want to apply cycle for this farm?'
             />
           </Box>
-          {wantCycle === 'yes' && (
+          {wantCycle === 'Yes' ? (
             <Box my={10}>
               <Heading as='h5' size='sm' mb={2}>
                 Choose number of cycles
@@ -144,6 +144,8 @@ const ChooseAcreage = ({ farm }) => {
                 />
               </Box>
             </Box>
+          ) : (
+            <Box my={10} />
           )}
         </Box>
       </GridItem>
