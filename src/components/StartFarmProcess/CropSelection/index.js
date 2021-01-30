@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Heading } from '@chakra-ui/react'
 
-import useComponent from 'context/component'
+import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
 
 import useFetch from 'hooks/useFetch'
@@ -11,7 +11,7 @@ import FetchCard from 'components/FetchCard'
 import FarmDetails from './FarmDetails'
 
 const CropSelection = () => {
-  const { handleNext, isSellOn, setIsSellOn } = useComponent()
+  const { handleNext, isSellOn } = useStartFarm()
 
   const [reload, setReload] = useState(0)
 
@@ -49,19 +49,18 @@ const CropSelection = () => {
                 align='center'
                 justify='center'
                 direction='column'
-                reload={triggerReload}
-                loading={isLoading}
                 error={error}
+                loading={isLoading}
+                reload={triggerReload}
               />
             ) : (
               <Tabs direction='row' py='0' px='0' boxWidth='100%'>
                 {categories?.map(cat => (
                   <Box key={cat._id} label={cat.name}>
                     <FarmDetails
-                      handleNext={handleNext}
-                      setIsSellOn={setIsSellOn}
                       catName={cat.name}
-                      query={cat._id !== { category: cat._id }}
+                      handleNext={handleNext}
+                      query={cat._id !== 'defualt' && { category: cat._id }}
                     />
                   </Box>
                 ))}

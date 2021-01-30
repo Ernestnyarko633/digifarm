@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import { AnimateSharedLayout, motion } from 'framer-motion'
 
-import useComponent from 'context/component'
 import useStartFarm from 'context/start-farm'
 
 import Button from 'components/Button'
@@ -14,13 +13,19 @@ import PaymentOption from './PaymentOption'
 import Confirmation from './Confirmation'
 import InviteLink from './InviteLink'
 import Contract from './Contract'
+
 import { getformattedDate } from 'helpers/misc'
 
 const MotionFlex = motion.custom(Flex)
 
 const OtherSteps = ({ history: { push } }) => {
-  const { otherStep, handlePrev, handleNextStep, handleBack } = useComponent()
-  const { selectedFarm } = useStartFarm()
+  const {
+    otherStep,
+    handlePrev,
+    handleBack,
+    selectedFarm,
+    handleNextStep
+  } = useStartFarm()
 
   const catName = sessionStorage.getItem('cat_name')
   const catFarms = JSON.parse(sessionStorage.getItem('farms'))
