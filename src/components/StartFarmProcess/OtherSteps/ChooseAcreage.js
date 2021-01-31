@@ -14,18 +14,26 @@ import {
 import { InfoIcon } from '@chakra-ui/icons'
 import { motion } from 'framer-motion'
 
+import useStartFarm from 'context/start-farm'
+
 import BaseSelect from 'components/Form/BaseSelect'
 import FormRadio from 'components/Form/FormRadio'
-import Map from './Map'
+import FormInput from 'components/Form/FormInput'
 
-const array = [...Array(500).keys()]
+import Map from './Map'
+import { getFormattedMoney } from 'helpers/misc'
+
 const options = ['Yes', 'No']
 
 const MotionGrid = motion.custom(Grid)
 
 const ChooseAcreage = ({ farm }) => {
-  const [selectedAcreage, setSelectedAcreage] = React.useState('')
-  const [cycle, setCycle] = React.useState('yes')
+  const [wantCycle, setWantCycle] = React.useState('No')
+
+  const { cycle, acreage, setCycle, setAcreage } = useStartFarm()
+
+  // eslint-disable-next-line no-console
+  console.log(wantCycle)
 
   return (
     <MotionGrid layout='true' templateColumns={{ md: 'repeat(2, 1fr)' }}>
@@ -51,11 +59,11 @@ const ChooseAcreage = ({ farm }) => {
           </Heading>
 
           <Box
-            borderWidth={1}
-            borderColor='gray.300'
             rounded='md'
-            overflow='hidden'
             padding={10}
+            borderWidth={1}
+            overflow='hidden'
+            borderColor='gray.300'
           >
             <Box paddingBottom='5'>
               <Heading as='h6' size='md'>
@@ -75,54 +83,70 @@ const ChooseAcreage = ({ farm }) => {
               water
             </Text>
           </Box>
-          <Box marginTop='10'>
-            <Heading as='h5' size='sm' mb={2}>
-              Choose number of acres to farm
-            </Heading>
-            <Flex align='center'>
-              <BaseSelect
-                options={array}
-                id='acres'
-                name='acres'
-                setFieldValue={setSelectedAcreage}
-                value={selectedAcreage || ''}
-                title='How many acres?'
-                placeholder='1 Acre'
-                width='250px'
-              />
-              <Box ml={6}>
-                <Text color='red.600' fontSize='xs'>
-                  +$800.00
-                </Text>
-                <Text mt={-2}>$ 750.000</Text>
+          <Flex marginTop='10' justifyContent='space-between'>
+            <Box>
+              <Heading as='h5' size='sm' mb={2}>
+                Choose number of acres to farm ({farm.acreage - acreage})
+              </Heading>
+              <Box w={36}>
+                <FormInput
+                  min={1}
+                  bg='white'
+                  type='number'
+                  name='acreage'
+                  value={acreage}
+                  max={farm.acreage}
+                  label='How many acres?'
+                  onChange={e => {
+                    // eslint-disable-next-line no-console
+                    console.log(e.target.value)
+                    if (e.nativeEvent.data) {
+                      setAcreage(e.nativeEvent.data)
+                    }
+                  }}
+                />
               </Box>
-            </Flex>
-          </Box>
+            </Box>
+            <Box textAlign='right'>
+              <Heading as='h5' size='sm' mb={2}>
+                Cost($)
+              </Heading>
+              <Box mt={6}>
+                <Text textAlign='right'>
+                  {getFormattedMoney(farm.pricePerAcre * acreage, true)}
+                </Text>
+              </Box>
+            </Box>
+          </Flex>
           <Box marginTop={10}>
             <FormRadio
-              state={cycle}
-              onChange={setCycle}
-              title='Do you want allow cycle for this farm?'
-              options={options}
               icon
+              state={wantCycle}
+              options={options}
+              onChange={setWantCycle}
+              title='Do you want to apply cycle for this farm?'
             />
           </Box>
-          <Box my={10}>
-            <Heading as='h5' size='sm' mb={2}>
-              Choose number of acres to farm
-            </Heading>
-            <Box w='250px'>
-              <BaseSelect
-                options={array}
-                id='acres'
-                name='acres'
-                setFieldValue={setSelectedAcreage}
-                value={selectedAcreage || ''}
-                title='Choose number of cycle(s)'
-                placeholder='1 cycle'
-              />
+          {wantCycle === 'Yes' ? (
+            <Box my={10}>
+              <Heading as='h5' size='sm' mb={2}>
+                Choose number of cycles
+              </Heading>
+              <Box w='250px'>
+                <BaseSelect
+                  id='cycle'
+                  name='cycle'
+                  value={cycle}
+                  placeholder='1 cycle'
+                  options={[2, 3, 4, 5]}
+                  title='Choose number of cycle(s)'
+                  setFieldValue={(name, value) => setCycle(value)}
+                />
+              </Box>
             </Box>
-          </Box>
+          ) : (
+            <Box my={10} />
+          )}
         </Box>
       </GridItem>
     </MotionGrid>

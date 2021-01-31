@@ -2,12 +2,12 @@ import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 
-import useComponent from 'context/component'
+import useStartFarm from 'context/start-farm'
 
 import FarmDetails from 'components/StartFarmProcess/CropSelection/FarmDetails'
 
 const HomeEmptyState = () => {
-  const { handleNext, isSellOn, setIsSellOn } = useComponent()
+  const { handleNext, isSellOn } = useStartFarm()
   const history = useHistory()
 
   const handleGoToNext = () => {
@@ -33,11 +33,7 @@ const HomeEmptyState = () => {
           <Text fontSize={{ md: '2xl' }}>Choose a crop to start farming</Text>
         </Flex>
 
-        <FarmDetails
-          catName='Top Selling'
-          setIsSellOn={setIsSellOn}
-          handleNext={handleGoToNext}
-        />
+        <FarmDetails catName='Top Selling' handleNext={handleGoToNext} />
       </Box>
     )
   )

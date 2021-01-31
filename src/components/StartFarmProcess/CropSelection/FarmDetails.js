@@ -17,11 +17,11 @@ import AboutFarm from './AboutFarm'
 
 const MotionBox = motion.custom(Box)
 
-const FarmDetails = ({ query, catName, handleNext, setIsSellOn }) => {
-  const [reload, setReload] = useState(0)
-
-  const { selectedFarm, setSelectedFarm } = useStartFarm()
+const FarmDetails = ({ query, catName, handleNext }) => {
+  const { setIsSellOn, selectedFarm, setSelectedFarm } = useStartFarm()
   const { getFarms } = useApi()
+
+  const [reload, setReload] = useState(0)
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -41,7 +41,6 @@ const FarmDetails = ({ query, catName, handleNext, setIsSellOn }) => {
         sessionStorage.setItem('cat_name', catName)
       }
     }
-
     return () => (mounted = false)
   }, [data, catName, setIsSellOn, setSelectedFarm])
 
@@ -89,9 +88,12 @@ const FarmDetails = ({ query, catName, handleNext, setIsSellOn }) => {
             farmName={farm.name}
             acres={farm.acreage}
             varietyName={farm.cropVariety?.name}
-            onClick={() => setSelectedFarm(farm)}
             cropName={farm.cropVariety?.crop?.name}
             selected={farm._id === selectedFarm?._id}
+            onClick={() => {
+              setSelectedFarm(farm)
+              // setFieldValue('product', farm._id)
+            }}
           />
         ))}
       </GridItem>
@@ -144,8 +146,7 @@ const FarmDetails = ({ query, catName, handleNext, setIsSellOn }) => {
 FarmDetails.propTypes = {
   query: PropTypes.any,
   catName: PropTypes.string.isRequired,
-  handleNext: PropTypes.func.isRequired,
-  setIsSellOn: PropTypes.func.isRequired
+  handleNext: PropTypes.func.isRequired
 }
 
 export default FarmDetails

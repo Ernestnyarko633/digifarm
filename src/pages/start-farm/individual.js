@@ -1,18 +1,31 @@
 import React from 'react'
-import { Box, Flex, Image } from '@chakra-ui/react'
-
+import { Box, Flex, Image, useToast } from '@chakra-ui/react'
 import CropSelection from 'components/StartFarmProcess/CropSelection'
+
 import OtherSteps from 'components/StartFarmProcess/OtherSteps'
 
-import useComponent from 'context/component'
+import useApi from 'context/api'
+import useAuth from 'context/auth'
+import useStartFarm from 'context/start-farm'
 
 const Individual = props => {
   document.title = 'Complete Farmer | Individual'
 
-  const { step } = useComponent()
+  const { addToast } = useToast()
+  const { setSession } = useAuth()
+  const { createOrder } = useApi()
+  const { step, setOrder, setSubmitting } = useStartFarm()
 
-  const getContent = value => {
-    switch (value) {
+  React.useEffect(() => {
+    return () => {
+      // clear cache data in session storage
+      sessionStorage.removeItem('categories')
+      sessionStorage.removeItem('farms')
+    }
+  }, [])
+
+  const getContent = key => {
+    switch (key) {
       case 0:
         return <CropSelection />
       case 1:
@@ -22,13 +35,34 @@ const Individual = props => {
     }
   }
 
-  React.useEffect(() => {
-    return () => {
-      // clear cache data in session storage
-      sessionStorage.removeItem('categories')
-      sessionStorage.removeItem('farms')
+  // eslint-disable-next-line no-unused-vars
+  const handleFormSubmit = async () => {
+    try {
+      setSubmitting(true)
+      const res = await createOrder({})
+      setSubmitting(false)
+      setOrder(res.data)
+      addToast(res.message, { appearance: 'success', autoDismiss: true })
+    } catch (error) {
+      if (error) {
+        if ([401, 403].includes(error.status)) {
+          setSession(false)
+        } else {
+          addToast(error?.data?.message || error.message, {
+            appearance: 'error',
+            autoDismiss: true
+          })
+        }
+      } else {
+        addToast('Unexpected network error', {
+          appearance: 'error',
+          autoDismiss: true
+        })
+      }
+    } finally {
+      setSubmitting(false)
     }
-  }, [])
+  }
 
   return (
     <Box>

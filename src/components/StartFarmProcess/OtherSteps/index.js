@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import { AnimateSharedLayout, motion } from 'framer-motion'
 
-import useComponent from 'context/component'
 import useStartFarm from 'context/start-farm'
 
 import Button from 'components/Button'
@@ -14,13 +13,19 @@ import PaymentOption from './PaymentOption'
 import Confirmation from './Confirmation'
 import InviteLink from './InviteLink'
 import Contract from './Contract'
+
 import { getformattedDate } from 'helpers/misc'
 
 const MotionFlex = motion.custom(Flex)
 
 const OtherSteps = ({ history: { push } }) => {
-  const { otherStep, handlePrev, handleNextStep, handleBack } = useComponent()
-  const { selectedFarm } = useStartFarm()
+  const {
+    otherStep,
+    handlePrev,
+    handleBack,
+    selectedFarm,
+    handleNextStep
+  } = useStartFarm()
 
   const catName = sessionStorage.getItem('cat_name')
   const catFarms = JSON.parse(sessionStorage.getItem('farms'))
@@ -48,36 +53,34 @@ const OtherSteps = ({ history: { push } }) => {
 
   return (
     <Box>
-      <Flex
-        align='center'
-        justify='center'
-        bg='gray.100'
-        w='100%'
-        h={20}
-        mt={20}
-      >
-        <Heading as='h5' size='md' mr={{ md: 20 }}>
-          {catName}
-        </Heading>
-
-        <Flex align='center' justify='space-between'>
-          {catFarms
-            ?.filter(farm => farm._id !== selectedFarm._id)
-            ?.map(farm => (
-              <Text key={farm._id} px={6}>
-                {farm.cropVariety?.crop.name}
-              </Text>
+      <Flex bg='cf-dark.400' h={20} mt={20}>
+        <Flex justify='space-between' mx='auto' w={{ md: 145 }}>
+          <Flex align='center'>
+            <Heading as='h5' size='md' mr={{ md: 40 }}>
+              {catName}
+            </Heading>
+          </Flex>
+          <Flex justify='space-between'>
+            {catFarms?.slice(0, 4)?.map(farm => (
+              <Flex
+                key={farm._id}
+                align='center'
+                justify='center'
+                direction='column'
+                borderBottomWidth={farm._id === selectedFarm._id && 2}
+                borderBottomColor={farm._id === selectedFarm._id && 'cf.400'}
+              >
+                <Text px={6} textTransform='uppercase'>
+                  {farm.cropVariety?.crop.name}
+                </Text>
+                <Text px={6} fontSize='tiny'>
+                  ({farm.cropVariety?.name}) #{farm?.name}
+                </Text>
+              </Flex>
             ))}
+          </Flex>
         </Flex>
       </Flex>
-
-      {/* <Flex align='center' justify='center' w='100%'>
-        <Box textAlign='center' mt={40}>
-          <Heading as='h4' size='xl'>
-            Farm details and Manager
-          </Heading>
-        </Box>
-      </Flex> */}
 
       <Flex
         align='center'

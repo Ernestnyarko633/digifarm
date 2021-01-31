@@ -7,10 +7,11 @@ const CropSelectionCard = ({
   cropName,
   selected,
   farmName,
-  onClick,
-  acres
+  acres,
+  ...rest
 }) => (
   <Flex
+    {...rest}
     h={48}
     w='100%'
     as='button'
@@ -18,7 +19,6 @@ const CropSelectionCard = ({
     align='center'
     direction='column'
     justify='center'
-    onClick={onClick}
     borderTopWidth={1}
     borderTopColor='gray.300'
     borderWidth={selected && 2}
@@ -40,12 +40,11 @@ const CropSelectionCard = ({
 )
 
 CropSelectionCard.propTypes = {
-  cropName: PropTypes.string.isRequired,
   varietyName: PropTypes.string.isRequired,
+  cropName: PropTypes.string.isRequired,
   farmName: PropTypes.string.isRequired,
-  acres: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
+  acres: PropTypes.number.isRequired
 }
 
 export default CropSelectionCard

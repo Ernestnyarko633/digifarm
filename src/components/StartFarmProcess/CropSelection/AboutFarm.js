@@ -17,36 +17,33 @@ import { IoLocation } from 'react-icons/io5'
 import { getformattedDate } from 'helpers/misc'
 
 const AboutFarm = ({ farm }) => (
-  <Box css={{ direction: 'ltr' }}>
+  <Box textAlign='left' css={{ direction: 'ltr' }}>
     <Box>
-      <Box>
-        <Flex alignItems='center'>
-          <Heading as='h5' size='md' textTransform='uppercase'>
-            {farm.cropVariety?.crop?.name}
-          </Heading>
-          <Text ml={2} as='span' fontSize='xs' textColor='gray.500'>
-            ({farm.cropVariety?.name}) #{farm.name}
-          </Text>
-        </Flex>
-        <Text fontSize='xs'>
-          <Icon as={IoLocation} color='cf.400' />
-          {farm.location?.name}, {farm.location?.state},{' '}
-          {farm.location?.country}
-          <Icon as={BsInfoCircleFill} color='cf.400' mx={2} />
+      <Flex alignItems='center'>
+        <Heading as='h5' size='md' textTransform='uppercase'>
+          {farm.cropVariety?.crop?.name}
+        </Heading>
+        <Text ml={2} as='span' fontSize='xs' textColor='gray.500'>
+          ({farm.cropVariety?.name}) #{farm.name}
         </Text>
-        <Divider orientation='horizontal' borderColor='gray.300' my={6} />
-      </Box>
+      </Flex>
+      <Text fontSize='xs'>
+        <Icon as={IoLocation} color='cf.400' />
+        {farm.location?.name}, {farm.location?.state}, {farm.location?.country}
+        <Icon as={BsInfoCircleFill} color='cf.400' mx={2} />
+      </Text>
+      <Divider orientation='horizontal' borderColor='gray.300' my={6} />
+    </Box>
 
-      <Box w='100%' h='200px' backgroundColor='#cccc'>
-        <Image
-          h='100%'
-          w='100%'
-          objectFit='cover'
-          rounded='md'
-          src={farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl}
-          alt='crop'
-        />
-      </Box>
+    <Box w='100%' h='200px' backgroundColor='#cccc'>
+      <Image
+        h='100%'
+        w='100%'
+        objectFit='cover'
+        rounded='md'
+        src={farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl}
+        alt='crop'
+      />
     </Box>
 
     <Box mb={{ md: 12 }}>

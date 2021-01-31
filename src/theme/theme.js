@@ -35,7 +35,6 @@ export const theme = extendTheme({
   },
   colors: {
     cf: {
-      50: '#FCFCFC',
       100: 'rgba(68, 95, 36, 0.04)',
       200: 'rgba(60, 145, 48, 0.1)',
       300: 'rgba(60, 145, 48, 0.05)',
@@ -49,9 +48,11 @@ export const theme = extendTheme({
       900: 'linear-gradient(#93CF88, #5AA250)'
     },
     'cf-dark': {
+      100: '#FCFCFC',
       200: 'rgba(227, 231, 221, 0.2)',
       250: 'rgba(97, 111, 57, 0.1)',
-      300: 'rgba(155, 155, 155, 0.085)'
+      300: 'rgba(155, 155, 155, 0.085)',
+      400: 'rgba(216, 216, 216,  0.22)'
     },
     cfButton: {
       500: '#3c9130',

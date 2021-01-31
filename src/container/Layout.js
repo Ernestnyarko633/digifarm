@@ -24,7 +24,7 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
           pt={pt}
           w='100%'
           as='main'
-          bg='cf.50'
+          bg='cf-dark.400'
           h={height}
           color='gray.800'
           fontFamily='body'
