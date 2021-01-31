@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { IoIosRefresh } from 'react-icons/io'
-import { Flex, Text, Button } from '@chakra-ui/react'
-import Loader from 'react-loader-spinner'
+import { Flex, Text, Spinner, Button } from '@chakra-ui/react'
 
 const FetchCard = ({ loading, error, text, reload, ...rest }) => {
   return (
@@ -14,9 +13,7 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
         direction='column'
       >
         <>
-          {loading && (
-            <Loader type='Oval' color='#417505' height={30} width={30} />
-          )}
+          {loading && <Spinner size='lg' color='cf.400' />}
           {text && !error && (
             <Text className='loading-text loading-text-b'>{text}</Text>
           )}

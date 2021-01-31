@@ -20,9 +20,7 @@
     "emotion-theming": "^11.0.0",
     "formik": "^2.2.5",
     "framer-motion": "^3.1.4",
-    "google-map-react": "^2.1.9",
     "immer": "^8.0.0",
-    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
     "node-sass": "5.0.0",
     "prismic-javascript": "^3.0.2",
@@ -33,7 +31,6 @@
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.2.4",
     "react-icons": "^4.1.0",
-    "react-loader-spinner": "^3.1.14",
     "react-map-gl": "^5.2.10",
     "react-query": "^2.26.3",
     "react-query-devtools": "^2.6.3",
@@ -99,7 +96,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.+(js|jsx|json)": [
+    "src/**/*.+(js|jsx)": [
       "eslint --fix"
     ]
   }

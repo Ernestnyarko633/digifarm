@@ -1,20 +1,15 @@
 import React from 'react'
-import { Box, Flex, Image, useToast } from '@chakra-ui/react'
-import CropSelection from 'components/StartFarmProcess/CropSelection'
+import { Box, Flex, Image } from '@chakra-ui/react'
 
-import OtherSteps from 'components/StartFarmProcess/OtherSteps'
-
-import useApi from 'context/api'
-import useAuth from 'context/auth'
 import useStartFarm from 'context/start-farm'
+
+import CropSelection from 'components/StartFarmProcess/CropSelection'
+import OtherSteps from 'components/StartFarmProcess/OtherSteps'
 
 const Individual = props => {
   document.title = 'Complete Farmer | Individual'
 
-  const { addToast } = useToast()
-  const { setSession } = useAuth()
-  const { createOrder } = useApi()
-  const { step, setOrder, setSubmitting } = useStartFarm()
+  const { step } = useStartFarm()
 
   React.useEffect(() => {
     return () => {
@@ -24,7 +19,7 @@ const Individual = props => {
     }
   }, [])
 
-  const getContent = key => {
+  const getFlow = key => {
     switch (key) {
       case 0:
         return <CropSelection />
@@ -32,35 +27,6 @@ const Individual = props => {
         return <OtherSteps {...props} />
       default:
         return null
-    }
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  const handleFormSubmit = async () => {
-    try {
-      setSubmitting(true)
-      const res = await createOrder({})
-      setSubmitting(false)
-      setOrder(res.data)
-      addToast(res.message, { appearance: 'success', autoDismiss: true })
-    } catch (error) {
-      if (error) {
-        if ([401, 403].includes(error.status)) {
-          setSession(false)
-        } else {
-          addToast(error?.data?.message || error.message, {
-            appearance: 'error',
-            autoDismiss: true
-          })
-        }
-      } else {
-        addToast('Unexpected network error', {
-          appearance: 'error',
-          autoDismiss: true
-        })
-      }
-    } finally {
-      setSubmitting(false)
     }
   }
 
@@ -84,7 +50,7 @@ const Individual = props => {
         </Box>
       </Flex>
 
-      {getContent(step)}
+      {getFlow(step)}
     </Box>
   )
 }

@@ -7,7 +7,7 @@ import http from 'utils/httpFacade'
 const ApiContext = createContext()
 
 export const ApiContextProvider = ({ children }) => {
-  const { AUTH_API, FMS_API, PAYMENT_API, DIGITAL_FARMER_API } = getConfig()
+  const { FMS_API, AUTH_API, PAYMENT_API, DIGITAL_FARMER_API } = getConfig()
 
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
