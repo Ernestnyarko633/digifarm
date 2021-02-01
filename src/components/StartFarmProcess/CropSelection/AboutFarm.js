@@ -39,10 +39,10 @@ const AboutFarm = ({ farm }) => (
       <Image
         h='100%'
         w='100%'
-        objectFit='cover'
         rounded='md'
+        objectFit='cover'
         src={farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl}
-        alt='crop'
+        alt={farm.cropVariety?.crop?.name}
       />
     </Box>
 

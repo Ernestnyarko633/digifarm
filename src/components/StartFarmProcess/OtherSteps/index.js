@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
+import { Flex, Heading, Image, Text } from '@chakra-ui/react'
 import { AnimateSharedLayout, motion } from 'framer-motion'
 
 import useStartFarm from 'context/start-farm'
 
+import Overlay from 'components/Loading/Overlay'
 import Button from 'components/Button'
 
 import AboutFarmManager from './AboutFarmManager'
@@ -20,17 +21,19 @@ const MotionFlex = motion.custom(Flex)
 
 const OtherSteps = ({ history: { push } }) => {
   const {
+    text,
     otherStep,
     handlePrev,
     handleBack,
     selectedFarm,
-    handleNextStep
+    isSubmitting,
+    handlePayment,
+    handleNextStep,
+    handleCreateOrder
   } = useStartFarm()
 
   const catName = sessionStorage.getItem('cat_name')
   const catFarms = JSON.parse(sessionStorage.getItem('farms'))
-
-  // const goHome = () => (window.location.pathname = '/dashboard')
 
   const getSteps = value => {
     switch (value) {
@@ -51,8 +54,36 @@ const OtherSteps = ({ history: { push } }) => {
     }
   }
 
+  const getForwardButtonProps = key => {
+    switch (key) {
+      case 2:
+        return {
+          title: 'Accept Agreement',
+          width: 56,
+          action: handleCreateOrder
+        }
+      case 3:
+        return {
+          title: 'Next',
+          width: 56,
+          action: handlePayment
+        }
+      case 5:
+        return {
+          title: 'Continue to my Dashboard',
+          width: 70,
+          action: () => push('/dashboard')
+        }
+      default:
+        return { title: 'Next', width: 56, action: handleNextStep }
+    }
+  }
+
+  const { title, action, width } = getForwardButtonProps(otherStep)
+
   return (
-    <Box>
+    <>
+      {isSubmitting && <Overlay text={text} />}
       <Flex bg='cf-dark.400' h={20} mt={20}>
         <Flex justify='space-between' mx='auto' w={{ md: 145 }}>
           <Flex align='center'>
@@ -124,7 +155,6 @@ const OtherSteps = ({ history: { push } }) => {
           w={{ md: 143 }}
           h={{ md: 120 }}
           mx='auto'
-          layout='true'
           borderWidth={1}
           borderColor='gray.400'
           rounded='md'
@@ -136,24 +166,24 @@ const OtherSteps = ({ history: { push } }) => {
 
       <Flex align='center' justify='center' mt={6}>
         <Button
-          btntitle='Prev'
-          colorScheme='white'
-          color='gray.700'
+          h={12}
           width={56}
           fontSize='md'
-          h={12}
+          btntitle='Prev'
+          color='gray.700'
+          colorScheme='white'
           onClick={otherStep <= 0 ? handleBack : handlePrev}
         />
         <Button
-          btntitle={otherStep === 5 ? 'Continue to my Dashboard' : 'Next'}
           ml={6}
-          width={otherStep === 5 ? 70 : 56}
-          fontSize='lg'
           h={12}
-          onClick={otherStep === 5 ? () => push('/dashboard') : handleNextStep}
+          fontSize='lg'
+          width={width}
+          btntitle={title}
+          onClick={action}
         />
       </Flex>
-    </Box>
+    </>
   )
 }
 

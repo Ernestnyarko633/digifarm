@@ -29,7 +29,7 @@ const CropSelectionCard = ({
       {acres} acres left
     </Text>
     <Flex direction='column'>
-      <Heading as='h5' size='md' textTransform='uppercase'>
+      <Heading as='h5' fontSize='md' textTransform='uppercase'>
         {cropName}
       </Heading>
       <Text ml={2} as='span' fontSize='xs' textColor='gray.500'>

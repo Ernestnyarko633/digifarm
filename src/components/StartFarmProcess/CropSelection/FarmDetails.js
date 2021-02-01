@@ -90,10 +90,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
             varietyName={farm.cropVariety?.name}
             cropName={farm.cropVariety?.crop?.name}
             selected={farm._id === selectedFarm?._id}
-            onClick={() => {
-              setSelectedFarm(farm)
-              // setFieldValue('product', farm._id)
-            }}
+            onClick={() => setSelectedFarm(farm)}
           />
         ))}
       </GridItem>

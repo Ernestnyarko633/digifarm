@@ -4,11 +4,12 @@ import { BrowserRouter } from 'react-router-dom'
 import { ReactQueryDevtools } from 'react-query-devtools'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 
-import { ApiContextProvider } from 'context/api'
+import { StartFarmContextProvider } from 'context/start-farm'
 import { ComponentContextProvider } from 'context/component'
-import { StartFarmProvider } from 'context/start-farm'
+import { ExternalContextProvider } from 'context/external'
 import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
+import { ApiContextProvider } from 'context/api'
 
 import Router from 'routes/register'
 
@@ -19,15 +20,17 @@ function App() {
     <BrowserRouter>
       <ReactQueryCacheProvider queryCache={queryCache}>
         <ComponentContextProvider>
-          <AuthContextProvider>
-            <StartFarmProvider>
-              <ApiContextProvider>
-                <ModalContextProvider>
-                  <Router />
-                </ModalContextProvider>
-              </ApiContextProvider>
-            </StartFarmProvider>
-          </AuthContextProvider>
+          <ApiContextProvider>
+            <ExternalContextProvider>
+              <AuthContextProvider>
+                <StartFarmContextProvider>
+                  <ModalContextProvider>
+                    <Router />
+                  </ModalContextProvider>
+                </StartFarmContextProvider>
+              </AuthContextProvider>
+            </ExternalContextProvider>
+          </ApiContextProvider>
         </ComponentContextProvider>
         <ReactQueryDevtools initialIsOpen />
       </ReactQueryCacheProvider>

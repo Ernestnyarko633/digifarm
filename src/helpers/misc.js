@@ -13,16 +13,17 @@ export const fileToBase64 = async file => {
   })
 }
 
-export const getFormattedMoney = (val, withCurrecy) => {
+export const getFormattedMoney = val => {
   let number = val
   if (Number.isNaN(val)) {
     number = 0
   }
-  const newFMondy = new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
-  }).format(number)
-  return !withCurrecy ? newFMondy.split('$')[1] : newFMondy
+  })
+    .format(number)
+    .split('$')[1]
 }
 
 export const getformattedDate = (

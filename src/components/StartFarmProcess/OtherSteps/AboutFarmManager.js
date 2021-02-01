@@ -51,7 +51,7 @@ const AboutFarmManager = ({ farm }) => {
   }, [Client, doc])
 
   return (
-    <MotionGrid layout='true' templateColumns='repeat(2, 1fr)'>
+    <MotionGrid templateColumns='repeat(2, 1fr)'>
       <Box px={20} pt={20} borderRightColor='gray.400' borderRightWidth={2}>
         <Box>
           <Image
