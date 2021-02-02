@@ -4,12 +4,12 @@ import {
   Divider,
   Progress,
   Heading,
-  Button,
   Flex,
   Avatar,
   Text,
   Image,
-  Spacer
+  Spacer,
+  Button
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
@@ -24,7 +24,14 @@ const BuyerCard = ({
   price
 }) => (
   <Flex justify='center'>
-    <Box py={6} my={6} w={{ md: '700px' }} bg='white' px={8}>
+    <Box
+      p={10}
+      my={6}
+      w={{ md: '700px' }}
+      bg='white'
+      rounded='lg'
+      boxShadow='0px 29px 36px rgba(125, 138, 159, 0.130406)'
+    >
       <Flex>
         <Box my={1}>
           <Flex>
@@ -42,12 +49,28 @@ const BuyerCard = ({
           </Flex>
         </Box>
         <Spacer />
-        <ConfirmSale
-          amtLeft={amtLeft}
-          name={name}
-          amtBought={amtBought}
-          price={price}
-        />
+        <Flex>
+          <Button
+            mr={5}
+            mt={4}
+            rounded='30px'
+            fontWeight='thin'
+            fontSize='xs'
+            variant='outline'
+            borderColor='cf.400'
+            bg='white'
+            _hover={{ bg: 'white' }}
+            w={{ md: '120px' }}
+          >
+            About buyer
+          </Button>
+          <ConfirmSale
+            amtLeft={amtLeft}
+            name={name}
+            amtBought={amtBought}
+            price={price}
+          />
+        </Flex>
       </Flex>
       <Box mt={4}>
         <Flex>
@@ -84,7 +107,7 @@ const BuyerCard = ({
         </Flex>
       </Box>
     </Box>
-    <Flex>
+    {/* <Flex>
       <Button
         mr={5}
         mt={4}
@@ -103,7 +126,7 @@ const BuyerCard = ({
         amtBought={amtBought}
         price={price}
       />
-    </Flex>
+    </Flex> */}
   </Flex>
 )
 
