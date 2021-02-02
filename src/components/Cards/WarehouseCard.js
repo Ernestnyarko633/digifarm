@@ -23,70 +23,93 @@ const WarehouseCard = ({
   mr,
   ml
 }) => (
-  <Box>
-    <Flex justify='center'>
-      <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>
-        <Flex>
-          <Flex mb={4}>
-            <Avatar bg='gray.100'>
-              <Image src={image} />
-            </Avatar>
-            <Box ml={2}>
-              <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
-                {name}
-              </Heading>
-              <Text fontSize='xs' mt={{ md: -2 }}>
-                {location}
-              </Text>
-            </Box>
-          </Flex>
-          <Box ml={6}>
-            <Box rounded='40px' bg='cf.200' my={1} pt={1} px={2}>
-              <Text color='cf.400' fontSize='9px' textAlign='center'>
-                Pending Order
-              </Text>
-            </Box>
-            <Text as='h6' fontSize='9px' ml={2} fontWeight='bold'>
-              80% Complete
+  <Flex mr={6}>
+    <Box
+      rounded='lg'
+      bg='white'
+      p={6}
+      minW={{ md: 108 }}
+      overflow='hidden'
+      shadow='md'
+    >
+      <Flex justify='space-between'>
+        <Flex mb={4}>
+          <Avatar bg='gray.100'>
+            <Image src={image} />
+          </Avatar>
+          <Box ml={2}>
+            <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
+              {name}
+            </Heading>
+            <Text fontSize='xs' mt={{ md: -2 }}>
+              {location}
             </Text>
           </Box>
         </Flex>
-        <Divider borderColor='gray.300' />
-        <Box>
-          <Flex>
-            <List my={3}>
-              <ListItem fontSize='xs'>
-                Volume -{' '}
-                <span fontSize='sm' pl={2}>
-                  {quantity}
-                </span>
-              </ListItem>
-              <ListItem fontSize='xs'>
-                Weight -{' '}
-                <span fontSize='sm' pl={2}>
-                  {weight}
-                </span>
-              </ListItem>
-              <ListItem fontSize='xs'>
-                Number of Bags -
-                <span fontSize='sm' pl={2}>
-                  {' '}
-                  {bags}
-                </span>
-              </ListItem>
-              <ListItem fontSize='xs'>
-                Yeild conditions -
-                <span fontSize='sm' pl={2}>
-                  {' '}
-                  {condition}
-                </span>
-              </ListItem>
-            </List>
-          </Flex>
+        <Box ml={6}>
+          <Box rounded='40px' bg='cf.200' my={1} pt={1} px={2}>
+            <Text color='cf.400' fontSize='9px' textAlign='center'>
+              Pending Order
+            </Text>
+          </Box>
+          <Text as='h6' fontSize='9px' ml={2} fontWeight='bold'>
+            80% Complete
+          </Text>
         </Box>
+      </Flex>
+      <Divider borderColor='gray.300' />
+      <Box>
+        <Flex>
+          <List my={3} w='100%' mr={{ md: 16 }}>
+            <ListItem
+              d='flex'
+              justifyContent='space-between'
+              alignItems='center'
+              fontSize='xs'
+            >
+              <Text>Volume</Text>
+              <Text as='span' fontSize='sm' textAlign='left'>
+                - {quantity}
+              </Text>
+            </ListItem>
+            <ListItem
+              d='flex'
+              justifyContent='space-between'
+              alignItems='center'
+              fontSize='xs'
+            >
+              <Text>Weight</Text>
+              <Text as='span' fontSize='sm' textAlign='left'>
+                - {weight}
+              </Text>
+            </ListItem>
+            <ListItem
+              d='flex'
+              justifyContent='space-between'
+              alignItems='center'
+              fontSize='xs'
+            >
+              <Text>Number of Bags</Text>
+              <Text as='span' fontSize='sm' textAlign='left'>
+                - {bags}
+              </Text>
+            </ListItem>
+            <ListItem
+              d='flex'
+              justifyContent='space-between'
+              alignItems='center'
+              fontSize='xs'
+            >
+              <Text>Yeild conditions</Text>
+              <Text as='span' fontSize='sm' textAlign='left'>
+                - {condition}
+              </Text>
+            </ListItem>
+          </List>
+        </Flex>
       </Box>
-    </Flex>
-  </Box>
+    </Box>
+  </Flex>
 )
 
 WarehouseCard.propTypes = {
