@@ -50,7 +50,7 @@ const Sidebar = () => {
       left={0}
       h={{ lg: '100vh' }}
       bg='white'
-      zIndex={20}
+      zIndex={50}
       pt={40}
       boxShadow=' sm'
       px={{ md: 2 }}

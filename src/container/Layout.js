@@ -28,6 +28,7 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
           h={height}
           color='gray.800'
           fontFamily='body'
+          overflowX='hidden'
           {...rest}
         >
           {children}
