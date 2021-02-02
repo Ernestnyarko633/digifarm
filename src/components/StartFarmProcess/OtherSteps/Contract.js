@@ -9,17 +9,14 @@ const MotionGrid = motion.custom(Grid)
 
 const Contract = ({ farm }) => {
   return (
-    <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
-      <GridItem>Left</GridItem>
+    <MotionGrid px={10}>
       <GridItem
-        borderLeftWidth={1}
-        borderLeftColor='gray.300'
         overflowY='scroll'
-        css={{
-          direction: 'rtl',
-          scrollbarColor: 'rebeccapurple',
-          scrollBehavior: 'smooth'
-        }}
+        // css={{
+        //   direction: 'rtl',
+        //   scrollbarColor: 'rebeccapurple',
+        //   scrollBehavior: 'smooth'
+        // }}
         mb={10}
       >
         <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
