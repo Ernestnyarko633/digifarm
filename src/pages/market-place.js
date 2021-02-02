@@ -7,6 +7,10 @@ import IllustrationImage from '../assets/images/home/illustration.png'
 import Oval from '../assets/images/Oval.svg'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import ArrowButton from '../components/Button/ArrowButton'
+import { motion } from 'framer-motion'
+
+const MotionFlex = motion.custom(Flex)
+const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 const buyers = [
   {
@@ -51,21 +55,31 @@ const warehouseGoods = [
     weight: '300 kg',
     bags: '30 bags',
     condition: 'Dry'
+  },
+  {
+    id: 3,
+    image: SoyaBean,
+    name: 'Soya Bean Warehouse',
+    location: 'Shai Osudoku, Eastern Region',
+    quantity: '2010 tonnes',
+    weight: '300 kg',
+    bags: '30 bags',
+    condition: 'Moist'
   }
-  // {
-  //   id:3,
-  //   image: SoyaBean,
-  //   name: 'Soya Bean Warehouse',
-  //   location: 'Shai Osudoku, Eastern Region',
-  //   quantity: '2010 tonnes',
-  //   weight: '300 kg',
-  //   bags: '30 bags',
-  //   condition: 'Moist'
-  // }
 ]
 
 const Marketplace = () => {
   document.title = 'Complete Farmer | Marketplace'
+
+  const [currentSlide, setCurrentSlide] = React.useState(0)
+
+  const handleClick = direction => {
+    setCurrentSlide(prevState => {
+      return (
+        (warehouseGoods.length + prevState + direction) % warehouseGoods.length
+      )
+    })
+  }
 
   return (
     <Layout>
@@ -87,9 +101,18 @@ const Marketplace = () => {
         <Heading as='h4' fontSize={{ md: '2xl' }}>
           Here are the crops in your warehouse
         </Heading>
-        <ArrowButton />
+        <ArrowButton handleClick={handleClick} />
       </Flex>
-      <Flex my={3}>
+      <MotionFlex
+        animate={{
+          x: `-${26.5 * currentSlide}rem`,
+          transition: { duration: 0.6, ...transition }
+        }}
+        pos='relative'
+        minW={{ md: 130 }}
+        mx='auto'
+        ml={{ md: 16 }}
+      >
         {warehouseGoods.map(item => (
           <WarehouseCard
             key={item.name}
@@ -100,28 +123,29 @@ const Marketplace = () => {
             weight={item.weight}
             bags={item.bags}
             condition={item.condition}
-            ml={14}
           />
         ))}
-      </Flex>
-      <Box my={10} mx={14} px={14}>
-        <Heading as='h4' fontSize={{ md: '2xl' }}>
-          Buyers you can sell to
-        </Heading>
-      </Box>
-      <Box>
-        {buyers.map(buyer => (
-          <BuyerCard
-            key={buyer.name}
-            name={buyer.name}
-            address={buyer.address}
-            image={buyer.image}
-            amtLeft={buyer.amtLeft}
-            amtNeeded={buyer.amtNeeded}
-            amtBought={buyer.amtBought}
-            price={buyer.price}
-          />
-        ))}
+      </MotionFlex>
+      <Box my={20}>
+        <Box px={14} mb={10}>
+          <Heading as='h4' fontSize={{ md: '2xl' }}>
+            Buyers you can sell to
+          </Heading>
+        </Box>
+        <Box>
+          {buyers.map(buyer => (
+            <BuyerCard
+              key={buyer.name}
+              name={buyer.name}
+              address={buyer.address}
+              image={buyer.image}
+              amtLeft={buyer.amtLeft}
+              amtNeeded={buyer.amtNeeded}
+              amtBought={buyer.amtBought}
+              price={buyer.price}
+            />
+          ))}
+        </Box>
       </Box>
     </Layout>
   )
