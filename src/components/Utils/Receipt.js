@@ -1,8 +1,9 @@
-import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
-import Button from 'components/Button'
 import React from 'react'
-import FarmInfo from 'components/Cards/FarmInfo'
 import PropTypes from 'prop-types'
+import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
+
+import Button from 'components/Button'
+import FarmInfo from 'components/Cards/FarmInfo'
 
 const Receipt = ({ title, description, buttonTitle, label, text }) => {
   return (

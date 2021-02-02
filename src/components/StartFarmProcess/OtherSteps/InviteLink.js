@@ -28,7 +28,7 @@ const InviteLink = () => {
   const { hasCopied, onCopy } = useClipboard(value)
 
   return (
-    <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
+    <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem>
         <Flex align='center' justify='center' mt={16}>
           <Image

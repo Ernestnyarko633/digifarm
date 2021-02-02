@@ -13,22 +13,41 @@ export const fileToBase64 = async file => {
   })
 }
 
-export const getFormattedMoney = (val, withCurrecy) => {
+export const getFormattedMoney = val => {
   let number = val
   if (Number.isNaN(val)) {
     number = 0
   }
-  const newFMondy = new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
-  }).format(number)
-  return !withCurrecy ? newFMondy.split('$')[1] : newFMondy
+  })
+    .format(number)
+    .split('$')[1]
 }
 
-export const getformattedDate = date => {
-  return new Date(date).toLocaleDateString('en-GB', {
+export const getformattedDate = (
+  date,
+  options = {
     day: 'numeric',
     month: 'short',
     year: 'numeric'
-  })
+  }
+) => {
+  return new Date(date).toLocaleDateString('en-GB', options)
+}
+
+export const getCurrentDayParting = () => {
+  const splitAfternoon = 12 // 24hr time to split the afternoon
+  const splitEvening = 17 // 24hr time to split the evening
+  const currentHour = parseFloat(new Date().getHours())
+
+  if (currentHour >= splitAfternoon && currentHour <= splitEvening) {
+    // Between 12 PM and 5PM
+    return { message: 'Good Afternoon', skyColor: '#FEEEC2' }
+  } else if (currentHour >= splitEvening) {
+    // Between 5PM and Midnight
+    return { message: 'Good Evening', skyColor: '#0B1026', textColor: 'white' }
+  }
+  return { message: 'Good Morning', skyColor: '#D7E8FD' }
 }

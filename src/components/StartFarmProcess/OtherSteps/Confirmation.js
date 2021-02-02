@@ -1,17 +1,18 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react'
-import FarmInfo from 'components/Cards/FarmInfo'
-import { Button } from 'components'
 import React from 'react'
-import useComponent from 'context/component'
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-// import { BsQuestionCircleFill } from 'react-icons/bs';
+
+import useComponent from 'context/component'
+
+import { Button } from 'components'
+import FarmInfo from 'components/Cards/FarmInfo'
 
 const MotionFlex = motion.custom(Flex)
 
 const Confirmation = () => {
   const { handleModalClick } = useComponent()
   return (
-    <MotionFlex layout w='100%'>
+    <MotionFlex w='100%'>
       <Box w='50%'>
         <Flex align='center' justify='center' h='100%'>
           <Image
@@ -35,25 +36,25 @@ const Confirmation = () => {
         </Flex>
         <Flex align='center' pos='absolute' bottom={5} left={0} right={0}>
           <Button
-            btntitle='View farm receipt'
-            rounded='30px'
-            borderColor='cf.900'
-            variant='outline'
-            color='cf.900'
-            _hover={{ bg: 'transparent' }}
-            _active={{ bg: 'transparent' }}
             w={64}
             h={12}
             mx={6}
             fontSize='md'
+            rounded='30px'
+            color='cf.900'
+            variant='outline'
+            borderColor='cf.900'
+            btntitle='View farm receipt'
+            _hover={{ bg: 'transparent' }}
+            _active={{ bg: 'transparent' }}
             onClick={() => handleModalClick('receipt')}
           />
           <Button
-            btntitle='View farm contract'
-            rounded='30px'
             w={64}
             h={12}
             fontSize='md'
+            rounded='30px'
+            btntitle='View farm contract'
             onClick={() => handleModalClick('contract')}
           />
         </Flex>

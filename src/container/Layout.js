@@ -15,24 +15,26 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
       fontSize={{ md: 'md' }}
     >
       <Header />
-      <GridItem>
+      <GridItem shadow='xl' zIndex={40}>
         <Sidebar />
       </GridItem>
-      <GridItem bg='gray.50'>
+      <GridItem>
         <Box
-          as='main'
-          w='100%'
-          color='gray.800'
-          pt={pt}
           px={px}
+          pt={pt}
+          w='100%'
+          as='main'
+          bg='cf-dark.400'
           h={height}
+          color='gray.800'
           fontFamily='body'
+          overflowX='hidden'
           {...rest}
         >
           {children}
         </Box>
       </GridItem>
-      <GridItem>
+      <GridItem shadow='xl' zIndex={40}>
         <RightSidebar />
       </GridItem>
     </Grid>

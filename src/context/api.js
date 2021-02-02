@@ -7,7 +7,7 @@ import http from 'utils/httpFacade'
 const ApiContext = createContext()
 
 export const ApiContextProvider = ({ children }) => {
-  const { AUTH_API, FMS_API, PAYMENT_API, DIGITAL_FARMER_API } = getConfig()
+  const { FMS_API, AUTH_API, PAYMENT_API, DIGITAL_FARMER_API } = getConfig()
 
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
@@ -27,7 +27,9 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const logout = async () => await http.post({ url: `${AUTH_API}/logout` })
+  const logout = async () => {
+    return await http.post({ url: `${AUTH_API}/logout` })
+  }
 
   const getCropCategories = async () => {
     return await http.get({ url: `${FMS_API}/crop-categories` })
@@ -35,6 +37,10 @@ export const ApiContextProvider = ({ children }) => {
 
   const getFarms = async query => {
     return await http.get({ url: `${FMS_API}/farms`, query })
+  }
+
+  const createOrder = async body => {
+    return await http.post({ url: `${DIGITAL_FARMER_API}/orders`, body })
   }
 
   const initiatePayment = async payload => {
@@ -84,6 +90,7 @@ export const ApiContextProvider = ({ children }) => {
         getMyFarms,
         getMyOrder,
         getMyOrders,
+        createOrder,
         changePassword,
         initiatePayment,
         getCropCategories,

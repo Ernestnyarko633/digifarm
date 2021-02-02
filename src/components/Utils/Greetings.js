@@ -1,15 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
-
-import useAuth from 'context/auth'
+import { getCurrentDayParting } from 'helpers/misc'
 
 import IllustrationImage from '../../assets/images/home/illustration.png'
 
-const Greetings = () => {
-  const { isAuthenticated } = useAuth()
-  const { user } = isAuthenticated()
+const Greetings = ({ title, text }) => {
+  const { skyColor, textColor } = getCurrentDayParting()
   return (
-    <Box pos='relative'>
+    <Box pos='relative' bg={skyColor} textColor={textColor}>
       <Image
         src={IllustrationImage}
         h={{ md: 115 }}
@@ -17,13 +16,20 @@ const Greetings = () => {
         objectFit='cover'
       />
       <Box pos='absolute' top={{ md: 40 }} left={{ md: 16 }}>
-        <Heading as='h3' fontSize={{ md: '4xl' }}>
-          Welcome Farmer {user?.firstName}
-        </Heading>
-        <Text>Get started by farming individually or with a group.</Text>
+        <Heading
+          as='h3'
+          fontSize={{ md: '4xl' }}
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
+        <Text dangerouslySetInnerHTML={{ __html: text }} />
       </Box>
     </Box>
   )
+}
+
+Greetings.propTypes = {
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired
 }
 
 export default Greetings

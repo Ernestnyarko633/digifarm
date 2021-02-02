@@ -1,26 +1,15 @@
 import React from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
 
+import useStartFarm from 'context/start-farm'
+
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import OtherSteps from 'components/StartFarmProcess/OtherSteps'
 
-import useComponent from 'context/component'
-
-const Individual = () => {
+const Individual = props => {
   document.title = 'Complete Farmer | Individual'
 
-  const { step } = useComponent()
-
-  const getContent = value => {
-    switch (value) {
-      case 0:
-        return <CropSelection />
-      case 1:
-        return <OtherSteps />
-      default:
-        return null
-    }
-  }
+  const { step } = useStartFarm()
 
   React.useEffect(() => {
     return () => {
@@ -29,6 +18,17 @@ const Individual = () => {
       sessionStorage.removeItem('farms')
     }
   }, [])
+
+  const getFlow = key => {
+    switch (key) {
+      case 0:
+        return <CropSelection />
+      case 1:
+        return <OtherSteps {...props} />
+      default:
+        return null
+    }
+  }
 
   return (
     <Box>
@@ -50,7 +50,7 @@ const Individual = () => {
         </Box>
       </Flex>
 
-      {getContent(step)}
+      {getFlow(step)}
     </Box>
   )
 }

@@ -1,26 +1,22 @@
-import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
-import FormRadio from 'components/Form/FormRadio'
-import { motion } from 'framer-motion'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+
+// import useStartFarm from 'context/start-farm'
 
 const MotionGrid = motion.custom(Grid)
 
-const Contract = () => {
-  const options = ['Accept', 'Decline']
-  const [contract, setContract] = React.useState('')
-
+const Contract = ({ farm }) => {
   return (
-    <MotionGrid layout templateColumns={{ md: 'repeat(2, 1fr)' }}>
-      <GridItem>Left</GridItem>
+    <MotionGrid px={10}>
       <GridItem
-        borderLeftWidth={1}
-        borderLeftColor='gray.300'
         overflowY='scroll'
-        css={{
-          direction: 'rtl',
-          scrollbarColor: 'rebeccapurple',
-          scrollBehavior: 'smooth'
-        }}
+        // css={{
+        //   direction: 'rtl',
+        //   scrollbarColor: 'rebeccapurple',
+        //   scrollBehavior: 'smooth'
+        // }}
         mb={10}
       >
         <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
@@ -97,19 +93,14 @@ const Contract = () => {
             click on the"Accept" button and do not download or use the
             Application.
           </Text>
-
-          <Box mt={10}>
-            <FormRadio
-              state={contract}
-              onChange={setContract}
-              options={options}
-              width={24}
-            />
-          </Box>
         </Box>
       </GridItem>
     </MotionGrid>
   )
+}
+
+Contract.propTypes = {
+  farm: PropTypes.object.isRequired
 }
 
 export default Contract

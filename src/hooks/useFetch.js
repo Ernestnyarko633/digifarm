@@ -1,4 +1,3 @@
-/* eslint-disable space-before-function-paren */
 import { useEffect, useReducer } from 'react'
 import useAuth from 'context/auth'
 
@@ -7,12 +6,18 @@ function fetchReducer(state, action) {
     case 'fetch':
       return {
         ...state,
-        isLoading: true,
         data: null,
-        error: null
+        error: null,
+        message: null,
+        isLoading: true
       }
     case 'success':
-      return { ...state, isLoading: false, data: action.payload }
+      return {
+        ...state,
+        isLoading: false,
+        data: action.payload.data,
+        message: action.payload.message
+      }
     case 'error':
       return {
         ...state,
@@ -34,15 +39,17 @@ const useFetch = (key, func, reload, ...rest) => {
     let mounted = true
     ;(async () => {
       try {
-        dispatch({ type: 'fetch' })
-        const dataFromStorage = JSON.parse(sessionStorage.getItem(key))
-        if (mounted && dataFromStorage) {
-          dispatch({ type: 'success', payload: dataFromStorage })
-        } else {
-          const res = await func(...rest)
-          if (mounted) {
-            sessionStorage.setItem(key, JSON.stringify(res.data))
-            dispatch({ type: 'success', payload: res.data })
+        if (mounted) {
+          dispatch({ type: 'fetch' })
+          const dataFromStorage = JSON.parse(sessionStorage.getItem(key))
+          if (dataFromStorage) {
+            dispatch({ type: 'success', payload: { data: dataFromStorage } })
+          } else {
+            const res = await func(...rest)
+            if (mounted) {
+              key && sessionStorage.setItem(key, JSON.stringify(res.data))
+              dispatch({ type: 'success', payload: res })
+            }
           }
         }
       } catch (error) {
@@ -55,7 +62,7 @@ const useFetch = (key, func, reload, ...rest) => {
             dispatch({ type: 'error', payload: error.message })
           }
         } else {
-          dispatch({ type: 'error', payload: 'Network connection error' })
+          dispatch({ type: 'error', payload: 'Unexpected network error.' })
         }
       }
     })()

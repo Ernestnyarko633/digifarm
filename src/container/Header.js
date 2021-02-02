@@ -26,16 +26,17 @@ const Header = () => {
 
   return (
     <Flex
-      as='header'
-      gridArea='header'
-      align='center'
-      justify='space-between'
+      top={0}
       w='100%'
-      h={{ md: 20 }}
       bg='white'
       pos='fixed'
-      top={0}
-      zIndex={50}
+      as='header'
+      shadow='lg'
+      zIndex={100}
+      align='center'
+      h={{ md: 20 }}
+      gridArea='header'
+      justify='space-between'
       borderBottomWidth={1}
       borderBottomColor='gray.300'
       px={{ md: 24 }}

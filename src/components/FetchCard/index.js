@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { IoIosRefresh } from 'react-icons/io'
-import { Flex, Text, Button } from '@chakra-ui/react'
-import Loader from 'react-loader-spinner'
+import { Flex, Text, Spinner, Button } from '@chakra-ui/react'
 
-const FetchCard = ({ loading, error, reload, ...rest }) => {
+const FetchCard = ({ loading, error, text, reload, ...rest }) => {
   return (
     <Flex {...rest}>
       <Flex
@@ -14,13 +13,14 @@ const FetchCard = ({ loading, error, reload, ...rest }) => {
         direction='column'
       >
         <>
-          {loading && (
-            <Loader type='Oval' color='#417505' height={40} width={40} />
+          {loading && <Spinner size='lg' color='cf.400' />}
+          {text && !error && (
+            <Text className='loading-text loading-text-b'>{text}</Text>
           )}
           {error && (
             <>
-              <Text fontSize='md' ml={2}>
-                Something went wrong.
+              <Text fontSize='md' ml={2} color='cf.400'>
+                Something went wrong
               </Text>
               <Button
                 bg='cf.800'
@@ -46,7 +46,8 @@ const FetchCard = ({ loading, error, reload, ...rest }) => {
 FetchCard.propTypes = {
   reload: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.any
+  error: PropTypes.any,
+  text: PropTypes.any
 }
 
 export default FetchCard

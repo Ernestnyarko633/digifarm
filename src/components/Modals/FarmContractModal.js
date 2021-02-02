@@ -1,6 +1,8 @@
-import useComponent from 'context/component'
-import Receipt from '../Utils/Receipt'
 import React from 'react'
+
+import useComponent from 'context/component'
+
+import Receipt from '../Utils/Receipt'
 import ModalWrapper from './ModalWrapper'
 
 const FarmContractModal = () => {

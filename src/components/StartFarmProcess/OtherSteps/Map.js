@@ -1,16 +1,21 @@
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 import ReactMapGL, {
-  Layer,
-  Source,
+  // Layer,
+  // Source,
+  ScaleControl,
   FullscreenControl,
   GeolocateControl,
-  NavigationControl,
-  ScaleControl
+  NavigationControl
 } from 'react-map-gl'
-import { dataJS, layer } from 'assets/data/mapdata'
+// import { dataJS, layer } from 'assets/data/mapdata'
+
+import getConfig from 'utils/configs'
 
 const Map = () => {
+  const { MAPBOX_API } = getConfig()
+
+  // const sourceRef = React.useRef(null)
   const [viewport, setViewport] = React.useState({
     latitude: 6.840278,
     longitude: -0.398889,
@@ -18,12 +23,11 @@ const Map = () => {
     height: '70vh',
     zoom: 15.9
   })
-  const sourceRef = React.useRef(null)
 
   return (
     <ReactMapGL
       {...viewport}
-      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API}
+      mapboxApiAccessToken={MAPBOX_API}
       onViewportChange={_viewport => {
         setViewport(_viewport)
       }}
@@ -43,10 +47,10 @@ const Map = () => {
       <Box style={{ position: 'absolute', top: 65, left: 5 }}>
         <NavigationControl />
       </Box>
-      <Source type='geojson' data={dataJS} ref={sourceRef} cluster={false}>
+      {/* <Source type='geojson' data={dataJS} ref={sourceRef} cluster={false}>
         <Layer {...layer} />
         Type
-      </Source>
+      </Source> */}
     </ReactMapGL>
   )
 }
