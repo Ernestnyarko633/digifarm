@@ -54,12 +54,12 @@ const EventsCard = ({
                 <Heading as='h6' fontSize='md' color='white'>
                   Soya Bean Farm
                 </Heading>
-                <Text mb={1} pb={4} fontSize='xs' color='#fff' mt={{ md: -2 }}>
+                <Text mb={1} pb={4} fontSize='xs' color='white' mt={{ md: -2 }}>
                   Agyata, Eastern Region
                 </Text>
 
                 <Button
-                  borderColor='#fff'
+                  borderColor='white'
                   borderWidth={3}
                   btntitle='Check it out'
                 />

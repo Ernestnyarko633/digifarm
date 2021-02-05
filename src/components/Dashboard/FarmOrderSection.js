@@ -4,9 +4,9 @@ import { Box, Flex, Grid, Heading } from '@chakra-ui/react'
 
 import ArrowButton from 'components/Button/ArrowButton'
 import FarmCard from 'components/Cards/FarmCard'
-// import OrderCard from './OrderCard'
+import OrdersCard from 'components/Cards/OrdersCard'
 
-const FarmOrderSection = ({ farms, orders }) => {
+const FarmOrderSection = ({ farms, orders, currentSlide, handleClick }) => {
   const [state, setState] = React.useState('farms')
   return (
     <Box p={20}>
@@ -46,7 +46,7 @@ const FarmOrderSection = ({ farms, orders }) => {
           </Flex>
 
           <Box>
-            <ArrowButton />
+            <ArrowButton handleClick={handleClick} />
           </Box>
         </Grid>
       </Box>
@@ -54,7 +54,9 @@ const FarmOrderSection = ({ farms, orders }) => {
       <Box>
         <Flex>
           {state === 'farms' && <FarmCard data={farms} />}
-          {state === 'orders' && <FarmCard data={orders} />}
+          {state === 'orders' && (
+            <OrdersCard data={orders} currentSlide={currentSlide} />
+          )}
         </Flex>
       </Box>
     </Box>
@@ -63,7 +65,9 @@ const FarmOrderSection = ({ farms, orders }) => {
 
 FarmOrderSection.propTypes = {
   farms: PropTypes.array.isRequired,
-  orders: PropTypes.array.isRequired
+  orders: PropTypes.array.isRequired,
+  handleClick: PropTypes.func,
+  currentSlide: PropTypes.number
 }
 
 export default FarmOrderSection
