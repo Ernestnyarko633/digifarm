@@ -11,9 +11,17 @@ import {
 } from '@chakra-ui/react'
 import Step from 'components/Form/Step'
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const FarmCard = () => (
-  <Box rounded='xl' shadow='md' p={10} bg='white'>
+const FarmCard = ({ farm }) => (
+  <Box
+    rounded='xl'
+    shadow='md'
+    p={10}
+    bg='white'
+    minW={{ md: 130 }}
+    mr={{ md: 6 }}
+  >
     <Flex align='center' justify='space-between'>
       <Flex align='center'>
         <Box mr={4}>
@@ -22,10 +30,10 @@ const FarmCard = () => (
 
         <Box>
           <Heading as='h4' fontSize={{ md: '2xl' }}>
-            John’s Farm
+            {farm.name}
           </Heading>
           <Text color='gray.500' mt={-1}>
-            Agyata, Eastern region
+            {farm.location}
           </Text>
         </Box>
       </Flex>
@@ -38,7 +46,7 @@ const FarmCard = () => (
         px={4}
         textAlign='center'
       >
-        Lvl 1
+        Lvl {farm.level}
       </Tag>
     </Flex>
     <Divider orientation='horizontal' borderColor='gray.300' my={6} />
@@ -63,5 +71,13 @@ const FarmCard = () => (
     </Grid>
   </Box>
 )
+
+FarmCard.propTypes = {
+  farm: PropTypes.shape({
+    name: PropTypes.string,
+    location: PropTypes.string,
+    level: PropTypes.number
+  })
+}
 
 export default FarmCard

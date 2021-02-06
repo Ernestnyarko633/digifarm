@@ -2,43 +2,43 @@ import { Flex } from '@chakra-ui/react'
 import useComponent from 'context/component'
 import { motion } from 'framer-motion'
 import React from 'react'
-import OrderCard from './OrderCard'
+import FarmCard from './FarmCard'
 
 const MotionFlex = motion.custom(Flex)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-const orders = [
+const farms = [
   {
     _id: 1,
-    name: 'Soy bean Farm',
+    name: 'John’s Farm',
     location: 'Agyata, Eastern region',
-    progress: '80%'
+    level: 1
   },
   {
     _id: 2,
-    name: 'Soy bean Farm 2',
+    name: 'John’s Farm 2',
     location: 'Agyata, Eastern region',
-    progress: '80%'
+    level: 2
   }
 ]
 
-const OrdersCard = () => {
+const FarmsCard = () => {
   const { currentSlide } = useComponent()
   return (
     <MotionFlex
       animate={{
-        x: `-${33.5 * currentSlide}rem`,
+        x: `-${56.5 * currentSlide}rem`,
         transition: { duration: 0.6, ...transition }
       }}
       pos='relative'
       minW={{ md: 130 }}
       mx='auto'
     >
-      {orders.map(order => (
-        <OrderCard order={order} key={order._id} />
+      {farms.map(farm => (
+        <FarmCard key={farm._id} farm={farm} />
       ))}
     </MotionFlex>
   )
 }
 
-export default OrdersCard
+export default FarmsCard

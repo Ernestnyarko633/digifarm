@@ -13,16 +13,17 @@ import FarmOrderSection from 'components/Dashboard/FarmOrderSection'
 import HomeEmptyState from 'components/EmptyStates/HomeEmptyState'
 import Greetings from 'components/Utils/Greetings'
 import { getCurrentDayParting } from 'helpers/misc'
+import useComponent from 'context/component'
 
 const Dashboard = () => {
   document.title = 'Complete Farmer | Dashboard'
 
   const [reloadMyFarms, setReloadMyFarms] = React.useState(0)
   const [reloadMyOrders, setReloadMyOrders] = React.useState(0)
-  const [currentSlide, setCurrentSlide] = React.useState(0)
 
   const { getMyFarms, getMyOrders } = useApi()
   const { isAuthenticated } = useAuth()
+  const { setCurrentSlide } = useComponent()
 
   const { message } = getCurrentDayParting()
 
@@ -51,10 +52,7 @@ const Dashboard = () => {
 
   const handleClick = direction => {
     setCurrentSlide(prevState => {
-      return (
-        (myFarms.length || myOrder.length + prevState + direction) %
-          myFarms.length || myOrder.length
-      )
+      return (myFarms.length + prevState + direction) % myFarms.length
     })
   }
 
@@ -85,7 +83,6 @@ const Dashboard = () => {
           farms={myFarms}
           orders={myOrder}
           handleClick={handleClick}
-          currentSlide={currentSlide}
         />
       ) : (
         <HomeEmptyState />
