@@ -13,6 +13,7 @@ import FarmOrderSection from 'components/Dashboard/FarmOrderSection'
 import HomeEmptyState from 'components/EmptyStates/HomeEmptyState'
 import Greetings from 'components/Utils/Greetings'
 import { getCurrentDayParting } from 'helpers/misc'
+import useComponent from 'context/component'
 
 const Dashboard = () => {
   document.title = 'Complete Farmer | Dashboard'
@@ -22,6 +23,7 @@ const Dashboard = () => {
 
   const { getMyFarms, getMyOrders } = useApi()
   const { isAuthenticated } = useAuth()
+  const { setCurrentSlide } = useComponent()
 
   const { message } = getCurrentDayParting()
 
@@ -48,6 +50,12 @@ const Dashboard = () => {
   const isLoading = myFarmsIsLoading || myOrdersIsLoading
   const hasError = myFarmsHasError || myOrdersHasError
 
+  const handleClick = direction => {
+    setCurrentSlide(prevState => {
+      return (myFarms.length + prevState + direction) % myFarms.length
+    })
+  }
+
   return (
     <Layout>
       <Greetings
@@ -71,7 +79,11 @@ const Dashboard = () => {
           />
         </Box>
       ) : myFarms?.length && myOrder?.length ? (
-        <FarmOrderSection farms={myFarms} orders={myOrder} />
+        <FarmOrderSection
+          farms={myFarms}
+          orders={myOrder}
+          handleClick={handleClick}
+        />
       ) : (
         <HomeEmptyState />
       )}

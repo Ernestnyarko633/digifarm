@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import { Box, Flex, Grid, Heading } from '@chakra-ui/react'
 
 import ArrowButton from 'components/Button/ArrowButton'
-import FarmCard from 'components/Cards/FarmCard'
-// import OrderCard from './OrderCard'
+import OrdersCard from 'components/Cards/OrdersCard'
+import useComponent from 'context/component'
+import FarmsCard from 'components/Cards/FarmsCard'
 
-const FarmOrderSection = ({ farms, orders }) => {
-  const [state, setState] = React.useState('farms')
+const FarmOrderSection = ({ farms, orders, handleClick }) => {
+  const { state, setState } = useComponent()
+
   return (
     <Box p={20}>
       <Box mb={10}>
@@ -46,15 +48,15 @@ const FarmOrderSection = ({ farms, orders }) => {
           </Flex>
 
           <Box>
-            <ArrowButton />
+            <ArrowButton handleClick={handleClick} />
           </Box>
         </Grid>
       </Box>
 
       <Box>
         <Flex>
-          {state === 'farms' && <FarmCard data={farms} />}
-          {state === 'orders' && <FarmCard data={orders} />}
+          {state === 'farms' && <FarmsCard data={farms} />}
+          {state === 'orders' && <OrdersCard data={orders} />}
         </Flex>
       </Box>
     </Box>
@@ -63,7 +65,8 @@ const FarmOrderSection = ({ farms, orders }) => {
 
 FarmOrderSection.propTypes = {
   farms: PropTypes.array.isRequired,
-  orders: PropTypes.array.isRequired
+  orders: PropTypes.array.isRequired,
+  handleClick: PropTypes.func
 }
 
 export default FarmOrderSection
