@@ -76,6 +76,10 @@ export const EosApiContextProvider = ({ children }) => {
     })
   }
 
+  /**
+   *@summary returns statistical data on the task_id created : "NDVI", "MSI", "EVI" bm types
+   * @param { string } task_id to be sent to the eos stats api
+   */
   const getEOSStatistics = async task_id => {
     return await http.get({
       url: `${EOS_API}/gdw/api/${task_id}?apikey=${EOS_API_KEY}`
