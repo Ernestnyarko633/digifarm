@@ -1,5 +1,6 @@
-import { Box, Flex, Heading, Text, Image, Badge } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, Image, Badge, Link } from '@chakra-ui/react'
 import React from 'react'
+import { Link as ReachLink } from 'react-router-dom'
 import Button from 'components/Button/index'
 import Bitmap from 'assets/images/Bitmap.png'
 
@@ -17,7 +18,9 @@ const YourFarmCard = () => {
           <Heading as='h6' fontSize='lg'>
             Your Farm(s)
           </Heading>
-          <Button rounded='30px' btntitle='Start a farm' />
+          <Link as={ReachLink} to='/start-farm' _hover={{ textDecor: 'none' }}>
+            <Button rounded='30px' btntitle='Start a farm' />
+          </Link>
         </Flex>
         <Flex direction='row' align='center' justify='center' my={10}>
           {dummyFarms.map(farm => (

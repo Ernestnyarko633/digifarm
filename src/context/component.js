@@ -9,6 +9,8 @@ export const ComponentContextProvider = ({ children }) => {
   const [data, setData] = useState([])
   const [mode, setMode] = useState('')
   const [modal, setModal] = useState('')
+  const [state, setState] = React.useState('farms')
+  const [currentSlide, setCurrentSlide] = React.useState(0)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleModalClick = useCallback(
@@ -31,7 +33,11 @@ export const ComponentContextProvider = ({ children }) => {
         modal,
         isOpen,
         onClose,
-        handleModalClick
+        handleModalClick,
+        state,
+        setState,
+        currentSlide,
+        setCurrentSlide
       }}
     >
       {children}

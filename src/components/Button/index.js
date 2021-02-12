@@ -16,7 +16,7 @@ const Button = ({
     fontSize={fontSize}
     w={width}
     fontWeight={400}
-    shadow='lg'
+    shadow='0px 10px 20px rgba(97, 111, 57, 0.5)'
     {...rest}
   >
     {btntitle}
