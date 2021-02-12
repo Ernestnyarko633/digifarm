@@ -13,9 +13,11 @@ const Profile = lazy(() => import('./profile'))
 const Logout = lazy(() => import('./logout'))
 const Forum = lazy(() => import('./forum'))
 const Auth = lazy(() => import('./auth'))
+const Farm = lazy(() => import('./farm'))
 
 const Pages = {
   Auth,
+  Farm,
   Forum,
   Logout,
   Profile,
