@@ -47,7 +47,7 @@ export const EosApiContextProvider = ({ children }) => {
    * @param { object } payload to be sent to the eos weather api
    */
 
-  const getWeatherForeCast = async (payload, type) => {
+  const getEOSWeatherForeCast = async (payload, type) => {
     
     switch (type) {
          case 'without-aggregate-data':
@@ -69,11 +69,28 @@ export const EosApiContextProvider = ({ children }) => {
  
   }
 
-  
+
+     /**
+   *@summary returns an obejct with task_id included task_id is needed to fetch statistics on a particular locations. getting statistics on "NDVI", "MSI", "EVI" bm types
+   * @param { object } payload to be sent to the eos stats api
+   */
+  const createEOSTaskForStats = async(payload) => {
+    return await http.post({
+        url: `${EOS_API}/gdw/api?apikey=${EOS_API_KEY}`,
+        body: JSON.stringify(payload)
+      })
+  }
+
+  const getEOSStatistics = async (task_id) => {
+    return await http.get({ url: `${EOS_API}/gdw/api/${task_id}?apikey=${EOS_API_KEY}` })
+  }
+
 
   return <EosApiContext.Provider value={{
     getEOSViewID,
-    getWeatherForeCast
+    getEOSWeatherForeCast,
+    createEOSTaskForStats,
+    getEOSStatistics
   }}>{children}</EosApiContext.Provider>
 }
 
