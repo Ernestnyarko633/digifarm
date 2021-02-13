@@ -1,8 +1,10 @@
 import React from 'react'
 import { Cloud } from 'theme/Icons'
 import { Box, Grid, Heading, Icon, Text } from '@chakra-ui/react'
+// import useEosApi from 'context/eosApi'
+import PropTypes from 'prop-types'
 
-export default function WeatherCard() {
+export default function WeatherCard({ farmfeeds }) {
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
       <Box
@@ -15,6 +17,11 @@ export default function WeatherCard() {
         <Text textAlign='center' fontWeight={300}>
           Plant population
         </Text>
+        <Box mt={2}>
+          <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
+            {farmfeeds[0]?.plantInfo?.population}
+          </Heading>
+        </Box>
       </Box>
       <Box
         w='100%'
@@ -33,4 +40,8 @@ export default function WeatherCard() {
       </Box>
     </Grid>
   )
+}
+
+WeatherCard.propTypes = {
+  farmfeeds: PropTypes.any
 }

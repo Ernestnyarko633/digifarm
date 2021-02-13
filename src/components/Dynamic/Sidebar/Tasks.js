@@ -4,31 +4,32 @@ import { BiTime } from 'react-icons/bi'
 import { Crop, Updates } from 'theme/Icons'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
+import PropTypes from 'prop-types'
 
-export default function Tasks() {
+export default function Tasks({ scheduledTasks, farmfeeds }) {
   return (
     <Box mb={8}>
       <FarmUpdateCard
         title='TODAY’S TASK'
-        duration='3m ago'
-        subtitle='Harrowing'
-        text='Can you imagine what we will be downloading in another twenty years?'
+        duration={farmfeeds[0]?.task?.duration}
+        subtitle={farmfeeds[0]?.task?.name}
+        text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
         icon={BiTime}
       />
-      <WeatherCards />
+      <WeatherCards farmfeeds={farmfeeds} />
       <Grid gap={8}>
         <FarmUpdateCard
           title='SCHEDULED TASK'
-          duration='3m ago'
-          subtitle='Harrowing'
-          text='Can you imagine what we will be downloading in another twenty years?'
+          duration={farmfeeds[0]?.nextTask?.duration}
+          subtitle={farmfeeds[0]?.nextTask?.name}
+          text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
           icon={BiTime}
         />
         <FarmUpdateCard
           title='FARM MANAGER UPDATE'
-          duration='3m ago'
-          subtitle='Harrowing'
-          text='Can you imagine what we will be downloading in another twenty years?'
+          duration={scheduledTasks[0]?.taskId?.duration}
+          subtitle={scheduledTasks[0]?.taskId?.name}
+          text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
           icon={Updates}
         />
         <Box
@@ -85,4 +86,9 @@ export default function Tasks() {
       </Grid>
     </Box>
   )
+}
+
+Tasks.propTypes = {
+  scheduledTasks: PropTypes.any,
+  farmfeeds: PropTypes.any
 }

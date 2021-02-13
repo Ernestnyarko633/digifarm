@@ -1,9 +1,47 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Spinner, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicCard from '../Sidebar'
+import useApi from 'context/api'
 
-export default function FarmRightSidebar({ state }) {
+export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
+  const [scheduledTasks, setScheduledTasks] = React.useState([])
+  const [farmfeeds, setFarmFeeds] = React.useState([])
+  const [loading, setLoading] = React.useState('fetching')
+  const [error, setError] = React.useState(null)
+  const { getMyScheduledTasks, getMyFarmFeeds } = useApi()
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        const res = await getMyScheduledTasks({ farm: digitalFarmerFarm })
+        setScheduledTasks(res.data)
+
+        setLoading('done')
+      } catch (error) {
+        setLoading('done')
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarm, getMyScheduledTasks])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        const res = await getMyFarmFeeds({ farm: digitalFarmerFarm })
+        setFarmFeeds(res.data)
+
+        setLoading('done')
+      } catch (error) {
+        setLoading('done')
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarm, getMyFarmFeeds])
   return (
     <Box
       py={8}
@@ -18,11 +56,28 @@ export default function FarmRightSidebar({ state }) {
       shadow='md'
       overflowY='scroll'
     >
-      <DynamicCard card={state} />
+      {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
+      {loading === 'done' && !error && (
+        <DynamicCard
+          card={state}
+          scheduledTasks={scheduledTasks}
+          farmfeeds={farmfeeds}
+          farm={digitalFarmerFarm}
+        />
+      )}
+      {loading === 'done' && error && (
+        <Box>
+          <Text fontSize='md' ml={2} color='cf.400'>
+            Something went wrong
+          </Text>
+        </Box>
+      )}
     </Box>
   )
 }
 
 FarmRightSidebar.propTypes = {
-  state: PropTypes.string
+  state: PropTypes.string,
+  digitalFarmerFarm: PropTypes.any,
+  farmfeeds: PropTypes.any
 }

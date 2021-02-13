@@ -1,17 +1,62 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
+import Header from 'container/Header'
+import useAuth from 'context/auth'
 import React from 'react'
 import { useScreenshot } from 'use-react-screenshot'
-
+import useApi from 'context/api'
+import useAPICalls from 'hooks/useApiCalls'
+// import { useParams } from 'react-router-dom'
 import Share from 'components/Share'
-import Header from 'container/Header'
 
 export default function Farm() {
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+
   const ref = React.useRef(null)
   const [state, setState] = React.useState('compA')
   const [isOpen, setIsOpen] = React.useState(false)
 
   const [image, takeScreenShot] = useScreenshot()
+  const [loading, setLoading] = React.useState('fetching')
+  const [error, setError] = React.useState(null)
+  const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState([])
+  const [farmfeeds, setFarmFeeds] = React.useState([])
+  const { getMyFarms, getMyFarmFeeds } = useApi()
+  const { farms } = useAPICalls()
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        const res = await getMyFarms()
+        setDigitalFarmerFarms(res.data)
+
+        setLoading('done')
+      } catch (error) {
+        setLoading('done')
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [getMyFarms])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        const res = await getMyFarmFeeds({
+          farm: digitalFarmerFarms[0]?.order?.product?._id
+        })
+        setFarmFeeds(res.data)
+        setLoading('done')
+      } catch (error) {
+        setLoading('done')
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarms, getMyFarmFeeds])
 
   const onClose = () => setIsOpen(false)
 
@@ -38,8 +83,15 @@ export default function Farm() {
         zIndex={50}
       >
         <Flex align='center'>
-          <Box w={8} h={8} rounded='100%' bg='gray.400' />
-          <Text ml={5}>Clinton farms</Text>
+          <Box
+            w={8}
+            h={8}
+            as={Avatar}
+            src={user?.avatar}
+            rounded='100%'
+            bg='gray.400'
+          />
+          <Text ml={5}>{`${user?.firstName}`}'s farm</Text>
         </Flex>
         <Flex align='center'>
           <Box
@@ -86,7 +138,15 @@ export default function Farm() {
       </Flex>
 
       <Box bg='white'>
-        <DynamicFarm farm={state} onOpen={getImage} />
+        <DynamicFarm
+          loading={loading}
+          error={error}
+          farm={state}
+          digitalFarmerFarms={digitalFarmerFarms}
+          farmfeeds={farmfeeds}
+          farms={farms}
+          onOpen={getImage}
+        />
       </Box>
     </Box>
   )

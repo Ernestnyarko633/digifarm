@@ -11,7 +11,9 @@ export default function ImageGallery({
   title,
   images,
   selectedImage,
-  setSelectedImage
+  setSelectedImage,
+  activeIndex,
+  setActiveIndex
 }) {
   return (
     <Box>
@@ -29,7 +31,7 @@ export default function ImageGallery({
             h={{ md: 85 }}
             w='100%'
             objectFit='cover'
-            src={require(`../../../assets/images/${selectedImage.img}`).default}
+            src={selectedImage.url}
           />
           <Flex
             align='center'
@@ -77,15 +79,18 @@ export default function ImageGallery({
         </Box>
 
         <MotionFlex pos='relative' minW={120} mt={4}>
-          {images.map(item => (
+          {images.map((item, index) => (
             <Box
               as='button'
               role='button'
               aria-label='image button'
-              onClick={() => setSelectedImage(item)}
+              onClick={() => {
+                setSelectedImage(item)
+                setActiveIndex(index)
+              }}
               mr={6}
               key={item.id}
-              borderWidth={selectedImage.id === item.id ? 4 : 0}
+              borderWidth={activeIndex === index ? 4 : 0}
               rounded='md'
               borderColor='cf.400'
             >
@@ -94,7 +99,7 @@ export default function ImageGallery({
                 w={32}
                 objectFit='cover'
                 rounded='md'
-                src={require(`../../../assets/images/${item.img}`).default}
+                src={item.url}
               />
             </Box>
           ))}
@@ -108,5 +113,7 @@ ImageGallery.propTypes = {
   title: PropTypes.string,
   images: PropTypes.array,
   selectedImage: PropTypes.object,
-  setSelectedImage: PropTypes.func
+  setSelectedImage: PropTypes.func,
+  activeIndex: PropTypes.any,
+  setActiveIndex: PropTypes.any
 }
