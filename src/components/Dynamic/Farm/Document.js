@@ -1,6 +1,5 @@
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
 import DynamicDocument from '../Document'
 import FarmReceiptCard from '../Cards/FarmReceiptCard'
@@ -13,7 +12,7 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-export default function Document({ children, ...rest }) {
+export default function Document() {
   const [state, setState] = React.useState('compA')
 
   return (
@@ -66,7 +65,6 @@ export default function Document({ children, ...rest }) {
           py={{ md: 56 }}
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
-          {...rest}
         >
           <Flex
             align='center'
@@ -134,9 +132,4 @@ export default function Document({ children, ...rest }) {
       </GridItem>
     </Grid>
   )
-}
-
-Document.propTypes = {
-  children: PropTypes.node.isRequired,
-  rest: PropTypes.any
 }
