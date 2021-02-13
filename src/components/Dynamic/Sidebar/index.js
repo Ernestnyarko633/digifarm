@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -16,9 +15,9 @@ const components = {
   compE: Updates
 }
 
-const DynamicCard = ({ card,  scheduledTasks, farmfeeds}) => {
+const DynamicCard = ({ card, scheduledTasks, farmfeeds }) => {
   const SelectedCard = components[card]
-  return <SelectedCard scheduledTasks={scheduledTasks}  farmfeeds={farmfeeds}/>
+  return <SelectedCard scheduledTasks={scheduledTasks} farmfeeds={farmfeeds} />
 }
 
 DynamicCard.propTypes = {

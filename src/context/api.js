@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
@@ -105,7 +104,7 @@ export const ApiContextProvider = ({ children }) => {
         getCropCategories,
         deleteBankTransfer,
         getMyScheduledTasks,
-        uploadPaymentDetails,
+        uploadPaymentDetails
       }}
     >
       {children}

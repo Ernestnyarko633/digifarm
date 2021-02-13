@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import { Box, Flex, Grid, Icon, Text } from '@chakra-ui/react'
 import React from 'react'
 import { BiTime } from 'react-icons/bi'
@@ -7,9 +6,7 @@ import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
 
-
-export default function Tasks({scheduledTasks, farmfeeds}) {
-  
+export default function Tasks({ scheduledTasks, farmfeeds }) {
   return (
     <Box mb={8}>
       <FarmUpdateCard

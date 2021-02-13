@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import { Box, Spinner, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -12,11 +11,9 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
   const [error, setError] = React.useState(null)
   const { getMyScheduledTasks, getMyFarmFeeds } = useApi()
 
-  console.log(digitalFarmerFarm, "the farm")
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-     
         setLoading('fetching')
         const res = await getMyScheduledTasks({ farm: digitalFarmerFarm })
         setScheduledTasks(res.data)
@@ -28,16 +25,15 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
       }
     }
     fetchData()
-  }, [digitalFarmerFarm])
+  }, [digitalFarmerFarm, getMyScheduledTasks])
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-     
         setLoading('fetching')
         const res = await getMyFarmFeeds({ farm: digitalFarmerFarm })
         setFarmFeeds(res.data)
-        console.log(res.data)
+
         setLoading('done')
       } catch (error) {
         setLoading('done')
@@ -45,7 +41,7 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
       }
     }
     fetchData()
-  }, [digitalFarmerFarm])
+  }, [digitalFarmerFarm, getMyFarmFeeds])
   return (
     <Box
       py={8}
@@ -60,14 +56,16 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
       shadow='md'
       overflowY='scroll'
     >
-     {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
-    {loading === "done" && !error &&  <DynamicCard
-        card={state}
-        scheduledTasks={scheduledTasks}
-        farmfeeds={farmfeeds}
-        farm={digitalFarmerFarm}
-      />}
-        {loading === 'done' && error && (
+      {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
+      {loading === 'done' && !error && (
+        <DynamicCard
+          card={state}
+          scheduledTasks={scheduledTasks}
+          farmfeeds={farmfeeds}
+          farm={digitalFarmerFarm}
+        />
+      )}
+      {loading === 'done' && error && (
         <Box>
           <Text fontSize='md' ml={2} color='cf.400'>
             Something went wrong

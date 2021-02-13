@@ -1,11 +1,10 @@
-/* eslint-disable*/
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 
-import SoyaBean from '../../../assets/images/startfarm/soya-beans.svg'
+// import SoyaBean from '../../../assets/images/startfarm/soya-beans.svg'
 
 const menus = [
   { id: 1, icon: Calendar, state: 'compA' },
@@ -15,44 +14,43 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-const warehouseGoods = [
-  {
-    id: 1,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'AgyaAtta, Eastern Region',
-    quantity: '2000 tonnes',
-    weight: '200 kg',
-    bags: '20 bags',
-    condition: 'Moist',
-    status: 'action'
-  },
-  {
-    id: 2,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'AgyaAtta, Eastern Region',
-    quantity: '2010 tonnes',
-    weight: '300 kg',
-    bags: '30 bags',
-    condition: 'Dry',
-    status: 'action'
-  },
-  {
-    id: 3,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'Shai Osudoku, Eastern Region',
-    quantity: '2010 tonnes',
-    weight: '300 kg',
-    bags: '30 bags',
-    condition: 'Moist',
-    status: 'sold'
-  }
-]
+// const warehouseGoods = [
+//   {
+//     id: 1,
+//     image: SoyaBean,
+//     name: 'Soya Bean Warehouse',
+//     location: 'AgyaAtta, Eastern Region',
+//     quantity: '2000 tonnes',
+//     weight: '200 kg',
+//     bags: '20 bags',
+//     condition: 'Moist',
+//     status: 'action'
+//   },
+//   {
+//     id: 2,
+//     image: SoyaBean,
+//     name: 'Soya Bean Warehouse',
+//     location: 'AgyaAtta, Eastern Region',
+//     quantity: '2010 tonnes',
+//     weight: '300 kg',
+//     bags: '30 bags',
+//     condition: 'Dry',
+//     status: 'action'
+//   },
+//   {
+//     id: 3,
+//     image: SoyaBean,
+//     name: 'Soya Bean Warehouse',
+//     location: 'Shai Osudoku, Eastern Region',
+//     quantity: '2010 tonnes',
+//     weight: '300 kg',
+//     bags: '30 bags',
+//     condition: 'Moist',
+//     status: 'sold'
+//   }
+// ]
 
 export default function Warehouse({ digitalFarmerFarms, farms }) {
-  console.log(digitalFarmerFarms, "myfarm")
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -77,7 +75,7 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
           color='gray.600'
         >
           <Box as='ul'>
-            {menus.map((item) => (
+            {menus.map(item => (
               <Flex
                 as='button'
                 role='button'
@@ -116,7 +114,7 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
                 location={item?.order?.product?.location?.name}
                 image={item?.order?.product?.cropVariety?.imageUrl}
                 quantity={item?.storage.quantity}
-                weight={ `${item?.storage?.weight}`}
+                weight={`${item?.storage?.weight}`}
                 bags={`${item?.storage?.numberOfBags}`}
                 condition={item?.storage.yieldConditions}
                 orderStatus={item?.order?.status}
@@ -133,5 +131,5 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
 }
 Warehouse.propTypes = {
   farms: PropTypes.any,
-  digitalFarmerFarm: PropTypes.any
+  digitalFarmerFarms: PropTypes.any
 }

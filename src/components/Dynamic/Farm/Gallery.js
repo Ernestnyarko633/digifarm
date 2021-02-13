@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
@@ -13,13 +12,13 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-const images = [
-  { id: 1, img: 'Bitmap.png' },
-  { id: 2, img: 'Bitmap.png' },
-  { id: 3, img: 'Bitmap.png' },
-  { id: 4, img: 'Bitmap.png' },
-  { id: 5, img: 'Bitmap.png' }
-]
+// const images = [
+//   { id: 1, img: 'Bitmap.png' },
+//   { id: 2, img: 'Bitmap.png' },
+//   { id: 3, img: 'Bitmap.png' },
+//   { id: 4, img: 'Bitmap.png' },
+//   { id: 5, img: 'Bitmap.png' }
+// ]
 
 // const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
@@ -36,18 +35,16 @@ export default function Gallery({ farmfeeds }) {
   // }
 
   React.useEffect(() => {
-   let array = []
-    farmfeeds.forEach((feed) => {
-    feed.media.map((_media) => {
-      if(_media.type === 'image'){
-
-        array.push(_media)
-      }
-    })
+    let array = []
+    farmfeeds.forEach(feed => {
+      feed.media.forEach(_media => {
+        if (_media.type === 'image') {
+          array.push(_media)
+        }
+      })
     })
     setImagesx(array)
     setSelectedImage(array[0])
-    
   }, [farmfeeds])
   return (
     <Grid
@@ -100,17 +97,20 @@ export default function Gallery({ farmfeeds }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
-          <Grid templateColumns={{  md: 'repeat(2, 1fr)' }} gap={20}>
-           { farmfeeds.map((feed) => {
-         return   <ImageGallery
-              title={`${feed?.task?.activity?.name}`}
-              images={imagesx}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-              activeIndex={activeIndex}
-              setActiveIndex={setActiveIndex}
-            />
-           })}
+          <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
+            {farmfeeds.map(feed => {
+              return (
+                <ImageGallery
+                  key={feed._id}
+                  title={`${feed?.task?.activity?.name}`}
+                  images={imagesx}
+                  selectedImage={selectedImage}
+                  setSelectedImage={setSelectedImage}
+                  activeIndex={activeIndex}
+                  setActiveIndex={setActiveIndex}
+                />
+              )
+            })}
           </Grid>
         </Box>
       </GridItem>

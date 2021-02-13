@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
@@ -7,61 +6,57 @@ import React from 'react'
 import { useScreenshot } from 'use-react-screenshot'
 import useApi from 'context/api'
 import useAPICalls from 'hooks/useApiCalls'
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 import Share from 'components/Share'
-
 
 export default function Farm() {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
- 
+
   const ref = React.useRef(null)
   const [state, setState] = React.useState('compA')
   const [isOpen, setIsOpen] = React.useState(false)
 
   const [image, takeScreenShot] = useScreenshot()
-
-
-  const { id } = useParams()
   const [loading, setLoading] = React.useState('fetching')
   const [error, setError] = React.useState(null)
   const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
-  const {getMyFarms, getMyFarmFeeds} = useApi()
-  const {farms} = useAPICalls()
+  const { getMyFarms, getMyFarmFeeds } = useApi()
+  const { farms } = useAPICalls()
 
   React.useEffect(() => {
     const fetchData = async () => {
-    try {
-      setLoading("fetching")
-      const res = await getMyFarms()
-      setDigitalFarmerFarms(res.data)
-      console.log("running", "oufarm", res.data, farms)
-      setLoading("done")
-    } catch (error) {
-      setLoading("done")
-      setError(error)
-    }
+      try {
+        setLoading('fetching')
+        const res = await getMyFarms()
+        setDigitalFarmerFarms(res.data)
+
+        setLoading('done')
+      } catch (error) {
+        setLoading('done')
+        setError(error)
+      }
     }
     fetchData()
-      }, [])
+  }, [getMyFarms])
 
-      React.useEffect(() => {
-        const fetchData = async () => {
-          try {
-         
-            setLoading('fetching')
-            const res = await getMyFarmFeeds({ farm: digitalFarmerFarms[0]?.order?.product?._id })
-            setFarmFeeds(res.data)
-            setLoading('done')
-            console.log("friendly", res.data)
-          } catch (error) {
-            setLoading('done')
-            setError(error)
-          }
-        }
-        fetchData()
-      }, [digitalFarmerFarms])
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        const res = await getMyFarmFeeds({
+          farm: digitalFarmerFarms[0]?.order?.product?._id
+        })
+        setFarmFeeds(res.data)
+        setLoading('done')
+      } catch (error) {
+        setLoading('done')
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarms, getMyFarmFeeds])
 
   const onClose = () => setIsOpen(false)
 
@@ -71,7 +66,6 @@ export default function Farm() {
     takeScreenShot(ref.current)
     onOpen()
   }
-
 
   return (
     <Box pos='relative' ref={ref}>
@@ -144,7 +138,15 @@ export default function Farm() {
       </Flex>
 
       <Box bg='white'>
-        <DynamicFarm loading={loading} error={error} farm={state} digitalFarmerFarms={digitalFarmerFarms} farmfeeds={farmfeeds} farms={farms} onOpen={getImage} />
+        <DynamicFarm
+          loading={loading}
+          error={error}
+          farm={state}
+          digitalFarmerFarms={digitalFarmerFarms}
+          farmfeeds={farmfeeds}
+          farms={farms}
+          onOpen={getImage}
+        />
       </Box>
     </Box>
   )

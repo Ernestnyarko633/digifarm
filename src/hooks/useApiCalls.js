@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import useApi from 'context/api'
 import React from 'react'
 
@@ -17,14 +16,14 @@ const useAPICalls = () => {
         setLoading('loading')
         const res = await getFarms()
         setFarms(res.data)
-        console.log(farms, 'homexd')
+
         setLoading('done')
       } catch (err) {
         setError(err.message)
       }
     }
     fetchData()
-  }, [])
+  }, [getFarms])
 
   //
   return {
