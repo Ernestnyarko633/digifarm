@@ -1,9 +1,12 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
+import useAuth from 'context/auth'
 import React from 'react'
 
 export default function Farm() {
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
   const [state, setState] = React.useState('compA')
 
   return (
@@ -21,8 +24,15 @@ export default function Farm() {
         zIndex={50}
       >
         <Flex align='center'>
-          <Box w={8} h={8} rounded='100%' bg='gray.400' />
-          <Text ml={5}>Clinton farms</Text>
+          <Box
+            w={8}
+            h={8}
+            as={Avatar}
+            src={user?.avatar}
+            rounded='100%'
+            bg='gray.400'
+          />
+          <Text ml={5}>{`${user?.firstName}`}'s farms</Text>
         </Flex>
         <Flex align='center'>
           <Box
