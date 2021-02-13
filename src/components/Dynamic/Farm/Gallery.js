@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
@@ -23,7 +24,9 @@ const images = [
 // const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 export default function Gallery({ farmfeeds }) {
-  const [selectedImage, setSelectedImage] = React.useState(images[0])
+  const [imagesx, setImagesx] = React.useState([])
+  const [selectedImage, setSelectedImage] = React.useState({})
+  const [activeIndex, setActiveIndex] = React.useState(0)
   // const [currentSlide, setCurrentSlide] = React.useState(images[0].id)
 
   // const handleClick = direction => {
@@ -32,6 +35,20 @@ export default function Gallery({ farmfeeds }) {
   //   })
   // }
 
+  React.useEffect(() => {
+   let array = []
+    farmfeeds.forEach((feed) => {
+    feed.media.map((_media) => {
+      if(_media.type === 'image'){
+
+        array.push(_media)
+      }
+    })
+    })
+    setImagesx(array)
+    setSelectedImage(array[0])
+    
+  }, [farmfeeds])
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -83,25 +100,17 @@ export default function Gallery({ farmfeeds }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
-          <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
-            <ImageGallery
-              title='Land preparation'
-              images={images}
+          <Grid templateColumns={{  md: 'repeat(2, 1fr)' }} gap={20}>
+           { farmfeeds.map((feed) => {
+         return   <ImageGallery
+              title={`${feed?.task?.activity?.name}`}
+              images={imagesx}
               selectedImage={selectedImage}
               setSelectedImage={setSelectedImage}
+              activeIndex={activeIndex}
+              setActiveIndex={setActiveIndex}
             />
-            <ImageGallery
-              title='Harrowing'
-              images={images}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-            />
-            <ImageGallery
-              title='Planting'
-              images={images}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-            />
+           })}
           </Grid>
         </Box>
       </GridItem>

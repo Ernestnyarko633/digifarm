@@ -27,14 +27,14 @@ export default function Farm() {
   const [error, setError] = React.useState(null)
   const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
-  const {getMyFarm, getMyFarmFeeds} = useApi()
+  const {getMyFarms, getMyFarmFeeds} = useApi()
   const {farms} = useAPICalls()
 
   React.useEffect(() => {
     const fetchData = async () => {
     try {
       setLoading("fetching")
-      const res = await getMyFarm(id)
+      const res = await getMyFarms()
       setDigitalFarmerFarms(res.data)
       console.log("running", "oufarm", res.data, farms)
       setLoading("done")
@@ -144,7 +144,7 @@ export default function Farm() {
       </Flex>
 
       <Box bg='white'>
-        <DynamicFarm farm={state} digitalFarmerFarms={digitalFarmerFarms} farmfeeds={farmfeeds} farms={farms} onOpen={getImage} />
+        <DynamicFarm loading={loading} error={error} farm={state} digitalFarmerFarms={digitalFarmerFarms} farmfeeds={farmfeeds} farms={farms} onOpen={getImage} />
       </Box>
     </Box>
   )

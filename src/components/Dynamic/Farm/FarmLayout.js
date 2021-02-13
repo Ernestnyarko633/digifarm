@@ -1,6 +1,6 @@
 /* eslint-disable*/
 import React from 'react'
-import { Box, Grid, GridItem } from '@chakra-ui/react'
+import { Box, Grid, GridItem, Spinner , Text, Flex} from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 import useApi from 'context/api'
@@ -58,7 +58,17 @@ export default function FarmLayout({ children, ...rest }) {
         </Box>
       </GridItem>
       <GridItem shadow='xl'>
-        <FarmRightSidebar state={state}  digitalFarmerFarm={digitalFarmerFarm?.order?.product?._id}/>
+      {loading === 'fetching' && <Flex w="100%" h="100%" align="center" justify="center">
+      <Spinner size='lg' color='cf.400' />
+      </Flex> }
+        {loading === 'done' && !error && <FarmRightSidebar state={state} digitalFarmerFarm={digitalFarmerFarm?.order?.product?._id}/>}
+        {loading === 'done' && error && (
+        <Box>
+          <Text fontSize='md' ml={2} color='cf.400'>
+            Something went wrong
+          </Text>
+        </Box>
+      )}
       </GridItem>
     </Grid>
   )

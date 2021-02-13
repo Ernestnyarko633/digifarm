@@ -1,5 +1,5 @@
 /* eslint-disable*/
-import { Box } from '@chakra-ui/react'
+import { Box, Spinner, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicCard from '../Sidebar'
@@ -60,12 +60,20 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
       shadow='md'
       overflowY='scroll'
     >
+     {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
     {loading === "done" && !error &&  <DynamicCard
         card={state}
         scheduledTasks={scheduledTasks}
         farmfeeds={farmfeeds}
         farm={digitalFarmerFarm}
       />}
+        {loading === 'done' && error && (
+        <Box>
+          <Text fontSize='md' ml={2} color='cf.400'>
+            Something went wrong
+          </Text>
+        </Box>
+      )}
     </Box>
   )
 }
