@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
-
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
 import ImageGallery from '../Cards/ImageGallery'
 
