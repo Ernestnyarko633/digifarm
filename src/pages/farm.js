@@ -25,15 +25,16 @@ export default function Farm() {
   const { id } = useParams()
   const [loading, setLoading] = React.useState('fetching')
   const [error, setError] = React.useState(null)
-  const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState('')
-  const {getMyFarms} = useApi()
+  const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState([])
+  const [farmfeeds, setFarmFeeds] = React.useState([])
+  const {getMyFarm, getMyFarmFeeds} = useApi()
   const {farms} = useAPICalls()
 
   React.useEffect(() => {
     const fetchData = async () => {
     try {
       setLoading("fetching")
-      const res = await getMyFarms()
+      const res = await getMyFarm(id)
       setDigitalFarmerFarms(res.data)
       console.log("running", "oufarm", res.data, farms)
       setLoading("done")
@@ -44,6 +45,23 @@ export default function Farm() {
     }
     fetchData()
       }, [])
+
+      React.useEffect(() => {
+        const fetchData = async () => {
+          try {
+         
+            setLoading('fetching')
+            const res = await getMyFarmFeeds({ farm: digitalFarmerFarms[0]?.order?.product?._id })
+            setFarmFeeds(res.data)
+            setLoading('done')
+            console.log("friendly", res.data)
+          } catch (error) {
+            setLoading('done')
+            setError(error)
+          }
+        }
+        fetchData()
+      }, [digitalFarmerFarms])
 
   const onClose = () => setIsOpen(false)
 
@@ -126,7 +144,7 @@ export default function Farm() {
       </Flex>
 
       <Box bg='white'>
-        <DynamicFarm farm={state} digitalFarmerFarms={digitalFarmerFarms} farms={farms} onOpen={getImage} />
+        <DynamicFarm farm={state} digitalFarmerFarms={digitalFarmerFarms} farmfeeds={farmfeeds} farms={farms} onOpen={getImage} />
       </Box>
     </Box>
   )

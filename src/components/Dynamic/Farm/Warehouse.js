@@ -77,12 +77,12 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
           color='gray.600'
         >
           <Box as='ul'>
-            {menus.map((item, index) => (
+            {menus.map((item) => (
               <Flex
                 as='button'
                 role='button'
                 aria-label={`${item.icon} button`}
-                key={index}
+                key={item.id}
                 align='center'
                 pb={6}
               >

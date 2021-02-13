@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
 import ImageGallery from '../Cards/ImageGallery'
+import PropTypes from 'prop-types'
 
 const menus = [
   { id: 1, icon: Calendar, state: 'compA' },
@@ -21,7 +22,7 @@ const images = [
 
 // const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-export default function Gallery() {
+export default function Gallery({ farmfeeds }) {
   const [selectedImage, setSelectedImage] = React.useState(images[0])
   // const [currentSlide, setCurrentSlide] = React.useState(images[0].id)
 
@@ -106,4 +107,8 @@ export default function Gallery() {
       </GridItem>
     </Grid>
   )
+}
+
+Gallery.propTypes = {
+  farmfeeds: PropTypes.any
 }
