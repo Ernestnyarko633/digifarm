@@ -5,8 +5,7 @@ class HttpFacade {
   constructor() {
     this.http = axios.create({
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Content-Type': 'application/json'
       }
     })
 

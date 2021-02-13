@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
@@ -7,7 +8,9 @@ import React from 'react'
 export default function Farm() {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
+ 
   const [state, setState] = React.useState('compA')
+
 
   return (
     <Box>
@@ -32,7 +35,7 @@ export default function Farm() {
             rounded='100%'
             bg='gray.400'
           />
-          <Text ml={5}>{`${user?.firstName}`}'s farms</Text>
+          <Text ml={5}>{`${user?.firstName}`}'s farm</Text>
         </Flex>
         <Flex align='center'>
           <Box

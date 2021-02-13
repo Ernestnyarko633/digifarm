@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
@@ -79,6 +80,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${DIGITAL_FARMER_API}/orders/${id}` })
   }
 
+  const getMyScheduledTasks = async query => {
+    return await http.get({ url: `${FMS_API}/task-schedulers`, query })
+  }
+
+  const getMyFarmFeeds = async query => {
+    return await http.get({ url: `${FMS_API}/farm-feeds`, query })
+  }
   return (
     <ApiContext.Provider
       value={{
@@ -87,15 +95,17 @@ export const ApiContextProvider = ({ children }) => {
         getFarms,
         patchUser,
         getMyFarm,
-        getMyFarms,
-        getMyOrder,
-        getMyOrders,
         createOrder,
-        changePassword,
+        getMyOrder,
+        getMyFarms,
+        getMyOrders,
         initiatePayment,
+        changePassword,
+        getMyFarmFeeds,
         getCropCategories,
         deleteBankTransfer,
-        uploadPaymentDetails
+        getMyScheduledTasks,
+        uploadPaymentDetails,
       }}
     >
       {children}

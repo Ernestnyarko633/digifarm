@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -15,13 +16,15 @@ const components = {
   compE: Updates
 }
 
-const DynamicCard = ({ card }) => {
+const DynamicCard = ({ card,  scheduledTasks, farmfeeds}) => {
   const SelectedCard = components[card]
-  return <SelectedCard />
+  return <SelectedCard scheduledTasks={scheduledTasks}  farmfeeds={farmfeeds}/>
 }
 
 DynamicCard.propTypes = {
-  card: PropTypes.string.isRequired
+  card: PropTypes.string.isRequired,
+  scheduledTasks: PropTypes.any,
+  farmfeeds: PropTypes.any
 }
 
 export default DynamicCard

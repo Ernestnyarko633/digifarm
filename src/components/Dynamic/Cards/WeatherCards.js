@@ -4,44 +4,8 @@ import { Cloud } from 'theme/Icons'
 import { Box, Grid, Heading, Icon, Text } from '@chakra-ui/react'
 import useEosApi from 'context/eosApi'
 
-export default function WeatherCard() {
+export default function WeatherCard({farmfeeds}) {
 
-  const [loading, setLoading] = React.useState('fetching')
-  const [error, setError] = React.useState(null)
-  const [weather, setWeather] = React.useState('')
-  const { getEOSWeatherForeCast } = useEosApi()
-
-  React.useEffect(() => {
-    let _payload = {
-      geometry:{
-         type:"Polygon",
-         coordinates: [
-           [
-               [-1.531048,5.578849],
-               [-1.530683,5.575411],
-               [-1.521606,5.576286],
-               [-1.522036,5.579767],
-               [-1.531048,5.578849]
-           ]
-       ]
-                   
-      }
-   }
-
-    const fetchData = async payload => {
-      try {
-        setLoading('fetching')
-        const res = await getEOSViewID(payload)
-        console.log(res, 'myresults')
-        setWeather(res)
-        setLoading('done')
-      } catch (error) {
-        setError(error)
-        setLoading('done')
-      }
-    }
-    fetchData(_payload)
-  }, [])
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
       <Box
