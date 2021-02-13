@@ -1,13 +1,30 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
-import Header from 'container/Header'
 import React from 'react'
+import { useScreenshot } from 'use-react-screenshot'
+
+import Share from 'components/Share'
+import Header from 'container/Header'
 
 export default function Farm() {
+  const ref = React.useRef(null)
   const [state, setState] = React.useState('compA')
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  const [image, takeScreenShot] = useScreenshot()
+
+  const onClose = () => setIsOpen(false)
+
+  const onOpen = () => setIsOpen(true)
+
+  const getImage = () => {
+    takeScreenShot(ref.current)
+    onOpen()
+  }
 
   return (
-    <Box>
+    <Box pos='relative' ref={ref}>
+      <Share isOpen={isOpen} onClose={onClose} image={image} />
       <Header />
       <Flex
         pos='fixed'
@@ -69,7 +86,7 @@ export default function Farm() {
       </Flex>
 
       <Box bg='white'>
-        <DynamicFarm farm={state} />
+        <DynamicFarm farm={state} onOpen={getImage} />
       </Box>
     </Box>
   )
