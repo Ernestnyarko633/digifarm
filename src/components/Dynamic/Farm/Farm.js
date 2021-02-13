@@ -1,10 +1,11 @@
 import { Box, Flex } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React from 'react'
+import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 
-export default function Farm() {
+export default function Farm({ onOpen }) {
   return (
     <FarmLayout>
       <Box h={{ md: 128 }} w='100%'>
@@ -31,8 +32,18 @@ export default function Farm() {
           w={{ md: 40 }}
           shadow='none'
         />
-        <Button btntitle='Share' rounded='30px' h={12} w={{ md: 40 }} />
+        <Button
+          btntitle='Share'
+          rounded='30px'
+          h={12}
+          w={{ md: 40 }}
+          onClick={onOpen}
+        />
       </Flex>
     </FarmLayout>
   )
+}
+
+Farm.propTypes = {
+  onOpen: PropTypes.func
 }
