@@ -23,6 +23,7 @@ const WarehouseCard = ({
   condition,
   status,
   mr,
+  orderStatus,
   ml
 }) => (
   <Flex mr={6}>
@@ -51,11 +52,11 @@ const WarehouseCard = ({
         <Box ml={6}>
           <Box rounded='40px' bg='cf.200' my={1} pt={1} px={2}>
             <Text color='cf.400' fontSize='xs' textAlign='center'>
-              Pending Order
+              {orderStatus ? `${orderStatus}` : 'Pending Order'}
             </Text>
           </Box>
           <Text as='h6' fontSize='xs' ml={2} fontWeight='bold'>
-            80% Complete
+            {orderStatus === 'PAID' ? '100%' : '80% Complete'}
           </Text>
         </Box>
       </Flex>
@@ -110,7 +111,7 @@ const WarehouseCard = ({
           </List>
         </Flex>
 
-        {status === 'action' && (
+        {quantity && (
           <Flex align='center' justify='space-between' mt={6}>
             <Box>
               <Button
@@ -132,7 +133,7 @@ const WarehouseCard = ({
           </Flex>
         )}
 
-        {status === 'sold' && (
+        {!quantity && (
           <Flex align='center' justify='center' mt={6}>
             <Button
               btntitle='sold'
@@ -164,7 +165,8 @@ WarehouseCard.propTypes = {
   condition: PropTypes.string.isRequired,
   mr: PropTypes.any,
   ml: PropTypes.any,
-  status: PropTypes.string
+  status: PropTypes.string,
+  orderStatus: PropTypes.any
 }
 
 export default WarehouseCard

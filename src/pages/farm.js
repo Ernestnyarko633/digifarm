@@ -5,7 +5,9 @@ import Header from 'container/Header'
 import useAuth from 'context/auth'
 import React from 'react'
 import { useScreenshot } from 'use-react-screenshot'
-
+import useApi from 'context/api'
+import useAPICalls from 'hooks/useApiCalls'
+import { useParams } from 'react-router-dom'
 import Share from 'components/Share'
 
 
@@ -18,6 +20,30 @@ export default function Farm() {
   const [isOpen, setIsOpen] = React.useState(false)
 
   const [image, takeScreenShot] = useScreenshot()
+
+
+  const { id } = useParams()
+  const [loading, setLoading] = React.useState('fetching')
+  const [error, setError] = React.useState(null)
+  const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState('')
+  const {getMyFarms} = useApi()
+  const {farms} = useAPICalls()
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+    try {
+      setLoading("fetching")
+      const res = await getMyFarms()
+      setDigitalFarmerFarms(res.data)
+      console.log("running", "oufarm", res.data, farms)
+      setLoading("done")
+    } catch (error) {
+      setLoading("done")
+      setError(error)
+    }
+    }
+    fetchData()
+      }, [])
 
   const onClose = () => setIsOpen(false)
 
@@ -100,7 +126,7 @@ export default function Farm() {
       </Flex>
 
       <Box bg='white'>
-        <DynamicFarm farm={state} onOpen={getImage} />
+        <DynamicFarm farm={state} digitalFarmerFarms={digitalFarmerFarms} farms={farms} onOpen={getImage} />
       </Box>
     </Box>
   )

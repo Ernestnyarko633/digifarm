@@ -18,6 +18,11 @@ export default function WeatherCard({farmfeeds}) {
         <Text textAlign='center' fontWeight={300}>
           Plant population
         </Text>
+        <Box mt={2}>
+          <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
+           {farmfeeds[0]?.plantInfo?.population}
+          </Heading>
+        </Box>
       </Box>
       <Box
         w='100%'

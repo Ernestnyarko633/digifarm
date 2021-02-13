@@ -14,18 +14,18 @@ export default function Tasks({scheduledTasks, farmfeeds}) {
     <Box mb={8}>
       <FarmUpdateCard
         title='TODAY’S TASK'
-        duration={scheduledTasks[0]?.taskId?.duration}
-        subtitle={scheduledTasks[0]?.taskId?.name}
-        text={scheduledTasks[0]?.description.replace(/<[^>]*>/g, '')}
+        duration={farmfeeds[0]?.task?.duration}
+        subtitle={farmfeeds[0]?.task?.name}
+        text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
         icon={BiTime}
       />
       <WeatherCards farmfeeds={farmfeeds} />
       <Grid gap={8}>
         <FarmUpdateCard
           title='SCHEDULED TASK'
-          duration={scheduledTasks[0]?.taskId?.duration}
-          subtitle={scheduledTasks[0]?.taskId?.name}
-          text={scheduledTasks[0]?.description.replace(/<[^>]*>/g, '')}
+          duration={farmfeeds[0]?.nextTask?.duration}
+          subtitle={farmfeeds[0]?.nextTask?.name}
+          text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
           icon={BiTime}
         />
         <FarmUpdateCard

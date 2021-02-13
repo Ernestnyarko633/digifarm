@@ -4,7 +4,7 @@ import { Box, Grid, GridItem } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 import useApi from 'context/api'
-import useAPICalls from 'hooks/useApiCalls'
+
 
 import FarmLeftSideBar from '../Container/FarmLeftSideBar'
 import FarmRightSidebar from '../Container/FarmRightSidebar'
@@ -16,14 +16,16 @@ export default function FarmLayout({ children, ...rest }) {
   const [error, setError] = React.useState(null)
   const [digitalFarmerFarm, setDigitalFarmerFarm] = React.useState('')
   const {getMyFarm} = useApi()
-  const {farms} = useAPICalls()
+
 
   React.useEffect(() => {
     const fetchData = async () => {
     try {
       setLoading("fetching")
+      console.log("runningthroughspace")
       const res = await getMyFarm(id)
       setDigitalFarmerFarm(res.data)
+      console.log("farming", res.data)
       setLoading("done")
     } catch (error) {
       setLoading("done")
@@ -56,7 +58,7 @@ export default function FarmLayout({ children, ...rest }) {
         </Box>
       </GridItem>
       <GridItem shadow='xl'>
-        <FarmRightSidebar state={state}  digitalFarmerFarm={digitalFarmerFarm?.order?.product}/>
+        <FarmRightSidebar state={state}  digitalFarmerFarm={digitalFarmerFarm?.order?.product?._id}/>
       </GridItem>
     </Grid>
   )

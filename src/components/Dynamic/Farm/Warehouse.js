@@ -1,6 +1,8 @@
+/* eslint-disable*/
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
+import PropTypes from 'prop-types'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 
 import SoyaBean from '../../../assets/images/startfarm/soya-beans.svg'
@@ -49,7 +51,8 @@ const warehouseGoods = [
   }
 ]
 
-export default function Warehouse() {
+export default function Warehouse({ digitalFarmerFarms, farms }) {
+  console.log(digitalFarmerFarms, "myfarm")
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -74,12 +77,12 @@ export default function Warehouse() {
           color='gray.600'
         >
           <Box as='ul'>
-            {menus.map(item => (
+            {menus.map((item, index) => (
               <Flex
                 as='button'
                 role='button'
                 aria-label={`${item.icon} button`}
-                key={item.id}
+                key={index}
                 align='center'
                 pb={6}
               >
@@ -106,19 +109,20 @@ export default function Warehouse() {
             gap={10}
             w={{ md: 115 }}
           >
-            {warehouseGoods.map(item => (
+            {digitalFarmerFarms.map(item => (
               <WarehouseCard
-                key={item.name}
-                name={item.name}
-                location={item.location}
-                image={item.image}
-                quantity={item.quantity}
-                weight={item.weight}
-                bags={item.bags}
-                condition={item.condition}
+                key={item?._id}
+                name={item?.order?.product?.cropVariety?.crop?.name}
+                location={item?.order?.product?.location?.name}
+                image={item?.order?.product?.cropVariety?.imageUrl}
+                quantity={item?.storage.quantity}
+                weight={ `${item?.storage?.weight}`}
+                bags={`${item?.storage?.numberOfBags}`}
+                condition={item?.storage.yieldConditions}
+                orderStatus={item?.order?.status}
                 mr={3}
                 ml={14}
-                status={item.status}
+                status={item?.status}
               />
             ))}
           </Grid>
@@ -126,4 +130,8 @@ export default function Warehouse() {
       </GridItem>
     </Grid>
   )
+}
+Warehouse.propTypes = {
+  farms: PropTypes.any,
+  digitalFarmerFarm: PropTypes.any
 }
