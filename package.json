@@ -20,6 +20,7 @@
     "emotion-theming": "^11.0.0",
     "formik": "^2.2.5",
     "framer-motion": "^3.1.4",
+    "html2canvas": "^1.0.0-rc.7",
     "immer": "^8.0.0",
     "lodash": "^4.17.20",
     "node-sass": "5.0.0",
@@ -42,6 +43,7 @@
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7",
     "use-immer": "^0.4.2",
+    "use-react-screenshot": "^1.0.2",
     "web-vitals": "^1.0.1",
     "yup": "^0.32.8"
   },

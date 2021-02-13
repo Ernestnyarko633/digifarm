@@ -13,13 +13,14 @@ const components = {
   compD: Warehouse
 }
 
-const DynamicFarm = ({ farm }) => {
+const DynamicFarm = ({ farm, onOpen }) => {
   const SelectedFarm = components[farm]
-  return <SelectedFarm />
+  return <SelectedFarm onOpen={onOpen} />
 }
 
 DynamicFarm.propTypes = {
-  farm: PropTypes.string.isRequired
+  farm: PropTypes.string.isRequired,
+  onOpen: PropTypes.func
 }
 
 export default DynamicFarm
