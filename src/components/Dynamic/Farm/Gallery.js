@@ -36,13 +36,15 @@ export default function Gallery({ farmfeeds }) {
 
   React.useEffect(() => {
     let array = []
-    farmfeeds?.forEach(feed => {
-      feed?.media?.forEach(_media => {
-        if (_media.type === 'image') {
-          array.push(_media)
-        }
+    const feeds = () =>
+      farmfeeds?.forEach(feed => {
+        feed?.media?.forEach(_media => {
+          if (_media.type === 'image') {
+            array.push(_media)
+          }
+        })
       })
-    })
+    feeds()
     setImagesx(array)
     setSelectedImage(array[0])
   }, [farmfeeds])
