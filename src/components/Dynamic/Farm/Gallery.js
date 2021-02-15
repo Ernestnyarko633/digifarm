@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
@@ -24,6 +25,7 @@ const menus = [
 
 export default function Gallery({ farmfeeds }) {
   const [activities, setActivities] = React.useState([])
+  console.log(farmfeeds, "letmesee")
   React.useEffect(() => {
     let array2 = []
     const feeds = () =>
@@ -100,11 +102,8 @@ export default function Gallery({ farmfeeds }) {
                   <ImageGallery
                     key={_feed._id}
                     title={`${_feed?.task?.activity?.name}`}
-                    farmfeeds={farmfeeds.filter(
-                      _feed =>
-                        _feed?.task?.activity?.name ===
-                        selectActivity(_feed).act
-                    )}
+                    farmfeeds={farmfeeds}
+                    activityName={selectActivity(_feed).act}
                   />
                 )
               )
