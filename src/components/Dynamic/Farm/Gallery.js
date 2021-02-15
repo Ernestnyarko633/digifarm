@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
@@ -23,29 +24,26 @@ const menus = [
 // const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 export default function Gallery({ farmfeeds }) {
-  const [imagesx, setImagesx] = React.useState([])
-  const [selectedImage, setSelectedImage] = React.useState({})
-  const [activeIndex, setActiveIndex] = React.useState(0)
-  // const [currentSlide, setCurrentSlide] = React.useState(images[0].id)
-
-  // const handleClick = direction => {
-  //   setCurrentSlide(prevState => {
-  //     return (images.length + prevState + direction) % images.length
-  //   })
-  // }
-
+  const [activities, setActivities] = React.useState([])
+  console.log(farmfeeds, "letmesee")
   React.useEffect(() => {
-    let array = []
-    farmfeeds?.forEach(feed => {
-      feed?.media?.forEach(_media => {
-        if (_media.type === 'image') {
-          array.push(_media)
-        }
+    let array2 = []
+    const feeds = () =>
+      farmfeeds?.forEach(feed => {
+        array2.push(feed?.task?.activity?.name)
       })
-    })
-    setImagesx(array)
-    setSelectedImage(array[0])
+    feeds()
+    setActivities([...new Set(array2)])
   }, [farmfeeds])
+
+  const selectActivity = feed => {
+    const res = activities.find(act => feed.task.activity.name === act)
+    if (res) {
+      return { bool: true, act: feed?.task?.activity?.name }
+    } else {
+      return { bool: false, act: feed?.task?.activity?.name }
+    }
+  }
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -98,17 +96,16 @@ export default function Gallery({ farmfeeds }) {
           minH={{ lg: '100vh' }}
         >
           <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
-            {farmfeeds?.map(feed => {
+            {farmfeeds?.map(_feed => {
               return (
-                <ImageGallery
-                  key={feed._id}
-                  title={`${feed?.task?.activity?.name}`}
-                  images={imagesx}
-                  selectedImage={selectedImage}
-                  setSelectedImage={setSelectedImage}
-                  activeIndex={activeIndex}
-                  setActiveIndex={setActiveIndex}
-                />
+                selectActivity(_feed).bool && (
+                  <ImageGallery
+                    key={_feed._id}
+                    title={`${_feed?.task?.activity?.name}`}
+                    farmfeeds={farmfeeds}
+                    activityName={selectActivity(_feed).act}
+                  />
+                )
               )
             })}
           </Grid>

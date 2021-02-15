@@ -14,13 +14,13 @@ export default function FarmReceiptCard({ farm }) {
 
   const _downloadOrder = async query => {
     try {
-      setLoading('fetching')
+      setLoading(true)
       setError(null)
       await downloadOrder(query)
-      setLoading('done')
+      setLoading(false)
     } catch (error) {
       setError(error)
-      setLoading('done')
+      setLoading(false)
     }
   }
   return (
@@ -32,7 +32,7 @@ export default function FarmReceiptCard({ farm }) {
     >
       <Flex align='center' justify='space-between'>
         <Flex align='center'>
-          <Avatar src={user?.avatar} />
+          <Avatar src={farm?.order?.product?.cropVariety?.imageUrl} />
           <Box ml={2}>
             <Text fontSize='lg' fontWeight={700}>
               {`${user?.firstName}'s Farm Contract`}
@@ -61,14 +61,10 @@ export default function FarmReceiptCard({ farm }) {
             width={32}
             _hover={{ bg: 'white' }}
             shadow='none'
-            isDisabled={loading === 'fetch' ? true : false}
+            isDisabled={loading ? true : false}
+            isLoading={loading ? true : false}
           />
-          {error && (
-            <Text color='#ff0000' fontSize='sm'>
-              {' '}
-              Something went wrong
-            </Text>
-          )}
+          {error && !loading && alert('Opps, Something went wrong')}
         </Box>
       </Flex>
 
