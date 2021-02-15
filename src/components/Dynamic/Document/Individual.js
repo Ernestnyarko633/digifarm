@@ -1,10 +1,11 @@
 import { Box, Flex, Grid } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { BsArrowRight } from 'react-icons/bs'
 import FarmDocumentCard from '../Cards/FarmDocumentCard'
 
-export default function Individual() {
+export default function Individual({ digitalFarmerFarms }) {
   return (
     <Box>
       <Grid gap={10}>
@@ -49,4 +50,8 @@ export default function Individual() {
       </Flex>
     </Box>
   )
+}
+
+Individual.propTypes = {
+  digitalFarmerFarms: PropTypes.any
 }

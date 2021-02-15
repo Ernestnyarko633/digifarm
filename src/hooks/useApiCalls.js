@@ -8,7 +8,6 @@ const useAPICalls = () => {
   const [error, setError] = React.useState(null)
 
   const [farms, setFarms] = React.useState([])
-
   // fetches Farms
   React.useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +24,6 @@ const useAPICalls = () => {
     fetchData()
   }, [getFarms])
 
-  //
   return {
     loading,
     farms,
