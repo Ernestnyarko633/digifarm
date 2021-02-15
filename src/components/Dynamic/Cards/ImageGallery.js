@@ -7,14 +7,26 @@ import PropTypes from 'prop-types'
 
 const MotionFlex = motion.custom(Flex)
 
-export default function ImageGallery({
-  title,
-  images,
-  selectedImage,
-  setSelectedImage,
-  activeIndex,
-  setActiveIndex
-}) {
+export default function ImageGallery({ title, farmfeeds }) {
+  const [images, setImages] = React.useState([])
+  const [selectedImage, setSelectedImage] = React.useState({})
+  const [activeIndex, setActiveIndex] = React.useState(0)
+
+  React.useEffect(() => {
+    let array = []
+    const feeds = () =>
+      farmfeeds?.forEach(feed => {
+        feed?.media?.forEach(_media => {
+          if (_media.type === 'image') {
+            array.push(_media)
+          }
+        })
+      })
+    feeds()
+
+    setImages(array)
+    setSelectedImage(array[0])
+  }, [farmfeeds])
   return (
     <Box>
       <Flex align='center' justify='space-between'>
@@ -111,9 +123,5 @@ export default function ImageGallery({
 
 ImageGallery.propTypes = {
   title: PropTypes.string,
-  images: PropTypes.array,
-  selectedImage: PropTypes.object,
-  setSelectedImage: PropTypes.func,
-  activeIndex: PropTypes.any,
-  setActiveIndex: PropTypes.any
+  farmfeeds: PropTypes.any
 }
