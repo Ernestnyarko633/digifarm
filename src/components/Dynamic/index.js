@@ -27,7 +27,7 @@ const DynamicFarm = ({
   return (
     <React.Fragment>
       {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
-      {loading === 'done' && !error && (
+      {loading === 'done' && (
         <SelectedFarm
           onOpen={onOpen}
           digitalFarmerFarms={digitalFarmerFarms}

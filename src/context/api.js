@@ -7,7 +7,13 @@ import http from 'utils/httpFacade'
 const ApiContext = createContext()
 
 export const ApiContextProvider = ({ children }) => {
-  const { FMS_API, AUTH_API, PAYMENT_API, DIGITAL_FARMER_API } = getConfig()
+  const {
+    FMS_API,
+    AUTH_API,
+    PAYMENT_API,
+    DIGITAL_FARMER_API,
+    BUYER_API
+  } = getConfig()
 
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
@@ -86,6 +92,21 @@ export const ApiContextProvider = ({ children }) => {
   const getMyFarmFeeds = async query => {
     return await http.get({ url: `${FMS_API}/farm-feeds`, query })
   }
+
+  const getSourcingOrders = async query => {
+    return await http.get({ url: `${BUYER_API}/sourcings`, query })
+  }
+
+  const getReceipt = async query => {
+    return await http.get({ url: `${DIGITAL_FARMER_API}/receipt`, query })
+  }
+
+  const downloadOrder = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/orders/download`,
+      query
+    })
+  }
   return (
     <ApiContext.Provider
       value={{
@@ -93,14 +114,17 @@ export const ApiContextProvider = ({ children }) => {
         getUser,
         getFarms,
         patchUser,
+        getReceipt,
         getMyFarm,
         createOrder,
         getMyOrder,
         getMyFarms,
         getMyOrders,
+        downloadOrder,
         initiatePayment,
         changePassword,
         getMyFarmFeeds,
+        getSourcingOrders,
         getCropCategories,
         deleteBankTransfer,
         getMyScheduledTasks,

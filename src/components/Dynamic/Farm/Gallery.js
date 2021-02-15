@@ -36,8 +36,8 @@ export default function Gallery({ farmfeeds }) {
 
   React.useEffect(() => {
     let array = []
-    farmfeeds.forEach(feed => {
-      feed.media.forEach(_media => {
+    farmfeeds?.forEach(feed => {
+      feed?.media?.forEach(_media => {
         if (_media.type === 'image') {
           array.push(_media)
         }
@@ -98,7 +98,7 @@ export default function Gallery({ farmfeeds }) {
           minH={{ lg: '100vh' }}
         >
           <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
-            {farmfeeds.map(feed => {
+            {farmfeeds?.map(feed => {
               return (
                 <ImageGallery
                   key={feed._id}

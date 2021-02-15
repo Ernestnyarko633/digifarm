@@ -1,6 +1,7 @@
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import React from 'react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
+import PropTypes from 'prop-types'
 import DynamicDocument from '../Document'
 import FarmReceiptCard from '../Cards/FarmReceiptCard'
 
@@ -12,7 +13,7 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-export default function Document() {
+export default function Document({ digitalFarmerFarms }) {
   const [state, setState] = React.useState('compA')
 
   return (
@@ -106,7 +107,10 @@ export default function Document() {
             </Box>
           </Flex>
           <Box mt={{ md: 10 }}>
-            <DynamicDocument document={state} />
+            <DynamicDocument
+              document={state}
+              digitalFarmerFarms={digitalFarmerFarms}
+            />
           </Box>
         </Box>
       </GridItem>
@@ -125,11 +129,16 @@ export default function Document() {
           overflowY='scroll'
         >
           <Grid gap={8}>
-            <FarmReceiptCard />
-            <FarmReceiptCard />
+            {digitalFarmerFarms?.map(farm => {
+              return <FarmReceiptCard key={farm._id} farm={farm} />
+            })}
           </Grid>
         </Box>
       </GridItem>
     </Grid>
   )
+}
+
+Document.propTypes = {
+  digitalFarmerFarms: PropTypes.any
 }

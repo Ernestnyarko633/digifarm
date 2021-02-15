@@ -57,7 +57,7 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
       overflowY='scroll'
     >
       {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
-      {loading === 'done' && !error && (
+      {loading === 'done' && (
         <DynamicCard
           card={state}
           scheduledTasks={scheduledTasks}

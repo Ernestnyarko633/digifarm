@@ -6,12 +6,13 @@ import React from 'react'
 import { useScreenshot } from 'use-react-screenshot'
 import useApi from 'context/api'
 import useAPICalls from 'hooks/useApiCalls'
-// import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Share from 'components/Share'
 
 export default function Farm() {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
+  const { id } = useParams()
 
   const ref = React.useRef(null)
   const [state, setState] = React.useState('compA')
@@ -22,7 +23,8 @@ export default function Farm() {
   const [error, setError] = React.useState(null)
   const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
-  const { getMyFarms, getMyFarmFeeds } = useApi()
+  const [sourcingOrders, setSourcingOrders] = React.useState([])
+  const { getMyFarms, getMyFarmFeeds, getSourcingOrders } = useApi()
   const { farms } = useAPICalls()
 
   React.useEffect(() => {
@@ -30,16 +32,16 @@ export default function Farm() {
       try {
         setLoading('fetching')
         const res = await getMyFarms()
-        setDigitalFarmerFarms(res.data)
-
+        setDigitalFarmerFarms(res.data.filter(farm => farm._id === id))
         setLoading('done')
       } catch (error) {
         setLoading('done')
         setError(error)
       }
     }
+
     fetchData()
-  }, [getMyFarms])
+  }, [getMyFarms, id])
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +59,24 @@ export default function Farm() {
     }
     fetchData()
   }, [digitalFarmerFarms, getMyFarmFeeds])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        const res = await getSourcingOrders({
+          cropVariety: digitalFarmerFarms[0]?.order?.product?.cropVariety._id
+        })
+        setSourcingOrders(res?.data?.filter(order => order.demand === 0))
+
+        setLoading('done')
+      } catch (error) {
+        setLoading('done')
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarms, getSourcingOrders])
 
   const onClose = () => setIsOpen(false)
 
@@ -146,6 +166,7 @@ export default function Farm() {
           farmfeeds={farmfeeds}
           farms={farms}
           onOpen={getImage}
+          sourcingOrders={sourcingOrders}
         />
       </Box>
     </Box>

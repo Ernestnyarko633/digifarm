@@ -1,8 +1,28 @@
 import React from 'react'
 import { Avatar, Box, Flex, Image, Text } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 import Button from 'components/Button'
+import useAuth from 'context/auth'
+import useApi from 'context/api'
 
-export default function FarmReceiptCard() {
+export default function FarmReceiptCard({ farm }) {
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  const { downloadOrder } = useApi()
+  const [loading, setLoading] = React.useState(null)
+  const [error, setError] = React.useState(null)
+
+  const _downloadOrder = async query => {
+    try {
+      setLoading('fetching')
+      setError(null)
+      await downloadOrder(query)
+      setLoading('done')
+    } catch (error) {
+      setError(error)
+      setLoading('done')
+    }
+  }
   return (
     <Box
       bg='white'
@@ -12,13 +32,13 @@ export default function FarmReceiptCard() {
     >
       <Flex align='center' justify='space-between'>
         <Flex align='center'>
-          <Avatar src={require('../../../assets/images/soya.png').default} />
+          <Avatar src={user?.avatar} />
           <Box ml={2}>
             <Text fontSize='lg' fontWeight={700}>
-              John’s Farm Contract
+              {`${user?.firstName}'s Farm Contract`}
             </Text>
             <Text fontSize='xs' color='gray.500' mt={-2}>
-              Agyata, Eastern region
+              {`${farm?.order?.product?.location?.state} ${farm?.order?.product?.location?.country}`}
             </Text>
           </Box>
         </Flex>
@@ -26,6 +46,12 @@ export default function FarmReceiptCard() {
         <Box>
           <Button
             btntitle='View contract'
+            onClick={() => {
+              return _downloadOrder({
+                reference: farm?.order?.reference,
+                type: 'agreement'
+              })
+            }}
             bg='white'
             borderWidth={1}
             borderColor='cf.400'
@@ -35,7 +61,14 @@ export default function FarmReceiptCard() {
             width={32}
             _hover={{ bg: 'white' }}
             shadow='none'
+            isDisabled={loading === 'fetch' ? true : false}
           />
+          {error && (
+            <Text color='#ff0000' fontSize='sm'>
+              {' '}
+              Something went wrong
+            </Text>
+          )}
         </Box>
       </Flex>
 
@@ -48,4 +81,8 @@ export default function FarmReceiptCard() {
       </Box>
     </Box>
   )
+}
+
+FarmReceiptCard.propTypes = {
+  farm: PropTypes.any
 }
