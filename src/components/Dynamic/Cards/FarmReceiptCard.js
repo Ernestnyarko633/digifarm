@@ -32,7 +32,7 @@ export default function FarmReceiptCard({ farm }) {
     >
       <Flex align='center' justify='space-between'>
         <Flex align='center'>
-          <Avatar src={user?.avatar} />
+          <Avatar src={farm?.order?.product?.cropVariety?.imageUrl} />
           <Box ml={2}>
             <Text fontSize='lg' fontWeight={700}>
               {`${user?.firstName}'s Farm Contract`}
