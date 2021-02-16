@@ -23,10 +23,11 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
           array.push(_media)
         }
       })
+      return null
     }
     const feeds = () =>
       farmfeeds?.forEach(feed => {
-        _feeds(feed)
+        return _feeds(feed)
       })
     feeds()
 
