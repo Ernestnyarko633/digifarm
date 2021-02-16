@@ -28,9 +28,7 @@ const BuyerCard = ({
       <Flex>
         <Box my={1}>
           <Flex>
-            <Avatar>
-              <Image src={image} />
-            </Avatar>
+            <Avatar src={image} />
             <Box ml={4}>
               <Heading as='h6' mt={1} fontSize={{ md: 'md' }}>
                 {name}
@@ -42,12 +40,26 @@ const BuyerCard = ({
           </Flex>
         </Box>
         <Spacer />
-        <ConfirmSale
-          amtLeft={amtLeft}
-          name={name}
-          amtBought={amtBought}
-          price={price}
-        />
+        <Flex>
+          <Button
+        mr={5}
+        mt={4}
+        rounded='30px'
+        fontWeight='thin'
+        fontSize='xs'
+        variant='outline'
+        borderColor='cf.400'
+        w={{ md: '120px' }}
+      >
+        About buyer
+      </Button>
+          <ConfirmSale
+            amtLeft={amtLeft}
+            name={name}
+            amtBought={amtBought}
+            price={price}
+          />
+        </Flex>
       </Flex>
       <Box mt={4}>
         <Flex>
@@ -84,26 +96,7 @@ const BuyerCard = ({
         </Flex>
       </Box>
     </Box>
-    <Flex>
-      <Button
-        mr={5}
-        mt={4}
-        rounded='30px'
-        fontWeight='thin'
-        fontSize='xs'
-        variant='outline'
-        borderColor='cf.400'
-        w={{ md: '120px' }}
-      >
-        About buyer
-      </Button>
-      <ConfirmSale
-        amtLeft={amtLeft}
-        name={name}
-        amtBought={amtBought}
-        price={price}
-      />
-    </Flex>
+
   </Flex>
 )
 

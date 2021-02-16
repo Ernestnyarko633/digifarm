@@ -28,9 +28,7 @@ const WarehouseCard = ({
       <Box rounded='lg' bg='white' mr={mr} ml={ml} p={6}>
         <Flex>
           <Flex mb={4}>
-            <Avatar bg='gray.100'>
-              <Image src={image} />
-            </Avatar>
+            <Avatar bg='gray.100' src={image} />
             <Box ml={2}>
               <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
                 {name}

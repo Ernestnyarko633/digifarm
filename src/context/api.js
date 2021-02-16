@@ -7,7 +7,13 @@ import http from 'utils/httpFacade'
 const ApiContext = createContext()
 
 export const ApiContextProvider = ({ children }) => {
-  const { AUTH_API, FMS_API, PAYMENT_API, DIGITAL_FARMER_API } = getConfig()
+  const {
+    AUTH_API,
+    FMS_API,
+    PAYMENT_API,
+    DIGITAL_FARMER_API,
+    BUYER_API
+  } = getConfig()
 
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
@@ -73,12 +79,17 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${DIGITAL_FARMER_API}/orders/${id}` })
   }
 
+  const getBuyers = async (query) => {
+    return await http.get({ url: `${BUYER_API}/sourcings`, query })
+  }
+
   return (
     <ApiContext.Provider
       value={{
         logout,
         getUser,
         getFarms,
+        getBuyers,
         patchUser,
         getMyFarm,
         getMyFarms,

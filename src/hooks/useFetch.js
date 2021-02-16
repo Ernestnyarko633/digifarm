@@ -1,3 +1,4 @@
+/*eslint-disable*/
 /* eslint-disable space-before-function-paren */
 import { useEffect, useReducer } from 'react'
 import useAuth from 'context/auth'
