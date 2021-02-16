@@ -15,7 +15,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
   React.useEffect(() => {
     let array = []
     const _feeds = feed => {
-      feed?.media?.forEach(_media => {
+      return feed?.media?.forEach(_media => {
         if (
           _media.type === 'image' &&
           feed?.task?.activity?.name === activityName
@@ -23,7 +23,6 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
           array.push(_media)
         }
       })
-      return null
     }
     const feeds = () =>
       farmfeeds?.forEach(feed => {
