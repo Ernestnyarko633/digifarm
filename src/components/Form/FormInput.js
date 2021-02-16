@@ -4,17 +4,11 @@ import { Box, FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react'
 import { Input } from 'baseui/input'
 
 const FormInput = ({
-  label,
   titleAddon,
-  value,
-  onChange,
-  onBlur,
-  placeholder,
-  name,
-  type,
   isRequired,
-  error,
   touched,
+  label,
+  error,
   width,
   mr,
   bg = 'cf.300',
@@ -46,12 +40,6 @@ const FormInput = ({
       </FormLabel>
       <Input
         {...rest}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        name={name}
-        type={type}
         clearOnEscape
         overrides={{
           Root: {
@@ -94,7 +82,6 @@ const FormInput = ({
 FormInput.propTypes = {
   inputType: PropTypes.any,
   inputClass: PropTypes.any,
-  placeholder: PropTypes.any,
   label: PropTypes.any,
   width: PropTypes.any,
   w: PropTypes.any,
@@ -104,16 +91,13 @@ FormInput.propTypes = {
   name: PropTypes.any,
   title: PropTypes.any,
   type: PropTypes.any,
-  onChange: PropTypes.any,
   error: PropTypes.any,
   inputValue: PropTypes.any,
   disabled: PropTypes.any,
-  onBlur: PropTypes.any,
   touched: PropTypes.any,
   className: PropTypes.any,
   titleAddon: PropTypes.any,
   fontSize: PropTypes.any,
-  value: PropTypes.any,
   bg: PropTypes.any,
   selectedValue: PropTypes.any,
   passwordShow: PropTypes.any,

@@ -1,8 +1,9 @@
 import React from 'react'
 import { IconButton, Flex } from '@chakra-ui/react'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
+import PropTypes from 'prop-types'
 
-const ArrowButton = () => (
+const ArrowButton = ({ handleClick }) => (
   <Flex justify='flex-end' mx={4}>
     <IconButton
       aria-label='Left Arrow'
@@ -13,6 +14,7 @@ const ArrowButton = () => (
       color='cf.900'
       _hover={{ bg: 'transparent' }}
       _active={{ bg: 'transparent' }}
+      onClick={() => handleClick(-1)}
     />
     <IconButton
       aria-label='Right Arrow'
@@ -21,8 +23,13 @@ const ArrowButton = () => (
       rounded='100%'
       colorScheme='linear'
       shadow='md'
+      onClick={() => handleClick(+1)}
     />
   </Flex>
 )
+
+ArrowButton.propTypes = {
+  handleClick: PropTypes.func
+}
 
 export default ArrowButton

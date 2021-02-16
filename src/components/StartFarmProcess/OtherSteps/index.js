@@ -1,73 +1,117 @@
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
-import Button from 'components/Button'
-import useComponent from 'context/component'
-import { AnimateSharedLayout, motion } from 'framer-motion'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Flex, Heading, Image, Text } from '@chakra-ui/react'
+import { AnimateSharedLayout, motion } from 'framer-motion'
+
+import useStartFarm from 'context/start-farm'
+
+import Overlay from 'components/Loading/Overlay'
+import Button from 'components/Button'
+
 import AboutFarmManager from './AboutFarmManager'
 import ChooseAcreage from './ChooseAcreage'
-import Confirmation from './Confirmation'
-import Contract from './Contract'
-import InviteLink from './InviteLink'
 import PaymentOption from './PaymentOption'
+import Confirmation from './Confirmation'
+import InviteLink from './InviteLink'
+import Contract from './Contract'
+
+import { getformattedDate } from 'helpers/misc'
 
 const MotionFlex = motion.custom(Flex)
 
-const OtherSteps = () => {
-  const { otherStep, handlePrev, handleNextStep, handleBack } = useComponent()
+const OtherSteps = ({ history: { push } }) => {
+  const {
+    text,
+    otherStep,
+    handlePrev,
+    handleBack,
+    selectedFarm,
+    isSubmitting,
+    handlePayment,
+    handleNextStep,
+    handleCreateOrder
+  } = useStartFarm()
 
-  function goHome() {
-    return (window.location.pathname = '/dashboard')
-  }
+  const catName = sessionStorage.getItem('cat_name')
+  const catFarms = JSON.parse(sessionStorage.getItem('farms'))
 
   const getSteps = value => {
     switch (value) {
       case 0:
-        return <AboutFarmManager />
+        return <AboutFarmManager farm={selectedFarm} />
       case 1:
-        return <ChooseAcreage />
+        return <ChooseAcreage farm={selectedFarm} />
       case 2:
-        return <Contract />
+        return <Contract farm={selectedFarm} />
       case 3:
-        return <PaymentOption />
+        return <PaymentOption farm={selectedFarm} />
       case 4:
-        return <InviteLink />
+        return <InviteLink farm={selectedFarm} />
       case 5:
-        return <Confirmation />
+        return <Confirmation farm={selectedFarm} />
       default:
         return null
     }
   }
 
-  return (
-    <Box>
-      <Flex
-        align='center'
-        justify='center'
-        bg='gray.100'
-        w='100%'
-        h={20}
-        mt={20}
-      >
-        <Heading as='h5' size='md' mr={{ md: 20 }}>
-          Roots / Tubers
-        </Heading>
+  const getForwardButtonProps = key => {
+    switch (key) {
+      case 2:
+        return {
+          title: 'Accept Agreement',
+          width: 56,
+          action: handleCreateOrder
+        }
+      case 3:
+        return {
+          title: 'Next',
+          width: 56,
+          action: handlePayment
+        }
+      case 5:
+        return {
+          title: 'Continue to my Dashboard',
+          width: 70,
+          action: () => push('/dashboard')
+        }
+      default:
+        return { title: 'Next', width: 56, action: handleNextStep }
+    }
+  }
 
-        <Flex align='center' justify='space-between'>
-          <Text px={6}>Ginger</Text>
-          <Text px={6}>Chilli pepper</Text>
-          <Text px={6}>Tiger nut</Text>
-          <Text px={6}>Sweet potato</Text>
-          <Text px={6}>Sorghum</Text>
+  const { title, action, width } = getForwardButtonProps(otherStep)
+
+  return (
+    <>
+      {isSubmitting && <Overlay text={text} />}
+      <Flex bg='cf-dark.400' h={20} mt={20}>
+        <Flex justify='space-between' mx='auto' w={{ md: 145 }}>
+          <Flex align='center'>
+            <Heading as='h5' size='md' mr={{ md: 40 }}>
+              {catName}
+            </Heading>
+          </Flex>
+          <Flex justify='space-between'>
+            {catFarms?.slice(0, 4)?.map(farm => (
+              <Flex
+                key={farm._id}
+                align='center'
+                justify='center'
+                direction='column'
+                borderBottomWidth={farm._id === selectedFarm._id && 2}
+                borderBottomColor={farm._id === selectedFarm._id && 'cf.400'}
+              >
+                <Text px={6} textTransform='uppercase'>
+                  {farm.cropVariety?.crop.name}
+                </Text>
+                <Text px={6} fontSize='tiny'>
+                  ({farm.cropVariety?.name}) #{farm?.name}
+                </Text>
+              </Flex>
+            ))}
+          </Flex>
         </Flex>
       </Flex>
-
-      {/* <Flex align='center' justify='center' w='100%'>
-        <Box textAlign='center' mt={40}>
-          <Heading as='h4' size='xl'>
-            Farm details and Manager
-          </Heading>
-        </Box>
-      </Flex> */}
 
       <Flex
         align='center'
@@ -78,7 +122,13 @@ const OtherSteps = () => {
         mb={4}
       >
         <Text fontSize='sm' color='red.600'>
-          Farm starts : 2nd September, 2020
+          Farm starts :{' '}
+          {getformattedDate(selectedFarm.startDate, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
         </Text>
         <Flex
           align='center'
@@ -102,7 +152,6 @@ const OtherSteps = () => {
 
       <AnimateSharedLayout>
         <MotionFlex
-          layout
           w={{ md: 143 }}
           h={{ md: 120 }}
           mx='auto'
@@ -117,26 +166,29 @@ const OtherSteps = () => {
 
       <Flex align='center' justify='center' mt={6}>
         <Button
-          btntitle='Prev'
-          colorScheme='white'
-          color='gray.700'
+          h={12}
           width={56}
           fontSize='md'
-          h={12}
+          btntitle='Prev'
+          color='gray.700'
+          colorScheme='white'
           onClick={otherStep <= 0 ? handleBack : handlePrev}
         />
         <Button
-          btntitle={otherStep === 5 ? 'Continue to my Dashboard' : 'Next'}
           ml={6}
-          width={otherStep === 5 ? 70 : 56}
-          fontSize='lg'
-          md
           h={12}
-          onClick={otherStep === 5 ? goHome : handleNextStep}
+          fontSize='lg'
+          width={width}
+          btntitle={title}
+          onClick={action}
         />
       </Flex>
-    </Box>
+    </>
   )
+}
+
+OtherSteps.propTypes = {
+  history: PropTypes.object.isRequired
 }
 
 export default OtherSteps

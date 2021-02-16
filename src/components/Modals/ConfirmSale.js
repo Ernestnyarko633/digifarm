@@ -95,12 +95,7 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
                 </Text>
               </Text>
             </Box>
-            <Text
-              fontSize={{ md: 'sm' }}
-              pl={2}
-              fontWeight='thin'
-              color='red.600'
-            >
+            <Text fontSize={{ md: 'sm' }} pl={2} color='red.500'>
               Are you sure you want to sell this crop? This action is
               irreversible{' '}
             </Text>
@@ -115,6 +110,8 @@ const ConfirmSale = ({ amtLeft, name, amtBought, price }) => {
                 variant='outline'
                 borderColor='black'
                 w={{ md: '90px' }}
+                bg='white'
+                _hover={{ bg: 'white' }}
               >
                 No
               </Button>

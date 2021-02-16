@@ -30,11 +30,11 @@ const FarmBoardCard = ({
   const Detail = () => {
     return (
       <Flex
-        justify='space-between'
+        pb={5}
         align='center'
         borderBottomWidth={1}
+        justify='space-between'
         borderBottomColor='gray.200'
-        pb={5}
       >
         <Flex align='center'>
           <Avatar size='lg' src={avatar} />
@@ -65,13 +65,10 @@ const FarmBoardCard = ({
   }
 
   return (
-    <Box rounded='xl' w='100%' bg='white' mb={{ md: 10 }} shadow='sm'>
+    <Box rounded='xl' w='100%' bg='white' mb={{ md: 10 }} shadow='md'>
       {status === 'farm' && (
         <>
-          <Box
-            py={{ md: status === 'news' || status === 'action' ? 8 : 10 }}
-            px={{ md: 16 }}
-          >
+          <Box py={{ md: 10 }} px={{ md: 16 }}>
             <Detail />
             <Box mt={6}>
               <Text textTransform='uppercase' fontWeight='bold'>
@@ -93,10 +90,7 @@ const FarmBoardCard = ({
       )}
 
       {status === 'news' && (
-        <Box
-          py={{ md: status === 'news' || status === 'action' ? 8 : 10 }}
-          px={{ md: 16 }}
-        >
+        <Box py={{ md: 8 }} px={{ md: 16 }}>
           <Detail />
           <Box mt={6}>
             <Flex>
@@ -125,12 +119,8 @@ const FarmBoardCard = ({
       )}
 
       {status === 'action' && (
-        <Box
-          py={{ md: status === 'news' || status === 'action' ? 8 : 10 }}
-          px={{ md: 16 }}
-        >
+        <Box py={{ md: 8 }} px={{ md: 16 }}>
           <Detail />
-
           <Box mt={6}>
             <Flex>
               <Text textTransform='uppercase' fontWeight='bold'>

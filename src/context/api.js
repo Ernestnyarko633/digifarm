@@ -8,8 +8,8 @@ const ApiContext = createContext()
 
 export const ApiContextProvider = ({ children }) => {
   const {
-    AUTH_API,
     FMS_API,
+    AUTH_API,
     PAYMENT_API,
     DIGITAL_FARMER_API,
     BUYER_API
@@ -33,7 +33,9 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const logout = async () => await http.post({ url: `${AUTH_API}/logout` })
+  const logout = async () => {
+    return await http.post({ url: `${AUTH_API}/logout` })
+  }
 
   const getCropCategories = async () => {
     return await http.get({ url: `${FMS_API}/crop-categories` })
@@ -41,6 +43,10 @@ export const ApiContextProvider = ({ children }) => {
 
   const getFarms = async query => {
     return await http.get({ url: `${FMS_API}/farms`, query })
+  }
+
+  const createOrder = async body => {
+    return await http.post({ url: `${DIGITAL_FARMER_API}/orders`, body })
   }
 
   const initiatePayment = async payload => {
@@ -79,10 +85,32 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${DIGITAL_FARMER_API}/orders/${id}` })
   }
 
-  const getBuyers = async (query) => {
+  const getBuyers = async query => {
     return await http.get({ url: `${BUYER_API}/sourcings`, query })
   }
 
+  const getMyScheduledTasks = async query => {
+    return await http.get({ url: `${FMS_API}/task-schedulers`, query })
+  }
+
+  const getMyFarmFeeds = async query => {
+    return await http.get({ url: `${FMS_API}/farm-feeds`, query })
+  }
+
+  const getSourcingOrders = async query => {
+    return await http.get({ url: `${BUYER_API}/sourcings`, query })
+  }
+
+  const getReceipt = async query => {
+    return await http.get({ url: `${DIGITAL_FARMER_API}/receipt`, query })
+  }
+
+  const downloadOrder = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/orders/download`,
+      query
+    })
+  }
   return (
     <ApiContext.Provider
       value={{
@@ -91,14 +119,20 @@ export const ApiContextProvider = ({ children }) => {
         getFarms,
         getBuyers,
         patchUser,
+        getReceipt,
         getMyFarm,
-        getMyFarms,
+        createOrder,
         getMyOrder,
+        getMyFarms,
         getMyOrders,
-        changePassword,
+        downloadOrder,
         initiatePayment,
+        changePassword,
+        getMyFarmFeeds,
+        getSourcingOrders,
         getCropCategories,
         deleteBankTransfer,
+        getMyScheduledTasks,
         uploadPaymentDetails
       }}
     >

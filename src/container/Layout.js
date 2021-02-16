@@ -5,7 +5,15 @@ import Sidebar from './Sidebar'
 import React from 'react'
 import RightSidebar from './RightSidebar'
 
-const Layout = ({ children, height, pt, px, ...rest }) => {
+const Layout = ({
+  children,
+  height,
+  pt,
+  px,
+  leftSidebar = true,
+  rightSidebar = true,
+  ...rest
+}) => {
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -15,26 +23,32 @@ const Layout = ({ children, height, pt, px, ...rest }) => {
       fontSize={{ md: 'md' }}
     >
       <Header />
+      {leftSidebar && (
+        <GridItem shadow='xl' zIndex={40}>
+          <Sidebar />
+        </GridItem>
+      )}
       <GridItem>
-        <Sidebar />
-      </GridItem>
-      <GridItem bg='gray.50'>
         <Box
-          as='main'
-          w='100%'
-          color='gray.800'
-          pt={pt}
           px={px}
+          pt={pt}
+          w='100%'
+          as='main'
+          bg='cf-dark.400'
           h={height}
+          color='gray.800'
           fontFamily='body'
+          overflowX='hidden'
           {...rest}
         >
           {children}
         </Box>
       </GridItem>
-      <GridItem>
-        <RightSidebar />
-      </GridItem>
+      {rightSidebar && (
+        <GridItem shadow='xl' zIndex={40}>
+          <RightSidebar />
+        </GridItem>
+      )}
     </Grid>
   )
 }
@@ -44,6 +58,8 @@ Layout.propTypes = {
   height: PropTypes.any,
   pt: PropTypes.any,
   px: PropTypes.any,
+  leftSidebar: PropTypes.bool,
+  rightSidebar: PropTypes.bool,
   rest: PropTypes.any
 }
 

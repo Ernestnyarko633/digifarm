@@ -4,27 +4,29 @@ import { Select } from 'baseui/select'
 import { Box, FormLabel } from '@chakra-ui/react'
 
 const BaseSelect = ({
-  options,
   setFieldTouched,
   setFieldValue,
-  multi,
-  value,
-  name,
-  id,
-  valueKey,
-  labelKey,
-  errors,
-  touched,
   placeholder,
+  labelKey,
+  valueKey,
+  options,
+  touched,
+  errors,
+  multi,
+  width,
+  value,
   title,
-  width
+  name,
+  id
 }) => {
   const isArrayOfObj = !!(valueKey && labelKey)
-  const getValue = _value =>
-    Object.keys(_value).map(key => ({
+
+  const getValue = _value => {
+    return Object.keys(_value).map(key => ({
       id: _value[key],
       label: _value[key]
     }))
+  }
 
   const getOptions = _options => {
     if (isArrayOfObj) {
@@ -106,20 +108,20 @@ const BaseSelect = ({
 }
 
 BaseSelect.propTypes = {
-  options: PropTypes.any,
   setFieldTouched: PropTypes.any,
   setFieldValue: PropTypes.any,
+  placeholder: PropTypes.any,
+  valueKey: PropTypes.any,
+  labelKey: PropTypes.any,
+  options: PropTypes.any,
+  touched: PropTypes.any,
+  errors: PropTypes.any,
+  title: PropTypes.any,
+  width: PropTypes.any,
   multi: PropTypes.any,
   value: PropTypes.any,
   name: PropTypes.any,
-  id: PropTypes.any,
-  valueKey: PropTypes.any,
-  labelKey: PropTypes.any,
-  errors: PropTypes.any,
-  touched: PropTypes.any,
-  placeholder: PropTypes.any,
-  title: PropTypes.any,
-  width: PropTypes.any
+  id: PropTypes.any
 }
 
 export default BaseSelect

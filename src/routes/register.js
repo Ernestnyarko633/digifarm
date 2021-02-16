@@ -17,6 +17,7 @@ const Router = () => {
         <PrivateRoute path='/logout' component={Pages.Logout} />
         <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
         <PrivateRoute exact path='/start-farm' component={Pages.StartFarm} />
+        <PrivateRoute exact path='/farm/:id' component={Pages.Farm} />
         <PrivateRoute
           exact
           path='/start-farm/individual'

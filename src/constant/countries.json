@@ -1,0 +1,156 @@
+[
+    {
+        "alpha3": "USA",
+        "currencyId": "USD",
+        "currencyName": "United States dollar",
+        "currencySymbol": "$",
+        "id": "US"
+    },
+    {
+        "alpha3": "GBR",
+        "currencyId": "GBP",
+        "currencyName": "British pound",
+        "currencySymbol": "£",
+        "id": "GB"
+    },
+    {
+        "alpha3": "DEU",
+        "currencyId": "EUR",
+        "currencyName": "European euro",
+        "currencySymbol": "€",
+        "id": "DE"
+    },
+    {
+        "currencyId": "GHS",
+        "currencyName": "Ghanaian cedi",
+        "alpha3": "GHA",
+        "id": "GH",
+        "currencySymbol": "₵"
+    },
+    {
+        "alpha3": "NGA",
+        "currencyId": "NGN",
+        "currencyName": "Nigerian naira",
+        "currencySymbol": "₦",
+        "id": "NG"
+    },
+    {
+        "alpha3": "CAN",
+        "currencyId": "CAD",
+        "currencyName": "Canadian dollar",
+        "currencySymbol": "$",
+        "id": "CA"
+    },
+    {
+        "alpha3": "CHN",
+        "currencyId": "CNY",
+        "currencyName": "Chinese renminbi",
+        "currencySymbol": "¥",
+        "id": "CN"
+    },
+    {
+        "currencyId": "XAF",
+        "currencyName": "Central African CFA franc",
+        "alpha3": "TCD",
+        "id": "TD",
+        "currencySymbol": "Fr"
+    },
+    {
+        "alpha3": "ISR",
+        "currencyId": "ILS",
+        "currencyName": "Israeli new sheqel",
+        "currencySymbol": "₪",
+        "id": "IL"
+    },
+    {
+        "currencyId": "KWD",
+        "currencyName": "Kuwaiti dinar",
+        "alpha3": "KWT",
+        "id": "KW",
+        "currencySymbol": "د.ك"
+    },
+    {
+        "alpha3": "NOR",
+        "currencyId": "NOK",
+        "currencyName": "Norwegian krone",
+        "currencySymbol": "kr",
+        "id": "NO"
+    },
+    {
+        "alpha3": "SWE",
+        "currencyId": "SEK",
+        "currencyName": "Swedish krona",
+        "currencySymbol": "kr",
+        "id": "SE"
+    },
+    {
+        "alpha3": "HKG",
+        "currencyId": "HKD",
+        "currencyName": "Hong Kong dollar",
+        "currencySymbol": "$",
+        "id": "HK"
+    },
+    {
+        "alpha3": "QAT",
+        "currencyId": "QAR",
+        "currencyName": "Qatari riyal",
+        "currencySymbol": "﷼",
+        "id": "QA"
+    },
+    {
+        "alpha3": "CYM",
+        "currencyId": "KYD",
+        "currencyName": "Cayman Islands dollar",
+        "currencySymbol": "$",
+        "id": "KY"
+    },
+    {
+        "alpha3": "DNK",
+        "currencyId": "DKK",
+        "currencyName": "Danish krone",
+        "currencySymbol": "kr",
+        "id": "DK"
+    },
+    {
+        "alpha3": "EGY",
+        "currencyId": "EGP",
+        "currencyName": "Egyptian pound",
+        "currencySymbol": "£",
+        "id": "EG"
+    },
+    {
+        "alpha3": "JPN",
+        "currencyId": "JPY",
+        "currencyName": "Japanese yen",
+        "currencySymbol": "¥",
+        "id": "JP"
+    },
+    {
+        "currencyId": "XOF",
+        "currencyName": "West African CFA franc",
+        "alpha3": "NER",
+        "id": "NE",
+        "currencySymbol": "Fr"
+    },
+    {
+        "alpha3": "SAU",
+        "currencyId": "SAR",
+        "currencyName": "Saudi riyal",
+        "currencySymbol": "﷼",
+        "id": "SA"
+    },
+    {
+        "alpha3": "SGP",
+        "currencyId": "SGD",
+        "currencyName": "Singapore dollar",
+        "currencySymbol": "$",
+        "id": "SG"
+    },
+    {
+        "alpha3": "ZAF",
+        "currencyId": "ZAR",
+        "currencyName": "South African rand",
+        "currencySymbol": "R",
+        "id": "ZA"
+    }
+]

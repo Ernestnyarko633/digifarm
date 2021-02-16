@@ -1,49 +1,26 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import Layout from 'container/Layout'
-import { Box, Heading, Image, Text, Flex, Alert, AlertIcon } from '@chakra-ui/react'
+import {
+  Box,
+  Heading,
+  Image,
+  Text,
+  Flex,
+  Alert,
+  AlertIcon
+} from '@chakra-ui/react'
 import BuyerCard from 'components/Cards/BuyerCard'
-import SoyaBean from '../assets/images/startfarm/soya-beans.svg'
 import IllustrationImage from '../assets/images/home/illustration.png'
 // import Oval from '../assets/images/Oval.svg'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import ArrowButton from '../components/Button/ArrowButton'
 import useApi from '../context/api'
-import { useQuery } from 'react-query'
 import useAuth from 'context/auth'
 /* eslint-disable */
+import { motion } from 'framer-motion'
 
-const warehouseGoods = [
-  {
-    id: 1,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'AgyaAtta, Eastern Region',
-    quantity: '2000 tonnes',
-    weight: '200 kg',
-    bags: '20 bags',
-    condition: 'Moist'
-  },
-  {
-    id: 2,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'AgyaAtta, Eastern Region',
-    quantity: '2010 tonnes',
-    weight: '300 kg',
-    bags: '30 bags',
-    condition: 'Dry'
-  }
-  // {
-  //   id:3,
-  //   image: SoyaBean,
-  //   name: 'Soya Bean Warehouse',
-  //   location: 'Shai Osudoku, Eastern Region',
-  //   quantity: '2010 tonnes',
-  //   weight: '300 kg',
-  //   bags: '30 bags',
-  //   condition: 'Moist'
-  // }
-]
+const MotionFlex = motion.custom(Flex)
+const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 const Marketplace = () => {
   document.title = 'Complete Farmer | Marketplace'
@@ -154,6 +131,16 @@ const Marketplace = () => {
   }, [])
 
 console.log("warehouses", warehouses)
+  const [currentSlide, setCurrentSlide] = React.useState(0)
+
+  const handleClick = direction => {
+    setCurrentSlide(prevState => {
+      return (
+        (warehouseGoods.length + prevState + direction) % warehouseGoods.length
+      )
+    })
+  }
+
   return (
     <Layout>
       <Box pos='relative'>
@@ -174,10 +161,19 @@ console.log("warehouses", warehouses)
         <Heading as='h4' fontSize={{ md: '2xl' }}>
           Here are the crops in your warehouse
         </Heading>
-        <ArrowButton />
+        <ArrowButton handleClick={handleClick} />
       </Flex>
       <Box>
-      <Flex my={3}>
+      <MotionFlex
+      animate={{
+        x: `-${26.5 * currentSlide}rem`,
+        transition: { duration: 0.6, ...transition }
+      }}
+      pos='relative'
+      minW={{ md: 130 }}
+      mx='auto'
+      ml={{ md: 16 }}
+    >
         {warehouses?.map(warehouse => (
           <WarehouseCard
             key={warehouse?.name}
@@ -191,7 +187,8 @@ console.log("warehouses", warehouses)
             ml={14}
           />
         ))}
-      </Flex>
+      </MotionFlex>
+      
 
       <Box border={1} borderRadius="30px" width='70%' borderWidth={1}>
         <Alert status="info" bgColor='white' >
@@ -224,9 +221,10 @@ console.log("warehouses", warehouses)
             amtNeeded={buyer.demand}
             amtBought={buyer.supply}
             price={buyer.cost}
-          />
-        ))}
+            />
+            ))}
       </Box>
+
     </Layout>
   )
 }

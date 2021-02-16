@@ -1,13 +1,15 @@
 import React from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
+
+import useStartFarm from 'context/start-farm'
+
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import OtherSteps from 'components/StartFarmProcess/OtherSteps'
-import useComponent from 'context/component'
 
 const Cooperative = () => {
   document.title = 'Complete Farmer | Cooperative'
 
-  const { step } = useComponent()
+  const { step } = useStartFarm()
 
   const getContent = value => {
     switch (value) {

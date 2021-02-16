@@ -1,34 +1,17 @@
 import React, { useState, createContext, useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useDisclosure } from '@chakra-ui/react'
-import { useImmer } from 'use-immer'
 
 const ComponentContext = createContext({})
 
 export const ComponentContextProvider = ({ children }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [modal, setModal] = useState('')
-  const [data, setData] = useState([])
   const [id, setId] = useState('')
+  const [data, setData] = useState([])
   const [mode, setMode] = useState('')
-  const [step, setStep] = useImmer(0)
-  const [otherStep, setOtherStep] = useImmer(0)
-
-  function handleNext() {
-    setStep(draft => draft + 1)
-  }
-
-  function handleBack() {
-    setStep(draft => draft - 1)
-  }
-
-  function handleNextStep() {
-    setOtherStep(draft => draft + 1)
-  }
-
-  function handlePrev() {
-    setOtherStep(draft => draft - 1)
-  }
+  const [modal, setModal] = useState('')
+  const [state, setState] = React.useState('farms')
+  const [currentSlide, setCurrentSlide] = React.useState(0)
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleModalClick = useCallback(
     (_modal, _data, _id, _mode) => {
@@ -44,19 +27,17 @@ export const ComponentContextProvider = ({ children }) => {
   return (
     <ComponentContext.Provider
       value={{
-        isOpen,
-        onClose,
-        modal,
-        data,
         id,
         mode,
+        data,
+        modal,
+        isOpen,
+        onClose,
         handleModalClick,
-        step,
-        handleNext,
-        handleBack,
-        otherStep,
-        handleNextStep,
-        handlePrev
+        state,
+        setState,
+        currentSlide,
+        setCurrentSlide
       }}
     >
       {children}

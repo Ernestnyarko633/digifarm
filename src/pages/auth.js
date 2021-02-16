@@ -4,7 +4,6 @@ import QueryString from 'query-string'
 
 import { replaceURI } from 'helpers/misc'
 
-import Splash from 'components/Loading/Splash'
 import FetchCard from 'components/FetchCard'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
@@ -15,10 +14,12 @@ const Auth = ({
   location: { search }
 }) => {
   document.title = 'Authenticating...'
-  const { getUser } = useApi()
-  const { store, isAuthenticated } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
   const [reload, setReload] = useState(0)
   const [error, setError] = useState(false)
+
+  const { store, isAuthenticated } = useAuth()
+  const { getUser } = useApi()
 
   const { to } = QueryString.parse(search, { parseBooleans: true })
   const { token } = params
@@ -39,6 +40,7 @@ const Auth = ({
           // Delay for half a seconds to make sure that token is stored
           setTimeout(async () => {
             try {
+              setIsLoading(true)
               // fetch user data
               const { data: user } = await getUser()
 
@@ -48,17 +50,18 @@ const Auth = ({
               setTimeout(() => {
                 replace(JSON.parse(to || null) || '/dashboard')
               }, 500)
-            } catch (_error) {
-              if (_error?.response) {
-                const res = _error.response
-                if ([401, 403].includes(res.status)) {
+            } catch (error) {
+              if (error) {
+                if ([401, 403].includes(error.status)) {
                   replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=false')
                 } else {
-                  setError(_error?.message)
+                  setError(error.message)
                 }
               } else {
-                setError(_error?.message)
+                setError('Unexpected network error')
               }
+            } finally {
+              setIsLoading(false)
             }
           }, 500)
         } else {
@@ -69,18 +72,14 @@ const Auth = ({
     return () => (mounted = false)
   }, [store, getUser, isAuthenticated, replace, token, to, reload])
 
-  return error ? (
+  return (
     <FetchCard
       direction='column'
       align='center'
       justify='center'
       reload={triggerReload}
-      loading={false}
+      loading={isLoading}
       error={error}
-    />
-  ) : (
-    <Splash
-      text={`Welcome Farmer ${isAuthenticated().user?.firstName || ''}`}
     />
   )
 }

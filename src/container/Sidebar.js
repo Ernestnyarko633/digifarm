@@ -50,7 +50,7 @@ const Sidebar = () => {
       left={0}
       h={{ lg: '100vh' }}
       bg='white'
-      zIndex={20}
+      zIndex={50}
       pt={40}
       boxShadow=' sm'
       px={{ md: 2 }}
@@ -108,9 +108,9 @@ const Sidebar = () => {
             </Flex>
             {toggleMenus && (
               <Box as='ul' color='gray.600'>
-                {item.submenu.map(ele => (
+                {item.submenu.map(element => (
                   <Link
-                    key={ele.name}
+                    key={element.name}
                     d='flex'
                     alignItems='center'
                     pr={{ md: 3 }}
@@ -119,7 +119,7 @@ const Sidebar = () => {
                     rounded='lg'
                     activeClassName='activeClasName'
                     as={NavLink}
-                    to={ele.path}
+                    to={element.path}
                     cursor='pointer'
                     className='active-link'
                     transition='background-color .2s ease-in'
@@ -134,9 +134,9 @@ const Sidebar = () => {
                       bg: 'cf.300'
                     }}
                   >
-                    <Icon as={ele.icon} boxSize={ele.size} mr={1} />
+                    <Icon as={element.icon} boxSize={element.size} mr={1} />
                     <Text fontSize='sm' textAlign='center' mt={1}>
-                      {ele.name}
+                      {element.name}
                     </Text>
                   </Link>
                 ))}
