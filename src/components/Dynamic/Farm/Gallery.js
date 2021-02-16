@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
@@ -25,7 +24,6 @@ const menus = [
 
 export default function Gallery({ farmfeeds }) {
   const [activities, setActivities] = React.useState([])
-  console.log(farmfeeds, "letmesee")
   React.useEffect(() => {
     let array2 = []
     const feeds = () =>
@@ -116,5 +114,5 @@ export default function Gallery({ farmfeeds }) {
 }
 
 Gallery.propTypes = {
-  farmfeeds: PropTypes.any
+  farmfeeds: PropTypes.array.isRequired
 }

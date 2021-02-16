@@ -78,6 +78,6 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
 
 FarmRightSidebar.propTypes = {
   state: PropTypes.string,
-  digitalFarmerFarm: PropTypes.any,
-  farmfeeds: PropTypes.any
+  digitalFarmerFarm: PropTypes.string.isRequired,
+  farmfeeds: PropTypes.array.isRequired
 }

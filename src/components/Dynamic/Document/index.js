@@ -16,7 +16,7 @@ const DynamicDocument = ({ document, digitalFarmerFarms }) => {
 
 DynamicDocument.propTypes = {
   document: PropTypes.string.isRequired,
-  digitalFarmerFarms: PropTypes.any
+  digitalFarmerFarms: PropTypes.array.isRequired
 }
 
 export default DynamicDocument

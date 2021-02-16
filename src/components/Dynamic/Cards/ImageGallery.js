@@ -129,6 +129,6 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
 
 ImageGallery.propTypes = {
   title: PropTypes.string,
-  farmfeeds: PropTypes.any,
-  activityName: PropTypes.any
+  farmfeeds: PropTypes.array.isRequired,
+  activityName: PropTypes.string.isRequired
 }
