@@ -34,6 +34,7 @@ const DynamicFarm = ({
           farmfeeds={farmfeeds}
           farms={farms}
           loading={loading}
+          error={error}
         />
       )}
       {loading === 'done' && error && (

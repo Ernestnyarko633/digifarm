@@ -6,7 +6,14 @@ import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
 
-export default function Tasks({ scheduledTasks, farmfeeds, loading, error }) {
+export default function Tasks({
+  scheduledTasks,
+  farmfeeds,
+  loading,
+  error,
+  farm,
+  weatherForeCasts
+}) {
   return (
     <Box mb={8}>
       {loading === 'done' && farmfeeds && (
@@ -18,7 +25,12 @@ export default function Tasks({ scheduledTasks, farmfeeds, loading, error }) {
           icon={BiTime}
         />
       )}
-      <WeatherCards farmfeeds={farmfeeds} loading={loading} error={error} />
+      <WeatherCards
+        farmfeeds={farmfeeds}
+        loading={loading}
+        error={error}
+        weatherForeCasts={weatherForeCasts}
+      />
       <Grid gap={8}>
         {loading === 'done' && farmfeeds.length > 0 && (
           <React.Fragment>
@@ -98,5 +110,7 @@ Tasks.propTypes = {
   scheduledTasks: PropTypes.any,
   farmfeeds: PropTypes.any,
   loading: PropTypes.any,
-  error: PropTypes.any
+  error: PropTypes.any,
+  farm: PropTypes.any,
+  weatherForeCasts: PropTypes.any
 }

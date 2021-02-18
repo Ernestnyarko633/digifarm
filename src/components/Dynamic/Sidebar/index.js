@@ -15,14 +15,24 @@ const components = {
   compE: Updates
 }
 
-const DynamicCard = ({ card, scheduledTasks, farmfeeds, loading, error }) => {
+const DynamicCard = ({
+  card,
+  scheduledTasks,
+  weatherForeCasts,
+  farmfeeds,
+  loading,
+  error,
+  farm
+}) => {
   const SelectedCard = components[card]
   return (
     <SelectedCard
       scheduledTasks={scheduledTasks}
+      weatherForeCasts={weatherForeCasts}
       farmfeeds={farmfeeds}
       loading={loading}
       error={error}
+      farm={farm}
     />
   )
 }
@@ -32,7 +42,9 @@ DynamicCard.propTypes = {
   scheduledTasks: PropTypes.any,
   farmfeeds: PropTypes.any,
   loading: PropTypes.any,
-  error: PropTypes.any
+  error: PropTypes.any,
+  farm: PropTypes.any,
+  weatherForeCasts: PropTypes.any
 }
 
 export default DynamicCard

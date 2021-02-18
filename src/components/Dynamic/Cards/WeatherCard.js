@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Cloud } from 'theme/Icons'
 
-export default function WeatherCard({ icon, title, duration }) {
+export default function WeatherCard({ icon, title, duration, value }) {
   return (
     <Box
       w='100%'
@@ -31,7 +31,7 @@ export default function WeatherCard({ icon, title, duration }) {
       <Box mt={2} w={{ md: 70 }}>
         <Icon as={Cloud} boxSize={10} />
         <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
-          11C
+          {value?.toFixed(2)} C
         </Heading>
         <Text fontSize='sm' color='gray.500' mt={2}>
           Weather is cloudy today. Looks like it might be raining on your farm
@@ -44,5 +44,6 @@ export default function WeatherCard({ icon, title, duration }) {
 WeatherCard.propTypes = {
   icon: PropTypes.string,
   title: PropTypes.string,
-  duration: PropTypes.string
+  duration: PropTypes.string,
+  value: PropTypes.any
 }

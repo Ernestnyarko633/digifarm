@@ -1,6 +1,7 @@
 // configs
 /*eslint-disable */
 import configs from '../utils/configs'
+import redis from 'redis'
 
 export const replaceURI = (APP, path) =>
   window.location.replace(configs()[`${APP}_SERVICE`] + path)
@@ -38,7 +39,6 @@ export const getformattedDate = (
   return new Date(date).toLocaleDateString('en-GB', options)
 }
 export const getRedisClusterClient = () => {
-  const redis = require('redis')
   const ENV = process.env.REACT_APP_ENVIRONMENT
   const { REDIS_HOST, REDIS_PORT, REDIS_PASS } = configs()
   try {

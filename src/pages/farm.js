@@ -1,4 +1,3 @@
-/*eslint-disable */
 import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
@@ -25,7 +24,9 @@ export default function Farm() {
   const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
   const [sourcingOrders, setSourcingOrders] = React.useState([])
+
   const { getMyFarms, getMyFarmFeeds, getSourcingOrders } = useApi()
+
   const { farms } = useAPICalls()
 
   React.useEffect(() => {
@@ -34,7 +35,6 @@ export default function Farm() {
         setLoading('fetching')
         const res = await getMyFarms()
         setDigitalFarmerFarms(res.data.filter(farm => farm._id === id))
-        console.log(res.data.filter(farm => farm._id === id), "checking")
         setLoading('done')
       } catch (error) {
         setLoading('done')
@@ -53,7 +53,6 @@ export default function Farm() {
           farm: digitalFarmerFarms[0]?.order?.product?._id
         })
         setFarmFeeds(res.data)
-        console.log("resultsfeeds", res.data)
         setLoading('done')
       } catch (error) {
         setLoading('done')

@@ -18,22 +18,22 @@ export const EosApiContextProvider = ({ children }) => {
     switch (type) {
       case 'sentinel2':
         return await http.post({
-          url: `${EOS_API}/lms/search/v2/sentinel2?apikey=${EOS_API_KEY}`,
+          url: `${EOS_API}/lms/search/v2/sentinel2?api_key=${EOS_API_KEY}`,
           body: JSON.stringify(payload)
         })
       case 'multi':
         return await http.post({
-          url: `${EOS_API}/lms/search/v2?apikey=${EOS_API_KEY}`,
+          url: `${EOS_API}/lms/search/v2?api_key=${EOS_API_KEY}`,
           body: JSON.stringify(payload)
         })
       case 'landsat8':
         return await http.post({
-          url: `${EOS_API}/lms/search/v2/landsat8?apikey=${EOS_API_KEY}`,
+          url: `${EOS_API}/lms/search/v2/landsat8?api_key=${EOS_API_KEY}`,
           body: JSON.stringify(payload)
         })
       default:
         return await http.post({
-          url: `${EOS_API}/lms/search/v2/sentinel2?apikey=${EOS_API_KEY}`,
+          url: `${EOS_API}/lms/search/v2/sentinel2?api_key=${EOS_API_KEY}`,
           body: JSON.stringify(payload)
         })
     }
@@ -49,17 +49,17 @@ export const EosApiContextProvider = ({ children }) => {
     switch (type) {
       case 'without-aggregate-data':
         return await http.post({
-          url: `${EOS_API}/forecast/weather/forecast/world/?apikey=${EOS_API_KEY}`,
+          url: `${EOS_API}/forecast/weather/forecast/world/?api_key=${EOS_API_KEY}`,
           body: JSON.stringify(payload)
         })
       case 'historical':
         return await http.post({
-          url: `${EOS_API}/cz/backend/forecast-history/?apikey=${EOS_API_KEY}`,
+          url: `${EOS_API}/cz/backend/forecast-history/?api_key=${EOS_API_KEY}`,
           body: JSON.stringify(payload)
         })
       default:
         return await http.post({
-          url: `${EOS_API}/forecast/weather/forecast/?apikey=${EOS_API_KEY}`,
+          url: `${EOS_API}/forecast/weather/forecast/?api_key=${EOS_API_KEY}`,
           body: JSON.stringify(payload)
         })
     }
@@ -71,7 +71,7 @@ export const EosApiContextProvider = ({ children }) => {
    */
   const createEOSTaskForStats = async payload => {
     return await http.post({
-      url: `${EOS_API}/gdw/api?apikey=${EOS_API_KEY}`,
+      url: `${EOS_API}/gdw/api?api_key=${EOS_API_KEY}`,
       body: JSON.stringify(payload)
     })
   }
@@ -82,7 +82,7 @@ export const EosApiContextProvider = ({ children }) => {
    */
   const getEOSStatistics = async task_id => {
     return await http.get({
-      url: `${EOS_API}/gdw/api/${task_id}?apikey=${EOS_API_KEY}`
+      url: `${EOS_API}/gdw/api/${task_id}?api_key=${EOS_API_KEY}`
     })
   }
 

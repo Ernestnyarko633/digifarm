@@ -1,4 +1,3 @@
-/*eslint-disable */
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon, Text } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
@@ -101,7 +100,7 @@ export default function Gallery({ farmfeeds, loading }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
-          {farmfeeds && (
+          {loading === 'done' && farmfeeds && (
             <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
               {farmfeeds?.map(_feed => {
                 return (

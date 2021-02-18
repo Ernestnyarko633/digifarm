@@ -17,10 +17,10 @@ export default function useMapbox({ center, onInit, zoom = 7, height = 1000 }) {
     if (currentRef && !map) {
       const _map = new mapboxgl.Map({
         container: ref.current,
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center,
-        zoom,
-        height
+        height,
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: [-59.04317437121783, -34.21593430784393] || center,
+        zoom: zoom
       })
 
       // Add navigation control (the +/- zoom buttons)
