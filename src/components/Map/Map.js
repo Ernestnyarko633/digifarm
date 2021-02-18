@@ -5,6 +5,7 @@ import { Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import useEosApi from 'context/eosApi'
 import configs from '../../utils/configs'
+import { getRedisClusterClient } from '../../helpers/misc'
 import './Map.css'
 
 const Map = ({ center, coords, ...rest }) => {
@@ -17,7 +18,9 @@ const Map = ({ center, coords, ...rest }) => {
   const [viewID, setViewID] = React.useState('')
   const { getEOSViewID } = useEosApi()
 
+
   React.useEffect(() => {
+    let redisClient = getRedisClusterClient()
     let _payload = {
       fields: ['sceneID', 'cloudCoverage'],
       limit: 1,
@@ -55,6 +58,8 @@ const Map = ({ center, coords, ...rest }) => {
         const res = await getEOSViewID(payload)
         console.log(res, 'myresults')
         setViewID(res.results[0].view_id)
+        console.log(res.results, "results")
+        redisClient.setex(redisKey, 86400, JSON.stringify(res.results[0].view_id))
         setLoading('done')
       } catch (error) {
         setError(error)

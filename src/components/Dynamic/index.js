@@ -33,6 +33,7 @@ const DynamicFarm = ({
           digitalFarmerFarms={digitalFarmerFarms}
           farmfeeds={farmfeeds}
           farms={farms}
+          loading={loading}
         />
       )}
       {loading === 'done' && error && (

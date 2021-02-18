@@ -63,6 +63,8 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
           scheduledTasks={scheduledTasks}
           farmfeeds={farmfeeds}
           farm={digitalFarmerFarm}
+          loading={loading}
+          error={error}
         />
       )}
       {loading === 'done' && error && (

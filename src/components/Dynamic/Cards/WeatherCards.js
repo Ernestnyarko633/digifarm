@@ -4,25 +4,27 @@ import { Box, Grid, Heading, Icon, Text } from '@chakra-ui/react'
 // import useEosApi from 'context/eosApi'
 import PropTypes from 'prop-types'
 
-export default function WeatherCard({ farmfeeds }) {
+export default function WeatherCard({ farmfeeds, loading, error }) {
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
-      <Box
-        w='100%'
-        rounded='lg'
-        filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-        p={6}
-        bg='white'
-      >
-        <Text textAlign='center' fontWeight={300}>
-          Plant population
-        </Text>
-        <Box mt={2}>
-          <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
-            {farmfeeds[0]?.plantInfo?.population}
-          </Heading>
+      {loading === 'done' && farmfeeds && (
+        <Box
+          w='100%'
+          rounded='lg'
+          filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+          p={6}
+          bg='white'
+        >
+          <Text textAlign='center' fontWeight={300}>
+            Plant population
+          </Text>
+          <Box mt={2}>
+            <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
+              {farmfeeds[0]?.plantInfo?.population}
+            </Heading>
+          </Box>
         </Box>
-      </Box>
+      )}
       <Box
         w='100%'
         rounded='lg'
@@ -43,5 +45,7 @@ export default function WeatherCard({ farmfeeds }) {
 }
 
 WeatherCard.propTypes = {
-  farmfeeds: PropTypes.any
+  farmfeeds: PropTypes.any,
+  loading: PropTypes.any,
+  error: PropTypes.any
 }
