@@ -1,3 +1,4 @@
+/*eslint-disabled */
 import { Box, Spinner, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -13,6 +14,7 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
   const [error, setError] = React.useState(null)
   const { getMyScheduledTasks, getMyFarmFeeds } = useApi()
   const { getEOSWeatherForeCast } = useEosApi()
+  const [location, setLocation] = React.useState([])
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +53,23 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
   }, [digitalFarmerFarm, getMyFarmFeeds])
 
   React.useEffect(() => {
+    let location_ = []
+
+    let _location = digitalFarmerFarm?.order?.product?.location
+    _location?.coords?.forEach(coordinate => {
+      location_?.push(
+        location_.push(
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
+          })
+        )
+      )
+    })
+
+    setLocation(location_)
+  }, [digitalFarmerFarm])
+
+  React.useEffect(() => {
     let _payload = {
       geometry: {
         type: 'Polygon',
@@ -78,7 +97,7 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
       }
     }
     fetchData()
-  }, [getEOSWeatherForeCast, digitalFarmerFarm])
+  }, [getEOSWeatherForeCast, digitalFarmerFarm, location])
 
   return (
     <Box

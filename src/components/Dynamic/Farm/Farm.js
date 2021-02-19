@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { Box, Flex } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React from 'react'
@@ -7,10 +8,26 @@ import Map from 'components/Map/Map'
 import useEosApi from 'context/eosApi'
 
 export default function Farm({ onOpen, digitalFarmerFarms }) {
+
   const [loading, setLoading] = React.useState('fetching')
   const [error, setError] = React.useState(null)
   const [viewID, setViewID] = React.useState('')
   const { getEOSViewID } = useEosApi()
+  const [location,setLocation] = React.useState([])
+
+  React.useEffect(()=> {
+    let location_ = []
+    digitalFarmerFarms?.forEach((farm) => {
+      let _location =  farm?.order?.product?.location
+      _location?.coords?.forEach((coordinate) => {
+        
+        location_?.push(coordinate.split(',').map(item => {
+          return parseFloat(item, 10)
+        }))
+      })
+    })
+    setLocation(location_)
+  }, [digitalFarmerFarms])
 
   React.useEffect(() => {
     let _payload = {
@@ -31,12 +48,12 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
           type: 'Polygon',
           coordinates: [
             [
-              [-1.531048, 5.578849],
-              [-1.530683, 5.575411],
-              [-1.521606, 5.576286],
-              [-1.522036, 5.579767],
-              [-1.531048, 5.578849]
-            ]
+              [-1.531048,5.578849],
+              [-1.530683,5.575411],
+              [-1.521606,5.576286],
+              [-1.522036,5.579767],
+              [-1.531048,5.578849]
+                                       ]
           ]
         }
       },
@@ -70,7 +87,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
           viewID={viewID}
           loading={loading}
           error={error}
-          center={[-1.531048, 5.578849]}
+          center={[-1.531048,5.578849]}
         />
       </Box>
       <Flex align='center' justify='flex-end' my={{ md: 6 }} px={{ md: 6 }}>

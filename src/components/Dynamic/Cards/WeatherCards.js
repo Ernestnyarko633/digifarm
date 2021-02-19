@@ -44,10 +44,10 @@ export default function WeatherCard({
               <Icon as={Cloud} boxSize={10} />
               <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
                 {(
-                  (weatherForeCasts[0].Temp_land_min +
-                    weatherForeCasts[0].Temp_land_max) /
+                  (weatherForeCasts[0]?.Temp_land_min +
+                    weatherForeCasts[0]?.Temp_land_max) /
                   2
-                ).toFixed(0)}{' '}
+                )?.toFixed(0)}{' '}
                 C
               </Heading>
             </Box>

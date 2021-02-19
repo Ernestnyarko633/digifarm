@@ -9,7 +9,12 @@ import configs from '../utils/configs'
 
 mapboxgl.accessToken = configs().MAPBOX_API
 
-export default function useMapbox({ center, onInit, zoom = 7, height = 1000 }) {
+export default function useMapbox({
+  center,
+  onInit,
+  zoom = 14,
+  height = 1000
+}) {
   const ref = useRef(null)
   const [map, setMap] = useState(null)
   useEffect(() => {
@@ -19,8 +24,8 @@ export default function useMapbox({ center, onInit, zoom = 7, height = 1000 }) {
         container: ref.current,
         height,
         style: 'mapbox://styles/mapbox/light-v10',
-        center: [-59.04317437121783, -34.21593430784393] || center,
-        zoom: zoom
+        center: [-1.531048, 5.578849],
+        zoom: 14
       })
 
       // Add navigation control (the +/- zoom buttons)
