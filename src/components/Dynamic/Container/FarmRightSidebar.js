@@ -1,21 +1,28 @@
+/*eslint-disabled */
 import { Box, Spinner, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicCard from '../Sidebar'
 import useApi from 'context/api'
+import useEosApi from 'context/eosApi'
 
 export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
   const [scheduledTasks, setScheduledTasks] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
+  const [weatherForeCasts, setWeatherForeCasts] = React.useState([])
   const [loading, setLoading] = React.useState('fetching')
   const [error, setError] = React.useState(null)
   const { getMyScheduledTasks, getMyFarmFeeds } = useApi()
+  const { getEOSWeatherForeCast } = useEosApi()
+  const [location, setLocation] = React.useState([])
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading('fetching')
-        const res = await getMyScheduledTasks({ farm: digitalFarmerFarm })
+        const res = await getMyScheduledTasks({
+          farm: digitalFarmerFarm?.order?.product?._id
+        })
         setScheduledTasks(res.data)
 
         setLoading('done')
@@ -31,7 +38,9 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
     const fetchData = async () => {
       try {
         setLoading('fetching')
-        const res = await getMyFarmFeeds({ farm: digitalFarmerFarm })
+        const res = await getMyFarmFeeds({
+          farm: digitalFarmerFarm?.order?.product?._id
+        })
         setFarmFeeds(res.data)
 
         setLoading('done')
@@ -42,6 +51,54 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
     }
     fetchData()
   }, [digitalFarmerFarm, getMyFarmFeeds])
+
+  React.useEffect(() => {
+    let location_ = []
+
+    let _location = digitalFarmerFarm?.order?.product?.location
+    _location?.coords?.forEach(coordinate => {
+      location_?.push(
+        location_.push(
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
+          })
+        )
+      )
+    })
+
+    setLocation(location_)
+  }, [digitalFarmerFarm])
+
+  React.useEffect(() => {
+    let _payload = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [-1.531048, 5.578849],
+            [-1.530683, 5.575411],
+            [-1.521606, 5.576286],
+            [-1.522036, 5.579767],
+            [-1.531048, 5.578849]
+          ]
+        ]
+      }
+    }
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        const res = await getEOSWeatherForeCast(_payload)
+        setWeatherForeCasts(res)
+
+        setLoading('done')
+      } catch (error) {
+        setLoading('done')
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [getEOSWeatherForeCast, digitalFarmerFarm, location])
+
   return (
     <Box
       py={8}
@@ -61,8 +118,11 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
         <DynamicCard
           card={state}
           scheduledTasks={scheduledTasks}
+          weatherForeCasts={weatherForeCasts}
           farmfeeds={farmfeeds}
           farm={digitalFarmerFarm}
+          loading={loading}
+          error={error}
         />
       )}
       {loading === 'done' && error && (
@@ -78,6 +138,5 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
 
 FarmRightSidebar.propTypes = {
   state: PropTypes.string,
-  digitalFarmerFarm: PropTypes.any,
-  farmfeeds: PropTypes.any
+  digitalFarmerFarm: PropTypes.string.isRequired
 }

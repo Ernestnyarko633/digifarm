@@ -33,6 +33,8 @@ const DynamicFarm = ({
           digitalFarmerFarms={digitalFarmerFarms}
           farmfeeds={farmfeeds}
           farms={farms}
+          loading={loading}
+          error={error}
         />
       )}
       {loading === 'done' && error && (
@@ -50,8 +52,8 @@ DynamicFarm.propTypes = {
   farm: PropTypes.string.isRequired,
   onOpen: PropTypes.func,
   farms: PropTypes.any,
-  digitalFarmerFarms: PropTypes.any,
-  farmfeeds: PropTypes.any,
+  digitalFarmerFarms: PropTypes.array.isRequired,
+  farmfeeds: PropTypes.array.isRequired,
   error: PropTypes.any,
   loading: PropTypes.any
 }

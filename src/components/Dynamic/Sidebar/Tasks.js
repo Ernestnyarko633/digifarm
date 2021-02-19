@@ -6,32 +6,50 @@ import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
 
-export default function Tasks({ scheduledTasks, farmfeeds }) {
+export default function Tasks({
+  scheduledTasks,
+  farmfeeds,
+  loading,
+  error,
+  farm,
+  weatherForeCasts
+}) {
   return (
     <Box mb={8}>
-      <FarmUpdateCard
-        title='TODAY’S TASK'
-        duration={farmfeeds[0]?.task?.duration}
-        subtitle={farmfeeds[0]?.task?.name}
-        text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-        icon={BiTime}
-      />
-      <WeatherCards farmfeeds={farmfeeds} />
-      <Grid gap={8}>
+      {loading === 'done' && farmfeeds && (
         <FarmUpdateCard
-          title='SCHEDULED TASK'
-          duration={farmfeeds[0]?.nextTask?.duration}
-          subtitle={farmfeeds[0]?.nextTask?.name}
+          title='TODAY’S TASK'
+          duration={farmfeeds[0]?.task?.duration}
+          subtitle={farmfeeds[0]?.task?.name}
           text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
           icon={BiTime}
         />
-        <FarmUpdateCard
-          title='FARM MANAGER UPDATE'
-          duration={scheduledTasks[0]?.taskId?.duration}
-          subtitle={scheduledTasks[0]?.taskId?.name}
-          text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
-          icon={Updates}
-        />
+      )}
+      <WeatherCards
+        farmfeeds={farmfeeds}
+        loading={loading}
+        error={error}
+        weatherForeCasts={weatherForeCasts}
+      />
+      <Grid gap={8}>
+        {loading === 'done' && farmfeeds.length > 0 && (
+          <React.Fragment>
+            <FarmUpdateCard
+              title='SCHEDULED TASK'
+              duration={farmfeeds[0]?.nextTask?.duration}
+              subtitle={farmfeeds[0]?.nextTask?.name}
+              text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
+              icon={BiTime}
+            />
+            <FarmUpdateCard
+              title='FARM MANAGER UPDATE'
+              duration={scheduledTasks[0]?.taskId?.duration}
+              subtitle={scheduledTasks[0]?.taskId?.name}
+              text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
+              icon={Updates}
+            />
+          </React.Fragment>
+        )}
         <Box
           bg='white'
           w='100%'
@@ -90,5 +108,9 @@ export default function Tasks({ scheduledTasks, farmfeeds }) {
 
 Tasks.propTypes = {
   scheduledTasks: PropTypes.any,
-  farmfeeds: PropTypes.any
+  farmfeeds: PropTypes.any,
+  loading: PropTypes.any,
+  error: PropTypes.any,
+  farm: PropTypes.any,
+  weatherForeCasts: PropTypes.any
 }

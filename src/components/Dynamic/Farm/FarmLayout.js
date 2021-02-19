@@ -63,7 +63,7 @@ export default function FarmLayout({ children, ...rest }) {
         {loading === 'done' && !error && (
           <FarmRightSidebar
             state={state}
-            digitalFarmerFarm={digitalFarmerFarm?.order?.product?._id}
+            digitalFarmerFarm={digitalFarmerFarm}
           />
         )}
         {loading === 'done' && error && (

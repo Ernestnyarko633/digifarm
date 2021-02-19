@@ -80,5 +80,5 @@ export default function FarmReceiptCard({ farm }) {
 }
 
 FarmReceiptCard.propTypes = {
-  farm: PropTypes.any
+  farm: PropTypes.object.isRequired
 }

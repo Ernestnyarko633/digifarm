@@ -41,6 +41,7 @@
     "react-scripts": "4.0.1",
     "react-share": "^4.3.1",
     "react-use": "^15.3.4",
+    "redis": "^3.0.2",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7",
     "use-immer": "^0.4.2",
