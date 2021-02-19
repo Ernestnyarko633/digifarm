@@ -70,7 +70,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
           viewID={viewID}
           loading={loading}
           error={error}
-          center={[-1.521606, 5.576286]}
+          center={[-1.531048, 5.578849]}
         />
       </Box>
       <Flex align='center' justify='flex-end' my={{ md: 6 }} px={{ md: 6 }}>

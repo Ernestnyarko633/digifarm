@@ -42,7 +42,7 @@ export default function WeatherCard({ icon, title, duration, value }) {
 }
 
 WeatherCard.propTypes = {
-  icon: PropTypes.string,
+  icon: PropTypes.any,
   title: PropTypes.string,
   duration: PropTypes.string,
   value: PropTypes.any
