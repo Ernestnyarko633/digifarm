@@ -1,7 +1,9 @@
+/*eslint-disable*/
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
 import ImageGallery from '../Cards/ImageGallery'
+import PropTypes from 'prop-types'
 
 const menus = [
   { id: 1, icon: Calendar, state: 'compA' },
@@ -11,26 +13,37 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-const images = [
-  { id: 1, img: 'Bitmap.png' },
-  { id: 2, img: 'Bitmap.png' },
-  { id: 3, img: 'Bitmap.png' },
-  { id: 4, img: 'Bitmap.png' },
-  { id: 5, img: 'Bitmap.png' }
-]
+// const images = [
+//   { id: 1, img: 'Bitmap.png' },
+//   { id: 2, img: 'Bitmap.png' },
+//   { id: 3, img: 'Bitmap.png' },
+//   { id: 4, img: 'Bitmap.png' },
+//   { id: 5, img: 'Bitmap.png' }
+// ]
 
 // const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-export default function Gallery() {
-  const [selectedImage, setSelectedImage] = React.useState(images[0])
-  // const [currentSlide, setCurrentSlide] = React.useState(images[0].id)
+export default function Gallery({ farmfeeds }) {
+  const [activities, setActivities] = React.useState([])
+  console.log(farmfeeds, "letmesee")
+  React.useEffect(() => {
+    let array2 = []
+    const feeds = () =>
+      farmfeeds?.forEach(feed => {
+        array2.push(feed?.task?.activity?.name)
+      })
+    feeds()
+    setActivities([...new Set(array2)])
+  }, [farmfeeds])
 
-  // const handleClick = direction => {
-  //   setCurrentSlide(prevState => {
-  //     return (images.length + prevState + direction) % images.length
-  //   })
-  // }
-
+  const selectActivity = feed => {
+    const res = activities.find(act => feed.task.activity.name === act)
+    if (res) {
+      return { bool: true, act: feed?.task?.activity?.name }
+    } else {
+      return { bool: false, act: feed?.task?.activity?.name }
+    }
+  }
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -83,27 +96,25 @@ export default function Gallery() {
           minH={{ lg: '100vh' }}
         >
           <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
-            <ImageGallery
-              title='Land preparation'
-              images={images}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-            />
-            <ImageGallery
-              title='Harrowing'
-              images={images}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-            />
-            <ImageGallery
-              title='Planting'
-              images={images}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-            />
+            {farmfeeds?.map(_feed => {
+              return (
+                selectActivity(_feed).bool && (
+                  <ImageGallery
+                    key={_feed._id}
+                    title={`${_feed?.task?.activity?.name}`}
+                    farmfeeds={farmfeeds}
+                    activityName={selectActivity(_feed).act}
+                  />
+                )
+              )
+            })}
           </Grid>
         </Box>
       </GridItem>
     </Grid>
   )
+}
+
+Gallery.propTypes = {
+  farmfeeds: PropTypes.any
 }

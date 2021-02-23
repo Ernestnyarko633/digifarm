@@ -17,6 +17,8 @@ const configs = () => {
     EXCHANGE_RATE_API_KEY:
       process.env[`REACT_APP_${ENV}_EXCHANGE_RATE_API_KEY`],
     MAPBOX_API: process.env.REACT_APP_MAPBOX_API,
+    EOS_API_KEY: process.env.REACT_APP_EOS_API_KEY,
+    EOS_API: process.env.REACT_APP_EOS_API,
     PRISMIC_API: process.env.REACT_APP_PRISMIC_API,
     PRISMIC_ACCESS_TOKEN: process.env.REACT_APP_PRISMIC_ACCESS_TOKEN
   }

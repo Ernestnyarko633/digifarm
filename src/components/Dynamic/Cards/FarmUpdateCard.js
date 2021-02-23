@@ -54,6 +54,6 @@ FarmUpdateCard.propTypes = {
   title: PropTypes.string,
   duration: PropTypes.string,
   subtitle: PropTypes.string,
-  text: PropTypes.string,
+  text: PropTypes.any,
   icon: PropTypes.string
 }

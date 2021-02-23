@@ -1,9 +1,10 @@
 import React from 'react'
 import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
+import PropTypes from 'prop-types'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 
-import SoyaBean from '../../../assets/images/startfarm/soya-beans.svg'
+// import SoyaBean from '../../../assets/images/startfarm/soya-beans.svg'
 
 const menus = [
   { id: 1, icon: Calendar, state: 'compA' },
@@ -13,43 +14,43 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-const warehouseGoods = [
-  {
-    id: 1,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'AgyaAtta, Eastern Region',
-    quantity: '2000 tonnes',
-    weight: '200 kg',
-    bags: '20 bags',
-    condition: 'Moist',
-    status: 'action'
-  },
-  {
-    id: 2,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'AgyaAtta, Eastern Region',
-    quantity: '2010 tonnes',
-    weight: '300 kg',
-    bags: '30 bags',
-    condition: 'Dry',
-    status: 'action'
-  },
-  {
-    id: 3,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'Shai Osudoku, Eastern Region',
-    quantity: '2010 tonnes',
-    weight: '300 kg',
-    bags: '30 bags',
-    condition: 'Moist',
-    status: 'sold'
-  }
-]
+// const warehouseGoods = [
+//   {
+//     id: 1,
+//     image: SoyaBean,
+//     name: 'Soya Bean Warehouse',
+//     location: 'AgyaAtta, Eastern Region',
+//     quantity: '2000 tonnes',
+//     weight: '200 kg',
+//     bags: '20 bags',
+//     condition: 'Moist',
+//     status: 'action'
+//   },
+//   {
+//     id: 2,
+//     image: SoyaBean,
+//     name: 'Soya Bean Warehouse',
+//     location: 'AgyaAtta, Eastern Region',
+//     quantity: '2010 tonnes',
+//     weight: '300 kg',
+//     bags: '30 bags',
+//     condition: 'Dry',
+//     status: 'action'
+//   },
+//   {
+//     id: 3,
+//     image: SoyaBean,
+//     name: 'Soya Bean Warehouse',
+//     location: 'Shai Osudoku, Eastern Region',
+//     quantity: '2010 tonnes',
+//     weight: '300 kg',
+//     bags: '30 bags',
+//     condition: 'Moist',
+//     status: 'sold'
+//   }
+// ]
 
-export default function Warehouse() {
+export default function Warehouse({ digitalFarmerFarms, farms }) {
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -106,19 +107,20 @@ export default function Warehouse() {
             gap={10}
             w={{ md: 115 }}
           >
-            {warehouseGoods.map(item => (
+            {digitalFarmerFarms.map(item => (
               <WarehouseCard
-                key={item.name}
-                name={item.name}
-                location={item.location}
-                image={item.image}
-                quantity={item.quantity}
-                weight={item.weight}
-                bags={item.bags}
-                condition={item.condition}
+                key={item?._id}
+                name={item?.order?.product?.cropVariety?.crop?.name}
+                location={item?.order?.product?.location?.name}
+                image={item?.order?.product?.cropVariety?.imageUrl}
+                quantity={item?.storage.quantity}
+                weight={`${item?.storage?.weight}`}
+                bags={`${item?.storage?.numberOfBags}`}
+                condition={item?.storage.yieldConditions}
+                orderStatus={item?.order?.status}
                 mr={3}
                 ml={14}
-                status={item.status}
+                status={item?.status}
               />
             ))}
           </Grid>
@@ -126,4 +128,8 @@ export default function Warehouse() {
       </GridItem>
     </Grid>
   )
+}
+Warehouse.propTypes = {
+  farms: PropTypes.any,
+  digitalFarmerFarms: PropTypes.any
 }

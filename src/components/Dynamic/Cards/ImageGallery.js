@@ -7,12 +7,32 @@ import PropTypes from 'prop-types'
 
 const MotionFlex = motion.custom(Flex)
 
-export default function ImageGallery({
-  title,
-  images,
-  selectedImage,
-  setSelectedImage
-}) {
+export default function ImageGallery({ title, farmfeeds, activityName }) {
+  const [images, setImages] = React.useState([])
+  const [selectedImage, setSelectedImage] = React.useState({})
+  const [activeIndex, setActiveIndex] = React.useState(0)
+
+  React.useEffect(() => {
+    let array = []
+    const _feeds = feed => {
+      return feed?.media?.forEach(_media => {
+        if (
+          _media.type === 'image' &&
+          feed?.task?.activity?.name === activityName
+        ) {
+          array.push(_media)
+        }
+      })
+    }
+    const feeds = () =>
+      farmfeeds?.forEach(feed => {
+        return _feeds(feed)
+      })
+    feeds()
+
+    setImages(array)
+    setSelectedImage(array[0])
+  }, [farmfeeds, activityName])
   return (
     <Box>
       <Flex align='center' justify='space-between'>
@@ -29,7 +49,7 @@ export default function ImageGallery({
             h={{ md: 85 }}
             w='100%'
             objectFit='cover'
-            src={require(`../../../assets/images/${selectedImage.img}`).default}
+            src={selectedImage.url}
           />
           <Flex
             align='center'
@@ -77,15 +97,18 @@ export default function ImageGallery({
         </Box>
 
         <MotionFlex pos='relative' minW={120} mt={4}>
-          {images.map(item => (
+          {images.map((item, index) => (
             <Box
               as='button'
               role='button'
               aria-label='image button'
-              onClick={() => setSelectedImage(item)}
+              onClick={() => {
+                setSelectedImage(item)
+                setActiveIndex(index)
+              }}
               mr={6}
               key={item.id}
-              borderWidth={selectedImage.id === item.id ? 4 : 0}
+              borderWidth={activeIndex === index ? 4 : 0}
               rounded='md'
               borderColor='cf.400'
             >
@@ -94,7 +117,7 @@ export default function ImageGallery({
                 w={32}
                 objectFit='cover'
                 rounded='md'
-                src={require(`../../../assets/images/${item.img}`).default}
+                src={item.url}
               />
             </Box>
           ))}
@@ -106,7 +129,6 @@ export default function ImageGallery({
 
 ImageGallery.propTypes = {
   title: PropTypes.string,
-  images: PropTypes.array,
-  selectedImage: PropTypes.object,
-  setSelectedImage: PropTypes.func
+  farmfeeds: PropTypes.any,
+  activityName: PropTypes.any
 }
