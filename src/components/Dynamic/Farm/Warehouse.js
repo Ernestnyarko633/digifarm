@@ -50,7 +50,7 @@ const menus = [
 //   }
 // ]
 
-export default function Warehouse({ digitalFarmerFarms, farms }) {
+export default function Warehouse({ farms }) {
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -75,7 +75,7 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
           color='gray.600'
         >
           <Box as='ul'>
-            {menus.map(item => (
+            {menus?.map(item => (
               <Flex
                 as='button'
                 role='button'
@@ -107,7 +107,7 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
             gap={10}
             w={{ md: 115 }}
           >
-            {digitalFarmerFarms.map(item => (
+            {farms.map(item => (
               <WarehouseCard
                 key={item?._id}
                 name={item?.order?.product?.cropVariety?.crop?.name}
@@ -130,6 +130,5 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
   )
 }
 Warehouse.propTypes = {
-  farms: PropTypes.any,
-  digitalFarmerFarms: PropTypes.any
+  farms: PropTypes.any
 }
