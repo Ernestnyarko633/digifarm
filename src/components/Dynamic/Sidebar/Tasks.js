@@ -6,6 +6,7 @@ import {
   Grid,
   Icon,
   Image,
+  Spinner,
   Text
 } from '@chakra-ui/react'
 import React from 'react'
@@ -23,17 +24,19 @@ export default function Tasks({
   farm,
   weatherForeCasts
 }) {
+  if (loading) {
+    return <Spinner size='lg' color='cf.400' />
+  }
+
   return (
     <Box mb={8}>
-      {loading === 'done' && farmfeeds && (
-        <FarmUpdateCard
-          title='TODAY’S TASK'
-          duration={farmfeeds[0]?.task?.duration}
-          subtitle={farmfeeds[0]?.task?.name}
-          text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-          icon={BiTime}
-        />
-      )}
+      <FarmUpdateCard
+        title='TODAY’S TASK'
+        duration={farmfeeds[0]?.task?.duration}
+        subtitle={farmfeeds[0]?.task?.name}
+        text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
+        icon={BiTime}
+      />
       <WeatherCards
         farmfeeds={farmfeeds}
         loading={loading}
@@ -41,24 +44,22 @@ export default function Tasks({
         weatherForeCasts={weatherForeCasts}
       />
       <Grid gap={8}>
-        {loading === 'done' && farmfeeds.length > 0 && (
-          <React.Fragment>
-            <FarmUpdateCard
-              title='SCHEDULED TASK'
-              duration={farmfeeds[0]?.nextTask?.duration}
-              subtitle={farmfeeds[0]?.nextTask?.name}
-              text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-              icon={BiTime}
-            />
-            <FarmUpdateCard
-              title='FARM MANAGER UPDATE'
-              duration={scheduledTasks[0]?.taskId?.duration}
-              subtitle={scheduledTasks[0]?.taskId?.name}
-              text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
-              icon={Updates}
-            />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <FarmUpdateCard
+            title='SCHEDULED TASK'
+            duration={farmfeeds[0]?.nextTask?.duration}
+            subtitle={farmfeeds[0]?.nextTask?.name}
+            text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
+            icon={BiTime}
+          />
+          <FarmUpdateCard
+            title='FARM MANAGER UPDATE'
+            duration={scheduledTasks[0]?.taskId?.duration}
+            subtitle={scheduledTasks[0]?.taskId?.name}
+            text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
+            icon={Updates}
+          />
+        </React.Fragment>
         <Box
           bg='white'
           w='100%'

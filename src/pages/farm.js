@@ -32,12 +32,11 @@ export default function Farm() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading('fetching')
+        setLoading(true)
         const res = await getMyFarms()
         setDigitalFarmerFarms(res.data.filter(farm => farm._id === id))
-        setLoading('done')
+        setLoading(false)
       } catch (error) {
-        setLoading('done')
         setError(error)
       }
     }
@@ -48,14 +47,13 @@ export default function Farm() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading('fetching')
+        setLoading(true)
         const res = await getMyFarmFeeds({
           farm: digitalFarmerFarms[0]?.order?.product?._id
         })
         setFarmFeeds(res.data)
-        setLoading('done')
+        setLoading(false)
       } catch (error) {
-        setLoading('done')
         setError(error)
       }
     }
@@ -65,15 +63,14 @@ export default function Farm() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading('fetching')
+        setLoading(true)
         const res = await getSourcingOrders({
           cropVariety: digitalFarmerFarms[0]?.order?.product?.cropVariety._id
         })
         setSourcingOrders(res?.data?.filter(order => order.demand === 0))
 
-        setLoading('done')
+        setLoading(false)
       } catch (error) {
-        setLoading('done')
         setError(error)
       }
     }
