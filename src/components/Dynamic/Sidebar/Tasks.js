@@ -1,7 +1,16 @@
-import { Box, Flex, Grid, Icon, Text } from '@chakra-ui/react'
+import {
+  Box,
+  CircularProgress,
+  CircularProgressLabel,
+  Flex,
+  Grid,
+  Icon,
+  Image,
+  Text
+} from '@chakra-ui/react'
 import React from 'react'
 import { BiTime } from 'react-icons/bi'
-import { Crop, Updates } from 'theme/Icons'
+import { Crop, Updates, PlantHealth } from 'theme/Icons'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
@@ -65,21 +74,40 @@ export default function Tasks({ scheduledTasks, farmfeeds }) {
               <Text fontSize='xs' fontWeight={300}>
                 Plant health
               </Text>
+
+              <Box mt={2}>
+                <Icon boxSize={20} as={PlantHealth} />
+              </Box>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Growing stage
               </Text>
+
+              <Box mt={2}>
+                <Image
+                  h={20}
+                  src={require('../../../assets/images/stage.png').default}
+                />
+              </Box>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Crop productivity
               </Text>
+
+              <CircularProgress value={67} size='100px' color='cf.400' mt={2}>
+                <CircularProgressLabel rounded='lg'>67%</CircularProgressLabel>
+              </CircularProgress>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Chlorophyl index
               </Text>
+
+              <CircularProgress value={67} size='100px' color='cf.400' mt={2}>
+                <CircularProgressLabel rounded='lg'>67%</CircularProgressLabel>
+              </CircularProgress>
             </Box>
           </Grid>
         </Box>
