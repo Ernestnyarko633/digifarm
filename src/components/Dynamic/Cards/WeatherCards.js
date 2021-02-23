@@ -12,7 +12,7 @@ export default function WeatherCard({
 }) {
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
-      {loading === 'done' && farmfeeds && (
+      {farmfeeds && (
         <Box
           w='100%'
           rounded='lg'
@@ -30,7 +30,7 @@ export default function WeatherCard({
           </Box>
         </Box>
       )}
-      {loading === 'done' && weatherForeCasts && (
+      {weatherForeCasts && (
         <React.Fragment>
           <Box
             w='100%'

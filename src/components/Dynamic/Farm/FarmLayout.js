@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, GridItem, Spinner, Text, Flex } from '@chakra-ui/react'
+import { Box, Grid, GridItem, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 import useApi from 'context/api'
@@ -10,27 +10,26 @@ import FarmRightSidebar from '../Container/FarmRightSidebar'
 export default function FarmLayout({ children, ...rest }) {
   const [state, setState] = React.useState('compA')
   const { id } = useParams()
-  const [loading, setLoading] = React.useState('fetching')
+  const [setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
-  const [digitalFarmerFarm, setDigitalFarmerFarm] = React.useState('')
+  const [digitalFarmerFarm, setDigitalFarmerFarm] = React.useState([])
   const { getMyFarm } = useApi()
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading('fetching')
-
+        setLoading(true)
         const res = await getMyFarm(id)
         setDigitalFarmerFarm(res.data)
 
-        setLoading('done')
+        setLoading(false)
       } catch (error) {
-        setLoading('done')
         setError(error)
       }
     }
     fetchData()
   }, [getMyFarm, id])
+
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -55,24 +54,15 @@ export default function FarmLayout({ children, ...rest }) {
         </Box>
       </GridItem>
       <GridItem shadow='xl'>
-        {loading === 'fetching' && (
-          <Flex w='100%' h='100%' align='center' justify='center'>
-            <Spinner size='lg' color='cf.400' />
-          </Flex>
-        )}
-        {loading === 'done' && !error && (
-          <FarmRightSidebar
-            state={state}
-            digitalFarmerFarm={digitalFarmerFarm}
-          />
-        )}
-        {loading === 'done' && error && (
+        {error && (
           <Box>
             <Text fontSize='md' ml={2} color='cf.400'>
               Something went wrong
             </Text>
           </Box>
         )}
+
+        <FarmRightSidebar state={state} digitalFarmerFarm={digitalFarmerFarm} />
       </GridItem>
     </Grid>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Spinner, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
+import { Box, Text } from '@chakra-ui/react'
 
 const { default: Document } = require('./Farm/Document')
 const { default: Farm } = require('./Farm/Farm')
@@ -24,26 +24,25 @@ const DynamicFarm = ({
   error
 }) => {
   const SelectedFarm = components[farm]
+
+  if (error) {
+    ;<Box>
+      <Text fontSize='md' ml={2} color='cf.400'>
+        Something went wrong
+      </Text>
+    </Box>
+  }
+
   return (
     <React.Fragment>
-      {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
-      {loading === 'done' && (
-        <SelectedFarm
-          onOpen={onOpen}
-          digitalFarmerFarms={digitalFarmerFarms}
-          farmfeeds={farmfeeds}
-          farms={farms}
-          loading={loading}
-          error={error}
-        />
-      )}
-      {loading === 'done' && error && (
-        <Box>
-          <Text fontSize='md' ml={2} color='cf.400'>
-            Something went wrong
-          </Text>
-        </Box>
-      )}
+      <SelectedFarm
+        onOpen={onOpen}
+        digitalFarmerFarms={digitalFarmerFarms}
+        farmfeeds={farmfeeds}
+        farms={farms}
+        loading={loading}
+        error={error}
+      />
     </React.Fragment>
   )
 }

@@ -1,7 +1,17 @@
-import { Box, Flex, Grid, Icon, Text } from '@chakra-ui/react'
+import {
+  Box,
+  CircularProgress,
+  CircularProgressLabel,
+  Flex,
+  Grid,
+  Icon,
+  Image,
+  Spinner,
+  Text
+} from '@chakra-ui/react'
 import React from 'react'
 import { BiTime } from 'react-icons/bi'
-import { Crop, Updates } from 'theme/Icons'
+import { Crop, Updates, PlantHealth } from 'theme/Icons'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
@@ -14,17 +24,19 @@ export default function Tasks({
   farm,
   weatherForeCasts
 }) {
+  if (loading) {
+    return <Spinner size='lg' color='cf.400' />
+  }
+
   return (
     <Box mb={8}>
-      {loading === 'done' && farmfeeds && (
-        <FarmUpdateCard
-          title='TODAY’S TASK'
-          duration={farmfeeds[0]?.task?.duration}
-          subtitle={farmfeeds[0]?.task?.name}
-          text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-          icon={BiTime}
-        />
-      )}
+      <FarmUpdateCard
+        title='TODAY’S TASK'
+        duration={farmfeeds[0]?.task?.duration}
+        subtitle={farmfeeds[0]?.task?.name}
+        text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
+        icon={BiTime}
+      />
       <WeatherCards
         farmfeeds={farmfeeds}
         loading={loading}
@@ -32,24 +44,22 @@ export default function Tasks({
         weatherForeCasts={weatherForeCasts}
       />
       <Grid gap={8}>
-        {loading === 'done' && farmfeeds.length > 0 && (
-          <React.Fragment>
-            <FarmUpdateCard
-              title='SCHEDULED TASK'
-              duration={farmfeeds[0]?.nextTask?.duration}
-              subtitle={farmfeeds[0]?.nextTask?.name}
-              text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-              icon={BiTime}
-            />
-            <FarmUpdateCard
-              title='FARM MANAGER UPDATE'
-              duration={scheduledTasks[0]?.taskId?.duration}
-              subtitle={scheduledTasks[0]?.taskId?.name}
-              text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
-              icon={Updates}
-            />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <FarmUpdateCard
+            title='SCHEDULED TASK'
+            duration={farmfeeds[0]?.nextTask?.duration}
+            subtitle={farmfeeds[0]?.nextTask?.name}
+            text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
+            icon={BiTime}
+          />
+          <FarmUpdateCard
+            title='FARM MANAGER UPDATE'
+            duration={scheduledTasks[0]?.taskId?.duration}
+            subtitle={scheduledTasks[0]?.taskId?.name}
+            text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
+            icon={Updates}
+          />
+        </React.Fragment>
         <Box
           bg='white'
           w='100%'
@@ -83,21 +93,40 @@ export default function Tasks({
               <Text fontSize='xs' fontWeight={300}>
                 Plant health
               </Text>
+
+              <Box mt={2}>
+                <Icon boxSize={20} as={PlantHealth} />
+              </Box>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Growing stage
               </Text>
+
+              <Box mt={2}>
+                <Image
+                  h={20}
+                  src={require('../../../assets/images/stage.png').default}
+                />
+              </Box>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Crop productivity
               </Text>
+
+              <CircularProgress value={67} size='100px' color='cf.400' mt={2}>
+                <CircularProgressLabel rounded='lg'>67%</CircularProgressLabel>
+              </CircularProgress>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Chlorophyl index
               </Text>
+
+              <CircularProgress value={67} size='100px' color='cf.400' mt={2}>
+                <CircularProgressLabel rounded='lg'>67%</CircularProgressLabel>
+              </CircularProgress>
             </Box>
           </Grid>
         </Box>

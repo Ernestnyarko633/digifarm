@@ -75,7 +75,7 @@ export default function Warehouse({ digitalFarmerFarms, farms, loading }) {
           color='gray.600'
         >
           <Box as='ul'>
-            {menus.map(item => (
+            {menus?.map(item => (
               <Flex
                 as='button'
                 role='button'
