@@ -12,16 +12,15 @@ export default function FarmLayout({ children, ...rest }) {
   const { id } = useParams()
   const [setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
-  const [farms, setFarms] = React.useState([])
+  const [digitalFarmerFarm, setDigitalFarmerFarm] = React.useState([])
   const { getMyFarm } = useApi()
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true)
-
         const res = await getMyFarm(id)
-        setFarms(res.data)
+        setDigitalFarmerFarm(res.data)
 
         setLoading(false)
       } catch (error) {
@@ -63,7 +62,7 @@ export default function FarmLayout({ children, ...rest }) {
           </Box>
         )}
 
-        <FarmRightSidebar state={state} farms={farms?.order?.product?._id} />
+        <FarmRightSidebar state={state} digitalFarmerFarm={digitalFarmerFarm} />
       </GridItem>
     </Grid>
   )

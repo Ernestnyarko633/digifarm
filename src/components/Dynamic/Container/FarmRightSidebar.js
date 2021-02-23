@@ -3,20 +3,87 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicCard from '../Sidebar'
 import useApi from 'context/api'
+import useEosApi from 'context/eosApi'
 
-export default function FarmRightSidebar({ state, farms }) {
+export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
   const [scheduledTasks, setScheduledTasks] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
   const { getMyScheduledTasks, getMyFarmFeeds } = useApi()
+  const { getEOSWeatherForeCast } = useEosApi()
+  const [location, setLocation] = React.useState([])
+  const [weatherForeCasts, setWeatherForeCasts] = React.useState(null)
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true)
-        const res = await getMyScheduledTasks({ farm: farms })
+        const res = await getMyScheduledTasks({
+          farm: digitalFarmerFarm?.order?.product?._id
+        })
         setScheduledTasks(res.data)
+        setLoading(false)
+      } catch (error) {
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarm, getMyScheduledTasks])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const res = await getMyFarmFeeds({
+          farm: digitalFarmerFarm?.order?.product?._id
+        })
+        setFarmFeeds(res.data)
+        setLoading(false)
+      } catch (error) {
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarm, getMyFarmFeeds])
+
+  React.useEffect(() => {
+    let location_ = []
+
+    let _location = digitalFarmerFarm?.order?.product?.location
+    _location?.coords?.forEach(coordinate => {
+      location_?.push(
+        location_.push(
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
+          })
+        )
+      )
+    })
+
+    setLocation(location_)
+  }, [digitalFarmerFarm])
+
+  React.useEffect(() => {
+    let _payload = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [-1.531048, 5.578849],
+            [-1.530683, 5.575411],
+            [-1.521606, 5.576286],
+            [-1.522036, 5.579767],
+            [-1.531048, 5.578849]
+          ]
+        ]
+      }
+    }
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const res = await getEOSWeatherForeCast(_payload)
+        setWeatherForeCasts(res)
 
         setLoading(false)
       } catch (error) {
@@ -24,23 +91,7 @@ export default function FarmRightSidebar({ state, farms }) {
       }
     }
     fetchData()
-  }, [farms, getMyScheduledTasks])
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading('fetching')
-        const res = await getMyFarmFeeds({ farm: farms })
-        setFarmFeeds(res.data)
-
-        setLoading('done')
-      } catch (error) {
-        setLoading('done')
-        setError(error)
-      }
-    }
-    fetchData()
-  }, [farms, getMyFarmFeeds])
+  }, [getEOSWeatherForeCast, digitalFarmerFarm, location])
 
   if (loading) {
     return (
@@ -80,8 +131,11 @@ export default function FarmRightSidebar({ state, farms }) {
       <DynamicCard
         card={state}
         scheduledTasks={scheduledTasks}
+        weatherForeCasts={weatherForeCasts}
         farmfeeds={farmfeeds}
-        farms={farms}
+        farm={digitalFarmerFarm}
+        loading={loading}
+        error={error}
       />
     </Box>
   )
@@ -89,6 +143,5 @@ export default function FarmRightSidebar({ state, farms }) {
 
 FarmRightSidebar.propTypes = {
   state: PropTypes.string,
-  farms: PropTypes.any,
-  farmfeeds: PropTypes.any
+  digitalFarmerFarm: PropTypes.string.isRequired
 }
