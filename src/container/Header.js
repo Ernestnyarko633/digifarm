@@ -1,6 +1,6 @@
 import React from 'react'
 import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Menu } from '@headlessui/react'
 import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
 import { BiCog, BiSupport, BiHistory } from 'react-icons/bi'
@@ -78,27 +78,75 @@ const Header = () => {
                   </Box>
                 </Flex>
               </Menu.Button>
-              {open && (
-                <Menu.Items
-                  static
-                  as={MotionBox}
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{
-                    opacity: 1,
-                    height: 'auto',
-                    transition: { duration: 0.6 }
-                  }}
-                  exit={{ opacity: 0, height: 0 }}
-                  pos='absolute'
-                  bg='white'
-                  w={48}
-                  right={10}
-                  rounded='sm'
-                  mt={2}
-                  color='gray.600'
-                >
-                  {menuLinks.map(item => (
-                    <Menu.Item key={item.name}>
+              <AnimatePresence>
+                {open && (
+                  <Menu.Items
+                    static
+                    as={MotionBox}
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.3 }
+                    }}
+                    exit={{ opacity: 0, y: 50 }}
+                    pos='absolute'
+                    bg='white'
+                    w={56}
+                    right={10}
+                    rounded='sm'
+                    mt={2}
+                    color='gray.600'
+                    _focus={{ outline: 'none' }}
+                    borderWidth={1}
+                    borderColor='gray.100'
+                  >
+                    <AnimatePresence>
+                      {menuLinks.map((item, i) => (
+                        <Menu.Item
+                          key={item.name}
+                          as={MotionBox}
+                          custom={i}
+                          variants={{
+                            hidden: i => ({
+                              y: -50 * i,
+                              opacity: 0
+                            }),
+                            visible: i => ({
+                              y: 0,
+                              opacity: 1,
+                              transition: {
+                                delay: i * 0.025
+                              }
+                            }),
+                            removed: {
+                              y: 30 * i
+                            }
+                          }}
+                          initial='hidden'
+                          animate='visible'
+                          exit='removed'
+                        >
+                          {({ active }) => (
+                            <Link
+                              py={2}
+                              px={6}
+                              _hover={{
+                                textDecor: 'none'
+                              }}
+                              bg={active && 'cf.400'}
+                              color={active && 'white'}
+                              d='block'
+                              href={item.link}
+                            >
+                              <Icon as={item.icon} boxSize={4} mr={2} />{' '}
+                              {item.name}
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      ))}
+                    </AnimatePresence>
+                    <Menu.Item>
                       {({ active }) => (
                         <Link
                           py={2}
@@ -109,32 +157,16 @@ const Header = () => {
                           bg={active && 'cf.400'}
                           color={active && 'white'}
                           d='block'
-                          href={item.link}
+                          href='/logout'
                         >
-                          <Icon as={item.icon} boxSize={4} mr={2} /> {item.name}
+                          <Icon as={HiOutlineLogout} boxSize={4} mr={2} />{' '}
+                          Logout
                         </Link>
                       )}
                     </Menu.Item>
-                  ))}
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        py={2}
-                        px={6}
-                        _hover={{
-                          textDecor: 'none'
-                        }}
-                        bg={active && 'cf.400'}
-                        color={active && 'white'}
-                        d='block'
-                        href='/logout'
-                      >
-                        <Icon as={HiOutlineLogout} boxSize={4} mr={2} /> Logout
-                      </Link>
-                    )}
-                  </Menu.Item>
-                </Menu.Items>
-              )}
+                  </Menu.Items>
+                )}
+              </AnimatePresence>
             </Box>
           )}
         </Menu>
