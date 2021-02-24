@@ -1,3 +1,4 @@
+/*eslint-disable */
 import React from 'react'
 import { Box, Grid, GridItem, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
@@ -10,7 +11,7 @@ import FarmRightSidebar from '../Container/FarmRightSidebar'
 export default function FarmLayout({ children, ...rest }) {
   const [state, setState] = React.useState('compA')
   const { id } = useParams()
-  const [setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
   const [digitalFarmerFarm, setDigitalFarmerFarm] = React.useState([])
   const { getMyFarm } = useApi()
@@ -21,14 +22,14 @@ export default function FarmLayout({ children, ...rest }) {
         setLoading(true)
         const res = await getMyFarm(id)
         setDigitalFarmerFarm(res.data)
-
+        console.log(digitalFarmerFarm, "our farm")
         setLoading(false)
       } catch (error) {
         setError(error)
       }
     }
     fetchData()
-  }, [getMyFarm, id])
+  }, [getMyFarm, id, setLoading])
 
   return (
     <Grid
@@ -62,7 +63,12 @@ export default function FarmLayout({ children, ...rest }) {
           </Box>
         )}
 
-        <FarmRightSidebar state={state} digitalFarmerFarm={digitalFarmerFarm} />
+        {!loading && !error && (
+          <FarmRightSidebar
+            state={state}
+            digitalFarmerFarm={digitalFarmerFarm}
+          />
+        )}
       </GridItem>
     </Grid>
   )

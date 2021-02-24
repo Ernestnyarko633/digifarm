@@ -6,10 +6,11 @@ import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import useEosApi from 'context/eosApi'
+import { truncate } from 'lodash'
 
 export default function Farm({ onOpen, digitalFarmerFarms }) {
 
-  const [loading, setLoading] = React.useState('fetching')
+  const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
   const [viewID, setViewID] = React.useState('')
   const { getEOSViewID } = useEosApi()
@@ -63,14 +64,14 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
     }
     const fetchData = async payload => {
       try {
-        setLoading('fetching')
+        setLoading(true)
         const res = await getEOSViewID(payload, 'multi')
         setViewID(res.results[0].view_id)
         // redisClient.setex(redisKey, 86400, JSON.stringify(res.results[0].view_id))
-        setLoading('done')
+        setLoading(false)
       } catch (error) {
         setError(error)
-        setLoading('done')
+        setLoading(false)
       }
     }
     fetchData(_payload)

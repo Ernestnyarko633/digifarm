@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { Box, Skeleton, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -15,21 +16,6 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
   const [location, setLocation] = React.useState([])
   const [weatherForeCasts, setWeatherForeCasts] = React.useState(null)
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        const res = await getMyScheduledTasks({
-          farm: digitalFarmerFarm?.order?.product?._id
-        })
-        setScheduledTasks(res.data)
-        setLoading(false)
-      } catch (error) {
-        setError(error)
-      }
-    }
-    fetchData()
-  }, [digitalFarmerFarm, getMyScheduledTasks])
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -46,6 +32,24 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
     }
     fetchData()
   }, [digitalFarmerFarm, getMyFarmFeeds])
+  
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const res = await getMyScheduledTasks({
+          farm: digitalFarmerFarm?.order?.product?._id
+        })
+        setScheduledTasks(res.data)
+        setLoading(false)
+      } catch (error) {
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarm, getMyScheduledTasks])
+
+
 
   React.useEffect(() => {
     let location_ = []
