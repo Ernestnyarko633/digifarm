@@ -1,3 +1,4 @@
+/*eslint-disable */
 import React from 'react'
 import { Box, Grid, GridItem, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
@@ -21,7 +22,7 @@ export default function FarmLayout({ children, ...rest }) {
         setLoading(true)
         const res = await getMyFarm(id)
         setDigitalFarmerFarm(res.data)
-
+        console.log(digitalFarmerFarm, "our farm")
         setLoading(false)
       } catch (error) {
         setError(error)
@@ -62,7 +63,7 @@ export default function FarmLayout({ children, ...rest }) {
           </Box>
         )}
 
-        {loading && !error && (
+        {!loading && !error && (
           <FarmRightSidebar
             state={state}
             digitalFarmerFarm={digitalFarmerFarm}

@@ -107,7 +107,7 @@ export default function Warehouse({ digitalFarmerFarms, farms, loading }) {
             gap={10}
             w={{ md: 115 }}
           >
-            {loading === 'done' &&
+            {!loading &&
               digitalFarmerFarms &&
               digitalFarmerFarms.map(item => (
                 <WarehouseCard
