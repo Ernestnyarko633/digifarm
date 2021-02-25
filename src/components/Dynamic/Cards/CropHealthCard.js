@@ -6,8 +6,13 @@ import {
   Text
 } from '@chakra-ui/react'
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const CropHealthCard = () => {
+const CropHealthCard = ({ eosStats }) => {
+  const [length, setLength] = React.useState(0)
+  React.useEffect(() => {
+    setLength(eosStats.length - 1)
+  }, [eosStats])
   return (
     <Grid
       templateColumns={{ md: 'repeat(3, 1fr)' }}
@@ -21,8 +26,14 @@ const CropHealthCard = () => {
         <Text mb={4} fontSize='sm'>
           Plant population
         </Text>
-        <CircularProgress value={40} size='100px' color='cf.400'>
-          <CircularProgressLabel rounded='lg'>40%</CircularProgressLabel>
+        <CircularProgress
+          value={eosStats[length]?.indexes?.NDVI?.average * 100}
+          size='100px'
+          color='cf.400'
+        >
+          <CircularProgressLabel rounded='lg'>
+            {eosStats[length]?.indexes?.NDVI?.average * 100}%
+          </CircularProgressLabel>
         </CircularProgress>
       </Box>
 
@@ -30,8 +41,14 @@ const CropHealthCard = () => {
         <Text mb={4} fontSize='sm'>
           Plant health
         </Text>
-        <CircularProgress value={40} size='100px' color='cf.400'>
-          <CircularProgressLabel rounded='lg'>40%</CircularProgressLabel>
+        <CircularProgress
+          value={eosStats[length]?.indexes?.NDVI?.average * 100}
+          size='100px'
+          color='cf.400'
+        >
+          <CircularProgressLabel rounded='lg'>
+            {eosStats[length]?.indexes?.NDVI?.average * 100}%
+          </CircularProgressLabel>
         </CircularProgress>
       </Box>
 
@@ -39,8 +56,14 @@ const CropHealthCard = () => {
         <Text mb={4} fontSize='sm'>
           Growing stage
         </Text>
-        <CircularProgress value={40} size='100px' color='cf.400'>
-          <CircularProgressLabel rounded='lg'>40%</CircularProgressLabel>
+        <CircularProgress
+          value={eosStats[length]?.indexes?.NDVI?.average * 100}
+          size='100px'
+          color='cf.400'
+        >
+          <CircularProgressLabel rounded='lg'>
+            {eosStats[length]?.indexes?.NDVI?.average * 100}%
+          </CircularProgressLabel>
         </CircularProgress>
       </Box>
 
@@ -48,8 +71,14 @@ const CropHealthCard = () => {
         <Text mb={4} fontSize='sm'>
           Crop productivity
         </Text>
-        <CircularProgress value={40} size='100px' color='cf.400'>
-          <CircularProgressLabel rounded='lg'>40%</CircularProgressLabel>
+        <CircularProgress
+          value={eosStats[length]?.indexes?.NDVI?.average * 100}
+          size='100px'
+          color='cf.400'
+        >
+          <CircularProgressLabel rounded='lg'>
+            {eosStats[length]?.indexes?.NDVI?.average * 100}%
+          </CircularProgressLabel>
         </CircularProgress>
       </Box>
 
@@ -57,12 +86,21 @@ const CropHealthCard = () => {
         <Text mb={4} fontSize='sm'>
           Chlorophyl index
         </Text>
-        <CircularProgress value={40} size='100px' color='cf.400'>
-          <CircularProgressLabel rounded='lg'>40%</CircularProgressLabel>
+        <CircularProgress
+          value={eosStats[length]?.indexes?.NDVI?.average * 100}
+          size='100px'
+          color='cf.400'
+        >
+          <CircularProgressLabel rounded='lg'>
+            {eosStats[length]?.indexes?.NDVI?.average * 100}%
+          </CircularProgressLabel>
         </CircularProgress>
       </Box>
     </Grid>
   )
 }
 
+CropHealthCard.propTypes = {
+  eosStats: PropTypes.any
+}
 export default CropHealthCard

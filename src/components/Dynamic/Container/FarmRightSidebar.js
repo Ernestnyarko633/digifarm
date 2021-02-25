@@ -6,7 +6,7 @@ import DynamicCard from '../Sidebar'
 import useApi from 'context/api'
 import useEosApi from 'context/eosApi'
 
-export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
+export default function FarmRightSidebar({ state, digitalFarmerFarm, eosStats }) {
   const [scheduledTasks, setScheduledTasks] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
   const [loading, setLoading] = React.useState(false)
@@ -140,6 +140,7 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
         farm={digitalFarmerFarm}
         loading={loading}
         error={error}
+        eosStats={eosStats}
       />
     </Box>
   )
@@ -147,5 +148,6 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
 
 FarmRightSidebar.propTypes = {
   state: PropTypes.string,
-  digitalFarmerFarm: PropTypes.string.isRequired
+  digitalFarmerFarm: PropTypes.string.isRequired,
+  eosStats: PropTypes.any
 }
