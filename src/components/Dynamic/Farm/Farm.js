@@ -16,21 +16,6 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
   const [eosTaskID, setEosTaskID] = React.useState('')
 
   React.useEffect(() => {
-    // let location_ = []
-    // digitalFarmerFarms?.forEach(farm => {
-    //   let _location = farm?.order?.product?.location
-    //   _location?.coords?.forEach(coordinate => {
-    //     location_?.push(
-    //       coordinate.split(',').map(item => {
-    //         return parseFloat(item, 10)
-    //       })
-    //     )
-    //   })
-    // })
-    //  setLocation(location_)
-  }, [digitalFarmerFarms])
-
-  React.useEffect(() => {
     let _payload = {
       fields: ['sceneID', 'cloudCoverage'],
       limit: 1,

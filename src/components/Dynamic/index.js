@@ -26,11 +26,13 @@ const DynamicFarm = ({
   const SelectedFarm = components[farm]
 
   if (error) {
-    ;<Box>
-      <Text fontSize='md' ml={2} color='cf.400'>
-        Something went wrong
-      </Text>
-    </Box>
+    return (
+      <Box>
+        <Text fontSize='md' ml={2} color='cf.400'>
+          Something went wrong
+        </Text>
+      </Box>
+    )
   }
 
   return (
