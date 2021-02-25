@@ -1,6 +1,6 @@
 import React from 'react'
 import { Cloud } from 'theme/Icons'
-import { Box, Grid, Heading, Icon, Text } from '@chakra-ui/react'
+import { Box, Grid, Heading, Icon, Text, Flex } from '@chakra-ui/react'
 // import useEosApi from 'context/eosApi'
 import PropTypes from 'prop-types'
 
@@ -23,11 +23,11 @@ export default function WeatherCard({
           <Text textAlign='center' fontWeight={300}>
             Plant population
           </Text>
-          <Box mt={2}>
+          <Flex mt={2} justify='center' align='center'>
             <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
               {farmfeeds[0]?.plantInfo?.population}
             </Heading>
-          </Box>
+          </Flex>
         </Box>
       )}
       {weatherForeCasts && (
@@ -39,8 +39,10 @@ export default function WeatherCard({
             p={6}
             bg='white'
           >
-            <Text fontWeight={300}>Weather today</Text>
-            <Box mt={2}>
+            <Text fontWeight={300} textAlign='center'>
+              Weather today
+            </Text>
+            <Flex mt={2} align='center' justify='center' direction='column'>
               <Icon as={Cloud} boxSize={10} />
               <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
                 {(
@@ -50,7 +52,7 @@ export default function WeatherCard({
                 )?.toFixed(0)}{' '}
                 C
               </Heading>
-            </Box>
+            </Flex>
           </Box>
         </React.Fragment>
       )}

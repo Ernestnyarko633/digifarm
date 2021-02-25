@@ -18,7 +18,7 @@ const useAPICalls = () => {
 
         setLoading('done')
       } catch (err) {
-        setError(err.message)
+        setError(err.message || err)
       }
     }
     fetchData()
