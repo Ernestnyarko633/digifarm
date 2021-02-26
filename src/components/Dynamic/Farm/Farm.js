@@ -1,4 +1,3 @@
-/*eslint-disable */
 import { Box, Flex } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React from 'react'
@@ -20,16 +19,17 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
     let location_ = []
     digitalFarmerFarms?.forEach(farm => {
       let _location = farm?.order?.product?.locationlocation_
-    const getLocations = () =>  _location?.coords?.forEach(coordinate => {
-      return  location_?.push(
-          coordinate.split(',').map(item => {
-            return parseFloat(item, 10)
-          })
-        )
-      })
+      const getLocations = () =>
+        _location?.coords?.forEach(coordinate => {
+          return location_?.push(
+            coordinate.split(',').map(item => {
+              return parseFloat(item, 10)
+            })
+          )
+        })
       getLocations()
     })
-     setLocation(location_)
+    setLocation(location_)
   }, [digitalFarmerFarms])
 
   React.useEffect(() => {
@@ -70,7 +70,6 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         const res = await getEOSViewID(payload, 'multi')
         setViewID(res?.results[0]?.view_id)
         setResults(res?.results)
-        console.log(res, 'testing if viewID is present')
         // redisClient.setex(redisKey, 86400, JSON.stringify(res.results[0].view_id))
         setLoading(false)
       } catch (error) {
@@ -89,9 +88,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         bands: ['B02', 'B03', 'B04'],
         geometry: {
           type: 'Polygon',
-          coordinates: [
-          location
-          ]
+          coordinates: [location]
         },
         merge: true,
 
@@ -109,7 +106,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         setLoading(false)
       }
     }
-   location && fetchData()
+    location && fetchData()
   }, [createEOSTaskForStats, viewID, location])
 
   const DownloadVisual = async downloadTaskID => {

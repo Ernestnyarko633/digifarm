@@ -1,7 +1,6 @@
-/*eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Text } from '@chakra-ui/react'
+//import { Box, Text } from '@chakra-ui/react'
 
 const { default: Document } = require('./Farm/Document')
 const { default: Farm } = require('./Farm/Farm')
@@ -25,7 +24,7 @@ const DynamicFarm = ({
   error
 }) => {
   const SelectedFarm = components[farm]
-console.log(error, "error")
+
   // if (error) {
   //   return (
   //     <Box>
