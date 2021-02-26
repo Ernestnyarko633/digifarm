@@ -55,6 +55,7 @@ export default function Farm() {
         setLoading(false)
       } catch (error) {
         setError(error)
+        setLoading(false)
       }
     }
     fetchData()
@@ -68,7 +69,6 @@ export default function Farm() {
           cropVariety: digitalFarmerFarms[0]?.order?.product?.cropVariety._id
         })
         setSourcingOrders(res?.data?.filter(order => order.demand === 0))
-
         setLoading(false)
       } catch (error) {
         setError(error)

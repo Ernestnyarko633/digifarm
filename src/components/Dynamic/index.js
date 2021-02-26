@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Text } from '@chakra-ui/react'
+//import { Box, Text } from '@chakra-ui/react'
 
 const { default: Document } = require('./Farm/Document')
 const { default: Farm } = require('./Farm/Farm')
@@ -25,15 +25,15 @@ const DynamicFarm = ({
 }) => {
   const SelectedFarm = components[farm]
 
-  if (error) {
-    return (
-      <Box>
-        <Text fontSize='md' ml={2} color='cf.400'>
-          Something went wrong
-        </Text>
-      </Box>
-    )
-  }
+  // if (error) {
+  //   return (
+  //     <Box>
+  //       <Text fontSize='md' ml={2} color='cf.400'>
+  //         Something went wrong
+  //       </Text>
+  //     </Box>
+  //   )
+  // }
 
   return (
     <React.Fragment>

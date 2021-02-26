@@ -8,7 +8,8 @@ import useEosApi from 'context/eosApi'
 export default function FarmRightSidebar({
   state,
   digitalFarmerFarm,
-  eosStats
+  eosStats,
+  location
 }) {
   const [scheduledTasks, setScheduledTasks] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
@@ -54,15 +55,7 @@ export default function FarmRightSidebar({
     let _payload = {
       geometry: {
         type: 'Polygon',
-        coordinates: [
-          [
-            [-1.531048, 5.578849],
-            [-1.530683, 5.575411],
-            [-1.521606, 5.576286],
-            [-1.522036, 5.579767],
-            [-1.531048, 5.578849]
-          ]
-        ]
+        coordinates: [location]
       }
     }
     const fetchData = async () => {
@@ -76,8 +69,8 @@ export default function FarmRightSidebar({
         setError(error)
       }
     }
-    fetchData()
-  }, [getEOSWeatherForeCast, digitalFarmerFarm])
+    location && fetchData()
+  }, [getEOSWeatherForeCast, digitalFarmerFarm, location])
 
   if (loading) {
     return (
@@ -131,5 +124,6 @@ export default function FarmRightSidebar({
 FarmRightSidebar.propTypes = {
   state: PropTypes.string,
   digitalFarmerFarm: PropTypes.string.isRequired,
-  eosStats: PropTypes.any
+  eosStats: PropTypes.any,
+  location: PropTypes.any
 }

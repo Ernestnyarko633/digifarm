@@ -12,8 +12,25 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
   const [viewID, setViewID] = React.useState('')
   const [results, setResults] = React.useState([])
   const { getEOSViewID, createEOSTaskForStats, getEOSStatistics } = useEosApi()
-  // const [location, setLocation] = React.useState([])
   const [eosTaskID, setEosTaskID] = React.useState('')
+  const [location, setLocation] = React.useState([])
+
+  React.useEffect(() => {
+    let location_ = []
+    digitalFarmerFarms?.forEach(farm => {
+      let _location = farm?.order?.product?.locationlocation_
+      const getLocations = () =>
+        _location?.coords?.forEach(coordinate => {
+          return location_?.push(
+            coordinate.split(',').map(item => {
+              return parseFloat(item, 10)
+            })
+          )
+        })
+      getLocations()
+    })
+    setLocation(location_)
+  }, [digitalFarmerFarms])
 
   React.useEffect(() => {
     let _payload = {
@@ -71,15 +88,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         bands: ['B02', 'B03', 'B04'],
         geometry: {
           type: 'Polygon',
-          coordinates: [
-            [
-              [-1.531048, 5.578849],
-              [-1.530683, 5.575411],
-              [-1.521606, 5.576286],
-              [-1.522036, 5.579767],
-              [-1.531048, 5.578849]
-            ]
-          ]
+          coordinates: [location]
         },
         merge: true,
 
@@ -97,8 +106,8 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         setLoading(false)
       }
     }
-    fetchData()
-  }, [createEOSTaskForStats, viewID])
+    location && fetchData()
+  }, [createEOSTaskForStats, viewID, location])
 
   const DownloadVisual = async downloadTaskID => {
     try {
