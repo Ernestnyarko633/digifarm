@@ -19,14 +19,15 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
   React.useEffect(() => {
     let location_ = []
     digitalFarmerFarms?.forEach(farm => {
-      let _location = farm?.order?.product?.location
-      _location?.coords?.forEach(coordinate => {
-        location_?.push(
+      let _location = farm?.order?.product?.locationlocation_
+    const getLocations = () =>  _location?.coords?.forEach(coordinate => {
+      return  location_?.push(
           coordinate.split(',').map(item => {
             return parseFloat(item, 10)
           })
         )
       })
+      getLocations()
     })
      setLocation(location_)
   }, [digitalFarmerFarms])

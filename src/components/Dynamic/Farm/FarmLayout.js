@@ -37,13 +37,15 @@ export default function FarmLayout({ children, ...rest }) {
   React.useEffect(() => {
     let location_ = []
     let _location = digitalFarmerFarm?.order?.product?.location
-    _location?.coords?.forEach(coordinate => {
-      location_?.push(
-        coordinate.split(',').map(item => {
-          return parseFloat(item, 10)
-        })
-      )
-    })
+    const getCoords = () =>
+      _location?.coords?.forEach(coordinate => {
+        return location_?.push(
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
+          })
+        )
+      })
+    getCoords()
     setLocation(location_)
   }, [digitalFarmerFarm])
 
