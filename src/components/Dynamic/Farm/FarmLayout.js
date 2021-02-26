@@ -18,6 +18,7 @@ export default function FarmLayout({ children, ...rest }) {
   const [eosStats, setEosStats] = React.useState([])
   const { getMyFarm } = useApi()
   const { createEOSTaskForStats, getEOSStatistics } = useEosApi()
+  const [location, setLocation] = React.useState([])
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +35,19 @@ export default function FarmLayout({ children, ...rest }) {
   }, [getMyFarm, id, setLoading])
 
   React.useEffect(() => {
+    let location_ = []
+    let _location = digitalFarmerFarm?.order?.product?.location
+    _location?.coords?.forEach(coordinate => {
+      location_?.push(
+        coordinate.split(',').map(item => {
+          return parseFloat(item, 10)
+        })
+      )
+    })
+    setLocation(location_)
+  }, [digitalFarmerFarm])
+
+  React.useEffect(() => {
     let _payload = {
       type: 'mt_stats',
       params: {
@@ -41,15 +55,7 @@ export default function FarmLayout({ children, ...rest }) {
         date_start: '2020-12-01',
         date_end: '2020-12-31',
         geometry: {
-          coordinates: [
-            [
-              [-1.531048, 5.578849],
-              [-1.530683, 5.575411],
-              [-1.521606, 5.576286],
-              [-1.522036, 5.579767],
-              [-1.531048, 5.578849]
-            ]
-          ],
+          coordinates: [[location]],
           type: 'Polygon'
         },
         reference: 'ref_20210208-00-00',
@@ -69,8 +75,8 @@ export default function FarmLayout({ children, ...rest }) {
         setLoading(false)
       }
     }
-    fetchData()
-  }, [createEOSTaskForStats])
+    location && fetchData()
+  }, [createEOSTaskForStats, location])
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -123,6 +129,7 @@ export default function FarmLayout({ children, ...rest }) {
             state={state}
             eosStats={eosStats}
             digitalFarmerFarm={digitalFarmerFarm}
+            location={location}
           />
         )}
       </GridItem>

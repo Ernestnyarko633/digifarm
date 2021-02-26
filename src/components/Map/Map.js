@@ -1,7 +1,7 @@
 /*eslint-disable */
 import React from 'react'
 import useMap from '../../hooks/useMap'
-import { Box } from '@chakra-ui/react'
+import { Box, Heading } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import configs from '../../utils/configs'
 //import { getRedisClusterClient } from '../../helpers/misc'
@@ -61,6 +61,7 @@ const Map = ({
     height: 1000
   })
 
+  console.log("viewId", viewID ? "true" : "false")
   return (
     <React.Fragment>
      {viewID && <Box {...rest} ref={ref} />}

@@ -22,8 +22,14 @@ export default function Tasks({
   loading,
   error,
   farm,
-  weatherForeCasts
+  weatherForeCasts,
+  eosStats
 }) {
+  const [length, setLength] = React.useState(0)
+  React.useEffect(() => {
+    setLength(eosStats.length - 1)
+  }, [eosStats])
+
   if (loading) {
     return <Spinner size='lg' color='cf.400' />
   }
@@ -115,8 +121,15 @@ export default function Tasks({
                 Crop productivity
               </Text>
 
-              <CircularProgress value={67} size='100px' color='cf.400' mt={2}>
-                <CircularProgressLabel rounded='lg'>67%</CircularProgressLabel>
+              <CircularProgress
+                value={eosStats[length]?.indexes?.NDVI?.average * 100}
+                size='100px'
+                color='cf.400'
+                mt={2}
+              >
+                <CircularProgressLabel rounded='lg'>
+                  {eosStats[length]?.indexes?.NDVI?.average * 100}%
+                </CircularProgressLabel>
               </CircularProgress>
             </Box>
             <Box>
@@ -124,8 +137,15 @@ export default function Tasks({
                 Chlorophyl index
               </Text>
 
-              <CircularProgress value={67} size='100px' color='cf.400' mt={2}>
-                <CircularProgressLabel rounded='lg'>67%</CircularProgressLabel>
+              <CircularProgress
+                value={eosStats[length]?.indexes?.NDVI?.average * 100}
+                size='100px'
+                color='cf.400'
+                mt={2}
+              >
+                <CircularProgressLabel rounded='lg'>
+                  {eosStats[length]?.indexes?.NDVI?.average * 100}%
+                </CircularProgressLabel>
               </CircularProgress>
             </Box>
           </Grid>
@@ -141,5 +161,6 @@ Tasks.propTypes = {
   loading: PropTypes.any,
   error: PropTypes.any,
   farm: PropTypes.any,
-  weatherForeCasts: PropTypes.any
+  weatherForeCasts: PropTypes.any,
+  eosStats: PropTypes.any
 }

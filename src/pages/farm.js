@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
@@ -35,6 +36,7 @@ export default function Farm() {
         setLoading(true)
         const res = await getMyFarms()
         setDigitalFarmerFarms(res.data.filter(farm => farm._id === id))
+        console.log(res.data, "my farm")
         setLoading(false)
       } catch (error) {
         setError(error)
@@ -52,9 +54,11 @@ export default function Farm() {
           farm: digitalFarmerFarms[0]?.order?.product?._id
         })
         setFarmFeeds(res.data)
+        console.log(res.data, "feeds my gallery")
         setLoading(false)
       } catch (error) {
         setError(error)
+        setLoading(false)
       }
     }
     fetchData()
@@ -68,7 +72,7 @@ export default function Farm() {
           cropVariety: digitalFarmerFarms[0]?.order?.product?.cropVariety._id
         })
         setSourcingOrders(res?.data?.filter(order => order.demand === 0))
-
+        console.log("orders", res.data)
         setLoading(false)
       } catch (error) {
         setError(error)

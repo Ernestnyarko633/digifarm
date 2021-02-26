@@ -1,3 +1,4 @@
+/*eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Text } from '@chakra-ui/react'
@@ -24,16 +25,16 @@ const DynamicFarm = ({
   error
 }) => {
   const SelectedFarm = components[farm]
-
-  if (error) {
-    return (
-      <Box>
-        <Text fontSize='md' ml={2} color='cf.400'>
-          Something went wrong
-        </Text>
-      </Box>
-    )
-  }
+console.log(error, "error")
+  // if (error) {
+  //   return (
+  //     <Box>
+  //       <Text fontSize='md' ml={2} color='cf.400'>
+  //         Something went wrong
+  //       </Text>
+  //     </Box>
+  //   )
+  // }
 
   return (
     <React.Fragment>

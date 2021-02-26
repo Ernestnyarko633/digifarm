@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { Box, Flex } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React from 'react'
@@ -12,8 +13,23 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
   const [viewID, setViewID] = React.useState('')
   const [results, setResults] = React.useState([])
   const { getEOSViewID, createEOSTaskForStats, getEOSStatistics } = useEosApi()
-  // const [location, setLocation] = React.useState([])
   const [eosTaskID, setEosTaskID] = React.useState('')
+  const [location, setLocation] = React.useState([])
+
+  React.useEffect(() => {
+    let location_ = []
+    digitalFarmerFarms?.forEach(farm => {
+      let _location = farm?.order?.product?.location
+      _location?.coords?.forEach(coordinate => {
+        location_?.push(
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
+          })
+        )
+      })
+    })
+     setLocation(location_)
+  }, [digitalFarmerFarms])
 
   React.useEffect(() => {
     let _payload = {
@@ -53,6 +69,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         const res = await getEOSViewID(payload, 'multi')
         setViewID(res?.results[0]?.view_id)
         setResults(res?.results)
+        console.log(res, 'testing if viewID is present')
         // redisClient.setex(redisKey, 86400, JSON.stringify(res.results[0].view_id))
         setLoading(false)
       } catch (error) {
@@ -72,13 +89,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         geometry: {
           type: 'Polygon',
           coordinates: [
-            [
-              [-1.531048, 5.578849],
-              [-1.530683, 5.575411],
-              [-1.521606, 5.576286],
-              [-1.522036, 5.579767],
-              [-1.531048, 5.578849]
-            ]
+          location
           ]
         },
         merge: true,
@@ -97,8 +108,8 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         setLoading(false)
       }
     }
-    fetchData()
-  }, [createEOSTaskForStats, viewID])
+   location && fetchData()
+  }, [createEOSTaskForStats, viewID, location])
 
   const DownloadVisual = async downloadTaskID => {
     try {
