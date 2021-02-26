@@ -1,4 +1,3 @@
-/*eslint-disable */
 import { Box, Skeleton, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -6,16 +5,18 @@ import DynamicCard from '../Sidebar'
 import useApi from 'context/api'
 import useEosApi from 'context/eosApi'
 
-export default function FarmRightSidebar({ state, digitalFarmerFarm, eosStats }) {
+export default function FarmRightSidebar({
+  state,
+  digitalFarmerFarm,
+  eosStats
+}) {
   const [scheduledTasks, setScheduledTasks] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
   const { getMyScheduledTasks, getMyFarmFeeds } = useApi()
   const { getEOSWeatherForeCast } = useEosApi()
-  const [location, setLocation] = React.useState([])
   const [weatherForeCasts, setWeatherForeCasts] = React.useState(null)
-
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +33,7 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm, eosStats })
     }
     fetchData()
   }, [digitalFarmerFarm, getMyFarmFeeds])
-  
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,25 +49,6 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm, eosStats })
     }
     fetchData()
   }, [digitalFarmerFarm, getMyScheduledTasks])
-
-
-
-  React.useEffect(() => {
-    let location_ = []
-
-    let _location = digitalFarmerFarm?.order?.product?.location
-    _location?.coords?.forEach(coordinate => {
-      location_?.push(
-        location_.push(
-          coordinate.split(',').map(item => {
-            return parseFloat(item, 10)
-          })
-        )
-      )
-    })
-
-    setLocation(location_)
-  }, [digitalFarmerFarm])
 
   React.useEffect(() => {
     let _payload = {
@@ -95,7 +77,7 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm, eosStats })
       }
     }
     fetchData()
-  }, [getEOSWeatherForeCast, digitalFarmerFarm, location])
+  }, [getEOSWeatherForeCast, digitalFarmerFarm])
 
   if (loading) {
     return (
