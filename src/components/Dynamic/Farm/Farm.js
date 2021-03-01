@@ -5,8 +5,10 @@ import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import useEosApi from 'context/eosApi'
+import { getRedisClusterClient } from '../../../helpers/misc'
 
 export default function Farm({ onOpen, digitalFarmerFarms }) {
+  let redisClient = getRedisClusterClient()
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
   const [viewID, setViewID] = React.useState('')
@@ -18,21 +20,21 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
   React.useEffect(() => {
     let location_ = []
     digitalFarmerFarms?.forEach(farm => {
-      let _location = farm?.order?.product?.locationlocation_
-      const getLocations = () =>
-        _location?.coords?.forEach(coordinate => {
-          return location_?.push(
-            coordinate.split(',').map(item => {
-              return parseFloat(item, 10)
-            })
-          )
-        })
-      getLocations()
+      let _location = farm?.order?.product?.location
+
+      _location?.coords?.forEach(coordinate => {
+        location_?.push(
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
+          })
+        )
+      })
     })
     setLocation(location_)
   }, [digitalFarmerFarms])
 
   React.useEffect(() => {
+    let redisKey = 'viewID'
     let _payload = {
       fields: ['sceneID', 'cloudCoverage'],
       limit: 1,
@@ -49,15 +51,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         },
         shape: {
           type: 'Polygon',
-          coordinates: [
-            [
-              [-1.531048, 5.578849],
-              [-1.530683, 5.575411],
-              [-1.521606, 5.576286],
-              [-1.522036, 5.579767],
-              [-1.531048, 5.578849]
-            ]
-          ]
+          coordinates: [location]
         }
       },
       sort: {
@@ -70,17 +64,34 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         const res = await getEOSViewID(payload, 'multi')
         setViewID(res?.results[0]?.view_id)
         setResults(res?.results)
-        // redisClient.setex(redisKey, 86400, JSON.stringify(res.results[0].view_id))
+
+        redisClient.setex(
+          redisKey,
+          86400,
+          JSON.stringify(res.results[0].view_id)
+        )
         setLoading(false)
       } catch (error) {
         setError(error)
         setLoading(false)
       }
     }
-    fetchData(_payload)
-  }, [getEOSViewID, digitalFarmerFarms])
+    redisClient.get(redisKey, function (err, data) {
+      if (data) {
+        return setViewID(data)
+      }
+      if (err) {
+        //   console.log(err)
+        return location && fetchData(_payload)
+      }
+
+      return location && fetchData(_payload)
+    })
+    //  location && fetchData(_payload)
+  }, [getEOSViewID, digitalFarmerFarms, location, redisClient])
 
   React.useEffect(() => {
+    let redisKey = 'statsTask'
     let _payload = {
       type: 'lbe',
       params: {
@@ -100,14 +111,26 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
         setLoading(true)
         const res = await createEOSTaskForStats(_payload)
         setEosTaskID(res?.task_id)
+        redisClient.setex(redisKey, 86400, JSON.stringify(res?.task_id))
         setLoading(false)
       } catch (error) {
         setError(error)
         setLoading(false)
       }
     }
-    location && fetchData()
-  }, [createEOSTaskForStats, viewID, location])
+    redisClient.get(redisKey, function (err, data) {
+      if (data) {
+        return setEosTaskID(data)
+      }
+      if (err) {
+        //console.log(err)
+        return location && fetchData()
+      }
+
+      return location && fetchData()
+    })
+    //  location && fetchData()
+  }, [createEOSTaskForStats, viewID, location, redisClient])
 
   const DownloadVisual = async downloadTaskID => {
     try {
@@ -119,6 +142,7 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
       setLoading(false)
     }
   }
+  // console.log(location, 'my location')
   return (
     <FarmLayout>
       <Box h={{ md: 128 }} w='100%'>

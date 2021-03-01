@@ -4,11 +4,13 @@ import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 import useApi from 'context/api'
 import useEosApi from 'context/eosApi'
+import { getRedisClusterClient } from 'helpers/misc'
 
 import FarmLeftSideBar from '../Container/FarmLeftSideBar'
 import FarmRightSidebar from '../Container/FarmRightSidebar'
 
 export default function FarmLayout({ children, ...rest }) {
+  let redisClient = getRedisClusterClient()
   const [state, setState] = React.useState('compA')
   const { id } = useParams()
   const [loading, setLoading] = React.useState(false)
@@ -50,6 +52,7 @@ export default function FarmLayout({ children, ...rest }) {
   }, [digitalFarmerFarm])
 
   React.useEffect(() => {
+    let redisKey = 'healthStatsTask'
     let _payload = {
       type: 'mt_stats',
       params: {
@@ -71,29 +74,54 @@ export default function FarmLayout({ children, ...rest }) {
         setLoading(true)
         const res = await createEOSTaskForStats(_payload)
         setEosTaskID(res?.task_id)
+        redisClient.setex(redisKey, 86400, JSON.stringify(res?.task_id))
         setLoading(false)
       } catch (error) {
         setError(error)
         setLoading(false)
       }
     }
-    location && fetchData()
-  }, [createEOSTaskForStats, location])
+    redisClient.get(redisKey, function (err, data) {
+      if (data) {
+        return setEosTaskID(data)
+      }
+      if (err) {
+        // console.log(err)
+        return location && fetchData()
+      }
+
+      return location && fetchData()
+    })
+    // location && fetchData()
+  }, [createEOSTaskForStats, location, redisClient])
 
   React.useEffect(() => {
+    let redisKey = 'healthStats'
     const fetchData = async () => {
       try {
         setLoading(true)
         const res = await getEOSStatistics(eosTaskID)
         setEosStats(res?.result)
+        redisClient.setex(redisKey, 86400, JSON.stringify(res?.result))
         setLoading(false)
       } catch (error) {
         setError(error)
         setLoading(false)
       }
     }
-    fetchData()
-  }, [eosTaskID, getEOSStatistics])
+    redisClient.get(redisKey, function (err, data) {
+      if (data) {
+        return setEosStats(data)
+      }
+      if (err) {
+        // console.log(err)
+        return fetchData()
+      }
+
+      return fetchData()
+    })
+    //fetchData()
+  }, [eosTaskID, getEOSStatistics, redisClient])
   return (
     <Grid
       templateRows='repeat(1 1fr)'

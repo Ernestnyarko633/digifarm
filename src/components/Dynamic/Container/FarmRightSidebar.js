@@ -1,4 +1,6 @@
+/*eslint-disable */
 import { Box, Skeleton, Stack, Text } from '@chakra-ui/react'
+import { getRedisClusterClient } from 'helpers/misc'
 import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicCard from '../Sidebar'
@@ -11,6 +13,7 @@ export default function FarmRightSidebar({
   eosStats,
   location
 }) {
+  let redisClient = getRedisClusterClient()
   const [scheduledTasks, setScheduledTasks] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
   const [loading, setLoading] = React.useState(false)
@@ -58,19 +61,31 @@ export default function FarmRightSidebar({
         coordinates: [location]
       }
     }
+    let redisKey = 'weatherForeCast'
     const fetchData = async () => {
       try {
         setLoading(true)
         const res = await getEOSWeatherForeCast(_payload)
         setWeatherForeCasts(res)
-
+        redisClient.setex(redisKey, 86400, JSON.stringify(res))
         setLoading(false)
       } catch (error) {
         setError(error)
       }
     }
-    location && fetchData()
-  }, [getEOSWeatherForeCast, digitalFarmerFarm, location])
+    redisClient.get(redisKey, function (err, data) {
+      if (data) {
+        return setWeatherForeCasts(data)
+      }
+      if (err) {
+        console.log(err)
+        return location && fetchData()
+      }
+
+      return location && fetchData()
+    })
+   // location && fetchData()
+  }, [getEOSWeatherForeCast, digitalFarmerFarm, location, redisClient])
 
   if (loading) {
     return (
