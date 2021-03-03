@@ -58,7 +58,7 @@ const Header = () => {
           </Box>
         </Flex>
 
-        <Menu as={Box} ml={2}>
+        <Menu as={Box} ml={2} userSelect='none'>
           {({ open }) => (
             <Box>
               <Menu.Button

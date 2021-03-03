@@ -1,6 +1,5 @@
-/*eslint-disable*/
 import React from 'react'
-import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
+import { Box, Flex, Grid, GridItem, Icon, Text } from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
 import ImageGallery from '../Cards/ImageGallery'
 import PropTypes from 'prop-types'
@@ -23,9 +22,10 @@ const menus = [
 
 // const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-export default function Gallery({ farmfeeds }) {
+export default function Gallery({ farmfeeds, loading }) {
   const [activities, setActivities] = React.useState([])
-  console.log(farmfeeds, "letmesee")
+  let isAlreadyThere = []
+
   React.useEffect(() => {
     let array2 = []
     const feeds = () =>
@@ -37,12 +37,17 @@ export default function Gallery({ farmfeeds }) {
   }, [farmfeeds])
 
   const selectActivity = feed => {
-    const res = activities.find(act => feed.task.activity.name === act)
-    if (res) {
-      return { bool: true, act: feed?.task?.activity?.name }
-    } else {
-      return { bool: false, act: feed?.task?.activity?.name }
+    if (!isAlreadyThere.includes(feed.task.activity.name)) {
+      const res = activities.find(act => feed.task.activity.name === act)
+      if (res) {
+        isAlreadyThere.push(feed.task.activity.name)
+        isAlreadyThere = [...new Set(isAlreadyThere)]
+        return { bool: true, act: feed?.task?.activity?.name }
+      } else {
+        return { bool: false, act: feed?.task?.activity?.name }
+      }
     }
+    return { bool: false, act: feed?.task?.activity?.name }
   }
   return (
     <Grid
@@ -95,20 +100,27 @@ export default function Gallery({ farmfeeds }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
-          <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
-            {farmfeeds?.map(_feed => {
-              return (
-                selectActivity(_feed).bool && (
-                  <ImageGallery
-                    key={_feed._id}
-                    title={`${_feed?.task?.activity?.name}`}
-                    farmfeeds={farmfeeds}
-                    activityName={selectActivity(_feed).act}
-                  />
+          {!loading && farmfeeds && (
+            <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
+              {farmfeeds?.map(_feed => {
+                return (
+                  selectActivity(_feed).bool && (
+                    <ImageGallery
+                      key={_feed._id}
+                      title={`${_feed?.task?.activity?.name}`}
+                      farmfeeds={farmfeeds}
+                      activityName={selectActivity(_feed).act}
+                    />
+                  )
                 )
-              )
-            })}
-          </Grid>
+              })}
+            </Grid>
+          )}
+          {farmfeeds?.length === 0 && !loading && (
+            <Flex w='100%' justify='center' align='center'>
+              <Text>Gallery is currently unavailable</Text>
+            </Flex>
+          )}
         </Box>
       </GridItem>
     </Grid>
@@ -116,5 +128,6 @@ export default function Gallery({ farmfeeds }) {
 }
 
 Gallery.propTypes = {
-  farmfeeds: PropTypes.any
+  farmfeeds: PropTypes.array.isRequired,
+  loading: PropTypes.any
 }

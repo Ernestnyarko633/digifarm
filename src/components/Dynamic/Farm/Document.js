@@ -140,5 +140,5 @@ export default function Document({ digitalFarmerFarms }) {
 }
 
 Document.propTypes = {
-  digitalFarmerFarms: PropTypes.any
+  digitalFarmerFarms: PropTypes.array.isRequired
 }

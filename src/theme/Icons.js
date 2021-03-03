@@ -1088,6 +1088,29 @@ export const Check = createIcon({
   )
 })
 
+export const PlantHealth = createIcon({
+  displayName: 'PlantHealth',
+  viewBox: '0 0 85 85',
+  path: (
+    <>
+      <path
+        d='M3.76819 47.4845C-0.575418 48.4766 1.101 57.0823 2.70112 59.4034C10.1625 73.9927 26.9161 85.7606 46.9275 84.9616C67.4126 82.1043 74.1028 74.4497 78.3656 68.0512C82.993 59.9034 88.4897 50.6837 82.0956 47.9415C70.6172 45.614 70.4537 58.4266 59.7159 55.7111C48.9781 52.9957 55.6495 44.6635 41.5793 42.336C27.5091 40.0085 37.1361 50.4813 27.8794 52.0329C18.6227 53.5846 12.2129 45.5555 3.76819 47.4845Z'
+        fill='#5AA250'
+      />
+      <circle
+        cx='42.5'
+        cy='42.5'
+        r='38.5'
+        fill='#D8D8D8'
+        fillOpacity='0.1'
+        stroke='#979797'
+        strokeOpacity='0.1'
+        strokeWidth='7'
+      />
+    </>
+  )
+})
+
 export const Flower = createIcon({
   displayName: 'Flower',
   viewBox: '0 0 20 20',

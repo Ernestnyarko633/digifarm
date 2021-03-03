@@ -1,6 +1,7 @@
 import {
   Box,
   Divider,
+  Flex,
   Grid,
   GridItem,
   Heading,
@@ -13,6 +14,7 @@ import React from 'react'
 import { IoClose } from 'react-icons/io5'
 import PropTypes from 'prop-types'
 import { AnimatePresence, motion } from 'framer-motion'
+import Button from 'components/Button'
 
 const MotionBox = motion.custom(Box)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
@@ -122,6 +124,17 @@ export default function ShareScreen({ isOpen, onClose, image }) {
               </Grid>
             </Box>
           </Box>
+
+          <Flex align='center' justify='flex-end' px={{ md: 32 }} my={6}>
+            <Button
+              btntitle='Share on Facebook'
+              rounded='30px'
+              h={12}
+              w={80}
+              fontWeight={800}
+              fontSize='md'
+            />
+          </Flex>
         </MotionBox>
       )}
     </AnimatePresence>

@@ -1,12 +1,39 @@
-import { Box, Flex, Grid, Icon, Text } from '@chakra-ui/react'
+import {
+  Box,
+  CircularProgress,
+  CircularProgressLabel,
+  Flex,
+  Grid,
+  Icon,
+  Image,
+  Spinner,
+  Text
+} from '@chakra-ui/react'
 import React from 'react'
 import { BiTime } from 'react-icons/bi'
-import { Crop, Updates } from 'theme/Icons'
+import { Crop, Updates, PlantHealth } from 'theme/Icons'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
 
-export default function Tasks({ scheduledTasks, farmfeeds }) {
+export default function Tasks({
+  scheduledTasks,
+  farmfeeds,
+  loading,
+  error,
+  farm,
+  weatherForeCasts,
+  eosStats
+}) {
+  const [length, setLength] = React.useState(0)
+  React.useEffect(() => {
+    setLength(eosStats.length - 1)
+  }, [eosStats])
+
+  if (loading) {
+    return <Spinner size='lg' color='cf.400' />
+  }
+
   return (
     <Box mb={8}>
       <FarmUpdateCard
@@ -16,22 +43,29 @@ export default function Tasks({ scheduledTasks, farmfeeds }) {
         text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
         icon={BiTime}
       />
-      <WeatherCards farmfeeds={farmfeeds} />
+      <WeatherCards
+        farmfeeds={farmfeeds}
+        loading={loading}
+        error={error}
+        weatherForeCasts={weatherForeCasts}
+      />
       <Grid gap={8}>
-        <FarmUpdateCard
-          title='SCHEDULED TASK'
-          duration={farmfeeds[0]?.nextTask?.duration}
-          subtitle={farmfeeds[0]?.nextTask?.name}
-          text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-          icon={BiTime}
-        />
-        <FarmUpdateCard
-          title='FARM MANAGER UPDATE'
-          duration={scheduledTasks[0]?.taskId?.duration}
-          subtitle={scheduledTasks[0]?.taskId?.name}
-          text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
-          icon={Updates}
-        />
+        <React.Fragment>
+          <FarmUpdateCard
+            title='SCHEDULED TASK'
+            duration={farmfeeds[0]?.nextTask?.duration}
+            subtitle={farmfeeds[0]?.nextTask?.name}
+            text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
+            icon={BiTime}
+          />
+          <FarmUpdateCard
+            title='FARM MANAGER UPDATE'
+            duration={scheduledTasks[0]?.taskId?.duration}
+            subtitle={scheduledTasks[0]?.taskId?.name}
+            text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
+            icon={Updates}
+          />
+        </React.Fragment>
         <Box
           bg='white'
           w='100%'
@@ -65,21 +99,54 @@ export default function Tasks({ scheduledTasks, farmfeeds }) {
               <Text fontSize='xs' fontWeight={300}>
                 Plant health
               </Text>
+
+              <Box mt={2}>
+                <Icon boxSize={20} as={PlantHealth} />
+              </Box>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Growing stage
               </Text>
+
+              <Box mt={2}>
+                <Image
+                  h={20}
+                  src={require('../../../assets/images/stage.png').default}
+                />
+              </Box>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Crop productivity
               </Text>
+
+              <CircularProgress
+                value={eosStats[length]?.indexes?.NDVI?.average * 100}
+                size='100px'
+                color='cf.400'
+                mt={2}
+              >
+                <CircularProgressLabel rounded='lg'>
+                  {eosStats[length]?.indexes?.NDVI?.average * 100}%
+                </CircularProgressLabel>
+              </CircularProgress>
             </Box>
             <Box>
               <Text fontSize='xs' fontWeight={300}>
                 Chlorophyl index
               </Text>
+
+              <CircularProgress
+                value={eosStats[length]?.indexes?.NDVI?.average * 100}
+                size='100px'
+                color='cf.400'
+                mt={2}
+              >
+                <CircularProgressLabel rounded='lg'>
+                  {eosStats[length]?.indexes?.NDVI?.average * 100}%
+                </CircularProgressLabel>
+              </CircularProgress>
             </Box>
           </Grid>
         </Box>
@@ -90,5 +157,10 @@ export default function Tasks({ scheduledTasks, farmfeeds }) {
 
 Tasks.propTypes = {
   scheduledTasks: PropTypes.any,
-  farmfeeds: PropTypes.any
+  farmfeeds: PropTypes.any,
+  loading: PropTypes.any,
+  error: PropTypes.any,
+  farm: PropTypes.any,
+  weatherForeCasts: PropTypes.any,
+  eosStats: PropTypes.any
 }

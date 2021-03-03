@@ -50,7 +50,7 @@ const menus = [
 //   }
 // ]
 
-export default function Warehouse({ digitalFarmerFarms, farms }) {
+export default function Warehouse({ digitalFarmerFarms, farms, loading }) {
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -75,7 +75,7 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
           color='gray.600'
         >
           <Box as='ul'>
-            {menus.map(item => (
+            {menus?.map(item => (
               <Flex
                 as='button'
                 role='button'
@@ -107,22 +107,24 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
             gap={10}
             w={{ md: 115 }}
           >
-            {digitalFarmerFarms.map(item => (
-              <WarehouseCard
-                key={item?._id}
-                name={item?.order?.product?.cropVariety?.crop?.name}
-                location={item?.order?.product?.location?.name}
-                image={item?.order?.product?.cropVariety?.imageUrl}
-                quantity={item?.storage.quantity}
-                weight={`${item?.storage?.weight}`}
-                bags={`${item?.storage?.numberOfBags}`}
-                condition={item?.storage.yieldConditions}
-                orderStatus={item?.order?.status}
-                mr={3}
-                ml={14}
-                status={item?.status}
-              />
-            ))}
+            {!loading &&
+              digitalFarmerFarms &&
+              digitalFarmerFarms.map(item => (
+                <WarehouseCard
+                  key={item?._id}
+                  name={item?.order?.product?.cropVariety?.crop?.name}
+                  location={item?.order?.product?.location?.name}
+                  image={item?.order?.product?.cropVariety?.imageUrl}
+                  quantity={item?.storage.quantity}
+                  weight={`${item?.storage?.weight}`}
+                  bags={`${item?.storage?.numberOfBags}`}
+                  condition={item?.storage.yieldConditions}
+                  orderStatus={item?.order?.status}
+                  mr={3}
+                  ml={14}
+                  status={item?.status}
+                />
+              ))}
           </Grid>
         </Box>
       </GridItem>
@@ -131,5 +133,6 @@ export default function Warehouse({ digitalFarmerFarms, farms }) {
 }
 Warehouse.propTypes = {
   farms: PropTypes.any,
-  digitalFarmerFarms: PropTypes.any
+  digitalFarmerFarms: PropTypes.any,
+  loading: PropTypes.any
 }

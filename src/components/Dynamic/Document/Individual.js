@@ -53,5 +53,5 @@ export default function Individual({ digitalFarmerFarms }) {
 }
 
 Individual.propTypes = {
-  digitalFarmerFarms: PropTypes.any
+  digitalFarmerFarms: PropTypes.array.isRequired
 }

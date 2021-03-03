@@ -20,7 +20,10 @@ const configs = () => {
     EOS_API_KEY: process.env.REACT_APP_EOS_API_KEY,
     EOS_API: process.env.REACT_APP_EOS_API,
     PRISMIC_API: process.env.REACT_APP_PRISMIC_API,
-    PRISMIC_ACCESS_TOKEN: process.env.REACT_APP_PRISMIC_ACCESS_TOKEN
+    PRISMIC_ACCESS_TOKEN: process.env.REACT_APP_PRISMIC_ACCESS_TOKEN,
+    REDIS_HOST: process.env[`REACT_APP_${ENV}_ REDIS_HOST`],
+    REDIS_PASS: process.env.REACT_APP_REDIS_PASS,
+    REDIS_PORT: process.env[`REACT_APP_${ENV}_ REDIS_PORT`]
   }
 }
 

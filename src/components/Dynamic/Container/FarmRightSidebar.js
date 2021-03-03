@@ -1,26 +1,50 @@
-import { Box, Spinner, Text } from '@chakra-ui/react'
+import { Box, Skeleton, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicCard from '../Sidebar'
 import useApi from 'context/api'
+import useEosApi from 'context/eosApi'
 
-export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
+export default function FarmRightSidebar({
+  state,
+  digitalFarmerFarm,
+  eosStats,
+  location
+}) {
   const [scheduledTasks, setScheduledTasks] = React.useState([])
   const [farmfeeds, setFarmFeeds] = React.useState([])
-  const [loading, setLoading] = React.useState('fetching')
+  const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
   const { getMyScheduledTasks, getMyFarmFeeds } = useApi()
+  const { getEOSWeatherForeCast } = useEosApi()
+  const [weatherForeCasts, setWeatherForeCasts] = React.useState(null)
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading('fetching')
-        const res = await getMyScheduledTasks({ farm: digitalFarmerFarm })
-        setScheduledTasks(res.data)
-
-        setLoading('done')
+        setLoading(true)
+        const res = await getMyFarmFeeds({
+          farm: digitalFarmerFarm?.order?.product?._id
+        })
+        setFarmFeeds(res.data)
+        setLoading(false)
       } catch (error) {
-        setLoading('done')
+        setError(error)
+      }
+    }
+    fetchData()
+  }, [digitalFarmerFarm, getMyFarmFeeds])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const res = await getMyScheduledTasks({
+          farm: digitalFarmerFarm?.order?.product?._id
+        })
+        setScheduledTasks(res.data)
+        setLoading(false)
+      } catch (error) {
         setError(error)
       }
     }
@@ -28,20 +52,47 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
   }, [digitalFarmerFarm, getMyScheduledTasks])
 
   React.useEffect(() => {
+    let _payload = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: [location]
+      }
+    }
     const fetchData = async () => {
       try {
-        setLoading('fetching')
-        const res = await getMyFarmFeeds({ farm: digitalFarmerFarm })
-        setFarmFeeds(res.data)
+        setLoading(true)
+        const res = await getEOSWeatherForeCast(_payload)
+        setWeatherForeCasts(res)
 
-        setLoading('done')
+        setLoading(false)
       } catch (error) {
-        setLoading('done')
         setError(error)
       }
     }
-    fetchData()
-  }, [digitalFarmerFarm, getMyFarmFeeds])
+    location && fetchData()
+  }, [getEOSWeatherForeCast, digitalFarmerFarm, location])
+
+  if (loading) {
+    return (
+      <Stack p={10} mt={24} spacing={4}>
+        <Skeleton bg='gray.100' height='200px' rounded='lg' />
+        <Skeleton bg='gray.100' height='200px' rounded='lg' />
+        <Skeleton bg='gray.100' height='200px' rounded='lg' />
+        <Skeleton bg='gray.100' height='200px' rounded='lg' />
+      </Stack>
+    )
+  }
+
+  if (error) {
+    return (
+      <Box>
+        <Text fontSize='md' ml={2} color='cf.400'>
+          Something went wrong
+        </Text>
+      </Box>
+    )
+  }
+
   return (
     <Box
       py={8}
@@ -56,28 +107,23 @@ export default function FarmRightSidebar({ state, digitalFarmerFarm }) {
       shadow='md'
       overflowY='scroll'
     >
-      {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
-      {loading === 'done' && (
-        <DynamicCard
-          card={state}
-          scheduledTasks={scheduledTasks}
-          farmfeeds={farmfeeds}
-          farm={digitalFarmerFarm}
-        />
-      )}
-      {loading === 'done' && error && (
-        <Box>
-          <Text fontSize='md' ml={2} color='cf.400'>
-            Something went wrong
-          </Text>
-        </Box>
-      )}
+      <DynamicCard
+        card={state}
+        scheduledTasks={scheduledTasks}
+        weatherForeCasts={weatherForeCasts}
+        farmfeeds={farmfeeds}
+        farm={digitalFarmerFarm}
+        loading={loading}
+        error={error}
+        eosStats={eosStats}
+      />
     </Box>
   )
 }
 
 FarmRightSidebar.propTypes = {
   state: PropTypes.string,
-  digitalFarmerFarm: PropTypes.any,
-  farmfeeds: PropTypes.any
+  digitalFarmerFarm: PropTypes.string.isRequired,
+  eosStats: PropTypes.any,
+  location: PropTypes.any
 }
