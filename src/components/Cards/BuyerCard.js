@@ -7,12 +7,12 @@ import {
   Flex,
   Avatar,
   Text,
-  Image,
-  Spacer,
-  Button
+  Spacer
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import ConfirmSale from 'components/Modals/ConfirmSale'
+import AboutBuyer from 'components/Modals/AboutBuyer'
+
 const BuyerCard = ({
   image,
   name,
@@ -34,9 +34,7 @@ const BuyerCard = ({
       <Flex>
         <Box my={1}>
           <Flex>
-            <Avatar>
-              <Image src={image} />
-            </Avatar>
+            <Avatar src={image} />
             <Box ml={4}>
               <Heading as='h6' mt={1} fontSize={{ md: 'md' }}>
                 {name}
@@ -49,26 +47,8 @@ const BuyerCard = ({
         </Box>
         <Spacer />
         <Flex>
-          <Button
-            mr={5}
-            mt={4}
-            rounded='30px'
-            fontWeight='thin'
-            fontSize='xs'
-            variant='outline'
-            borderColor='cf.400'
-            bg='white'
-            _hover={{ bg: 'white' }}
-            w={{ md: '120px' }}
-          >
-            About buyer
-          </Button>
-          <ConfirmSale
-            amtLeft={amtLeft}
-            name={name}
-            amtBought={amtBought}
-            price={price}
-          />
+          <AboutBuyer />
+          <ConfirmSale title='Sell crop' />
         </Flex>
       </Flex>
       <Box mt={4}>

@@ -7,7 +7,9 @@ import {
   Text,
   Flex,
   Alert,
-  AlertIcon
+  AlertIcon,
+  Spinner,
+  Center
 } from '@chakra-ui/react'
 import BuyerCard from 'components/Cards/BuyerCard'
 import IllustrationImage from '../assets/images/home/illustration.png'
@@ -18,6 +20,8 @@ import useApi from '../context/api'
 import useAuth from 'context/auth'
 /* eslint-disable */
 import { motion } from 'framer-motion'
+import AboutBuyer from 'components/Modals/AboutBuyer'
+
 
 const MotionFlex = motion.custom(Flex)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
@@ -39,6 +43,7 @@ const Marketplace = () => {
     const fetchData = async () => {
      try {
     setLoading("fetching")
+    setError(null)
      const res = await getMyOrders({user: user?._id})
      setOrders(res.data)
      setLoading("done")
@@ -54,6 +59,7 @@ const Marketplace = () => {
     const fetchData = async () => {
      try {
     setLoading("fetching")
+    setError(null)
      const res = await getFarms()
      setFarms(res.data)
      setLoading("done")
@@ -69,7 +75,7 @@ const Marketplace = () => {
     let array = []
     orders.map(order => {
       farms.map((farm) => {
-        if(farm._id === order.product){
+        if(farm._id === order.product._id){
           array.push(farm)
         }
       })
@@ -77,6 +83,7 @@ const Marketplace = () => {
 
     return array
   }
+  
 
   React.useEffect(() => {
     let filteredFarms = filterFarmsByProduct(farms, orders)
@@ -92,9 +99,11 @@ const Marketplace = () => {
      }
     }
     
+    
     filteredFarms.forEach(async (_farm) => {
       try {
         setLoading("fetching")
+        console.log(_farm.cropVariety, "clopValiety")
        const _res = await fetchData({cropVariety: _farm?.cropVariety?._id})
        setBuyers([...new Set(...buyers, ..._res.data)])
        setLoading("done")
@@ -111,6 +120,7 @@ const Marketplace = () => {
     const fetchData = async () => {
      try {
     setLoading("fetching")
+    setError(null)
      const res = await getMyFarms()
      setMyFarms(res.data)
      setLoading("done")
@@ -121,7 +131,7 @@ const Marketplace = () => {
     }
     fetchData()
     myFarms.forEach(farm => {
-     const temp = farms.find(_farm =>_farm._id === farm.order?.product)
+     const temp = farms.find(_farm =>_farm._id === farm.order?.product?._id)
      if(temp){
        farm.order.product = temp
        setWarehouses([farm])
@@ -130,13 +140,12 @@ const Marketplace = () => {
     })
   }, [])
 
-console.log("warehouses", warehouses)
   const [currentSlide, setCurrentSlide] = React.useState(0)
 
   const handleClick = direction => {
     setCurrentSlide(prevState => {
       return (
-        (warehouseGoods.length + prevState + direction) % warehouseGoods.length
+        (myFarms.storage.length + prevState + direction) % myFarms.storage.length
       )
     })
   }
@@ -163,6 +172,7 @@ console.log("warehouses", warehouses)
         </Heading>
         <ArrowButton handleClick={handleClick} />
       </Flex>
+     
       <Box>
       <MotionFlex
       animate={{
@@ -174,24 +184,33 @@ console.log("warehouses", warehouses)
       mx='auto'
       ml={{ md: 16 }}
     >
-        {warehouses?.map(warehouse => (
+      
+      {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
+        {loading === 'done' && myFarms?.map(myfarm => (
           <WarehouseCard
-            key={warehouse?.name}
-            name={`${warehouse?.order?.product?.cropVariety?.crop?.name} Warehouse`}
-            location={`${warehouse?.order?.product?.location?.name},${warehouse?.order?.product?.location?.state}`}
-            image={`${warehouse?.order?.product?.cropVariety?.imageUrl}`}
-            quantity={warehouse?.storage?.quantity}
-            weight={warehouse?.storage?.weight}
-            bags={warehouse?.storage?.numberOfBags}
-            condition={warehouse?.yieldConditions}
+            key={myfarm?.name}
+            name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
+            location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
+            image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
+            quantity={myfarm?.storage?.quantity}
+            weight={myfarm?.storage?.weight}
+            bags={myfarm?.storage?.numberOfBags}
+            condition={myfarm?.storage?.yieldConditions}
             ml={14}
           />
-        ))}
+        ))}        
+        {/* {loading === 'done' && error &&(
+          <Box>
+            <Text fontSize="md" ml={2} color="cf.400">
+              Something went wrong
+            </Text>
+          </Box>
+        )} */}
       </MotionFlex>
       
-
-      <Box border={1} borderRadius="30px" width='70%' borderWidth={1}>
-        <Alert status="info" bgColor='white' >
+      <Center>
+        <Box mt={16} md={16}>
+          <Alert status="info" bgColor='white' borderRadius={40} padding={5} borderWidth={1} borderColor='black'>
           <AlertIcon color='cf.400'/>
             <Text fontWeight="bold" fontSize="18px">
               Note: 
@@ -200,7 +219,8 @@ console.log("warehouses", warehouses)
               </Text>
             </Text>
         </Alert>
-      </Box>
+        </Box>
+      </Center>
 
 
       </Box>
@@ -210,8 +230,12 @@ console.log("warehouses", warehouses)
           Buyers you can sell to
         </Heading>
       </Box>
+      <AboutBuyer/>
       <Box>
-        {buyers?.map(buyer => (
+      {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
+
+        {loading === 'done' &&buyers?.map(buyer => (
+          
           <BuyerCard
             key={buyer._id}
             name={`${buyer?.user?.firstName} ${buyer?.user?.lastName}`}
@@ -223,6 +247,13 @@ console.log("warehouses", warehouses)
             price={buyer.cost}
             />
             ))}
+          {/* {loading === 'done' && error &&(
+          <Box>
+            <Text fontSize="md" ml={2} color="cf.400">
+              Something went wrong{error.message}
+            </Text>
+          </Box>
+        )} */}
       </Box>
 
     </Layout>
