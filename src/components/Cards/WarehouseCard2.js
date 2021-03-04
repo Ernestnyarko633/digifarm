@@ -10,12 +10,15 @@ import {
   Text,
   Button,
   Spacer,
-  HStack,
-  StackDivider,
-  Center
+  Grid,
+  GridItem,
+  Center,
+  Link
 } from '@chakra-ui/react'
+import { Link as RouterBrowser } from 'react-router-dom'
 
 const WarehouseCard2 = ({
+  _id,
   name,
   location,
   image,
@@ -28,7 +31,6 @@ const WarehouseCard2 = ({
   orderStatus,
   ml
 }) => {
-  const ourH = window.innerHeight
   return (
     <Flex w='100%'>
       <Box
@@ -53,29 +55,41 @@ const WarehouseCard2 = ({
           </Flex>
           <Spacer />
           <Flex>
-            <Button
-              colorScheme='none'
-              rounded='30px'
-              ml={2}
-              mt={4}
-              borderWidth={1}
-              color='cf.400'
-              mr={2}
-              borderColor='cf.400'
+            <Link
+              as={RouterBrowser}
+              _hover={{ textDecor: 'none' }}
+              to={`/farm/${_id}`}
             >
-              View Farm
-            </Button>
-            <Button
-              colorScheme='linear'
-              rounded='30px'
-              ml={2}
-              mt={4}
-              borderWidth={1}
-              color='white'
-              mr={2}
+              <Button
+                colorScheme='none'
+                rounded='30px'
+                ml={2}
+                mt={4}
+                borderWidth={1}
+                color='cf.400'
+                mr={2}
+                borderColor='cf.400'
+              >
+                View Farm
+              </Button>
+            </Link>
+            <Link
+              as={RouterBrowser}
+              _hover={{ textDecor: 'none' }}
+              to='/marketplace'
             >
-              Sell Produce
-            </Button>
+              <Button
+                colorScheme='linear'
+                rounded='30px'
+                ml={2}
+                mt={4}
+                borderWidth={1}
+                color='white'
+                mr={2}
+              >
+                Sell Produce
+              </Button>
+            </Link>
           </Flex>
         </Flex>
         <Divider borderColor='gray.300' />
@@ -91,52 +105,93 @@ const WarehouseCard2 = ({
             mt={2}
           />
 
-          <HStack
-            divider={<StackDivider borderColor='gray.300' />}
-            spacing={ourH / 8}
-            pt={4}
-          >
-            <Box pt={2} py={4}>
-              {' '}
-              <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+          <Grid templateColumns='repeat(4, 1fr)' w='100%' pt={4}>
+            <GridItem>
+              <Flex
+                w='80%'
+                direction='row'
+                align='center'
+                justify='space-between'
+              >
+                <Box pt={2} py={4}>
+                  {' '}
+                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+                    {' '}
+                    {quantity}
+                  </Text>
+                  <Text fontWeight='light' color='gray.500'>
+                    Quantity (Tonnes)
+                  </Text>
+                </Box>
+                <Divider
+                  orientation='vertical'
+                  borderColor='gray.300'
+                  h='80px'
+                />
+              </Flex>
+            </GridItem>
+            <GridItem>
+              <Flex
+                w='80%'
+                direction='row'
+                align='center'
+                justify='space-between'
+              >
+                <Box pt={2} py={4}>
+                  {' '}
+                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+                    {' '}
+                    {weight}
+                  </Text>
+                  <Text fontWeight='light' color='gray.500'>
+                    Weight(kg)
+                  </Text>
+                </Box>
+                <Divider
+                  orientation='vertical'
+                  borderColor='gray.300'
+                  h='80px'
+                />
+              </Flex>
+            </GridItem>
+            <GridItem>
+              <Flex
+                w='80%'
+                direction='row'
+                align='center'
+                justify='space-between'
+              >
+                <Box pt={2} py={4}>
+                  {' '}
+                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+                    {' '}
+                    {bags}
+                  </Text>
+                  <Text fontWeight='light' color='gray.500'>
+                    Number of bags
+                  </Text>
+                </Box>
+                <Divider
+                  orientation='vertical'
+                  borderColor='gray.300'
+                  h='80px'
+                />
+              </Flex>
+            </GridItem>
+            <GridItem>
+              <Box pt={2} py={4}>
                 {' '}
-                {quantity}
-              </Text>
-              <Text fontWeight='light' color='gray.500'>
-                Quantity(Tonnes)
-              </Text>
-            </Box>
-            <Box pt={2} py={4}>
-              {' '}
-              <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
-                {' '}
-                {weight}
-              </Text>
-              <Text fontWeight='light' color='gray.500'>
-                Weight(Kg)
-              </Text>
-            </Box>
-            <Box pt={2} py={4}>
-              {' '}
-              <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
-                {' '}
-                {bags}
-              </Text>
-              <Text fontWeight='light' color='gray.500'>
-                Number of bags
-              </Text>
-            </Box>
-            <Box pt={2} py={4}>
-              {' '}
-              <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
-                {' '}
-                {condition}
-              </Text>
-              <Text fontWeight='light' color='gray.500'>
-                Yield conditions
-              </Text>
-            </Box>
-          </HStack>
+                <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+                  {' '}
+                  {condition}
+                </Text>
+                <Text fontWeight='light' color='gray.500'>
+                  Yield Conditions
+                </Text>
+              </Box>
+            </GridItem>
+          </Grid>
+
           <Center>
             <Text pt={8} color='cf.400' size='16px'>
               View auditor report
@@ -176,6 +231,7 @@ WarehouseCard2.propTypes = {
   mr: PropTypes.any,
   ml: PropTypes.any,
   status: PropTypes.string,
-  orderStatus: PropTypes.any
+  orderStatus: PropTypes.any,
+  _id: PropTypes.any
 }
 export default WarehouseCard2

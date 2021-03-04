@@ -43,7 +43,7 @@ const AboutBuyer = () => {
         onClick={onOpen}
         borderWidth={1}
         borderColor='cf.400'
-        color='black'
+        color='cf.400'
         mr={2}
       >
         About Buyer
@@ -138,11 +138,45 @@ const AboutBuyer = () => {
                       $10,000 - $20,000
                     </Text>
                   </Flex>
-                  <hr color='red' />
+                  <hr />
                   <Heading fontSize='18px' pt={2}>
                     Description
                   </Heading>
                   <Text fontSize='14px'>Soya Beans | 100 tonnes</Text>
+                  <Text p={1} fontSize='14px'>
+                    Sandy loam soil is one of the most preferable types of soil
+                    for many types of plants.Planting in loam soil with a high
+                    percentage of sand is the same as planting in normal loam
+                    soil, but extra amendments may be made to compensate for
+                    slightly lower water
+                  </Text>
+                </Box>
+                <Box
+                  borderWidth={1}
+                  bgColor='none'
+                  borderColor='gray.400'
+                  borderRadius='5px'
+                  p={4}
+                  mt={6}
+                  w={{ md: 110 }}
+                  h={{ md: 60 }}
+                >
+                  <Heading fontSize='18px' pb={4}>
+                    Incoterm
+                  </Heading>
+
+                  <hr />
+
+                  <Heading fontSize='18px' pt={2}>
+                    FAC
+                  </Heading>
+                  <Text p={1} fontSize='14px'>
+                    Sandy loam soil is one of the most preferable types of soil
+                    for many types of plants.Planting in loam soil with a high
+                    percentage of sand is the same as planting in normal loam
+                    soil, but extra amendments may be made to compensate for
+                    slightly lower water
+                  </Text>
                 </Box>
                 <Flex>
                   <Button

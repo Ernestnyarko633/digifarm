@@ -3,11 +3,8 @@ import Layout from 'container/Layout'
 import { Heading, Box, Flex, Icon, Text, Spinner } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
 import WarehouseCard2 from 'components/Cards/WarehouseCard2'
-// import ArrowButton from '../components/Button/ArrowButton'
 import useApi from 'context/api'
 import useAuth from 'context/auth'
-
-// import SoyaBean from '../assets/images/startfarm/soya-beans.svg'
 
 const Warehouse = () => {
   document.title = 'Complete Farmer | Warehouse'
@@ -112,6 +109,7 @@ const Warehouse = () => {
             {loading === 'done' &&
               myFarms?.map(myfarm => (
                 <WarehouseCard2
+                  _id={myfarm._id}
                   key={myfarm?.name}
                   name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
                   location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
@@ -127,7 +125,7 @@ const Warehouse = () => {
             {loading === 'done' && error && (
               <Box>
                 <Text fontSize='md' ml={2} color='cf.400'>
-                  Something went wrong
+                  {/* Something went wrong */}
                 </Text>
               </Box>
             )}

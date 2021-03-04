@@ -15,7 +15,8 @@ import {
   Divider,
   Center
 } from '@chakra-ui/react'
-// import Notification from 'components/Notifications'
+
+import { CheckIcon } from '@chakra-ui/icons'
 
 const ConfirmSale = ({ title, _width, height, onClosex, isOpenx, onClose }) => {
   // const toast = useToast()
@@ -126,13 +127,30 @@ const ConfirmSale = ({ title, _width, height, onClosex, isOpenx, onClose }) => {
               <Divider orientation='horizontal' borderColor='gray.400' />
               <ModalBody p={10}>
                 <Center>
-                  <Box w='96px' h='96px' bgColor='gray.400' />
+                  <CheckIcon w={10} h={10} color='cf.400' />
                 </Center>
                 <Center>
                   <Text pt={4} w='380px' textAlign='center'>
                     Your transaction for produce you sold to buyer is being
                     processed
                   </Text>
+                </Center>
+                <Center>
+                  <Button
+                    colorScheme='none'
+                    rounded='30px'
+                    ml={2}
+                    mt={6}
+                    onClick={onClosex}
+                    borderWidth={1}
+                    borderColor='cf.400'
+                    w={{ md: '300px' }}
+                    h={{ md: '40px' }}
+                    color='cf.400'
+                    mr={2}
+                  >
+                    Dismiss
+                  </Button>
                 </Center>
               </ModalBody>
             </ModalContent>
