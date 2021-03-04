@@ -9,14 +9,14 @@ const components = {
   compB: Cooperative
 }
 
-const DynamicDocument = ({ document, digitalFarmerFarms }) => {
+const DynamicDocument = ({ document, digitalFarmerFarm }) => {
   const SelectedCard = components[document]
-  return <SelectedCard digitalFarmerFarms={digitalFarmerFarms} />
+  return <SelectedCard digitalFarmerFarm={digitalFarmerFarm} />
 }
 
 DynamicDocument.propTypes = {
   document: PropTypes.string.isRequired,
-  digitalFarmerFarms: PropTypes.array.isRequired
+  digitalFarmerFarm: PropTypes.any
 }
 
 export default DynamicDocument
