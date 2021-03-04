@@ -3,7 +3,6 @@ import Layout from 'container/Layout'
 import {
   Box,
   Heading,
-  Image,
   Text,
   Flex,
   Alert,
@@ -199,13 +198,13 @@ const Marketplace = () => {
             ml={14}
           />
         ))}        
-        {/* {loading === 'done' && error &&(
+        {loading === 'done' && error &&(
           <Box>
             <Text fontSize="md" ml={2} color="cf.400">
               Something went wrong
             </Text>
           </Box>
-        )} */}
+        )}
       </MotionFlex>
       
       <Center>

@@ -4,6 +4,7 @@ const Cooperative = lazy(() => import('./start-farm/cooperative'))
 const Individual = lazy(() => import('./start-farm/individual'))
 const StartFarm = lazy(() => import('./start-farm/index'))
 const Marketplace = lazy(() => import('./market-place'))
+const Warehouse = lazy(() => import('./warehouse'))
 const FarmWallet = lazy(() => import('./farm-wallet'))
 const FarmBoard = lazy(() => import('./farm-board'))
 const Dashboard = lazy(() => import('./dashboard'))
@@ -29,7 +30,8 @@ const Pages = {
   FarmWallet,
   Individual,
   Marketplace,
-  Cooperative
+  Cooperative,
+  Warehouse
 }
 
 export default Pages
