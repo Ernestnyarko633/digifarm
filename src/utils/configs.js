@@ -1,6 +1,7 @@
 /**
  * Method to return backend services urls based on the environment
  * */
+
 const configs = () => {
   // Get REACT ENV
   const ENV = process.env.REACT_APP_ENVIRONMENT
@@ -21,9 +22,9 @@ const configs = () => {
     EOS_API: process.env.REACT_APP_EOS_API,
     PRISMIC_API: process.env.REACT_APP_PRISMIC_API,
     PRISMIC_ACCESS_TOKEN: process.env.REACT_APP_PRISMIC_ACCESS_TOKEN,
-    REDIS_HOST: process.env[`REACT_APP_${ENV}_ REDIS_HOST`],
+    REDIS_HOST: process.env[`REACT_APP_${ENV}_REDIS_HOST`],
     REDIS_PASS: process.env.REACT_APP_REDIS_PASS,
-    REDIS_PORT: process.env[`REACT_APP_${ENV}_ REDIS_PORT`]
+    REDIS_PORT: process.env[`REACT_APP_${ENV}_REDIS_PORT`]
   }
 }
 

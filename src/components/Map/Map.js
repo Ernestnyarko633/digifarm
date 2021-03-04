@@ -1,7 +1,6 @@
-/*eslint-disable */
 import React from 'react'
 import useMap from '../../hooks/useMap'
-import { Box, Heading } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import configs from '../../utils/configs'
 //import { getRedisClusterClient } from '../../helpers/misc'
@@ -14,15 +13,12 @@ const Map = ({
   error,
   digitalFarmerFarms,
   results,
+  _error,
+  reloads,
   ...rest
 }) => {
-  const {EOS_API,  EOS_API_KEY } = configs()
-  const VIEW_ID = 'S2/30/N/XM/2021/2/5/0'
+  const { EOS_API, EOS_API_KEY } = configs()
   const BAND = 'MSAVI'
-  const API_KEY ='apk.66f9483aff1d56dcf67cd16de910d675c7b039f1743c1ac3e0fbf119ee9dba8c'
-  const API = 'https://gate.eos.com/api/render'
-
-  console.log(viewID, VIEW_ID, "seeing")
   // console.log(
   //   'testing',
   //   viewID,
@@ -35,7 +31,9 @@ const Map = ({
     map.on('load', function () {
       map.addSource('tms-source', {
         type: 'raster',
-        tiles: [`${EOS_API}/render/${viewID}/${BAND}/{z}/{x}/{y}?api_key=${EOS_API_KEY}`],
+        tiles: [
+          `${EOS_API}/render/${viewID}/${BAND}/{z}/{x}/{y}?api_key=${EOS_API_KEY}`
+        ],
 
         // tiles: [
         //   `${EOS_API}/render/${viewID}/NDVI/{z}/{x}/{y}?api_key=${EOS_API_KEY}`
@@ -61,11 +59,8 @@ const Map = ({
     height: 1000
   })
 
-  console.log("viewId", viewID ? "true" : "false")
   return (
-    <React.Fragment>
-     {viewID && <Box {...rest} ref={ref} />}
-    </React.Fragment>
+    <React.Fragment>{viewID && <Box {...rest} ref={ref} />}</React.Fragment>
   )
 }
 
@@ -75,7 +70,9 @@ Map.propTypes = {
   error: PropTypes.any,
   viewID: PropTypes.any,
   digitalFarmerFarms: PropTypes.any,
-  results: PropTypes.any
+  results: PropTypes.any,
+  _error: PropTypes.any,
+  reloads: PropTypes.any
 }
 
 export default Map
