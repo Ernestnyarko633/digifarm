@@ -15,7 +15,7 @@ function fetchReducer(state, action) {
       return {
         ...state,
         isLoading: false,
-        data: action.payload.data,
+        data: action.payload.data ? action.payload.data : action.payload,
         message: action.payload.message
       }
     case 'error':
@@ -47,7 +47,11 @@ const useFetch = (key, func, reload, ...rest) => {
           } else {
             const res = await func(...rest)
             if (mounted) {
-              key && sessionStorage.setItem(key, JSON.stringify(res.data))
+              key &&
+                sessionStorage.setItem(
+                  key,
+                  JSON.stringify(res.data ? res.data : res)
+                )
               dispatch({ type: 'success', payload: res })
             }
           }

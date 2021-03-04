@@ -23,7 +23,8 @@ const DynamicCard = ({
   loading,
   error,
   farm,
-  eosStats
+  eosStats,
+  _error
 }) => {
   const SelectedCard = components[card]
   return (
@@ -33,6 +34,7 @@ const DynamicCard = ({
       farmfeeds={farmfeeds}
       loading={loading}
       error={error}
+      _error={_error}
       farm={farm}
       eosStats={eosStats}
     />
@@ -47,7 +49,8 @@ DynamicCard.propTypes = {
   error: PropTypes.any,
   farm: PropTypes.any,
   weatherForeCasts: PropTypes.any,
-  eosStats: PropTypes.any
+  eosStats: PropTypes.any,
+  _error: PropTypes.any
 }
 
 export default DynamicCard

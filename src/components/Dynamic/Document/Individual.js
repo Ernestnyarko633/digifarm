@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { BsArrowRight } from 'react-icons/bs'
 import FarmDocumentCard from '../Cards/FarmDocumentCard'
 
-export default function Individual({ digitalFarmerFarms }) {
+export default function Individual({ digitalFarmerFarm }) {
   return (
     <Box>
       <Grid gap={10}>
@@ -53,5 +53,5 @@ export default function Individual({ digitalFarmerFarms }) {
 }
 
 Individual.propTypes = {
-  digitalFarmerFarms: PropTypes.array.isRequired
+  digitalFarmerFarm: PropTypes.any
 }

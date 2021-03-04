@@ -47,6 +47,7 @@ export const getRedisClusterClient = () => {
     if (ENV !== 'PROD') {
       client.auth(REDIS_PASS, err => {
         if (err) {
+          console.log(err, "redis error")
           throw err
         }
       })
@@ -73,4 +74,34 @@ export const getCurrentDayParting = () => {
     return { message: 'Good Evening', skyColor: '#0B1026', textColor: 'white' }
   }
   return { message: 'Good Morning', skyColor: '#D7E8FD' }
+}
+
+export const dateIntervals = () => {
+  // today's date
+  let today = new Date()
+
+  // 30 days ago date
+  let _30DaysAgo = new Date(new Date().setDate(new Date().getDate() - 30))
+  let dd = today.getDate()
+  let _dd = _30DaysAgo.getDate()
+
+  let mm = today.getMonth() + 1
+  let _mm = _30DaysAgo.getMonth() + 1
+
+  let yyyy = today.getFullYear()
+  let _yyyy = _30DaysAgo.getFullYear()
+
+  if (dd < 10 || _dd < 10) {
+    dd = '0' + dd
+    _dd = '0' + _dd
+  }
+
+  if (mm < 10 || _mm < 10) {
+    mm = '0' + mm
+    _mm = '0' + _mm
+  }
+  today = yyyy + '-' + mm + '-' + dd
+  _30DaysAgo = _yyyy + '-' + _mm + '-' + _dd
+
+  return { today: today, _30DaysAgo: _30DaysAgo }
 }
