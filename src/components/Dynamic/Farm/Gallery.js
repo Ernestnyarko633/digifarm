@@ -100,7 +100,7 @@ export default function Gallery({ farmfeeds, loading }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
-          {loading === 'done' && farmfeeds && (
+          {!loading && farmfeeds && (
             <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
               {farmfeeds?.map(_feed => {
                 return (
@@ -116,7 +116,7 @@ export default function Gallery({ farmfeeds, loading }) {
               })}
             </Grid>
           )}
-          {farmfeeds?.length === 0 && loading === 'done' && (
+          {farmfeeds?.length === 0 && !loading && (
             <Flex w='100%' justify='center' align='center'>
               <Text>Gallery is currently unavailable</Text>
             </Flex>

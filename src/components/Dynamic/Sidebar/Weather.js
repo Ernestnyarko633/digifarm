@@ -7,7 +7,7 @@ import WeatherCard from '../Cards/WeatherCard'
 export default function Weather({ farm, weatherForeCasts, loading }) {
   return (
     <Grid gap={8} mb={8}>
-      {loading === 'done' &&
+      {!loading &&
         weatherForeCasts &&
         weatherForeCasts?.map(weather => (
           <WeatherCard
