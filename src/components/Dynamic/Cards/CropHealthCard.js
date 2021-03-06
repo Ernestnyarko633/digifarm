@@ -8,7 +8,7 @@ import {
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const CropHealthCard = ({ eosStats }) => {
+const CropHealthCard = ({ eosStats, _error }) => {
   const [length, setLength] = React.useState(0)
   React.useEffect(() => {
     setLength(eosStats.length - 1)
@@ -101,6 +101,7 @@ const CropHealthCard = ({ eosStats }) => {
 }
 
 CropHealthCard.propTypes = {
-  eosStats: PropTypes.any
+  eosStats: PropTypes.any,
+  _error: PropTypes.any
 }
 export default CropHealthCard

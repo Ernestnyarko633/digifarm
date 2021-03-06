@@ -5,9 +5,11 @@ import useAuth from 'context/auth'
 import React from 'react'
 import { useScreenshot } from 'use-react-screenshot'
 import useApi from 'context/api'
-import useAPICalls from 'hooks/useApiCalls'
+import FetchCard from 'components/FetchCard'
 import { useParams } from 'react-router-dom'
 import Share from 'components/Share'
+import useFetch from 'hooks/useFetch'
+import { dateIntervals } from 'helpers/misc'
 
 export default function Farm() {
   const { isAuthenticated } = useAuth()
@@ -17,65 +19,73 @@ export default function Farm() {
   const ref = React.useRef(null)
   const [state, setState] = React.useState('compA')
   const [isOpen, setIsOpen] = React.useState(false)
-
   const [image, takeScreenShot] = useScreenshot()
-  const [loading, setLoading] = React.useState('fetching')
-  const [error, setError] = React.useState(null)
-  const [digitalFarmerFarms, setDigitalFarmerFarms] = React.useState([])
-  const [farmfeeds, setFarmFeeds] = React.useState([])
-  const [sourcingOrders, setSourcingOrders] = React.useState([])
+  const [reload, setReload] = React.useState(0)
+  const [location, setLocation] = React.useState([])
+  const triggerReload = () => setReload(prevState => prevState + 1)
 
-  const { getMyFarms, getMyFarmFeeds, getSourcingOrders } = useApi()
+  const {
+    getMyFarmFeeds,
+    getSourcingOrders,
+    getMyFarm,
+    getMyScheduledTasks
+  } = useApi()
 
-  const { farms } = useAPICalls()
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        const res = await getMyFarms()
-        setDigitalFarmerFarms(res.data.filter(farm => farm._id === id))
-        setLoading(false)
-      } catch (error) {
-        setError(error)
-      }
-    }
-
-    fetchData()
-  }, [getMyFarms, id])
+  const {
+    data: yourFarm,
+    isLoading: yourFarmIsLoading,
+    error: yourFarmHasError
+  } = useFetch('digital_farmer_farm', getMyFarm, reload, id)
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        const res = await getMyFarmFeeds({
-          farm: digitalFarmerFarms[0]?.order?.product?._id
-        })
-        setFarmFeeds(res.data)
-        setLoading(false)
-      } catch (error) {
-        setError(error)
-      }
-    }
-    fetchData()
-  }, [digitalFarmerFarms, getMyFarmFeeds])
+    let location_ = []
+    let _location = yourFarm?.order?.product?.location
+    const getCoords = () =>
+      _location?.coords?.forEach(coordinate => {
+        return location_?.push(
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
+          })
+        )
+      })
+    getCoords()
+    setLocation(location_)
+  }, [yourFarm])
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        const res = await getSourcingOrders({
-          cropVariety: digitalFarmerFarms[0]?.order?.product?.cropVariety._id
-        })
-        setSourcingOrders(res?.data?.filter(order => order.demand === 0))
+  const {
+    data: yourFarmFeeds,
+    isLoading: yourFarmFeedsIsLoading,
+    error: yourFarmFeedsHasError
+  } = useFetch('feed_feeds', getMyFarmFeeds, reload, {
+    farm: yourFarm?.order?.product?._id
+  })
 
-        setLoading(false)
-      } catch (error) {
-        setError(error)
-      }
-    }
-    fetchData()
-  }, [digitalFarmerFarms, getSourcingOrders])
+  const {
+    data: SourcingOrders,
+    isLoading: SourcingOrdersIsLoading,
+    error: SourcingOrdersHasError
+  } = useFetch('sourcing_orders', getSourcingOrders, reload, {
+    cropVariety: yourFarm?.order?.product?.cropVariety._id
+  })
+
+  const {
+    data: ScheduledTasks,
+    isLoading: ScheduledTasksIsLoading,
+    error: ScheduledTasksHasError
+  } = useFetch('sourcing_orders', getMyScheduledTasks, reload, {
+    farm: yourFarm?.order?.product?._id
+  })
+
+  const isLoading =
+    SourcingOrdersIsLoading ||
+    yourFarmFeedsIsLoading ||
+    yourFarmIsLoading ||
+    ScheduledTasksIsLoading
+  const hasError =
+    SourcingOrdersHasError ||
+    yourFarmFeedsHasError ||
+    yourFarmHasError ||
+    ScheduledTasksHasError
 
   const onClose = () => setIsOpen(false)
 
@@ -157,16 +167,40 @@ export default function Farm() {
       </Flex>
 
       <Box bg='white'>
-        <DynamicFarm
-          loading={loading}
-          error={error}
-          farm={state}
-          digitalFarmerFarms={digitalFarmerFarms}
-          farmfeeds={farmfeeds}
-          farms={farms}
-          onOpen={getImage}
-          sourcingOrders={sourcingOrders}
-        />
+        {!isLoading && location?.length > 0 && (
+          <DynamicFarm
+            loading={isLoading}
+            error={hasError}
+            farm={state}
+            ScheduledTasks={ScheduledTasks}
+            digitalFarmerFarm={yourFarm}
+            farmfeeds={yourFarmFeeds}
+            location={location}
+            dateIntervals={dateIntervals}
+            reload={reload}
+            onOpen={getImage}
+            reloads={[triggerReload]}
+            sourcingOrders={SourcingOrders?.filter(order => order.demand === 0)}
+          />
+        )}
+        {isLoading && (
+          <FetchCard
+            direction='column'
+            align='center'
+            justify='center'
+            mx='auto'
+            reload={() => {
+              hasError && triggerReload()
+            }}
+            loading={isLoading}
+            error={hasError}
+            text={
+              !hasError
+                ? 'Standby as we load your current farms and pending orders'
+                : 'Something went wrong, please dont fret'
+            }
+          />
+        )}
       </Box>
     </Box>
   )

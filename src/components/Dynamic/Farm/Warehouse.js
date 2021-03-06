@@ -50,7 +50,7 @@ const menus = [
 //   }
 // ]
 
-export default function Warehouse({ digitalFarmerFarms, farms, loading }) {
+export default function Warehouse({ digitalFarmerFarm, loading }) {
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -107,24 +107,19 @@ export default function Warehouse({ digitalFarmerFarms, farms, loading }) {
             gap={10}
             w={{ md: 115 }}
           >
-            {!loading &&
-              digitalFarmerFarms &&
-              digitalFarmerFarms.map(item => (
-                <WarehouseCard
-                  key={item?._id}
-                  name={item?.order?.product?.cropVariety?.crop?.name}
-                  location={item?.order?.product?.location?.name}
-                  image={item?.order?.product?.cropVariety?.imageUrl}
-                  quantity={item?.storage.quantity}
-                  weight={`${item?.storage?.weight}`}
-                  bags={`${item?.storage?.numberOfBags}`}
-                  condition={item?.storage.yieldConditions}
-                  orderStatus={item?.order?.status}
-                  mr={3}
-                  ml={14}
-                  status={item?.status}
-                />
-              ))}
+            <WarehouseCard
+              name={digitalFarmerFarm?.order?.product?.cropVariety?.crop?.name}
+              location={digitalFarmerFarm?.order?.product?.location?.name}
+              image={digitalFarmerFarm?.order?.product?.cropVariety?.imageUrl}
+              quantity={digitalFarmerFarm?.storage.quantity}
+              weight={`${digitalFarmerFarm?.storage?.weight}`}
+              bags={`${digitalFarmerFarm?.storage?.numberOfBags}`}
+              condition={digitalFarmerFarm?.storage.yieldConditions}
+              orderStatus={digitalFarmerFarm?.order?.status}
+              mr={3}
+              ml={14}
+              status={digitalFarmerFarm?.status}
+            />
           </Grid>
         </Box>
       </GridItem>
@@ -132,7 +127,6 @@ export default function Warehouse({ digitalFarmerFarms, farms, loading }) {
   )
 }
 Warehouse.propTypes = {
-  farms: PropTypes.any,
-  digitalFarmerFarms: PropTypes.any,
+  digitalFarmerFarm: PropTypes.any,
   loading: PropTypes.any
 }

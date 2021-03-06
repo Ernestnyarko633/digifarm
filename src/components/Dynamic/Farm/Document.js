@@ -13,7 +13,7 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-export default function Document({ digitalFarmerFarms }) {
+export default function Document({ digitalFarmerFarm }) {
   const [state, setState] = React.useState('compA')
 
   return (
@@ -109,7 +109,7 @@ export default function Document({ digitalFarmerFarms }) {
           <Box mt={{ md: 10 }}>
             <DynamicDocument
               document={state}
-              digitalFarmerFarms={digitalFarmerFarms}
+              digitalFarmerFarm={digitalFarmerFarm}
             />
           </Box>
         </Box>
@@ -129,9 +129,7 @@ export default function Document({ digitalFarmerFarms }) {
           overflowY='scroll'
         >
           <Grid gap={8}>
-            {digitalFarmerFarms?.map(farm => {
-              return <FarmReceiptCard key={farm._id} farm={farm} />
-            })}
+            <FarmReceiptCard farm={digitalFarmerFarm} />
           </Grid>
         </Box>
       </GridItem>
@@ -140,5 +138,5 @@ export default function Document({ digitalFarmerFarms }) {
 }
 
 Document.propTypes = {
-  digitalFarmerFarms: PropTypes.array.isRequired
+  digitalFarmerFarm: PropTypes.any
 }

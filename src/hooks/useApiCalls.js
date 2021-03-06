@@ -4,7 +4,7 @@ import React from 'react'
 const useAPICalls = () => {
   const { getFarms } = useApi()
 
-  const [loading, setLoading] = React.useState('fetching')
+  const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   const [farms, setFarms] = React.useState([])
@@ -12,13 +12,14 @@ const useAPICalls = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading('loading')
+        setLoading(true)
         const res = await getFarms()
         setFarms(res.data)
 
-        setLoading('done')
+        setLoading(false)
       } catch (err) {
-        setError(err.message || err)
+        setError(err?.message || err)
+        setLoading(false)
       }
     }
     fetchData()

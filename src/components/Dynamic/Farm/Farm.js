@@ -5,124 +5,90 @@ import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import useEosApi from 'context/eosApi'
+import useFetch from 'hooks/useFetch'
+export default function Farm({
+  onOpen,
+  digitalFarmerFarm,
+  EOSStatistics,
+  WeatherForeCasts,
+  ScheduledTasks,
+  EOSViewID,
+  reload,
+  location,
+  loading,
+  error,
+  _error,
+  farmfeeds,
+  reloads
+}) {
+  const [_loading, _setLoading] = React.useState(false)
+  const [__error, _setError] = React.useState(null)
+  const { getEOSStatistics, createEOSTaskForStats } = useEosApi()
 
-export default function Farm({ onOpen, digitalFarmerFarms }) {
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState(null)
-  const [viewID, setViewID] = React.useState('')
-  const [results, setResults] = React.useState([])
-  const { getEOSViewID, createEOSTaskForStats, getEOSStatistics } = useEosApi()
-  // const [location, setLocation] = React.useState([])
-  const [eosTaskID, setEosTaskID] = React.useState('')
-
-  React.useEffect(() => {
-    let _payload = {
-      fields: ['sceneID', 'cloudCoverage'],
-      limit: 1,
-      page: 1,
-      search: {
-        satellites: ['sentinel2', 'landsat8'],
-        date: {
-          from: '2021-01-01',
-          to: '2021-02-08'
-        },
-        cloudCoverage: {
-          from: 0,
-          to: 60
-        },
-        shape: {
-          type: 'Polygon',
-          coordinates: [
-            [
-              [-1.531048, 5.578849],
-              [-1.530683, 5.575411],
-              [-1.521606, 5.576286],
-              [-1.522036, 5.579767],
-              [-1.531048, 5.578849]
-            ]
-          ]
-        }
+  let EOSTaskForStatsCreationPayload = {
+    type: 'lbe',
+    params: {
+      view_id: EOSViewID?.results[0]?.view_id,
+      bands: ['B02', 'B03', 'B04'],
+      geometry: {
+        type: 'Polygon',
+        coordinates: [location]
       },
-      sort: {
-        date: 'desc'
-      }
-    }
-    const fetchData = async payload => {
-      try {
-        setLoading(true)
-        const res = await getEOSViewID(payload, 'multi')
-        setViewID(res?.results[0]?.view_id)
-        setResults(res?.results)
-        // redisClient.setex(redisKey, 86400, JSON.stringify(res.results[0].view_id))
-        setLoading(false)
-      } catch (error) {
-        setError(error)
-        setLoading(false)
-      }
-    }
-    fetchData(_payload)
-  }, [getEOSViewID, digitalFarmerFarms])
+      merge: true,
 
-  React.useEffect(() => {
-    let _payload = {
-      type: 'lbe',
-      params: {
-        view_id: viewID,
-        bands: ['B02', 'B03', 'B04'],
-        geometry: {
-          type: 'Polygon',
-          coordinates: [
-            [
-              [-1.531048, 5.578849],
-              [-1.530683, 5.575411],
-              [-1.521606, 5.576286],
-              [-1.522036, 5.579767],
-              [-1.531048, 5.578849]
-            ]
-          ]
-        },
-        merge: true,
+      reference: 'ref_datetime'
+    }
+  }
 
-        reference: 'ref_datetime'
-      }
-    }
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        const res = await createEOSTaskForStats(_payload)
-        setEosTaskID(res?.task_id)
-        setLoading(false)
-      } catch (error) {
-        setError(error)
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [createEOSTaskForStats, viewID])
+  const {
+    data: EOSTaskForStatsCreated,
+    isLoading: EOSTaskForStatsCreationIsLoading,
+    error: EOSTaskForStatsCreationHasError
+  } = useFetch(
+    'eos_task_stats_creation',
+    createEOSTaskForStats,
+    reload,
+    EOSTaskForStatsCreationPayload
+  )
 
   const DownloadVisual = async downloadTaskID => {
     try {
-      setLoading(true)
+      _setError(null)
+      _setLoading(true)
       await getEOSStatistics(downloadTaskID)
-      setLoading(false)
+      _setLoading(false)
     } catch (error) {
-      setError(error)
-      setLoading(false)
+      _setError(error)
+      _setLoading(false)
     }
   }
+
   return (
-    <FarmLayout>
+    <FarmLayout
+      digitalFarmerFarm={digitalFarmerFarm}
+      EOSStatistics={EOSStatistics}
+      WeatherForeCasts={WeatherForeCasts}
+      ScheduledTasks={ScheduledTasks}
+      EOSViewID={EOSViewID}
+      location={location}
+      farmfeeds={farmfeeds}
+      loading={loading}
+      reloads={reloads}
+      error={error}
+      _error={_error}
+    >
       <Box h={{ md: 128 }} w='100%'>
         <Box
           h='100%'
           w='100%'
           objectFit='cover'
           as={Map}
-          viewID={viewID}
-          loading={loading}
+          viewID={EOSViewID?.results[0]?.view_id}
+          loading={loading || EOSTaskForStatsCreationIsLoading}
           error={error}
+          _error={_error || EOSTaskForStatsCreationHasError}
           center={[-1.531048, 5.578849]}
-          results={results}
+          reloads={reloads}
         />
       </Box>
       <Flex align='center' justify='flex-end' my={{ md: 6 }} px={{ md: 6 }}>
@@ -138,9 +104,10 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
           h={12}
           w={{ md: 40 }}
           shadow='none'
-          isLoading={loading}
-          isDisabled={loading}
-          onClick={() => DownloadVisual(eosTaskID)}
+          isLoading={_loading}
+          isDisabled={_loading}
+          isError={__error}
+          onClick={() => DownloadVisual(EOSTaskForStatsCreated?.task_id)}
         />
         <Button
           btntitle='Share'
@@ -155,6 +122,17 @@ export default function Farm({ onOpen, digitalFarmerFarms }) {
 }
 
 Farm.propTypes = {
+  reload: PropTypes.any,
   onOpen: PropTypes.func,
-  digitalFarmerFarms: PropTypes.any
+  digitalFarmerFarm: PropTypes.any,
+  EOSStatistics: PropTypes.any,
+  EOSViewID: PropTypes.any,
+  WeatherForeCasts: PropTypes.any,
+  ScheduledTasks: PropTypes.any,
+  location: PropTypes.any,
+  farmfeeds: PropTypes.any,
+  error: PropTypes.any,
+  _error: PropTypes.any,
+  loading: PropTypes.any,
+  reloads: PropTypes.any
 }

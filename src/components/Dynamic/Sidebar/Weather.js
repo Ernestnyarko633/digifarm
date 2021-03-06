@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Weather as WeatherIcon } from 'theme/Icons'
 import WeatherCard from '../Cards/WeatherCard'
 
-export default function Weather({ farm, weatherForeCasts, loading }) {
+export default function Weather({ farm, weatherForeCasts, loading, _error }) {
   return (
     <Grid gap={8} mb={8}>
       {!loading &&
@@ -25,5 +25,6 @@ export default function Weather({ farm, weatherForeCasts, loading }) {
 Weather.propTypes = {
   farm: PropTypes.any,
   weatherForeCasts: PropTypes.any,
-  loading: PropTypes.any
+  loading: PropTypes.any,
+  _error: PropTypes.any
 }

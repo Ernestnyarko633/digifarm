@@ -1,4 +1,3 @@
-/*eslint-disable */
 import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
@@ -71,7 +70,6 @@ export const EosApiContextProvider = ({ children }) => {
    * @param { object } payload to be sent to the eos stats api
    */
   const createEOSTaskForStats = async payload => {
-    console.log(JSON.stringify(payload), "my json")
     return await http.post({
       url: `${EOS_API}/gdw/api?api_key=${EOS_API_KEY}`,
       body: JSON.stringify(payload)
