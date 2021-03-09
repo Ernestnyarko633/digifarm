@@ -38,6 +38,7 @@ export default function FarmLayout({
           color='gray.800'
           fontFamily='body'
           overflowX='hidden'
+          minH='100vh'
           {...rest}
         >
           {children}
