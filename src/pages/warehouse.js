@@ -103,7 +103,7 @@ const Warehouse = () => {
           </Flex>
         </Box>
 
-        <Box mt={20}>
+        <Box mt={20} p={16}>
           <Flex my={3} w='62%' align='center' direction='column'>
             {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
             {loading === 'done' &&
