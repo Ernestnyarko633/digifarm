@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import useEosApi from 'context/eosApi'
 import useFetch from 'hooks/useFetch'
+import FetchCard from 'components/FetchCard'
 
 const { default: Document } = require('./Farm/Document')
 const { default: Farm } = require('./Farm/Farm')
@@ -152,6 +153,24 @@ const DynamicFarm = ({
           loading={loading || isLoading}
           error={error}
           _error={eosHasError}
+        />
+      )}
+      {!isLoading && (
+        <FetchCard
+          direction='column'
+          align='center'
+          justify='center'
+          mx='auto'
+          reload={() => {
+            ;(error || eosHasError) && reloads[0]()
+          }}
+          loading={isLoading}
+          error={error}
+          text={
+            !error || !eosHasError
+              ? 'Standby as we load your current farms and pending orders'
+              : 'Something went wrong, please dont fret'
+          }
         />
       )}
     </React.Fragment>

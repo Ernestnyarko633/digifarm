@@ -29,6 +29,7 @@ const Router = () => {
           component={Pages.Cooperative}
         />
         <PrivateRoute path='/marketplace' component={Pages.Marketplace} />
+        <PrivateRoute path='/warehouses' component={Pages.Warehouse} />
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />
         <PrivateRoute path='/profile' component={Pages.Profile} />
         <PrivateRoute path='/notfound' component={Pages.NotFound} />
