@@ -25,11 +25,12 @@ const Warehouse = () => {
 
   return (
     <Layout>
-      <Box pos='absolute' top={{ md: 40 }} left={{ md: 60 }} w='100%'>
-        <Heading>Warehouse</Heading>
+      <Box h="880px" py={50} mt={-20} pos='absolute' top={{ md: 40 }} left={{ md: 60 }} w='100%' bg='cf-dark.400' >
+        <Heading ml={24}>Warehouse</Heading>
         <Box
           mt={2}
-          mb={6}
+          mb={2}
+          ml={24}
           borderRadius={40}
           borderWidth={2}
           borderColor='rgba(208, 143, 49, 0.1)'
@@ -38,13 +39,13 @@ const Warehouse = () => {
           position='absolute'
         >
           <Flex>
-            <Icon as={IoWarningOutline} color='#D08F31' w={7} h={7} />
+            <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
             <Text
               as='span'
               fontWeight='bold'
-              fontSize='18px'
+              fontSize='14px'
               color='#D08F31'
-              px={4}
+              px={2}
             >
               If produce in the warehouse are not sold within 2 weeks, they will
               automatically be sold to a buyer
@@ -52,7 +53,7 @@ const Warehouse = () => {
           </Flex>
         </Box>
 
-        <Box mt={20} p={16}>
+        <Box mt={2} p={16}>
           <Flex my={3} w='62%' align='center' direction='column'>
             { myfarms?.map( myfarm => (
             <WarehouseCard2
