@@ -85,10 +85,6 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${DIGITAL_FARMER_API}/orders/${id}` })
   }
 
-  const getBuyers = async query => {
-    return await http.get({ url: `${BUYER_API}/sourcings`, query })
-  }
-
   const getMyScheduledTasks = async query => {
     return await http.get({ url: `${FMS_API}/task-schedulers`, query })
   }
@@ -117,7 +113,6 @@ export const ApiContextProvider = ({ children }) => {
         logout,
         getUser,
         getFarms,
-        getBuyers,
         patchUser,
         getReceipt,
         getMyFarm,

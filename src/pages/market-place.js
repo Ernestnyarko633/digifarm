@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import Layout from 'container/Layout'
-import { Box, Flex, Icon, Text, Heading, Spinner } from '@chakra-ui/react'
+import { Box, Flex, Icon, Text, Heading } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
 import BuyerCard from 'components/Cards/BuyerCard'
 // import IllustrationImage from '../assets/images/home/illustration.png'
 // import Oval from '../assets/images/Oval.svg'
 import WarehouseCard from 'components/Cards/WarehouseCard2'
 // import ArrowButton from '../components/Button/ArrowButton'
-
 import useApi from '../context/api'
 import useAuth from 'context/auth'
 /* eslint-disable */
 import { motion } from 'framer-motion'
 import AboutBuyer from 'components/Modals/AboutBuyer'
+import useFetch from 'hooks/useFetch'
 
 
 // const MotionFlex = motion.custom(Flex)
@@ -20,72 +20,31 @@ import AboutBuyer from 'components/Modals/AboutBuyer'
 
 const Marketplace = () => {
   document.title = 'Complete Farmer | Marketplace'
-  const { getBuyers, getMyFarms, getMyOrders, getFarms} = useApi()
+  const { getSourcingOrders, getMyFarms} = useApi()
+  const [ varieties, setVarieties ] = useState([])
+  const [ buyers, setBuyers ] = useState([])
   const {isAuthenticated} = useAuth()
   const {user} = isAuthenticated()
-  const [orders, setOrders] = useState([])
-  const [farms, setFarms] = useState([])
-  const [buyers, setBuyers] = useState([])
-  const [error, setError] = useState(null)
   const [loading, setLoading] = useState("fetching")
-  const [myFarms, setMyFarms] = useState([])
-  const [warehouses, setWarehouses] = useState([])
+  const [reload, setReload] = React.useState(0)
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading('fetching')
-        setError(null)
-        const res = await getMyOrders({ user: user?._id })
-        setOrders(res.data)
-        setLoading('done')
-      } catch (error) {
-        setError(error)
-        setLoading('done')
-      }
-    }
-    fetchData()
-  }, [])
+  const {
+    data:myfarms,
+    isLoading: myFarmsIsLoading,
+    error: myFarmssHasError
+  } = useFetch('my_farms', getMyFarms, reload, { user: user?._id })
+  console.log(myfarms?.order, 'farms')
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading('fetching')
-        setError(null)
-        const res = await getFarms()
-        setFarms(res.data)
-        setLoading('done')
-      } catch (error) {
-        setError(error)
-        setLoading('done')
-      }
-    }
-    fetchData()
-  }, [])
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading('fetching')
-        setError(null)
-        const res = await getMyFarms()
-        setMyFarms(res.data)
-        setLoading('done')
-      } catch (error) {
-        setError(error)
-        setLoading('done')
-      }
-    }
-    fetchData()
-    myFarms.forEach(farm => {
-      const temp = farms.find(_farm => _farm._id === farm.order?.product?._id)
-      if (temp) {
-        farm.order.product = temp
-        setWarehouses([farm])
-        setLoading('done')
-      }
-    })
-  }, [])
+  const {
+    data: SourcingOrders,
+    isLoading: SourcingOrdersIsLoading,
+    error: SourcingOrdersHasError
+  } = useFetch('sourcing_orders', getSourcingOrders, reload, {
+    cropVariety: "602e1d1d7c083a1edd24fab9"
+  })
+  console.log(SourcingOrders,"buyers")
+  
 
   return (
     <Layout>
@@ -116,11 +75,9 @@ const Marketplace = () => {
           </Flex>
         </Box>
 
-        <Box mt={20}>
+        <Box mt={20} ml={2}>
           <Flex my={3} w='62%' align='center' direction='column'>
-            {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
-            {loading === 'done' &&
-              myFarms?.map(myfarm => (
+              {myfarms?.map(myfarm => (
                 <WarehouseCard
                   _id={myfarm._id}
                   key={myfarm?.name}
@@ -135,22 +92,17 @@ const Marketplace = () => {
                   ml={14}
                 />
               ))}
-            {loading === 'done' && error && (
-              <Box>
-                <Text fontSize='md' ml={2} color='cf.400'>
-                  {/* Something went wrong */}
-                </Text>
-              </Box>
-            )}
           </Flex>
         </Box>
-        <Box>
-          <BuyerCard/>
-        </Box>
-
-       
-      
-     
+        <Box mt ={20} ml={2}>
+          {SourcingOrders?.map(buyers =>(
+          <BuyerCard
+          _id={buyers._id}
+          key={buyers._id}
+          buyers={buyers}
+          />
+          ))}
+        </Box>   
       </Box>
     </Layout>
    
