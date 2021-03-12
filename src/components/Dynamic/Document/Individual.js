@@ -8,7 +8,7 @@ import FarmDocumentCard from '../Cards/FarmDocumentCard'
 export default function Individual({ digitalFarmerFarm }) {
   return (
     <Box>
-      <Grid gap={10}>
+      <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={10}>
         <FarmDocumentCard
           title='Land preparation'
           subtitle='During the 7 days period, land preparation...'
@@ -18,6 +18,13 @@ export default function Individual({ digitalFarmerFarm }) {
         />
         <FarmDocumentCard
           title='Transplanting'
+          subtitle='During the 7 days period, land preparation...'
+          receipt='CF294001'
+          date='10/01/2021'
+          amount='2,800'
+        />
+        <FarmDocumentCard
+          title='Destroying'
           subtitle='During the 7 days period, land preparation...'
           receipt='CF294001'
           date='10/01/2021'
