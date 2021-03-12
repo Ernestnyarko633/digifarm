@@ -37,11 +37,14 @@ const WarehouseCard2 = ({
         rounded='lg'
         bg='white'
         p={10}
+        pb={1}
+        mx={35}
         my={6}
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
         w='100%'
+        borderRadius='20px'
       >
-        <Flex justify='space-between'>
+        <Flex justify='space-between' pt={2}>
           <Flex mb={4}>
             <Avatar bg='gray.100' src={image} />
             <Box ml={2}>
@@ -64,11 +67,12 @@ const WarehouseCard2 = ({
                 colorScheme='none'
                 rounded='30px'
                 ml={2}
-                mt={4}
+                mt={1}
                 borderWidth={1}
                 color='cf.400'
                 mr={2}
                 borderColor='cf.400'
+                px={10}
               >
                 View Farm
               </Button>
@@ -82,10 +86,11 @@ const WarehouseCard2 = ({
                 colorScheme='linear'
                 rounded='30px'
                 ml={2}
-                mt={4}
+                mt={1}
                 borderWidth={1}
                 color='white'
                 mr={2}
+                px={10}
               >
                 Sell Produce
               </Button>
@@ -193,7 +198,7 @@ const WarehouseCard2 = ({
           </Grid>
 
           <Center>
-            <Text pt={8} color='cf.400' size='16px'>
+            <Text pt={4} color='cf.400' size='16px' pb={-8}>
               View auditor report
             </Text>
           </Center>
