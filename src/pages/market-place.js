@@ -33,8 +33,6 @@ const Marketplace = () => {
     isLoading: myFarmsIsLoading,
     error: myFarmssHasError
   } = useFetch('my_farms', getMyFarms, reload, { user: user?._id })
-  console.log(myfarms?.order, 'farms')
-
 
   const {
     data: SourcingOrders,
@@ -42,9 +40,7 @@ const Marketplace = () => {
     error: SourcingOrdersHasError
   } = useFetch('sourcing_orders', getSourcingOrders, reload, {
     cropVariety: "602e1d1d7c083a1edd24fab9"
-  })
-  console.log(SourcingOrders,"buyers")
-  
+  })  
 
   return (
     <Layout>
