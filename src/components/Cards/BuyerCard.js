@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Box,
   Divider,
@@ -16,11 +17,10 @@ import {
   useDisclosure,
   Button
 } from '@chakra-ui/react'
-import PropTypes from 'prop-types'
 import AboutBuyer from 'components/Modals/AboutBuyer'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 
-const BuyerCard = () => {
+const BuyerCard = ({ buyers }) => {
   const { onClose } = useDisclosure()
 
   const [isOpened, setOpened] = React.useState(false)
@@ -44,19 +44,20 @@ const BuyerCard = () => {
       >
         <Flex justify='space-between'>
           <Flex mb={4}>
-            <Avatar bg='gray.100' />
+            <Avatar bg='gray.100' src={buyers?.user?.avatar} />
             <Box ml={2}>
               <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
-                John Clinton
+                {buyers?.user?.firstName} {buyers?.user?.lastName}
               </Heading>
               <Text mt={{ md: -2 }} fontSize='sm' color='gray.500'>
-                Accra | John Clinton Company Limited
+                {buyers?.onboarding?.info?.address?.state} |{' '}
+                {buyers?.onboarding?.info?.name}
               </Text>
             </Box>
           </Flex>
           <Spacer />
           <Flex>
-            <AboutBuyer />
+            <AboutBuyer buyers={buyers} />
             <ConfirmSale
               onClick={onOpenx}
               onClose={onClose}
@@ -83,11 +84,11 @@ const BuyerCard = () => {
               <TagLabel>Offer</TagLabel>
             </Tag>
             <Text mt={1} fontWeight='bold' fontSize='1xl'>
-              $ 30.00 per tonne
+              $ {buyers?.cost} per tonne
             </Text>
           </Flex>
           <Progress
-            value={100}
+            value={((buyers?.demand - buyers?.supply) / buyers?.demand) * 100}
             rounded='lg'
             colorScheme='cfButton'
             size='lg'
@@ -105,7 +106,7 @@ const BuyerCard = () => {
                   {' '}
                   <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
                     {' '}
-                    3,000
+                    {buyers?.demand}
                   </Text>
                   <Text fontWeight='light' color='gray.500'>
                     Tonnes needed
@@ -129,7 +130,7 @@ const BuyerCard = () => {
                   {' '}
                   <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
                     {' '}
-                    200
+                    {buyers?.supply}
                   </Text>
                   <Text fontWeight='light' color='gray.500'>
                     Tonnes bought
@@ -153,7 +154,7 @@ const BuyerCard = () => {
                   {' '}
                   <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
                     {' '}
-                    2,800
+                    {buyers?.demand - buyers?.supply}
                   </Text>
                   <Text fontWeight='light' color='gray.500'>
                     Tonnes remaining
@@ -171,7 +172,7 @@ const BuyerCard = () => {
                 {' '}
                 <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
                   {' '}
-                  FOB
+                  {buyers?.deliveryMethod?.rule}
                 </Text>
                 <Text fontWeight='light' color='gray.500'>
                   Delivery option
@@ -207,13 +208,6 @@ const BuyerCard = () => {
   )
 }
 BuyerCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  image: PropTypes.any.isRequired,
-  btntitle: PropTypes.string.isRequired,
-  amtNeeded: PropTypes.string.isRequired,
-  amtBought: PropTypes.string.isRequired,
-  amtLeft: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired
+  buyers: PropTypes.any.isRequired
 }
 export default BuyerCard

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState } from 'react'
 import Layout from 'container/Layout'
 import { Heading, Box, Flex, Icon, Text, Spinner } from '@chakra-ui/react'
@@ -5,74 +7,21 @@ import { IoWarningOutline } from 'react-icons/io5'
 import WarehouseCard2 from 'components/Cards/WarehouseCard2'
 import useApi from 'context/api'
 import useAuth from 'context/auth'
+import useFetch from 'hooks/useFetch'
 
 const Warehouse = () => {
   document.title = 'Complete Farmer | Warehouse'
-  const { getMyFarms, getMyOrders, getFarms } = useApi()
+  const { getMyFarms } = useApi()
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  const [farms, setFarms] = useState([])
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState('fetching')
-  const [myFarms, setMyFarms] = useState([])
-  const [setWarehouses] = useState([])
-  const [setOrders] = useState([])
+  const [reload, setReload] = React.useState(0)
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading('fetching')
-        setError(null)
-        const res = await getMyOrders({ user: user?._id })
-        setOrders(res.data)
-        setLoading('done')
-      } catch (error) {
-        setError(error)
-        setLoading('done')
-      }
-    }
-    fetchData()
-  }, [])
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading('fetching')
-        setError(null)
-        const res = await getFarms()
-        setFarms(res.data)
-        setLoading('done')
-      } catch (error) {
-        setError(error)
-        setLoading('done')
-      }
-    }
-    fetchData()
-  }, [])
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading('fetching')
-        setError(null)
-        const res = await getMyFarms()
-        setMyFarms(res.data)
-        setLoading('done')
-      } catch (error) {
-        setError(error)
-        setLoading('done')
-      }
-    }
-    fetchData()
-    myFarms.forEach(farm => {
-      const temp = farms.find(_farm => _farm._id === farm.order?.product?._id)
-      if (temp) {
-        farm.order.product = temp
-        setWarehouses([farm])
-        setLoading('done')
-      }
-    })
-  }, [])
+  const {
+    data: myfarms,
+    isLoading: myFarmsIsLoading,
+    error: myFarmssHasError
+  } = useFetch('my_farms', getMyFarms, reload, { user: user?._id })
+  console.log(myfarms, 'farms')
 
   return (
     <Layout>
@@ -105,30 +54,27 @@ const Warehouse = () => {
 
         <Box mt={20} p={16}>
           <Flex my={3} w='62%' align='center' direction='column'>
-            {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
-            {loading === 'done' &&
-              myFarms?.map(myfarm => (
-                <WarehouseCard2
-                  _id={myfarm._id}
-                  key={myfarm?.name}
-                  name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
-                  location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
-                  image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
-                  quantity={myfarm?.storage?.quantity}
-                  weight={myfarm?.storage?.weight}
-                  bags={myfarm?.storage?.numberOfBags}
-                  condition={myfarm?.storage?.yieldConditions}
-                  mr={3}
-                  ml={14}
-                />
-              ))}
-            {loading === 'done' && error && (
-              <Box>
-                <Text fontSize='md' ml={2} color='cf.400'>
-                  {/* Something went wrong */}
-                </Text>
-              </Box>
-            )}
+            { myfarms?.map( myfarm => (
+            <WarehouseCard2
+              _id={myfarm._id}
+              key={myfarm?.name}
+              name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
+              location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
+              image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
+              quantity={myfarm?.storage?.quantity}
+              weight={myfarm?.storage?.weight}
+              bags={myfarm?.storage?.numberOfBags}
+              condition={myfarm?.storage?.yieldConditions}
+              mr={3}
+              ml={14}
+            />
+            ))}
+
+            <Box>
+              <Text fontSize='md' ml={2} color='cf.400'>
+                {/* Something went wrong */}
+              </Text>
+            </Box>
           </Flex>
         </Box>
       </Box>
