@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
@@ -76,17 +77,19 @@ export default function Farm() {
     farm: yourFarm?.order?.product?._id
   })
 
+  
   const isLoading =
-    SourcingOrdersIsLoading ||
-    yourFarmFeedsIsLoading ||
-    yourFarmIsLoading ||
-    ScheduledTasksIsLoading
+  SourcingOrdersIsLoading ||
+  yourFarmFeedsIsLoading ||
+  yourFarmIsLoading ||
+  ScheduledTasksIsLoading
   const hasError =
-    SourcingOrdersHasError ||
-    yourFarmFeedsHasError ||
-    yourFarmHasError ||
-    ScheduledTasksHasError
-
+  SourcingOrdersHasError ||
+  yourFarmFeedsHasError ||
+  yourFarmHasError ||
+  ScheduledTasksHasError
+  
+  console.log(isLoading, hasError, ScheduledTasks, yourFarm, yourFarmFeeds, "mustshow", location)
   const onClose = () => setIsOpen(false)
 
   const onOpen = () => setIsOpen(true)

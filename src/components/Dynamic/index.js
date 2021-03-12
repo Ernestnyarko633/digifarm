@@ -176,6 +176,24 @@ const DynamicFarm = ({
           _error={eosHasError}
         />
       )}
+      {!isLoading && (
+        <FetchCard
+          direction='column'
+          align='center'
+          justify='center'
+          mx='auto'
+          reload={() => {
+            ;(error || eosHasError) && reloads[0]()
+          }}
+          loading={isLoading}
+          error={error}
+          text={
+            !error || !eosHasError
+              ? 'Standby as we load your current farms and pending orders'
+              : 'Something went wrong, please dont fret'
+          }
+        />
+      )}
     </React.Fragment>
   )
 }

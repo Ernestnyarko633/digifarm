@@ -9,7 +9,8 @@ import {
   Container,
   Divider,
   Avatar,
-  Input
+  Input,
+  Button
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 
@@ -18,6 +19,7 @@ import { FormInput, FormTextArea } from 'components/Form'
 
 import useAuth from 'context/auth'
 import useApi from 'context/api'
+import BasePhone from 'components/Form/BasePhone'
 
 const Profile = () => {
   const { isAuthenticated } = useAuth()
@@ -30,11 +32,11 @@ const Profile = () => {
     firstName: user?.firstName,
     lastName: user?.lastName,
     address: {
-      street: '',
-      state: '',
+      street: user?.address?.street,
+      state: user?.address?.state,
       country: user?.address?.country
     },
-    dateOfBirth: '',
+    dateOfBirth: user?.dateOfBirth,
     email: user?.email,
     phoneNumber: user?.phoneNumber,
     IdType: '',
@@ -109,7 +111,9 @@ const Profile = () => {
           handleBlur,
           isSubmitting,
           handleSubmit,
-          errors
+          errors,
+          setFieldTouched,
+          setFieldValue
         }) => (
           <form onSubmit={handleSubmit}>
             <Headings title='Profile' />
@@ -177,6 +181,7 @@ const Profile = () => {
                     name='dateOfBirth'
                     value={values.dateOfBirth}
                     onChange={handleChange}
+                    disabled
                     onBlur={handleBlur}
                     isRequired
                     bg='white'
@@ -200,6 +205,7 @@ const Profile = () => {
                     isRequired
                     bg='white'
                   />
+
                   <FormInput
                     label='Country'
                     name='address.country'
@@ -210,7 +216,17 @@ const Profile = () => {
                     bg='white'
                   />
 
-                  <FormInput
+                  <BasePhone
+                    country={values.address.country}
+                    value={values.phoneNumber.replace(/\D/g, '').substr(3, 10)}
+                    setFieldTouched={setFieldTouched}
+                    setFieldValue={setFieldValue}
+                    phoneNumber='phoneNumber'
+                    error={errors.phoneNumber}
+                    bg='white'
+                  />
+
+                  {/* <FormInput
                     label='Phone number'
                     name='phoneNumber'
                     value={values.phoneNumber}
@@ -218,7 +234,7 @@ const Profile = () => {
                     onBlur={handleBlur}
                     isRequired
                     bg='white'
-                  />
+                  /> */}
 
                   <FormInput
                     label='Email'
@@ -234,94 +250,106 @@ const Profile = () => {
                 <Box>
                   <FormTextArea bg='white' label='About you' />
                 </Box>
-              </Box>
-            </Box>
-            <Box rounded='xl' shadow='md' mt={12} bg='white' p={10}>
-              <Box m={10}>
-                <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
-                  Identification Info
-                </Heading>
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                  mb={6}
-                >
-                  <FormInput
-                    label='ID Type'
-                    name='IdType'
-                    value={values.IdType}
-                    isRequired
-                    bg='white'
-                  />
-                  <FormInput
-                    label='ID Number'
-                    name='IDNumber'
-                    value={values.IDNumber}
-                    isRequired
-                    bg='white'
-                  />
-                </Grid>
-                <FormInput
-                  label='Country'
-                  value={values.address.country}
-                  isRequired
-                  bg='white'
-                />
-              </Box>
-            </Box>
 
-            <Box rounded='xl' shadow='md' my={12} bg='white' p={10}>
-              <Box m={10}>
-                <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
-                  Bank details
-                </Heading>
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                >
-                  <FormInput
-                    label='Bank name'
-                    name='bankName'
-                    value={values.bankName}
-                    isRequired
-                    bg='white'
-                  />
-                  <FormInput
-                    label='Bank branch'
-                    name='bankBranch'
-                    value={values.bankBranch}
-                    isRequired
-                    bg='white'
-                  />
-                </Grid>
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                  py={{ md: 10 }}
-                >
-                  <FormInput
-                    label='Account name'
-                    name='accountName'
-                    value={values.accountName}
-                    isRequired
-                    bg='white'
-                  />
-                  <FormInput
-                    label='Account number'
-                    name='accountNumber'
-                    value={values.accountNumber}
-                    isRequired
-                    bg='white'
-                  />
-                </Grid>
+                <Box textAlign='right' mt={6}>
+                  <Button
+                    colorScheme='linear'
+                    rounded='30px'
+                    w={40}
+                    h={12}
+                    shadow='sm'
+                    ml={4}
+                    type='submit'
+                    isLoading={isSubmitting}
+                  >
+                    Save
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </form>
         )}
       </Formik>
+
+      <Box rounded='xl' shadow='md' mt={12} bg='white' p={10}>
+        <Box m={10}>
+          <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
+            Identification Info
+          </Heading>
+          <Grid
+            templateColumns='repeat(2, 1fr)'
+            w={{ md: '100%' }}
+            gap={6}
+            mb={6}
+          >
+            <FormInput
+              label='ID Type'
+              name='IdType'
+              // value={values.IdType}
+              isRequired
+              bg='white'
+            />
+            <FormInput
+              label='ID Number'
+              name='IDNumber'
+              // value={values.IDNumber}
+              isRequired
+              bg='white'
+            />
+          </Grid>
+          <FormInput
+            label='Country'
+            // value={values.address.country}
+            isRequired
+            bg='white'
+          />
+        </Box>
+      </Box>
+
+      <Box rounded='xl' shadow='md' my={12} bg='white' p={10}>
+        <Box m={10}>
+          <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
+            Bank details
+          </Heading>
+          <Grid templateColumns='repeat(2, 1fr)' w={{ md: '100%' }} gap={6}>
+            <FormInput
+              label='Bank name'
+              name='bankName'
+              // value={values.bankName}
+              isRequired
+              bg='white'
+            />
+            <FormInput
+              label='Bank branch'
+              name='bankBranch'
+              // value={values.bankBranch}
+              isRequired
+              bg='white'
+            />
+          </Grid>
+          <Grid
+            templateColumns='repeat(2, 1fr)'
+            w={{ md: '100%' }}
+            gap={6}
+            py={{ md: 10 }}
+          >
+            <FormInput
+              label='Account name'
+              name='accountName'
+              // value={values.accountName}
+              isRequired
+              bg='white'
+            />
+            <FormInput
+              label='Account number'
+              name='accountNumber'
+              // value={values.accountNumber}
+              isRequired
+              bg='white'
+            />
+          </Grid>
+        </Box>
+      </Box>
     </Container>
   )
 }

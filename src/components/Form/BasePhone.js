@@ -2,59 +2,90 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { PhoneInput, COUNTRIES } from 'baseui/phone-input'
-import { FormControl, FormLabel } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel } from '@chakra-ui/react'
 
 const BasePhone = ({
   setFieldValue,
   setFieldTouched,
   phoneNumber,
   country,
-  countryList,
   value,
   error,
   touched,
-  placeholder
-}) => (
-  <FormControl
-    bg='cf.300'
-    pos='relative'
-    pt={2}
-    borderBottomWidth={1}
-    borderBottomColor='cf.400'
-  >
-    <FormLabel fontSize='xs' pos='absolute' left={3} top={-1} color='gray.600'>
-      Phone number
-    </FormLabel>
-    <PhoneInput
-      name={phoneNumber}
-      country={countryList || COUNTRIES.GH}
-      placeholder={placeholder}
-      onCountryChange={({ option }) => {
-        setFieldValue(country, option)
-        setFieldTouched(country, true)
-      }}
-      text={value}
-      error={error}
-      onTextChange={e => {
-        setFieldValue(phoneNumber, e.currentTarget.value)
-        setFieldTouched(phoneNumber, true)
-      }}
-      overrides={{
-        Input: {
-          props: {
-            overrides: {
-              Root: {
-                style: {
-                  backgroundColor: 'transparent'
+  placeholder,
+  isRequired,
+  bg,
+  width
+}) => {
+  const [state] = React.useState(COUNTRIES.GH)
+  return (
+    <FormControl
+      pos='relative'
+      pt={2}
+      isRequired={isRequired}
+      isInvalid={error && touched}
+    >
+      <Box
+        bg={bg}
+        borderWidth={1}
+        borderColor='gray.100'
+        borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
+        w={width}
+      >
+        <FormLabel
+          fontSize={{ md: 'xs' }}
+          pos='absolute'
+          left={{ md: 4 }}
+          top={2}
+          color='gray.600'
+        >
+          Phone number
+        </FormLabel>
+        <PhoneInput
+          name={phoneNumber}
+          country={state}
+          placeholder={placeholder}
+          onCountryChange={event => {
+            setFieldValue(country, event.option)
+            setFieldTouched(country, true)
+          }}
+          text={value}
+          error={error}
+          onTextChange={e => {
+            setFieldValue(phoneNumber, e.currentTarget.value)
+            setFieldTouched(phoneNumber, true)
+          }}
+          overrides={{
+            Input: {
+              props: {
+                overrides: {
+                  Root: {
+                    style: {
+                      ':focus': {
+                        outline: 'none'
+                      }
+                    }
+                  },
+                  InputContainer: {
+                    style: {
+                      backgroundColor: '#fff',
+                      paddingTop: '2px',
+                      marginBottom: '0px',
+                      outline: 'none',
+                      ':focus': {
+                        outline: 'none'
+                      }
+                    }
+                  }
                 }
               }
             }
-          }
-        }
-      }}
-    />
-  </FormControl>
-)
+          }}
+        />
+      </Box>
+    </FormControl>
+  )
+}
 
 BasePhone.propTypes = {
   setFieldTouched: PropTypes.any,
@@ -65,7 +96,10 @@ BasePhone.propTypes = {
   countryList: PropTypes.any,
   error: PropTypes.any,
   touched: PropTypes.any,
-  placeholder: PropTypes.any
+  placeholder: PropTypes.any,
+  bg: PropTypes.string,
+  isRequired: PropTypes.string,
+  width: PropTypes.any
 }
 
 export default BasePhone

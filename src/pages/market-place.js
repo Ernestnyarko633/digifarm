@@ -1,153 +1,159 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from 'container/Layout'
-import { Box, Heading, Image, Text, Flex } from '@chakra-ui/react'
+import { Box, Flex, Icon, Text, Heading, Spinner } from '@chakra-ui/react'
+import { IoWarningOutline } from 'react-icons/io5'
 import BuyerCard from 'components/Cards/BuyerCard'
-import SoyaBean from '../assets/images/startfarm/soya-beans.svg'
-import IllustrationImage from '../assets/images/home/illustration.png'
-import Oval from '../assets/images/Oval.svg'
-import WarehouseCard from 'components/Cards/WarehouseCard'
-import ArrowButton from '../components/Button/ArrowButton'
+// import IllustrationImage from '../assets/images/home/illustration.png'
+// import Oval from '../assets/images/Oval.svg'
+import WarehouseCard from 'components/Cards/WarehouseCard2'
+// import ArrowButton from '../components/Button/ArrowButton'
+
+import useApi from '../context/api'
+import useAuth from 'context/auth'
+/* eslint-disable */
 import { motion } from 'framer-motion'
+import AboutBuyer from 'components/Modals/AboutBuyer'
 
-const MotionFlex = motion.custom(Flex)
-const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-const buyers = [
-  {
-    id: 1,
-    image: Oval,
-    name: 'John Clinton',
-    address: 'Accra | John Clinton Company Limited',
-    amtLeft: '2100',
-    amtNeeded: '3000',
-    amtBought: '900',
-    price: '$30.00'
-  },
-  {
-    id: 2,
-    image: Oval,
-    name: 'Georgina Adzorgenu',
-    address: 'Ayikuma | Approcon Enterprise Limited',
-    amtLeft: '800',
-    amtNeeded: '2000',
-    amtBought: '1200',
-    price: '$50.00'
-  }
-]
-
-const warehouseGoods = [
-  {
-    id: 1,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'AgyaAtta, Eastern Region',
-    quantity: '2000 tonnes',
-    weight: '200 kg',
-    bags: '20 bags',
-    condition: 'Moist'
-  },
-  {
-    id: 2,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'AgyaAtta, Eastern Region',
-    quantity: '2010 tonnes',
-    weight: '300 kg',
-    bags: '30 bags',
-    condition: 'Dry'
-  },
-  {
-    id: 3,
-    image: SoyaBean,
-    name: 'Soya Bean Warehouse',
-    location: 'Shai Osudoku, Eastern Region',
-    quantity: '2010 tonnes',
-    weight: '300 kg',
-    bags: '30 bags',
-    condition: 'Moist'
-  }
-]
+// const MotionFlex = motion.custom(Flex)
+// const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 const Marketplace = () => {
   document.title = 'Complete Farmer | Marketplace'
+  const { getBuyers, getMyFarms, getMyOrders, getFarms} = useApi()
+  const {isAuthenticated} = useAuth()
+  const {user} = isAuthenticated()
+  const [orders, setOrders] = useState([])
+  const [farms, setFarms] = useState([])
+  const [buyers, setBuyers] = useState([])
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState("fetching")
+  const [myFarms, setMyFarms] = useState([])
+  const [warehouses, setWarehouses] = useState([])
 
-  const [currentSlide, setCurrentSlide] = React.useState(0)
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        setError(null)
+        const res = await getMyOrders({ user: user?._id })
+        setOrders(res.data)
+        setLoading('done')
+      } catch (error) {
+        setError(error)
+        setLoading('done')
+      }
+    }
+    fetchData()
+  }, [])
 
-  const handleClick = direction => {
-    setCurrentSlide(prevState => {
-      return (
-        (warehouseGoods.length + prevState + direction) % warehouseGoods.length
-      )
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        setError(null)
+        const res = await getFarms()
+        setFarms(res.data)
+        setLoading('done')
+      } catch (error) {
+        setError(error)
+        setLoading('done')
+      }
+    }
+    fetchData()
+  }, [])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading('fetching')
+        setError(null)
+        const res = await getMyFarms()
+        setMyFarms(res.data)
+        setLoading('done')
+      } catch (error) {
+        setError(error)
+        setLoading('done')
+      }
+    }
+    fetchData()
+    myFarms.forEach(farm => {
+      const temp = farms.find(_farm => _farm._id === farm.order?.product?._id)
+      if (temp) {
+        farm.order.product = temp
+        setWarehouses([farm])
+        setLoading('done')
+      }
     })
-  }
+  }, [])
 
   return (
     <Layout>
-      <Box pos='relative'>
-        <Image
-          src={IllustrationImage}
-          h={{ md: 115 }}
-          w='100%'
-          objectFit='cover'
-        />
-        <Box pos='absolute' top={{ md: 40 }} left={{ md: 16 }}>
-          <Heading as='h3' fontSize={{ md: '4xl' }}>
-            Welcome to your marketplace
-          </Heading>
-          <Text>Sell your produce to the right buyer at a good price</Text>
+      <Box pos='absolute' top={{md:40}} left={{md:60}} w='100%'>
+        <Heading>Warehouse / Marketplace </Heading>
+        <Box
+          mt={2}
+          mb={6}
+          borderRadius={40}
+          borderWidth={2}
+          borderColor='rgba(208, 143, 49, 0.1)'
+          bgColor='rgba(208, 143, 49, 0.1)'
+          p={2}
+          position='absolute'
+        >
+          <Flex>
+            <Icon as={IoWarningOutline} color='#D08F31' w={7} h={7} />
+            <Text
+              as='span'
+              fontWeight='bold'
+              fontSize='18px'
+              color='#D08F31'
+              px={4}
+            >
+              If produce in the warehouse are not sold within 2 weeks, they will
+              automatically be sold to a buyer
+            </Text>
+          </Flex>
         </Box>
-      </Box>
-      <Flex align='center' justify='space-between' p={{ md: 16 }}>
-        <Heading as='h4' fontSize={{ md: '2xl' }}>
-          Here are the crops in your warehouse
-        </Heading>
-        <ArrowButton handleClick={handleClick} />
-      </Flex>
-      <MotionFlex
-        animate={{
-          x: `-${26.5 * currentSlide}rem`,
-          transition: { duration: 0.6, ...transition }
-        }}
-        pos='relative'
-        minW={{ md: 130 }}
-        mx='auto'
-        ml={{ md: 16 }}
-      >
-        {warehouseGoods.map(item => (
-          <WarehouseCard
-            key={item.name}
-            name={item.name}
-            location={item.location}
-            image={item.image}
-            quantity={item.quantity}
-            weight={item.weight}
-            bags={item.bags}
-            condition={item.condition}
-          />
-        ))}
-      </MotionFlex>
-      <Box my={20}>
-        <Box px={14} mb={10}>
-          <Heading as='h4' fontSize={{ md: '2xl' }}>
-            Buyers you can sell to
-          </Heading>
+
+        <Box mt={20}>
+          <Flex my={3} w='62%' align='center' direction='column'>
+            {loading === 'fetching' && <Spinner size='lg' color='cf.400' />}
+            {loading === 'done' &&
+              myFarms?.map(myfarm => (
+                <WarehouseCard
+                  _id={myfarm._id}
+                  key={myfarm?.name}
+                  name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
+                  location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
+                  image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
+                  quantity={myfarm?.storage?.quantity}
+                  weight={myfarm?.storage?.weight}
+                  bags={myfarm?.storage?.numberOfBags}
+                  condition={myfarm?.storage?.yieldConditions}
+                  mr={3}
+                  ml={14}
+                />
+              ))}
+            {loading === 'done' && error && (
+              <Box>
+                <Text fontSize='md' ml={2} color='cf.400'>
+                  {/* Something went wrong */}
+                </Text>
+              </Box>
+            )}
+          </Flex>
         </Box>
         <Box>
-          {buyers.map(buyer => (
-            <BuyerCard
-              key={buyer.name}
-              name={buyer.name}
-              address={buyer.address}
-              image={buyer.image}
-              amtLeft={buyer.amtLeft}
-              amtNeeded={buyer.amtNeeded}
-              amtBought={buyer.amtBought}
-              price={buyer.price}
-            />
-          ))}
+          <BuyerCard/>
         </Box>
+
+       
+      
+     
       </Box>
     </Layout>
+   
   )
 }
 

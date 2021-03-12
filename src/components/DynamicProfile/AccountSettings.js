@@ -6,8 +6,6 @@ import {
   Container,
   Divider,
   Stack,
-  Radio,
-  RadioGroup,
   Checkbox,
   Grid
 } from '@chakra-ui/react'
@@ -48,7 +46,7 @@ const AccountSettings = () => {
                   <Text>GMT</Text>
                 </Box>
 
-                <Box>
+                {/* <Box>
                   <Heading
                     as='h5'
                     fontFamily='display'
@@ -70,7 +68,7 @@ const AccountSettings = () => {
                       </Radio>
                     </Stack>
                   </RadioGroup>
-                </Box>
+                </Box> */}
               </Box>
 
               <Divider
