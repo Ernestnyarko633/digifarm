@@ -120,11 +120,11 @@ const WarehouseCard2 = ({
               >
                 <Box pt={2} py={4}>
                   {' '}
-                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+                  <Text fontWeight='bold' fontSize='28px'>
                     {' '}
                     {quantity}
                   </Text>
-                  <Text fontWeight='light' color='gray.500'>
+                  <Text fontWeight='light' color='gray.500' fontSize='16px'>
                     Quantity (Tonnes)
                   </Text>
                 </Box>
@@ -144,11 +144,11 @@ const WarehouseCard2 = ({
               >
                 <Box pt={2} py={4}>
                   {' '}
-                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+                  <Text fontWeight='bold' fontSize='28px'>
                     {' '}
                     {weight}
                   </Text>
-                  <Text fontWeight='light' color='gray.500'>
+                  <Text fontWeight='light' color='gray.500' fontSize='16px'>
                     Weight(kg)
                   </Text>
                 </Box>
@@ -168,11 +168,11 @@ const WarehouseCard2 = ({
               >
                 <Box pt={2} py={4}>
                   {' '}
-                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+                  <Text fontWeight='bold' fontSize='28px'>
                     {' '}
                     {bags}
                   </Text>
-                  <Text fontWeight='light' color='gray.500'>
+                  <Text fontWeight='light' color='gray.500' fontSize='16px'>
                     Number of bags
                   </Text>
                 </Box>
@@ -186,11 +186,11 @@ const WarehouseCard2 = ({
             <GridItem>
               <Box pt={2} py={4}>
                 {' '}
-                <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
+                <Text fontWeight='bold' fontSize='28px'>
                   {' '}
                   {condition}
                 </Text>
-                <Text fontWeight='light' color='gray.500'>
+                <Text fontWeight='light' color='gray.500' fontSize='16px'>
                   Yield Conditions
                 </Text>
               </Box>
