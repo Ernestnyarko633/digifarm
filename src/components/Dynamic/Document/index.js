@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Individual from './Individual'
-import Cooperative from './Cooperative'
+//import Cooperative from './Cooperative'
 
 const components = {
-  compA: Individual,
-  compB: Cooperative
+  compA: Individual
+  // compB: Cooperative
 }
 
 const DynamicDocument = ({ document, digitalFarmerFarm }) => {

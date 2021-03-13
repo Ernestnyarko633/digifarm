@@ -8,11 +8,9 @@ import {
   ListItem,
   List,
   Avatar,
-  Text,
-  Image
+  Text
 } from '@chakra-ui/react'
 import Button from 'components/Button'
-
 const WarehouseCard = ({
   name,
   location,
@@ -37,9 +35,7 @@ const WarehouseCard = ({
     >
       <Flex justify='space-between'>
         <Flex mb={4}>
-          <Avatar bg='gray.100'>
-            <Image src={image} />
-          </Avatar>
+          <Avatar bg='gray.100' src={image} />
           <Box ml={2}>
             <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
               {name}
@@ -110,29 +106,7 @@ const WarehouseCard = ({
             </ListItem>
           </List>
         </Flex>
-
-        {quantity && (
-          <Flex align='center' justify='space-between' mt={6}>
-            <Box>
-              <Button
-                btntitle='View auditor report'
-                rounded='30px'
-                h={12}
-                w={40}
-                shadow='none'
-                bg='white'
-                borderWidth={1}
-                borderColor='cf.400'
-                color='cf.400'
-                _hover={{ bg: 'white' }}
-              />
-            </Box>
-            <Box>
-              <Button btntitle='Sell produce' rounded='30px' h={12} w={40} />
-            </Box>
-          </Flex>
-        )}
-
+        {quantity && <Flex align='center' justify='space-between' mt={6} />}
         {!quantity && (
           <Flex align='center' justify='center' mt={6}>
             <Button
@@ -153,7 +127,6 @@ const WarehouseCard = ({
     </Box>
   </Flex>
 )
-
 WarehouseCard.propTypes = {
   name: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
@@ -168,5 +141,4 @@ WarehouseCard.propTypes = {
   status: PropTypes.string,
   orderStatus: PropTypes.any
 }
-
 export default WarehouseCard

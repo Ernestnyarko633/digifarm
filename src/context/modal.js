@@ -6,6 +6,7 @@ import useComponent from './component'
 import LearnMoreModal from 'components/Modals/LearnMoreModal'
 import FarmReceiptModal from 'components/Modals/FarmReceiptModal'
 import FarmContractModal from 'components/Modals/FarmContractModal'
+import DocumentsReceipts from 'components/Modals/DocumentReceipts'
 
 const ModalContext = React.createContext({})
 
@@ -20,6 +21,8 @@ export const ModalContextProvider = ({ children }) => {
         return <FarmReceiptModal />
       case 'contract':
         return <FarmContractModal />
+      case 'activity-receipts':
+        return <DocumentsReceipts />
       default:
         return null
     }

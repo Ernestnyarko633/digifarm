@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import useEosApi from 'context/eosApi'
 import useFetch from 'hooks/useFetch'
+import FetchCard from 'components/FetchCard'
 
 const { default: Document } = require('./Farm/Document')
 const { default: Farm } = require('./Farm/Farm')
@@ -36,7 +37,7 @@ const DynamicFarm = ({
     getEOSWeatherForeCast
   } = useEosApi()
 
-  let eosViewIdPayload = {
+  const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
     limit: 1,
     page: 1,
@@ -66,7 +67,7 @@ const DynamicFarm = ({
   } = useFetch('eos_view_id', getEOSViewID, reload, eosViewIdPayload)
 
   // payload of health eos task_id creation
-  let EOSTaskForStats = {
+  const EOSTaskForStats = {
     type: 'mt_stats',
     params: {
       bm_type: '(B08-B04)/(B08+B04)',
@@ -104,7 +105,7 @@ const DynamicFarm = ({
     error: EOSStatisticsHasError
   } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
 
-  let weatherForeCastsPayload = {
+  const weatherForeCastsPayload = {
     geometry: {
       type: 'Polygon',
       coordinates: [location]
@@ -135,6 +136,27 @@ const DynamicFarm = ({
     EOSStatisticsHasError ||
     eosStatsHasError
 
+  if (isLoading || !EOSViewID) {
+    return (
+      <FetchCard
+        direction='column'
+        align='center'
+        justify='center'
+        mx='auto'
+        reload={() => {
+          error && reloads[0]()
+        }}
+        loading={loading}
+        error={error}
+        text={
+          !error
+            ? 'Standby as we load your current farms and pending orders'
+            : 'Something went wrong, please dont fret'
+        }
+      />
+    )
+  }
+
   return (
     <React.Fragment>
       {!loading && EOSViewID && (
@@ -152,6 +174,24 @@ const DynamicFarm = ({
           loading={loading || isLoading}
           error={error}
           _error={eosHasError}
+        />
+      )}
+      {!isLoading && (
+        <FetchCard
+          direction='column'
+          align='center'
+          justify='center'
+          mx='auto'
+          reload={() => {
+            ;(error || eosHasError) && reloads[0]()
+          }}
+          loading={isLoading}
+          error={error}
+          text={
+            !error || !eosHasError
+              ? 'Standby as we load your current farms and pending orders'
+              : 'Something went wrong, please dont fret'
+          }
         />
       )}
     </React.Fragment>

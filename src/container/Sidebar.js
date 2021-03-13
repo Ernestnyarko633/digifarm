@@ -18,7 +18,7 @@ const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
   { icon: farm, path: '/farms', name: 'Farm board', size: 4 },
   { icon: wallet, path: '/wallet', name: 'Farm Wallet', size: 4 },
-  { icon: market, path: '/marketplace', name: 'Marketplace', size: 4 },
+  { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 },
   { icon: MdChatBubbleOutline, path: '/market', name: 'Forum', size: 4 }
 ]
 
