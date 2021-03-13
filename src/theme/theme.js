@@ -14,7 +14,8 @@ export const theme = extendTheme({
         fontSize: 'md',
         fontFamily: '"CeraGR", sans-serif',
         lineHeight: 'tall',
-        fontWeight: 400
+        fontWeight: 400,
+        bg: 'gray.50'
       }
     })
   },

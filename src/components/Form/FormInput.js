@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react'
 import { Input } from 'baseui/input'
 
 const FormInput = ({
@@ -13,6 +13,8 @@ const FormInput = ({
   mr,
   bg = 'cf.300',
   w,
+  value,
+  type,
   ...rest
 }) => (
   <FormControl
@@ -21,58 +23,65 @@ const FormInput = ({
     pt={2}
     isRequired={isRequired}
     isInvalid={error && touched}
+    bg={bg}
+    borderWidth={1}
+    borderColor='gray.100'
+    borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
+    w={w}
   >
-    <Box
-      bg={bg}
-      borderWidth={1}
-      borderColor='gray.100'
-      borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
-      w={w}
+    <FormLabel
+      fontSize={{ md: 'xs' }}
+      pos='absolute'
+      left={{ md: 4 }}
+      top={2}
+      color='gray.600'
     >
-      <FormLabel
-        fontSize={{ md: 'xs' }}
-        pos='absolute'
-        left={{ md: 4 }}
-        top={2}
-        color='gray.600'
-      >
-        {label} {titleAddon}
-      </FormLabel>
-      <Input
-        {...rest}
-        clearOnEscape
-        overrides={{
-          Root: {
-            style: {
-              backgroundColor: 'transparent',
-              borderWidth: '0px',
-              width: width || '100%',
-              height: '50px'
-            }
-          },
-          Input: {
-            style: {
-              backgroundColor: 'transparent',
-              borderWidth: '0px',
-              height: '50px',
-              marginTop: '8px'
-            }
-          },
-          InputContainer: {
-            style: {
-              backgroundColor: 'transparent',
-              borderWidth: '0px',
-              width: width || '100%'
-            }
-          },
-          StartEnhancer: {
-            style: {
-              backgroundColor: 'transparent'
+      {label} {titleAddon}
+    </FormLabel>
+    <Input
+      {...rest}
+      type={type || 'text'}
+      value={value}
+      clearOnEscape
+      overrides={{
+        Root: {
+          style: {
+            backgroundColor: 'transparent',
+            borderWidth: '0px',
+            width: width || '100%',
+            height: '50px'
+          }
+        },
+        Input: {
+          style: {
+            backgroundColor: 'transparent',
+            borderWidth: '0px',
+            height: '50px',
+            marginTop: '8px',
+            ':disabled': {
+              background: '#f4f4f4'
             }
           }
-        }}
-      />
-    </Box>
+        },
+        InputContainer: {
+          style: {
+            backgroundColor: 'transparent',
+            borderWidth: '0px',
+            width: width || '100%'
+          }
+        },
+        StartEnhancer: {
+          style: {
+            backgroundColor: 'transparent'
+          }
+        }
+      }}
+    />
+
+    <FormErrorMessage mt={10} fontSize='xs'>
+      Please enter a number
+    </FormErrorMessage>
+
     {error && touched && (
       <FormErrorMessage fontSize='xs'>{error}</FormErrorMessage>
     )}
@@ -101,7 +110,8 @@ FormInput.propTypes = {
   bg: PropTypes.any,
   selectedValue: PropTypes.any,
   passwordShow: PropTypes.any,
-  isRequired: PropTypes.bool
+  isRequired: PropTypes.bool,
+  value: PropTypes.any
 }
 
 export default FormInput
