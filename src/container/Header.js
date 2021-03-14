@@ -31,7 +31,7 @@ const Header = () => {
       bg='white'
       pos='fixed'
       as='header'
-      shadow='lg'
+      // shadow='lg'
       zIndex={100}
       align='center'
       h={{ md: 20 }}

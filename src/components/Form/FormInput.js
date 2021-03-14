@@ -1,6 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react'
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Text
+} from '@chakra-ui/react'
 import { Input } from 'baseui/input'
 
 const FormInput = ({
@@ -13,6 +19,8 @@ const FormInput = ({
   mr,
   bg = 'cf.300',
   w,
+  value,
+  type,
   ...rest
 }) => (
   <FormControl
@@ -40,6 +48,8 @@ const FormInput = ({
       </FormLabel>
       <Input
         {...rest}
+        type={type || 'text'}
+        value={value}
         clearOnEscape
         overrides={{
           Root: {
@@ -55,7 +65,10 @@ const FormInput = ({
               backgroundColor: 'transparent',
               borderWidth: '0px',
               height: '50px',
-              marginTop: '8px'
+              marginTop: '8px',
+              ':disabled': {
+                background: '#f4f4f4'
+              }
             }
           },
           InputContainer: {
@@ -73,6 +86,11 @@ const FormInput = ({
         }}
       />
     </Box>
+    {type === 'account' && isNaN(value) ? (
+      <Text color='red.600' fontSize='xs'>
+        Numbers only
+      </Text>
+    ) : null}
     {error && touched && (
       <FormErrorMessage fontSize='xs'>{error}</FormErrorMessage>
     )}
@@ -101,7 +119,8 @@ FormInput.propTypes = {
   bg: PropTypes.any,
   selectedValue: PropTypes.any,
   passwordShow: PropTypes.any,
-  isRequired: PropTypes.bool
+  isRequired: PropTypes.bool,
+  value: PropTypes.any
 }
 
 export default FormInput
