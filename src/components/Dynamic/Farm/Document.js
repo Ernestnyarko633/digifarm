@@ -13,7 +13,12 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-export default function Document({ digitalFarmerFarm }) {
+export default function Document({
+  digitalFarmerFarm,
+  activities,
+  tasks,
+  ScheduledTasks
+}) {
   let state = 'compA'
 
   return (
@@ -70,6 +75,9 @@ export default function Document({ digitalFarmerFarm }) {
           <Box mt={{ md: 10 }}>
             <DynamicDocument
               document={state}
+              activities={activities}
+              tasks={tasks}
+              ScheduledTasks={ScheduledTasks}
               digitalFarmerFarm={digitalFarmerFarm}
             />
           </Box>
@@ -99,5 +107,8 @@ export default function Document({ digitalFarmerFarm }) {
 }
 
 Document.propTypes = {
-  digitalFarmerFarm: PropTypes.any
+  digitalFarmerFarm: PropTypes.any,
+  activities: PropTypes.any,
+  tasks: PropTypes.any,
+  ScheduledTasks: PropTypes.any
 }

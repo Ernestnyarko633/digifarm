@@ -28,7 +28,9 @@ export default function Farm() {
   const {
     getMyFarmFeeds,
     getSourcingOrders,
+    getAllTasks,
     getMyFarm,
+    getActivities,
     getMyScheduledTasks
   } = useApi()
 
@@ -38,6 +40,7 @@ export default function Farm() {
     error: yourFarmHasError
   } = useFetch(`${id}_digital_farmer_farm`, getMyFarm, reload, id)
 
+  console.log("yourFarm", yourFarm)
   React.useEffect(() => {
     let location_ = []
     let _location = yourFarm?.order?.product?.location
@@ -77,17 +80,31 @@ export default function Farm() {
     farm: yourFarm?.order?.product?._id
   })
 
+  const {
+    data: myFarmActivities,
+    isLoading: myFarmActivitiesIsLoading,
+    error: myFarmActivitiesHasError
+  } = useFetch(`${yourFarm?.order?.product?.protocol?._id}_activities`, getActivities, reload, {
+    protocol: yourFarm?.order?.product?.protocol?._id
+  })
+
+  const {
+    data: tasks,
+    isLoading: tasksIsLoading,
+    error: tasksHasError
+  } = useFetch(`tasks`, getAllTasks, reload)
   
   const isLoading =
   SourcingOrdersIsLoading ||
   yourFarmFeedsIsLoading ||
   yourFarmIsLoading ||
-  ScheduledTasksIsLoading
+  ScheduledTasksIsLoading || myFarmActivitiesIsLoading || tasksIsLoading
   const hasError =
   SourcingOrdersHasError ||
   yourFarmFeedsHasError ||
   yourFarmHasError ||
-  ScheduledTasksHasError
+  ScheduledTasksHasError || myFarmActivitiesHasError || tasksHasError
+
   
   console.log(isLoading, hasError, ScheduledTasks, yourFarm, yourFarmFeeds, "mustshow", location)
   const onClose = () => setIsOpen(false)
@@ -185,6 +202,8 @@ export default function Farm() {
             loading={isLoading}
             error={hasError}
             farm={state}
+            tasks={tasks}
+            activities={myFarmActivities}
             ScheduledTasks={ScheduledTasks}
             digitalFarmerFarm={yourFarm}
             farmfeeds={yourFarmFeeds}
