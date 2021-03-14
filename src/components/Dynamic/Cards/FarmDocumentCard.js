@@ -3,7 +3,7 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import useComponent from 'context/component'
-/*eslint-disable*/
+
 export default function FarmDocumentCard({
   key,
   title,
@@ -16,7 +16,7 @@ export default function FarmDocumentCard({
   amount
 }) {
   const { handleModalClick } = useComponent()
-  console.log(__activityID, "mykey")
+
   const thisData = {
     title,
     amount,
@@ -25,13 +25,6 @@ export default function FarmDocumentCard({
     )
   }
   const keys = [
-    // { name: 'Start Date', data: new Date().toLocaleDateString() },
-    // {
-    //   name: 'End Date',
-    //   data: new Date(
-    //     new Date().setDate(new Date().getDate() + 30)
-    //   ).toLocaleDateString()
-    // },
     { name: 'Total Tasks', data: tasksNumber },
     { name: 'Total Cost', data: `$ ${amount}` }
   ]
