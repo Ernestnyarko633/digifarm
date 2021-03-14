@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Modal,
   ModalOverlay,
@@ -20,7 +21,7 @@ import {
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 
-const AboutBuyer = () => {
+const AboutBuyer = ({ buyers }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   // const { modal, setModal } = useState(true)
   const [isOpened, setOpened] = React.useState(false)
@@ -32,6 +33,25 @@ const AboutBuyer = () => {
   const onClosex = () => {
     setOpened(false)
   }
+
+  // const getRule = (value) => {
+  //   switch (value) {
+  //     case 'FCA':
+  //       break;
+  //     case 'CIP':
+  //       break;
+  //     case 'CPT':
+  //       break;
+  //     case 'FOB':
+  //       break;
+  //     case 'CIF':
+  //       break;
+  //     case 'FARMGATE EXWORKS':
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   return (
     <>
@@ -80,11 +100,13 @@ const AboutBuyer = () => {
           <ModalBody>
             <Grid p={8} templateColumns='50% 50%'>
               <Flex align='center' justify='center' height='50%'>
-                <Avatar mt={35} boxSize={80} name='Kimberly Emmanuella' />
+                <Avatar mt={35} boxSize={80} src={buyers?.user?.avatar} />
               </Flex>
               <Box>
                 <Box>
-                  <Heading fontSize='36px'>John Clinton</Heading>
+                  <Heading fontSize='36px'>
+                    {buyers?.user?.firstName} {buyers?.user?.lastName}
+                  </Heading>
                   <Flex py={2}>
                     <Icon
                       as={FaMapMarkerAlt}
@@ -94,7 +116,11 @@ const AboutBuyer = () => {
                       h={5}
                       pt={1}
                     />
-                    <Text fontSize='18px'> Waterloo, London</Text>
+                    <Text fontSize='18px'>
+                      {' '}
+                      {buyers?.onboarding?.info?.address?.street},{' '}
+                      {buyers?.onboarding?.info?.address?.state}
+                    </Text>
                   </Flex>
                 </Box>
                 <Box
@@ -105,20 +131,19 @@ const AboutBuyer = () => {
                   p={4}
                   w={{ md: 110 }}
                 >
-                  <Heading fontSize='18px'>Clinton Limited</Heading>
+                  <Heading fontSize='18px'>
+                    {buyers?.onboarding?.info?.name}
+                  </Heading>
                   <Text fontSize='14px' pb={4}>
-                    London, England
+                    {buyers?.onboarding?.info?.address?.state},{' '}
+                    {buyers?.onboarding?.info?.address?.country}
                   </Text>
                   <hr />
                   <Heading fontSize='18px' pt={2}>
                     Company description
                   </Heading>
                   <Text fontSize='14px'>
-                    Sandy loam soil is one of the most preferable types of soil
-                    for many types of plants.Planting in loam soil with a high
-                    percentage of sand is the same as planting in normal loam
-                    soil, but extra amendments may be made to compensate for
-                    slightly lower water
+                    {buyers?.onboarding?.info?.description}
                   </Text>
                 </Box>
                 <Box
@@ -133,9 +158,12 @@ const AboutBuyer = () => {
                 >
                   <Heading fontSize='18px'>Need</Heading>
                   <Flex pb={4} justifyContent='space-between'>
-                    <Text fontSize='14px'>Soya Beans | 100 tonnes</Text>
+                    <Text fontSize='14px'>
+                      {' '}
+                      {buyers?.crop?.variety?.name} | {buyers?.demand} tonnes
+                    </Text>
                     <Text color='cf.400' fontSize='16px' fontWeight={600}>
-                      $10,000 - $20,000
+                      ${buyers?.cost} per tonne
                     </Text>
                   </Flex>
                   <hr />
@@ -168,7 +196,7 @@ const AboutBuyer = () => {
                   <hr />
 
                   <Heading fontSize='18px' pt={2}>
-                    FAC
+                    {buyers?.deliveryMethod?.rule}
                   </Heading>
                   <Text p={1} fontSize='14px'>
                     Sandy loam soil is one of the most preferable types of soil
@@ -213,6 +241,9 @@ const AboutBuyer = () => {
       </Modal>
     </>
   )
+}
+AboutBuyer.propTypes = {
+  buyers: PropTypes.any.isRequired
 }
 
 export default AboutBuyer
