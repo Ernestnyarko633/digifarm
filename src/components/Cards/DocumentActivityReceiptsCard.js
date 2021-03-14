@@ -3,40 +3,6 @@ import { Box, Flex, Heading, Text, Link } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
 export default function FarmDocumentCard({ data, title, amount }) {
-  // const keys = [
-  //   {
-  //     name: 'Start Date',
-  //     data: {
-  //       date: new Date().toLocaleDateString(),
-  //       task: 'Riding',
-  //       amount: `$ ${amount}`
-  //     }
-  //   },
-  //   {
-  //     name: 'End Date',
-  //     data: {
-  //       date: new Date().toLocaleDateString(),
-  //       task: 'Riding',
-  //       amount: `$ ${amount}`
-  //     }
-  //   },
-  //   {
-  //     name: 'Total Tasks',
-  //     data: {
-  //       date: new Date().toLocaleDateString(),
-  //       task: 'Riding',
-  //       amount: `$ ${amount}`
-  //     }
-  //   },
-  //   {
-  //     name: 'Total Cost',
-  //     data: {
-  //       date: new Date().toLocaleDateString(),
-  //       task: 'Riding',
-  //       amount: `$ ${amount}`
-  //     }
-  //   }
-  // ]
   return (
     <Box
       w='687px'
