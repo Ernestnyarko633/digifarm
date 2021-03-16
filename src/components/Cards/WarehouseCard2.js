@@ -119,9 +119,7 @@ const WarehouseCard2 = ({
                 justify='space-between'
               >
                 <Box pt={2} py={4}>
-                  {' '}
                   <Text fontWeight='bold' fontSize='28px'>
-                    {' '}
                     {quantity}
                   </Text>
                   <Text fontWeight='light' color='gray.500' fontSize='16px'>
@@ -143,13 +141,11 @@ const WarehouseCard2 = ({
                 justify='space-between'
               >
                 <Box pt={2} py={4}>
-                  {' '}
                   <Text fontWeight='bold' fontSize='28px'>
-                    {' '}
                     {weight}
                   </Text>
                   <Text fontWeight='light' color='gray.500' fontSize='16px'>
-                    Weight(kg)
+                    Weight (kg)
                   </Text>
                 </Box>
                 <Divider
@@ -167,12 +163,15 @@ const WarehouseCard2 = ({
                 justify='space-between'
               >
                 <Box pt={2} py={4}>
-                  {' '}
                   <Text fontWeight='bold' fontSize='28px'>
-                    {' '}
                     {bags}
                   </Text>
-                  <Text fontWeight='light' color='gray.500' fontSize='16px'>
+                  <Text
+                    fontWeight='light'
+                    color='gray.500'
+                    fontSize='16px'
+                    pl={1}
+                  >
                     Number of bags
                   </Text>
                 </Box>
@@ -185,9 +184,7 @@ const WarehouseCard2 = ({
             </GridItem>
             <GridItem>
               <Box pt={2} py={4}>
-                {' '}
                 <Text fontWeight='bold' fontSize='28px'>
-                  {' '}
                   {condition}
                 </Text>
                 <Text fontWeight='light' color='gray.500' fontSize='16px'>
@@ -202,23 +199,6 @@ const WarehouseCard2 = ({
               View auditor report
             </Text>
           </Center>
-          {quantity && <Flex align='center' justify='space-between' mt={6} />}
-          {!quantity && (
-            <Flex align='center' justify='center' mt={6}>
-              <Button
-                btntitle='sold'
-                bg='gray.400'
-                color='gray.100'
-                cursor='not-allowed'
-                _hover={{ bg: 'gray.400' }}
-                _action={{ bg: 'gray.400' }}
-                rounded='30px'
-                shadow='none'
-                h={12}
-                w={56}
-              />
-            </Flex>
-          )}
         </Box>
       </Box>
     </Flex>

@@ -38,11 +38,14 @@ const BuyerCard = ({ buyers }) => {
         rounded='lg'
         bg='white'
         p={10}
+        pb={1}
+        mx={35}
         my={6}
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-        w='62%'
+        w='100%'
+        borderRadius='20px'
       >
-        <Flex justify='space-between'>
+        <Flex justify='space-between' pt={2}>
           <Flex mb={4}>
             <Avatar bg='gray.100' src={buyers?.user?.avatar} />
             <Box ml={2}>
@@ -65,12 +68,14 @@ const BuyerCard = ({ buyers }) => {
               onClosex={onClosex}
             />
             <Button
-              mt={4}
               colorScheme='linear'
               rounded='30px'
-              fontSize='xs'
-              width={{ md: '120px' }}
-              h={{ md: '40px' }}
+              ml={2}
+              mt={1}
+              borderWidth={1}
+              color='white'
+              borderColor='cf.400'
+              px={10}
               onClick={onOpenx}
             >
               Sell to buyer
@@ -79,11 +84,11 @@ const BuyerCard = ({ buyers }) => {
         </Flex>
         <Divider borderColor='gray.300' />
         <Box p={4}>
-          <Flex w='20.5%' justify='space-between' align='center'>
-            <Tag mt={2} size='lg' colorScheme='green' borderRadius='full'>
+          <Flex w='100%'>
+            <Tag mt={1} size='lg' colorScheme='green' borderRadius='full'>
               <TagLabel>Offer</TagLabel>
             </Tag>
-            <Text mt={1} fontWeight='bold' fontSize='1xl'>
+            <Text mt={1} fontWeight='bold' fontSize='20px' ml={4}>
               $ {buyers?.cost} per tonne
             </Text>
           </Flex>
@@ -103,12 +108,15 @@ const BuyerCard = ({ buyers }) => {
                 justify='space-between'
               >
                 <Box pt={2} py={4}>
-                  {' '}
-                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
-                    {' '}
+                  <Text fontWeight='bold' fontSize='28px'>
                     {buyers?.demand}
                   </Text>
-                  <Text fontWeight='light' color='gray.500'>
+                  <Text
+                    fontWeight='light'
+                    color='gray.500'
+                    fontSize='16px'
+                    pl={1}
+                  >
                     Tonnes needed
                   </Text>
                 </Box>
@@ -127,12 +135,15 @@ const BuyerCard = ({ buyers }) => {
                 justify='space-between'
               >
                 <Box pt={2} py={4}>
-                  {' '}
-                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
-                    {' '}
+                  <Text fontWeight='bold' fontSize='28px'>
                     {buyers?.supply}
                   </Text>
-                  <Text fontWeight='light' color='gray.500'>
+                  <Text
+                    fontWeight='light'
+                    color='gray.500'
+                    fontSize='16px'
+                    pl={1}
+                  >
                     Tonnes bought
                   </Text>
                 </Box>
@@ -151,12 +162,10 @@ const BuyerCard = ({ buyers }) => {
                 justify='space-between'
               >
                 <Box pt={2} py={4}>
-                  {' '}
-                  <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
-                    {' '}
+                  <Text fontWeight='bold' fontSize='28px'>
                     {buyers?.demand - buyers?.supply}
                   </Text>
-                  <Text fontWeight='light' color='gray.500'>
+                  <Text fontWeight='light' color='gray.500' fontSize='16px'>
                     Tonnes remaining
                   </Text>
                 </Box>
@@ -169,12 +178,10 @@ const BuyerCard = ({ buyers }) => {
             </GridItem>
             <GridItem>
               <Box pt={2} py={4}>
-                {' '}
-                <Text fontWeight='bold' fontSize={{ md: '4xl' }}>
-                  {' '}
+                <Text fontWeight='bold' fontSize='28px'>
                   {buyers?.deliveryMethod?.rule}
                 </Text>
-                <Text fontWeight='light' color='gray.500'>
+                <Text fontWeight='light' color='gray.500' fontSize='16px'>
                   Delivery option
                 </Text>
               </Box>
@@ -185,23 +192,6 @@ const BuyerCard = ({ buyers }) => {
               View auditor report
             </Text>
           </Center>
-          {/* {quantity && <Flex align='center' justify='space-between' mt={6} />}
-          {!quantity && (
-            <Flex align='center' justify='center' mt={6}>
-              <Button
-                btntitle='sold'
-                bg='gray.400'
-                color='gray.100'
-                cursor='not-allowed'
-                _hover={{ bg: 'gray.400' }}
-                _action={{ bg: 'gray.400' }}
-                rounded='30px'
-                shadow='none'
-                h={12}
-                w={56}
-              />
-            </Flex>
-          )} */}
         </Box>
       </Box>
     </Flex>
