@@ -59,12 +59,13 @@ const AboutBuyer = ({ buyers }) => {
         colorScheme='none'
         rounded='30px'
         ml={2}
-        mt={4}
-        onClick={onOpen}
+        mt={1}
         borderWidth={1}
-        borderColor='cf.400'
         color='cf.400'
         mr={2}
+        borderColor='cf.400'
+        px={10}
+        onClick={onOpen}
       >
         About Buyer
       </Button>
