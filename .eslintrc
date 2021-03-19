@@ -49,7 +49,6 @@
   "parser": "babel-eslint",
   "extends": [
     "prettier",
-    "prettier/react",
     "plugin:react/recommended",
     "@1f8/eslint-config-react"
   ]

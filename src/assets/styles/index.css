@@ -1,3 +1,8 @@
+::selection {
+  background-color: #3c9130;
+  color: #fff;
+}
+
 @font-face {
   font-family: 'CeraGR';
   font-style: normal;
@@ -59,7 +64,7 @@
   animation: dots 1s steps(5, end) infinite;
 }
 
-.loading-text-b{
+.loading-text-b {
   display: unset;
   top: unset;
   position: unset;
