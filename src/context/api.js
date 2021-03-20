@@ -97,6 +97,14 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${BUYER_API}/sourcings`, query })
   }
 
+  const getActivities = async query => {
+    return await http.get({ url: `${FMS_API}/activities`, query })
+  }
+
+  const getAllTasks = async query => {
+    return await http.get({ url: `${FMS_API}/tasks`, query })
+  }
+
   const getReceipt = async query => {
     return await http.get({ url: `${DIGITAL_FARMER_API}/receipt`, query })
   }
@@ -104,6 +112,13 @@ export const ApiContextProvider = ({ children }) => {
   const downloadOrder = async query => {
     return await http.get({
       url: `${DIGITAL_FARMER_API}/orders/download`,
+      query
+    })
+  }
+
+  const downloadTaskReceipt = async query => {
+    return await http.get({
+      url: `${FMS_API}/receipt`,
       query
     })
   }
@@ -116,9 +131,11 @@ export const ApiContextProvider = ({ children }) => {
         patchUser,
         getReceipt,
         getMyFarm,
+        getAllTasks,
         createOrder,
         getMyOrder,
         getMyFarms,
+        getActivities,
         getMyOrders,
         downloadOrder,
         initiatePayment,
@@ -127,6 +144,7 @@ export const ApiContextProvider = ({ children }) => {
         getSourcingOrders,
         getCropCategories,
         deleteBankTransfer,
+        downloadTaskReceipt,
         getMyScheduledTasks,
         uploadPaymentDetails
       }}

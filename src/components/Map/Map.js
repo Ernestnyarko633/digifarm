@@ -18,7 +18,7 @@ const Map = ({
   ...rest
 }) => {
   const { EOS_API, EOS_API_KEY } = configs()
-  const BAND = 'MSAVI'
+  const BAND = 'B11,B8A,B02'
   // console.log(
   //   'testing',
   //   viewID,

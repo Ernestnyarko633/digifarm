@@ -1,11 +1,11 @@
+import React, { useEffect, useState } from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import Button from 'components/Button'
-import React from 'react'
 import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import useEosApi from 'context/eosApi'
-import useFetch from 'hooks/useFetch'
+//import useFetch from 'hooks/useFetch'
 export default function Farm({
   onOpen,
   digitalFarmerFarm,
@@ -22,34 +22,62 @@ export default function Farm({
   reloads
 }) {
   const [_loading, _setLoading] = React.useState(false)
+  const [
+    EOSTaskForStatsCreationIsLoading,
+    setEOSTaskForStatsCreationIsLoading
+  ] = useState(false)
+  const [
+    EOSTaskForStatsCreationHasError,
+    setEOSTaskForStatsCreationHasError
+  ] = useState(null)
+  const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({})
   const [__error, _setError] = React.useState(null)
   const { getEOSStatistics, createEOSTaskForStats } = useEosApi()
 
-  let EOSTaskForStatsCreationPayload = {
-    type: 'lbe',
-    params: {
-      view_id: EOSViewID?.results[0]?.view_id,
-      bands: ['B02', 'B03', 'B04'],
-      geometry: {
-        type: 'Polygon',
-        coordinates: [location]
-      },
-      merge: true,
+  useEffect(() => {
+    let mounted = true
+    let EOSTaskForStatsCreationPayload = {
+      type: 'lbe',
+      params: {
+        view_id: EOSViewID?.results[0]?.view_id,
+        bands: ['B02', 'B03', 'B04'],
+        geometry: {
+          type: 'Polygon',
+          coordinates: [location]
+        },
+        merge: true,
 
-      reference: 'ref_datetime'
+        reference: 'ref_datetime'
+      }
     }
-  }
 
-  const {
-    data: EOSTaskForStatsCreated,
-    isLoading: EOSTaskForStatsCreationIsLoading,
-    error: EOSTaskForStatsCreationHasError
-  } = useFetch(
-    'eos_task_stats_creation',
-    createEOSTaskForStats,
-    reload,
-    EOSTaskForStatsCreationPayload
-  )
+    const fetchData = async payload => {
+      try {
+        let key = `${EOSViewID?.results[0]?.view_id}_os_task_stats_creation`
+        const dataFromStorage = JSON.parse(sessionStorage.getItem(key))
+        if (dataFromStorage) {
+          return setEOSTaskForStatsCreated(dataFromStorage)
+        } else {
+          setEOSTaskForStatsCreationHasError(null)
+          setEOSTaskForStatsCreationIsLoading(true)
+          const res = await createEOSTaskForStats(payload)
+          if (mounted) {
+            key && sessionStorage.setItem(key, JSON.stringify(res))
+          }
+          setEOSTaskForStatsCreated(res)
+          setEOSTaskForStatsCreationIsLoading(false)
+        }
+      } catch (error) {
+        setEOSTaskForStatsCreationHasError(error)
+        setEOSTaskForStatsCreationIsLoading(false)
+      }
+    }
+    if (mounted) {
+      EOSViewID && location && fetchData(EOSTaskForStatsCreationPayload)
+    }
+
+    return () => (mounted = false)
+  }, [location, EOSViewID, createEOSTaskForStats, reload])
 
   const DownloadVisual = async downloadTaskID => {
     try {
@@ -78,18 +106,20 @@ export default function Farm({
       _error={_error}
     >
       <Box h={{ md: 128 }} w='100%'>
-        <Box
-          h='100%'
-          w='100%'
-          objectFit='cover'
-          as={Map}
-          viewID={EOSViewID?.results[0]?.view_id}
-          loading={loading || EOSTaskForStatsCreationIsLoading}
-          error={error}
-          _error={_error || EOSTaskForStatsCreationHasError}
-          center={[-1.531048, 5.578849]}
-          reloads={reloads}
-        />
+        {EOSViewID && (
+          <Box
+            h='100%'
+            w='100%'
+            objectFit='cover'
+            as={Map}
+            viewID={EOSViewID?.results[0]?.view_id}
+            loading={loading || EOSTaskForStatsCreationIsLoading}
+            error={error}
+            _error={_error || EOSTaskForStatsCreationHasError}
+            center={[-1.531048, 5.578849]}
+            reloads={reloads}
+          />
+        )}
       </Box>
       <Flex align='center' justify='flex-end' my={{ md: 6 }} px={{ md: 6 }}>
         <Button

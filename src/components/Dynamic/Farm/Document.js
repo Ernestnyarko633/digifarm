@@ -13,8 +13,13 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-export default function Document({ digitalFarmerFarm }) {
-  const [state, setState] = React.useState('compA')
+export default function Document({
+  digitalFarmerFarm,
+  activities,
+  tasks,
+  ScheduledTasks
+}) {
+  let state = 'compA'
 
   return (
     <Grid
@@ -67,48 +72,12 @@ export default function Document({ digitalFarmerFarm }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
-          <Flex
-            align='center'
-            borderBottomWidth={4}
-            borderBottomColor='gray.200'
-            pb={2}
-            w={{ md: 72 }}
-            pos='relative'
-          >
-            <Box
-              as='button'
-              role='button'
-              aria-label='individual button'
-              fontWeight={state === 'compA' ? 900 : 400}
-              onClick={() => setState('compA')}
-              mr={{ md: 14 }}
-              fontSize={{ md: 'lg' }}
-              letterSpacing='wider'
-              pos='relative'
-            >
-              Individual
-              <Box
-                borderBottomWidth={4}
-                borderBottomColor='cf.400'
-                pos='absolute'
-                bottom={0}
-              />
-            </Box>
-            <Box
-              as='button'
-              role='button'
-              aria-label='cooperative button'
-              fontWeight={state === 'compB' ? 900 : 400}
-              onClick={() => setState('compB')}
-              fontSize={{ md: 'lg' }}
-              letterSpacing='wider'
-            >
-              Cooperative
-            </Box>
-          </Flex>
           <Box mt={{ md: 10 }}>
             <DynamicDocument
               document={state}
+              activities={activities}
+              tasks={tasks}
+              ScheduledTasks={ScheduledTasks}
               digitalFarmerFarm={digitalFarmerFarm}
             />
           </Box>
@@ -138,5 +107,8 @@ export default function Document({ digitalFarmerFarm }) {
 }
 
 Document.propTypes = {
-  digitalFarmerFarm: PropTypes.any
+  digitalFarmerFarm: PropTypes.any,
+  activities: PropTypes.any,
+  tasks: PropTypes.any,
+  ScheduledTasks: PropTypes.any
 }

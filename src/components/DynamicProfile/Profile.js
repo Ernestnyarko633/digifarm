@@ -40,11 +40,18 @@ const Profile = () => {
     email: user?.email,
     phoneNumber: user?.phoneNumber,
     IdType: '',
-    IDNumber: '',
+    IDNumber: ''
+  }
+
+  const bankValues = {
     bankName: '',
     bankBranch: '',
+    branchCountry: '',
+    currency: '',
+    swiftCode: '',
     accountName: '',
-    accountNumber: ''
+    accountNumber: '',
+    iban: ''
   }
 
   const onSubmit = async (
@@ -226,16 +233,6 @@ const Profile = () => {
                     bg='white'
                   />
 
-                  {/* <FormInput
-                    label='Phone number'
-                    name='phoneNumber'
-                    value={values.phoneNumber}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='white'
-                  /> */}
-
                   <FormInput
                     label='Email'
                     value={values.email}
@@ -304,52 +301,140 @@ const Profile = () => {
             bg='white'
           />
         </Box>
-      </Box>
 
-      <Box rounded='xl' shadow='md' my={12} bg='white' p={10}>
-        <Box m={10}>
-          <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
-            Bank details
-          </Heading>
-          <Grid templateColumns='repeat(2, 1fr)' w={{ md: '100%' }} gap={6}>
-            <FormInput
-              label='Bank name'
-              name='bankName'
-              // value={values.bankName}
-              isRequired
-              bg='white'
-            />
-            <FormInput
-              label='Bank branch'
-              name='bankBranch'
-              // value={values.bankBranch}
-              isRequired
-              bg='white'
-            />
-          </Grid>
-          <Grid
-            templateColumns='repeat(2, 1fr)'
-            w={{ md: '100%' }}
-            gap={6}
-            py={{ md: 10 }}
+        <Box textAlign='right' mt={6}>
+          <Button
+            colorScheme='linear'
+            rounded='30px'
+            w={40}
+            h={12}
+            shadow='sm'
+            ml={4}
+            type='submit'
+            // isLoading={isSubmitting}
           >
-            <FormInput
-              label='Account name'
-              name='accountName'
-              // value={values.accountName}
-              isRequired
-              bg='white'
-            />
-            <FormInput
-              label='Account number'
-              name='accountNumber'
-              // value={values.accountNumber}
-              isRequired
-              bg='white'
-            />
-          </Grid>
+            Save
+          </Button>
         </Box>
       </Box>
+
+      <Formik initialValues={bankValues}>
+        {({ values, isSubmitting, handleBlur, handleChange, handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Box rounded='xl' shadow='md' my={12} bg='white' p={10}>
+              <Box m={10}>
+                <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
+                  Bank details
+                </Heading>
+                <Grid
+                  templateColumns='repeat(2, 1fr)'
+                  w={{ md: '100%' }}
+                  gap={6}
+                >
+                  <FormInput
+                    label='Bank name'
+                    name='bankName'
+                    value={values.bankName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                  />
+
+                  <FormInput
+                    label='Bank branch'
+                    name='bankBranch'
+                    value={values.bankBranch}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                  />
+
+                  <FormInput
+                    label='Branch Country'
+                    name='branchCountry'
+                    value={values.branchCountry}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                  />
+
+                  <FormInput
+                    label='Account Name'
+                    name='accountName'
+                    value={values.accountName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                  />
+
+                  <FormInput
+                    label='Account Number'
+                    name='accountNumber'
+                    value={values.accountNumber}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    disabled={values.iban.length > 1}
+                    isRequired
+                    type='account'
+                    bg='white'
+                  />
+
+                  <FormInput
+                    label='IBAN Number'
+                    name='iban'
+                    value={values.iban}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    type='account'
+                    disabled={values.accountNumber.length > 1}
+                    bg='white'
+                  />
+
+                  <FormInput
+                    label='Account Currency'
+                    name='currency'
+                    value={values.currency}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                  />
+
+                  <FormInput
+                    label='Swift Code'
+                    name='swiftCode'
+                    value={values.swiftCode}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isRequired
+                    bg='white'
+                  />
+                </Grid>
+
+                <Box textAlign='right' mt={6}>
+                  <Button
+                    colorScheme='linear'
+                    rounded='30px'
+                    w={40}
+                    h={12}
+                    shadow='sm'
+                    ml={4}
+                    type='submit'
+                    isLoading={isSubmitting}
+                  >
+                    Save
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          </form>
+        )}
+      </Formik>
     </Container>
   )
 }

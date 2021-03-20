@@ -1,5 +1,4 @@
-/*eslint-disable*/
-import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
+import { Box, Flex, Text, Avatar, Stack, Skeleton } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
 import useAuth from 'context/auth'
@@ -28,7 +27,9 @@ export default function Farm() {
   const {
     getMyFarmFeeds,
     getSourcingOrders,
+    getAllTasks,
     getMyFarm,
+    getActivities,
     getMyScheduledTasks
   } = useApi()
 
@@ -36,7 +37,7 @@ export default function Farm() {
     data: yourFarm,
     isLoading: yourFarmIsLoading,
     error: yourFarmHasError
-  } = useFetch('digital_farmer_farm', getMyFarm, reload, id)
+  } = useFetch(`${id}_digital_farmer_farm`, getMyFarm, reload, id)
 
   React.useEffect(() => {
     let location_ = []
@@ -57,39 +58,75 @@ export default function Farm() {
     data: yourFarmFeeds,
     isLoading: yourFarmFeedsIsLoading,
     error: yourFarmFeedsHasError
-  } = useFetch('feed_feeds', getMyFarmFeeds, reload, {
-    farm: yourFarm?.order?.product?._id
-  })
+  } = useFetch(
+    `${yourFarm?.order?.product?._id}_farm_feeds`,
+    getMyFarmFeeds,
+    reload,
+    {
+      farm: yourFarm?.order?.product?._id
+    }
+  )
 
   const {
     data: SourcingOrders,
     isLoading: SourcingOrdersIsLoading,
     error: SourcingOrdersHasError
-  } = useFetch('sourcing_orders', getSourcingOrders, reload, {
-    cropVariety: yourFarm?.order?.product?.cropVariety._id
-  })
+  } = useFetch(
+    `${yourFarm?.order?.product?.cropVariety._id}_sourcing_orders`,
+    getSourcingOrders,
+    reload,
+    {
+      cropVariety: yourFarm?.order?.product?.cropVariety._id
+    }
+  )
 
   const {
     data: ScheduledTasks,
     isLoading: ScheduledTasksIsLoading,
     error: ScheduledTasksHasError
-  } = useFetch('sourcing_orders', getMyScheduledTasks, reload, {
-    farm: yourFarm?.order?.product?._id
-  })
+  } = useFetch(
+    `${yourFarm?.order?.product?._id}_scheduled_tasks`,
+    getMyScheduledTasks,
+    reload,
+    {
+      farm: yourFarm?.order?.product?._id
+    }
+  )
 
-  
+  const {
+    data: myFarmActivities,
+    isLoading: myFarmActivitiesIsLoading,
+    error: myFarmActivitiesHasError
+  } = useFetch(
+    `${yourFarm?.order?.product?.protocol?._id}_activities`,
+    getActivities,
+    reload,
+    {
+      protocol: yourFarm?.order?.product?.protocol?._id
+    }
+  )
+
+  const {
+    data: tasks,
+    isLoading: tasksIsLoading,
+    error: tasksHasError
+  } = useFetch('tasks', getAllTasks, reload)
+
   const isLoading =
-  SourcingOrdersIsLoading ||
-  yourFarmFeedsIsLoading ||
-  yourFarmIsLoading ||
-  ScheduledTasksIsLoading
+    SourcingOrdersIsLoading ||
+    yourFarmFeedsIsLoading ||
+    yourFarmIsLoading ||
+    ScheduledTasksIsLoading ||
+    myFarmActivitiesIsLoading ||
+    tasksIsLoading
   const hasError =
-  SourcingOrdersHasError ||
-  yourFarmFeedsHasError ||
-  yourFarmHasError ||
-  ScheduledTasksHasError
-  
-  console.log(isLoading, hasError, ScheduledTasks, yourFarm, yourFarmFeeds, "mustshow", location)
+    SourcingOrdersHasError ||
+    yourFarmFeedsHasError ||
+    yourFarmHasError ||
+    ScheduledTasksHasError ||
+    myFarmActivitiesHasError ||
+    tasksHasError
+
   const onClose = () => setIsOpen(false)
 
   const onOpen = () => setIsOpen(true)
@@ -99,6 +136,16 @@ export default function Farm() {
     onOpen()
   }
 
+  if (isLoading) {
+    return (
+      <Stack p={10} mt={24} spacing={4} w='auto' h='auto'>
+        <Skeleton bg='gray.100' height='20%' rounded='lg' />
+        <Skeleton bg='gray.100' height='20%' rounded='lg' />
+        <Skeleton bg='gray.100' height='20%' rounded='lg' />
+        <Skeleton bg='gray.100' height='20%' rounded='lg' />
+      </Stack>
+    )
+  }
   return (
     <Box pos='relative' ref={ref}>
       <Share isOpen={isOpen} onClose={onClose} image={image} />
@@ -175,6 +222,8 @@ export default function Farm() {
             loading={isLoading}
             error={hasError}
             farm={state}
+            tasks={tasks}
+            activities={myFarmActivities}
             ScheduledTasks={ScheduledTasks}
             digitalFarmerFarm={yourFarm}
             farmfeeds={yourFarmFeeds}

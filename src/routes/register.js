@@ -18,6 +18,11 @@ const Router = () => {
         <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
         <PrivateRoute exact path='/start-farm' component={Pages.StartFarm} />
         <PrivateRoute exact path='/farm/:id' component={Pages.Farm} />
+        {/* <PrivateRoute
+          exact
+          path='/documents/receipt'
+          component={Pages.Receipt}
+        /> */}
         <PrivateRoute
           exact
           path='/start-farm/individual'
