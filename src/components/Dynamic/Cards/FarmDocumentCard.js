@@ -5,35 +5,33 @@ import Button from 'components/Button'
 import useComponent from 'context/component'
 
 export default function FarmDocumentCard({
+  key,
   title,
   subtitle,
   receipt,
   date,
+  ScheduledTasks,
+  tasksNumber,
+  __activityID,
   amount
 }) {
   const { handleModalClick } = useComponent()
+
   const thisData = {
     title,
-    subtitle,
-    receipt,
-    date,
-    amount
+    amount,
+    ScheduledTasks: ScheduledTasks.filter(
+      _task => __activityID === _task.taskId.activity._id
+    )
   }
   const keys = [
-    { name: 'Start Date', data: new Date().toLocaleDateString() },
-    {
-      name: 'End Date',
-      data: new Date(
-        new Date().setDate(new Date().getDate() + 30)
-      ).toLocaleDateString()
-    },
-    { name: 'Total Tasks', data: 0 },
+    { name: 'Total Tasks', data: tasksNumber },
     { name: 'Total Cost', data: `$ ${amount}` }
   ]
   return (
     <Box
       w='408px'
-      h='336px'
+      h='236px'
       bg='white'
       rounded='lg'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
@@ -68,31 +66,37 @@ export default function FarmDocumentCard({
             </Flex>
           )
         })}
-        <Button
-          btntitle='View all receipts'
-          bg='white'
-          borderWidth={1}
-          borderColor='cf.400'
-          color='cf.400'
-          rounded='30px'
-          my={5}
-          colorScheme='none'
-          w='100%'
-          h={50}
-          _hover={{ bg: 'white' }}
-          shadow='none'
-          fontSize='md'
-          onClick={() => handleModalClick('activity-receipts', thisData)}
-        />
+        {thisData.ScheduledTasks.length > 0 && (
+          <Button
+            btntitle='View all receipts'
+            bg='white'
+            borderWidth={1}
+            borderColor='cf.400'
+            color='cf.400'
+            rounded='30px'
+            my={5}
+            colorScheme='none'
+            w='100%'
+            h={50}
+            _hover={{ bg: 'white' }}
+            shadow='none'
+            fontSize='md'
+            onClick={() => handleModalClick('activity-receipts', thisData)}
+          />
+        )}
       </Flex>
     </Box>
   )
 }
 
 FarmDocumentCard.propTypes = {
+  key: PropTypes.any,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   receipt: PropTypes.string,
   date: PropTypes.string,
-  amount: PropTypes.string
+  amount: PropTypes.any,
+  tasksNumber: PropTypes.any,
+  ScheduledTasks: PropTypes.any,
+  __activityID: PropTypes.any
 }

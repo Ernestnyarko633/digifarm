@@ -9,14 +9,30 @@ const components = {
   // compB: Cooperative
 }
 
-const DynamicDocument = ({ document, digitalFarmerFarm }) => {
+const DynamicDocument = ({
+  document,
+  digitalFarmerFarm,
+  activities,
+  ScheduledTasks,
+  tasks
+}) => {
   const SelectedCard = components[document]
-  return <SelectedCard digitalFarmerFarm={digitalFarmerFarm} />
+  return (
+    <SelectedCard
+      digitalFarmerFarm={digitalFarmerFarm}
+      ScheduledTasks={ScheduledTasks}
+      activities={activities}
+      tasks={tasks}
+    />
+  )
 }
 
 DynamicDocument.propTypes = {
   document: PropTypes.string.isRequired,
-  digitalFarmerFarm: PropTypes.any
+  digitalFarmerFarm: PropTypes.any,
+  activities: PropTypes.any,
+  tasks: PropTypes.any,
+  ScheduledTasks: PropTypes.any
 }
 
 export default DynamicDocument

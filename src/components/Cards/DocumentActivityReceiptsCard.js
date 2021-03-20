@@ -2,45 +2,7 @@ import React from 'react'
 import { Box, Flex, Heading, Text, Link } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
-export default function FarmDocumentCard({ title, amount }) {
-  const keys = [
-    {
-      name: 'Start Date',
-      data: {
-        date: new Date().toLocaleDateString(),
-        receiptNo: 'ASJD2134S',
-        task: 'Riding',
-        amount: `$ ${amount}`
-      }
-    },
-    {
-      name: 'End Date',
-      data: {
-        date: new Date().toLocaleDateString(),
-        receiptNo: 'ASJD2134S',
-        task: 'Riding',
-        amount: `$ ${amount}`
-      }
-    },
-    {
-      name: 'Total Tasks',
-      data: {
-        date: new Date().toLocaleDateString(),
-        receiptNo: 'ASJD2134S',
-        task: 'Riding',
-        amount: `$ ${amount}`
-      }
-    },
-    {
-      name: 'Total Cost',
-      data: {
-        date: new Date().toLocaleDateString(),
-        receiptNo: 'ASJD2134S',
-        task: 'Riding',
-        amount: `$ ${amount}`
-      }
-    }
-  ]
+export default function FarmDocumentCard({ data, title, amount }) {
   return (
     <Box
       w='687px'
@@ -73,36 +35,31 @@ export default function FarmDocumentCard({ title, amount }) {
           borderBottomColor='gray.200'
           py={5}
         >
-          <Box w='20%'>
+          <Box w='25%'>
             <Text color='gray.500' fontSize='sm'>
               DATE
             </Text>
           </Box>
-          <Box w='20%'>
-            <Text color='gray.500' fontSize='sm'>
-              RECEIPT NO.
-            </Text>
-          </Box>
-          <Box w='20%'>
+          <Box w='25%'>
             <Text color='gray.500' fontSize='sm'>
               TASK
             </Text>
           </Box>
-          <Box w='20%'>
+          <Box w='25%'>
             <Text color='gray.500' fontSize='sm'>
               AMOUNT
             </Text>
           </Box>
-          <Box w='20%'>
+          <Box w='25%'>
             <Text color='gray.500' fontSize='sm'>
               {' '}
             </Text>
           </Box>
         </Flex>
-        {keys.map((_key, index) => {
+        {data?.map((_key, index) => {
           return (
             <Flex
-              key={_key.name}
+              key={_key._id}
               direction='row'
               justify='space-between'
               align='center'
@@ -110,27 +67,24 @@ export default function FarmDocumentCard({ title, amount }) {
               borderBottomColor='gray.200'
               py={5}
             >
-              <Box w='20%'>
+              <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>
-                  {_key.data.date}
+                  {new Date(
+                    _key.actual_endDate || _key.endDate
+                  ).toLocaleDateString()}
                 </Heading>
               </Box>
-              <Box w='20%'>
+              <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>
-                  {_key.data.receiptNo}
+                  {_key?.taskId?.name}
                 </Heading>
               </Box>
-              <Box w='20%'>
+              <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>
-                  {_key.data.task}
+                  {_key?.taskId?.budget}
                 </Heading>
               </Box>
-              <Box w='20%'>
-                <Heading textAlign='left' fontSize='lg'>
-                  {_key.data.amount}
-                </Heading>
-              </Box>
-              <Box w='20%'>
+              <Box w='25%'>
                 <Link color='cf.400'>Download</Link>
               </Box>
             </Flex>
@@ -142,9 +96,7 @@ export default function FarmDocumentCard({ title, amount }) {
 }
 
 FarmDocumentCard.propTypes = {
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  receipt: PropTypes.string,
-  date: PropTypes.string,
-  amount: PropTypes.string
+  data: PropTypes.any,
+  title: PropTypes.any,
+  amount: PropTypes.any
 }

@@ -18,12 +18,14 @@ const components = {
 
 const DynamicFarm = ({
   farm,
+  tasks,
   onOpen,
   digitalFarmerFarm,
   ScheduledTasks,
   dateIntervals,
   reloads,
   farmfeeds,
+  activities,
   loading,
   location,
   reload,
@@ -164,8 +166,10 @@ const DynamicFarm = ({
           reload={reload}
           reloads={reloads}
           onOpen={onOpen}
+          tasks={tasks}
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
+          activities={activities}
           EOSStatistics={EOSStatistics}
           EOSViewID={EOSViewID}
           WeatherForeCasts={WeatherForeCasts}
@@ -213,7 +217,9 @@ DynamicFarm.propTypes = {
   loading: PropTypes.any,
   location: PropTypes.any,
   reload: PropTypes.any,
-  dateIntervals: PropTypes.any
+  dateIntervals: PropTypes.any,
+  activities: PropTypes.any,
+  tasks: PropTypes.any
 }
 
 export default DynamicFarm
