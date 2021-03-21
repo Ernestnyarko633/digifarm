@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Avatar, Stack, Skeleton } from '@chakra-ui/react'
+import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
 import useAuth from 'context/auth'
@@ -136,16 +136,27 @@ export default function Farm() {
     onOpen()
   }
 
-  if (isLoading) {
-    return (
-      <Stack p={10} mt={24} spacing={4} w='auto' h='auto'>
-        <Skeleton bg='gray.100' height='20%' rounded='lg' />
-        <Skeleton bg='gray.100' height='20%' rounded='lg' />
-        <Skeleton bg='gray.100' height='20%' rounded='lg' />
-        <Skeleton bg='gray.100' height='20%' rounded='lg' />
-      </Stack>
-    )
-  }
+  // if(isLoading){
+
+  //   return (
+  //     <Flex direction="row" w={{md: 'auto'}} h={{md: '1000px'}} justify="space-between">
+  //        <Stack mt={24} pt={10} spacing={4} w='15%' h='100%' >
+  //               <Skeleton bg='gray.100' height='100%' rounded='lg' />
+
+  //     </Stack>
+  //        <Stack mt={24} pt={10} spacing={4} w='50%' h='50%'>
+  //               <Skeleton bg='gray.100' height='100%' rounded='lg' />
+  //     </Stack>
+  //     <Stack mt={24} pt={10} spacing={4} w='25%' h='100%' >
+  //       <Skeleton bg='gray.100' height='20%' rounded='lg' />
+  //       <Skeleton bg='gray.100' height='20%' rounded='lg' />
+  //       <Skeleton bg='gray.100' height='20%' rounded='lg' />
+  //       <Skeleton bg='gray.100' height='20%' rounded='lg' />
+  //     </Stack>
+  //     </Flex>
+  //   )
+  // }
+
   return (
     <Box pos='relative' ref={ref}>
       <Share isOpen={isOpen} onClose={onClose} image={image} />
