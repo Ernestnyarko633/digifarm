@@ -15,6 +15,7 @@ const Logout = lazy(() => import('./logout'))
 const Forum = lazy(() => import('./forum'))
 const Auth = lazy(() => import('./auth'))
 const Farm = lazy(() => import('./farm'))
+// const Receipt = lazy(() => import('./receipt'))
 
 const Pages = {
   Auth,
@@ -32,6 +33,7 @@ const Pages = {
   Marketplace,
   Cooperative,
   Warehouse
+  // Receipt
 }
 
 export default Pages

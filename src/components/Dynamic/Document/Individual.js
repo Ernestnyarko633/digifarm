@@ -70,6 +70,7 @@ export default function Individual({
             return (
               <FarmDocumentCard
                 key={_activity?._id}
+                digitalFarmerFarm={digitalFarmerFarm}
                 __activityID={_activity?._id}
                 title={_activity?.name}
                 ScheduledTasks={ScheduledTasks.filter(

@@ -1,12 +1,51 @@
-import React from 'react'
-import { Box, Flex, Heading, Text, Link } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Box, Flex, Heading, Text, Button } from '@chakra-ui/react'
+import useApi from 'context/api'
 import PropTypes from 'prop-types'
+import useAuth from 'context/auth'
+import useComponent from 'context/component'
+import { useHistory } from 'react-router-dom'
+/*eslint-disable */
+export default function FarmDocumentCard({
+  data,
+  digitalFarmerFarm,
+  title,
+  amount
+}) {
+  const { _xclip } = useComponent()
+  const history = useHistory()
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  const { downloadTaskReceipt } = useApi()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const { _receipt, setReceipt } = useState({})
+  const _downloadPDF = async (task) => {
+    try {
+      setLoading(true)
+      setError(null)
+      const res = await downloadTaskReceipt({
+        digitalfarmer: user?._id,
+        task: task?._id,
+        farm: digitalFarmerFarm?._id
+      })
+      setReceipt(res.data)
+      console.log(res.data, 'datafromspace')
+      _xclip(res.data)
+      setLoading(false)
+      history.push(`/documents/${_receipt?.reference.trim()}/receipt`)
+    } catch (error) {
+      setError(error)
+      setLoading(false)
+    }
 
-export default function FarmDocumentCard({ data, title, amount }) {
+  
+      
+  }
   return (
     <Box
-      w='687px'
-      h='390px'
+      w={{ md: '687px' }}
+      h={{ md: '390px' }}
       bg='white'
       rounded='lg'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
@@ -85,7 +124,14 @@ export default function FarmDocumentCard({ data, title, amount }) {
                 </Heading>
               </Box>
               <Box w='25%'>
-                <Link color='cf.400'>Download</Link>
+                <Button
+                  color='cf.400'
+                  onClick={() => _downloadPDF(_key)}
+                  isLoading={loading}
+                  isDisabled={loading}
+                >
+                  Download
+                </Button>
               </Box>
             </Flex>
           )
@@ -98,5 +144,6 @@ export default function FarmDocumentCard({ data, title, amount }) {
 FarmDocumentCard.propTypes = {
   data: PropTypes.any,
   title: PropTypes.any,
-  amount: PropTypes.any
+  amount: PropTypes.any,
+  digitalFarmerFarm: PropTypes.any
 }

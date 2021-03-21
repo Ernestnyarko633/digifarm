@@ -9,6 +9,7 @@ export const ComponentContextProvider = ({ children }) => {
   const [data, setData] = useState([])
   const [mode, setMode] = useState('')
   const [modal, setModal] = useState('')
+  const [clip, setClip] = useState({})
   const [state, setState] = React.useState('farms')
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -24,16 +25,21 @@ export const ComponentContextProvider = ({ children }) => {
     [onOpen]
   )
 
+  const _xclip = useCallback(_clip => {
+    setClip(_clip)
+  }, [])
   return (
     <ComponentContext.Provider
       value={{
         id,
         mode,
         data,
+        clip,
         modal,
         isOpen,
         onClose,
         handleModalClick,
+        _xclip,
         state,
         setState,
         currentSlide,

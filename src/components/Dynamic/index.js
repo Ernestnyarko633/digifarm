@@ -161,7 +161,7 @@ const DynamicFarm = ({
 
   return (
     <React.Fragment>
-      {!loading && EOSViewID && (
+      {!loading && (
         <SelectedFarm
           reload={reload}
           reloads={reloads}
