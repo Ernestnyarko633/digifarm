@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react'
+import { Box, useDisclosure } from '@chakra-ui/react'
 
 import Layout from 'container/Layout'
 
@@ -14,9 +14,12 @@ import HomeEmptyState from 'components/EmptyStates/HomeEmptyState'
 import Greetings from 'components/Utils/Greetings'
 import { getCurrentDayParting } from 'helpers/misc'
 import useComponent from 'context/component'
+import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
 
 const Dashboard = () => {
   document.title = 'Complete Farmer | Dashboard'
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [reloadMyFarms, setReloadMyFarms] = React.useState(0)
   const [reloadMyOrders, setReloadMyOrders] = React.useState(0)
@@ -52,12 +55,13 @@ const Dashboard = () => {
 
   const handleClick = direction => {
     setCurrentSlide(prevState => {
-      return (myFarms.length + prevState + direction) % myFarms.length
+      return (myOrder.length + prevState + direction) % myOrder.length
     })
   }
 
   return (
     <Layout>
+      <CompleteOrderModal isOpen={isOpen} onClose={onClose} />
       <Greetings
         title={`${message} Farmer ${user?.firstName}`}
         text='Get started by farming individually or with a group.'
@@ -78,11 +82,12 @@ const Dashboard = () => {
             text='Standby as we load your current farms and pending orders'
           />
         </Box>
-      ) : myFarms?.length && myOrder?.length ? (
+      ) : myFarms?.length || myOrder?.length ? (
         <FarmOrderSection
           farms={myFarms}
           orders={myOrder}
           handleClick={handleClick}
+          onOpen={onOpen}
         />
       ) : (
         <HomeEmptyState />

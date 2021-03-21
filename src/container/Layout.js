@@ -24,7 +24,7 @@ const Layout = ({
     >
       <Header />
       {leftSidebar && (
-        <GridItem shadow='xl' zIndex={40}>
+        <GridItem shadow='xl' zIndex={40} bg='white'>
           <Sidebar />
         </GridItem>
       )}

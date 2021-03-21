@@ -7,7 +7,7 @@ import OrdersCard from 'components/Cards/OrdersCard'
 import useComponent from 'context/component'
 import FarmsCard from 'components/Cards/FarmsCard'
 
-const FarmOrderSection = ({ farms, orders, handleClick }) => {
+const FarmOrderSection = ({ farms, orders, handleClick, onOpen }) => {
   const { state, setState } = useComponent()
 
   return (
@@ -56,7 +56,7 @@ const FarmOrderSection = ({ farms, orders, handleClick }) => {
       <Box>
         <Flex>
           {state === 'farms' && <FarmsCard data={farms} />}
-          {state === 'orders' && <OrdersCard data={orders} />}
+          {state === 'orders' && <OrdersCard data={orders} onOpen={onOpen} />}
         </Flex>
       </Box>
     </Box>
@@ -66,7 +66,8 @@ const FarmOrderSection = ({ farms, orders, handleClick }) => {
 FarmOrderSection.propTypes = {
   farms: PropTypes.array.isRequired,
   orders: PropTypes.array.isRequired,
-  handleClick: PropTypes.func
+  handleClick: PropTypes.func,
+  onOpen: PropTypes.bool
 }
 
 export default FarmOrderSection
