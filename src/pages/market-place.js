@@ -13,6 +13,7 @@ import useAuth from 'context/auth'
 import { motion } from 'framer-motion'
 import AboutBuyer from 'components/Modals/AboutBuyer'
 import useFetch from 'hooks/useFetch'
+import { Button } from 'carbon-components-react'
 
 
 // const MotionFlex = motion.custom(Flex)
@@ -92,7 +93,14 @@ const Marketplace = () => {
           </Flex>
         </Box> 
         <Box mt ={-5} p={16} bgColor='cf-dark.300'>
-          <Heading ml={10}>Buyers you can sell to</Heading>
+          <Heading ml={10} mb={4}>Buyers you can sell to</Heading>
+          <Flex ml={10}>
+              <Box cursor='pointer'>Ready Buyers</Box>
+              <Box mx={10} />
+              <Box cursor='pointer'>Ongoing Transations</Box>
+              <Box mx={10} />
+              <Box cursor='pointer'>Past Buyers</Box>
+          </Flex>
             <Flex my={3} w='62%' align='center' direction='column'>
             {SourcingOrders?.map(buyers =>(
             <BuyerCard
