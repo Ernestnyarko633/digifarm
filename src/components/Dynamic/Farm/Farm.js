@@ -6,6 +6,7 @@ import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import useEosApi from 'context/eosApi'
 //import useFetch from 'hooks/useFetch'
+import FetchCard from 'components/FetchCard'
 export default function Farm({
   onOpen,
   digitalFarmerFarm,
@@ -120,33 +121,55 @@ export default function Farm({
             reloads={reloads}
           />
         )}
+        {!loading && !EOSViewID && (
+          <Flex w='100%' h='100%'>
+            <FetchCard
+              direction='column'
+              align='center'
+              justify='center'
+              mx='auto'
+              reload={() => {
+                ;(error || _error) && reloads[0]()
+              }}
+              loading={loading}
+              error={error || _error}
+              text={
+                !error || !_error
+                  ? 'Standby as we load your current farms and pending orders'
+                  : 'Something went wrong, please dont fret'
+              }
+            />
+          </Flex>
+        )}
       </Box>
-      <Flex align='center' justify='flex-end' my={{ md: 6 }} px={{ md: 6 }}>
-        <Button
-          btntitle='Download'
-          bg='white'
-          borderWidth={2}
-          borderColor='cf.400'
-          rounded='30px'
-          mr={6}
-          _hover={{ bg: 'white' }}
-          color='cf.400'
-          h={12}
-          w={{ md: 40 }}
-          shadow='none'
-          isLoading={_loading}
-          isDisabled={_loading}
-          isError={__error}
-          onClick={() => DownloadVisual(EOSTaskForStatsCreated?.task_id)}
-        />
-        <Button
-          btntitle='Share'
-          rounded='30px'
-          h={12}
-          w={{ md: 40 }}
-          onClick={onOpen}
-        />
-      </Flex>
+      {EOSViewID && (
+        <Flex align='center' justify='flex-end' my={{ md: 6 }} px={{ md: 6 }}>
+          <Button
+            btntitle='Download'
+            bg='white'
+            borderWidth={2}
+            borderColor='cf.400'
+            rounded='30px'
+            mr={6}
+            _hover={{ bg: 'white' }}
+            color='cf.400'
+            h={12}
+            w={{ md: 40 }}
+            shadow='none'
+            isLoading={_loading}
+            isDisabled={_loading}
+            isError={__error}
+            onClick={() => DownloadVisual(EOSTaskForStatsCreated?.task_id)}
+          />
+          <Button
+            btntitle='Share'
+            rounded='30px'
+            h={12}
+            w={{ md: 40 }}
+            onClick={onOpen}
+          />
+        </Flex>
+      )}
     </FarmLayout>
   )
 }

@@ -91,7 +91,7 @@ const Marketplace = () => {
               ))}
           </Flex>
         </Box>
-        <Box mt ={-20} p={16} bgColor='red'>
+        <Box mt ={-20} p={16} bgColor='cf-dark.300'>
           <Heading ml={10}>Buyers you can sell to</Heading>
             <Flex my={3} w='62%' align='center' direction='column'>
             {SourcingOrders?.map(buyers =>(
