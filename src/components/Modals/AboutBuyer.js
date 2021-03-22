@@ -69,16 +69,17 @@ const AboutBuyer = ({ buyers }) => {
       >
         About Buyer
       </Button>
+
       <ConfirmSale
         onClick={onOpenx}
         onClose={onClose}
         isOpenx={isOpened}
         onClosex={onClosex}
       />
+
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        mt={10}
         variant='outline'
         borderColor='black'
         borderWidth={5}
@@ -88,7 +89,6 @@ const AboutBuyer = ({ buyers }) => {
       >
         <ModalOverlay />
         <ModalContent>
-          {' '}
           <Flex m={3} justify='center' align='center'>
             <Box ml={10}>
               <Heading as='h4' fontWeight='bold' fontSize={{ md: 'xl' }}>
@@ -118,7 +118,6 @@ const AboutBuyer = ({ buyers }) => {
                       pt={1}
                     />
                     <Text fontSize='18px'>
-                      {' '}
                       {buyers?.onboarding?.info?.address?.street},{' '}
                       {buyers?.onboarding?.info?.address?.state}
                     </Text>
@@ -160,7 +159,6 @@ const AboutBuyer = ({ buyers }) => {
                   <Heading fontSize='18px'>Need</Heading>
                   <Flex pb={4} justifyContent='space-between'>
                     <Text fontSize='14px'>
-                      {' '}
                       {buyers?.crop?.variety?.name} | {buyers?.demand} tonnes
                     </Text>
                     <Text color='cf.400' fontSize='16px' fontWeight={600}>
