@@ -188,9 +188,16 @@ const BuyerCard = ({ buyers }) => {
             </GridItem>
           </Grid>
           <Center>
-            <Text pt={8} color='cf.400' size='16px'>
+            <Button
+              pt={4}
+              color='cf.400'
+              size='16px'
+              pb={-8}
+              isDisabled='true'
+              variant='link'
+            >
               View auditor report
-            </Text>
+            </Button>
           </Center>
         </Box>
       </Box>

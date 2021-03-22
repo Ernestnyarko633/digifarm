@@ -34,24 +34,24 @@ const AboutBuyer = ({ buyers }) => {
     setOpened(false)
   }
 
-  // const getRule = (value) => {
-  //   switch (value) {
-  //     case 'FCA':
-  //       break;
-  //     case 'CIP':
-  //       break;
-  //     case 'CPT':
-  //       break;
-  //     case 'FOB':
-  //       break;
-  //     case 'CIF':
-  //       break;
-  //     case 'FARMGATE EXWORKS':
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
+  const getRule = value => {
+    switch (value) {
+      case 'FCA':
+        return 'FCA description'
+      case 'CIP':
+        return 'CIP decsription'
+      case 'CPT':
+        return 'CPT description'
+      case 'FOB':
+        return 'FOB description'
+      case 'CIF':
+        return 'CIF description'
+      case 'FARMGATE EXWORKS':
+        return 'FARMGATE EXWORKS'
+      default:
+        return null
+    }
+  }
 
   return (
     <>
@@ -69,16 +69,17 @@ const AboutBuyer = ({ buyers }) => {
       >
         About Buyer
       </Button>
+
       <ConfirmSale
         onClick={onOpenx}
         onClose={onClose}
         isOpenx={isOpened}
         onClosex={onClosex}
       />
+
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        mt={10}
         variant='outline'
         borderColor='black'
         borderWidth={5}
@@ -88,7 +89,6 @@ const AboutBuyer = ({ buyers }) => {
       >
         <ModalOverlay />
         <ModalContent>
-          {' '}
           <Flex m={3} justify='center' align='center'>
             <Box ml={10}>
               <Heading as='h4' fontWeight='bold' fontSize={{ md: 'xl' }}>
@@ -118,7 +118,6 @@ const AboutBuyer = ({ buyers }) => {
                       pt={1}
                     />
                     <Text fontSize='18px'>
-                      {' '}
                       {buyers?.onboarding?.info?.address?.street},{' '}
                       {buyers?.onboarding?.info?.address?.state}
                     </Text>
@@ -160,7 +159,6 @@ const AboutBuyer = ({ buyers }) => {
                   <Heading fontSize='18px'>Need</Heading>
                   <Flex pb={4} justifyContent='space-between'>
                     <Text fontSize='14px'>
-                      {' '}
                       {buyers?.crop?.variety?.name} | {buyers?.demand} tonnes
                     </Text>
                     <Text color='cf.400' fontSize='16px' fontWeight={600}>
@@ -199,12 +197,8 @@ const AboutBuyer = ({ buyers }) => {
                   <Heading fontSize='18px' pt={2}>
                     {buyers?.deliveryMethod?.rule}
                   </Heading>
-                  <Text p={1} fontSize='14px'>
-                    Sandy loam soil is one of the most preferable types of soil
-                    for many types of plants.Planting in loam soil with a high
-                    percentage of sand is the same as planting in normal loam
-                    soil, but extra amendments may be made to compensate for
-                    slightly lower water
+                  <Text fontSize='14px'>
+                    {getRule(buyers?.deliveryMethod?.rule)}
                   </Text>
                 </Box>
                 <Flex>

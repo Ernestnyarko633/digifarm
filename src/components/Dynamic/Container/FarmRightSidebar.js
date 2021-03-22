@@ -62,7 +62,7 @@ export default function FarmRightSidebar({
             ;(error || _error) && reloads[0]()
           }}
           loading={loading}
-          error={error}
+          error={error || _error}
           text={
             loading
               ? 'Standby as we load your current farms and pending orders'
