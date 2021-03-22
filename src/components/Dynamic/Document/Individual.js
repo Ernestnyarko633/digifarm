@@ -20,15 +20,17 @@ export default function Individual({
     setReload(prevState => prevState + 1)
   }
   useEffect(() => {
+    const _activities = _array =>
+      activities?.forEach((_activity, index) => {
+        if (index < 4) {
+          _array.push(_activity)
+        }
+      })
     const _less = () => {
       let array = []
       if (activities?.length > 4) {
         setShowMoreButton(true)
-        activities?.forEach((_activity, index) => {
-          if (index < 4) {
-            array.push(_activity)
-          }
-        })
+        _activities(array)
       }
       if (array) {
         setToggleText(false)
