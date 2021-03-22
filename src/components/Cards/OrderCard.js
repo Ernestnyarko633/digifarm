@@ -13,7 +13,7 @@ import Button from 'components/Button'
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const OrderCard = ({ order }) => {
+const OrderCard = ({ order, onOpen }) => {
   return (
     <Box
       bg='white'
@@ -62,6 +62,7 @@ const OrderCard = ({ order }) => {
           w={{ md: '100%' }}
           h={{ md: 16 }}
           fontSize={{ md: 'lg' }}
+          onClick={onOpen}
         />
       </Box>
     </Box>
@@ -73,7 +74,8 @@ OrderCard.propTypes = {
     name: PropTypes.string,
     location: PropTypes.string,
     progress: PropTypes.string
-  })
+  }),
+  onOpen: PropTypes.bool
 }
 
 export default OrderCard
