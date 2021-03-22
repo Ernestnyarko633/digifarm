@@ -5,7 +5,7 @@ import { IoWarningOutline } from 'react-icons/io5'
 import BuyerCard from 'components/Cards/BuyerCard'
 // import IllustrationImage from '../assets/images/home/illustration.png'
 // import Oval from '../assets/images/Oval.svg'
-import WarehouseCard from 'components/Cards/WarehouseCard2'
+import WarehouseCard from 'components/Cards/WarehouseCard'
 // import ArrowButton from '../components/Button/ArrowButton'
 import useApi from '../context/api'
 import useAuth from 'context/auth'
@@ -72,7 +72,7 @@ const Marketplace = () => {
           </Flex>
         </Box>
 
-        <Box mt={2} p={16}>
+         <Box mt={2} p={16}>
           <Flex my={3} w='62%' align='center' direction='column'>
               {myfarms?.map(myfarm => (
                 <WarehouseCard
@@ -90,8 +90,8 @@ const Marketplace = () => {
                 />
               ))}
           </Flex>
-        </Box>
-        <Box mt ={-20} p={16} bgColor='cf-dark.300'>
+        </Box> 
+        <Box mt ={-5} p={16} bgColor='cf-dark.300'>
           <Heading ml={10}>Buyers you can sell to</Heading>
             <Flex my={3} w='62%' align='center' direction='column'>
             {SourcingOrders?.map(buyers =>(

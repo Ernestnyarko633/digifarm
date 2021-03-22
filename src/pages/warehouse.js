@@ -25,7 +25,7 @@ const Warehouse = () => {
 
   return (
     <Layout>
-      <Box h="880px" py={50} mt={-20} pos='absolute' top={{ md: 40 }} left={{ md: 60 }} w='100%' bg='cf-dark.400' >
+       <Box h="880px" py={50} mt={-20} pos='absolute' top={{ md: 40 }} left={{ md: 60 }} w='100%' bg='cf-dark.400' >
         <Heading ml={24}>Warehouse</Heading>
         <Box
           mt={2}
@@ -73,12 +73,12 @@ const Warehouse = () => {
 
             <Box>
               <Text fontSize='md' ml={2} color='cf.400'>
-                {/* Something went wrong */}
+                
               </Text>
             </Box>
           </Flex>
         </Box>
-      </Box>
+      </Box> 
     </Layout>
   )
 }
