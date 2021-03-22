@@ -37,17 +37,17 @@ const AboutBuyer = ({ buyers }) => {
   const getRule = value => {
     switch (value) {
       case 'FCA':
-        return 'FCA description'
+        return 'Free Carrier is abbreviated as FCA. Free carrier is a trade term requiring the seller of goods to deliver those goods to a named airport, shipping terminal, warehouse, or other carrier location specified by the buyer. '
       case 'CIP':
-        return 'CIP decsription'
+        return "CIP stands for Carriage and Insurance Paid To. It is an Incoterm where the seller is responsible for the delivery of goods to an agreed destination in the buyer's country and must pay for the cost of this carriage."
       case 'CPT':
-        return 'CPT description'
+        return 'Carriage Paid To abreviated as CPT is an incoterm definition used to explain that the cost of the goods includes everything required to bring the products to the agreed destination'
       case 'FOB':
-        return 'FOB description'
+        return 'Free on Board (FOB) is an Incoterm, which means the seller is responsible for loading the purchased cargo onto the ship, and all costs associated'
       case 'CIF':
-        return 'CIF description'
+        return 'Under CIF (short for “Cost, Insurance and Freight”), the seller delivers the goods, cleared for export, onboard the vessel at the port of shipment, pays for the transport of the goods to the port of destination, and also obtains and pays for minimum insurance coverage on the goods through their journey to the named port of destination'
       case 'FARMGATE EXWORKS':
-        return 'FARMGATE EXWORKS'
+        return 'Ex works (EXW) is an international trade term that describes when a seller makes a product available at a designated location, and the buyer of the product must cover the transport costs'
       default:
         return null
     }
@@ -131,9 +131,8 @@ const AboutBuyer = ({ buyers }) => {
                   p={4}
                   w={{ md: 110 }}
                 >
-                  <Heading fontSize='18px'>
-                    {buyers?.onboarding?.info?.name}
-                  </Heading>
+                  <Heading fontSize='18px'>Company Name</Heading>
+                  <Text fontSize='14px'>{buyers?.onboarding?.info?.name}</Text>
                   <Text fontSize='14px' pb={4}>
                     {buyers?.onboarding?.info?.address?.state},{' '}
                     {buyers?.onboarding?.info?.address?.country}
