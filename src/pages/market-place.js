@@ -5,7 +5,7 @@ import { IoWarningOutline } from 'react-icons/io5'
 import BuyerCard from 'components/Cards/BuyerCard'
 // import IllustrationImage from '../assets/images/home/illustration.png'
 // import Oval from '../assets/images/Oval.svg'
-import WarehouseCard from 'components/Cards/WarehouseCard2'
+import WarehouseCard from 'components/Cards/WarehouseCard'
 // import ArrowButton from '../components/Button/ArrowButton'
 import useApi from '../context/api'
 import useAuth from 'context/auth'
@@ -13,13 +13,14 @@ import useAuth from 'context/auth'
 import { motion } from 'framer-motion'
 import AboutBuyer from 'components/Modals/AboutBuyer'
 import useFetch from 'hooks/useFetch'
+import { Button } from 'carbon-components-react'
 
 
 // const MotionFlex = motion.custom(Flex)
 // const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 const Marketplace = () => {
-  document.title = 'Complete Farmer | Marketplace'
+  document.title = "Complete Farmer | Farmer's Market" 
   const { getSourcingOrders, getMyFarms} = useApi()
   const [ varieties, setVarieties ] = useState([])
   const [ buyers, setBuyers ] = useState([])
@@ -45,7 +46,7 @@ const Marketplace = () => {
   return (
     <Layout>
       <Box h="1500px" py={50} mt={-20} pos='absolute' top={{ md: 40 }} left={{ md: 60 }} w='100%' bg='cf-dark.400'>
-        <Heading ml={24}>Warehouse / Marketplace </Heading>
+        <Heading ml={24}>Farmer's Market </Heading>
         <Box
            mt={2}
            mb={2}
@@ -72,7 +73,7 @@ const Marketplace = () => {
           </Flex>
         </Box>
 
-        <Box mt={2} p={16}>
+         <Box mt={2} p={16}>
           <Flex my={3} w='62%' align='center' direction='column'>
               {myfarms?.map(myfarm => (
                 <WarehouseCard
@@ -90,14 +91,22 @@ const Marketplace = () => {
                 />
               ))}
           </Flex>
-        </Box>
-        <Box mt ={-20} p={16}>
-          <Flex my={3} w='62%' align='center' direction='column'>
-          {SourcingOrders?.map(buyers =>(
-          <BuyerCard
-          _id={buyers._id}
-          key={buyers._id}
-          buyers={buyers}
+        </Box> 
+        <Box mt ={-5} p={16} bgColor='cf-dark.300'>
+          <Heading ml={10} mb={4}>Buyers you can sell to</Heading>
+          <Flex ml={10}>
+              <Box cursor='pointer'>Ready Buyers</Box>
+              <Box mx={10} />
+              <Box cursor='pointer'>Ongoing Transations</Box>
+              <Box mx={10} />
+              <Box cursor='pointer'>Past Buyers</Box>
+          </Flex>
+            <Flex my={3} w='62%' align='center' direction='column'>
+            {SourcingOrders?.map(buyers =>(
+            <BuyerCard
+            _id={buyers._id}
+            key={buyers._id}
+            buyers={buyers}
           />
           ))}
           </Flex>

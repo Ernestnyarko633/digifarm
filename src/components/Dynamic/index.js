@@ -138,7 +138,7 @@ const DynamicFarm = ({
     EOSStatisticsHasError ||
     eosStatsHasError
 
-  if (isLoading || !EOSViewID) {
+  if (isLoading) {
     return (
       <FetchCard
         direction='column'
@@ -161,7 +161,7 @@ const DynamicFarm = ({
 
   return (
     <React.Fragment>
-      {!loading && EOSViewID && (
+      {!loading && (
         <SelectedFarm
           reload={reload}
           reloads={reloads}
@@ -178,24 +178,6 @@ const DynamicFarm = ({
           loading={loading || isLoading}
           error={error}
           _error={eosHasError}
-        />
-      )}
-      {!isLoading && (
-        <FetchCard
-          direction='column'
-          align='center'
-          justify='center'
-          mx='auto'
-          reload={() => {
-            ;(error || eosHasError) && reloads[0]()
-          }}
-          loading={isLoading}
-          error={error}
-          text={
-            !error || !eosHasError
-              ? 'Standby as we load your current farms and pending orders'
-              : 'Something went wrong, please dont fret'
-          }
         />
       )}
     </React.Fragment>

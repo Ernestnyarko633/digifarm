@@ -49,7 +49,7 @@ const Auth = ({
 
               setTimeout(() => {
                 replace(JSON.parse(to || null) || '/dashboard')
-              }, 500)
+              }, 1000)
             } catch (error) {
               if (error) {
                 if ([401, 403].includes(error.status)) {

@@ -1,4 +1,5 @@
-import React from 'react'
+/*eslint-disable */
+import React, { useEffect } from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
@@ -13,13 +14,33 @@ export default function FarmDocumentCard({
   ScheduledTasks,
   tasksNumber,
   __activityID,
+  digitalFarmerFarm,
   amount
 }) {
   const { handleModalClick } = useComponent()
 
+  // useEffect(() => {
+  //   window.html2canvas = html2canvas
+  //   var doc = new jsPDF({
+  //     orientation: 'landscape',
+  //     unit: 'px'
+  //     // format: [4, 2]
+  //   })
+
+  //   var content = document.getElementById('content-22')
+  //   console.log('content', content)
+  //   console.log('document.body', document.body)
+  //   doc.html(content, {
+  //     callback: function (doc) {
+  //       console.log('in callback')
+  //       doc.save()
+  //     }
+  //   })
+  // }, [])
   const thisData = {
     title,
     amount,
+    digitalFarmerFarm,
     ScheduledTasks: ScheduledTasks.filter(
       _task => __activityID === _task.taskId.activity._id
     )
@@ -30,7 +51,7 @@ export default function FarmDocumentCard({
   ]
   return (
     <Box
-      w='408px'
+      w="auto"
       h='236px'
       bg='white'
       rounded='lg'
@@ -66,7 +87,7 @@ export default function FarmDocumentCard({
             </Flex>
           )
         })}
-        {thisData.ScheduledTasks.length > 0 && (
+        {
           <Button
             btntitle='View all receipts'
             bg='white'
@@ -81,9 +102,9 @@ export default function FarmDocumentCard({
             _hover={{ bg: 'white' }}
             shadow='none'
             fontSize='md'
-            onClick={() => handleModalClick('activity-receipts', thisData)}
+            onClick={() => handleModalClick('activity-receipts', thisData.ScheduledTasks?.length > 0 ? thisData : null)}
           />
-        )}
+        }
       </Flex>
     </Box>
   )
@@ -98,5 +119,6 @@ FarmDocumentCard.propTypes = {
   amount: PropTypes.any,
   tasksNumber: PropTypes.any,
   ScheduledTasks: PropTypes.any,
-  __activityID: PropTypes.any
+  __activityID: PropTypes.any,
+  digitalFarmerFarm: PropTypes.any
 }

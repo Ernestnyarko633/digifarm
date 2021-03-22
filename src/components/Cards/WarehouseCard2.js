@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {
   Box,
   Divider,
-  Progress,
   Heading,
   Flex,
   Avatar,
@@ -99,18 +98,7 @@ const WarehouseCard2 = ({
         </Flex>
         <Divider borderColor='gray.300' />
         <Box>
-          <Text fontWeight='bold' pt={2}>
-            Farm Progress: 100%
-          </Text>
-          <Progress
-            value={100}
-            rounded='lg'
-            colorScheme='cfButton'
-            size='lg'
-            mt={2}
-          />
-
-          <Grid templateColumns='repeat(4, 1fr)' w='100%' pt={4}>
+          <Grid templateColumns='repeat(3, 1fr)' w='100%' pt={4}>
             <GridItem>
               <Flex
                 w='80%'
@@ -175,14 +163,14 @@ const WarehouseCard2 = ({
                     Number of bags
                   </Text>
                 </Box>
-                <Divider
+                {/* <Divider
                   orientation='vertical'
                   borderColor='gray.300'
                   h='80px'
-                />
+                /> */}
               </Flex>
             </GridItem>
-            <GridItem>
+            {/* <GridItem>
               <Box pt={2} py={4}>
                 <Text fontWeight='bold' fontSize='28px'>
                   {condition}
@@ -191,13 +179,20 @@ const WarehouseCard2 = ({
                   Yield Conditions
                 </Text>
               </Box>
-            </GridItem>
+            </GridItem> */}
           </Grid>
 
           <Center>
-            <Text pt={4} color='cf.400' size='16px' pb={-8}>
+            <Button
+              pt={4}
+              color='cf.400'
+              size='16px'
+              pb={-8}
+              isDisabled='true'
+              variant='link'
+            >
               View auditor report
-            </Text>
+            </Button>
           </Center>
         </Box>
       </Box>

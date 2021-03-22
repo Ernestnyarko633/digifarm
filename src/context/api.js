@@ -15,6 +15,8 @@ export const ApiContextProvider = ({ children }) => {
     BUYER_API
   } = getConfig()
 
+  // eslint-disable-next-line no-console
+  console.log(getConfig(), 'configs')
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
   }
@@ -121,6 +123,13 @@ export const ApiContextProvider = ({ children }) => {
       query
     })
   }
+
+  const downloadTaskReceipt = async query => {
+    return await http.get({
+      url: `${FMS_API}/receipt`,
+      query
+    })
+  }
   return (
     <ApiContext.Provider
       value={{
@@ -144,6 +153,7 @@ export const ApiContextProvider = ({ children }) => {
         getSourcingOrders,
         getCropCategories,
         deleteBankTransfer,
+        downloadTaskReceipt,
         getMyScheduledTasks,
         uploadPaymentDetails
       }}
