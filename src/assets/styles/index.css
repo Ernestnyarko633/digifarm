@@ -51,6 +51,12 @@
   src: url('../fonts/Cera\ GR\ Medium.woff') format('woff');
 }
 
+@font-face {
+  font-family: Smitta-Bali;
+  src: url('../fonts/Smitta-Bali-dafont.ttf') format('truetype');
+  font-weight: normal;
+}
+
 .loading-text {
   display: inline-block;
   top: calc(50% + 20px);
