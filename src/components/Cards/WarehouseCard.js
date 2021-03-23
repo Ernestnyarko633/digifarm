@@ -73,7 +73,7 @@ const WarehouseCard = ({
             <Link
               as={RouterBrowser}
               _hover={{ textDecor: 'none' }}
-              to={`/farm/${_id}`}
+              to={`/farms/${_id}`}
             >
               <Button
                 colorScheme='none'
