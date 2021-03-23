@@ -12,8 +12,7 @@ import {
   Grid,
   GridItem,
   Center,
-  Link,
-  sellButton
+  Link
 } from '@chakra-ui/react'
 import { Link as RouterBrowser } from 'react-router-dom'
 
@@ -30,7 +29,8 @@ const WarehouseCard = ({
   status,
   mr,
   orderStatus,
-  ml
+  ml,
+  sellButton
 }) => {
   return (
     <Flex w='100%'>
