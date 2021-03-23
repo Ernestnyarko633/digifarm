@@ -76,24 +76,6 @@ const WarehouseCard2 = ({
                 View Farm
               </Button>
             </Link>
-            <Link
-              as={RouterBrowser}
-              _hover={{ textDecor: 'none' }}
-              to='/marketplace'
-            >
-              <Button
-                colorScheme='linear'
-                rounded='30px'
-                ml={2}
-                mt={1}
-                borderWidth={1}
-                color='white'
-                mr={2}
-                px={10}
-              >
-                Sell Produce
-              </Button>
-            </Link>
           </Flex>
         </Flex>
         <Divider borderColor='gray.300' />

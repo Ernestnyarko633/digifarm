@@ -12,7 +12,8 @@ import {
   Grid,
   GridItem,
   Center,
-  Link
+  Link,
+  sellButton
 } from '@chakra-ui/react'
 import { Link as RouterBrowser } from 'react-router-dom'
 
@@ -75,6 +76,26 @@ const WarehouseCard = ({
               >
                 View Farm
               </Button>
+              {sellButton && (
+                <Link
+                  as={RouterBrowser}
+                  _hover={{ textDecor: 'none' }}
+                  to='/marketplace'
+                >
+                  <Button
+                    colorScheme='linear'
+                    rounded='30px'
+                    ml={2}
+                    mt={1}
+                    borderWidth={1}
+                    color='white'
+                    mr={2}
+                    px={10}
+                  >
+                    Sell Produce
+                  </Button>
+                </Link>
+              )}
             </Link>
           </Flex>
         </Flex>
