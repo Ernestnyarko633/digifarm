@@ -57,7 +57,7 @@ const Warehouse = () => {
           <Flex my={3} w='62%' align='center' direction='column'>
             { myfarms?.map( myfarm => (
             <WarehouseCard
-            sellButton={true}
+              sellButton={true}
               _id={myfarm._id}
               key={myfarm?.name}
               mr={3}

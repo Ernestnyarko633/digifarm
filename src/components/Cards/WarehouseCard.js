@@ -14,7 +14,7 @@ import {
   Center,
   Link
 } from '@chakra-ui/react'
-import { Link as RouterBrowser } from 'react-router-dom'
+import { Link as ReachRouter } from 'react-router-dom'
 
 const WarehouseCard = ({
   _id,
@@ -71,7 +71,7 @@ const WarehouseCard = ({
           <Spacer />
           <Flex>
             <Link
-              as={RouterBrowser}
+              as={ReachRouter}
               _hover={{ textDecor: 'none' }}
               to={`/farms/${_id}`}
             >
@@ -90,9 +90,9 @@ const WarehouseCard = ({
               </Button>
               {sellButton === true && (
                 <Link
-                  as={RouterBrowser}
+                  as={ReachRouter}
                   _hover={{ textDecor: 'none' }}
-                  to='/marketplace'
+                  to={{ pathname: '/marketplace', state: myfarm }}
                 >
                   <Button
                     colorScheme='linear'
