@@ -44,10 +44,8 @@ const Marketplace = () => {
     isLoading: SourcingOrdersIsLoading,
     error: SourcingOrdersHasError
   } = useFetch('sourcing_orders', getSourcingOrders, reload, {
-    cropVariety: "602e1d1d7c083a1edd24fab9"
-    // myfarm?.order?.product?.cropVariety?._id
+    cropVariety: myfarm?.order?.product?.cropVariety?._id
   }) 
-  console.log(SourcingOrders, "SO") 
 
   return (
     <Layout>
@@ -137,9 +135,9 @@ const Marketplace = () => {
                  Past Buyers
               </Box>
           </Flex>
+        {
           <Box>
             <Flex my={3} w='62%' align='center' direction='column'>
-
             {SourcingOrders?.map(buyers =>(
             <BuyerCard
             _id={buyers._id}
@@ -149,6 +147,7 @@ const Marketplace = () => {
           ))} 
           </Flex>
           </Box>
+}
         </Box>   
       </Box>
     </Layout>

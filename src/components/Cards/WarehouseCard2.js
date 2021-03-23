@@ -50,7 +50,7 @@ const WarehouseCard2 = ({ _id, myfarm, mr, ml }) => {
             <Link
               as={ReachRouter}
               _hover={{ textDecor: 'none' }}
-              to={`/farm/${_id}`}
+              to={`/farms/${_id}`}
             >
               <Button
                 colorScheme='none'
@@ -154,23 +154,8 @@ const WarehouseCard2 = ({ _id, myfarm, mr, ml }) => {
                     Number of bags
                   </Text>
                 </Box>
-                {/* <Divider
-                  orientation='vertical'
-                  borderColor='gray.300'
-                  h='80px'
-                /> */}
               </Flex>
             </GridItem>
-            {/* <GridItem>
-              <Box pt={2} py={4}>
-                <Text fontWeight='bold' fontSize='28px'>
-                  {condition}
-                </Text>
-                <Text fontWeight='light' color='gray.500' fontSize='16px'>
-                  Yield Conditions
-                </Text>
-              </Box>
-            </GridItem> */}
           </Grid>
 
           <Center>
