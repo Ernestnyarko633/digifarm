@@ -12,6 +12,7 @@ import useAuth from 'context/auth'
 /* eslint-disable */
 import { motion } from 'framer-motion'
 import AboutBuyer from 'components/Modals/AboutBuyer'
+import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
 import useFetch from 'hooks/useFetch'
 import { Button } from 'carbon-components-react'
 import useComponent from 'context/component'
@@ -136,19 +137,24 @@ const Marketplace = () => {
                  Past Buyers
               </Box>
           </Flex>
-        {
+        
           <Box>
             <Flex my={3} w='62%' align='center' direction='column'>
-            {SourcingOrders?.map(buyers =>(
+              {state === 0 &&
+            SourcingOrders?.map(buyers =>(
             <BuyerCard
             _id={buyers._id}
             key={buyers._id}
             buyers={buyers}
           />
           ))} 
+          {state === 1 && 
+          <BuyerEmptyState/>}
+          {state === 2 && 
+          <BuyerEmptyState/>}
           </Flex>
           </Box>
-}
+      
         </Box>   
       </Box>
     </Layout>
