@@ -1,20 +1,26 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Flex, Box, Text, Image } from '@chakra-ui/react'
-import { IoMdCreate } from 'react-icons/io'
+/*eslint-disable */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Flex, Box, Text, Image } from '@chakra-ui/react';
+import { IoMdCreate } from 'react-icons/io';
 
-import Button from 'components/Button'
+import Button from 'components/Button';
 
-const SignatureDisplay = ({ data, isEditing, setIsEditing }) => {
+const SignatureDisplay = ({ data, isEditing, setIsEditing, contract }) => {
+  console.log('data', data);
   return (
     <>
       <Flex w='100%' justifyContent='flex-end'>
-        <Button
-          btntitle='Change'
-          shadow='none'
-          leftIcon={<IoMdCreate size={20} />}
-          onClick={() => setIsEditing(!isEditing)}
-        />
+        {contract ? (
+          ''
+        ) : (
+          <Button
+            btntitle='Change'
+            shadow='none'
+            leftIcon={<IoMdCreate size={20} />}
+            onClick={() => setIsEditing(!isEditing)}
+          />
+        )}
       </Flex>
       <Flex
         p={4}
@@ -38,7 +44,7 @@ const SignatureDisplay = ({ data, isEditing, setIsEditing }) => {
             <Text
               mt={10}
               as='span'
-              fontSize={{ md: '2xl' }}
+              fontSize={{ md: '3xl' }}
               fontWeight='bold'
               fontFamily='signature'
             >
@@ -48,13 +54,13 @@ const SignatureDisplay = ({ data, isEditing, setIsEditing }) => {
         </Box>
       </Flex>
     </>
-  )
-}
+  );
+};
 
 SignatureDisplay.propTypes = {
   data: PropTypes.object.isRequired,
   isEditing: PropTypes.bool.isRequired,
-  setIsEditing: PropTypes.func.isRequired
-}
+  setIsEditing: PropTypes.func.isRequired,
+};
 
-export default SignatureDisplay
+export default SignatureDisplay;
