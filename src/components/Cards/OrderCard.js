@@ -1,3 +1,4 @@
+/*eslint-disable */
 import {
   Avatar,
   Box,
@@ -7,13 +8,29 @@ import {
   List,
   ListItem,
   Tag,
-  Text
-} from '@chakra-ui/react'
-import Button from 'components/Button'
-import React from 'react'
-import PropTypes from 'prop-types'
+  Text,
+} from '@chakra-ui/react';
+import Button from 'components/Button';
+import React from 'react';
+import PropTypes from 'prop-types';
+import useApi from 'context/api';
 
 const OrderCard = ({ order, onOpen }) => {
+  const { getPaymentDetails } = useApi();
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log('order_id', order);
+        const res = await getPaymentDetails(order?._id);
+        console.log('result', res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Box
       bg='white'
@@ -66,16 +83,16 @@ const OrderCard = ({ order, onOpen }) => {
         />
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 OrderCard.propTypes = {
   order: PropTypes.shape({
     name: PropTypes.string,
     location: PropTypes.string,
-    progress: PropTypes.string
+    progress: PropTypes.string,
   }),
-  onOpen: PropTypes.bool
-}
+  onOpen: PropTypes.bool,
+};
 
-export default OrderCard
+export default OrderCard;

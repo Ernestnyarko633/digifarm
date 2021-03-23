@@ -51,6 +51,12 @@ export const ApiContextProvider = ({ children }) => {
     return await http.post({ url: `${DIGITAL_FARMER_API}/orders`, body })
   }
 
+  const getPaymentDetails = async id => {
+    return await http.get({
+      url: `${PAYMENT_API}/payment/orderPayments?order_id=${id}&option="ONE"`
+    })
+  }
+
   const initiatePayment = async payload => {
     return await http.post({
       url: `${PAYMENT_API}/payment/`,
@@ -143,6 +149,7 @@ export const ApiContextProvider = ({ children }) => {
         initiatePayment,
         changePassword,
         getMyFarmFeeds,
+        getPaymentDetails,
         getSourcingOrders,
         getCropCategories,
         deleteBankTransfer,

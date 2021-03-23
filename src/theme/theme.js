@@ -26,7 +26,8 @@ export const theme = extendTheme({
     medium: '"CeraGR" ,sans-serif',
     light: '"CeraGR" ,sans-serif',
     thin: '"CeraGR" ,sans-serif',
-    body: '"CeraGR", sans-serif'
+    body: '"CeraGR", sans-serif',
+    signature: '"Smitta-Bali", cursive'
   },
   fontSizes: {
     xx: '.55rem',
