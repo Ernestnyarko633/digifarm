@@ -25,6 +25,7 @@ const orders = [
 
 const OrdersCard = ({ onOpen }) => {
   const { currentSlide } = useComponent()
+
   return (
     <MotionFlex
       animate={{

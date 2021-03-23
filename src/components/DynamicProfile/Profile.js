@@ -20,6 +20,7 @@ import { FormInput, FormTextArea } from 'components/Form'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import BasePhone from 'components/Form/BasePhone'
+import Signature from 'components/Signature'
 
 const Profile = () => {
   const { isAuthenticated } = useAuth()
@@ -267,6 +268,10 @@ const Profile = () => {
           </form>
         )}
       </Formik>
+
+      <Box rounded='xl' shadow='md' bg='white' p={10} mt={12}>
+        <Signature data={user?.signature} />
+      </Box>
 
       <Box rounded='xl' shadow='md' mt={12} bg='white' p={10}>
         <Box m={10}>

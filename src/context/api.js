@@ -15,6 +15,8 @@ export const ApiContextProvider = ({ children }) => {
     BUYER_API
   } = getConfig()
 
+  // eslint-disable-next-line no-console
+  console.log(getConfig(), 'configs')
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
   }
@@ -47,6 +49,12 @@ export const ApiContextProvider = ({ children }) => {
 
   const createOrder = async body => {
     return await http.post({ url: `${DIGITAL_FARMER_API}/orders`, body })
+  }
+
+  const getPaymentDetails = async id => {
+    return await http.get({
+      url: `${PAYMENT_API}/payment/orderPayments?order_id=${id}&option="ONE"`
+    })
   }
 
   const initiatePayment = async payload => {
@@ -141,6 +149,7 @@ export const ApiContextProvider = ({ children }) => {
         initiatePayment,
         changePassword,
         getMyFarmFeeds,
+        getPaymentDetails,
         getSourcingOrders,
         getCropCategories,
         deleteBankTransfer,
