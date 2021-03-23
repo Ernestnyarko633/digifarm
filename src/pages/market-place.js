@@ -12,6 +12,7 @@ import useAuth from 'context/auth'
 /* eslint-disable */
 import { motion } from 'framer-motion'
 import AboutBuyer from 'components/Modals/AboutBuyer'
+import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
 import useFetch from 'hooks/useFetch'
 import { Button } from 'carbon-components-react'
 import useComponent from 'context/component'
@@ -148,9 +149,9 @@ const Marketplace = () => {
           />
           ))} 
           {state === 1 && 
-          <Box>kim</Box>}
+          <BuyerEmptyState/>}
           {state === 2 && 
-          <Box>yunipa</Box>}
+          <BuyerEmptyState/>}
           </Flex>
           </Box>
       
