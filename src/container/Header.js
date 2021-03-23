@@ -6,6 +6,7 @@ import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
 import { BiCog, BiSupport, BiHistory } from 'react-icons/bi'
 import { HiOutlineLogout } from 'react-icons/hi'
 import { BsBell, BsStar, BsPlus } from 'react-icons/bs'
+import { Link as ReachRouter } from 'react-router-dom'
 
 import Logo from '../assets/images/logo.png'
 import useAuth from 'context/auth'
@@ -41,9 +42,11 @@ const Header = () => {
       borderBottomColor='gray.300'
       px={{ md: 24 }}
     >
-      <Box>
-        <Image src={Logo} w={{ md: 12 }} />
-      </Box>
+      <ReachRouter to='/dashboard'>
+        <Link _hover={{ textDecor: 'none' }}>
+          <Image src={Logo} w={{ md: 12 }} />
+        </Link>
+      </ReachRouter>
 
       <Flex align='center'>
         <Flex align='center' mr={10}>

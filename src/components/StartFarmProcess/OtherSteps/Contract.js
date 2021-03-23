@@ -1,13 +1,23 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+/*eslint-disable */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import useAuth from 'context/auth';
+import SignatureSetup from 'components/Signature/SignatureSetup';
+import SignatureDisplay from 'components/Signature/SignatureDisplay';
 
 // import useStartFarm from 'context/start-farm'
 
-const MotionGrid = motion.custom(Grid)
+const MotionGrid = motion.custom(Grid);
 
 const Contract = ({ farm }) => {
+  const [isEditing, setIsEditing] = React.useState(false);
+  const { isAuthenticated } = useAuth();
+  const { user } = isAuthenticated();
+
+  console.log('user', user);
+
   return (
     <MotionGrid px={10}>
       <GridItem
@@ -93,14 +103,33 @@ const Contract = ({ farm }) => {
             click on the"Accept" button and do not download or use the
             Application.
           </Text>
+
+          <Box w={{ md: 90 }} mx='auto' my={{ md: 10 }}>
+            <Heading as='h5' fontSize={{ md: 'lg' }} mb={2}>
+              Your signature
+            </Heading>
+            {user?.signature?.string && !isEditing ? (
+              <SignatureDisplay
+                contract
+                data={user?.signature}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+              />
+            ) : (
+              <SignatureSetup
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+              />
+            )}
+          </Box>
         </Box>
       </GridItem>
     </MotionGrid>
-  )
-}
+  );
+};
 
 Contract.propTypes = {
-  farm: PropTypes.object.isRequired
-}
+  farm: PropTypes.object.isRequired,
+};
 
-export default Contract
+export default Contract;
