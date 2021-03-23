@@ -59,15 +59,9 @@ const Warehouse = () => {
             <WarehouseCard2
               _id={myfarm._id}
               key={myfarm?.name}
-              name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
-              location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
-              image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
-              quantity={myfarm?.storage?.quantity}
-              weight={myfarm?.storage?.weight}
-              bags={myfarm?.storage?.numberOfBags}
-              condition={myfarm?.storage?.yieldConditions}
               mr={3}
               ml={14}
+              myfarm={myfarm}
             />
             ))}
 

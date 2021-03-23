@@ -14,22 +14,9 @@ import {
   Center,
   Link
 } from '@chakra-ui/react'
-import { Link as RouterBrowser } from 'react-router-dom'
+import { Link as ReachRouter } from 'react-router-dom'
 
-const WarehouseCard2 = ({
-  _id,
-  name,
-  location,
-  image,
-  weight,
-  bags,
-  quantity,
-  condition,
-  status,
-  mr,
-  orderStatus,
-  ml
-}) => {
+const WarehouseCard2 = ({ _id, myfarm, mr, ml }) => {
   return (
     <Flex w='100%'>
       <Box
@@ -45,20 +32,23 @@ const WarehouseCard2 = ({
       >
         <Flex justify='space-between' pt={2}>
           <Flex mb={4}>
-            <Avatar bg='gray.100' src={image} />
+            <Avatar
+              bg='gray.100'
+              src={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
+            />
             <Box ml={2}>
               <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
-                {name}
+                {`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
               </Heading>
               <Text mt={{ md: -2 }} fontSize='sm' color='gray.500'>
-                {location}
+                {`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
               </Text>
             </Box>
           </Flex>
           <Spacer />
           <Flex>
             <Link
-              as={RouterBrowser}
+              as={ReachRouter}
               _hover={{ textDecor: 'none' }}
               to={`/farm/${_id}`}
             >
@@ -77,9 +67,9 @@ const WarehouseCard2 = ({
               </Button>
             </Link>
             <Link
-              as={RouterBrowser}
+              as={ReachRouter}
               _hover={{ textDecor: 'none' }}
-              to='/marketplace'
+              to={{ pathname: '/marketplace', state: myfarm }}
             >
               <Button
                 colorScheme='linear'
@@ -90,6 +80,7 @@ const WarehouseCard2 = ({
                 color='white'
                 mr={2}
                 px={10}
+                myfarm={myfarm}
               >
                 Sell Produce
               </Button>
@@ -108,7 +99,7 @@ const WarehouseCard2 = ({
               >
                 <Box pt={2} py={4}>
                   <Text fontWeight='bold' fontSize='28px'>
-                    {quantity}
+                    {myfarm?.storage?.quantity}
                   </Text>
                   <Text fontWeight='light' color='gray.500' fontSize='16px'>
                     Quantity (Tonnes)
@@ -130,7 +121,7 @@ const WarehouseCard2 = ({
               >
                 <Box pt={2} py={4}>
                   <Text fontWeight='bold' fontSize='28px'>
-                    {weight}
+                    {myfarm?.storage?.weight}
                   </Text>
                   <Text fontWeight='light' color='gray.500' fontSize='16px'>
                     Weight (kg)
@@ -152,7 +143,7 @@ const WarehouseCard2 = ({
               >
                 <Box pt={2} py={4}>
                   <Text fontWeight='bold' fontSize='28px'>
-                    {bags}
+                    {myfarm?.storage?.numberOfBags}
                   </Text>
                   <Text
                     fontWeight='light'
@@ -200,18 +191,11 @@ const WarehouseCard2 = ({
   )
 }
 WarehouseCard2.propTypes = {
-  name: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
-  image: PropTypes.any.isRequired,
-  buttontitle: PropTypes.string.isRequired,
-  weight: PropTypes.string.isRequired,
-  bags: PropTypes.string.isRequired,
-  quantity: PropTypes.string.isRequired,
-  condition: PropTypes.string.isRequired,
+  myfarm: PropTypes.any.isRequired,
+
   mr: PropTypes.any,
   ml: PropTypes.any,
-  status: PropTypes.string,
-  orderStatus: PropTypes.any,
+
   _id: PropTypes.any
 }
 export default WarehouseCard2
