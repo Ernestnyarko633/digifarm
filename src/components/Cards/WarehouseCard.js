@@ -12,7 +12,8 @@ import {
   Grid,
   GridItem,
   Center,
-  Link
+  Link,
+  sellButton
 } from '@chakra-ui/react'
 import { Link as RouterBrowser } from 'react-router-dom'
 
@@ -21,6 +22,7 @@ const WarehouseCard = ({
   name,
   location,
   image,
+  myfarm,
   weight,
   bags,
   quantity,
@@ -45,13 +47,24 @@ const WarehouseCard = ({
       >
         <Flex justify='space-between' pt={2}>
           <Flex mb={4}>
-            <Avatar bg='gray.100' src={image} />
+            <Avatar
+              bg='gray.100'
+              src={
+                myfarm
+                  ? `${myfarm?.order?.product?.cropVariety?.imageUrl}`
+                  : image
+              }
+            />
             <Box ml={2}>
               <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
-                {name}
+                {myfarm
+                  ? `${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`
+                  : name}
               </Heading>
               <Text mt={{ md: -2 }} fontSize='sm' color='gray.500'>
-                {location}
+                {myfarm
+                  ? `${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`
+                  : location}
               </Text>
             </Box>
           </Flex>
@@ -75,6 +88,26 @@ const WarehouseCard = ({
               >
                 View Farm
               </Button>
+              {sellButton === true && (
+                <Link
+                  as={RouterBrowser}
+                  _hover={{ textDecor: 'none' }}
+                  to='/marketplace'
+                >
+                  <Button
+                    colorScheme='linear'
+                    rounded='30px'
+                    ml={2}
+                    mt={1}
+                    borderWidth={1}
+                    color='white'
+                    mr={2}
+                    px={10}
+                  >
+                    Sell Produce
+                  </Button>
+                </Link>
+              )}
             </Link>
           </Flex>
         </Flex>
@@ -90,7 +123,7 @@ const WarehouseCard = ({
               >
                 <Box pt={2} py={4}>
                   <Text fontWeight='bold' fontSize='28px'>
-                    {quantity}
+                    {myfarm ? myfarm?.storage.quantity : quantity}
                   </Text>
                   <Text fontWeight='light' color='gray.500' fontSize='16px'>
                     Quantity (Tonnes)
@@ -112,7 +145,7 @@ const WarehouseCard = ({
               >
                 <Box pt={2} py={4}>
                   <Text fontWeight='bold' fontSize='28px'>
-                    {weight}
+                    {myfarm ? myfarm?.storage?.weight : weight}
                   </Text>
                   <Text fontWeight='light' color='gray.500' fontSize='16px'>
                     Weight (kg)
@@ -134,7 +167,7 @@ const WarehouseCard = ({
               >
                 <Box pt={2} py={4}>
                   <Text fontWeight='bold' fontSize='28px'>
-                    {bags}
+                    {myfarm ? myfarm?.storage?.numberOfBags : bags}
                   </Text>
                   <Text
                     fontWeight='light'
@@ -194,6 +227,9 @@ WarehouseCard.propTypes = {
   ml: PropTypes.any,
   status: PropTypes.string,
   orderStatus: PropTypes.any,
-  _id: PropTypes.any
+  _id: PropTypes.any,
+  myfarm: PropTypes.any,
+  sellButton: PropTypes.bool
 }
+
 export default WarehouseCard

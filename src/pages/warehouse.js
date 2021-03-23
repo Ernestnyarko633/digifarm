@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Layout from 'container/Layout'
 import { Heading, Box, Flex, Icon, Text, Spinner } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
-import WarehouseCard2 from 'components/Cards/WarehouseCard2'
+import WarehouseCard from 'components/Cards/WarehouseCard'
 import useApi from 'context/api'
 import useAuth from 'context/auth'
 import useFetch from 'hooks/useFetch'
@@ -56,18 +56,13 @@ const Warehouse = () => {
         <Box mt={2} p={16}>
           <Flex my={3} w='62%' align='center' direction='column'>
             { myfarms?.map( myfarm => (
-            <WarehouseCard2
+            <WarehouseCard
+            sellButton={true}
               _id={myfarm._id}
               key={myfarm?.name}
-              name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
-              location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
-              image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
-              quantity={myfarm?.storage?.quantity}
-              weight={myfarm?.storage?.weight}
-              bags={myfarm?.storage?.numberOfBags}
-              condition={myfarm?.storage?.yieldConditions}
               mr={3}
               ml={14}
+              myfarm={myfarm}
             />
             ))}
 
