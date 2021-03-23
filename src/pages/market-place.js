@@ -136,19 +136,24 @@ const Marketplace = () => {
                  Past Buyers
               </Box>
           </Flex>
-        {
+        
           <Box>
             <Flex my={3} w='62%' align='center' direction='column'>
-            {SourcingOrders?.map(buyers =>(
+              {state === 0 &&
+            SourcingOrders?.map(buyers =>(
             <BuyerCard
             _id={buyers._id}
             key={buyers._id}
             buyers={buyers}
           />
           ))} 
+          {state === 1 && 
+          <Box>kim</Box>}
+          {state === 2 && 
+          <Box>yunipa</Box>}
           </Flex>
           </Box>
-}
+      
         </Box>   
       </Box>
     </Layout>
