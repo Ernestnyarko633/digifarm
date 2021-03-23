@@ -108,6 +108,7 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
             w={{ md: 115 }}
           >
             <WarehouseCard
+              sellButton={false}
               name={digitalFarmerFarm?.order?.product?.cropVariety?.crop?.name}
               location={digitalFarmerFarm?.order?.product?.location?.name}
               image={digitalFarmerFarm?.order?.product?.cropVariety?.imageUrl}
