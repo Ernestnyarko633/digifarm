@@ -44,7 +44,8 @@ const Marketplace = () => {
     isLoading: SourcingOrdersIsLoading,
     error: SourcingOrdersHasError
   } = useFetch('sourcing_orders', getSourcingOrders, reload, {
-    cropVariety: myfarm?.order?.product?.cropVariety?._id
+    cropVariety: "602e1d1d7c083a1edd24fab9"
+    // myfarm?.order?.product?.cropVariety?._id
   }) 
   console.log(SourcingOrders, "SO") 
 
