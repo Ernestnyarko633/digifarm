@@ -8,6 +8,12 @@ import WarehouseCard from 'components/Cards/WarehouseCard'
 import useApi from 'context/api'
 import useAuth from 'context/auth'
 import useFetch from 'hooks/useFetch'
+import FarmsEmptyState from 'components/EmptyStates/FarmsEmptyState'
+import Greetings from 'components/Utils/Greetings'
+import { getCurrentDayParting } from 'helpers/misc'
+
+
+
 
 const Warehouse = () => {
   document.title = 'Complete Farmer | Warehouse'
@@ -15,6 +21,7 @@ const Warehouse = () => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [reload, setReload] = React.useState(0)
+  const { message } = getCurrentDayParting()
 
   const {
     data: myfarms,
@@ -25,7 +32,8 @@ const Warehouse = () => {
 
   return (
     <Layout>
-       <Box h="880px" py={50} mt={-20} pos='absolute' top={{ md: 40 }} left={{ md: 60 }} w='100%' bg='cf-dark.400' >
+      {(myfarms?.length >0 )? (
+        <Box h="880px" py={50} mt={-20} pos='absolute' top={{ md: 40 }} left={{ md: 60 }} w='100%' bg='cf-dark.400' >
         <Heading ml={24}>Warehouse</Heading>
         <Box
           mt={2}
@@ -52,7 +60,6 @@ const Warehouse = () => {
             </Text>
           </Flex>
         </Box>
-
         <Box mt={2} p={16}>
           <Flex my={3} w='62%' align='center' direction='column'>
             { myfarms?.map( myfarm => (
@@ -74,6 +81,16 @@ const Warehouse = () => {
           </Flex>
         </Box>
       </Box> 
+      
+      ):(
+      <>
+      <Greetings
+        title={`${message} Farmer ${user?.firstName}`}
+        text='Get started by farming individually or with a group.'
+      />
+      <FarmsEmptyState mt={50}/>
+      </>
+      )}
     </Layout>
   )
 }
