@@ -6,7 +6,7 @@ const BuyerEmptyState = ({ image, note, info }) => {
   return (
     <Box textAlign='center' p={{ md: 16 }}>
       <Box pb={{ md: 16 }}>
-        <Image src={image} w='20' ml='40' mb={4} />
+        <Image src={image} w='20' ml='80' mb={4} />
         <Heading as='h4' fontSize={{ md: '20px' }} mb={4}>
           {note}
         </Heading>
