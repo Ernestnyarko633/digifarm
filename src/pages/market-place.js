@@ -4,6 +4,8 @@ import { Box, Flex, Icon, Text, Heading } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
 import BuyerCard from 'components/Cards/BuyerCard'
 // import IllustrationImage from '../assets/images/home/illustration.png'
+import transaction1 from '../assets/images/transaction1.png'
+import transaction2 from '../assets/images/transaction2.png'
 // import Oval from '../assets/images/Oval.svg'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 // import ArrowButton from '../components/Button/ArrowButton'
@@ -149,9 +151,18 @@ const Marketplace = () => {
           />
           ))} 
           {state === 1 && 
-          <BuyerEmptyState/>}
+          <BuyerEmptyState 
+          image={transaction1}
+          note={'No ongoing transaction yet'}
+          info={'Ongoing transactions will be available here'}
+          />}
           {state === 2 && 
-          <BuyerEmptyState/>}
+          <BuyerEmptyState
+          image={transaction2}
+          note={"You haven't made any transactions"}
+          info={'Past transaction history will show here'}
+          
+          />}
           </Flex>
           </Box>
       
