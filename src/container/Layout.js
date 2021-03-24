@@ -36,6 +36,7 @@ const Layout = ({
           as='main'
           bg='cf-dark.400'
           h={height}
+          mt={{ md: 20 }}
           color='gray.800'
           fontFamily='body'
           overflowX='hidden'
