@@ -76,13 +76,10 @@ const WarehouseCard = ({
             <Button
               colorScheme='none'
               rounded='30px'
-              ml={2}
-              mt={1}
               borderWidth={1}
               color='cf.400'
-              mr={2}
               borderColor='cf.400'
-              px={10}
+              px={8}
             >
               View Farm
             </Button>
@@ -95,12 +92,10 @@ const WarehouseCard = ({
                 <Button
                   colorScheme='linear'
                   rounded='30px'
-                  ml={2}
-                  mt={1}
                   borderWidth={1}
                   color='white'
-                  mr={2}
-                  px={10}
+                  px={8}
+                  ml={2}
                 >
                   Sell Produce
                 </Button>
