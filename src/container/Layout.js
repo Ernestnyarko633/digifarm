@@ -19,6 +19,7 @@ const Layout = ({
       templateRows='repeat(1 1fr)'
       templateColumns='15% 63% 22%'
       pos='relative'
+      h='100vh'
       fontFamily='body'
       fontSize={{ md: 'md' }}
     >

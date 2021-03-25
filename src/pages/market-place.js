@@ -87,7 +87,7 @@ const Marketplace = () => {
         />
 
         
-          <Heading mt={4}>
+          <Heading mt={8}>
             Buyers you can sell to
           </Heading>
           <Flex

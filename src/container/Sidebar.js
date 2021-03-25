@@ -56,6 +56,7 @@ const Sidebar = () => {
       px={{ md: 2 }}
       color='gray.600'
       pr={{ md: 5 }}
+      w={{ md: '15%' }}
     >
       <Text as='ul'>
         {menuLink.map(item => (
