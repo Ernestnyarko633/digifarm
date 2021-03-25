@@ -40,62 +40,13 @@ const Warehouse = () => {
 
   const isLoading = myFarmsIsLoading;
   const hasError = myFarmsHasError;
+  const filteredFarms = myfarms?.filter(farm => farm.storage.quantity > 0)
 
   return (
     <Layout>
       {myfarms?.length > 0 ? (
         <>
-          {myfarms?.some(farms => farms.storage.quantity!==0) ? (
-            <>
-              {isLoading || hasError ? (
-                <FetchCard
-                  w="100%"
-                  mx="auto"
-                  align="center"
-                  justify="center"
-                  direction="column"
-                  error={hasError}
-                  loading={isLoading}
-                />
-              ) : (
-                <Box py={12} px={24}>
-                  <Heading>Warehouse </Heading>
-                  <Box
-                    borderRadius={40}
-                    borderWidth={2}
-                    borderColor="rgba(208, 143, 49, 0.1)"
-                    bgColor="rgba(208, 143, 49, 0.1)"
-                    p={2}
-                    position='absolute'
-                  >
-                    <Icon as={IoWarningOutline} color="#D08F31" w={5} h={5} />
-                    <Text
-                      as="span"
-                      fontWeight="bold"
-                      fontSize="14px"
-                      color="#D08F31"
-                      px={2}
-                    >
-                      If produce in the warehouse are not sold within 2 weeks,
-                      they will automatically be sold to a buyer
-                    </Text>
-                  </Box>
-                  <Box mt = {20}>
-                    {myfarms?.map((myfarm) => (
-                      <WarehouseCard
-                        sellButton={true}
-                        _id={myfarm._id}
-                        key={myfarm?.name}
-                        mr={3}
-                        ml={14}
-                        myfarm={myfarm}
-                      />
-                    ))}
-                  </Box>
-                </Box>
-              )}
-            </>
-          ) : (
+          {myfarms?.length === 1 && myfarms[0].storage.quantity === 0 ? (
             <>
               <Greetings title={"Warehouse"} />
               <Box
@@ -123,6 +74,59 @@ const Warehouse = () => {
                   }
                 />
               </Center>
+            </>
+          ) : ( 
+            <>
+            { 
+              isLoading || hasError ? (
+                <FetchCard
+                  w="100%"
+                  mx="auto"
+                  align="center"
+                  justify="center"
+                  direction="column"
+                  error={hasError}
+                  loading={isLoading}
+                />
+              ) : (
+                <Box py={12} px={24}>
+                  <Heading>Warehouse </Heading>
+                  <Box
+                    borderRadius={40}
+                    borderWidth={2}
+                    borderColor="rgba(208, 143, 49, 0.1)"
+                    bgColor="rgba(208, 143, 49, 0.1)"
+                    p={2}
+                    position="absolute"
+                  >
+                    <Icon as={IoWarningOutline} color="#D08F31" w={5} h={5} />
+                    <Text
+                      as="span"
+                      fontWeight="bold"
+                      fontSize="14px"
+                      color="#D08F31"
+                      px={2}
+                    >
+                      If produce in the warehouse are not sold within 2 weeks,
+                      they will automatically be sold to a buyer
+                    </Text>
+                  </Box>
+                  <Box mt={20}>
+                    {filteredFarms?.map((myfarm) => (
+                      <WarehouseCard
+                        sellButton={true}
+                        _id={myfarm._id}
+                        key={myfarm?.name}
+                        mr={3}
+                        ml={14}
+                        myfarm={myfarm}
+                      />
+                    ))}
+                  </Box>
+                </Box>
+              )
+
+            }
             </>
           )}
         </>
