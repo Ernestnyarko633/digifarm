@@ -44,8 +44,8 @@ const Warehouse = () => {
   return (
     <Layout>
       {myfarms?.length > 0 ? (
-        <Box>
-          {myfarms[0]?.storage ? (
+        <>
+          {myfarms?.some(farms => farms.storage.quantity!==0) ? (
             <>
               {isLoading || hasError ? (
                 <FetchCard
@@ -125,7 +125,7 @@ const Warehouse = () => {
               </Center>
             </>
           )}
-        </Box>
+        </>
       ) : (
         <>
           <Greetings
