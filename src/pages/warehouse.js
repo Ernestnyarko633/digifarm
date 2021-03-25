@@ -40,34 +40,8 @@ const Warehouse = () => {
   return (
     <Layout>
       {(myfarms?.length >0 )? (
-        <Box h="880px" py={40} mt={-20}  top={{ md: 40 }} left={{ md: 60 }} w='100%' bg='cf-dark.400' >
-        {/* <Heading ml={24}>Warehouse</Heading> */}
-        <Box
-          mt={2}
-          mb={2}
-          ml={24}
-          borderRadius={40}
-          borderWidth={2}
-          borderColor='rgba(208, 143, 49, 0.1)'
-          bgColor='rgba(208, 143, 49, 0.1)'
-          p={2}
-          position='absolute'
-        >
-          <Flex>
-            <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
-            <Text
-              as='span'
-              fontWeight='bold'
-              fontSize='14px'
-              color='#D08F31'
-              px={2}
-            >
-              If produce in the warehouse are not sold within 2 weeks, they will
-              automatically be sold to a buyer
-            </Text>
-          </Flex>
-        </Box>
-      {(myfarms[0]?.storage) ? (
+        <Box>
+      {(myfarms?.storage) ? (
       <>
         {isLoading || hasError ? (
           <FetchCard
@@ -103,29 +77,25 @@ const Warehouse = () => {
           title={'Warehouse'}
         />
         <Box
-          left={{ md: 16 }}
-          mt={-70}
-          // mb={2}
-          // ml={18}
           borderRadius={10}
           borderWidth={2}
           borderColor='rgba(255, 246, 216, 1)'
           bgColor='rgba(255, 246, 216, 1)'
-          pt={2}
+          p={1}
+          mt={-70}
           position='absolute'
+          ml={20}
         >
-          <Flex p={2}>
             <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5}/>
             <Text
               as='span'
               fontSize='14px'
               color='black'
-              px={3}
+              px={2}
             >
               If produce in the warehouse are not sold within 2 weeks, they will
               automatically be sold to a buyer
             </Text>
-          </Flex>
         </Box>
         <Center>
           <BuyerEmptyState
