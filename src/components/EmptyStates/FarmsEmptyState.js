@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box, Button, Heading, Icon, Image, Link, Text } from '@chakra-ui/react'
+import { Box, Button, Heading, Image, Link, Text } from '@chakra-ui/react'
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
-import { MdKeyboardArrowRight } from 'react-icons/md'
+// import { MdKeyboardArrowRight } from 'react-icons/md'
 import { Link as ReachLink } from 'react-router-dom'
 
 const FarmsEmptyState = () => {
@@ -19,9 +19,9 @@ const FarmsEmptyState = () => {
         </Box>
 
         <Box my={{ md: 10 }} textAlign='center'>
-          <Link _hover={{ textDecor: 'none' }} color='cf.400' d='block' mb={4}>
+          {/* <Link _hover={{ textDecor: 'none' }} color='cf.400' d='block' mb={4}>
             Learn more <Icon as={MdKeyboardArrowRight} />
-          </Link>
+          </Link> */}
 
           <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/start-farm'>
             <Button

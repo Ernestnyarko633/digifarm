@@ -58,6 +58,7 @@ const Marketplace = () => {
           borderColor="rgba(208, 143, 49, 0.1)"
           bgColor="rgba(208, 143, 49, 0.1)"
           p={2}
+          position='absolute'
         >
           <Icon as={IoWarningOutline} color="#D08F31" w={5} h={5} />
           <Text
@@ -72,6 +73,7 @@ const Marketplace = () => {
           </Text>
         </Box>
 
+      <Box mt = {20}>
         <WarehouseCard
           sellButton={false}
           _id={myfarm._id}
@@ -85,7 +87,7 @@ const Marketplace = () => {
           mr={3}
           ml={14}
         />
-
+        </Box>
         
           <Heading mt={8}>
             Buyers you can sell to
