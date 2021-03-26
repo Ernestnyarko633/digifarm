@@ -1,11 +1,13 @@
 import React from 'react'
-import { Box, Grid, Flex, Image, Heading, Text } from '@chakra-ui/react'
+import { Box, Grid, Flex, Image, Heading, Text, Icon } from '@chakra-ui/react'
 import Stack from '../../assets/images/finance.svg'
 import Money from '../../assets/images/money.svg'
 import Button from 'components/Button'
 import PropTypes from 'prop-types'
+import Graph from 'components/Utils/Graph'
+import { FaCircle } from 'react-icons/fa'
 
-const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
+const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
   //   const keys = [
   //     { name: 'Total Tasks', data: 900 },
   //     { name: 'Total Cost', data: '$' }
@@ -31,8 +33,6 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
         totalAmount = totalAmount + _task?.budget
       })
     }
-    // eslint-disable-next-line no-console
-    console.log(totalAmount, 'hey')
     if (scheduledTasks) {
       let currentExpense = 0
       let _tasks = scheduledTasks.filter(
@@ -57,7 +57,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
     <Box
       rounded='lg'
       bg='white'
-      p={10}
+      p={5}
       pb={1}
       my={6}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
@@ -67,7 +67,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
       <Grid templateColumns={{ md: '60% 40%' }} width='100%'>
         <Flex direction='column' w='100%' h='100%'>
           <Flex w='100%' direction='column'>
-            <Flex align='center'>
+            <Flex align='center' pl={{ md: 5 }}>
               <Box>
                 <Image src={Stack} />
               </Box>
@@ -77,14 +77,39 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
                 </Heading>
               </Flex>
             </Flex>
-            <Box mt={{ md: 5 }}>
+
+            <Box py={{ md: 35 }} pl={{ md: 5 }}>
               <Text color='gray.200' fontSize='2xl' lineHeight='21.09px'>
                 Growing conditions are currently perfect
               </Text>
             </Box>
+            <Box w='100%' bg='#ff0000'>
+              <Graph
+                farm={farm}
+                activities={activities}
+                tasks={tasks}
+                scheduledTasks={scheduledTasks}
+              />
+            </Box>
+            <Box>
+              <Flex direction='row' p={{ md: 5 }}>
+                <Flex justify='space-between' align='center'>
+                  <Icon as={FaCircle} boxSize={3} color='gray.400' />
+                  <Text ml={{ md: 2 }} fontSize={{ md: 'md' }}>
+                    Expenses
+                  </Text>
+                </Flex>
+                {/* <Flex ml={{ md: 5 }} justify='space-between' align='center'>
+                  <Icon as={FaCircle} boxSize={3} color='cf.400' />
+                  <Text ml={{ md: 2 }} fontSize={{ md: 'md' }}>
+                    Sales
+                  </Text>
+                </Flex> */}
+              </Flex>
+            </Box>
           </Flex>
         </Flex>
-        <Flex w='100%' direction='column'>
+        <Flex w='100%' direction='column' pr={{ md: 5 }}>
           <Flex
             align='center'
             borderBottomWidth={1}
@@ -142,22 +167,34 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
                 </Flex>
               )
             })}
-            <Button
-              btntitle='Payout'
-              borderColor='cf.400'
-              color='white'
-              rounded='30px'
-              my={5}
-              w='100%'
-              h={50}
-              fontSize='xl'
-              //   onClick={() =>
-              //     handleModalClick(
-              //       'activity-receipts',
-              //       thisData.ScheduledTasks?.length > 0 ? thisData : null
-              //     )
-              //   }
-            />
+            <Flex>
+              <Button
+                btntitle='Rollover'
+                bg='white'
+                borderWidth={1}
+                borderColor='cf.400'
+                color='cf.400'
+                rounded='30px'
+                my={5}
+                colorScheme='none'
+                w='50%'
+                h={50}
+                _hover={{ bg: 'white' }}
+                shadow='none'
+                fontSize='md'
+                mr={{ md: 5 }}
+              />
+              <Button
+                btntitle='Payout'
+                borderColor='cf.400'
+                color='white'
+                rounded='30px'
+                my={5}
+                w='50%'
+                h={50}
+                fontSize='xl'
+              />
+            </Flex>
           </Flex>
         </Flex>
       </Grid>
@@ -168,6 +205,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
 FarmFinances.propTypes = {
   activities: PropTypes.array.isRequired,
   tasks: PropTypes.array.isRequired,
-  scheduledTasks: PropTypes.array.isRequired
+  scheduledTasks: PropTypes.array.isRequired,
+  farm: PropTypes.object.isRequired
 }
 export default FarmFinances

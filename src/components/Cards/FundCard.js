@@ -13,6 +13,7 @@ const FundCard = ({ amount, label }) => {
       rounded='lg'
       justify='center'
       align='center'
+      height={{ md: '220px' }}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       p={6}
       bg='white'

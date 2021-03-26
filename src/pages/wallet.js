@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Heading, Flex } from '@chakra-ui/react'
+import { Box, Heading, Grid } from '@chakra-ui/react'
 import Layout from 'container/Layout'
 import FarmWalletEmptyState from 'components/EmptyStates/FarmWalletEmptyState'
 import FundCard from 'components/Cards/FundCard'
@@ -75,24 +75,25 @@ const Wallet = () => {
     <Layout>
       <FarmWalletEmptyState>
         {!loading && !error && (
-          <Box w='100%' px={{ md: 20 }} py={{ md: 55 }}>
-            <Heading as='h3' fontSize={{ md: '3xl' }} mt={{ md: 6 }}>
+          <Box w='100%' px={{ md: 20 }} pt={{ md: 20 }} pb={{ md: 10 }}>
+            <Heading as='h3' fontSize={{ md: '4xl' }} mt={{ md: 6 }}>
               Here's how your farm is doing
             </Heading>
-            <Flex direction='row' py={{ md: 10 }} w='100%'>
-              <Box w='30.33%' mx={{ md: 5 }}>
-                <FundCard label='Total funds' amount={750.0} />
-              </Box>
-              <Box w='30.33%' mx={{ md: 5 }}>
-                <FundCard label='Total funds used' amount={150.0} />
-              </Box>
-              <Box w='30.33%' mx={{ md: 5 }}>
-                <FundCard label='Total funds balance' amount={750.0 - 150.0} />
-              </Box>
-            </Flex>
+            <Grid
+              gap={8}
+              templateColumns={{ md: 'repeat(3, 1fr)' }}
+              py={{ md: 5 }}
+              w='100%'
+            >
+              <FundCard label='Total funds' amount={750.0} />
+
+              <FundCard label='Total funds used' amount={150.0} />
+
+              <FundCard label='Total funds balance' amount={750.0 - 150.0} />
+            </Grid>
           </Box>
         )}
-        <Box w='100%' px={{ md: 20 }} py={{ md: 55 }}>
+        <Box w='100%' px={{ md: 20 }}>
           {(loading || error) && (
             <Box p={16}>
               <FetchCard
@@ -114,15 +115,23 @@ const Wallet = () => {
             </Box>
           )}
           {!loading && !error && (
-            <FarmFinances
-              activities={myFarmActivities}
-              tasks={tasks}
-              scheduledTasks={ScheduledTasks}
-            />
+            <Box>
+              <FarmFinances
+                farm={yourFarm}
+                activities={myFarmActivities}
+                tasks={tasks}
+                scheduledTasks={ScheduledTasks}
+              />
+            </Box>
           )}
           {!loading && !error && (
             <React.Fragment>
-              <Heading as='h3' fontSize={{ md: '3xl' }} py={{ md: 20 }}>
+              <Heading
+                as='h3'
+                fontSize={{ md: '3xl' }}
+                pt={{ md: 20 }}
+                pb={{ md: 10 }}
+              >
                 See and view your receipts to funds usage
               </Heading>
               <Individual
