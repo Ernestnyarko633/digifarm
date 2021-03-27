@@ -14,6 +14,7 @@ const DocumentsReceipts = () => {
           digitalFarmerFarm={data?.digitalFarmerFarm}
           title={data?.title}
           amount={data?.amount}
+          viewDoc={data?.viewDoc}
         />
       ) : (
         <Flex

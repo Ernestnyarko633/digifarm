@@ -10,7 +10,8 @@ export default function Individual({
   digitalFarmerFarm,
   activities,
   tasks,
-  ScheduledTasks
+  ScheduledTasks,
+  viewDoc
 }) {
   const [tempActs, setTempActs] = useState([])
   const [moreButton, setShowMoreButton] = useState(false)
@@ -72,6 +73,7 @@ export default function Individual({
           tempActs?.map(_activity => {
             return (
               <FarmDocumentCard
+                viewDoc={viewDoc}
                 key={_activity?._id}
                 digitalFarmerFarm={digitalFarmerFarm}
                 __activityID={_activity?._id}
@@ -137,5 +139,6 @@ Individual.propTypes = {
   digitalFarmerFarm: PropTypes.any,
   activities: PropTypes.any,
   tasks: PropTypes.any,
-  ScheduledTasks: PropTypes.any
+  ScheduledTasks: PropTypes.any,
+  viewDoc: PropTypes.bool
 }

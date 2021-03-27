@@ -10,7 +10,8 @@ export default function FarmDocumentCard({
   data,
   digitalFarmerFarm,
   title,
-  amount
+  amount,
+  viewDoc
 }) {
   const { _xclip, handleModalClick } = useComponent()
   const history = useHistory()
@@ -124,14 +125,14 @@ export default function FarmDocumentCard({
                 </Heading>
               </Box>
               <Box w='25%'>
-                <Button
+               { <Button
                   color='cf.400'
-                  onClick={() => _downloadPDF(_key)}
+                  onClick={() => !viewDoc ?  _downloadPDF(_key) : null}
                   isLoading={loading}
                   isDisabled={loading}
                 >
-                  View
-                </Button>
+                 {!viewDoc ? 'View Receipt' : 'View Document'}
+                </Button>}
               </Box>
             </Flex>
           )
@@ -145,5 +146,6 @@ FarmDocumentCard.propTypes = {
   data: PropTypes.any,
   title: PropTypes.any,
   amount: PropTypes.any,
-  digitalFarmerFarm: PropTypes.any
+  digitalFarmerFarm: PropTypes.any,
+  viewDoc: PropTypes.bool
 }
