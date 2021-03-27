@@ -130,7 +130,7 @@ export default function FarmDocumentCard({
                   isLoading={loading}
                   isDisabled={loading}
                 >
-                  Download
+                  View
                 </Button>
               </Box>
             </Flex>

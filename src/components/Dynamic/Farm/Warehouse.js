@@ -1,8 +1,18 @@
 import React from 'react'
-import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Icon,
+  Image,
+  Heading,
+  Text
+} from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import WarehouseCard from 'components/Cards/WarehouseCard'
+import Warehouse from 'assets/images/warehouse.png'
 
 // import SoyaBean from '../../../assets/images/startfarm/soya-beans.svg'
 
@@ -102,25 +112,46 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
+          {!digitalFarmerFarm && (
+            <Flex
+              w='100%'
+              justify='center'
+              align='center'
+              direction='column'
+              py={{ md: 40 }}
+            >
+              <Image src={Warehouse} py={{ md: 10 }} />
+              <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
+                Warehouse is empty
+              </Heading>
+              <Text fontSize='xs'>
+                Your total farms and their details will show up here
+              </Text>
+            </Flex>
+          )}
           <Grid
-            templateColumns={{ md: 'repeat(2, 1fr)' }}
+            templateColumns={{ md: 'repeat(1, 1fr)' }}
             gap={10}
             w={{ md: 115 }}
           >
-            <WarehouseCard
-              sellButton={false}
-              name={digitalFarmerFarm?.order?.product?.cropVariety?.crop?.name}
-              location={digitalFarmerFarm?.order?.product?.location?.name}
-              image={digitalFarmerFarm?.order?.product?.cropVariety?.imageUrl}
-              quantity={digitalFarmerFarm?.storage.quantity}
-              weight={`${digitalFarmerFarm?.storage?.weight}`}
-              bags={`${digitalFarmerFarm?.storage?.numberOfBags}`}
-              condition={digitalFarmerFarm?.storage.yieldConditions}
-              orderStatus={digitalFarmerFarm?.order?.status}
-              mr={3}
-              ml={14}
-              status={digitalFarmerFarm?.status}
-            />
+            {digitalFarmerFarm && (
+              <WarehouseCard
+                sellButton={false}
+                name={
+                  digitalFarmerFarm?.order?.product?.cropVariety?.crop?.name
+                }
+                location={digitalFarmerFarm?.order?.product?.location?.name}
+                image={digitalFarmerFarm?.order?.product?.cropVariety?.imageUrl}
+                quantity={digitalFarmerFarm?.storage.quantity}
+                weight={`${digitalFarmerFarm?.storage?.weight}`}
+                bags={`${digitalFarmerFarm?.storage?.numberOfBags}`}
+                condition={digitalFarmerFarm?.storage.yieldConditions}
+                orderStatus={digitalFarmerFarm?.order?.status}
+                mr={3}
+                ml={14}
+                status={digitalFarmerFarm?.status}
+              />
+            )}
           </Grid>
         </Box>
       </GridItem>
