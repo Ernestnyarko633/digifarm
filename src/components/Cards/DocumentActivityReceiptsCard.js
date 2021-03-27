@@ -12,7 +12,7 @@ export default function FarmDocumentCard({
   title,
   amount
 }) {
-  const { _xclip } = useComponent()
+  const { _xclip, handleModalClick } = useComponent()
   const history = useHistory()
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
@@ -21,25 +21,25 @@ export default function FarmDocumentCard({
   const [error, setError] = useState(null)
   const { _receipt, setReceipt } = useState({})
   const _downloadPDF = async (task) => {
-    try {
-      setLoading(true)
-      setError(null)
-      const res = await downloadTaskReceipt({
-        digitalfarmer: user?._id,
-        task: task?._id,
-        farm: digitalFarmerFarm?._id
-      })
-      setReceipt(res.data)
-      console.log(res.data, 'datafromspace')
-      _xclip(res.data)
-      setLoading(false)
-      history.push(`/documents/${_receipt?.reference.trim()}/receipt`)
-    } catch (error) {
-      setError(error)
-      setLoading(false)
-    }
+    // try {
+    //   setLoading(true)
+    //   setError(null)
+    //   const res = await downloadTaskReceipt({
+    //     digitalfarmer: user?._id,
+    //     task: task?._id,
+    //     farm: digitalFarmerFarm?._id
+    //   })
+    //   setReceipt(res.data)
+    //   console.log(res.data, 'datafromspace')
+    //   _xclip(res.data)
+    //   setLoading(false)
+    //   history.push(`/documents/${_receipt?.reference.trim()}/receipt`)
+    // } catch (error) {
+    //   setError(error)
+    //   setLoading(false)
+    // }
 
-  
+  handleModalClick("viewreceipt")
       
   }
   return (

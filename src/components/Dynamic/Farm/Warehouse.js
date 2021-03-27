@@ -12,7 +12,7 @@ import {
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import WarehouseCard from 'components/Cards/WarehouseCard'
-import Warehouse from 'assets/images/warehouse.png'
+import Ware from 'assets/images/warehouse.png'
 
 // import SoyaBean from '../../../assets/images/startfarm/soya-beans.svg'
 
@@ -120,7 +120,7 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
               direction='column'
               py={{ md: 40 }}
             >
-              <Image src={Warehouse} py={{ md: 10 }} />
+              <Image src={Ware} py={{ md: 10 }} />
               <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
                 Warehouse is empty
               </Heading>
@@ -129,11 +129,7 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
               </Text>
             </Flex>
           )}
-          <Grid
-            templateColumns={{ md: 'repeat(1, 1fr)' }}
-            gap={10}
-            w={{ md: 115 }}
-          >
+          <Grid templateColumns={{ md: 'repeat(1, 1fr)' }} gap={10} w='100%'>
             {digitalFarmerFarm && (
               <WarehouseCard
                 sellButton={false}
