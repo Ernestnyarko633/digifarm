@@ -19,8 +19,10 @@ const FormInput = ({
   mr,
   bg = 'cf.300',
   w,
+  h,
   value,
   type,
+  borderBottomColor,
   ...rest
 }) => (
   <FormControl
@@ -34,8 +36,11 @@ const FormInput = ({
       bg={bg}
       borderWidth={1}
       borderColor='gray.100'
-      borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
+      borderBottomColor={
+        error && touched ? 'red.500' : borderBottomColor || 'cf.400'
+      }
       w={w}
+      h={h}
     >
       <FormLabel
         fontSize={{ md: 'xs' }}
@@ -120,7 +125,9 @@ FormInput.propTypes = {
   selectedValue: PropTypes.any,
   passwordShow: PropTypes.any,
   isRequired: PropTypes.bool,
-  value: PropTypes.any
+  value: PropTypes.any,
+  borderBottomColor: PropTypes.any,
+  h: PropTypes.any
 }
 
 export default FormInput
