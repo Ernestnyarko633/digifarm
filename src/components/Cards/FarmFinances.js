@@ -6,8 +6,10 @@ import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import Graph from 'components/Utils/Graph'
 import { FaCircle } from 'react-icons/fa'
+import useComponent from 'context/component'
 
 const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
+  const { handleModalClick } = useComponent()
   //   const keys = [
   //     { name: 'Total Tasks', data: 900 },
   //     { name: 'Total Cost', data: '$' }
@@ -183,6 +185,9 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
                 shadow='none'
                 fontSize='md'
                 mr={{ md: 5 }}
+                onClick={() => {
+                  handleModalClick('rollover')
+                }}
               />
               <Button
                 btntitle='Payout'
@@ -193,6 +198,9 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
                 w='50%'
                 h={50}
                 fontSize='xl'
+                onClick={() => {
+                  handleModalClick('payout')
+                }}
               />
             </Flex>
           </Flex>
