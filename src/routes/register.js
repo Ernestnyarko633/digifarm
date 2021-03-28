@@ -37,6 +37,7 @@ const Router = () => {
         <PrivateRoute path='/warehouses' component={Pages.Warehouse} />
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />
         <PrivateRoute path='/profile' component={Pages.Profile} />
+        <PrivateRoute path='/guide' component={Pages.Guide} />
         <PrivateRoute path='/notfound' component={Pages.NotFound} />
         <Redirect from='*' to='/404' />
       </Switch>

@@ -43,6 +43,7 @@
     "react-scripts": "4.0.3",
     "react-share": "^4.4.0",
     "react-use": "^17.2.1",
+    "react-youtube": "^7.13.1",
     "redis": "^3.0.2",
     "styletron-engine-atomic": "^1.4.7",
     "styletron-react": "^6.0.1",
