@@ -15,7 +15,7 @@ const Logout = lazy(() => import('./logout'))
 const Forum = lazy(() => import('./forum'))
 const Auth = lazy(() => import('./auth'))
 const Farm = lazy(() => import('./farm'))
-const Wallet = lazy(() => import('./wallet'))
+const Guide = lazy(() => import('./guide'))
 // const Receipt = lazy(() => import('./receipt'))
 
 const Pages = {
@@ -34,7 +34,7 @@ const Pages = {
   Marketplace,
   Cooperative,
   Warehouse,
-  Wallet
+  Guide
   // Receipt
 }
 
