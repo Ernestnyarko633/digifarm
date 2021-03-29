@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable */
+import React from 'react';
 import {
   Box,
   Flex,
@@ -8,13 +9,14 @@ import {
   Icon,
   Image,
   Tag,
-  Collapse
-} from '@chakra-ui/react'
-import PropTypes from 'prop-types'
-import { Flower, CreditCard } from 'theme/Icons'
-import { BsHeart } from 'react-icons/bs'
-import { RiShareForwardLine } from 'react-icons/ri'
-import Button from 'components/Button'
+  Collapse,
+} from '@chakra-ui/react';
+import PropTypes from 'prop-types';
+import { RichText } from 'prismic-reactjs';
+import { Flower, CreditCard } from 'theme/Icons';
+import { BsHeart } from 'react-icons/bs';
+import { RiShareForwardLine } from 'react-icons/ri';
+import Button from 'components/Button';
 
 const FarmBoardCard = ({
   status,
@@ -26,11 +28,12 @@ const FarmBoardCard = ({
   actionTitle,
   actionTag,
   actionText,
-  actionBtnTitle
+  actionBtnTitle,
+  news,
 }) => {
-  const [show, setShow] = React.useState(false)
+  const [show, setShow] = React.useState(false);
 
-  const handleToggle = () => setShow(!show)
+  const handleToggle = () => setShow(!show);
 
   const Detail = () => {
     return (
@@ -68,8 +71,8 @@ const FarmBoardCard = ({
           <Text color='gray.500'>{timestamp}</Text>
         </Box>
       </Flex>
-    )
-  }
+    );
+  };
 
   const NewHead = () => (
     <Flex align='center' justify='space-between'>
@@ -86,7 +89,7 @@ const FarmBoardCard = ({
         <Text color='gray.500'>{timestamp}</Text>
       </Box>
     </Flex>
-  )
+  );
 
   return (
     <Box
@@ -120,47 +123,51 @@ const FarmBoardCard = ({
         </>
       )}
 
-      {status === 'news' && (
-        <>
-          <Box pt={{ md: 8 }} pb={{ md: 2 }} px={{ md: 16 }}>
-            <NewHead />
-          </Box>
-          <Box>
-            <Image
-              w='100%'
-              h={{ md: 90 }}
-              objectFit='cover'
-              src={require('../../assets/images/Bitmap.png').default}
-            />
-          </Box>
-          <Box py={{ md: 4 }} px={{ md: 10 }}>
-            <Box mt={6}>
-              <Heading as='h5' fontSize={{ md: 'lg' }}>
-                Thank you for taking responsiblity and joining Complete Farmer
-                to feed the work together.
-              </Heading>
-              <Collapse
-                startingHeight={85}
-                in={show}
-                onClick={handleToggle}
-                cursor='pointer'
-              >
-                <Text color='gray.500' mt={3}>
-                  Thank you for taking responsiblity and joining Complete Farmer
-                  to feed the work together. Thank you for taking responsiblity
-                  and joining Complete Farmer to feed the work together.Thank
-                  you for taking responsiblity and joining Complete Farmer to
-                  feed the work together. Thank you for taking responsiblity and
-                  joining Complete Farmer to feed the work together. Thank you
-                  for taking responsiblity and joining Complete Farmer to feed
-                  the work together.Thank you for taking responsiblity and
-                  joining Complete Farmer to feed the work together.
-                </Text>
-              </Collapse>
+      {status === 'news' &&
+        news?.map((data) => (
+          <Box key={data?.id}>
+            <Box pt={{ md: 8 }} pb={{ md: 2 }} px={{ md: 16 }}>
+              <NewHead />
+            </Box>
+            <Box>
+              <Image
+                w='100%'
+                h={{ md: 90 }}
+                objectFit='cover'
+                src={data.data.body[0].primary.image.url}
+              />
+            </Box>
+            <Box py={{ md: 4 }} px={{ md: 10 }}>
+              <Box mt={6}>
+                <Heading as='h5' fontSize={{ md: 'lg' }}>
+                  {data.data.headline[0].text}
+                </Heading>
+                <Collapse
+                  startingHeight={85}
+                  in={show}
+                  onClick={handleToggle}
+                  cursor='pointer'
+                >
+                  {data.data.body[0].primary.description.map((item) => (
+                    <Text color='gray.500' mt={3} key={item.text}>
+                      {item.text}
+                    </Text>
+                  ))}
+                  {/* Thank you for taking responsiblity and joining Complete
+                    Farmer to feed the work together. Thank you for taking
+                    responsiblity and joining Complete Farmer to feed the work
+                    together.Thank you for taking responsiblity and joining
+                    Complete Farmer to feed the work together. Thank you for
+                    taking responsiblity and joining Complete Farmer to feed the
+                    work together. Thank you for taking responsiblity and
+                    joining Complete Farmer to feed the work together.Thank you
+                    for taking responsiblity and joining Complete Farmer to feed
+                    the work together. */}
+                </Collapse>
+              </Box>
             </Box>
           </Box>
-        </>
-      )}
+        ))}
 
       {status === 'action' && (
         <Box py={{ md: 8 }} px={{ md: 16 }}>
@@ -217,8 +224,8 @@ const FarmBoardCard = ({
         </Box>
       </Flex>
     </Box>
-  )
-}
+  );
+};
 
 FarmBoardCard.propTypes = {
   status: PropTypes.string.isRequired,
@@ -230,7 +237,8 @@ FarmBoardCard.propTypes = {
   actionTitle: PropTypes.string.isRequired,
   actionTag: PropTypes.string,
   actionText: PropTypes.string,
-  actionBtnTitle: PropTypes.string
-}
+  actionBtnTitle: PropTypes.string,
+  news: PropTypes.array,
+};
 
-export default FarmBoardCard
+export default FarmBoardCard;
