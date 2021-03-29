@@ -24,7 +24,7 @@ const Profile = () => {
       comp: 'compD'
     },
     {
-      name: 'Privacy & Data',
+      name: 'Privacy Terms',
       comp: 'compE'
     }
   ]

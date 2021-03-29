@@ -18,6 +18,8 @@ const Router = () => {
         <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
         <PrivateRoute exact path='/start-farm' component={Pages.StartFarm} />
         <PrivateRoute exact path='/farms/:id' component={Pages.Farm} />
+        <PrivateRoute exact path='/wallet' component={Pages.FarmWallet} />
+        <PrivateRoute exact path='/wallets/:id' component={Pages.Wallet} />
         {/* <PrivateRoute
           exact
           path='/documents/receipt'
@@ -37,6 +39,7 @@ const Router = () => {
         <PrivateRoute path='/warehouses' component={Pages.Warehouse} />
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />
         <PrivateRoute path='/profile' component={Pages.Profile} />
+        <PrivateRoute path='/guide' component={Pages.Guide} />
         <PrivateRoute path='/notfound' component={Pages.NotFound} />
         <Redirect from='*' to='/404' />
       </Switch>

@@ -7,6 +7,9 @@ import LearnMoreModal from 'components/Modals/LearnMoreModal'
 import FarmReceiptModal from 'components/Modals/FarmReceiptModal'
 import FarmContractModal from 'components/Modals/FarmContractModal'
 import DocumentsReceipts from 'components/Modals/DocumentReceipts'
+import RolloverModal from 'components/Modals/RolloverModal'
+import PayoutModal from 'components/Modals/PayoutModal'
+import SuccessModal from 'components/Modals/SuccessModal'
 
 const ModalContext = React.createContext({})
 
@@ -23,6 +26,14 @@ export const ModalContextProvider = ({ children }) => {
         return <FarmContractModal />
       case 'activity-receipts':
         return <DocumentsReceipts />
+      case 'rollover':
+        return <RolloverModal />
+      case 'payout':
+        return <PayoutModal />
+      case 'successmodal':
+        return <SuccessModal />
+      case 'payoutform':
+        return null
       default:
         return null
     }
