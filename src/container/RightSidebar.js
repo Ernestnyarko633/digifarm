@@ -1,11 +1,11 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
+import { Box, Grid, Heading, Text } from '@chakra-ui/react'
 import EventCard from 'components/Cards/EventCard'
 import React from 'react'
 
 const RightSidebar = () => {
   return (
     <Box
-      pt={40}
+      pt={28}
       right={0}
       bg='white'
       as='aside'
@@ -32,9 +32,10 @@ const RightSidebar = () => {
         performed
       </Text>
 
-      <Box mt={{ md: 4 }}>
+      <Grid gap={4} mt={{ md: 4 }} maxH={{ md: 90 }}>
         <EventCard />
-      </Box>
+        <EventCard />
+      </Grid>
     </Box>
   )
 }

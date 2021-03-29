@@ -24,7 +24,7 @@ const FarmBoardContent = () => {
     {
       id: 2,
       avatar: SoyaBeanImg,
-      timepstamp: '3m ago',
+      timepstamp: 'July 12, 2021',
       status: 'news',
       level: 'Lvl 1',
       actionTitle: 'CROP HEALTH',
@@ -55,7 +55,7 @@ const FarmBoardContent = () => {
     <Flex w='100%' align='center' direction='column'>
       <YourFarmCard />
       <Box p={16}>
-        <Heading as='h3' fontSize={{ md: 'xl' }} mb={10}>
+        <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
           See what's happening in your farm(s)
         </Heading>
         {farms.map(farm => {

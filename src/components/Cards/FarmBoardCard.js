@@ -7,7 +7,8 @@ import {
   Text,
   Icon,
   Image,
-  Tag
+  Tag,
+  Collapse
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { Flower, CreditCard } from 'theme/Icons'
@@ -27,6 +28,10 @@ const FarmBoardCard = ({
   actionText,
   actionBtnTitle
 }) => {
+  const [show, setShow] = React.useState(false)
+
+  const handleToggle = () => setShow(!show)
+
   const Detail = () => {
     return (
       <Flex
@@ -37,24 +42,26 @@ const FarmBoardCard = ({
         borderBottomColor='gray.200'
       >
         <Flex align='center'>
-          <Avatar size='lg' src={avatar} />
+          <Avatar size='md' src={avatar} />
           <Box ml={4}>
-            <Heading as='h4' fontSize={{ md: '2xl' }} fontWeight={700}>
+            <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
               {firstName}’s Farm
             </Heading>
             <Text color='gray.600'>{location}</Text>
           </Box>
-          <Box ml={12}>
-            <Tag
-              bg='cf.200'
-              color='cf.400'
-              rounded='xl'
-              px={6}
-              fontWeight='bold'
-            >
-              {level}
-            </Tag>
-          </Box>
+          {status !== 'news' && (
+            <Box ml={12}>
+              <Tag
+                bg='cf.200'
+                color='cf.400'
+                rounded='xl'
+                px={6}
+                fontWeight='bold'
+              >
+                {level}
+              </Tag>
+            </Box>
+          )}
         </Flex>
 
         <Box>
@@ -64,8 +71,32 @@ const FarmBoardCard = ({
     )
   }
 
+  const NewHead = () => (
+    <Flex align='center' justify='space-between'>
+      <Flex align='center'>
+        <Avatar size='md' src={avatar} />
+        <Box ml={4}>
+          <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
+            {firstName}
+          </Heading>
+        </Box>
+      </Flex>
+
+      <Box>
+        <Text color='gray.500'>{timestamp}</Text>
+      </Box>
+    </Flex>
+  )
+
   return (
-    <Box rounded='xl' w='100%' bg='white' mb={{ md: 10 }} shadow='md'>
+    <Box
+      rounded='xl'
+      w='80%'
+      mx='auto'
+      bg='white'
+      mb={{ md: 10 }}
+      filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+    >
       {status === 'farm' && (
         <>
           <Box py={{ md: 10 }} px={{ md: 16 }}>
@@ -90,32 +121,45 @@ const FarmBoardCard = ({
       )}
 
       {status === 'news' && (
-        <Box py={{ md: 8 }} px={{ md: 16 }}>
-          <Detail />
-          <Box mt={6}>
-            <Flex>
-              <Text textTransform='uppercase' fontWeight='bold'>
-                <Icon as={Flower} /> {actionTitle}
-              </Text>
-
-              <Box ml={12}>
-                <Tag
-                  bg='cf.200'
-                  color='cf.400'
-                  rounded='xl'
-                  px={6}
-                  fontWeight='bold'
-                  textTransform='uppercase'
-                >
-                  {actionTag}
-                </Tag>
-              </Box>
-            </Flex>
-            <Text color='gray.500' mt={3}>
-              {actionText}
-            </Text>
+        <>
+          <Box pt={{ md: 8 }} pb={{ md: 2 }} px={{ md: 16 }}>
+            <NewHead />
           </Box>
-        </Box>
+          <Box>
+            <Image
+              w='100%'
+              h={{ md: 90 }}
+              objectFit='cover'
+              src={require('../../assets/images/Bitmap.png').default}
+            />
+          </Box>
+          <Box py={{ md: 4 }} px={{ md: 10 }}>
+            <Box mt={6}>
+              <Heading as='h5' fontSize={{ md: 'lg' }}>
+                Thank you for taking responsiblity and joining Complete Farmer
+                to feed the work together.
+              </Heading>
+              <Collapse
+                startingHeight={85}
+                in={show}
+                onClick={handleToggle}
+                cursor='pointer'
+              >
+                <Text color='gray.500' mt={3}>
+                  Thank you for taking responsiblity and joining Complete Farmer
+                  to feed the work together. Thank you for taking responsiblity
+                  and joining Complete Farmer to feed the work together.Thank
+                  you for taking responsiblity and joining Complete Farmer to
+                  feed the work together. Thank you for taking responsiblity and
+                  joining Complete Farmer to feed the work together. Thank you
+                  for taking responsiblity and joining Complete Farmer to feed
+                  the work together.Thank you for taking responsiblity and
+                  joining Complete Farmer to feed the work together.
+                </Text>
+              </Collapse>
+            </Box>
+          </Box>
+        </>
       )}
 
       {status === 'action' && (
