@@ -36,6 +36,7 @@
     "react-dropzone": "^11.3.1",
     "react-icons": "^4.2.0",
     "react-map-gl": "^6.1.10",
+    "react-player": "^2.9.0",
     "react-query": "^3.12.1",
     "react-query-devtools": "^2.6.3",
     "react-reveal": "^1.2.2",
