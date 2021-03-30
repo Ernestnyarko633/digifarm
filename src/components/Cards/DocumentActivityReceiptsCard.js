@@ -4,8 +4,7 @@ import useApi from 'context/api'
 import PropTypes from 'prop-types'
 import useAuth from 'context/auth'
 import useComponent from 'context/component'
-import { useHistory } from 'react-router-dom'
-/*eslint-disable */
+
 export default function FarmDocumentCard({
   data,
   digitalFarmerFarm,
@@ -13,35 +12,33 @@ export default function FarmDocumentCard({
   amount,
   viewDoc
 }) {
-  const { _xclip, handleModalClick } = useComponent()
-  const history = useHistory()
+  const { handleModalClick } = useComponent()
+
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { downloadTaskReceipt } = useApi()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const { _receipt, setReceipt } = useState({})
-  const _downloadPDF = async (task) => {
-    // try {
-    //   setLoading(true)
-    //   setError(null)
-    //   const res = await downloadTaskReceipt({
-    //     digitalfarmer: user?._id,
-    //     task: task?._id,
-    //     farm: digitalFarmerFarm?._id
-    //   })
-    //   setReceipt(res.data)
-    //   console.log(res.data, 'datafromspace')
-    //   _xclip(res.data)
-    //   setLoading(false)
-    //   history.push(`/documents/${_receipt?.reference.trim()}/receipt`)
-    // } catch (error) {
-    //   setError(error)
-    //   setLoading(false)
-    // }
 
-  handleModalClick("viewreceipt")
-      
+  const _downloadPDF = async task => {
+    try {
+      setLoading(true)
+      setError(null)
+      const res = await downloadTaskReceipt({
+        digitalfarmer: user?._id,
+        task: task?._id,
+        farm: digitalFarmerFarm?._id
+      })
+
+      handleModalClick('viewreceipt', {
+        data: res?.data,
+        date: new Date(task.actual_endDate || task.endDate).toLocaleDateString()
+      })
+      setLoading(false)
+    } catch (error) {
+      setError(error)
+      setLoading(false)
+    }
   }
   return (
     <Box
@@ -124,16 +121,30 @@ export default function FarmDocumentCard({
                   {_key?.taskId?.budget}
                 </Heading>
               </Box>
-              <Box w='25%'>
-               { <Button
+              <Flex w='25%'>
+                <Button
                   color='cf.400'
-                  onClick={() => !viewDoc ?  _downloadPDF(_key) : null}
+                  onError={() => error}
+                  onClick={() => _downloadPDF(_key)}
+                  isLoading={loading}
+                  isDisabled={loading}
+                  bg='white'
+                  mr={{ md: 5 }}
+                  _hover={{ backgroundColor: 'white' }}
+                >
+                  Receipt
+                </Button>
+                <Button
+                  bg='white'
+                  _hover={{ backgroundColor: 'white' }}
+                  color='cf.400'
+                  onClick={() => null}
                   isLoading={loading}
                   isDisabled={loading}
                 >
-                 {!viewDoc ? 'View Receipt' : 'View Document'}
-                </Button>}
-              </Box>
+                  Documents
+                </Button>
+              </Flex>
             </Flex>
           )
         })}

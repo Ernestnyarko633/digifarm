@@ -18,7 +18,7 @@ import useComponent from 'context/component'
 import Logo from 'assets/images/white.png'
 
 const ReceiptModal = () => {
-  const { isOpen, onClose } = useComponent()
+  const { isOpen, onClose, data } = useComponent()
   return (
     <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='3xl'>
       <Box w='100%'>
@@ -37,7 +37,7 @@ const ReceiptModal = () => {
           </Flex>
           <Flex align='center' justify='center' bg='cf.400'>
             <Heading as='h6' py={{ md: 5 }}>
-              [Task] Receipt
+              [{data?.data?.task?.name}] Receipt
             </Heading>
           </Flex>
           <Box w='100%' p={{ md: 10 }}>
@@ -58,37 +58,37 @@ const ReceiptModal = () => {
                 <Tbody>
                   <Tr>
                     <Td>Task date</Td>
-                    <Td>millimetres (mm)</Td>
+                    <Td>{data?.date}</Td>
                   </Tr>
                   <Tr>
                     <Td>Farm name</Td>
-                    <Td>centimetres (cm)</Td>
+                    <Td>{data?.data?.farm?.name}</Td>
                   </Tr>
                   <Tr>
                     <Td>Digital farmer</Td>
-                    <Td>metres (m)</Td>
+                    <Td>{data?.data?.digitalFarmer}</Td>
                   </Tr>
                   <Tr>
                     <Td>Activity</Td>
-                    <Td>metres (m)</Td>
+                    <Td>{data?.data?.activity?.name}</Td>
                   </Tr>
-                  <Tr>
+                  {/* <Tr>
                     <Td>Resources</Td>
                     <Td>metres (m)</Td>
-                  </Tr>
+                  </Tr> */}
                   <Tr>
                     <Td>Farm Manager Signature</Td>
-                    <Td>metres (m)</Td>
+                    <Td>{data?.data?.managerSignature}</Td>
                   </Tr>
                   <Tr>
                     <Td>Tax/VAT</Td>
-                    <Td>metres (m)</Td>
+                    <Td>0.05</Td>
                   </Tr>
                 </Tbody>
                 <Tfoot>
                   <Tr>
                     <Th>Total cost</Th>
-                    <Th>into</Th>
+                    <Th>{data?.data?.cost}</Th>
                   </Tr>
                 </Tfoot>
               </Table>
