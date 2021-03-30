@@ -10,7 +10,6 @@ import { ExternalContextProvider } from 'context/external'
 import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
 import { ApiContextProvider } from 'context/api'
-import { EosApiContextProvider } from 'context/eosApi'
 
 import Router from 'routes/register'
 
@@ -21,17 +20,15 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <ComponentContextProvider>
         <ApiContextProvider>
-          <EosApiContextProvider>
-            <ExternalContextProvider>
-              <AuthContextProvider>
-                <StartFarmContextProvider>
-                  <ModalContextProvider>
-                    <Router />
-                  </ModalContextProvider>
-                </StartFarmContextProvider>
-              </AuthContextProvider>
-            </ExternalContextProvider>
-          </EosApiContextProvider>
+          <ExternalContextProvider>
+            <AuthContextProvider>
+              <StartFarmContextProvider>
+                <ModalContextProvider>
+                  <Router />
+                </ModalContextProvider>
+              </StartFarmContextProvider>
+            </AuthContextProvider>
+          </ExternalContextProvider>
         </ApiContextProvider>
       </ComponentContextProvider>
       <ReactQueryDevtools initialIsOpen />

@@ -4,7 +4,7 @@ import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
-import useEosApi from 'context/eosApi'
+import useExternalApi from 'context/external'
 import EmptyMap from 'assets/images/map.png'
 //import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
@@ -34,7 +34,7 @@ export default function Farm({
   ] = useState(null)
   const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({})
   const [__error, _setError] = React.useState(null)
-  const { getEOSStatistics, createEOSTaskForStats } = useEosApi()
+  const { getEOSStatistics, createEOSTaskForStats } = useExternalApi()
 
   useEffect(() => {
     let mounted = true

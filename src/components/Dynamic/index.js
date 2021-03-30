@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import useEosApi from 'context/eosApi'
+import useExternalApi from 'context/external'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 
@@ -31,13 +31,15 @@ const DynamicFarm = ({
   reload,
   error
 }) => {
+  const [type, setType] = useState('/sentinel2')
   const SelectedFarm = components[farm]
+
   const {
     getEOSViewID,
     createEOSTaskForStats,
     getEOSStatistics,
     getEOSWeatherForeCast
-  } = useEosApi()
+  } = useExternalApi()
 
   const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
@@ -66,7 +68,7 @@ const DynamicFarm = ({
     data: EOSViewID,
     isLoading: EOSViewIDIsLoading,
     error: EOSViewIDHasError
-  } = useFetch('eos_view_id', getEOSViewID, reload, eosViewIdPayload)
+  } = useFetch('eos_view_id', getEOSViewID, reload, eosViewIdPayload, type)
 
   // payload of health eos task_id creation
   const EOSTaskForStats = {
@@ -176,6 +178,7 @@ const DynamicFarm = ({
           ScheduledTasks={ScheduledTasks}
           location={location}
           loading={loading || isLoading}
+          setType={setType}
           error={error}
           _error={eosHasError}
         />
