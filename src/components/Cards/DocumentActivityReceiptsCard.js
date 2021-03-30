@@ -3,7 +3,8 @@ import { Box, Flex, Heading, Text, Button } from '@chakra-ui/react'
 import useApi from 'context/api'
 import PropTypes from 'prop-types'
 import useAuth from 'context/auth'
-import useComponent from 'context/component'
+import ReceiptModal from 'components/Modals/ReceiptModal'
+import TasksDocuments from 'components/Modals/TasksDocuments'
 
 export default function FarmDocumentCard({
   data,
@@ -12,16 +13,27 @@ export default function FarmDocumentCard({
   amount,
   viewDoc
 }) {
-  const { handleModalClick } = useComponent()
-
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { downloadTaskReceipt } = useApi()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [receipt, setReceipt] = useState({})
+  const [modal, setModal] = useState('')
+  const [open, setOpen] = useState(false)
+  const [selectedTask, setSelectedTask] = useState({})
 
+  const onOpen = value => {
+    setModal(value)
+    setOpen(true)
+  }
+
+  const onClose = () => {
+    setOpen(false)
+  }
   const _downloadPDF = async task => {
     try {
+      setSelectedTask(task)
       setLoading(true)
       setError(null)
       const res = await downloadTaskReceipt({
@@ -29,17 +41,42 @@ export default function FarmDocumentCard({
         task: task?._id,
         farm: digitalFarmerFarm?._id
       })
-
-      handleModalClick('viewreceipt', {
-        data: res?.data,
-        date: new Date(task.actual_endDate || task.endDate).toLocaleDateString()
-      })
+      setReceipt(res?.data)
       setLoading(false)
+      onOpen('viewreceipt')
     } catch (error) {
       setError(error)
       setLoading(false)
     }
   }
+  const toggleModal = value => {
+    switch (value) {
+      case 'viewreceipt':
+        return (
+          <ReceiptModal
+            open={open}
+            onClose={onClose}
+            data={{
+              data: receipt,
+              date: new Date(
+                selectedTask?.actual_endDate || selectedTask?.endDate
+              ).toLocaleDateString()
+            }}
+          />
+        )
+      case 'viewdocuments':
+        return (
+          <TasksDocuments
+            open={open}
+            onClose={onClose}
+            data={selectedTask?.media.filter(media => media.type === 'pdf')}
+          />
+        )
+      default:
+        return null
+    }
+  }
+
   return (
     <Box
       w={{ md: '687px' }}
@@ -48,6 +85,7 @@ export default function FarmDocumentCard({
       rounded='lg'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
     >
+      {toggleModal(modal)}
       <Flex
         align='center'
         justify='space-between'
@@ -134,16 +172,21 @@ export default function FarmDocumentCard({
                 >
                   Receipt
                 </Button>
-                <Button
-                  bg='white'
-                  _hover={{ backgroundColor: 'white' }}
-                  color='cf.400'
-                  onClick={() => null}
-                  isLoading={loading}
-                  isDisabled={loading}
-                >
-                  Documents
-                </Button>
+                {!viewDoc && (
+                  <Button
+                    bg='white'
+                    _hover={{ backgroundColor: 'white' }}
+                    color='cf.400'
+                    onClick={() => {
+                      setSelectedTask(_key)
+                      onOpen('viewdocuments')
+                    }}
+                    isLoading={loading}
+                    isDisabled={loading}
+                  >
+                    Documents
+                  </Button>
+                )}
               </Flex>
             </Flex>
           )

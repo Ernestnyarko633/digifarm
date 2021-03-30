@@ -35,6 +35,8 @@ export const ModalContextProvider = ({ children }) => {
         return <SuccessModal />
       case 'viewreceipt':
         return <ReceiptModal />
+      case 'viewdocuments':
+        return null
       default:
         return null
     }

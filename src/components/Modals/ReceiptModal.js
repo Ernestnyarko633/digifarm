@@ -14,13 +14,13 @@ import {
   Tfoot
 } from '@chakra-ui/react'
 import ModalWrapper from './ModalWrapper'
-import useComponent from 'context/component'
-import Logo from 'assets/images/white.png'
 
-const ReceiptModal = () => {
-  const { isOpen, onClose, data } = useComponent()
+import Logo from 'assets/images/white.png'
+import PropTypes from 'prop-types'
+
+const ReceiptModal = ({ open, onClose, data }) => {
   return (
-    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='3xl'>
+    <ModalWrapper isCentered isOpen={open} onClose={onClose} size='3xl'>
       <Box w='100%'>
         <Box w='100%'>
           {/*Header */}
@@ -117,4 +117,9 @@ const ReceiptModal = () => {
   )
 }
 
+ReceiptModal.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+  data: PropTypes.object
+}
 export default ReceiptModal
