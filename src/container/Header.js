@@ -32,19 +32,18 @@ const Header = () => {
       bg='white'
       pos='fixed'
       as='header'
-      // shadow='lg'
       zIndex={100}
       align='center'
-      h={{ md: 20 }}
+      h={{ base: 12, md: 20 }}
       gridArea='header'
       justify='space-between'
       borderBottomWidth={1}
       borderBottomColor='gray.300'
-      px={{ md: 24 }}
+      px={{ base: 4, md: 24 }}
     >
       <ReachRouter to='/dashboard'>
         <Link _hover={{ textDecor: 'none' }}>
-          <Image src={Logo} w={{ md: 12 }} />
+          <Image src={Logo} w={{ base: 8, md: 12 }} />
         </Link>
       </ReachRouter>
 

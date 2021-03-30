@@ -17,7 +17,7 @@ const Layout = ({
   return (
     <Grid
       templateRows='repeat(1 1fr)'
-      templateColumns='15% 63% 22%'
+      templateColumns={{ md: '20% 80%', lg: '15% 63% 22%' }}
       pos='relative'
       h='100vh'
       fontFamily='body'
@@ -25,7 +25,12 @@ const Layout = ({
     >
       <Header />
       {leftSidebar && (
-        <GridItem shadow='xl' zIndex={40} bg='white'>
+        <GridItem
+          shadow='xl'
+          zIndex={40}
+          bg='white'
+          d={{ base: 'none', md: 'block' }}
+        >
           <Sidebar />
         </GridItem>
       )}
@@ -33,7 +38,7 @@ const Layout = ({
         <Box
           px={px}
           pt={pt}
-          w='100%'
+          w={{ lg: '100%' }}
           as='main'
           bg='cf-dark.400'
           h={height}
@@ -47,7 +52,11 @@ const Layout = ({
         </Box>
       </GridItem>
       {rightSidebar && (
-        <GridItem shadow='xl' zIndex={40}>
+        <GridItem
+          shadow='xl'
+          zIndex={40}
+          d={{ base: 'none', md: 'none', lg: 'block' }}
+        >
           <RightSidebar />
         </GridItem>
       )}

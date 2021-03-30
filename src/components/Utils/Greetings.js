@@ -11,11 +11,11 @@ const Greetings = ({ title, text }) => {
     <Box pos='relative' bg={skyColor} textColor={textColor}>
       <Image
         src={IllustrationImage}
-        h={{ md: 115 }}
+        h={{ base: 90, md: 115 }}
         w='100%'
         objectFit='cover'
       />
-      <Box pos='absolute' top={{ md: 40 }} left={{ md: 16 }}>
+      <Box pos='absolute' top={{ base: 48, md: 40 }} left={{ base: 6, md: 16 }}>
         <Heading
           as='h3'
           fontSize={{ md: '4xl' }}
