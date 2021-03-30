@@ -47,7 +47,7 @@ const DynamicFarm = ({
     page: 1,
     search: {
       date: {
-        from: dateIntervals()?._30DaysAgo,
+        from: dateIntervals()?.ThirtyDaysAgo,
         to: dateIntervals()?.today
       },
       cloudCoverage: {
@@ -75,7 +75,7 @@ const DynamicFarm = ({
     type: 'mt_stats',
     params: {
       bm_type: '(B08-B04)/(B08+B04)',
-      date_start: dateIntervals()?._30DaysAgo,
+      date_start: dateIntervals()?.ThirtyDaysAgo,
       date_end: dateIntervals()?.today,
       geometry: {
         coordinates: [location],
