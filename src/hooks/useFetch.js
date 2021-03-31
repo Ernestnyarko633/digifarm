@@ -48,9 +48,8 @@ const useFetch = (key, func, reload, ...rest) => {
           if (dataFromStorage) {
             dispatch({ type: 'success', payload: { data: dataFromStorage } })
           } else {
-            console.log(...rest, "here")
             const res = await func(...rest)
-            if (mounted) {
+            if (mounted && res) {
               key &&
                 sessionStorage.setItem(
                   key,

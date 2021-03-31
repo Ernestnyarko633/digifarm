@@ -59,7 +59,7 @@ export default function Farm() {
     error: yourFarmFeedsHasError
   } = useFetch(
     `${yourFarm?.order?.product?._id}_farm_feeds`,
-    getMyFarmFeeds,
+    yourFarm?.order?.product?._id ? getMyFarmFeeds : null,
     reload,
     {
       farm: yourFarm?.order?.product?._id
@@ -72,7 +72,7 @@ export default function Farm() {
     error: ScheduledTasksHasError
   } = useFetch(
     `${yourFarm?.order?.product?._id}_scheduled_tasks`,
-    getMyScheduledTasks,
+    yourFarm?.order?.product?._id ? getMyScheduledTasks : null,
     reload,
     {
       farm: yourFarm?.order?.product?._id
@@ -85,7 +85,7 @@ export default function Farm() {
     error: myFarmActivitiesHasError
   } = useFetch(
     `${yourFarm?.order?.product?.protocol?._id}_activities`,
-    getActivities,
+    yourFarm?.order?.product?.protocol?._id ? getActivities : null,
     reload,
     {
       protocol: yourFarm?.order?.product?.protocol?._id

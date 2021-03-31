@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react'
 import { Box, Flex, Heading, Text, Button } from '@chakra-ui/react'
 import useApi from 'context/api'
@@ -172,7 +173,7 @@ export default function FarmDocumentCard({
                 >
                   Receipt
                 </Button>
-                {!viewDoc && (
+                {viewDoc && (
                   <Button
                     bg='white'
                     _hover={{ backgroundColor: 'white' }}
