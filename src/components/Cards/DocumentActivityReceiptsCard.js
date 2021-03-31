@@ -69,7 +69,7 @@ export default function FarmDocumentCard({
           <TasksDocuments
             open={open}
             onClose={onClose}
-            data={selectedTask?.media.filter(media => media.type === 'pdf')}
+            data={selectedTask?.media.filter(media => media.type === 'image')}
           />
         )
       default:
@@ -172,7 +172,7 @@ export default function FarmDocumentCard({
                 >
                   Receipt
                 </Button>
-                {!viewDoc && (
+                {viewDoc && (
                   <Button
                     bg='white'
                     _hover={{ backgroundColor: 'white' }}
