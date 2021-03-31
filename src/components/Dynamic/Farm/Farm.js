@@ -163,7 +163,7 @@ export default function Farm({
             w={{ md: 40 }}
             shadow='none'
             isLoading={_loading}
-            isDisabled={_loading}
+            isDisabled={_loading || !EOSTaskForStatsCreated?.task_id}
             isError={__error}
             onClick={() => DownloadVisual(EOSTaskForStatsCreated?.task_id)}
           />
