@@ -17,10 +17,21 @@ import {
 } from '@chakra-ui/react'
 
 import { CheckIcon } from '@chakra-ui/icons'
+import useApi from 'context/api'
 
-const ConfirmSale = ({ title, _width, height, onClosex, isOpenx, onClose }) => {
+const ConfirmSale = ({
+  title,
+  _width,
+  height,
+  onClosex,
+  isOpenx,
+  onClose,
+  buyers,
+  myfarm
+}) => {
   // const toast = useToast()
   const [modal, setModal] = useState(true)
+  const { sellProduce } = useApi()
 
   const handleKeyPress = e => {
     const key = e.keyCode || e.charCode
@@ -35,16 +46,16 @@ const ConfirmSale = ({ title, _width, height, onClosex, isOpenx, onClose }) => {
     }
   }
 
+  const _sellProduce = async (id, payload) => {
+    await sellProduce(id, payload)
+    onClosex()
+  }
+
   React.useEffect(() => {
     if (!isOpenx) {
       setModal(true)
     }
   }, [isOpenx])
-
-  const onSubmit = () => {
-    setModal(false)
-    onClose()
-  }
 
   return (
     <>
@@ -98,16 +109,10 @@ const ConfirmSale = ({ title, _width, height, onClosex, isOpenx, onClose }) => {
                     rounded='30px'
                     w={{ md: '120px' }}
                     onKeyPress={handleKeyPress}
-                    onClick={() => {
-                      onSubmit()
-                      // toast({
-                      //   position: 'top-right',
-                      //   duration: 9000,
-                      //   render: () => (
-                      //     <Notification amtBought={amtBought} name={name} />
-                      //   )
-                      // })
-                    }}
+                    onClick={
+                      () => _sellProduce(myfarm._id, { sourcing: buyers._id })
+                      // eslint-disable-next-line react/jsx-curly-newline
+                    }
                   >
                     Sell crop
                   </Button>
@@ -167,7 +172,9 @@ ConfirmSale.propTypes = {
   height: PropTypes.string,
   onClosex: PropTypes.any,
   isOpenx: PropTypes.any,
-  onClose: PropTypes.any
+  onClose: PropTypes.any,
+  myfarm: PropTypes.any,
+  buyers: PropTypes.any
 }
 
 export default ConfirmSale

@@ -61,7 +61,7 @@ const Warehouse = () => {
                   image={vector}
                   note='Warehouse is currently empty'
                   info='Warehouse will automatically show up when the produce are harvested and ready to sell'
-                  ml={80}
+                  ml={90}
                 />
               </Center>
             </>

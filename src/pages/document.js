@@ -62,7 +62,7 @@ const Document = () => {
       }
     }
     announcements()
-  }, [])
+  })
 
   useEffect(() => {
     const news = async () => {
