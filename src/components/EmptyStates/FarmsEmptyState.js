@@ -6,8 +6,8 @@ import { Link as ReachLink } from 'react-router-dom'
 
 const FarmsEmptyState = () => {
   return (
-    <Box bg='rgba(155, 155, 155, 0.1)'>
-      <Box bg='rgba(155, 155, 155, 0.1)' p={{ md: 10 }}>
+    <Box bg='#F5F5F5'>
+      <Box bg='#F5F5F5' p={{ md: 10 }}>
         <Box textAlign='center'>
           <Heading as='h3' fontSize={{ md: '3xl' }} mt={{ md: 6 }} mb={4}>
             You currently have no farm(s)

@@ -87,11 +87,11 @@ const BuyerCard = ({ buyers }) => {
             <TagLabel>Offer</TagLabel>
           </Tag>
           <Text mt={1} fontWeight='bold' fontSize='20px' ml={4}>
-            $ {buyers?.cost} per tonne
+            $ {buyers?.pricePerUnit} per tonne
           </Text>
         </Flex>
         <Progress
-          value={((buyers?.demand - buyers?.supply) / buyers?.demand) * 100}
+          value={(buyers?.supply / buyers?.demand) * 100}
           rounded='lg'
           colorScheme='cfButton'
           size='lg'

@@ -13,7 +13,6 @@ import {
   Heading,
   Flex,
   Divider,
-  Grid,
   Avatar,
   Icon
 } from '@chakra-ui/react'
@@ -25,6 +24,7 @@ const AboutBuyer = ({ buyers }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   // const { modal, setModal } = useState(true)
   const [isOpened, setOpened] = React.useState(false)
+  const btnRef = React.useRef()
 
   const onOpenx = () => {
     setOpened(true)
@@ -66,6 +66,7 @@ const AboutBuyer = ({ buyers }) => {
         borderColor='cf.400'
         px={10}
         onClick={onOpen}
+        ref={btnRef}
       >
         About Buyer
       </Button>
@@ -85,13 +86,15 @@ const AboutBuyer = ({ buyers }) => {
         borderWidth={5}
         colorScheme='white'
         isCentered
-        size='6xl'
+        finalFocusRef={btnRef}
+        scrollBehavior='outside'
+        size='3xl'
       >
         <ModalOverlay />
         <ModalContent>
           <Flex m={3} justify='center' align='center'>
             <Box ml={10}>
-              <Heading as='h4' fontWeight='bold' fontSize={{ md: 'xl' }}>
+              <Heading as='h4' fontWeight='bold' fontSize={{ md: '4xl' }}>
                 About buyer
               </Heading>
             </Box>
@@ -99,137 +102,146 @@ const AboutBuyer = ({ buyers }) => {
           </Flex>
           <Divider orientation='horizontal' borderColor='gray.400' />
           <ModalBody>
-            <Grid p={8} templateColumns='50% 50%'>
-              <Flex align='center' justify='center' height='50%'>
-                <Avatar mt={35} boxSize={80} src={buyers?.user?.avatar} />
-              </Flex>
-              <Box>
-                <Box>
-                  <Heading fontSize='36px'>
-                    {buyers?.user?.firstName} {buyers?.user?.lastName}
-                  </Heading>
-                  <Flex py={2}>
-                    <Icon
-                      as={FaMapMarkerAlt}
-                      color='gray.400'
-                      pr={2}
-                      w={5}
-                      h={5}
-                      pt={1}
-                    />
-                    <Text fontSize='18px'>
-                      {buyers?.onboarding?.info?.address?.street},{' '}
-                      {buyers?.onboarding?.info?.address?.state}
-                    </Text>
+            <Box mx={10} my={10}>
+              <Box
+                borderWidth={1}
+                bgColor='none'
+                borderColor='gray.400'
+                borderRadius='5px'
+                p={4}
+              >
+                <Flex justifyContent='space-between' mb={4}>
+                  <Flex>
+                    <Avatar bg='gray.100' mr={2} />
+                    <Box>
+                      <Heading fontSize='md'>
+                        {' '}
+                        {buyers?.user?.firstName} {buyers?.user?.lastName}
+                      </Heading>
+                      <Flex mt={2}>
+                        <Text fontSize='xs'>
+                          <Icon
+                            as={FaMapMarkerAlt}
+                            color='gray.400'
+                            pr={2}
+                            w={4}
+                            h={4}
+                          />
+                          {buyers?.onboarding?.info?.address?.street},{' '}
+                          {buyers?.onboarding?.info?.address?.state}
+                        </Text>
+                      </Flex>
+                    </Box>
                   </Flex>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  bgColor='none'
-                  borderColor='gray.400'
-                  borderRadius='5px'
-                  p={4}
-                  w={{ md: 110 }}
-                >
-                  <Heading fontSize='18px'>Company Name</Heading>
-                  <Text fontSize='14px'>{buyers?.onboarding?.info?.name}</Text>
-                  <Text fontSize='14px' pb={4}>
-                    {buyers?.onboarding?.info?.address?.state},{' '}
-                    {buyers?.onboarding?.info?.address?.country}
-                  </Text>
-                  <hr />
-                  <Heading fontSize='18px' pt={2}>
-                    Company description
-                  </Heading>
-                  <Text fontSize='14px'>
-                    {buyers?.onboarding?.info?.description}
-                  </Text>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  bgColor='none'
-                  borderColor='gray.400'
-                  borderRadius='5px'
-                  p={4}
-                  mt={6}
-                  w={{ md: 110 }}
-                  h={{ md: 60 }}
-                >
-                  <Heading fontSize='18px'>Need</Heading>
-                  <Flex pb={4} justifyContent='space-between'>
-                    <Text fontSize='14px'>
-                      {buyers?.crop?.variety?.name} | {buyers?.demand} tonnes
-                    </Text>
-                    <Text color='cf.400' fontSize='16px' fontWeight={600}>
-                      ${buyers?.cost} per tonne
-                    </Text>
+                  <Flex>
+                    <Box>
+                      <Heading fontSize='md'>
+                        {buyers?.onboarding?.info?.name}
+                      </Heading>
+                      <Flex mt={2}>
+                        <Text fontSize='xs'>
+                          {' '}
+                          <Icon
+                            as={FaMapMarkerAlt}
+                            color='gray.400'
+                            pr={2}
+                            w={4}
+                            h={4}
+                          />
+                          {buyers?.onboarding?.info?.address?.state},{' '}
+                          {buyers?.onboarding?.info?.address?.country}
+                        </Text>
+                      </Flex>
+                    </Box>
                   </Flex>
-                  <hr />
-                  <Heading fontSize='18px' pt={2}>
-                    Description
-                  </Heading>
-                  <Text fontSize='14px'>Soya Beans | 100 tonnes</Text>
-                  <Text p={1} fontSize='14px'>
-                    Sandy loam soil is one of the most preferable types of soil
-                    for many types of plants.Planting in loam soil with a high
-                    percentage of sand is the same as planting in normal loam
-                    soil, but extra amendments may be made to compensate for
-                    slightly lower water
-                  </Text>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  bgColor='none'
-                  borderColor='gray.400'
-                  borderRadius='5px'
-                  p={4}
-                  mt={6}
-                  w={{ md: 110 }}
-                  h={{ md: 60 }}
-                >
-                  <Heading fontSize='18px' pb={4}>
-                    Incoterm
-                  </Heading>
-
-                  <hr />
-
-                  <Heading fontSize='18px' pt={2}>
-                    {buyers?.deliveryMethod?.rule}
-                  </Heading>
-                  <Text fontSize='14px'>
-                    {getRule(buyers?.deliveryMethod?.rule)}
-                  </Text>
-                </Box>
-                <Flex>
-                  <Button
-                    mt={4}
-                    colorScheme='linear'
-                    rounded='30px'
-                    fontSize='xs'
-                    width={{ md: '240px' }}
-                    h={{ md: '60px' }}
-                    onClick={onOpenx}
-                  >
-                    Sell to buyer
-                  </Button>
-                  <Button
-                    colorScheme='none'
-                    rounded='30px'
-                    ml={2}
-                    mt={4}
-                    onClick={onClose}
-                    borderWidth={1}
-                    borderColor='black'
-                    w={{ md: '240px' }}
-                    h={{ md: '60px' }}
-                    color='black'
-                    mr={2}
-                  >
-                    Cancel
-                  </Button>
                 </Flex>
+
+                <hr />
+
+                <Text fontSize='sm' mt={4}>
+                  {buyers?.onboarding?.info?.description}
+                </Text>
               </Box>
-            </Grid>
+
+              <Box
+                borderWidth={1}
+                bgColor='none'
+                borderColor='gray.400'
+                borderRadius='5px'
+                p={4}
+                mt={6}
+              >
+                <Text fontSize='sm'>Need</Text>
+                <Flex pb={4} justifyContent='space-between'>
+                  <Text fontSize='md' fontWeight='bold' mt={2}>
+                    {buyers?.crop?.variety?.name} . {buyers?.demand} tonnes
+                  </Text>
+                  <Text color='cf.400' fontSize='lg' fontWeight={600}>
+                    ${buyers?.buyingAt}
+                  </Text>
+                </Flex>
+                <hr />
+
+                <Text p={1} fontSize='sm' mt={4}>
+                  Sandy loam soil is one of the most preferable types of soil
+                  for many types of plants.Planting in loam soil with a high
+                  percentage of sand is the same as planting in normal loam
+                  soil, but extra amendments may be made to compensate for
+                  slightly lower water
+                </Text>
+              </Box>
+              <Box
+                borderWidth={1}
+                bgColor='none'
+                borderColor='gray.400'
+                borderRadius='5px'
+                p={4}
+                mt={6}
+                w='100%'
+                h='100%'
+              >
+                <Heading fontSize='md' pb={4}>
+                  Incoterm
+                </Heading>
+
+                <hr />
+
+                <Heading fontSize='md' mt={4}>
+                  {buyers?.deliveryMethod?.rule}
+                </Heading>
+                <Text fontSize='sm' mt={4}>
+                  {getRule(buyers?.deliveryMethod?.rule)}
+                </Text>
+              </Box>
+              <Flex>
+                <Button
+                  colorScheme='none'
+                  rounded='30px'
+                  ml={2}
+                  mt={6}
+                  onClick={onClose}
+                  borderWidth={1}
+                  borderColor='black'
+                  w={{ md: '360px' }}
+                  h={{ md: '60px' }}
+                  color='black'
+                  mr={2}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  mt={6}
+                  colorScheme='linear'
+                  rounded='30px'
+                  fontSize='xs'
+                  width={{ md: '360px' }}
+                  h={{ md: '60px' }}
+                  onClick={onOpenx}
+                >
+                  Sell to buyer
+                </Button>
+              </Flex>
+            </Box>
           </ModalBody>
         </ModalContent>
       </Modal>
