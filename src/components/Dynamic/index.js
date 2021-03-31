@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import useExternalApi from 'context/external'
@@ -37,7 +38,7 @@ const DynamicFarm = ({
   const {
     getEOSViewID,
     createEOSTaskForStats,
-    getEOSStatistics,
+    // getEOSStatistics,
     getEOSWeatherForeCast
   } = useExternalApi()
 
@@ -89,7 +90,6 @@ const DynamicFarm = ({
   }
 
   //creates stats task_id for stats health card
-
   const {
     data: eosStats,
     isLoading: eosStatsIsLoading,
@@ -101,13 +101,14 @@ const DynamicFarm = ({
     EOSTaskForStats
   )
 
-  // for health card stats
+  console.log(eosStats)
 
-  const {
-    data: EOSStatistics,
-    isLoading: EOSStatisticsIsLoading,
-    error: EOSStatisticsHasError
-  } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
+  // // for health card stats
+  // const {
+  //   data: EOSStatistics,
+  //   isLoading: EOSStatisticsIsLoading,
+  //   error: EOSStatisticsHasError
+  // } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
 
   const weatherForeCastsPayload = {
     geometry: {
@@ -130,14 +131,14 @@ const DynamicFarm = ({
   const isLoading =
     EOSViewIDIsLoading ||
     WeatherForeCastsIsLoading ||
-    EOSStatisticsIsLoading ||
+    // EOSStatisticsIsLoading ||
     eosStatsIsLoading
 
   const eosHasError =
     EOSViewIDHasError ||
-    EOSStatisticsHasError ||
+    //EOSStatisticsHasError ||
     WeatherForeCastsHasError ||
-    EOSStatisticsHasError ||
+    // EOSStatisticsHasError ||
     eosStatsHasError
 
   if (isLoading) {
@@ -172,7 +173,7 @@ const DynamicFarm = ({
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
           activities={activities}
-          EOSStatistics={EOSStatistics}
+          //    EOSStatistics={EOSStatistics}
           EOSViewID={EOSViewID}
           WeatherForeCasts={WeatherForeCasts}
           ScheduledTasks={ScheduledTasks}

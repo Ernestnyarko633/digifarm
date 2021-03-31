@@ -181,7 +181,6 @@ export default function FarmDocumentCard({
                       setSelectedTask(_key)
                       onOpen('viewdocuments')
                     }}
-                    isLoading={loading}
                     isDisabled={loading}
                   >
                     Documents

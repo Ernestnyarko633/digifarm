@@ -75,7 +75,10 @@ export default function Farm({
       }
     }
     if (mounted) {
-      EOSViewID && location && fetchData(EOSTaskForStatsCreationPayload)
+      EOSViewID &&
+        location &&
+        false &&
+        fetchData(EOSTaskForStatsCreationPayload)
     }
 
     return () => (mounted = false)
