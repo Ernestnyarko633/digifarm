@@ -91,15 +91,22 @@ export const dateIntervals = () => {
   let yyyy = today.getFullYear()
   let _yyyy = ThirtyDaysAgo.getFullYear()
 
-  if (dd < 10 || _dd < 10) {
+  if (dd < 10) {
     dd = '0' + dd
+    
+  }
+  if(_dd < 10){
     _dd = '0' + _dd
   }
 
-  if (mm < 10 || _mm < 10) {
+  if (mm < 10 ) {
     mm = '0' + mm
+   
+  }
+  if(_mm < 10){
     _mm = '0' + _mm
   }
+
   today = yyyy + '-' + mm + '-' + dd
   ThirtyDaysAgo = _yyyy + '-' + _mm + '-' + _dd
 
