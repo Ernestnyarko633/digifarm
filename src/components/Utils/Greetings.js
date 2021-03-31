@@ -15,7 +15,7 @@ const Greetings = ({ title, text }) => {
         w='100%'
         objectFit='cover'
       />
-      <Box pos='absolute' top={{ md: 40 }} left={{ md: 16 }}>
+      <Box pos='absolute' top={{ md: 20 }} left={{ md: 16 }}>
         <Heading
           as='h3'
           fontSize={{ md: '4xl' }}

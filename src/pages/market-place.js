@@ -44,7 +44,7 @@ const Marketplace = () => {
     data: SourcingOrders,
     isLoading: SourcingOrdersIsLoading,
     error: SourcingOrdersHasError,
-  } = useFetch("sourcing_orders", getSourcingOrders, reload, {
+  } = useFetch("s_orders", getSourcingOrders, reload, {
     cropVariety: myfarm?.order?.product?.cropVariety?._id,
   });
 
@@ -140,6 +140,7 @@ const Marketplace = () => {
           </Flex>
               {state === 0 &&
                 SourcingOrders?.map((buyers) => (
+                  // add condition for when there are no buyer and error handling
                   <BuyerCard
                     _id={buyers._id}
                     key={buyers._id}
@@ -151,6 +152,7 @@ const Marketplace = () => {
                   image={transaction1}
                   note={"No ongoing transaction yet"}
                   info={"Ongoing transactions will be available here"}
+                  ml={122}
                 />
               )}
               {state === 2 && (
@@ -158,6 +160,7 @@ const Marketplace = () => {
                   image={transaction2}
                   note={"You haven't made any transactions"}
                   info={"Past transaction history will show here"}
+                  ml={122}
                 />
               )}
             
