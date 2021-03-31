@@ -20,7 +20,8 @@ export default function Document({
   ScheduledTasks
 }) {
   let state = 'compA'
-
+  // eslint-disable-next-line no-console
+  console.log(digitalFarmerFarm, 'hisfarm')
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -98,7 +99,25 @@ export default function Document({
           overflowY='scroll'
         >
           <Grid gap={8}>
-            <FarmReceiptCard farm={digitalFarmerFarm} />
+            {digitalFarmerFarm?.order?.status === 'PAID' && (
+              <React.Fragment>
+                <FarmReceiptCard
+                  title='Agreement'
+                  type='agreement'
+                  farm={digitalFarmerFarm}
+                />
+                <FarmReceiptCard
+                  title='Invoice'
+                  type='invoice'
+                  farm={digitalFarmerFarm}
+                />
+                <FarmReceiptCard
+                  title='Receipt'
+                  type='receipt'
+                  farm={digitalFarmerFarm}
+                />
+              </React.Fragment>
+            )}
           </Grid>
         </Box>
       </GridItem>
