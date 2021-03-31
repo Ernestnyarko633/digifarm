@@ -4,19 +4,22 @@ import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
+import { saveAs } from 'file-saver'
 
 export default function FarmReceiptCard({ farm }) {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { downloadOrder } = useApi()
-  const [loading, setLoading] = React.useState(null)
+  const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   const _downloadOrder = async query => {
     try {
       setLoading(true)
       setError(null)
-      await downloadOrder(query)
+      const res = await downloadOrder(query)
+      const pdfBlob = new Blob([res], { type: 'application/pdf' })
+      saveAs(pdfBlob, 'agreement.pdf')
       setLoading(false)
     } catch (error) {
       setError(error)
@@ -28,14 +31,14 @@ export default function FarmReceiptCard({ farm }) {
       bg='white'
       rounded='lg'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      p={6}
+      p={4}
     >
       <Flex align='center' justify='space-between'>
         <Flex align='center'>
           <Avatar src={farm?.order?.product?.cropVariety?.imageUrl} />
           <Box ml={2}>
             <Text fontSize='lg' fontWeight={700}>
-              {`${user?.firstName}'s Farm Contract`}
+              {`${user?.firstName}'s Farm Agreement`}
             </Text>
             <Text fontSize='xs' color='gray.500' mt={-2}>
               {`${farm?.order?.product?.location?.state} ${farm?.order?.product?.location?.country}`}

@@ -1,15 +1,17 @@
-import { Box, Flex, Grid } from '@chakra-ui/react'
+import { Box, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { BsArrowRight } from 'react-icons/bs'
 import FarmDocumentCard from '../Cards/FarmDocumentCard'
+import Doc from 'assets/images/doc.png'
 
 export default function Individual({
   digitalFarmerFarm,
   activities,
   tasks,
-  ScheduledTasks
+  ScheduledTasks,
+  viewDoc
 }) {
   const [tempActs, setTempActs] = useState([])
   const [moreButton, setShowMoreButton] = useState(false)
@@ -71,6 +73,7 @@ export default function Individual({
           tempActs?.map(_activity => {
             return (
               <FarmDocumentCard
+                viewDoc={viewDoc}
                 key={_activity?._id}
                 digitalFarmerFarm={digitalFarmerFarm}
                 __activityID={_activity?._id}
@@ -88,12 +91,29 @@ export default function Individual({
               />
             )
           })}
+        {!tempActs && (
+          <Flex
+            w='100%'
+            justify='center'
+            align='center'
+            direction='column'
+            py={{ md: 40 }}
+          >
+            <Image src={Doc} py={{ md: 10 }} />
+            <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
+              Your document is empty
+            </Heading>
+            <Text fontSize='xs'>
+              Documents like receipts, contracts will show up here
+            </Text>
+          </Flex>
+        )}
       </Grid>
 
       {moreButton && (
         <Flex align='center' justify='center' mt={{ md: 16 }}>
           <Button
-            btntitle={!toggleText ? 'Show me more' : 'Show me less'}
+            btntitle={!toggleText ? 'Show more' : 'Show less'}
             icon={BsArrowRight}
             bg='white'
             borderWidth={1}
@@ -119,5 +139,6 @@ Individual.propTypes = {
   digitalFarmerFarm: PropTypes.any,
   activities: PropTypes.any,
   tasks: PropTypes.any,
-  ScheduledTasks: PropTypes.any
+  ScheduledTasks: PropTypes.any,
+  viewDoc: PropTypes.bool
 }

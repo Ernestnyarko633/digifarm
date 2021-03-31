@@ -19,6 +19,7 @@
     "carbon-components-react": "7.24.0",
     "carbon-icons": "7.0.7",
     "emotion-theming": "^11.0.0",
+    "file-saver": "^2.0.5",
     "formik": "^2.2.6",
     "framer-motion": "^3.10.3",
     "html2canvas": "^1.0.0-rc.7",

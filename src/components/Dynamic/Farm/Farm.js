@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Image } from '@chakra-ui/react'
 import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
-import useEosApi from 'context/eosApi'
+import useExternalApi from 'context/external'
+import EmptyMap from 'assets/images/map.png'
 //import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 export default function Farm({
@@ -33,7 +34,7 @@ export default function Farm({
   ] = useState(null)
   const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({})
   const [__error, _setError] = React.useState(null)
-  const { getEOSStatistics, createEOSTaskForStats } = useEosApi()
+  const { getEOSStatistics, createEOSTaskForStats } = useExternalApi()
 
   useEffect(() => {
     let mounted = true
@@ -122,23 +123,28 @@ export default function Farm({
           />
         )}
         {!loading && !EOSViewID && (
-          <Flex w='100%' h='100%'>
-            <FetchCard
-              direction='column'
-              align='center'
-              justify='center'
-              mx='auto'
-              reload={() => {
-                ;(error || _error) && reloads[0]()
-              }}
-              loading={loading}
-              error={error || _error}
-              text={
-                !error || !_error
-                  ? 'Standby as we load your current farms and pending orders'
-                  : 'Something went wrong, please dont fret'
-              }
-            />
+          <Flex w='100%' h='100%' direction='column'>
+            <Box w='100%' h='100%'>
+              <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
+            </Box>
+            <Box pt={{ md: 10 }}>
+              <FetchCard
+                direction='column'
+                align='center'
+                justify='center'
+                mx='auto'
+                reload={() => {
+                  ;(error || _error) && reloads[0]()
+                }}
+                loading={loading}
+                error={error || _error}
+                text={
+                  !error || !_error
+                    ? 'Standby as we load your current farms and pending orders'
+                    : 'Something went wrong, please dont fret'
+                }
+              />
+            </Box>
           </Flex>
         )}
       </Box>

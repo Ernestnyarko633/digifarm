@@ -1,7 +1,6 @@
 import React from 'react'
 import { Cloud } from 'theme/Icons'
 import { Box, Grid, Heading, Icon, Text, Flex } from '@chakra-ui/react'
-// import useEosApi from 'context/eosApi'
 import PropTypes from 'prop-types'
 
 export default function WeatherCard({
