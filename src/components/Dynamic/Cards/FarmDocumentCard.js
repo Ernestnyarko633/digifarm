@@ -15,7 +15,8 @@ export default function FarmDocumentCard({
   tasksNumber,
   __activityID,
   digitalFarmerFarm,
-  amount
+  amount,
+  viewDoc
 }) {
   const { handleModalClick } = useComponent()
 
@@ -43,7 +44,8 @@ export default function FarmDocumentCard({
     digitalFarmerFarm,
     ScheduledTasks: ScheduledTasks.filter(
       _task => __activityID === _task.taskId.activity._id
-    )
+    ),
+    viewDoc
   }
   const keys = [
     { name: 'Total Tasks', data: tasksNumber },
@@ -89,7 +91,7 @@ export default function FarmDocumentCard({
         })}
         {
           <Button
-            btntitle='View all receipts'
+            btntitle={!viewDoc ? 'View all receipts' : 'View all Documents'}
             bg='white'
             borderWidth={1}
             borderColor='cf.400'
@@ -120,5 +122,6 @@ FarmDocumentCard.propTypes = {
   tasksNumber: PropTypes.any,
   ScheduledTasks: PropTypes.any,
   __activityID: PropTypes.any,
-  digitalFarmerFarm: PropTypes.any
+  digitalFarmerFarm: PropTypes.any,
+  viewDoc: PropTypes.bool
 }

@@ -7,9 +7,7 @@ import Bitmap from 'assets/images/Bitmap.png'
 const YourFarmCard = () => {
   const dummyFarms = [
     { name: 'FarmX', color: '#FF9F9F' },
-    { name: 'FarmY', color: '#76B1F6' },
-    { name: 'FarmZ', color: '#EEE463' },
-    { name: 'FarmT', color: '#AED033' }
+    { name: 'FarmY', color: '#76B1F6' }
   ]
   return (
     <Box bg='white' w='100%' p={16}>

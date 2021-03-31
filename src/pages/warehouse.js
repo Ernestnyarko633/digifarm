@@ -34,7 +34,7 @@ const Warehouse = () => {
   const filteredFarms = myfarms?.filter(farm => farm.storage.quantity > 0)
 
   return (
-    <Layout>
+    <Layout height="100vh" bgColor='none'>
       {myfarms?.length > 0 ? (
         <>
           {myfarms?.length === 1 && myfarms[0].storage.quantity === 0 ? (

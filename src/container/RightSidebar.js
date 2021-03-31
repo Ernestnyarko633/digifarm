@@ -1,11 +1,40 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
-import EventCard from 'components/Cards/EventCard'
-import React from 'react'
+/* eslint-disable */
+import { Box, Grid, Heading, Text } from '@chakra-ui/react';
+import EventCard from 'components/Cards/EventCard';
+import React from 'react';
+import Prismic from 'prismic-javascript';
+import getConfig from 'utils/configs';
 
 const RightSidebar = () => {
+  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig();
+
+  const Client = Prismic.client(PRISMIC_API, {
+    accessToken: PRISMIC_ACCESS_TOKEN,
+  });
+
+  const [doc, setDocData] = React.useState(null);
+
+  React.useEffect(() => {
+    let mounted = true;
+    if (mounted && !doc) {
+      const fetchData = async () => {
+        const response = await Client.query(
+          Prismic.Predicates.at('document.type', 'announcements')
+        );
+        if (response) {
+          setDocData(response.results);
+        }
+      };
+      fetchData();
+    }
+    return () => (mounted = false);
+  }, [Client, doc]);
+
+  console.log('events', doc);
+
   return (
     <Box
-      pt={40}
+      pt={28}
       right={0}
       bg='white'
       as='aside'
@@ -32,11 +61,12 @@ const RightSidebar = () => {
         performed
       </Text>
 
-      <Box mt={{ md: 4 }}>
+      <Grid gap={4} mt={{ md: 4 }} maxH={{ md: 90 }}>
         <EventCard />
-      </Box>
+        <EventCard />
+      </Grid>
     </Box>
-  )
-}
+  );
+};
 
-export default RightSidebar
+export default RightSidebar;

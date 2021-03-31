@@ -16,7 +16,6 @@ export const ApiContextProvider = ({ children }) => {
   } = getConfig()
 
   // eslint-disable-next-line no-console
-  console.log(getConfig(), 'configs')
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
   }
