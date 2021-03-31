@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react'
 import { Box, Flex, Heading, Text, Button } from '@chakra-ui/react'
 import useApi from 'context/api'
@@ -69,7 +70,7 @@ export default function FarmDocumentCard({
           <TasksDocuments
             open={open}
             onClose={onClose}
-            data={selectedTask?.media.filter(media => media.type === 'image')}
+            data={selectedTask?.media.filter(media => media.type === 'pdf')}
           />
         )
       default:

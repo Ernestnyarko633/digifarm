@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
-import { saveAs } from 'file-saver'
 
 export default function FarmReceiptCard({ farm, title, type }) {
   const { isAuthenticated } = useAuth()
@@ -18,8 +17,7 @@ export default function FarmReceiptCard({ farm, title, type }) {
       setLoading(true)
       setError(null)
       const res = await downloadOrder(query)
-      const pdfBlob = new Blob([res], { type: 'application/pdf' })
-      saveAs(pdfBlob, `${type}.pdf`)
+      window.location = res?.data
       setLoading(false)
     } catch (error) {
       setError(error)

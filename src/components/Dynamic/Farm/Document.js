@@ -20,8 +20,7 @@ export default function Document({
   ScheduledTasks
 }) {
   let state = 'compA'
-  // eslint-disable-next-line no-console
-  console.log(digitalFarmerFarm, 'hisfarm')
+
   return (
     <Grid
       templateRows='repeat(1 1fr)'
