@@ -26,7 +26,6 @@ export default function Farm() {
 
   const {
     getMyFarmFeeds,
-    getSourcingOrders,
     getAllTasks,
     getMyFarm,
     getActivities,
@@ -60,23 +59,10 @@ export default function Farm() {
     error: yourFarmFeedsHasError
   } = useFetch(
     `${yourFarm?.order?.product?._id}_farm_feeds`,
-    getMyFarmFeeds,
+    yourFarm?.order?.product?._id ? getMyFarmFeeds : null,
     reload,
     {
       farm: yourFarm?.order?.product?._id
-    }
-  )
-
-  const {
-    data: SourcingOrders,
-    isLoading: SourcingOrdersIsLoading,
-    error: SourcingOrdersHasError
-  } = useFetch(
-    `${yourFarm?.order?.product?.cropVariety._id}_sourcing_orders`,
-    getSourcingOrders,
-    reload,
-    {
-      cropVariety: yourFarm?.order?.product?.cropVariety._id
     }
   )
 
@@ -86,7 +72,7 @@ export default function Farm() {
     error: ScheduledTasksHasError
   } = useFetch(
     `${yourFarm?.order?.product?._id}_scheduled_tasks`,
-    getMyScheduledTasks,
+    yourFarm?.order?.product?._id ? getMyScheduledTasks : null,
     reload,
     {
       farm: yourFarm?.order?.product?._id
@@ -99,7 +85,7 @@ export default function Farm() {
     error: myFarmActivitiesHasError
   } = useFetch(
     `${yourFarm?.order?.product?.protocol?._id}_activities`,
-    getActivities,
+    yourFarm?.order?.product?.protocol?._id ? getActivities : null,
     reload,
     {
       protocol: yourFarm?.order?.product?.protocol?._id
@@ -113,14 +99,12 @@ export default function Farm() {
   } = useFetch('tasks', getAllTasks, reload)
 
   const isLoading =
-    SourcingOrdersIsLoading ||
     yourFarmFeedsIsLoading ||
     yourFarmIsLoading ||
     ScheduledTasksIsLoading ||
     myFarmActivitiesIsLoading ||
     tasksIsLoading
   const hasError =
-    SourcingOrdersHasError ||
     yourFarmFeedsHasError ||
     yourFarmHasError ||
     ScheduledTasksHasError ||
@@ -232,7 +216,6 @@ export default function Farm() {
             reload={reload}
             onOpen={getImage}
             reloads={[triggerReload]}
-            sourcingOrders={SourcingOrders?.filter(order => order.demand === 0)}
           />
         )}
         {isLoading && (

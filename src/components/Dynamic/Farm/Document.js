@@ -98,7 +98,35 @@ export default function Document({
           overflowY='scroll'
         >
           <Grid gap={8}>
-            <FarmReceiptCard farm={digitalFarmerFarm} />
+            {(digitalFarmerFarm?.order?.status === 'PAID' ||
+              digitalFarmerFarm?.order?.status === 'PENDING' ||
+              digitalFarmerFarm?.order?.status === 'PROCESSING') && (
+              <React.Fragment>
+                {digitalFarmerFarm?.order?.status === 'PAID' && (
+                  <FarmReceiptCard
+                    title='Agreement'
+                    type='agreement'
+                    farm={digitalFarmerFarm}
+                  />
+                )}
+                {(digitalFarmerFarm?.order?.status === 'PAID' ||
+                  digitalFarmerFarm?.order?.status === 'PENDING') && (
+                  <FarmReceiptCard
+                    title='Invoice'
+                    type='invoice'
+                    farm={digitalFarmerFarm}
+                  />
+                )}
+                {(digitalFarmerFarm?.order?.status === 'PAID' ||
+                  digitalFarmerFarm?.order?.status === 'PROCESSING') && (
+                  <FarmReceiptCard
+                    title='Receipt'
+                    type='receipt'
+                    farm={digitalFarmerFarm}
+                  />
+                )}
+              </React.Fragment>
+            )}
           </Grid>
         </Box>
       </GridItem>

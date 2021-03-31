@@ -1,9 +1,54 @@
 import React from 'react'
 import ModalWrapper from './ModalWrapper'
-import { Box, Heading, Flex, Grid, Image, Text, Button } from '@chakra-ui/react'
+import {
+  Box,
+  Heading,
+  Flex,
+  Grid,
+  Image,
+  Text,
+  Button,
+  Icon
+} from '@chakra-ui/react'
+import { closeIcon } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import Doc from 'assets/images/doc.png'
+
+const previewModal = ({ data, setShown }) => (
+  <Box
+    bg='#fff'
+    position='fixed'
+    top='50%'
+    left='50%'
+    transform='translate(-50%, -50%)'
+    m='auto'
+    height='800px'
+    width={{ md: '80%' }}
+    zIndex='9999px'
+    overflow='auto'
+  >
+    <Box pos='relative'>
+      <Box position='absolute' right={0} top={4} pr={{ md: 6 }}>
+        <Icon
+          as={closeIcon}
+          color='cf.400'
+          boxSize={8}
+          onClick={() => {
+            setShown(false)
+          }}
+        />
+      </Box>
+      <iframe
+        src={data?.url + '#toolbar=0'}
+        title={data?.url}
+        width='100%'
+        height='800px'
+      />
+    </Box>
+  </Box>
+)
 const TasksDocuments = ({ open, onClose, data }) => {
+  const [shown, setShown] = React.useState(false)
   return (
     <ModalWrapper isCentered isOpen={open} onClose={onClose} size='3xl'>
       {data?.length > 0 && (
@@ -23,23 +68,26 @@ const TasksDocuments = ({ open, onClose, data }) => {
           <Grid w='100%' templateColumns={{ md: 'repeat(3, 1fr)' }}>
             {data?.map((pdf, index) => {
               return (
-                <Button
-                  as={Flex}
-                  key={pdf.url}
-                  w='100%'
-                  h='auto'
-                  rounded='xl'
-                  shadow='md'
-                  p={10}
-                  bg='white'
-                  justify={{ md: 'center' }}
-                  align={{ md: 'center' }}
-                  direction={{ md: 'column' }}
-                  m={{ md: 5 }}
-                >
-                  <Image src={Doc} w='900px' h='100%' />
-                  <Text fontSize={{ md: '4xl' }}>{index + 1}</Text>
-                </Button>
+                <React.Fragment key={pdf.url}>
+                  <Button
+                    as={Flex}
+                    w='100%'
+                    h='auto'
+                    rounded='xl'
+                    shadow='md'
+                    p={10}
+                    bg='white'
+                    justify={{ md: 'center' }}
+                    align={{ md: 'center' }}
+                    direction={{ md: 'column' }}
+                    m={{ md: 5 }}
+                    onClick={() => setShown(true)}
+                  >
+                    <Image src={Doc} w='900px' h='100%' />
+                    <Text fontSize={{ md: '4xl' }}>{index + 1}</Text>
+                  </Button>
+                  {shown && <previewModal data={pdf} setShown={setShown} />}
+                </React.Fragment>
               )
             })}
           </Grid>

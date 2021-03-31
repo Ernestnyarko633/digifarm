@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
-import { saveAs } from 'file-saver'
 
-export default function FarmReceiptCard({ farm }) {
+export default function FarmReceiptCard({ farm, title, type }) {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { downloadOrder } = useApi()
@@ -18,8 +17,7 @@ export default function FarmReceiptCard({ farm }) {
       setLoading(true)
       setError(null)
       const res = await downloadOrder(query)
-      const pdfBlob = new Blob([res], { type: 'application/pdf' })
-      saveAs(pdfBlob, 'agreement.pdf')
+      window.location = res?.data
       setLoading(false)
     } catch (error) {
       setError(error)
@@ -38,7 +36,7 @@ export default function FarmReceiptCard({ farm }) {
           <Avatar src={farm?.order?.product?.cropVariety?.imageUrl} />
           <Box ml={2}>
             <Text fontSize='lg' fontWeight={700}>
-              {`${user?.firstName}'s Farm Agreement`}
+              {`${user?.firstName}'s Farm ${title}`}
             </Text>
             <Text fontSize='xs' color='gray.500' mt={-2}>
               {`${farm?.order?.product?.location?.state} ${farm?.order?.product?.location?.country}`}
@@ -48,11 +46,11 @@ export default function FarmReceiptCard({ farm }) {
 
         <Box>
           <Button
-            btntitle='View contract'
+            btntitle={`View ${title.toLowerCase()}`}
             onClick={() => {
               return _downloadOrder({
                 reference: farm?.order?.reference,
-                type: 'agreement'
+                type: type
               })
             }}
             bg='white'
@@ -83,5 +81,7 @@ export default function FarmReceiptCard({ farm }) {
 }
 
 FarmReceiptCard.propTypes = {
-  farm: PropTypes.object.isRequired
+  farm: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 }
