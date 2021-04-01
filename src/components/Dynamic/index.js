@@ -107,7 +107,12 @@ const DynamicFarm = ({
     data: EOSStatistics,
     isLoading: EOSStatisticsIsLoading,
     error: EOSStatisticsHasError
-  } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
+  } = useFetch(
+    'eos_task_stats',
+    eosStats?.task_id ? getEOSStatistics : null,
+    reload,
+    eosStats?.task_id
+  )
 
   const weatherForeCastsPayload = {
     geometry: {
