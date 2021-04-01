@@ -1,5 +1,14 @@
 import React from 'react'
-import { Box, Button, Heading, Icon, Image, Link, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Heading,
+  Icon,
+  Image,
+  Link,
+  Text,
+  Flex
+} from '@chakra-ui/react'
 import { Link as ReachLink } from 'react-router-dom'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
@@ -29,9 +38,9 @@ const GetStartedNowCard = () => (
       </Link>
     </Box>
 
-    <Box mx='auto' w='80%' my={{ md: 16 }}>
+    <Flex justify='center' align='center' mx='auto' w='80%' my={{ md: 16 }}>
       <Image src={CorporateIllustration} />
-    </Box>
+    </Flex>
   </Box>
 )
 

@@ -48,7 +48,7 @@ const ConfirmSale = ({
 
   const _sellProduce = async (id, payload) => {
     await sellProduce(id, payload)
-    onClosex()
+    // onClosex()
   }
 
   React.useEffect(() => {

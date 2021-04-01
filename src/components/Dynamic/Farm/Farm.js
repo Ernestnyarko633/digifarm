@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
 import Button from 'components/Button'
@@ -6,10 +7,13 @@ import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import useExternalApi from 'context/external'
 import EmptyMap from 'assets/images/map.png'
-//import useFetch from 'hooks/useFetch'
+
 import FetchCard from 'components/FetchCard'
+
 export default function Farm({
   onOpen,
+  center,
+  zoom = 14,
   digitalFarmerFarm,
   EOSStatistics,
   WeatherForeCasts,
@@ -24,6 +28,8 @@ export default function Farm({
   reloads
 }) {
   const [_loading, _setLoading] = React.useState(false)
+  // const [band, setBand] = React.useState('NDVI')
+
   const [
     EOSTaskForStatsCreationIsLoading,
     setEOSTaskForStatsCreationIsLoading
@@ -117,8 +123,10 @@ export default function Farm({
             viewID={EOSViewID?.results[0]?.view_id}
             loading={loading || EOSTaskForStatsCreationIsLoading}
             error={error}
+            band={null}
             _error={_error || EOSTaskForStatsCreationHasError}
-            center={[-1.531048, 5.578849]}
+            center={center || location[0]}
+            zoom={zoom}
             reloads={reloads}
           />
         )}
@@ -163,7 +171,7 @@ export default function Farm({
             w={{ md: 40 }}
             shadow='none'
             isLoading={_loading}
-            isDisabled={_loading}
+            isDisabled={_loading || !EOSTaskForStatsCreated?.task_id}
             isError={__error}
             onClick={() => DownloadVisual(EOSTaskForStatsCreated?.task_id)}
           />
@@ -181,17 +189,20 @@ export default function Farm({
 }
 
 Farm.propTypes = {
+  center: PropTypes.array.isRequired,
   reload: PropTypes.any,
   onOpen: PropTypes.func,
-  digitalFarmerFarm: PropTypes.any,
+  digitalFarmerFarm: PropTypes.object.isRequired,
   EOSStatistics: PropTypes.any,
   EOSViewID: PropTypes.any,
   WeatherForeCasts: PropTypes.any,
-  ScheduledTasks: PropTypes.any,
-  location: PropTypes.any,
-  farmfeeds: PropTypes.any,
+  ScheduledTasks: PropTypes.array.isRequired,
+  location: PropTypes.array.isRequired,
+  farmfeeds: PropTypes.array.isRequired,
   error: PropTypes.any,
   _error: PropTypes.any,
   loading: PropTypes.any,
-  reloads: PropTypes.any
+  reloads: PropTypes.any,
+  zoom: PropTypes.number,
+  band: PropTypes.string
 }
