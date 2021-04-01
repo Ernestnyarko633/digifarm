@@ -12,33 +12,6 @@ import {
 
 import PropTypes from 'prop-types'
 
-// const data = [
-//   {
-//     name: 'Page A',
-//     uv: 590
-//   },
-//   {
-//     name: 'Page B',
-//     uv: 868
-//   },
-//   {
-//     name: 'Page C',
-//     uv: 1397
-//   },
-//   {
-//     name: 'Page D',
-//     uv: 1480
-//   },
-//   {
-//     name: 'Page E',
-//     uv: 1520
-//   },
-//   {
-//     name: 'Page F',
-//     uv: 1400
-//   }
-// ]
-
 export default function Graph({
   activities,
   tasks,
