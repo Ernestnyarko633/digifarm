@@ -18,6 +18,7 @@ const components = {
 }
 
 const DynamicFarm = ({
+  center,
   farm,
   tasks,
   onOpen,
@@ -38,7 +39,7 @@ const DynamicFarm = ({
   const {
     getEOSViewID,
     createEOSTaskForStats,
-    // getEOSStatistics,
+    getEOSStatistics,
     getEOSWeatherForeCast
   } = useExternalApi()
 
@@ -101,14 +102,12 @@ const DynamicFarm = ({
     EOSTaskForStats
   )
 
-  console.log(eosStats)
-
-  // // for health card stats
-  // const {
-  //   data: EOSStatistics,
-  //   isLoading: EOSStatisticsIsLoading,
-  //   error: EOSStatisticsHasError
-  // } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
+  // for health card stats
+  const {
+    data: EOSStatistics,
+    isLoading: EOSStatisticsIsLoading,
+    error: EOSStatisticsHasError
+  } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
 
   const weatherForeCastsPayload = {
     geometry: {
@@ -131,14 +130,14 @@ const DynamicFarm = ({
   const isLoading =
     EOSViewIDIsLoading ||
     WeatherForeCastsIsLoading ||
-    // EOSStatisticsIsLoading ||
+    EOSStatisticsIsLoading ||
     eosStatsIsLoading
 
   const eosHasError =
     EOSViewIDHasError ||
-    //EOSStatisticsHasError ||
+    EOSStatisticsHasError ||
     WeatherForeCastsHasError ||
-    // EOSStatisticsHasError ||
+    EOSStatisticsHasError ||
     eosStatsHasError
 
   if (isLoading) {
@@ -166,6 +165,7 @@ const DynamicFarm = ({
     <React.Fragment>
       {!loading && (
         <SelectedFarm
+          center={center}
           reload={reload}
           reloads={reloads}
           onOpen={onOpen}
@@ -173,7 +173,7 @@ const DynamicFarm = ({
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
           activities={activities}
-          //    EOSStatistics={EOSStatistics}
+          EOSStatistics={EOSStatistics}
           EOSViewID={EOSViewID}
           WeatherForeCasts={WeatherForeCasts}
           ScheduledTasks={ScheduledTasks}
@@ -191,21 +191,22 @@ const DynamicFarm = ({
 DynamicFarm.propTypes = {
   farm: PropTypes.string.isRequired,
   onOpen: PropTypes.func,
-  digitalFarmerFarm: PropTypes.any,
-  farmfeeds: PropTypes.any,
+  digitalFarmerFarm: PropTypes.object.isRequired,
+  farmfeeds: PropTypes.array.isRequired,
   EOSStatistics: PropTypes.any,
   EOSViewID: PropTypes.any,
   WeatherForeCasts: PropTypes.any,
-  ScheduledTasks: PropTypes.any,
+  ScheduledTasks: PropTypes.array.isRequired,
   EOSTaskForStatsCreated: PropTypes.any,
-  reloads: PropTypes.any,
+  reloads: PropTypes.array,
   error: PropTypes.any,
   loading: PropTypes.any,
-  location: PropTypes.any,
+  location: PropTypes.array.isRequired,
   reload: PropTypes.any,
-  dateIntervals: PropTypes.any,
+  dateIntervals: PropTypes.func.isRequired,
   activities: PropTypes.any,
-  tasks: PropTypes.any
+  tasks: PropTypes.array.isRequired,
+  center: PropTypes.array.isRequired
 }
 
 export default DynamicFarm

@@ -22,6 +22,7 @@ export default function Farm() {
   const [image, takeScreenShot] = useScreenshot()
   const [reload, setReload] = React.useState(0)
   const [location, setLocation] = React.useState([])
+  const [center, setCenter] = React.useState([])
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const {
@@ -40,17 +41,21 @@ export default function Farm() {
 
   React.useEffect(() => {
     let location_ = []
+    let center_ = []
     let _location = yourFarm?.order?.product?.location
-    const getCoords = () =>
-      _location?.coords?.forEach(coordinate => {
-        return location_?.push(
+    let _center = _location?.center
+    const strToNumber = (value, array) =>
+      value?.forEach(coordinate => {
+        return array?.push(
           coordinate.split(',').map(item => {
             return parseFloat(item, 10)
           })
         )
       })
-    getCoords()
+    strToNumber(_location?.coords, location_)
+    strToNumber(_center, center_)
     setLocation(location_)
+    setCenter(center_)
   }, [yourFarm])
 
   const {
@@ -203,6 +208,7 @@ export default function Farm() {
       <Box bg='white'>
         {!isLoading && location?.length > 0 && (
           <DynamicFarm
+            center={center}
             loading={isLoading}
             error={hasError}
             farm={state}
