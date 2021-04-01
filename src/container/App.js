@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
-import { ReactQueryDevtools } from 'react-query-devtools'
+// import { ReactQueryDevtools } from 'react-query-devtools'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import { StartFarmContextProvider } from 'context/start-farm'
@@ -34,7 +34,7 @@ const App = () => (
           </EosApiContextProvider>
         </ApiContextProvider>
       </ComponentContextProvider>
-      <ReactQueryDevtools initialIsOpen />
+      {/* <ReactQueryDevtools initialIsOpen /> */}
     </QueryClientProvider>
   </BrowserRouter>
 )
