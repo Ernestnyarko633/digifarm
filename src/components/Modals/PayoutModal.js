@@ -3,6 +3,7 @@ import {
   useToast,
   Flex,
   Heading,
+  Checkbox,
   Box,
   Icon,
   Text,
@@ -16,14 +17,29 @@ import { Formik } from 'formik'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import FormInput from 'components/Form/FormInput'
 import Button from 'components/Button'
+import useFetch from 'hooks/useFetch'
+import FetchCard from 'components/FetchCard'
 
 const PayoutModal = () => {
   const { isOpen, onClose } = useComponent()
   const { isAuthenticated } = useAuth()
-  const { patchUser } = useApi()
+  const { patchUser, getUserBankingDetails } = useApi()
+  const [check, setCheck] = React.useState(false)
+  const [reload, setReload] = React.useState(0)
 
   const { user } = isAuthenticated()
   const toast = useToast()
+
+  const { data, isLoading, error } = useFetch(
+    'banking_details',
+    user?._id ? getUserBankingDetails : null,
+    reload,
+    { user: user?._id }
+  )
+
+  const triggerReload = () => {
+    return setReload(prevState => prevState + 1)
+  }
 
   const initialValues = {
     bankName: '',
@@ -100,10 +116,24 @@ const PayoutModal = () => {
   }
 
   return (
-    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='3xl'>
+    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='md'>
       <Formik
         enableReinitialize
-        initialValues={initialValues}
+        initialValues={
+          data
+            ? {
+                bankName: data?.bankingDetails?.bankName,
+                branchAddress: data?.bankingDetails?.branchAddress,
+                branchCountry: data?.bankingDetails?.branchCountry,
+                accountName: data?.bankingDetails?.accountName,
+                accountNumber: data?.bankingDetails?.accountNumber,
+                iban: data?.iban,
+                sortCode: '',
+                swiftCode: '',
+                homeAddress: ''
+              }
+            : initialValues
+        }
         onSubmit={onSubmit}
       >
         {({
@@ -117,173 +147,200 @@ const PayoutModal = () => {
           setFieldValue
         }) => (
           <form onSubmit={handleSubmit}>
-            <Box w='100%'>
-              <Flex
-                align='center'
-                justify='center'
-                borderBottomWidth={1}
-                borderBottomColor='gray.200'
-                px={{ md: 8 }}
-                w='100%'
-              >
-                <Heading as='h3' fontSize='4xl' fontWeight={800}>
-                  Request for payout
-                </Heading>
-              </Flex>
-              <Flex
-                w='100%'
-                direction='column'
-                justify='center'
-                align='center'
-                pt={{ md: 20 }}
-              >
-                <Flex w='100%'>
-                  <Box>
-                    <Icon boxSize={5} as={AiFillInfoCircle} color='cf.400' />
-                  </Box>
-                  <Text ml={{ md: 4 }}>
-                    {' '}
-                    For authentication purposes, bank information provided here
-                    should be the same as that on your dashboard
-                  </Text>
-                </Flex>
-                <Grid
-                  templateColumns={{ md: 'repeat(1, 1fr)' }}
-                  gap={{ md: 8 }}
+            {!isLoading && !error && (
+              <Box w='100%'>
+                <Flex
+                  align='center'
+                  justify='center'
+                  borderBottomWidth={1}
+                  borderBottomColor='gray.200'
+                  px={{ md: 8 }}
                   w='100%'
-                  py={{ md: 5 }}
-                  direction='column'
                 >
-                  <FormInput
-                    label='Bank name'
-                    name='bankName'
-                    value={values.bankName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    h={{ md: 68 }}
-                    borderBottomColor={{ md: 'black' }}
-                    bg='gray.100'
-                  />
-                  <FormInput
-                    label='Branch address'
-                    name='branchAddress'
-                    value={values.branchAddress}
-                    h={{ md: 68 }}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    borderBottomColor={{ md: 'black' }}
-                    isRequired
-                    bg='gray.100'
-                  />
-                  <FormInput
-                    label='Branch Country'
-                    name='branchCountry'
-                    value={values.branchCountry}
-                    h={{ md: 68 }}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='gray.100'
-                  />
-                  <FormInput
-                    label='Account name'
-                    name='accountName'
-                    value={values.accountName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    borderBottomColor={{ md: 'black' }}
-                    isRequired
-                    bg='gray.100'
-                  />
-                  <FormInput
-                    label='Account number'
-                    name='accountNumber'
-                    value={values.accountNumber}
-                    h={{ md: 68 }}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='gray.100'
-                  />
-                  <FormInput
-                    label='IBAN'
-                    name='iban'
-                    value={values.iban}
-                    h={{ md: 68 }}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    borderBottomColor={{ md: 'black' }}
-                    isRequired
-                    bg='gray.100'
-                  />
+                  <Heading as='h3' fontSize='4xl' fontWeight={800}>
+                    Request for payout
+                  </Heading>
+                </Flex>
+                <Flex
+                  w='100%'
+                  direction='column'
+                  justify='center'
+                  align='center'
+                  pt={{ md: 20 }}
+                >
+                  <Flex w='100%'>
+                    <Box>
+                      <Icon boxSize={5} as={AiFillInfoCircle} color='cf.400' />
+                    </Box>
+                    <Text ml={{ md: 4 }}>
+                      {' '}
+                      For authentication purposes, bank information provided
+                      here should be the same as that on your dashboard
+                    </Text>
+                  </Flex>
                   <Grid
-                    templateColumns={{ md: 'repeat(2, 1fr)' }}
+                    templateColumns={{ md: 'repeat(1, 1fr)' }}
                     gap={{ md: 8 }}
                     w='100%'
+                    py={{ md: 5 }}
+                    direction='column'
                   >
                     <FormInput
-                      label='Sort code'
-                      name='sortCode'
-                      value={values.sortCode}
+                      label='Bank name'
+                      name='bankName'
+                      value={values.bankName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      h={{ md: 68 }}
+                      borderBottomColor={{ md: 'black' }}
+                      bg='gray.100'
+                    />
+                    <FormInput
+                      label='Branch address'
+                      name='branchAddress'
+                      value={values.branchAddress}
                       h={{ md: 68 }}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       borderBottomColor={{ md: 'black' }}
+                      isRequired
+                      bg='gray.100'
+                    />
+                    <FormInput
+                      label='Branch Country'
+                      name='branchCountry'
+                      value={values.branchCountry}
+                      h={{ md: 68 }}
+                      onChange={handleChange}
                       onBlur={handleBlur}
                       isRequired
                       bg='gray.100'
                     />
                     <FormInput
-                      label='Swift code'
-                      name='swiftCode'
-                      value={values.swiftCode}
+                      label='Account name'
+                      name='accountName'
+                      value={values.accountName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      borderBottomColor={{ md: 'black' }}
+                      isRequired
+                      bg='gray.100'
+                    />
+                    <FormInput
+                      label='Account number'
+                      name='accountNumber'
+                      value={values.accountNumber}
                       h={{ md: 68 }}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      bg='gray.100'
+                    />
+                    <FormInput
+                      label='IBAN'
+                      name='iban'
+                      value={values.iban}
+                      h={{ md: 68 }}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      borderBottomColor={{ md: 'black' }}
+                      isRequired
+                      bg='gray.100'
+                    />
+                    <Grid
+                      templateColumns={{ md: 'repeat(2, 1fr)' }}
+                      gap={{ md: 8 }}
+                      w='100%'
+                    >
+                      <FormInput
+                        label='Sort code'
+                        name='sortCode'
+                        value={values.sortCode}
+                        h={{ md: 68 }}
+                        onChange={handleChange}
+                        borderBottomColor={{ md: 'black' }}
+                        onBlur={handleBlur}
+                        isRequired
+                        bg='gray.100'
+                      />
+                      <FormInput
+                        label='Swift code'
+                        name='swiftCode'
+                        value={values.swiftCode}
+                        h={{ md: 68 }}
+                        onChange={handleChange}
+                        borderBottomColor={{ md: 'black' }}
+                        onBlur={handleBlur}
+                        isRequired
+                        bg='gray.100'
+                      />
+                    </Grid>
+                    <FormInput
+                      label='Home address'
+                      name='homeAddress'
+                      value={values.homeAddress}
+                      onChange={handleChange}
+                      h={{ md: 68 }}
                       borderBottomColor={{ md: 'black' }}
                       onBlur={handleBlur}
                       isRequired
                       bg='gray.100'
                     />
                   </Grid>
-                  <FormInput
-                    label='Home address'
-                    name='homeAddress'
-                    value={values.homeAddress}
-                    onChange={handleChange}
-                    h={{ md: 68 }}
-                    borderBottomColor={{ md: 'black' }}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='gray.100'
+                  <Flex w='100%'>
+                    <Box pt={{ md: 1 }}>
+                      <Checkbox
+                        onClick={() => {
+                          if (check) {
+                            setCheck(false)
+                          } else {
+                            setCheck(true)
+                          }
+                        }}
+                      />
+                    </Box>
+                    <Text ml={{ md: 4 }}>
+                      I hereby confirm that all the information provided on this
+                      form is accurate. In addition, I agree that Complete
+                      Farmer Limited will not be held liable for any loss or
+                      misrouted funds that occur as a result of any wrong
+                      information provided by me
+                    </Text>
+                  </Flex>
+                  <Button
+                    btntitle='Confirm'
+                    borderColor='cf.400'
+                    color='white'
+                    rounded='30px'
+                    my={5}
+                    w='100%'
+                    h={100}
+                    isDisabled={!check}
+                    fontSize='xl'
+                    // onClick={() => {
+                    //   handleModalClick('payout')
+                    // }}
                   />
-                </Grid>
-                <Flex w='100%'>
-                  <Box>
-                    <Icon boxSize={5} as={AiFillInfoCircle} color='cf.400' />
-                  </Box>
-                  <Text ml={{ md: 4 }}>
-                    I hereby confirm that all the information provided on this
-                    form is accurate. In addition, I agree that Complete Farmer
-                    Limited will not be held liable for any loss or misrouted
-                    funds that occur as a result of any wrong information
-                    provided by me
-                  </Text>
                 </Flex>
-                <Button
-                  btntitle='Confirm'
-                  borderColor='cf.400'
-                  color='white'
-                  rounded='30px'
-                  my={5}
-                  w='100%'
-                  h={100}
-                  fontSize='xl'
-                  // onClick={() => {
-                  //   handleModalClick('payout')
-                  // }}
+              </Box>
+            )}
+            {(isLoading || error) && (
+              <Flex w='100%' align='center' justify='center'>
+                <FetchCard
+                  direction='column'
+                  align='center'
+                  justify='center'
+                  mx='auto'
+                  reload={() => {
+                    !data && triggerReload()
+                  }}
+                  loading={isLoading}
+                  error={error}
+                  text='Standby as we load some of your details'
                 />
               </Flex>
-            </Box>
+            )}
           </form>
         )}
       </Formik>
