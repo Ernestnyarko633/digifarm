@@ -92,6 +92,9 @@
     "production": [
       ">0.2%",
       "not dead",
+      "not ie 11",
+      "not chrome < 51",
+      "not safari < 10",
       "not op_mini all"
     ],
     "development": [
@@ -109,5 +112,12 @@
     "src/**/*.+(js|jsx)": [
       "eslint --fix"
     ]
-  }
+  },
+ "use": {
+    "loader": "babel-loader",
+    "options": {
+      "presets": ["my-custom-babel-preset"],
+      "ignore": ["./node_modules/mapbox-gl/dist/mapbox-gl.js"]
+    }
+ }  
 }

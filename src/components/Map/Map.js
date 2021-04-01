@@ -3,7 +3,6 @@ import useMap from '../../hooks/useMap'
 import { Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import configs from '../../utils/configs'
-//import { getRedisClusterClient } from '../../helpers/misc'
 import './Map.css'
 
 const Map = ({
@@ -11,28 +10,25 @@ const Map = ({
   viewID,
   loading,
   error,
+  band,
   digitalFarmerFarms,
   results,
   _error,
   reloads,
+  zoom,
   ...rest
 }) => {
   const { EOS_API, EOS_API_KEY } = configs()
   const BAND = 'B11,B8A,B02'
-  // console.log(
-  //   'testing',
-  //   viewID,
-  //   center,
-  //   loading,
-  //   `${EOS_API}/render/${viewID}/${BAND}/{z}/{x}/{y}?api_key=${EOS_API_KEY}`
-  // )
   const onInitHandler = map => {
     // Add data and events here
     map.on('load', function () {
       map.addSource('tms-source', {
         type: 'raster',
         tiles: [
-          `${EOS_API}/render/${viewID}/${BAND}/{z}/{x}/{y}?api_key=${EOS_API_KEY}`
+          `${EOS_API}/render/${viewID}/${
+            band || BAND
+          }/{z}/{x}/{y}?api_key=${EOS_API_KEY}`
         ],
 
         // tiles: [
@@ -55,7 +51,7 @@ const Map = ({
   const { ref } = useMap({
     center: center,
     onInit: onInitHandler,
-    zoom: 14,
+    zoom: zoom,
     height: 1000
   })
 
@@ -69,10 +65,12 @@ Map.propTypes = {
   loading: PropTypes.any,
   error: PropTypes.any,
   viewID: PropTypes.any,
-  digitalFarmerFarms: PropTypes.any,
+  digitalFarmerFarms: PropTypes.array,
   results: PropTypes.any,
   _error: PropTypes.any,
-  reloads: PropTypes.any
+  reloads: PropTypes.array,
+  zoom: PropTypes.number.isRequired,
+  band: PropTypes.string.isRequired
 }
 
 export default Map
