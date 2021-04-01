@@ -46,9 +46,9 @@ const Warehouse = () => {
                 borderColor='rgba(255, 246, 216, 1)'
                 bgColor='rgba(255, 246, 216, 1)'
                 p={1}
-                mt={-70}
+                mt={-90}
                 position='absolute'
-                ml={20}
+                ml={16}
               >
                 <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
                 <Text as='span' fontSize='14px' color='black' px={2}>
@@ -61,7 +61,7 @@ const Warehouse = () => {
                   image={vector}
                   note='Warehouse is currently empty'
                   info='Warehouse will automatically show up when the produce are harvested and ready to sell'
-                  ml={80}
+                  ml={90}
                 />
               </Center>
             </>

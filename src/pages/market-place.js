@@ -40,7 +40,6 @@ const Marketplace = () => {
   const toggle = (value) => {
     return setState(value);
   };
-  console.log(myfarm, "farms");
 
   const {
     data: SourcingOrders,
@@ -143,12 +142,12 @@ const Marketplace = () => {
         {state === 0 && 
           SourcingOrders?.map((buyers) => (
             // add condition for when there are no buyer and error handling
-            <BuyerCard _id={buyers._id} key={buyers._id} buyers={buyers} />
+            <BuyerCard _id={buyers._id} key={buyers._id} buyers={buyers} myfarm={myfarm}/>
           ))}
         {state === 0 && SourcingOrders?.length ===0 &&(
             <BuyerEmptyState
             image={group}
-            ml={70}
+            ml={90}
             />
           )}
          
@@ -157,7 +156,7 @@ const Marketplace = () => {
             image={transaction1}
             note={"No ongoing transaction yet"}
             info={"Ongoing transactions will be available here"}
-            ml={70}
+            ml={90}
           />
         )}
         {state === 2 && (
@@ -165,7 +164,7 @@ const Marketplace = () => {
             image={transaction2}
             note={"You haven't made any transactions"}
             info={"Past transaction history will show here"}
-            ml={70}
+            ml={90}
           />
         )}
      </Box>

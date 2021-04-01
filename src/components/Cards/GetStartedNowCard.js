@@ -14,7 +14,7 @@ import { MdKeyboardArrowRight } from 'react-icons/md'
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
 
 const GetStartedNowCard = () => (
-  <Box p={{ md: 16 }} bg='cf-dark.300'>
+  <Box p={{ md: 16 }} bg='#ECECEC'>
     <Box textAlign='center'>
       <Heading as='h3' fontSize={{ md: '3xl' }} mt={{ md: 6 }}>
         We are connecting the world through agriculture

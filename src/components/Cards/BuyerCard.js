@@ -20,7 +20,7 @@ import {
 import AboutBuyer from 'components/Modals/AboutBuyer'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 
-const BuyerCard = ({ buyers }) => {
+const BuyerCard = ({ buyers, myfarm }) => {
   const { onClose } = useDisclosure()
 
   const [isOpened, setOpened] = React.useState(false)
@@ -64,6 +64,8 @@ const BuyerCard = ({ buyers }) => {
             onClose={onClose}
             isOpenx={isOpened}
             onClosex={onClosex}
+            buyers={buyers}
+            myfarm={myfarm}
           />
           <Button
             colorScheme='linear'
@@ -190,6 +192,7 @@ const BuyerCard = ({ buyers }) => {
   )
 }
 BuyerCard.propTypes = {
-  buyers: PropTypes.any.isRequired
+  buyers: PropTypes.any.isRequired,
+  myfarm: PropTypes.any.isRequired
 }
 export default BuyerCard
