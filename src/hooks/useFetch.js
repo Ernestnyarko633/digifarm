@@ -2,6 +2,7 @@
 /* eslint-disable space-before-function-paren */
 import { useEffect, useReducer } from 'react'
 import useAuth from 'context/auth'
+import { FaCommentsDollar } from 'react-icons/fa'
 
 function fetchReducer(state, action) {
   switch (action.type) {
@@ -48,7 +49,7 @@ const useFetch = (key, func, reload, ...rest) => {
             dispatch({ type: 'success', payload: { data: dataFromStorage } })
           } else {
             const res = await func(...rest)
-            if (mounted) {
+            if (mounted && res) {
               key &&
                 sessionStorage.setItem(
                   key,

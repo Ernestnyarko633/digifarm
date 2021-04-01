@@ -16,6 +16,7 @@ const Forum = lazy(() => import('./forum'))
 const Auth = lazy(() => import('./auth'))
 const Farm = lazy(() => import('./farm'))
 const Guide = lazy(() => import('./guide'))
+const Wallet = lazy(() => import('./wallet'))
 // const Receipt = lazy(() => import('./receipt'))
 
 const Pages = {
@@ -34,7 +35,8 @@ const Pages = {
   Marketplace,
   Cooperative,
   Warehouse,
-  Guide
+  Guide,
+  Wallet
   // Receipt
 }
 

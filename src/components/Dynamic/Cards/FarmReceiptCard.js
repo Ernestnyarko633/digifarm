@@ -5,18 +5,19 @@ import Button from 'components/Button'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 
-export default function FarmReceiptCard({ farm }) {
+export default function FarmReceiptCard({ farm, title, type }) {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { downloadOrder } = useApi()
-  const [loading, setLoading] = React.useState(null)
+  const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   const _downloadOrder = async query => {
     try {
       setLoading(true)
       setError(null)
-      await downloadOrder(query)
+      const res = await downloadOrder(query)
+      window.location = res?.data
       setLoading(false)
     } catch (error) {
       setError(error)
@@ -28,14 +29,14 @@ export default function FarmReceiptCard({ farm }) {
       bg='white'
       rounded='lg'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      p={6}
+      p={4}
     >
       <Flex align='center' justify='space-between'>
         <Flex align='center'>
           <Avatar src={farm?.order?.product?.cropVariety?.imageUrl} />
           <Box ml={2}>
             <Text fontSize='lg' fontWeight={700}>
-              {`${user?.firstName}'s Farm Contract`}
+              {`${user?.firstName}'s Farm ${title}`}
             </Text>
             <Text fontSize='xs' color='gray.500' mt={-2}>
               {`${farm?.order?.product?.location?.state} ${farm?.order?.product?.location?.country}`}
@@ -45,11 +46,11 @@ export default function FarmReceiptCard({ farm }) {
 
         <Box>
           <Button
-            btntitle='View contract'
+            btntitle={`View ${title.toLowerCase()}`}
             onClick={() => {
               return _downloadOrder({
                 reference: farm?.order?.reference,
-                type: 'agreement'
+                type: type
               })
             }}
             bg='white'
@@ -80,5 +81,7 @@ export default function FarmReceiptCard({ farm }) {
 }
 
 FarmReceiptCard.propTypes = {
-  farm: PropTypes.object.isRequired
+  farm: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 }

@@ -40,7 +40,8 @@ const WarehouseCard = ({
       pb={1}
       my={6}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      w='100%'
+      w='50%'
+      mx='auto'
       borderRadius='20px'
     >
       <Flex justify='space-between' pt={2}>
@@ -71,7 +72,7 @@ const WarehouseCard = ({
           <Link
             as={ReachRouter}
             _hover={{ textDecor: 'none' }}
-            to={`/farms/${_id}`}
+            to={`/farms/${myfarm?._id}`}
           >
             <Button
               colorScheme='none'

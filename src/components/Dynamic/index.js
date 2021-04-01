@@ -1,6 +1,7 @@
-import React from 'react'
+/* eslint-disable no-console */
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import useEosApi from 'context/eosApi'
+import useExternalApi from 'context/external'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 
@@ -31,13 +32,15 @@ const DynamicFarm = ({
   reload,
   error
 }) => {
+  const [type, setType] = useState('/sentinel2')
   const SelectedFarm = components[farm]
+
   const {
     getEOSViewID,
     createEOSTaskForStats,
-    getEOSStatistics,
+    // getEOSStatistics,
     getEOSWeatherForeCast
-  } = useEosApi()
+  } = useExternalApi()
 
   const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
@@ -45,7 +48,7 @@ const DynamicFarm = ({
     page: 1,
     search: {
       date: {
-        from: dateIntervals()?._30DaysAgo,
+        from: dateIntervals()?.ThirtyDaysAgo,
         to: dateIntervals()?.today
       },
       cloudCoverage: {
@@ -66,14 +69,14 @@ const DynamicFarm = ({
     data: EOSViewID,
     isLoading: EOSViewIDIsLoading,
     error: EOSViewIDHasError
-  } = useFetch('eos_view_id', getEOSViewID, reload, eosViewIdPayload)
+  } = useFetch('eos_view_id', getEOSViewID, reload, eosViewIdPayload, type)
 
   // payload of health eos task_id creation
   const EOSTaskForStats = {
     type: 'mt_stats',
     params: {
       bm_type: '(B08-B04)/(B08+B04)',
-      date_start: dateIntervals()?._30DaysAgo,
+      date_start: dateIntervals()?.ThirtyDaysAgo,
       date_end: dateIntervals()?.today,
       geometry: {
         coordinates: [location],
@@ -87,7 +90,6 @@ const DynamicFarm = ({
   }
 
   //creates stats task_id for stats health card
-
   const {
     data: eosStats,
     isLoading: eosStatsIsLoading,
@@ -99,13 +101,14 @@ const DynamicFarm = ({
     EOSTaskForStats
   )
 
-  // for health card stats
+  console.log(eosStats)
 
-  const {
-    data: EOSStatistics,
-    isLoading: EOSStatisticsIsLoading,
-    error: EOSStatisticsHasError
-  } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
+  // // for health card stats
+  // const {
+  //   data: EOSStatistics,
+  //   isLoading: EOSStatisticsIsLoading,
+  //   error: EOSStatisticsHasError
+  // } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
 
   const weatherForeCastsPayload = {
     geometry: {
@@ -128,14 +131,14 @@ const DynamicFarm = ({
   const isLoading =
     EOSViewIDIsLoading ||
     WeatherForeCastsIsLoading ||
-    EOSStatisticsIsLoading ||
+    // EOSStatisticsIsLoading ||
     eosStatsIsLoading
 
   const eosHasError =
     EOSViewIDHasError ||
-    EOSStatisticsHasError ||
+    //EOSStatisticsHasError ||
     WeatherForeCastsHasError ||
-    EOSStatisticsHasError ||
+    // EOSStatisticsHasError ||
     eosStatsHasError
 
   if (isLoading) {
@@ -170,12 +173,13 @@ const DynamicFarm = ({
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
           activities={activities}
-          EOSStatistics={EOSStatistics}
+          //    EOSStatistics={EOSStatistics}
           EOSViewID={EOSViewID}
           WeatherForeCasts={WeatherForeCasts}
           ScheduledTasks={ScheduledTasks}
           location={location}
           loading={loading || isLoading}
+          setType={setType}
           error={error}
           _error={eosHasError}
         />

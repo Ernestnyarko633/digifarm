@@ -10,6 +10,7 @@ import DocumentsReceipts from 'components/Modals/DocumentReceipts'
 import RolloverModal from 'components/Modals/RolloverModal'
 import PayoutModal from 'components/Modals/PayoutModal'
 import SuccessModal from 'components/Modals/SuccessModal'
+import ReceiptModal from 'components/Modals/ReceiptModal'
 
 const ModalContext = React.createContext({})
 
@@ -32,7 +33,9 @@ export const ModalContextProvider = ({ children }) => {
         return <PayoutModal />
       case 'successmodal':
         return <SuccessModal />
-      case 'payoutform':
+      case 'viewreceipt':
+        return <ReceiptModal />
+      case 'viewdocuments':
         return null
       default:
         return null

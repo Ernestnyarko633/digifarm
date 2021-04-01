@@ -23,6 +23,7 @@ const DynamicDocument = ({
       ScheduledTasks={ScheduledTasks}
       activities={activities}
       tasks={tasks}
+      viewDoc={true}
     />
   )
 }

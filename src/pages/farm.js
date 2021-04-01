@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
+import { Box, Flex, Text, Avatar, Spinner } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
 import useAuth from 'context/auth'
@@ -26,7 +26,6 @@ export default function Farm() {
 
   const {
     getMyFarmFeeds,
-    getSourcingOrders,
     getAllTasks,
     getMyFarm,
     getActivities,
@@ -60,23 +59,10 @@ export default function Farm() {
     error: yourFarmFeedsHasError
   } = useFetch(
     `${yourFarm?.order?.product?._id}_farm_feeds`,
-    getMyFarmFeeds,
+    yourFarm?.order?.product?._id ? getMyFarmFeeds : null,
     reload,
     {
       farm: yourFarm?.order?.product?._id
-    }
-  )
-
-  const {
-    data: SourcingOrders,
-    isLoading: SourcingOrdersIsLoading,
-    error: SourcingOrdersHasError
-  } = useFetch(
-    `${yourFarm?.order?.product?.cropVariety._id}_sourcing_orders`,
-    getSourcingOrders,
-    reload,
-    {
-      cropVariety: yourFarm?.order?.product?.cropVariety._id
     }
   )
 
@@ -86,7 +72,7 @@ export default function Farm() {
     error: ScheduledTasksHasError
   } = useFetch(
     `${yourFarm?.order?.product?._id}_scheduled_tasks`,
-    getMyScheduledTasks,
+    yourFarm?.order?.product?._id ? getMyScheduledTasks : null,
     reload,
     {
       farm: yourFarm?.order?.product?._id
@@ -99,7 +85,7 @@ export default function Farm() {
     error: myFarmActivitiesHasError
   } = useFetch(
     `${yourFarm?.order?.product?.protocol?._id}_activities`,
-    getActivities,
+    yourFarm?.order?.product?.protocol?._id ? getActivities : null,
     reload,
     {
       protocol: yourFarm?.order?.product?.protocol?._id
@@ -113,14 +99,12 @@ export default function Farm() {
   } = useFetch('tasks', getAllTasks, reload)
 
   const isLoading =
-    SourcingOrdersIsLoading ||
     yourFarmFeedsIsLoading ||
     yourFarmIsLoading ||
     ScheduledTasksIsLoading ||
     myFarmActivitiesIsLoading ||
     tasksIsLoading
   const hasError =
-    SourcingOrdersHasError ||
     yourFarmFeedsHasError ||
     yourFarmHasError ||
     ScheduledTasksHasError ||
@@ -136,31 +120,20 @@ export default function Farm() {
     onOpen()
   }
 
-  // if(isLoading){
-
-  //   return (
-  //     <Flex direction="row" w={{md: 'auto'}} h={{md: '1000px'}} justify="space-between">
-  //        <Stack mt={24} pt={10} spacing={4} w='15%' h='100%' >
-  //               <Skeleton bg='gray.100' height='100%' rounded='lg' />
-
-  //     </Stack>
-  //        <Stack mt={24} pt={10} spacing={4} w='50%' h='50%'>
-  //               <Skeleton bg='gray.100' height='100%' rounded='lg' />
-  //     </Stack>
-  //     <Stack mt={24} pt={10} spacing={4} w='25%' h='100%' >
-  //       <Skeleton bg='gray.100' height='20%' rounded='lg' />
-  //       <Skeleton bg='gray.100' height='20%' rounded='lg' />
-  //       <Skeleton bg='gray.100' height='20%' rounded='lg' />
-  //       <Skeleton bg='gray.100' height='20%' rounded='lg' />
-  //     </Stack>
-  //     </Flex>
-  //   )
-  // }
-
   return (
     <Box pos='relative' ref={ref}>
       <Share isOpen={isOpen} onClose={onClose} image={image} />
       <Header />
+      {isLoading && (
+        <Flex
+          w='100%'
+          h={{ md: '900px' }}
+          align={{ md: 'center' }}
+          justify={{ md: 'center' }}
+        >
+          <Spinner color={{ md: 'cf.400' }} />
+        </Flex>
+      )}
       <Flex
         pos='fixed'
         top={20}
@@ -243,7 +216,6 @@ export default function Farm() {
             reload={reload}
             onOpen={getImage}
             reloads={[triggerReload]}
-            sourcingOrders={SourcingOrders?.filter(order => order.demand === 0)}
           />
         )}
         {isLoading && (

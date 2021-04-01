@@ -1,66 +1,57 @@
 /* eslint-disable */
-
-import React, { useState } from "react";
-import Layout from "container/Layout";
-import {
-  Heading,
-  Box,
-  Flex,
-  Icon,
-  Text,
-  Spinner,
-  Center,
-} from "@chakra-ui/react";
-import { IoWarningOutline } from "react-icons/io5";
-import WarehouseCard from "components/Cards/WarehouseCard";
-import useApi from "context/api";
-import useAuth from "context/auth";
-import useFetch from "hooks/useFetch";
-import FarmsEmptyState from "components/EmptyStates/FarmsEmptyState";
-import Greetings from "components/Utils/Greetings";
-import { getCurrentDayParting } from "helpers/misc";
-import BuyerEmptyState from "components/EmptyStates/BuyerEmptyState";
-import vector from "../assets/images/vector.png";
-import FetchCard from "components/FetchCard";
+import React from 'react'
+import Layout from 'container/Layout'
+import { Heading, Box, Icon, Text, Center } from '@chakra-ui/react'
+import { IoWarningOutline } from 'react-icons/io5'
+import WarehouseCard from 'components/Cards/WarehouseCard'
+import useApi from 'context/api'
+import useAuth from 'context/auth'
+import useFetch from 'hooks/useFetch'
+import FarmsEmptyState from 'components/EmptyStates/FarmsEmptyState'
+import Greetings from 'components/Utils/Greetings'
+import { getCurrentDayParting } from 'helpers/misc'
+import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
+import vector from '../assets/images/vector.png'
+import FetchCard from 'components/FetchCard'
 
 const Warehouse = () => {
-  document.title = "Complete Farmer | Warehouse";
-  const { getMyFarms } = useApi();
-  const { isAuthenticated } = useAuth();
-  const { user } = isAuthenticated();
-  const [reload, setReload] = React.useState(0);
-  const { message } = getCurrentDayParting();
+  document.title = 'Complete Farmer | Warehouse'
+  const { getMyFarms } = useApi()
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  const [reload, setReload] = React.useState(0)
+  const { message } = getCurrentDayParting()
 
+  const triggerReload = () => setReload(prevState => prevState + 1)
   const {
     data: myfarms,
     isLoading: myFarmsIsLoading,
-    error: myFarmsHasError,
-  } = useFetch("my_farms", getMyFarms, reload, { user: user?._id });
-  console.log(myfarms, "farms");
+    error: myFarmsHasError
+  } = useFetch('my_farms', getMyFarms, reload, { user: user?._id })
 
-  const isLoading = myFarmsIsLoading;
-  const hasError = myFarmsHasError;
+  const isLoading = myFarmsIsLoading
+  const hasError = myFarmsHasError
   const filteredFarms = myfarms?.filter(farm => farm.storage.quantity > 0)
 
   return (
-    <Layout>
+    <Layout height="100vh" bgColor='none'>
       {myfarms?.length > 0 ? (
         <>
           {myfarms?.length === 1 && myfarms[0].storage.quantity === 0 ? (
             <>
-              <Greetings title={"Warehouse"} />
+              <Greetings title='Warehouse' />
               <Box
                 borderRadius={10}
                 borderWidth={2}
-                borderColor="rgba(255, 246, 216, 1)"
-                bgColor="rgba(255, 246, 216, 1)"
+                borderColor='rgba(255, 246, 216, 1)'
+                bgColor='rgba(255, 246, 216, 1)'
                 p={1}
                 mt={-70}
-                position="absolute"
+                position='absolute'
                 ml={20}
               >
-                <Icon as={IoWarningOutline} color="#D08F31" w={5} h={5} />
-                <Text as="span" fontSize="14px" color="black" px={2}>
+                <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
+                <Text as='span' fontSize='14px' color='black' px={2}>
                   If produce in the warehouse are not sold within 2 weeks, they
                   will automatically be sold to a buyer
                 </Text>
@@ -68,23 +59,22 @@ const Warehouse = () => {
               <Center>
                 <BuyerEmptyState
                   image={vector}
-                  note={"Warehouse is currently empty"}
-                  info={
-                    "Warehouse will automatically show up when the produce are harvested and ready to sell"
-                  }
+                  note='Warehouse is currently empty'
+                  info='Warehouse will automatically show up when the produce are harvested and ready to sell'
+                  ml={80}
                 />
               </Center>
             </>
-          ) : ( 
+          ) : (
             <>
-            { 
-              isLoading || hasError ? (
+              {isLoading || hasError ? (
                 <FetchCard
-                  w="100%"
-                  mx="auto"
-                  align="center"
-                  justify="center"
-                  direction="column"
+                  reload={() => !myfarms.length && triggerReload()}
+                  w='100%'
+                  mx='auto'
+                  align='center'
+                  justify='center'
+                  direction='column'
                   error={hasError}
                   loading={isLoading}
                 />
@@ -94,17 +84,17 @@ const Warehouse = () => {
                   <Box
                     borderRadius={40}
                     borderWidth={2}
-                    borderColor="rgba(208, 143, 49, 0.1)"
-                    bgColor="rgba(208, 143, 49, 0.1)"
+                    borderColor='rgba(208, 143, 49, 0.1)'
+                    bgColor='rgba(208, 143, 49, 0.1)'
                     p={2}
-                    position="absolute"
+                    position='absolute'
                   >
-                    <Icon as={IoWarningOutline} color="#D08F31" w={5} h={5} />
+                    <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
                     <Text
-                      as="span"
-                      fontWeight="bold"
-                      fontSize="14px"
-                      color="#D08F31"
+                      as='span'
+                      fontWeight='bold'
+                      fontSize='14px'
+                      color='#D08F31'
                       px={2}
                     >
                       If produce in the warehouse are not sold within 2 weeks,
@@ -112,7 +102,7 @@ const Warehouse = () => {
                     </Text>
                   </Box>
                   <Box mt={20}>
-                    {filteredFarms?.map((myfarm) => (
+                    {filteredFarms?.map(myfarm => (
                       <WarehouseCard
                         sellButton={true}
                         _id={myfarm._id}
@@ -124,23 +114,22 @@ const Warehouse = () => {
                     ))}
                   </Box>
                 </Box>
-              )
-
-            }
+              )}
             </>
           )}
         </>
-      ) : (
-        <>
-          <Greetings
-            title={`${message} Farmer ${user?.firstName}`}
-            text="Get started by farming individually or with a group."
-          />
-          <FarmsEmptyState />
-        </>
+      ) :
+          (
+            <>
+              <Greetings
+                title={`${message} Farmer ${user?.firstName}`}
+                text='Get started by farming individually or with a group.'
+              />
+              <FarmsEmptyState />
+            </>
       )}
     </Layout>
-  );
-};
+  )
+}
 
-export default Warehouse;
+export default Warehouse

@@ -1,6 +1,16 @@
 import React from 'react'
-import { Box, Flex, Grid, GridItem, Icon, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Icon,
+  Text,
+  Image,
+  Heading
+} from '@chakra-ui/react'
 import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
+import Gal from 'assets/images/gallery.png'
 import ImageGallery from '../Cards/ImageGallery'
 import PropTypes from 'prop-types'
 
@@ -117,8 +127,20 @@ export default function Gallery({ farmfeeds, loading }) {
             </Grid>
           )}
           {farmfeeds?.length === 0 && !loading && (
-            <Flex w='100%' justify='center' align='center'>
-              <Text>Gallery is currently unavailable</Text>
+            <Flex
+              w='100%'
+              justify='center'
+              align='center'
+              direction='column'
+              py={{ md: 40 }}
+            >
+              <Image src={Gal} py={{ md: 10 }} />
+              <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
+                Gallery is empty
+              </Heading>
+              <Text fontSize='xs'>
+                Photos of farm and farm activities will show up here
+              </Text>
             </Flex>
           )}
         </Box>
