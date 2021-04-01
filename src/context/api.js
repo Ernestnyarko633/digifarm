@@ -129,6 +129,13 @@ export const ApiContextProvider = ({ children }) => {
       query
     })
   }
+
+  const getUserBankingDetails = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/banking-details`,
+      query
+    })
+  }
   return (
     <ApiContext.Provider
       value={{
@@ -154,7 +161,8 @@ export const ApiContextProvider = ({ children }) => {
         deleteBankTransfer,
         downloadTaskReceipt,
         getMyScheduledTasks,
-        uploadPaymentDetails
+        uploadPaymentDetails,
+        getUserBankingDetails
       }}
     >
       {children}
