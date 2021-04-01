@@ -39,42 +39,14 @@ import PropTypes from 'prop-types'
 //   }
 // ]
 
-export default function Graph({ activities, tasks, scheduledTasks, farm }) {
+export default function Graph({
+  activities,
+  tasks,
+  scheduledTasks,
+  farm,
+  totalAmount
+}) {
   const [data, setData] = React.useState([])
-
-  const totalAmount = React.useCallback(
-    __activity => {
-      let totalAmount = 0
-      let tempTasks = tasks?.filter(
-        _task => _task.activity._id === __activity._id
-      )
-      if (tempTasks) {
-        tempTasks.forEach(_task => {
-          totalAmount = totalAmount + _task?.budget
-        })
-      }
-      if (scheduledTasks) {
-        let currentExpense = 0
-        let _tasks = scheduledTasks.filter(
-          completedTask =>
-            __activity._id === completedTask?.taskId?.activity?._id &&
-            completedTask.status === 'COMPLETED'
-        )
-
-        if (_tasks) {
-          _tasks.forEach(_task => {
-            currentExpense = currentExpense + _task?.taskId?.budget
-          })
-        }
-
-        return {
-          total: currentExpense ? currentExpense : totalAmount,
-          state: currentExpense ? true : false
-        }
-      }
-    },
-    [tasks, scheduledTasks]
-  )
   React.useEffect(() => {
     let array = []
     if (activities && tasks) {
@@ -94,14 +66,14 @@ export default function Graph({ activities, tasks, scheduledTasks, farm }) {
   }
 
   return (
-    <ResponsiveContainer width='100%' height={300}>
+    <ResponsiveContainer width='200%' height={300}>
       <ComposedChart
         style={{ backgroundColor: 'white' }}
         margin={{ right: 60 }}
         data={data}
       >
-        <XAxis dataKey='name' scale='auto' fontSize={7} />
-        <YAxis dataKey='amount' fontSize={7} />
+        <XAxis dataKey='name' scale='auto' fontSize={12} />
+        <YAxis dataKey='amount' fontSize={12} />
         <Tooltip />
         <Bar
           dataKey='amount'
@@ -127,5 +99,6 @@ Graph.propTypes = {
   activities: PropTypes.array,
   tasks: PropTypes.array,
   scheduledTasks: PropTypes.array,
-  farm: PropTypes.object.isRequired
+  farm: PropTypes.object.isRequired,
+  totalAmount: PropTypes.func.isRequired
 }

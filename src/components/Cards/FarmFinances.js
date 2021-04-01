@@ -8,53 +8,66 @@ import Graph from 'components/Utils/Graph'
 import { FaCircle } from 'react-icons/fa'
 import useComponent from 'context/component'
 
-const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
+const FarmFinances = ({
+  activities,
+  tasks,
+  scheduledTasks,
+  farm,
+  setExpenses
+}) => {
   const { handleModalClick } = useComponent()
-  //   const keys = [
-  //     { name: 'Total Tasks', data: 900 },
-  //     { name: 'Total Cost', data: '$' }
-  //   ]
 
-  //   React.useEffect(() => {
-  //     let mounted = true
-  //     if (mounted) {
-  //       if (activities && tasks) {
-  //       }
-  //     }
-
-  //     return () => (mounted = false)
-  //   }, [activities, scheduledTasks, tasks])
-
-  const totalAmount = (__activity, index) => {
-    let totalAmount = 0
-    let tempTasks = tasks?.filter(
-      _task => _task.activity._id === __activity._id
-    )
-    if (tempTasks) {
-      tempTasks.forEach(_task => {
-        totalAmount = totalAmount + _task?.budget
-      })
-    }
-    if (scheduledTasks) {
-      let currentExpense = 0
-      let _tasks = scheduledTasks.filter(
-        completedTask =>
-          __activity._id === completedTask?.taskId?.activity?._id &&
-          completedTask.status === 'COMPLETED'
+  const totalAmount = React.useCallback(
+    (__activity, index) => {
+      let totalAmount = 0
+      let tempTasks = tasks?.filter(
+        _task => _task.activity._id === __activity._id
       )
-
-      if (_tasks) {
-        _tasks.forEach(_task => {
-          currentExpense = currentExpense + _task?.taskId?.budget
+      if (tempTasks) {
+        tempTasks.forEach(_task => {
+          totalAmount = totalAmount + _task?.budget
         })
       }
+      if (scheduledTasks) {
+        let currentExpense = 0
+        let _tasks = scheduledTasks.filter(
+          completedTask =>
+            __activity._id === completedTask?.taskId?.activity?._id &&
+            completedTask.status === 'COMPLETED'
+        )
 
-      return {
-        total: currentExpense ? currentExpense : totalAmount,
-        state: currentExpense ? true : false
+        if (_tasks) {
+          _tasks.forEach(_task => {
+            currentExpense = currentExpense + _task?.taskId?.budget
+          })
+        }
+
+        return {
+          total: currentExpense ? currentExpense : totalAmount,
+          state: currentExpense ? true : false
+        }
       }
+    },
+    [scheduledTasks, tasks]
+  )
+
+  React.useEffect(() => {
+    let totalExpense = 0
+    const process = value =>
+      value?.forEach(val => {
+        const bool = totalAmount(val)?.state
+
+        if (bool) {
+          totalExpense = totalExpense + totalAmount(val)?.total
+        }
+      })
+    if (activities) {
+      process(activities)
     }
-  }
+
+    setExpenses(totalExpense)
+  }, [activities, setExpenses, totalAmount])
+
   return (
     <Box
       rounded='lg'
@@ -85,12 +98,13 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
                 Growing conditions are currently perfect
               </Text>
             </Box>
-            <Box w='100%' bg='#ff0000'>
+            <Box w='100%' overflowX='scroll'>
               <Graph
                 farm={farm}
                 activities={activities}
                 tasks={tasks}
                 scheduledTasks={scheduledTasks}
+                totalAmount={totalAmount}
               />
             </Box>
             <Box>
@@ -101,12 +115,6 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
                     Expenses
                   </Text>
                 </Flex>
-                {/* <Flex ml={{ md: 5 }} justify='space-between' align='center'>
-                  <Icon as={FaCircle} boxSize={3} color='cf.400' />
-                  <Text ml={{ md: 2 }} fontSize={{ md: 'md' }}>
-                    Sales
-                  </Text>
-                </Flex> */}
               </Flex>
             </Box>
           </Flex>
@@ -177,6 +185,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
                 borderColor='cf.400'
                 color='cf.400'
                 rounded='30px'
+                isDisabled={true}
                 my={5}
                 colorScheme='none'
                 w='50%'
@@ -194,6 +203,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
                 borderColor='cf.400'
                 color='white'
                 rounded='30px'
+                isDisabled={true}
                 my={5}
                 w='50%'
                 h={50}
@@ -214,6 +224,7 @@ FarmFinances.propTypes = {
   activities: PropTypes.array.isRequired,
   tasks: PropTypes.array.isRequired,
   scheduledTasks: PropTypes.array.isRequired,
-  farm: PropTypes.object.isRequired
+  farm: PropTypes.object.isRequired,
+  setExpenses: PropTypes.func.isRequired
 }
 export default FarmFinances

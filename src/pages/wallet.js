@@ -9,11 +9,14 @@ import { useParams } from 'react-router-dom'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
 import FarmFinances from 'components/Cards/FarmFinances'
+import Price from '../data/price.json'
 
 const Wallet = () => {
   document.title = 'Complete Farmer | Farm wallet'
   const [reload, setReload] = React.useState(0)
   const { id } = useParams()
+  const [wallet, setWallet] = React.useState(Price.price)
+  const [expenses, setExpenses] = React.useState(0)
   const {
     getAllTasks,
     getMyFarm,
@@ -71,6 +74,16 @@ const Wallet = () => {
     tasksHasError ||
     myFarmActivitiesHasError
 
+  // eslint-disable-next-line no-console
+  console.log(yourFarm, 'hisfarm')
+
+  React.useEffect(() => {
+    let total = 0
+    if (yourFarm && yourFarm?.order?.status === 'PAID') {
+      total = 750 * yourFarm?.order?.acreage
+    }
+    setWallet(total)
+  }, [yourFarm])
   return (
     <Layout>
       <FarmWalletEmptyState>
@@ -85,11 +98,14 @@ const Wallet = () => {
               py={{ md: 5 }}
               w='100%'
             >
-              <FundCard label='Total funds' amount={750.0} />
+              <FundCard label='Total funds' amount={wallet} />
 
-              <FundCard label='Total funds used' amount={150.0} />
+              <FundCard label='Total funds used' amount={expenses} />
 
-              <FundCard label='Total funds balance' amount={750.0 - 150.0} />
+              <FundCard
+                label='Total funds balance'
+                amount={wallet - expenses}
+              />
             </Grid>
           </Box>
         )}
@@ -121,6 +137,7 @@ const Wallet = () => {
                 activities={myFarmActivities}
                 tasks={tasks}
                 scheduledTasks={ScheduledTasks}
+                setExpenses={setExpenses}
               />
             </Box>
           )}
