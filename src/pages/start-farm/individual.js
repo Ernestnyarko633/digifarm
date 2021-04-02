@@ -31,7 +31,7 @@ const Individual = props => {
   }
 
   return (
-    <Box w='100%' overflowX='hidden'>
+    <Box w='100%'>
       <Flex
         align='center'
         w='100vw'

@@ -17,7 +17,7 @@ const Button = ({
     fontSize={fontSize}
     w={width}
     fontWeight={400}
-    shadow='0px 10px 20px rgba(97, 111, 57, 0.5)'
+    filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
     {...rest}
   >
     {btntitle} {icon && <Icon as={icon} ml={2} boxSize={4} />}
