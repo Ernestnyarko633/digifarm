@@ -72,6 +72,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
       pos='relative'
       borderWidth={1}
       borderColor='gray.300'
+      mt={{ base: 4, md: 0 }}
     >
       <GridItem
         overflowY='scroll'
@@ -81,6 +82,10 @@ const FarmDetails = ({ query, catName, handleNext }) => {
           scrollbarColor: 'rebeccapurple',
           scrollBehavior: 'smooth'
         }}
+        display={{ base: 'grid', md: 'block' }}
+        gridTemplateColumns={{ base: 'repeat(3, 1fr)', md: '1fr' }}
+        borderBottomWidth={{ base: 1, md: 0 }}
+        borderBottomColor='gray.300'
       >
         {data?.map(farm => (
           <CropSelectionCard
@@ -98,7 +103,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
         overflowY='scroll'
         borderLeftWidth={1}
         borderLeftColor='gray.300'
-        p={{ md: 10 }}
+        p={{ base: 4, md: 10 }}
         pos='relative'
         css={{
           direction: 'rtl',
@@ -122,11 +127,13 @@ const FarmDetails = ({ query, catName, handleNext }) => {
                         : 1,
                     y: 0
                   }}
+                  px={{ base: 4, md: 0 }}
                 >
                   <Button
                     btntitle='Start this farm'
                     w={80}
                     h={14}
+                    ms
                     fontSize='md'
                     onClick={handleNext}
                   />

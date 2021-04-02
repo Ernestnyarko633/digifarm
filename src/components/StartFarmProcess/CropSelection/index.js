@@ -54,7 +54,14 @@ const CropSelection = () => {
                 reload={triggerReload}
               />
             ) : (
-              <Tabs direction='row' py='0' px='0' boxWidth='100%'>
+              <Tabs
+                direction={{ base: 'column', md: 'row' }}
+                py='0'
+                px='0'
+                boxWidth='100%'
+                display={{ base: 'flex', md: 'block' }}
+                width={{ base: '100%', md: 'initial' }}
+              >
                 {categories?.map(cat => (
                   <Box key={cat._id} label={cat.name}>
                     <FarmDetails

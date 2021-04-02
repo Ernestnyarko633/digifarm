@@ -31,18 +31,18 @@ const Individual = props => {
   }
 
   return (
-    <Box>
+    <Box w='100%' overflowX='hidden'>
       <Flex
         align='center'
         w='100vw'
-        h={{ md: 20 }}
+        h={20}
         pos='fixed'
         top={0}
         bg='white'
         shadow='md'
-        px={{ md: 20 }}
+        px={{ base: 4, md: 20 }}
       >
-        <Box h={{ md: 12 }}>
+        <Box h={{ base: 10, md: 12 }}>
           <Image
             h='100%'
             src={require('../../assets/images/logo.png').default}
