@@ -10,8 +10,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const CropHealthCard = ({ eosStat, _error, date }) => {
-  // eslint-disable-next-line no-console
-  console.log(eosStat, 'you are what')
   const health = value => {
     if (value >= 0.2 && value <= 1.0) return true
     return false

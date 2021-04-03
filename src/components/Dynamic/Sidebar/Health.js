@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import CropHealthCard from '../Cards/CropHealthCard'
 
 export default function Health({ farm, eosStats, _error }) {
-  // eslint-disable-next-line no-console
-  console.log('checking', eosStats)
   return (
     <div>
       {!_error &&

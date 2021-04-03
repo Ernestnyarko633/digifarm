@@ -101,8 +101,6 @@ const DynamicFarm = ({
     reload,
     EOSTaskForStats
   )
-
-  console.log(eosTask?.task_id, 'stats from eos')
   // for health card stats
   const {
     data: EOSStatistics,
@@ -116,8 +114,6 @@ const DynamicFarm = ({
       task: eosTask?.task_id
     }
   )
-
-  console.log(EOSStatistics, 'stats from space')
 
   const weatherForeCastsPayload = {
     geometry: {

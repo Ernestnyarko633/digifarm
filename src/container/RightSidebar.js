@@ -30,7 +30,7 @@ const RightSidebar = () => {
     return () => (mounted = false);
   }, [Client, doc]);
 
-  console.log('events', doc);
+
 
   return (
     <Box
