@@ -27,7 +27,7 @@ const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
   }
 
   return (
-    <Box as='table' w={width} m={margin}>
+    <Box as='table' w={{ base: 82, md: width }} m={margin}>
       <Box as='tbody'>
         <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
           <Flex as='td' align='center' justify='space-between' pb={2}>
