@@ -131,7 +131,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
                 >
                   <Button
                     btntitle='Start this farm'
-                    w={80}
+                    w={{ base: 70, md: 80 }}
                     h={14}
                     ms
                     fontSize='md'

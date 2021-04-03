@@ -71,7 +71,7 @@ const OtherSteps = ({ history: { push } }) => {
       case 5:
         return {
           title: 'Continue to my Dashboard',
-          width: 70,
+          width: 80,
           action: () => push('/dashboard')
         }
       default:
@@ -194,7 +194,7 @@ const OtherSteps = ({ history: { push } }) => {
       >
         <Button
           h={12}
-          width={56}
+          width={40}
           fontSize='md'
           btntitle='Prev'
           color='gray.700'
@@ -205,7 +205,7 @@ const OtherSteps = ({ history: { push } }) => {
         <Button
           ml={{ base: 4, md: 6 }}
           h={12}
-          fontSize='lg'
+          fontSize={{ md: 'lg' }}
           width={width}
           btntitle={title}
           onClick={action}

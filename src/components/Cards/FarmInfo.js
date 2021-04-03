@@ -8,10 +8,10 @@ import { getFormattedMoney } from 'helpers/misc'
 const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
   const getDiscount = () => {
     // if discount exist then apply discount to cost
-    if (farm.discounts) {
+    if (farm?.discounts) {
       // get discounts user may qualify for
-      const discounts = farm.discounts.filter(
-        ({ point }) => point <= order.acreage
+      const discounts = farm?.discounts.filter(
+        ({ point }) => point <= order?.acreage
       )
       // get highest discount user qualified for
       if (discounts.length) {
@@ -33,15 +33,15 @@ const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
           <Flex as='td' align='center' justify='space-between' pb={2}>
             <Flex direction='column'>
               <Heading as='h3' fontSize='xl' textTransform='uppercase'>
-                {farm.cropVariety?.crop?.name}
+                {farm?.cropVariety?.crop?.name}
               </Heading>
               <Text as='span' fontSize='xs' textColor='gray.500'>
-                ({farm.cropVariety?.name}) #{farm.name}
+                ({farm?.cropVariety?.name}) #{farm?.name}
               </Text>
             </Flex>
             <Text>
-              {currency.currencySymbol}
-              {getFormattedMoney(farm.pricePerAcre * rate)}/acre
+              {currency?.currencySymbol}
+              {getFormattedMoney(farm?.pricePerAcre * rate)}/acre
             </Text>
           </Flex>
         </Box>
@@ -82,8 +82,8 @@ const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
                 </Text>
               )}
               <Text fontWeight={700}>
-                {currency.currencySymbol}
-                {getFormattedMoney(order.cost * rate)}
+                {currency?.currencySymbol}
+                {getFormattedMoney(order?.cost * rate)}
               </Text>
             </Flex>
           </Flex>

@@ -32,7 +32,8 @@ const InviteLink = () => {
       <GridItem>
         <Flex align='center' justify='center' mt={16}>
           <Image
-            w={108}
+            w={{ base: 95, md: 108 }}
+            mx={{ base: 'auto', md: 'initial' }}
             src={require('../../../assets/images/invite.png').default}
           />
         </Flex>
