@@ -12,7 +12,7 @@ const CropSelectionCard = ({
 }) => (
   <Flex
     {...rest}
-    h={48}
+    h={{ base: 20, md: 48 }}
     w='100%'
     as='button'
     role='button'
@@ -32,7 +32,13 @@ const CropSelectionCard = ({
       <Heading as='h5' fontSize='md' textTransform='uppercase'>
         {cropName}
       </Heading>
-      <Text ml={2} as='span' fontSize='xs' textColor='gray.500'>
+      <Text
+        ml={2}
+        as='span'
+        fontSize='xs'
+        textColor='gray.500'
+        display={{ base: 'none', md: 'block' }}
+      >
         ({varietyName}) #{farmName}
       </Text>
     </Flex>

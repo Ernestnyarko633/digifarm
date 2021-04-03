@@ -70,6 +70,13 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const sellProduce = async (id, body) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/farms/${id}/sell`,
+      body
+    })
+  }
+
   const deleteBankTransfer = async id => {
     return await http.patch({
       url: `${PAYMENT_API}/payment/receipt-delete?payment_id=${id}`
@@ -179,6 +186,7 @@ export const ApiContextProvider = ({ children }) => {
         downloadTaskReceipt,
         getMyScheduledTasks,
         uploadPaymentDetails,
+        sellProduce,
         getUserBankingDetails
       }}
     >

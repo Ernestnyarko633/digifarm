@@ -37,7 +37,7 @@ const ModalWrapper = ({
           </Box>
         </ModalHeader>
         <ModalCloseButton color='cf.400' />
-        <ModalBody px={10} py={5}>
+        <ModalBody px={{ base: 4, md: 10 }} py={5}>
           {children}
         </ModalBody>
       </ModalContent>

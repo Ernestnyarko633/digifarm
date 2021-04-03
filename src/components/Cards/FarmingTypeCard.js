@@ -37,6 +37,7 @@ const FarmingTypeCard = ({
       rounded='lg'
       textAlign='left'
       mr={mr}
+      mb={{ base: 6, md: 0 }}
     >
       <Box mb={3}>
         <Image src={image} />

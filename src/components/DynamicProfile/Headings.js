@@ -5,7 +5,12 @@ import PropTypes from 'prop-types'
 const Headings = ({ title }) => {
   return (
     <Box>
-      <Box p={10} rounded='md' bg='white'>
+      <Box
+        p={10}
+        rounded='md'
+        bg='white'
+        filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+      >
         <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
           {title}
         </Heading>

@@ -29,8 +29,14 @@ const Contract = ({ farm }) => {
         // }}
         mb={10}
       >
-        <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
-          <Heading as='h3' size='lg' mb={6} color='cf.400'>
+        <Box css={{ direction: 'ltr' }} p={{ base: 2, md: 10 }}>
+          <Heading
+            as='h3'
+            size='lg'
+            mb={6}
+            color='cf.400'
+            mt={{ base: 4, md: 0 }}
+          >
             Complete Farmer Crowd Farming User Agreement
           </Heading>
           <Text>

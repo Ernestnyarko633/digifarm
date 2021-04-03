@@ -31,7 +31,7 @@ const PayOption = ({
       m={4}
       py={6}
       px={10}
-      w={108}
+      w={{ md: 108 }}
       as='button'
       rounded='md'
       textAlign='left'
@@ -42,7 +42,7 @@ const PayOption = ({
       borderColor={selected ? 'cf.400' : 'gray.400'}
       _focus={{ outline: 'none', borderColor: 'cf.400' }}
     >
-      <Flex align='center'>
+      <Flex align='center' justify={{ base: 'space-between', md: 'initial' }}>
         <Image src={icon} alt='Card Image' />
         <Text fontSize='lg' fontWeight={500} ml={4} fontFamily='body'>
           {title}

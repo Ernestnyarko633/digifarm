@@ -71,7 +71,7 @@ const OtherSteps = ({ history: { push } }) => {
       case 5:
         return {
           title: 'Continue to my Dashboard',
-          width: 70,
+          width: 80,
           action: () => push('/dashboard')
         }
       default:
@@ -84,10 +84,22 @@ const OtherSteps = ({ history: { push } }) => {
   return (
     <>
       {isSubmitting && <Overlay text={text} />}
-      <Flex bg='cf-dark.400' h={20} mt={20}>
-        <Flex justify='space-between' mx='auto' w={{ md: 145 }}>
+      <Flex
+        bg='cf-dark.400'
+        h={{ base: 28, md: 20 }}
+        mt={{ base: 24, md: 20 }}
+        mb={{ base: 10, md: 0 }}
+        py={{ base: 2, md: 0 }}
+      >
+        <Flex
+          justify='space-between'
+          mx='auto'
+          w={{ md: 145 }}
+          direction={{ base: 'column', md: 'row' }}
+          align={{ base: 'center', md: 'initial' }}
+        >
           <Flex align='center'>
-            <Heading as='h5' size='md' mr={{ md: 40 }}>
+            <Heading as='h5' size='md' mr={{ md: 40 }} mb={{ base: 4, md: 0 }}>
               {catName}
             </Heading>
           </Flex>
@@ -101,10 +113,18 @@ const OtherSteps = ({ history: { push } }) => {
                 borderBottomWidth={farm._id === selectedFarm._id && 2}
                 borderBottomColor={farm._id === selectedFarm._id && 'cf.400'}
               >
-                <Text px={6} textTransform='uppercase'>
+                <Text
+                  px={6}
+                  textTransform='uppercase'
+                  fontSize={{ base: 'sm', md: 'md' }}
+                >
                   {farm.cropVariety?.crop.name}
                 </Text>
-                <Text px={6} fontSize='tiny'>
+                <Text
+                  px={6}
+                  fontSize='tiny'
+                  textAlign={{ base: 'center', md: 'initial' }}
+                >
                   ({farm.cropVariety?.name}) #{farm?.name}
                 </Text>
               </Flex>
@@ -120,8 +140,9 @@ const OtherSteps = ({ history: { push } }) => {
         mx='auto'
         mt={{ md: 12 }}
         mb={4}
+        px={{ base: 2, md: 0 }}
       >
-        <Text fontSize='sm' color='red.600'>
+        <Text fontSize='sm' color='red.600' w={{ base: 32, md: '100%' }}>
           Farm starts :{' '}
           {getformattedDate(selectedFarm.startDate, {
             weekday: 'short',
@@ -133,7 +154,7 @@ const OtherSteps = ({ history: { push } }) => {
         <Flex
           align='center'
           rounded='30px'
-          px={4}
+          px={{ base: 2, md: 4 }}
           py={1}
           borderWidth={1}
           borderColor='cf.400'
@@ -164,20 +185,27 @@ const OtherSteps = ({ history: { push } }) => {
         </MotionFlex>
       </AnimateSharedLayout>
 
-      <Flex align='center' justify='center' mt={6}>
+      <Flex
+        align='center'
+        justify='center'
+        mt={6}
+        px={{ base: 4, md: 0 }}
+        mb={{ base: 4, md: 0 }}
+      >
         <Button
           h={12}
-          width={56}
+          width={40}
           fontSize='md'
           btntitle='Prev'
           color='gray.700'
           colorScheme='white'
           onClick={otherStep <= 0 ? handleBack : handlePrev}
+          borderWidth={1}
         />
         <Button
-          ml={6}
+          ml={{ base: 4, md: 6 }}
           h={12}
-          fontSize='lg'
+          fontSize={{ md: 'lg' }}
           width={width}
           btntitle={title}
           onClick={action}

@@ -16,10 +16,10 @@ const AcreageInput = ({ totalAcres }) => {
   const { acreage, setAcreage } = useStartFarm()
 
   return (
-    <Box w={{ md: 80 }}>
+    <Box w={{ base: 48, md: 80 }}>
       <InputGroup>
         <Input
-          h={{ md: 16 }}
+          h={{ base: 10, md: 16 }}
           type='number'
           roundedBottom='0px'
           value={acreage}
@@ -38,7 +38,7 @@ const AcreageInput = ({ totalAcres }) => {
             }
           }}
         />
-        <InputRightElement h={{ md: 16 }} mr={{ md: 8 }}>
+        <InputRightElement h={{ md: 16 }} mr={{ base: 4, md: 8 }}>
           <IconButton
             aria-label='Reduce acreage'
             fontSize='25px'
