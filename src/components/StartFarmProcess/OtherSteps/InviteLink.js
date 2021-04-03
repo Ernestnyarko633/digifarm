@@ -24,7 +24,7 @@ const MotionGrid = motion.custom(Grid)
 
 const InviteLink = () => {
   const [files, setFiles] = React.useState([])
-  const [value] = React.useState('http://completefarmer.com//djjgo49950-2')
+  const [value] = React.useState('http://completefarmer.com/djjgo49950-2')
   const { hasCopied, onCopy } = useClipboard(value)
 
   return (
@@ -43,7 +43,12 @@ const InviteLink = () => {
           mt={{ md: 20 }}
           px={{ md: 10 }}
         >
-          <Box textAlign='center' w={{ md: '100%' }} px={8}>
+          <Box
+            textAlign='center'
+            w={{ md: '100%' }}
+            px={8}
+            mt={{ base: 6, md: 0 }}
+          >
             <Heading as='h6' fontSize='md' mb={3}>
               What is included in this farm
             </Heading>
@@ -75,7 +80,11 @@ const InviteLink = () => {
         }}
         mb={10}
       >
-        <Box css={{ direction: 'ltr' }} py={{ md: 10 }} px={{ md: 16 }}>
+        <Box
+          css={{ direction: 'ltr' }}
+          py={{ md: 10 }}
+          px={{ base: 4, md: 16 }}
+        >
           <Box py={4}>
             <Heading as='h5' size='sm'>
               What would you like to call this farm?
@@ -89,7 +98,7 @@ const InviteLink = () => {
               />
             </Box>
 
-            <Box mt={16}>
+            <Box mt={16} px={{ base: 3, md: 0 }}>
               <Heading as='h5' size='sm'>
                 Upload your profile image
               </Heading>
@@ -98,7 +107,7 @@ const InviteLink = () => {
               </Box>
             </Box>
 
-            <Box mt={16}>
+            <Box mt={16} px={{ base: 3, md: 0 }}>
               <Heading as='h5' size='sm'>
                 Invite your cooperative members
               </Heading>
@@ -134,7 +143,7 @@ const InviteLink = () => {
 
             <Divider orientation='horizontal' borderColor='gray.300' my={12} />
 
-            <Box>
+            <Box px={{ base: 3, md: 0 }}>
               <Heading as='h5' size='sm'>
                 Get link
               </Heading>
@@ -143,12 +152,12 @@ const InviteLink = () => {
                 <Box>
                   <Input
                     rounded='30px'
-                    h={12}
+                    h={{ base: 10, md: 12 }}
                     bg='gray.100'
                     borderWidth='0px'
                     value={value}
                     color='gray.400'
-                    w={80}
+                    w={{ base: 56, md: 80 }}
                     isReadOnly
                   />
                 </Box>
@@ -160,8 +169,8 @@ const InviteLink = () => {
                   bg='white'
                   color='gray.800'
                   _hover={{ bg: 'white' }}
-                  h={12}
-                  w={40}
+                  h={{ base: 10, md: 12 }}
+                  w={{ base: 48, md: 40 }}
                   ml={3}
                   onClick={onCopy}
                   shadow='none'
