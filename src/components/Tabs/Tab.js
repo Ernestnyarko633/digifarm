@@ -9,7 +9,9 @@ const Tab = ({ activeTab, label, onClick }) => {
   return (
     <Box
       as='li'
-      w={64}
+      minW={{ base: 64, md: 0 }}
+      w={{ md: 64 }}
+      h={16}
       textAlign='center'
       py={4}
       mr={10}

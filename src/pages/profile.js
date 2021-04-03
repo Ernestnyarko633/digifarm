@@ -1,7 +1,10 @@
-import { Box, Flex, Grid, Text, Container, Input } from '@chakra-ui/react'
+import { Box, Flex, Grid, Text, Container, Input, Icon } from '@chakra-ui/react'
 import React from 'react'
 import DynamicProfile from 'components/DynamicProfile'
 import Header from 'container/Header'
+import { FiUser } from 'react-icons/fi'
+import { BiCog, BiLockAlt } from 'react-icons/bi'
+import { BsShield } from 'react-icons/bs'
 
 const Profile = () => {
   const [page, setPage] = React.useState('compA')
@@ -9,23 +12,28 @@ const Profile = () => {
   const menus = [
     {
       name: 'Profile',
-      comp: 'compA'
+      comp: 'compA',
+      icon: FiUser
     },
     {
       name: 'Account Settings',
-      comp: 'compB'
+      comp: 'compB',
+      icon: BiCog
     },
-    {
-      name: 'Notifications',
-      comp: 'compC'
-    },
+    // {
+    //   name: 'Notifications',
+    //   comp: 'compC',
+    //   icon: FiBell
+    // },
     {
       name: 'Security',
-      comp: 'compD'
+      comp: 'compD',
+      icon: BiLockAlt
     },
     {
       name: 'Privacy Terms',
-      comp: 'compE'
+      comp: 'compE',
+      icon: BsShield
     }
   ]
 
@@ -58,31 +66,35 @@ const Profile = () => {
             </Text>
           </Box>
         </Flex>
-        <Grid templateColumns={{ md: '18% 82%' }} my={16}>
+        <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Flex
-            align='center'
-            justify='center'
+            // align='center'
+            // justify='center'
             direction='column'
             borderWidth={1}
             borderColor='gray.200'
             rounded='30px'
             p={4}
-            h={{ md: 85 }}
+            h={{ md: 70 }}
+            bg='white'
+            filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
           >
             {menus.map(menu => (
-              <Box
+              <Flex
+                align='center'
                 key={menu}
                 as='button'
                 role='button'
                 my={3}
                 bg={page === menu.comp && 'cf.200'}
-                px={8}
+                px={5}
                 py={2}
                 rounded='30px'
                 onClick={() => setPage(menu.comp)}
               >
+                <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
                 <Text>{menu.name}</Text>
-              </Box>
+              </Flex>
             ))}
           </Flex>
 

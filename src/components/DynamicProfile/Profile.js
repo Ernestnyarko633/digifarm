@@ -153,7 +153,13 @@ const Profile = () => {
               </Box>
             </Flex>
 
-            <Box rounded='xl' shadow='md' bg='white' p={10} mt={12}>
+            <Box
+              rounded='xl'
+              filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+              bg='white'
+              p={10}
+              mt={12}
+            >
               <Box m={10}>
                 <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
                   Personal Info
@@ -269,11 +275,23 @@ const Profile = () => {
         )}
       </Formik>
 
-      <Box rounded='xl' shadow='md' bg='white' p={10} mt={12}>
+      <Box
+        rounded='xl'
+        filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+        bg='white'
+        p={10}
+        mt={12}
+      >
         <Signature data={user?.signature} />
       </Box>
 
-      <Box rounded='xl' shadow='md' mt={12} bg='white' p={10}>
+      <Box
+        rounded='xl'
+        filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+        mt={12}
+        bg='white'
+        p={10}
+      >
         <Box m={10}>
           <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
             Identification Info
@@ -326,7 +344,13 @@ const Profile = () => {
       <Formik initialValues={bankValues}>
         {({ values, isSubmitting, handleBlur, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <Box rounded='xl' shadow='md' my={12} bg='white' p={10}>
+            <Box
+              rounded='xl'
+              filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+              my={12}
+              bg='white'
+              p={10}
+            >
               <Box m={10}>
                 <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
                   Bank details
