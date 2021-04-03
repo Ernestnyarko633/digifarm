@@ -5,7 +5,7 @@ import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
-import useExternalApi from 'context/external'
+import useApi from 'context/api'
 import EmptyMap from 'assets/images/map.png'
 
 import FetchCard from 'components/FetchCard'
@@ -14,8 +14,8 @@ export default function Farm({
   onOpen,
   center,
   zoom = 14,
+  eosTask,
   digitalFarmerFarm,
-  EOSStatistics,
   WeatherForeCasts,
   ScheduledTasks,
   EOSViewID,
@@ -40,7 +40,7 @@ export default function Farm({
   ] = useState(null)
   const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({})
   const [__error, _setError] = React.useState(null)
-  const { getEOSStatistics, createEOSTaskForStats } = useExternalApi()
+  const { getStats, createTask } = useApi()
 
   useEffect(() => {
     let mounted = true
@@ -68,7 +68,7 @@ export default function Farm({
         } else {
           setEOSTaskForStatsCreationHasError(null)
           setEOSTaskForStatsCreationIsLoading(true)
-          const res = await createEOSTaskForStats(payload)
+          const res = await createTask(payload)
           if (mounted) {
             key && sessionStorage.setItem(key, JSON.stringify(res))
           }
@@ -88,13 +88,13 @@ export default function Farm({
     }
 
     return () => (mounted = false)
-  }, [location, EOSViewID, createEOSTaskForStats, reload])
+  }, [location, EOSViewID, reload, createTask])
 
   const DownloadVisual = async downloadTaskID => {
     try {
       _setError(null)
       _setLoading(true)
-      await getEOSStatistics(downloadTaskID)
+      await getStats(downloadTaskID)
       _setLoading(false)
     } catch (error) {
       _setError(error)
@@ -105,7 +105,6 @@ export default function Farm({
   return (
     <FarmLayout
       digitalFarmerFarm={digitalFarmerFarm}
-      EOSStatistics={EOSStatistics}
       WeatherForeCasts={WeatherForeCasts}
       ScheduledTasks={ScheduledTasks}
       EOSViewID={EOSViewID}
@@ -113,6 +112,7 @@ export default function Farm({
       farmfeeds={farmfeeds}
       loading={loading}
       reloads={reloads}
+      eosTask={eosTask}
       error={error}
       _error={_error}
     >
@@ -176,7 +176,10 @@ export default function Farm({
             isLoading={_loading}
             isDisabled={_loading || !EOSTaskForStatsCreated?.task_id}
             isError={__error}
-            onClick={() => DownloadVisual(EOSTaskForStatsCreated?.task_id)}
+            onClick={
+              () => DownloadVisual({ task: EOSTaskForStatsCreated?.task_id })
+              // eslint-disable-next-line react/jsx-curly-newline
+            }
           />
           <Button
             btntitle='Share'
@@ -207,5 +210,6 @@ Farm.propTypes = {
   loading: PropTypes.any,
   reloads: PropTypes.any,
   zoom: PropTypes.number,
-  band: PropTypes.string
+  band: PropTypes.string,
+  eosTask: PropTypes.any
 }

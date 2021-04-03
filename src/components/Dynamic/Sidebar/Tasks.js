@@ -71,7 +71,7 @@ export default function Tasks({
             )}
           </React.Fragment>
         )}
-        {eosStats && !_error && (
+        {eosStats?.length > 0 && !_error && (
           <Box
             bg='white'
             w='100%'
@@ -95,7 +95,7 @@ export default function Tasks({
               </Text>
             </Flex>
 
-            {eosStats && (
+            {eosStats?.length > 0 && (
               <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} gap={6} mt={5}>
                 <Box>
                   <Text mb={4} fontSize='sm'>
@@ -105,7 +105,7 @@ export default function Tasks({
                     value={(
                       eosStats[eosStats?.length - 1]?.indexes?.EVI?.average *
                       100
-                    ).toFixed(0)}
+                    )?.toFixed(0)}
                     size='100px'
                     color={
                       health(
@@ -116,9 +116,9 @@ export default function Tasks({
                     }
                   >
                     <CircularProgressLabel rounded='lg'>
-                      {(eosStats[
+                      {eosStats[
                         eosStats?.length - 1
-                      ]?.indexes?.EVI?.average).toFixed(2)}
+                      ]?.indexes?.EVI?.average?.toFixed(2)}
                     </CircularProgressLabel>
                   </CircularProgress>
                 </Box>
@@ -143,15 +143,15 @@ export default function Tasks({
                     value={(
                       eosStats[eosStats?.length - 1]?.indexes?.NDVI?.average *
                       100
-                    ).toFixed(0)}
+                    )?.toFixed(0)}
                     size='100px'
                     color='cf.400'
                     mt={2}
                   >
                     <CircularProgressLabel rounded='lg'>
-                      {(eosStats[
+                      {eosStats[
                         eosStats?.length - 1
-                      ]?.indexes?.NDVI?.average).toFixed(2)}
+                      ]?.indexes?.NDVI?.average?.toFixed(2)}
                     </CircularProgressLabel>
                   </CircularProgress>
                 </Box>
@@ -164,15 +164,15 @@ export default function Tasks({
                     value={(
                       eosStats[eosStats?.length - 1]?.indexes?.CCCI?.average *
                       100
-                    ).toFixed(0)}
+                    )?.toFixed(0)}
                     size='100px'
                     color='cf.400'
                     mt={2}
                   >
                     <CircularProgressLabel rounded='lg'>
-                      {(eosStats[
+                      {eosStats[
                         eosStats?.length - 1
-                      ]?.indexes?.CCCI?.average).toFixed(2)}
+                      ]?.indexes?.CCCI?.average?.toFixed(2)}
                     </CircularProgressLabel>
                   </CircularProgress>
                 </Box>

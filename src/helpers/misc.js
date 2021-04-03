@@ -82,14 +82,21 @@ export const dateIntervals = () => {
 
   // 30 days ago date
   let ThirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30))
+
+  let SixtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 60))
+
   let dd = today.getDate()
   let _dd = ThirtyDaysAgo.getDate()
+  let __dd = SixtyDaysAgo.getDate()
 
   let mm = today.getMonth() + 1
   let _mm = ThirtyDaysAgo.getMonth() + 1
+  let __mm = SixtyDaysAgo.getMonth() + 1
 
   let yyyy = today.getFullYear()
   let _yyyy = ThirtyDaysAgo.getFullYear()
+  let __yyyy = SixtyDaysAgo.getFullYear()  
+
 
   if (dd < 10) {
     dd = '0' + dd
@@ -97,6 +104,9 @@ export const dateIntervals = () => {
   }
   if(_dd < 10){
     _dd = '0' + _dd
+  }
+  if(__dd < 10){
+    __dd = '0' + __dd
   }
 
   if (mm < 10 ) {
@@ -106,9 +116,14 @@ export const dateIntervals = () => {
   if(_mm < 10){
     _mm = '0' + _mm
   }
+  if(__mm < 10){
+    __mm = '0' + __mm
+  }
 
   today = yyyy + '-' + mm + '-' + dd
   ThirtyDaysAgo = _yyyy + '-' + _mm + '-' + _dd
+  SixtyDaysAgo = __yyyy + '-' + __mm + '-' + __dd
 
-  return { today: today, ThirtyDaysAgo: ThirtyDaysAgo }
+
+  return { today: today, ThirtyDaysAgo: ThirtyDaysAgo, SixtyDaysAgo: SixtyDaysAgo  }
 }
