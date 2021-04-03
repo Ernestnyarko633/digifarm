@@ -79,8 +79,8 @@ const DynamicFarm = ({
     type: 'mt_stats',
     params: {
       bm_type: ['NDVI', 'MSI', 'EVI', 'CCCI', 'NDRE', 'GCI'],
-      date_start: '2020-12-01',
-      date_end: '2020-12-31',
+      date_start: dateIntervals()?.ThirtyDaysAgo,
+      date_end: dateIntervals()?.today,
       geometry: {
         coordinates: [location],
         type: 'Polygon'
