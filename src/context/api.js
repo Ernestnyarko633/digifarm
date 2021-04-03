@@ -143,25 +143,42 @@ export const ApiContextProvider = ({ children }) => {
       query
     })
   }
+
+  const createTask = async payload => {
+    return await http.post({
+      url: `${FMS_API}/eos-task`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const getStats = async query => {
+    return await http.get({
+      url: `${FMS_API}/eos-task`,
+      query
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
         logout,
         getUser,
+        getStats,
         getFarms,
         patchUser,
-        getReceipt,
         getMyFarm,
-        getAllTasks,
-        createOrder,
+        createTask,
+        getReceipt,
         getMyOrder,
         getMyFarms,
-        getActivities,
+        createOrder,
         getMyOrders,
+        getAllTasks,
         downloadOrder,
-        initiatePayment,
-        changePassword,
+        getActivities,
         getMyFarmFeeds,
+        changePassword,
+        initiatePayment,
         getPaymentDetails,
         getSourcingOrders,
         getCropCategories,
