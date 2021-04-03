@@ -41,6 +41,7 @@ const Individual = props => {
         bg='white'
         shadow='md'
         px={{ base: 4, md: 20 }}
+        zIndex={999999999}
       >
         <Box h={{ base: 10, md: 12 }}>
           <Image
