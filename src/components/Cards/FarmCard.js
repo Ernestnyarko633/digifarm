@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 
 const FarmCard = ({ farm, _small }) => {
   return (
-    <ReachRouter to={_small ? `/farms/${farm._id}` : `/wallets/${farm?._id}`}>
+    <ReachRouter to={!_small ? `/farms/${farm._id}` : `/wallets/${farm?._id}`}>
       <Link _hover={{ textDecor: 'none' }}>
         <Box
           rounded='xl'
