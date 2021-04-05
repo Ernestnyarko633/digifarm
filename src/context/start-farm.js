@@ -131,19 +131,16 @@ export const StartFarmContextProvider = ({ children }) => {
       if (paymentOption === Constants.paymentOptions[0]) {
         const q = 'USD_GHS'
         const res = await getExchangeRate({ q })
-        data.amount *= res.data[q]
+        data.amount =
+          Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
         if (data.amount) {
           const res = await initiatePayment(data)
-          // TODO: redirect user to either payment page
-          // eslint-disable-next-line no-console
-          console.log(res)
+          window.location.href = res.message.url
         } else {
           throw new Error('Unknown error occurred, try again')
         }
       } else {
         const res = await initiatePayment(data)
-        // eslint-disable-next-line no-console
-        console.log(res)
         toast({
           duration: 9000,
           isClosable: true,
@@ -159,7 +156,7 @@ export const StartFarmContextProvider = ({ children }) => {
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
-          setSession(false)
+          // setSession(false)
         } else {
           toast({
             status: 'error',

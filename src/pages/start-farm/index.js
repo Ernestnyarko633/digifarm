@@ -17,6 +17,7 @@ const StartFarm = () => {
       align='center'
       justify='center'
       direction='column'
+      bgColor='white'
       w={{ md: '100vw' }}
       h={{ md: '100vh' }}
       overflow='hidden'

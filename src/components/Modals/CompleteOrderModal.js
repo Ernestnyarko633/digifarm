@@ -67,7 +67,7 @@ const CompleteOrderModal = ({ isOpen, onClose }) => {
 
 CompleteOrderModal.propTypes = {
   isOpen: PropTypes.bool,
-  onClose: PropTypes.bool
+  onClose: PropTypes.func
 }
 
 export default CompleteOrderModal

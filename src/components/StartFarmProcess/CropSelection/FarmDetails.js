@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { Box, Grid, GridItem } from '@chakra-ui/react'
+import { Box, Grid, GridItem, Heading } from '@chakra-ui/react'
 import { useIntersection } from 'react-use'
 import { Button } from 'components'
 import { motion } from 'framer-motion'
@@ -18,23 +18,20 @@ import AboutFarm from './AboutFarm'
 const MotionBox = motion.custom(Box)
 
 const FarmDetails = ({ query, catName, handleNext }) => {
-  const { setIsSellOn, selectedFarm, setSelectedFarm } = useStartFarm()
+  const { selectedFarm, setSelectedFarm } = useStartFarm()
   const { getFarms } = useApi()
 
   const [reload, setReload] = useState(0)
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
-  const { data, isLoading, error } = useFetch('farms', getFarms, reload, query)
+  const { data, isLoading, error } = useFetch(null, getFarms, reload, query)
 
   useEffect(() => {
     let mounted = true
     if (mounted && data) {
       if (data.length) {
-        setIsSellOn(true)
         setSelectedFarm(data[0])
-      } else {
-        setIsSellOn(false)
       }
 
       if (catName) {
@@ -42,7 +39,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
       }
     }
     return () => (mounted = false)
-  }, [data, catName, setIsSellOn, setSelectedFarm])
+  }, [data, catName, setSelectedFarm])
 
   const intersectionRef = useRef(null)
   const intersection = useIntersection(intersectionRef, {
@@ -64,14 +61,14 @@ const FarmDetails = ({ query, catName, handleNext }) => {
       loading={isLoading}
       reload={triggerReload}
     />
-  ) : (
+  ) : data.length > 0 ? (
     <Grid
       templateColumns={{ md: '45% 55%' }}
       h={121}
       w='100%'
       pos='relative'
       borderWidth={1}
-      borderColor='gray.300'
+      borderColor='gray.200'
       mt={{ base: 4, md: 0 }}
     >
       <GridItem
@@ -85,7 +82,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
         display={{ base: 'grid', md: 'block' }}
         gridTemplateColumns={{ base: 'repeat(3, 1fr)', md: '1fr' }}
         borderBottomWidth={{ base: 1, md: 0 }}
-        borderBottomColor='gray.300'
+        borderBottomColor='gray.200'
       >
         {data?.map(farm => (
           <CropSelectionCard
@@ -102,7 +99,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
       <GridItem
         overflowY='scroll'
         borderLeftWidth={1}
-        borderLeftColor='gray.300'
+        borderLeftColor='gray.200'
         p={{ base: 4, md: 10 }}
         pos='relative'
         css={{
@@ -144,6 +141,12 @@ const FarmDetails = ({ query, catName, handleNext }) => {
         )}
       </GridItem>
     </Grid>
+  ) : (
+    <Box m='auto' w='100%' textAlign='center'>
+      <Heading as='h4' size='xl'>
+        Sorry no farm on sale...
+      </Heading>
+    </Box>
   )
 }
 
