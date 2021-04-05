@@ -47,7 +47,7 @@ const AboutFarm = ({ farm }) => (
     </Box>
 
     <Box mb={{ md: 12 }}>
-      <Box mt={{ md: 10 }}>
+      <Box mt={{ base: 5, md: 10 }}>
         <Heading as='h6' size='sm'>
           About crop
         </Heading>
@@ -57,7 +57,7 @@ const AboutFarm = ({ farm }) => (
         borderWidth={1}
         borderColor='gray.300'
         rounded='md'
-        p={{ md: 6 }}
+        p={{ base: 3, md: 6 }}
         color='gray.700'
         mt={4}
       >
@@ -65,7 +65,7 @@ const AboutFarm = ({ farm }) => (
           <Text>Farm starts: {getformattedDate(farm.startDate)} </Text>
           <Text>Farm duration: {farm.duration} months </Text>
         </Flex>
-        <Divider orientation='horizontal' mt={4} />
+        <Divider orientation='horizontal' my={4} />
         <Progress
           colorScheme='cfButton'
           value={30}
@@ -96,7 +96,7 @@ const AboutFarm = ({ farm }) => (
       </Box>
     </Box>
 
-    <Box textAlign='left'>
+    <Box textAlign='left' mt={{ base: 3, md: 0 }}>
       <Text>{farm.cropVariety?.description}</Text>
       <Text>{farm.cropVariety?.crop?.description}</Text>
     </Box>

@@ -131,7 +131,7 @@ const ChooseAcreage = ({ farm }) => {
               </Box>
             </Box>
           </Box>
-          <Box mt={10}>
+          <Box mt={10} px={{ base: 6, md: 0 }}>
             <Box>
               <Heading as='h5' size='sm'>
                 Amount to get started
@@ -185,7 +185,10 @@ const ChooseAcreage = ({ farm }) => {
                 Choose number of acres to farm ({farm.acreage - acreage})
               </Heading>
               <Divider orientation='horizontal' my={5} />
-              <Flex>
+              <Flex
+                align='center'
+                justify={{ base: 'space-between', md: 'initial' }}
+              >
                 <AcreageInput totalAcres={farm.acreage} />
                 <Flex alignItems='center' marginLeft={{ md: 6 }}>
                   <Skeleton
@@ -206,7 +209,7 @@ const ChooseAcreage = ({ farm }) => {
               </Flex>
             </Box>
           </Box>
-          <Box mt={10}>
+          <Box mt={10} px={{ base: 6, md: 0 }}>
             <FormRadio
               icon
               state={wantCycle}
@@ -220,7 +223,7 @@ const ChooseAcreage = ({ farm }) => {
               title='Do you want to apply cycle for this farm?'
             />
           </Box>
-          <Box my={10}>
+          <Box my={10} px={{ base: 6, md: 0 }}>
             {wantCycle === 'Yes' && (
               <>
                 <Heading as='h5' size='sm' mb={2}>

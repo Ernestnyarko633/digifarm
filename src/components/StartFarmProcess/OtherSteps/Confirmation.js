@@ -13,7 +13,7 @@ const Confirmation = () => {
   const { handleModalClick } = useComponent()
   return (
     <MotionFlex w='100%'>
-      <Box w='50%'>
+      <Box w={{ md: '50%' }}>
         <Flex align='center' justify='center' h='100%'>
           <Image
             w={80}
@@ -22,19 +22,26 @@ const Confirmation = () => {
           />
         </Flex>
       </Box>
-      <Box w='50%' p={14} pos='relative'>
+      <Box w={{ md: '50%' }} p={{ base: 2, md: 14 }} pos='relative'>
         <Flex direction='column' align='center' justify='center'>
           <Box textAlign='center' m='auto' mt={6}>
-            <Text mb={1} fontSize={22} fontWeight='bold'>
+            <Text mb={1} fontSize={{ base: 18, md: 22 }} fontWeight='bold'>
               Confirmation
             </Text>
-            <Text color='gray.400' mb={8} fontSize={20}>
+            <Text color='gray.400' mb={8} fontSize={{ base: 14, md: 20 }}>
               Hurray! you have successfully <br /> made payment to your new farm
             </Text>
           </Box>
           <FarmInfo />
         </Flex>
-        <Flex align='center' pos='absolute' bottom={5} left={0} right={0}>
+        <Flex
+          direction={{ base: 'column', md: 'row' }}
+          align='center'
+          pos={{ md: 'absolute' }}
+          bottom={5}
+          left={0}
+          right={0}
+        >
           <Button
             w={64}
             h={12}
@@ -51,6 +58,7 @@ const Confirmation = () => {
           />
           <Button
             w={64}
+            mt={{ base: 4, md: 0 }}
             h={12}
             fontSize='md'
             rounded='30px'

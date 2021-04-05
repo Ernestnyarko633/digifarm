@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Flex, Box } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 
 import Tab from './Tab'
@@ -25,7 +25,13 @@ const Tabs = ({
 
   return (
     <Flex direction={direction} mt={mt}>
-      <Box display={display} as='ol' listStyleType='none' w={width}>
+      <Flex
+        display={display}
+        as='ol'
+        listStyleType='none'
+        w={width}
+        overflowX={{ base: 'scroll', md: 'visible' }}
+      >
         {children?.map(child => {
           const { label } = child.props
 
@@ -38,7 +44,7 @@ const Tabs = ({
             />
           )
         })}
-      </Box>
+      </Flex>
 
       <MotionFlex
         initial={{ opacity: 0 }}
