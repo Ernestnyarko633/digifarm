@@ -2,7 +2,7 @@ import { Box, Flex, Text, Avatar, Spinner } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
 import useAuth from 'context/auth'
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useScreenshot } from 'use-react-screenshot'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
@@ -16,13 +16,13 @@ export default function Farm() {
   const { user } = isAuthenticated()
   const { id } = useParams()
 
-  const ref = React.useRef(null)
-  const [state, setState] = React.useState('compA')
-  const [isOpen, setIsOpen] = React.useState(false)
+  const ref = useRef(null)
+  const [state, setState] = useState('compA')
+  const [isOpen, setIsOpen] = useState(false)
   const [image, takeScreenShot] = useScreenshot()
-  const [reload, setReload] = React.useState(0)
-  const [location, setLocation] = React.useState([])
-  const [center, setCenter] = React.useState([])
+  const [reload, setReload] = useState(0)
+  const [location, setLocation] = useState([])
+  const [center, setCenter] = useState([])
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const {
@@ -37,9 +37,9 @@ export default function Farm() {
     data: yourFarm,
     isLoading: yourFarmIsLoading,
     error: yourFarmHasError
-  } = useFetch(`${id}_digital_farmer_farm`, getMyFarm, reload, id)
+  } = useFetch(null, getMyFarm, reload, id)
 
-  React.useEffect(() => {
+  useEffect(() => {
     let location_ = []
     let center_ = []
     let _location = yourFarm?.order?.product?.location
