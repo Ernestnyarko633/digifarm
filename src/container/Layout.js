@@ -21,6 +21,7 @@ const Layout = ({
       pos='relative'
       h='100vh'
       fontFamily='body'
+      bgColor='white'
       fontSize={{ md: 'md' }}
     >
       <Header />

@@ -12,7 +12,7 @@ import AboutFarmManager from './AboutFarmManager'
 import ChooseAcreage from './ChooseAcreage'
 import PaymentOption from './PaymentOption'
 import Confirmation from './Confirmation'
-import InviteLink from './InviteLink'
+// import InviteLink from './InviteLink'
 import Contract from './Contract'
 
 import { getformattedDate } from 'helpers/misc'
@@ -45,9 +45,9 @@ const OtherSteps = ({ history: { push } }) => {
         return <Contract farm={selectedFarm} />
       case 3:
         return <PaymentOption farm={selectedFarm} />
+      // case 4:
+      //   return <InviteLink farm={selectedFarm} />
       case 4:
-        return <InviteLink farm={selectedFarm} />
-      case 5:
         return <Confirmation farm={selectedFarm} />
       default:
         return null
@@ -152,10 +152,11 @@ const OtherSteps = ({ history: { push } }) => {
           })}
         </Text>
         <Flex
+          py={1}
           align='center'
           rounded='30px'
+          w={{ md: '11rem' }}
           px={{ base: 2, md: 4 }}
-          py={1}
           borderWidth={1}
           borderColor='cf.400'
         >
@@ -177,8 +178,9 @@ const OtherSteps = ({ history: { push } }) => {
           h={{ md: 120 }}
           mx='auto'
           borderWidth={1}
-          borderColor='gray.400'
+          borderColor='gray.200'
           rounded='md'
+          bgColor='white'
           overflow='hidden'
         >
           {getSteps(otherStep)}

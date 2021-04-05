@@ -88,7 +88,7 @@ const ChooseAcreage = ({ farm }) => {
       </GridItem>
       <GridItem
         borderLeftWidth={1}
-        borderLeftColor='gray.300'
+        borderLeftColor='gray.200'
         overflowY='scroll'
         css={{
           direction: 'rtl',
@@ -108,7 +108,7 @@ const ChooseAcreage = ({ farm }) => {
               padding={10}
               borderWidth={1}
               overflow='hidden'
-              borderColor='gray.300'
+              borderColor='gray.200'
             >
               <Box>
                 <Heading as='h6' size='md'>
@@ -179,7 +179,7 @@ const ChooseAcreage = ({ farm }) => {
               mt={4}
               rounded='md'
               borderWidth={1}
-              borderColor='gray.300'
+              borderColor='gray.200'
             >
               <Heading as='h5' size='sm'>
                 Choose number of acres to farm ({farm.acreage - acreage})

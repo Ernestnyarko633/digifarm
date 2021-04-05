@@ -8,22 +8,7 @@ import OrderCard from './OrderCard'
 const MotionFlex = motion.custom(Flex)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-const orders = [
-  {
-    _id: 1,
-    name: 'Soy bean Farm',
-    location: 'Agyata, Eastern region',
-    progress: '80%'
-  },
-  {
-    _id: 2,
-    name: 'Soy bean Farm 2',
-    location: 'Agyata, Eastern region',
-    progress: '80%'
-  }
-]
-
-const OrdersCard = ({ onOpen }) => {
+const OrdersCard = ({ onOpen, data }) => {
   const { currentSlide } = useComponent()
 
   return (
@@ -36,7 +21,7 @@ const OrdersCard = ({ onOpen }) => {
       minW={{ md: 130 }}
       mx='auto'
     >
-      {orders.map(order => (
+      {data.map(order => (
         <OrderCard order={order} key={order._id} onOpen={onOpen} />
       ))}
     </MotionFlex>
@@ -44,7 +29,8 @@ const OrdersCard = ({ onOpen }) => {
 }
 
 OrdersCard.propTypes = {
-  onOpen: PropTypes.bool
+  data: PropTypes.array,
+  onOpen: PropTypes.func
 }
 
 export default OrdersCard

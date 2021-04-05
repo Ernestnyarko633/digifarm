@@ -31,17 +31,17 @@ const Individual = props => {
   }
 
   return (
-    <Box w='100%'>
+    <Box w='100%' h='100vh' bgColor='white'>
       <Flex
-        align='center'
-        w='100vw'
         h={20}
-        pos='fixed'
         top={0}
-        bg='white'
+        bgColor='white'
+        w='100vw'
         shadow='md'
+        pos='fixed'
+        zIndex={999}
+        align='center'
         px={{ base: 4, md: 20 }}
-        zIndex={999999999}
       >
         <Box h={{ base: 10, md: 12 }}>
           <Image

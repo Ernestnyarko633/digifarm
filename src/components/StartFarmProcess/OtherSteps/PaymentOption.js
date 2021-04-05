@@ -28,6 +28,7 @@ const PaymentOption = ({ farm }) => {
       <GridItem p={{ md: 10 }}>
         <Box py={{ md: 10 }} m={8}>
           <Image
+            rounded='3xl'
             src={farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl}
             alt={farm.cropVariety?.crop?.name}
           />
@@ -35,7 +36,7 @@ const PaymentOption = ({ farm }) => {
       </GridItem>
       <GridItem
         borderLeftWidth={1}
-        borderLeftColor='gray.300'
+        borderLeftColor='gray.200'
         overflowY='scroll'
         p={{ md: 10 }}
         css={{

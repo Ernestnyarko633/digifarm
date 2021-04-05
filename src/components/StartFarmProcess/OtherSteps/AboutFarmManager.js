@@ -61,6 +61,7 @@ const AboutFarmManager = ({ farm }) => {
         >
           <Box>
             <Image
+              rounded='3xl'
               h={{ base: 64, md: 80 }}
               w={{ base: 80, md: '100%' }}
               objectFit='cover'
@@ -137,7 +138,7 @@ const AboutFarmManager = ({ farm }) => {
                       <Text fontSize='sm'>Farm Manager</Text>
                       <Divider
                         orientation='horizontal'
-                        borderColor='gray.300'
+                        borderColor='gray.200'
                         w={60}
                         my={5}
                       />

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react'
 import Layout from 'container/Layout'
 import { Heading, Box, Icon, Text, Center } from '@chakra-ui/react'
@@ -34,7 +33,7 @@ const Warehouse = () => {
   const filteredFarms = myfarms?.filter(farm => farm.storage.quantity > 0)
 
   return (
-    <Layout height="100vh" bgColor='none'>
+    <Layout height='100vh' bgColor='none'>
       {myfarms?.length > 0 ? (
         <>
           {myfarms?.length === 1 && myfarms[0].storage.quantity === 0 ? (
@@ -118,15 +117,14 @@ const Warehouse = () => {
             </>
           )}
         </>
-      ) :
-          (
-            <>
-              <Greetings
-                title={`${message} Farmer ${user?.firstName}`}
-                text='Get started by farming individually or with a group.'
-              />
-              <FarmsEmptyState />
-            </>
+      ) : (
+        <>
+          <Greetings
+            title={`${message} Farmer ${user?.firstName}`}
+            text='Get started by farming individually or with a group.'
+          />
+          <FarmsEmptyState />
+        </>
       )}
     </Layout>
   )
