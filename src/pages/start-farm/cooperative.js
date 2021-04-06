@@ -28,6 +28,7 @@ const Cooperative = () => {
         align='center'
         w='100vw'
         h={{ md: 20 }}
+        bgColor='white'
         pos='fixed'
         top={0}
         bg='white'

@@ -33,7 +33,7 @@ FarmOrderSection.propTypes = {
   farms: PropTypes.array.isRequired,
   orders: PropTypes.array.isRequired,
   handleClick: PropTypes.func,
-  onOpen: PropTypes.bool
+  onOpen: PropTypes.func
 }
 
 export default FarmOrderSection

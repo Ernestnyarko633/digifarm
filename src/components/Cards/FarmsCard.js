@@ -8,21 +8,6 @@ import FarmCard from './FarmCard'
 const MotionFlex = motion.custom(Flex)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-// const farms = [
-//   {
-//     _id: 1,
-//     name: 'John’s Farm',
-//     location: 'Agyata, Eastern region',
-//     level: 1
-//   },
-//   {
-//     _id: 2,
-//     name: 'John’s Farm 2',
-//     location: 'Agyata, Eastern region',
-//     level: 2
-//   }
-// ]
-
 const FarmsCard = ({ data }) => {
   const { currentSlide } = useComponent()
   return (
