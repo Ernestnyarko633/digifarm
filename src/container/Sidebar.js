@@ -2,15 +2,14 @@ import React from 'react'
 import { Box, Icon, Link, Text } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 import { farm, home, wallet, market, Guide } from 'theme/Icons'
-import { MdChatBubbleOutline } from 'react-icons/md'
+//import { MdChatBubbleOutline } from 'react-icons/md'
 import { IoIosHelpCircle } from 'react-icons/io'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
   { icon: farm, path: '/farms', name: 'Farm board', size: 4 },
   { icon: wallet, path: '/wallet', name: 'Farm Wallet', size: 4 },
-  { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 },
-  { icon: MdChatBubbleOutline, path: '/market', name: 'Forum', size: 4 }
+  { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
 ]
 
 const links = [

@@ -33,12 +33,12 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
               Plant population
             </Text>
             <CircularProgress
-              value={(eosStat?.indexes?.NDVI?.average * 100).toFixed(0)}
+              value={(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
               size='100px'
               color='cf.400'
             >
               <CircularProgressLabel rounded='lg'>
-                {(eosStat?.indexes?.NDVI?.average).toFixed(2)}
+                {(eosStat?.indexes?.NDVI?.average)?.toFixed(2)}
               </CircularProgressLabel>
             </CircularProgress>
           </Box> */}
@@ -48,14 +48,14 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
               Plant health
             </Text>
             <CircularProgress
-              value={(eosStat?.indexes?.EVI?.average * 100).toFixed(0)}
+              value={(eosStat?.indexes?.EVI?.average * 100)?.toFixed(0)}
               size='100px'
               color={
                 health(eosStat?.indexes?.EVI?.average) ? 'cf.400' : '#ff0000'
               }
             >
               <CircularProgressLabel rounded='lg'>
-                {(eosStat?.indexes?.EVI?.average).toFixed(2)}
+                {eosStat?.indexes?.EVI?.average?.toFixed(2)}
               </CircularProgressLabel>
             </CircularProgress>
           </Box>
@@ -65,12 +65,12 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
           Growing stage
         </Text>
         <CircularProgress
-          value={(eosStat?.indexes?.NDVI?.average * 100).toFixed(0)}
+          value={(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
           size='100px'
           color='cf.400'
         >
           <CircularProgressLabel rounded='lg'>
-            {(eosStat?.indexes?.NDVI?.average * 100).toFixed(0)}
+            {(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
           </CircularProgressLabel>
         </CircularProgress>
       </Box> */}
@@ -80,12 +80,12 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
               Crop productivity
             </Text>
             <CircularProgress
-              value={(eosStat?.indexes?.NDVI?.average * 100).toFixed(0)}
+              value={(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
               size='100px'
               color='cf.400'
             >
               <CircularProgressLabel rounded='lg'>
-                {(eosStat?.indexes?.NDVI?.average).toFixed(2)}
+                {eosStat?.indexes?.NDVI?.average?.toFixed(2)}
               </CircularProgressLabel>
             </CircularProgress>
           </Box>
@@ -95,12 +95,12 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
               Chlorophyl index
             </Text>
             <CircularProgress
-              value={(eosStat?.indexes?.NDVI?.average * 100).toFixed(0)}
+              value={(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
               size='100px'
               color='cf.400'
             >
               <CircularProgressLabel rounded='lg'>
-                {(eosStat?.indexes?.NDVI?.average).toFixed(2)}
+                {eosStat?.indexes?.NDVI?.average?.toFixed(2)}
               </CircularProgressLabel>
             </CircularProgress>
           </Box>
