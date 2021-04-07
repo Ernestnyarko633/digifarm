@@ -13,6 +13,7 @@ const Map = ({
   band,
   digitalFarmerFarms,
   results,
+  height,
   _error,
   reloads,
   zoom,
@@ -52,7 +53,7 @@ const Map = ({
     center: center,
     onInit: onInitHandler,
     zoom: zoom,
-    height: 1000
+    height: height
   })
 
   return (
@@ -70,7 +71,8 @@ Map.propTypes = {
   _error: PropTypes.any,
   reloads: PropTypes.array,
   zoom: PropTypes.number.isRequired,
-  band: PropTypes.string.isRequired
+  band: PropTypes.string.isRequired,
+  height: PropTypes.any
 }
 
 export default Map
