@@ -24,10 +24,10 @@ const FarmCard = ({ farm, _small }) => {
         <Box
           rounded='xl'
           shadow='md'
-          p={10}
+          p={{ base: 6, md: 10 }}
           bg='white'
-          minW={{ md: _small ? 85 : 130 }}
-          mr={{ md: 6 }}
+          minW={{ base: 82, md: _small ? 85 : 130 }}
+          mr={6}
         >
           <Flex align='center' justify='space-between'>
             <Flex align='center'>
@@ -60,6 +60,12 @@ const FarmCard = ({ farm, _small }) => {
             <React.Fragment>
               <Divider orientation='horizontal' borderColor='gray.300' my={6} />
 
+              <Box d={{ base: 'block', md: 'none' }} mb={4}>
+                <Image
+                  src={require('../../assets/images/farmimg.png').default}
+                />
+              </Box>
+
               <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={16}>
                 <Box>
                   <Heading as='h4' fontSize={{ md: '2xl' }}>
@@ -78,7 +84,7 @@ const FarmCard = ({ farm, _small }) => {
                     <Step />
                   </Box>
                 </Box>
-                <Box>
+                <Box d={{ base: 'none', md: 'block' }}>
                   <Image
                     src={require('../../assets/images/farmimg.png').default}
                   />

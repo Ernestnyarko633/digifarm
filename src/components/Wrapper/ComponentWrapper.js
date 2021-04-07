@@ -14,12 +14,18 @@ const ComponentWrapper = ({
   secondBoxTitle
 }) => {
   return (
-    <Box p={20}>
+    <Box p={{ base: 4, md: 20 }}>
       <Box mb={10}>
         <Heading as='h4' fontSize={{ md: '2xl' }} mb={6}>
           Here’s how your farm(s) are doing
         </Heading>
-        <Grid templateColumns={{ md: '70% 20%' }} gap={{ md: '10%' }}>
+        <Grid
+          d={{ base: 'flex', md: 'grid' }}
+          templateColumns={{ md: '70% 20%' }}
+          gap={{ md: '10%' }}
+          justifyContent={{ base: 'space-between', md: 'inherit' }}
+          alignItems='center'
+        >
           <Flex
             align='center'
             borderBottomWidth={1}
@@ -36,7 +42,7 @@ const ComponentWrapper = ({
             >
               {firstBoxTitle}
             </Box>
-            <Box mx={10} />
+            <Box mx={{ base: 4, md: 10 }} />
             <Box
               color={state === secondStateValue ? 'cf.400' : 'gray.700'}
               onClick={() => setState(secondStateValue)}
