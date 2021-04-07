@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Heading, Image, Text } from '@chakra-ui/react'
@@ -12,6 +13,7 @@ import AboutFarmManager from './AboutFarmManager'
 import ChooseAcreage from './ChooseAcreage'
 import PaymentOption from './PaymentOption'
 import Confirmation from './Confirmation'
+
 // import InviteLink from './InviteLink'
 import Contract from './Contract'
 

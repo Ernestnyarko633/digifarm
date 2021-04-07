@@ -21,15 +21,16 @@ export default function useMapbox({
     const currentRef = ref.current
     if (currentRef && !map) {
       const _map = new mapboxgl.Map({
+        attributionControl: false,
         container: ref.current,
         height,
         style: 'mapbox://styles/mapbox/light-v10',
         center: [-1.531048, 5.578849],
-        zoom: 14
+        zoom: zoom
       })
 
       // Add navigation control (the +/- zoom buttons)
-      _map.addControl(new mapboxgl.NavigationControl(), 'top-right')
+      _map.addControl(new mapboxgl.NavigationControl())
       setMap(_map)
       onInit(_map)
     }

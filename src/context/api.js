@@ -143,17 +143,31 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const createTask = async payload => {
+  const eosTask = async payload => {
     return await http.post({
       url: `${FMS_API}/eos-task`,
       body: JSON.stringify(payload)
     })
   }
 
-  const getStats = async query => {
+  const eosStats = async query => {
     return await http.get({
       url: `${FMS_API}/eos-task`,
       query
+    })
+  }
+
+  const eosSearch = async (payload, url) => {
+    return await http.post({
+      url: `${FMS_API}/eos-search?url=${url}`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const eosWeather = async (payload, url) => {
+    return await http.post({
+      url: `${FMS_API}/eos-weather?url=${url}`,
+      body: JSON.stringify(payload)
     })
   }
 
@@ -161,18 +175,21 @@ export const ApiContextProvider = ({ children }) => {
     <ApiContext.Provider
       value={{
         logout,
+        eosTask,
         getUser,
-        getStats,
+        eosStats,
         getFarms,
+        eosSearch,
         patchUser,
         getMyFarm,
-        createTask,
         getReceipt,
         getMyOrder,
         getMyFarms,
-        createOrder,
+        eosWeather,
         getMyOrders,
         getAllTasks,
+        sellProduce,
+        createOrder,
         downloadOrder,
         getActivities,
         getMyFarmFeeds,
@@ -185,7 +202,6 @@ export const ApiContextProvider = ({ children }) => {
         downloadTaskReceipt,
         getMyScheduledTasks,
         uploadPaymentDetails,
-        sellProduce,
         getUserBankingDetails
       }}
     >
