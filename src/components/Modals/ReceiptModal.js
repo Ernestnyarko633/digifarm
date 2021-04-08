@@ -37,7 +37,7 @@ const ReceiptModal = ({ open, onClose, data }) => {
           </Flex>
           <Flex align='center' justify='center' bg='cf.400'>
             <Heading as='h6' py={{ md: 5 }}>
-              [{data?.data?.task?.name}] Receipt
+              [{data?.data?.task?.title}] Receipt
             </Heading>
           </Flex>
           <Box w='100%' p={{ md: 10 }}>
@@ -70,7 +70,7 @@ const ReceiptModal = ({ open, onClose, data }) => {
                   </Tr>
                   <Tr>
                     <Td>Activity</Td>
-                    <Td>{data?.data?.activity?.name}</Td>
+                    <Td>{data?.data?.activity?.title}</Td>
                   </Tr>
                   {/* <Tr>
                     <Td>Resources</Td>
@@ -78,7 +78,11 @@ const ReceiptModal = ({ open, onClose, data }) => {
                   </Tr> */}
                   <Tr>
                     <Td>Farm Manager Signature</Td>
-                    <Td>{data?.data?.managerSignature}</Td>
+                    <Td>
+                      {data?.data?.managerSignature === 'no signature'
+                        ? '---'
+                        : data?.data?.managerSignature}
+                    </Td>
                   </Tr>
                   <Tr>
                     <Td>Tax/VAT</Td>

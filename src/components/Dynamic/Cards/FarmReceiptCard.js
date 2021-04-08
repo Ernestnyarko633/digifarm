@@ -1,14 +1,16 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Avatar, Box, Flex, Image, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
+import { saveAs } from 'file-saver'
 
 export default function FarmReceiptCard({ farm, title, type }) {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  const { downloadOrder } = useApi()
+  const { downloadFile } = useApi()
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
@@ -16,9 +18,10 @@ export default function FarmReceiptCard({ farm, title, type }) {
     try {
       setLoading(true)
       setError(null)
-      const res = await downloadOrder(query)
-      window.location = res?.data
+      const res = await downloadFile('orders', query)
+      let blob = new Blob([res.data], { type: 'application/pdf;charset=utf-8' })
       setLoading(false)
+      saveAs(blob, `${query.reference}-agreement.pdf`)
     } catch (error) {
       setError(error)
       setLoading(false)
@@ -48,6 +51,9 @@ export default function FarmReceiptCard({ farm, title, type }) {
           <Button
             btntitle={`View ${title.toLowerCase()}`}
             onClick={() => {
+              if (farm?.order?.agreement) {
+                return (window.location = farm?.order?.agreement)
+              }
               return _downloadOrder({
                 reference: farm?.order?.reference,
                 type: type

@@ -17,7 +17,8 @@ export default function Document({
   digitalFarmerFarm,
   activities,
   tasks,
-  ScheduledTasks
+  ScheduledTasks,
+  farmfeeds
 }) {
   let state = 'compA'
 
@@ -79,6 +80,7 @@ export default function Document({
               tasks={tasks}
               ScheduledTasks={ScheduledTasks}
               digitalFarmerFarm={digitalFarmerFarm}
+              farmfeeds={farmfeeds}
             />
           </Box>
         </Box>
@@ -98,18 +100,16 @@ export default function Document({
           overflowY='scroll'
         >
           <Grid gap={8}>
-            {(digitalFarmerFarm?.order?.status === 'PAID' ||
-              digitalFarmerFarm?.order?.status === 'PENDING' ||
-              digitalFarmerFarm?.order?.status === 'PROCESSING') && (
+            {digitalFarmerFarm?.order?.status === 'PAID' && (
               <React.Fragment>
-                {digitalFarmerFarm?.order?.status === 'PAID' && (
+                {
                   <FarmReceiptCard
                     title='Agreement'
                     type='agreement'
                     farm={digitalFarmerFarm}
                   />
-                )}
-                {(digitalFarmerFarm?.order?.status === 'PAID' ||
+                }
+                {/* {(digitalFarmerFarm?.order?.status === 'PAID' ||
                   digitalFarmerFarm?.order?.status === 'PENDING') && (
                   <FarmReceiptCard
                     title='Invoice'
@@ -124,7 +124,7 @@ export default function Document({
                     type='receipt'
                     farm={digitalFarmerFarm}
                   />
-                )}
+                )} */}
               </React.Fragment>
             )}
           </Grid>
@@ -138,5 +138,6 @@ Document.propTypes = {
   digitalFarmerFarm: PropTypes.any,
   activities: PropTypes.any,
   tasks: PropTypes.any,
-  ScheduledTasks: PropTypes.any
+  ScheduledTasks: PropTypes.any,
+  farmfeeds: PropTypes.any
 }

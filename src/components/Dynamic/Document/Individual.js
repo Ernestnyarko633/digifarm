@@ -10,6 +10,7 @@ import Doc from 'assets/images/doc.png'
 export default function Individual({
   digitalFarmerFarm,
   activities,
+  farmfeeds,
   tasks,
   ScheduledTasks,
   viewDoc
@@ -31,8 +32,8 @@ export default function Individual({
       })
     const _less = () => {
       let array = []
-      if (activities?.length > 4) {
-        setShowMoreButton(true)
+      if (activities?.length) {
+        if (activities?.length > 4) setShowMoreButton(true)
         _activities(array)
       }
       if (array) {
@@ -56,9 +57,7 @@ export default function Individual({
 
   const totalAmount = __activity => {
     let totalAmount = 0
-    let tempTasks = tasks?.filter(
-      _task => _task.activity._id === __activity._id
-    )
+    let tempTasks = tasks?.filter(_task => _task.activity === __activity._id)
     if (tempTasks) {
       tempTasks.forEach(_task => {
         totalAmount = totalAmount + _task?.budget
@@ -66,7 +65,7 @@ export default function Individual({
     }
     return totalAmount
   }
-  console.log(activities, tempActs, 'checking')
+  console.log(activities, tempActs, farmfeeds, 'checking')
   return (
     <Box>
       {tempActs?.length === 0 && (
@@ -86,15 +85,16 @@ export default function Individual({
           tempActs?.map(_activity => {
             return (
               <FarmDocumentCard
+                farmfeeds={farmfeeds}
                 viewDoc={viewDoc}
                 key={_activity?._id}
                 digitalFarmerFarm={digitalFarmerFarm}
                 __activityID={_activity?._id}
-                title={_activity?.name}
+                title={_activity?.title}
                 ScheduledTasks={ScheduledTasks.filter(
                   _completedTask =>
-                    _activity._id === _completedTask?.taskId?.activity?._id &&
-                    _completedTask.status === 'COMPLETED'
+                    _activity._id === _completedTask?.task?.activity &&
+                    _completedTask.status === 'PENDING'
                 )}
                 tasksNumber={
                   tasks?.filter(_task => _task.activity._id === _activity._id)
@@ -136,5 +136,6 @@ Individual.propTypes = {
   activities: PropTypes.any,
   tasks: PropTypes.any,
   ScheduledTasks: PropTypes.any,
-  viewDoc: PropTypes.bool
+  viewDoc: PropTypes.bool,
+  farmfeeds: PropTypes.any
 }

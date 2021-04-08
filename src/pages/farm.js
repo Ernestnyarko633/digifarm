@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Avatar, Spinner } from '@chakra-ui/react'
+import { Box, Flex, Text, Avatar } from '@chakra-ui/react'
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
 import useAuth from 'context/auth'
@@ -101,7 +101,9 @@ export default function Farm() {
     data: tasks,
     isLoading: tasksIsLoading,
     error: tasksHasError
-  } = useFetch('tasks', getAllTasks, reload)
+  } = useFetch('tasks', getAllTasks, reload, {
+    farm: farm?.order?.product?._id
+  })
 
   const isLoading =
     farmFeedsIsLoading ||
@@ -125,88 +127,89 @@ export default function Farm() {
     onOpen()
   }
 
-  return (
+  return isLoading || hasError ? (
+    <FetchCard
+      h='100vh'
+      direction='column'
+      align='center'
+      justify='center'
+      mx='auto'
+      reload={triggerReload}
+      loading={isLoading}
+      error={hasError}
+      text='Standby as we load your current farms and pending orders'
+    />
+  ) : (
     <Box pos='relative' ref={ref}>
       <Share isOpen={isOpen} onClose={onClose} image={image} />
       <Header />
-      {isLoading && (
-        <Flex
-          w='100%'
-          h={{ md: '900px' }}
-          align={{ md: 'center' }}
-          justify={{ md: 'center' }}
-        >
-          <Spinner color={{ md: 'cf.400' }} />
-        </Flex>
-      )}
-      <Flex
-        pos='fixed'
-        top={20}
-        w='100%'
-        bg='cf-dark.600'
-        align='center'
-        justify='space-between'
-        px={{ md: 20 }}
-        h={{ md: 16 }}
-        zIndex={50}
-      >
-        <Flex align='center'>
-          <Box
-            w={8}
-            h={8}
-            as={Avatar}
-            src={user?.avatar}
-            rounded='100%'
-            bg='gray.400'
-          />
-          <Text ml={5}>{`${user?.firstName}`}'s farm</Text>
-        </Flex>
-        <Flex align='center'>
-          <Box
-            as='button'
-            role='button'
-            aria-label='farm button'
-            px={{ md: 6 }}
-            color={state === 'compA' ? 'cf.400' : ''}
-            onClick={() => setState('compA')}
-          >
-            Farm
-          </Box>
-          <Box
-            as='button'
-            role='button'
-            aria-label='document button'
-            px={{ md: 6 }}
-            color={state === 'compB' ? 'cf.400' : ''}
-            onClick={() => setState('compB')}
-          >
-            Documents
-          </Box>
-          <Box
-            as='button'
-            role='button'
-            aria-label='gallery button'
-            px={{ md: 6 }}
-            color={state === 'compC' ? 'cf.400' : ''}
-            onClick={() => setState('compC')}
-          >
-            Gallery
-          </Box>
-          <Box
-            as='button'
-            role='button'
-            aria-label='warehouse button'
-            px={{ md: 6 }}
-            color={state === 'compD' ? 'cf.400' : ''}
-            onClick={() => setState('compD')}
-          >
-            Warehouse
-          </Box>
-        </Flex>
-      </Flex>
-
       <Box bg='white'>
-        {!isLoading && location?.length > 0 && (
+        <Flex
+          pos='fixed'
+          top={20}
+          w='100%'
+          bg='cf-dark.600'
+          align='center'
+          justify='space-between'
+          px={{ md: 20 }}
+          h={{ md: 16 }}
+          zIndex={50}
+        >
+          <Flex align='center'>
+            <Box
+              w={8}
+              h={8}
+              as={Avatar}
+              src={user?.avatar}
+              rounded='100%'
+              bg='gray.400'
+            />
+            <Text ml={5}>{`${user?.firstName}`}'s farm</Text>
+          </Flex>
+          <Flex align='center'>
+            <Box
+              as='button'
+              role='button'
+              aria-label='farm button'
+              px={{ md: 6 }}
+              color={state === 'compA' ? 'cf.400' : ''}
+              onClick={() => setState('compA')}
+            >
+              Farm
+            </Box>
+            <Box
+              as='button'
+              role='button'
+              aria-label='document button'
+              px={{ md: 6 }}
+              color={state === 'compB' ? 'cf.400' : ''}
+              onClick={() => setState('compB')}
+            >
+              Documents
+            </Box>
+            <Box
+              as='button'
+              role='button'
+              aria-label='gallery button'
+              px={{ md: 6 }}
+              color={state === 'compC' ? 'cf.400' : ''}
+              onClick={() => setState('compC')}
+            >
+              Gallery
+            </Box>
+            <Box
+              as='button'
+              role='button'
+              aria-label='warehouse button'
+              px={{ md: 6 }}
+              color={state === 'compD' ? 'cf.400' : ''}
+              onClick={() => setState('compD')}
+            >
+              Warehouse
+            </Box>
+          </Flex>
+        </Flex>
+        {location?.length > 0 && (
           <DynamicFarm
             center={center}
             loading={isLoading}
@@ -222,24 +225,6 @@ export default function Farm() {
             reload={reload}
             onOpen={getImage}
             reloads={[triggerReload]}
-          />
-        )}
-        {isLoading && (
-          <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            mx='auto'
-            reload={() => {
-              hasError && triggerReload()
-            }}
-            loading={isLoading}
-            error={hasError}
-            text={
-              !hasError
-                ? 'Standby as we load your current farms and pending orders'
-                : 'Something went wrong, please dont fret'
-            }
           />
         )}
       </Box>
