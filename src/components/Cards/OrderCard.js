@@ -13,9 +13,11 @@ import {
 import Button from 'components/Button'
 import React from 'react'
 import PropTypes from 'prop-types'
+import useStartFarm from 'context/start-farm'
 // import useApi from 'context/api'
 
 const OrderCard = ({ order, onOpen }) => {
+  const { setOrder } = useStartFarm()
   // const { getPaymentDetails } = useApi()
 
   // React.useEffect(() => {
@@ -86,7 +88,10 @@ const OrderCard = ({ order, onOpen }) => {
           w={{ md: '100%' }}
           h={{ md: 16 }}
           fontSize={{ md: 'lg' }}
-          onClick={onOpen}
+          onClick={() => {
+            setOrder(order)
+            onOpen()
+          }}
         />
       </Box>
     </Box>
