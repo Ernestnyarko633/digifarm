@@ -24,7 +24,7 @@ const StartFarm = () => {
     >
       <Box textAlign='center' mb={{ md: 12 }}>
         <Text fontFamily='light' fontSize={{ md: '3xl' }}>
-          Welcome {user.firstName}
+          Welcome {user?.firstName}
         </Text>
         <Heading as='h4' size='xl'>
           How would you like to farm with us
@@ -36,19 +36,23 @@ const StartFarm = () => {
         px={{ base: 6, md: 0 }}
         my={{ base: 10, md: 0 }}
       >
-        {data.map((item, idx) => (
-          <FarmingTypeCard
-            state={item}
-            key={item.id}
-            btntitle='Select'
-            title={item.name}
-            options={item.benefits}
-            subtitle={item.subtitle}
-            path={`/start-farm/${item.id}`}
-            mr={{ md: idx ? 0 : 5 }}
-            image={require(`../../assets/images/startfarm/${item.img}`).default}
-          />
-        ))}
+        {data
+          ?.filter(type => type?.id !== 'cooperative')
+          ?.map((item, idx) => (
+            <FarmingTypeCard
+              state={item}
+              key={item.id}
+              btntitle='Select'
+              title={item.name}
+              options={item.benefits}
+              subtitle={item.subtitle}
+              path={`/start-farm/${item.id}`}
+              mr={{ md: idx ? 0 : 5 }}
+              image={
+                require(`../../assets/images/startfarm/${item.img}`).default
+              }
+            />
+          ))}
       </Flex>
     </Flex>
   )
