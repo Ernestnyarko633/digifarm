@@ -11,6 +11,7 @@ const DocumentsReceipts = () => {
       {data ? (
         <DocumentActivityReceiptCard
           data={data?.ScheduledTasks}
+          farmfeeds={data?.farmfeeds}
           digitalFarmerFarm={data?.digitalFarmerFarm}
           title={data?.title}
           amount={data?.amount}

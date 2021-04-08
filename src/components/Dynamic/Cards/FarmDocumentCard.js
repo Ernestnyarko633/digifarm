@@ -43,7 +43,7 @@ export default function FarmDocumentCard({
     title,
     amount,
     digitalFarmerFarm,
-    farmfeeds,
+    farmfeeds: farmfeeds.filter((feed) => __activityID === feed?.task?.activity),
     ScheduledTasks: ScheduledTasks.filter(
       _task => __activityID === _task.task.activity
     ),
