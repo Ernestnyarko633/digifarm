@@ -12,7 +12,7 @@ import Constants from 'constant'
 //import useFetch from '../hooks/useFetch'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
-const dpo = Constants.paymentOptions[1]
+const dpo = Constants.paymentOptions[0]
 
 const StartFarmContext = createContext({})
 
@@ -160,13 +160,13 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const handlePayment = async () => {
+  const handlePayment = async (id, cost) => {
     try {
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
       const data = {
-        amount: order.cost,
-        order_id: order._id,
+        amount: cost || order.cost,
+        order_id: id || order._id,
         purpose: 'FARM_PURCHASE',
         transaction_type: paymentOption
       }

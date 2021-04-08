@@ -34,15 +34,15 @@ export default function Farm() {
   } = useApi()
 
   const {
-    data: yourFarm,
-    isLoading: yourFarmIsLoading,
-    error: yourFarmHasError
+    data: farm,
+    isLoading: farmIsLoading,
+    error: farmHasError
   } = useFetch(null, getMyFarm, reload, id)
 
   useEffect(() => {
     let location_ = []
     let center_ = []
-    let _location = yourFarm?.order?.product?.location
+    let _location = farm?.order?.product?.location
     let _center = _location?.center
     const strToNumber = (value, array) =>
       value?.forEach(coordinate => {
@@ -56,18 +56,18 @@ export default function Farm() {
     strToNumber(_center, center_)
     setLocation(location_)
     setCenter(center_)
-  }, [yourFarm])
+  }, [farm])
 
   const {
-    data: yourFarmFeeds,
-    isLoading: yourFarmFeedsIsLoading,
-    error: yourFarmFeedsHasError
+    data: farmFeeds,
+    isLoading: farmFeedsIsLoading,
+    error: farmFeedsHasError
   } = useFetch(
-    `${yourFarm?.order?.product?._id}_farm_feeds`,
-    yourFarm?.order?.product?._id ? getMyFarmFeeds : null,
+    `${farm?.order?.product?._id}_farm_feeds`,
+    farm?.order?.product?._id ? getMyFarmFeeds : null,
     reload,
     {
-      farm: yourFarm?.order?.product?._id
+      farm: farm?.order?.product?._id
     }
   )
 
@@ -76,11 +76,11 @@ export default function Farm() {
     isLoading: ScheduledTasksIsLoading,
     error: ScheduledTasksHasError
   } = useFetch(
-    `${yourFarm?.order?.product?._id}_scheduled_tasks`,
-    yourFarm?.order?.product?._id ? getMyScheduledTasks : null,
+    `${farm?.order?.product?._id}_scheduled_tasks`,
+    farm?.order?.product?._id ? getMyScheduledTasks : null,
     reload,
     {
-      farm: yourFarm?.order?.product?._id
+      farm: farm?.order?.product?._id
     }
   )
 
@@ -89,11 +89,11 @@ export default function Farm() {
     isLoading: myFarmActivitiesIsLoading,
     error: myFarmActivitiesHasError
   } = useFetch(
-    `${yourFarm?.order?.product?.protocol?._id}_activities`,
-    yourFarm?.order?.product?.protocol?._id ? getActivities : null,
+    `${farm?.order?.product?._id}_activities`,
+    farm?.order?.product?._id ? getActivities : null,
     reload,
     {
-      protocol: yourFarm?.order?.product?.protocol?._id
+      farm: farm?.order?.product?._id
     }
   )
 
@@ -104,14 +104,14 @@ export default function Farm() {
   } = useFetch('tasks', getAllTasks, reload)
 
   const isLoading =
-    yourFarmFeedsIsLoading ||
-    yourFarmIsLoading ||
+    farmFeedsIsLoading ||
+    farmIsLoading ||
     ScheduledTasksIsLoading ||
     myFarmActivitiesIsLoading ||
     tasksIsLoading
   const hasError =
-    yourFarmFeedsHasError ||
-    yourFarmHasError ||
+    farmFeedsHasError ||
+    farmHasError ||
     ScheduledTasksHasError ||
     myFarmActivitiesHasError ||
     tasksHasError
@@ -215,8 +215,8 @@ export default function Farm() {
             tasks={tasks}
             activities={myFarmActivities}
             ScheduledTasks={ScheduledTasks}
-            digitalFarmerFarm={yourFarm}
-            farmfeeds={yourFarmFeeds}
+            digitalFarmerFarm={farm}
+            farmfeeds={farmFeeds}
             location={location}
             dateIntervals={dateIntervals}
             reload={reload}

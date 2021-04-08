@@ -157,14 +157,14 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const eosSearch = async (payload, url) => {
+  const eosSearch = async (payload, url = 'sentinel2') => {
     return await http.post({
       url: `${FMS_API}/eos-search?url=${url}`,
       body: JSON.stringify(payload)
     })
   }
 
-  const eosWeather = async (payload, url) => {
+  const eosWeather = async (payload, url = '/') => {
     return await http.post({
       url: `${FMS_API}/eos-weather?url=${url}`,
       body: JSON.stringify(payload)

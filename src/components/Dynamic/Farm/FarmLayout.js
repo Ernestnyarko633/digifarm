@@ -22,20 +22,15 @@ export default function FarmLayout({
   ...rest
 }) {
   const [state, setState] = React.useState('compA')
-  const { getStats } = useApi()
+  const { eosStats } = useApi()
   // for health card stats
   const {
     data: EOSStatistics,
     isLoading: EOSStatisticsIsLoading,
     error: EOSStatisticsHasError
-  } = useFetch(
-    null,
-    eosTask?.task_id ? getStats : null,
-    reload || eosTask?.task_id,
-    {
-      task: eosTask?.task_id
-    }
-  )
+  } = useFetch(null, eosTask?.task_id ? eosStats : null, reload, {
+    task: eosTask?.task_id
+  })
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -71,7 +66,7 @@ export default function FarmLayout({
             _error={_error}
             state={state}
             reloads={reloads}
-            eosStats={EOSStatistics?.result}
+            eosStats={EOSStatistics}
             digitalFarmerFarm={digitalFarmerFarm}
             location={location}
           />
