@@ -112,7 +112,7 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
-          {!digitalFarmerFarm && (
+          {!digitalFarmerFarm.digitalFarmerFarm?.storage.quantity && (
             <Flex
               w='100%'
               justify='center'
@@ -130,7 +130,7 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
             </Flex>
           )}
           <Grid templateColumns={{ md: 'repeat(1, 1fr)' }} gap={10} w='100%'>
-            {digitalFarmerFarm && (
+            {digitalFarmerFarm?.storage.quantity && (
               <WarehouseCard
                 sellButton={false}
                 name={

@@ -23,7 +23,7 @@ export default function WeatherCard({
             Plant population
           </Text>
           <Flex mt={2} justify='center' align='center'>
-            <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
+            <Heading fontSize={{ md: '3xl' }} fontWeight={900} mt={1}>
               {farmfeeds[0]?.plantInfo?.population}
             </Heading>
           </Flex>
@@ -43,7 +43,7 @@ export default function WeatherCard({
             </Text>
             <Flex mt={2} align='center' justify='center' direction='column'>
               <Icon as={Cloud} boxSize={10} />
-              <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
+              <Heading fontSize={{ md: '3xl' }} fontWeight={900} mt={1}>
                 {(
                   (weatherForeCasts[0]?.Temp_land_min +
                     weatherForeCasts[0]?.Temp_land_max) /

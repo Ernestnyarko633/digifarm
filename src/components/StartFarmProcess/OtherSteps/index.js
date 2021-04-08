@@ -68,7 +68,7 @@ const OtherSteps = ({ history: { push } }) => {
         return {
           title: 'Next',
           width: 56,
-          action: handlePayment
+          action: _ => handlePayment()
         }
       case 5:
         return {

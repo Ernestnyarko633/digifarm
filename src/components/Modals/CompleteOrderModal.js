@@ -15,7 +15,7 @@ import ImageUpload from '../ImageUpload'
 import { Formik } from 'formik'
 import useStartFarm from 'context/start-farm'
 
-const CompleteOrderModal = ({ isOpen, onClose }) => {
+const CompleteOrderModal = ({ order, isOpen, onClose }) => {
   const [files, setFiles] = React.useState([])
   const { handlePayment, isSubmitting } = useStartFarm()
 
@@ -36,7 +36,7 @@ const CompleteOrderModal = ({ isOpen, onClose }) => {
                   btntitle='Pay with card'
                   isLoading={isSubmitting}
                   isDisabled={isSubmitting}
-                  onClick={() => handlePayment()}
+                  onClick={_ => handlePayment(order?._id, order?.cost)}
                   width={{ md: 56 }}
                 />
               </Box>
@@ -74,6 +74,7 @@ const CompleteOrderModal = ({ isOpen, onClose }) => {
 }
 
 CompleteOrderModal.propTypes = {
+  order: PropTypes.object,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func
 }
