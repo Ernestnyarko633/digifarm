@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Box, Flex, Text, Avatar, Icon } from '@chakra-ui/react';
+import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react';
 import DynamicFarm from 'components/Dynamic';
 import Header from 'container/Header';
 import useAuth from 'context/auth';
@@ -195,9 +195,13 @@ export default function Farm() {
           </Flex>
           <Flex align='center'>
             {menus.map((menu, idx) => (
-              <Box
+              <Flex
                 key={idx}
-                as='button'
+                _hover={{background: 'transparent'}}
+                bg="transparent"
+                outlineColor="none"
+                outline="none"
+                as={Button}
                 role='button'
                 aria-label={`${menu.name} button`}
                 px={{ md: 6 }}
@@ -205,7 +209,7 @@ export default function Farm() {
                 onClick={() => setState(menu.comp)}
               >
                 {menu.name}
-              </Box>
+              </Flex>
             ))}
           </Flex>
         </Flex>
