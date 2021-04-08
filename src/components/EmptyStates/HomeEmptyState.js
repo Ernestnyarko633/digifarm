@@ -17,9 +17,13 @@ const HomeEmptyState = () => {
 
   return (
     isSellOn && (
-      <Box textAlign='center' p={{ md: 16 }}>
-        <Box pb={{ md: 16 }}>
-          <Heading as='h4' fontSize={{ md: 'xl' }}>
+      <Box textAlign='center' p={{ base: 6, md: 16 }}>
+        <Box pb={{ base: 12, md: 16 }}>
+          <Heading
+            as='h4'
+            fontSize={{ base: 'lg', md: 'xl' }}
+            mb={{ base: 4, md: 0 }}
+          >
             New and exciting crops to start with
           </Heading>
           <Text fontSize='sm'>
@@ -29,8 +33,15 @@ const HomeEmptyState = () => {
           </Text>
         </Box>
 
-        <Flex align='center' justify='space-between' mb={5}>
-          <Text fontSize={{ md: '2xl' }}>Choose a crop to start farming</Text>
+        <Flex
+          align='center'
+          justify='space-between'
+          mb={5}
+          mt={{ base: 4, md: 0 }}
+        >
+          <Text fontSize={{ base: 'lg', md: '2xl' }}>
+            Choose a crop to start farming
+          </Text>
         </Flex>
 
         <FarmDetails catName='Top Selling' handleNext={handleGoToNext} />

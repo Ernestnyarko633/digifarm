@@ -18,7 +18,7 @@ const Greetings = ({ title, text }) => {
       <Box pos='absolute' top={{ base: 48, md: 55 }} left={{ base: 6, md: 16 }}>
         <Heading
           as='h3'
-          fontSize={{ md: '4xl' }}
+          fontSize={{ base: '2xl', md: '4xl' }}
           dangerouslySetInnerHTML={{ __html: title }}
         />
         <Text dangerouslySetInnerHTML={{ __html: text }} />

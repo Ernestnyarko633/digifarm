@@ -35,9 +35,9 @@ const OrderCard = ({ order, onOpen }) => {
   return (
     <Box
       bg='white'
-      minW={{ md: 115 }}
-      p={{ md: 8 }}
-      rounded='30px'
+      minW={{ base: 82, md: 115 }}
+      p={{ base: 4, md: 8 }}
+      rounded={{ base: '15px', md: '30px' }}
       filter='drop-shadow(0px 2px 50px rgba(0, 0, 0, 0.1))'
       mr={6}
     >
@@ -81,12 +81,12 @@ const OrderCard = ({ order, onOpen }) => {
         </Box>
       </Flex>
 
-      <Box mt={{ md: 6 }} w='90%' mx='auto'>
+      <Box mt={6} w='90%' mx='auto'>
         <Button
           btntitle='Complete order'
           rounded='30px'
-          w={{ md: '100%' }}
-          h={{ md: 16 }}
+          w='100%'
+          h={{ base: 12, md: 16 }}
           fontSize={{ md: 'lg' }}
           onClick={() => {
             setOrder(order)

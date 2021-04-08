@@ -4,7 +4,7 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
 import PropTypes from 'prop-types'
 
 const ArrowButton = ({ handleClick }) => (
-  <Flex justify='flex-end' mx={4}>
+  <Flex justify='flex-end' mx={{ md: 4 }}>
     <IconButton
       aria-label='Left Arrow'
       icon={<MdKeyboardArrowLeft />}

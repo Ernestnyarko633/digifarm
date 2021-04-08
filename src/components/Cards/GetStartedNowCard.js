@@ -1,27 +1,18 @@
 import React from 'react'
-import {
-  Box,
-  Button,
-  Heading,
-  Icon,
-  Image,
-  Link,
-  Text,
-  Flex
-} from '@chakra-ui/react'
+import { Box, Button, Heading, Icon, Image, Link, Text } from '@chakra-ui/react'
 import { Link as ReachLink } from 'react-router-dom'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
 
 const GetStartedNowCard = () => (
-  <Box p={{ md: 16 }} bg='#ECECEC'>
+  <Box p={{ base: 4, md: 16 }} bg='#ECECEC' mt={{ base: 16, md: 0 }}>
     <Box textAlign='center'>
-      <Heading as='h3' fontSize={{ md: '3xl' }} mt={{ md: 6 }}>
+      <Heading as='h3' fontSize={{ base: 'xl', md: '3xl' }} mt={6}>
         We are connecting the world through agriculture
       </Heading>
       <Text>
         Be part of a cooperative where you can connect to people around the
-        <br />
+        <Box as='br' d={{ base: 'none', md: 'block' }} />
         world and co-own a farm in Africa.
       </Text>
     </Box>
@@ -32,15 +23,21 @@ const GetStartedNowCard = () => (
       </Link>
 
       <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/start-farm'>
-        <Button colorScheme='linear' rounded='30px' w={64} h={12} shadow='md'>
+        <Button
+          colorScheme='linear'
+          rounded='30px'
+          w={{ base: 56, md: 64 }}
+          h={12}
+          shadow='md'
+        >
           Get me started now
         </Button>
       </Link>
     </Box>
 
-    <Flex justify='center' align='center' mx='auto' w='80%' my={{ md: 16 }}>
+    <Box mx='auto' w={{ md: '80%' }} my={{ md: 16 }}>
       <Image src={CorporateIllustration} />
-    </Flex>
+    </Box>
   </Box>
 )
 
