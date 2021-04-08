@@ -29,7 +29,7 @@ const Header = () => {
     <Flex
       top={0}
       w='100%'
-      bg='white'
+      bgColor='white'
       pos='fixed'
       as='header'
       zIndex={100}

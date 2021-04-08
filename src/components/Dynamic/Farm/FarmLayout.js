@@ -3,11 +3,13 @@ import { Box, Grid, GridItem } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import FarmLeftSideBar from '../Container/FarmLeftSideBar'
 import FarmRightSidebar from '../Container/FarmRightSidebar'
-
+import useApi from 'context/api'
+import useFetch from 'hooks/useFetch'
 export default function FarmLayout({
   children,
+  reload,
   digitalFarmerFarm,
-  EOSStatistics,
+  eosTask,
   WeatherForeCasts,
   ScheduledTasks,
   EOSViewID,
@@ -20,6 +22,20 @@ export default function FarmLayout({
   ...rest
 }) {
   const [state, setState] = React.useState('compA')
+  const { getStats } = useApi()
+  // for health card stats
+  const {
+    data: EOSStatistics,
+    isLoading: EOSStatisticsIsLoading,
+    error: EOSStatisticsHasError
+  } = useFetch(
+    null,
+    eosTask?.task_id ? getStats : null,
+    reload || eosTask?.task_id,
+    {
+      task: eosTask?.task_id
+    }
+  )
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -45,13 +61,13 @@ export default function FarmLayout({
         </Box>
       </GridItem>
       <GridItem shadow='xl'>
-        {!loading && (
+        {!loading && !EOSStatisticsIsLoading && (
           <FarmRightSidebar
             farmfeeds={farmfeeds}
             WeatherForeCasts={WeatherForeCasts}
             ScheduledTasks={ScheduledTasks}
-            loading={loading}
-            error={error}
+            loading={loading || EOSStatisticsIsLoading}
+            error={error || EOSStatisticsHasError}
             _error={_error}
             state={state}
             reloads={reloads}
@@ -68,15 +84,16 @@ export default function FarmLayout({
 FarmLayout.propTypes = {
   children: PropTypes.node.isRequired,
   digitalFarmerFarm: PropTypes.any,
-  EOSStatistics: PropTypes.any,
+  eosTask: PropTypes.any,
   WeatherForeCasts: PropTypes.any,
   ScheduledTasks: PropTypes.any,
   EOSViewID: PropTypes.any,
   location: PropTypes.any,
   rest: PropTypes.any,
-  farmfeeds: PropTypes.any,
-  loading: PropTypes.any,
+  farmfeeds: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
   error: PropTypes.any,
   _error: PropTypes.any,
-  reloads: PropTypes.any
+  reloads: PropTypes.array,
+  reload: PropTypes.number.isRequired
 }

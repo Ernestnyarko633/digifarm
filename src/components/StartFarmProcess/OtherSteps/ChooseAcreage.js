@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
+import FetchCard from 'components/FetchCard'
 import {
   Box,
   Grid,
@@ -15,7 +17,7 @@ import {
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import { motion } from 'framer-motion'
-
+import useFetch from 'hooks/useFetch'
 import useExternal from 'context/external'
 import useStartFarm from 'context/start-farm'
 
@@ -27,14 +29,22 @@ import { getFormattedMoney } from 'helpers/misc'
 import Constants from 'constant'
 
 import AcreageInput from './AcreageInput'
-import Map from './Map'
+import Map from 'components/Map/Map'
+import { dateIntervals } from 'helpers/misc'
+import useApi from 'context/api'
 
 const options = ['Yes', 'No']
 
 const MotionGrid = motion.custom(Grid)
 
 const ChooseAcreage = ({ farm }) => {
+  const { eosSearch } = useApi()
   const [isLoading, setLoading] = React.useState(false)
+  const [location, setLocation] = React.useState([])
+  const [center, setCenter] = React.useState([])
+  const [reload, setReload] = React.useState(0)
+
+  const triggerMapReload = () => setReload(prevState => prevState++)
 
   const {
     cycle,
@@ -49,6 +59,65 @@ const ChooseAcreage = ({ farm }) => {
   } = useStartFarm()
   const { getExchangeRate } = useExternal()
   const toast = useToast()
+
+  React.useEffect(() => {
+    if (farm) {
+      let location_ = []
+      let center_ = []
+      let _location = farm?.location
+      let _center = _location?.center
+      const strToNumber = (value, array) =>
+        value?.forEach(coordinate => {
+          return array?.push(
+            coordinate.split(',').map(item => {
+              return parseFloat(item, 10)
+            })
+          )
+        })
+      strToNumber(_location?.coords, location_)
+      strToNumber(_center, center_)
+      setLocation(location_)
+      setCenter(center_)
+    }
+  }, [farm])
+
+  console.log(location, center)
+  let eosViewIdPayload = {
+    fields: ['sceneID', 'cloudCoverage'],
+    limit: 1,
+    page: 1,
+    search: {
+      date: {
+        from: dateIntervals()?.ThirtyDaysAgo,
+        to: dateIntervals()?.today
+      },
+      cloudCoverage: {
+        from: 0,
+        to: 60
+      },
+      shape: {
+        type: 'Polygon',
+        coordinates: [location]
+      }
+    },
+    sort: {
+      date: 'desc'
+    }
+  }
+  console.log(eosViewIdPayload)
+  const {
+    data: EOSViewID,
+    isLoading: EOSViewIDIsLoading,
+    error: EOSViewIDHasError
+  } = useFetch(
+    null,
+    farm?._id && location.length > 0 ? eosSearch : null,
+    reload,
+    eosViewIdPayload,
+    'sentinel2'
+  )
+
+  console.log(EOSViewID, 'the view')
 
   React.useEffect(() => {
     if (currency.id !== 'US') {
@@ -81,14 +150,48 @@ const ChooseAcreage = ({ farm }) => {
     }
   }, [setExchangeRate, getExchangeRate, currency, toast])
 
+  const loading = EOSViewIDIsLoading
+  const error = EOSViewIDHasError
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
-      <GridItem>
-        <Map />
+      <GridItem w='100%' h='100%'>
+        {(loading || error) && (
+          <Flex w='100%' h='100%'>
+            <FetchCard
+              direction='column'
+              align='center'
+              justify='center'
+              mx='auto'
+              reload={() => {
+                error && triggerMapReload()
+              }}
+              loading={loading}
+              error={error}
+              text={
+                !error
+                  ? 'Standby as we load the map'
+                  : 'Something went wrong, please dont fret'
+              }
+            />
+          </Flex>
+        )}
+        {!loading && !error && EOSViewID?.results && (
+          <Flex
+            w='100%'
+            h='90%'
+            as={Map}
+            viewID={EOSViewID?.results[0]?.view_id}
+            loading={loading}
+            error={error}
+            band={null}
+            center={center || location[0] || null}
+            zoom={10}
+          />
+        )}
       </GridItem>
       <GridItem
         borderLeftWidth={1}
-        borderLeftColor='gray.300'
+        borderLeftColor='gray.200'
         overflowY='scroll'
         css={{
           direction: 'rtl',
@@ -108,7 +211,7 @@ const ChooseAcreage = ({ farm }) => {
               padding={10}
               borderWidth={1}
               overflow='hidden'
-              borderColor='gray.300'
+              borderColor='gray.200'
             >
               <Box>
                 <Heading as='h6' size='md'>
@@ -179,7 +282,7 @@ const ChooseAcreage = ({ farm }) => {
               mt={4}
               rounded='md'
               borderWidth={1}
-              borderColor='gray.300'
+              borderColor='gray.200'
             >
               <Heading as='h5' size='sm'>
                 Choose number of acres to farm ({farm.acreage - acreage})

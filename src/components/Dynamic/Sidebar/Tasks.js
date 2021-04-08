@@ -5,13 +5,12 @@ import {
   Flex,
   Grid,
   Icon,
-  Image,
   Spinner,
   Text
 } from '@chakra-ui/react'
 import React from 'react'
 import { BiTime } from 'react-icons/bi'
-import { Crop, Updates, PlantHealth } from 'theme/Icons'
+import { Crop, Updates } from 'theme/Icons'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
@@ -26,14 +25,12 @@ export default function Tasks({
   weatherForeCasts,
   eosStats
 }) {
-  const [length, setLength] = React.useState(0)
-
-  React.useEffect(() => {
-    eosStats && setLength(eosStats.length - 1)
-  }, [eosStats])
-
   if (loading) {
     return <Spinner size='lg' color='cf.400' />
+  }
+  const health = value => {
+    if (value >= 0.2 && value <= 1.0) return true
+    return false
   }
 
   return (
@@ -63,16 +60,18 @@ export default function Tasks({
               text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
               icon={BiTime}
             />
-            <FarmUpdateCard
-              title='FARM MANAGER UPDATE'
-              duration={scheduledTasks[0]?.taskId?.duration}
-              subtitle={scheduledTasks[0]?.taskId?.name}
-              text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
-              icon={Updates}
-            />
+            {scheduledTasks.length > 0 && (
+              <FarmUpdateCard
+                title='FARM MANAGER UPDATE'
+                duration={scheduledTasks[0]?.taskId?.duration}
+                subtitle={scheduledTasks[0]?.taskId?.name}
+                text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
+                icon={Updates}
+              />
+            )}
           </React.Fragment>
         )}
-        {eosStats && !_error && (
+        {eosStats?.length > 0 && !_error && (
           <Box
             bg='white'
             w='100%'
@@ -96,23 +95,34 @@ export default function Tasks({
               </Text>
             </Flex>
 
-            {eosStats && (
+            {eosStats?.length > 0 && (
               <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} gap={6} mt={5}>
                 <Box>
-                  <Text fontSize='xs' fontWeight={300}>
-                    Plant population
-                  </Text>
-                </Box>
-                <Box>
-                  <Text fontSize='xs' fontWeight={300}>
+                  <Text mb={4} fontSize='sm'>
                     Plant health
                   </Text>
-
-                  <Box mt={2}>
-                    <Icon boxSize={20} as={PlantHealth} />
-                  </Box>
+                  <CircularProgress
+                    value={(
+                      eosStats[eosStats?.length - 1]?.indexes?.EVI?.average *
+                      100
+                    )?.toFixed(0)}
+                    size='100px'
+                    color={
+                      health(
+                        eosStats[eosStats?.length - 1]?.indexes?.EVI?.average
+                      )
+                        ? 'cf.400'
+                        : '#ff0000'
+                    }
+                  >
+                    <CircularProgressLabel rounded='lg'>
+                      {eosStats[
+                        eosStats?.length - 1
+                      ]?.indexes?.EVI?.average?.toFixed(2)}
+                    </CircularProgressLabel>
+                  </CircularProgress>
                 </Box>
-                <Box>
+                {/* <Box>
                   <Text fontSize='xs' fontWeight={300}>
                     Growing stage
                   </Text>
@@ -123,20 +133,25 @@ export default function Tasks({
                       src={require('../../../assets/images/stage.png').default}
                     />
                   </Box>
-                </Box>
+                </Box> */}
                 <Box>
                   <Text fontSize='xs' fontWeight={300}>
                     Crop productivity
                   </Text>
 
                   <CircularProgress
-                    value={eosStats[length]?.indexes?.NDVI?.average * 100}
+                    value={(
+                      eosStats[eosStats?.length - 1]?.indexes?.NDVI?.average *
+                      100
+                    )?.toFixed(0)}
                     size='100px'
                     color='cf.400'
                     mt={2}
                   >
                     <CircularProgressLabel rounded='lg'>
-                      {eosStats[length]?.indexes?.NDVI?.average * 100}%
+                      {eosStats[
+                        eosStats?.length - 1
+                      ]?.indexes?.NDVI?.average?.toFixed(2)}
                     </CircularProgressLabel>
                   </CircularProgress>
                 </Box>
@@ -146,13 +161,18 @@ export default function Tasks({
                   </Text>
 
                   <CircularProgress
-                    value={eosStats[length]?.indexes?.NDVI?.average * 100}
+                    value={(
+                      eosStats[eosStats?.length - 1]?.indexes?.CCCI?.average *
+                      100
+                    )?.toFixed(0)}
                     size='100px'
                     color='cf.400'
                     mt={2}
                   >
                     <CircularProgressLabel rounded='lg'>
-                      {eosStats[length]?.indexes?.NDVI?.average * 100}%
+                      {eosStats[
+                        eosStats?.length - 1
+                      ]?.indexes?.CCCI?.average?.toFixed(2)}
                     </CircularProgressLabel>
                   </CircularProgress>
                 </Box>

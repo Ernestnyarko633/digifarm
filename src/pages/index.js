@@ -9,7 +9,7 @@ const FarmWallet = lazy(() => import('./farm-wallet'))
 const FarmBoard = lazy(() => import('./farm-board'))
 const Dashboard = lazy(() => import('./dashboard'))
 const NotFound = lazy(() => import('./not-found'))
-const Document = lazy(() => import('./document'))
+// const Document = lazy(() => import('./document'))
 const Profile = lazy(() => import('./profile'))
 const Logout = lazy(() => import('./logout'))
 const Forum = lazy(() => import('./forum'))
@@ -26,7 +26,7 @@ const Pages = {
   Logout,
   Profile,
   NotFound,
-  Document,
+  // Document,
   Dashboard,
   FarmBoard,
   StartFarm,

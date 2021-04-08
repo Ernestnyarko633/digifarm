@@ -1,36 +1,33 @@
-/* eslint-disable */
-import { Box, Grid, Heading, Text } from '@chakra-ui/react';
-import EventCard from 'components/Cards/EventCard';
-import React from 'react';
-import Prismic from 'prismic-javascript';
-import getConfig from 'utils/configs';
+import { Box, Grid, Heading, Text } from '@chakra-ui/react'
+import EventCard from 'components/Cards/EventCard'
+import React from 'react'
+import Prismic from 'prismic-javascript'
+import getConfig from 'utils/configs'
 
 const RightSidebar = () => {
-  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig();
+  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
   const Client = Prismic.client(PRISMIC_API, {
-    accessToken: PRISMIC_ACCESS_TOKEN,
-  });
+    accessToken: PRISMIC_ACCESS_TOKEN
+  })
 
-  const [doc, setDocData] = React.useState(null);
+  const [doc, setDocData] = React.useState(null)
 
   React.useEffect(() => {
-    let mounted = true;
+    let mounted = true
     if (mounted && !doc) {
       const fetchData = async () => {
         const response = await Client.query(
           Prismic.Predicates.at('document.type', 'announcements')
-        );
+        )
         if (response) {
-          setDocData(response.results);
+          setDocData(response.results)
         }
-      };
-      fetchData();
+      }
+      fetchData()
     }
-    return () => (mounted = false);
-  }, [Client, doc]);
-
-  console.log('events', doc);
+    return () => (mounted = false)
+  }, [Client, doc])
 
   return (
     <Box
@@ -66,7 +63,7 @@ const RightSidebar = () => {
         <EventCard />
       </Grid>
     </Box>
-  );
-};
+  )
+}
 
-export default RightSidebar;
+export default RightSidebar

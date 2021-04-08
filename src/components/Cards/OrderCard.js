@@ -1,4 +1,4 @@
-/*eslint-disable */
+/* eslint-disable no-console */
 import {
   Avatar,
   Box,
@@ -8,28 +8,27 @@ import {
   List,
   ListItem,
   Tag,
-  Text,
-} from '@chakra-ui/react';
-import Button from 'components/Button';
-import React from 'react';
-import PropTypes from 'prop-types';
-import useApi from 'context/api';
+  Text
+} from '@chakra-ui/react'
+import Button from 'components/Button'
+import React from 'react'
+import PropTypes from 'prop-types'
+// import useApi from 'context/api'
 
 const OrderCard = ({ order, onOpen }) => {
-  const { getPaymentDetails } = useApi();
+  // const { getPaymentDetails } = useApi()
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log('order_id', order);
-        const res = await getPaymentDetails(order?._id);
-        console.log('result', res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
+  // React.useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await getPaymentDetails(order?._id)
+  //       console.log(res)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [getPaymentDetails, order?._id])
 
   return (
     <Box
@@ -41,21 +40,29 @@ const OrderCard = ({ order, onOpen }) => {
       mr={6}
     >
       <Flex>
-        <Avatar src={require('../../assets/images/soya.png').default} />
+        <Avatar
+          src={
+            order?.product?.cropVariety?.imageUrl ||
+            require('../../assets/images/soya.png').default
+          }
+        />
         <Box ml={4}>
           <Heading as='h4' fontSize={{ md: 'lg' }}>
-            {order.name}
+            {order?.product?.cropVariety?.crop?.name}(
+            {order?.product?.cropVariety?.name}) Farm
           </Heading>
-          <Text color='gray.600'>{order.location}</Text>
+          <Text color='gray.600'>
+            {order?.product?.location?.name}, {order?.product?.location?.state}
+          </Text>
         </Box>
       </Flex>
       <Divider orientation='horizontal' borderColor='gray.300' my={5} />
 
       <Flex justify='space-between'>
         <List fontWeight='800'>
-          <ListItem>Order number: #12019</ListItem>
-          <ListItem>10 Acres</ListItem>
-          <ListItem>GH 10,000 </ListItem>
+          <ListItem>Order number: {order?.reference}</ListItem>
+          <ListItem>{order?.acreage} Acres</ListItem>
+          <ListItem>USD {order?.cost}</ListItem>
         </List>
 
         <Box textAlign='center'>
@@ -68,7 +75,7 @@ const OrderCard = ({ order, onOpen }) => {
           >
             Pending Order
           </Tag>
-          <Text fontSize='sm'>{order.progress} Complete</Text>
+          <Text fontSize='sm'>80% Complete</Text>
         </Box>
       </Flex>
 
@@ -83,16 +90,20 @@ const OrderCard = ({ order, onOpen }) => {
         />
       </Box>
     </Box>
-  );
-};
+  )
+}
 
 OrderCard.propTypes = {
   order: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
-    location: PropTypes.string,
-    progress: PropTypes.string,
+    reference: PropTypes.string,
+    cost: PropTypes.number,
+    acreage: PropTypes.number,
+    product: PropTypes.object,
+    location: PropTypes.object
   }),
-  onOpen: PropTypes.bool,
-};
+  onOpen: PropTypes.func
+}
 
-export default OrderCard;
+export default OrderCard

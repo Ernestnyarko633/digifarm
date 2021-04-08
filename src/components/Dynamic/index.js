@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import useExternalApi from 'context/external'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
+import useApi from 'context/api'
 
 const { default: Document } = require('./Farm/Document')
 const { default: Farm } = require('./Farm/Farm')
@@ -18,6 +19,7 @@ const components = {
 }
 
 const DynamicFarm = ({
+  center,
   farm,
   tasks,
   onOpen,
@@ -34,13 +36,8 @@ const DynamicFarm = ({
 }) => {
   const [type, setType] = useState('/sentinel2')
   const SelectedFarm = components[farm]
-
-  const {
-    getEOSViewID,
-    createEOSTaskForStats,
-    // getEOSStatistics,
-    getEOSWeatherForeCast
-  } = useExternalApi()
+  const { createTask } = useApi()
+  const { getEOSViewID, getEOSWeatherForeCast } = useExternalApi()
 
   const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
@@ -69,13 +66,19 @@ const DynamicFarm = ({
     data: EOSViewID,
     isLoading: EOSViewIDIsLoading,
     error: EOSViewIDHasError
-  } = useFetch('eos_view_id', getEOSViewID, reload, eosViewIdPayload, type)
+  } = useFetch(
+    `${digitalFarmerFarm?._id}_eos_view_id`,
+    digitalFarmerFarm?._id ? getEOSViewID : null,
+    reload,
+    eosViewIdPayload,
+    type
+  )
 
   // payload of health eos task_id creation
   const EOSTaskForStats = {
     type: 'mt_stats',
     params: {
-      bm_type: '(B08-B04)/(B08+B04)',
+      bm_type: ['NDVI', 'MSI', 'EVI', 'CCCI', 'NDRE', 'GCI'],
       date_start: dateIntervals()?.ThirtyDaysAgo,
       date_end: dateIntervals()?.today,
       geometry: {
@@ -83,32 +86,21 @@ const DynamicFarm = ({
         type: 'Polygon'
       },
       reference: 'ref_20210208-00-00',
-      sensors: ['sentinel2'],
-      max_cloud_cover_in_aoi: 0,
-      limit: 1
+      sensors: ['sentinel2']
     }
   }
 
   //creates stats task_id for stats health card
   const {
-    data: eosStats,
-    isLoading: eosStatsIsLoading,
-    error: eosStatsHasError
+    data: eosTask,
+    isLoading: eosTaskIsLoading,
+    error: eosTaskHasError
   } = useFetch(
-    'eos_task_stats_for_health',
-    createEOSTaskForStats,
+    `${digitalFarmerFarm?._id}_eos_task_stats_for_health`,
+    digitalFarmerFarm?._id ? createTask : null,
     reload,
     EOSTaskForStats
   )
-
-  console.log(eosStats)
-
-  // // for health card stats
-  // const {
-  //   data: EOSStatistics,
-  //   isLoading: EOSStatisticsIsLoading,
-  //   error: EOSStatisticsHasError
-  // } = useFetch('eos_task_stats', getEOSStatistics, reload, eosStats?.task_id)
 
   const weatherForeCastsPayload = {
     geometry: {
@@ -122,24 +114,17 @@ const DynamicFarm = ({
     isLoading: WeatherForeCastsIsLoading,
     error: WeatherForeCastsHasError
   } = useFetch(
-    'eos_weather_forecasts',
-    getEOSWeatherForeCast,
+    `${digitalFarmerFarm?._id}_eos_weather_forecasts`,
+    digitalFarmerFarm?._id ? getEOSWeatherForeCast : null,
     reload,
     weatherForeCastsPayload
   )
 
   const isLoading =
-    EOSViewIDIsLoading ||
-    WeatherForeCastsIsLoading ||
-    // EOSStatisticsIsLoading ||
-    eosStatsIsLoading
+    EOSViewIDIsLoading || WeatherForeCastsIsLoading || eosTaskIsLoading
 
   const eosHasError =
-    EOSViewIDHasError ||
-    //EOSStatisticsHasError ||
-    WeatherForeCastsHasError ||
-    // EOSStatisticsHasError ||
-    eosStatsHasError
+    EOSViewIDHasError || WeatherForeCastsHasError || eosTaskHasError
 
   if (isLoading) {
     return (
@@ -166,6 +151,7 @@ const DynamicFarm = ({
     <React.Fragment>
       {!loading && (
         <SelectedFarm
+          center={center}
           reload={reload}
           reloads={reloads}
           onOpen={onOpen}
@@ -173,7 +159,7 @@ const DynamicFarm = ({
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
           activities={activities}
-          //    EOSStatistics={EOSStatistics}
+          eosTask={eosTask}
           EOSViewID={EOSViewID}
           WeatherForeCasts={WeatherForeCasts}
           ScheduledTasks={ScheduledTasks}
@@ -191,21 +177,21 @@ const DynamicFarm = ({
 DynamicFarm.propTypes = {
   farm: PropTypes.string.isRequired,
   onOpen: PropTypes.func,
-  digitalFarmerFarm: PropTypes.any,
-  farmfeeds: PropTypes.any,
-  EOSStatistics: PropTypes.any,
+  digitalFarmerFarm: PropTypes.object.isRequired,
+  farmfeeds: PropTypes.array.isRequired,
   EOSViewID: PropTypes.any,
   WeatherForeCasts: PropTypes.any,
-  ScheduledTasks: PropTypes.any,
+  ScheduledTasks: PropTypes.array.isRequired,
   EOSTaskForStatsCreated: PropTypes.any,
-  reloads: PropTypes.any,
+  reloads: PropTypes.array,
   error: PropTypes.any,
   loading: PropTypes.any,
-  location: PropTypes.any,
+  location: PropTypes.array.isRequired,
   reload: PropTypes.any,
-  dateIntervals: PropTypes.any,
+  dateIntervals: PropTypes.func.isRequired,
   activities: PropTypes.any,
-  tasks: PropTypes.any
+  tasks: PropTypes.array.isRequired,
+  center: PropTypes.array.isRequired
 }
 
 export default DynamicFarm

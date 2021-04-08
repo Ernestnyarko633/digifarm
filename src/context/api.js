@@ -15,7 +15,6 @@ export const ApiContextProvider = ({ children }) => {
     BUYER_API
   } = getConfig()
 
-  // eslint-disable-next-line no-console
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
   }
@@ -67,6 +66,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.patch({
       url: `${PAYMENT_API}/payment/receipt-upload?payment_id=${id}`,
       body: formData
+    })
+  }
+
+  const sellProduce = async (id, body) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/farms/${id}/sell`,
+      body
     })
   }
 
@@ -129,32 +135,74 @@ export const ApiContextProvider = ({ children }) => {
       query
     })
   }
+
+  const getUserBankingDetails = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/banking-details`,
+      query
+    })
+  }
+
+  const eosTask = async payload => {
+    return await http.post({
+      url: `${FMS_API}/eos-task`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const eosStats = async query => {
+    return await http.get({
+      url: `${FMS_API}/eos-task`,
+      query
+    })
+  }
+
+  const eosSearch = async (payload, url) => {
+    return await http.post({
+      url: `${FMS_API}/eos-search?url=${url}`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const eosWeather = async (payload, url) => {
+    return await http.post({
+      url: `${FMS_API}/eos-weather?url=${url}`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
         logout,
+        eosTask,
         getUser,
+        eosStats,
         getFarms,
+        eosSearch,
         patchUser,
-        getReceipt,
         getMyFarm,
-        getAllTasks,
-        createOrder,
+        getReceipt,
         getMyOrder,
         getMyFarms,
-        getActivities,
+        eosWeather,
         getMyOrders,
+        getAllTasks,
+        sellProduce,
+        createOrder,
         downloadOrder,
-        initiatePayment,
-        changePassword,
+        getActivities,
         getMyFarmFeeds,
+        changePassword,
+        initiatePayment,
         getPaymentDetails,
         getSourcingOrders,
         getCropCategories,
         deleteBankTransfer,
         downloadTaskReceipt,
         getMyScheduledTasks,
-        uploadPaymentDetails
+        uploadPaymentDetails,
+        getUserBankingDetails
       }}
     >
       {children}

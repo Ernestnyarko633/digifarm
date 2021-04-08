@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useContext, createContext } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
@@ -8,6 +9,7 @@ import useAuth from './auth'
 import useExternal from './external'
 
 import Constants from 'constant'
+//import useFetch from '../hooks/useFetch'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[1]
@@ -18,6 +20,9 @@ export const StartFarmContextProvider = ({ children }) => {
   const [paymentOption, setPaymentOption] = useState(dpo)
   const [wantCycle, setWantCycle] = React.useState('No')
   const [selectedFarm, setSelectedFarm] = useState(null)
+  //const [location, setLocation] = useState([])
+  // const [center, setCenter] = useState([])
+  const [reload, setReload] = useState(0)
   const [isSubmitting, setSubmitting] = useState(false)
   const [exchangeRate, setExchangeRate] = useState(1)
   const [isSellOn, setIsSellOn] = useState(true)
@@ -35,6 +40,44 @@ export const StartFarmContextProvider = ({ children }) => {
   const { setSession } = useAuth()
 
   const toast = useToast()
+
+  const triggerMapReload = () => setReload(prevState => prevState++)
+
+  // const eosViewIdPayload = {
+  //   fields: ['sceneID', 'cloudCoverage'],
+  //   limit: 1,
+  //   page: 1,
+  //   search: {
+  //     date: {
+  //       from: dateIntervals()?.ThirtyDaysAgo,
+  //       to: dateIntervals()?.today
+  //     },
+  //     cloudCoverage: {
+  //       from: 0,
+  //       to: 60
+  //     },
+  //     shape: {
+  //       type: 'Polygon',
+  //       coordinates: [location]
+  //     }
+  //   },
+  //   sort: {
+  //     date: 'desc'
+  //   }
+  // }
+  // const {
+  //   data: EOSViewID,
+  //   isLoading: EOSViewIDIsLoading,
+  //   error: EOSViewIDHasError
+  // } = useFetch(
+  //   `${selectedFarm?._id}_eos_view_id`,
+  //   selectedFarm?._id ? eosSearch : null,
+  //   reload,
+  //   eosViewIdPayload,
+  //   'sentinel2'
+  // )
+
+  // console.log(EOSViewID, 'the view')
 
   function handleNext() {
     setStep(draft => draft + 1)
@@ -131,19 +174,16 @@ export const StartFarmContextProvider = ({ children }) => {
       if (paymentOption === Constants.paymentOptions[0]) {
         const q = 'USD_GHS'
         const res = await getExchangeRate({ q })
-        data.amount *= res.data[q]
+        data.amount =
+          Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
         if (data.amount) {
           const res = await initiatePayment(data)
-          // TODO: redirect user to either payment page
-          // eslint-disable-next-line no-console
-          console.log(res)
+          window.location.href = res.message.url
         } else {
           throw new Error('Unknown error occurred, try again')
         }
       } else {
         const res = await initiatePayment(data)
-        // eslint-disable-next-line no-console
-        console.log(res)
         toast({
           duration: 9000,
           isClosable: true,
@@ -159,7 +199,7 @@ export const StartFarmContextProvider = ({ children }) => {
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
-          setSession(false)
+          // setSession(false)
         } else {
           toast({
             status: 'error',
@@ -195,12 +235,15 @@ export const StartFarmContextProvider = ({ children }) => {
         text,
         cycle,
         order,
+
         acreage,
         setOrder,
+
         isSellOn,
         contract,
         setCycle,
         currency,
+        // EOSViewID,
         wantCycle,
         otherStep,
         setAcreage,
@@ -213,6 +256,9 @@ export const StartFarmContextProvider = ({ children }) => {
         setWantCycle,
         exchangeRate,
         selectedFarm,
+        //  EOSViewIDIsLoading,
+        //EOSViewIDHasError,
+        triggerMapReload,
         isSubmitting,
         paymentOption,
         handlePayment,
@@ -224,6 +270,7 @@ export const StartFarmContextProvider = ({ children }) => {
         handleCreateOrder
       }}
     >
+      {false && reload}
       {children}
     </StartFarmContext.Provider>
   )

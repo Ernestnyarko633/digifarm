@@ -1,23 +1,35 @@
-/* eslint-disable */
+import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Avatar,
   Box,
   Divider,
   Flex,
-  Grid,
   Heading,
   Image,
   Link,
-  Tag,
-  Text,
-} from '@chakra-ui/react';
-import { Link as ReachRouter } from 'react-router-dom';
-import Step from 'components/Form/Step';
-import React from 'react';
-import PropTypes from 'prop-types';
+  Text
+} from '@chakra-ui/react'
+import { Link as ReachRouter, useHistory } from 'react-router-dom'
+
+import Step from 'components/Form/Step'
+import Button from 'components/Button'
+import FetchCard from 'components/FetchCard'
+
+import useFetch from 'hooks/useFetch'
+import useApi from 'context/api'
 
 const FarmCard = ({ farm, _small }) => {
-  console.log('farm', farm);
+  const [reload, setReload] = React.useState(0)
+  const { getActivities } = useApi()
+  const history = useHistory()
+
+  const triggerReload = () => setReload(prevState => prevState + 1)
+
+  const { data, isLoading, error } = useFetch(null, getActivities, reload, {
+    farm: farm?._id
+  })
+
   return (
     <ReachRouter to={`/farms/${farm._id}`}>
       <Link _hover={{ textDecor: 'none' }}>
@@ -32,7 +44,12 @@ const FarmCard = ({ farm, _small }) => {
           <Flex align='center' justify='space-between'>
             <Flex align='center'>
               <Box mr={4}>
-                <Avatar src={require('../../assets/images/soya.png').default} />
+                <Avatar
+                  src={
+                    farm?.order?.product?.cropVariety?.imageUrl ||
+                    require('../../assets/images/soya.png').default
+                  }
+                />
               </Box>
 
               <Box>
@@ -40,34 +57,47 @@ const FarmCard = ({ farm, _small }) => {
                   {farm.name}
                 </Heading>
                 <Text color='gray.500' mt={-1}>
-                  {farm.location}
+                  {farm?.order?.product?.location?.name},{' '}
+                  {farm?.order?.product?.location?.state}
                 </Text>
               </Box>
             </Flex>
 
-            <Tag
-              bg='cf.200'
-              color='cf.400'
-              rounded='3xl'
-              fontSize='sm'
-              px={4}
-              textAlign='center'
-            >
-              Lvl {farm.level}
-            </Tag>
+            <Button
+              btntitle='View Farm'
+              rounded='30px'
+              w={{ md: '190px' }}
+              h={{ md: '55px' }}
+              fontSize={{ md: 'lg' }}
+              onClick={() => history.push(`/farms/${farm._id}`)}
+            />
           </Flex>
           {!_small && (
-            <React.Fragment>
+            <>
               <Divider orientation='horizontal' borderColor='gray.300' my={6} />
 
-              <Box d={{ base: 'block', md: 'none' }} mb={4}>
+              <Box
+                d={{ base: 'block', md: 'none' }}
+                mb={4}
+                pos='absolute'
+                top={{ md: 14 }}
+                right={{ md: 0 }}
+              >
                 <Image
-                  src={require('../../assets/images/farmimg.png').default}
+                  rounded='3xl'
+                  src={
+                    farm?.order?.product?.cropVariety?.imageUrl ||
+                    require('../../assets/images/farmimg.png').default
+                  }
                 />
               </Box>
 
-              <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={16}>
-                <Box>
+              <Flex
+                justifyContent='space-between'
+                alignItems='center'
+                pos='relative'
+              >
+                <Box w={{ md: '40%' }}>
                   <Heading as='h4' fontSize={{ md: '2xl' }}>
                     Progress on farm
                   </Heading>
@@ -76,35 +106,64 @@ const FarmCard = ({ farm, _small }) => {
                     borderColor='gray.300'
                     my={3}
                   />
-                  <Box>
-                    <Step />
-                    <Step />
-                    <Step />
-                    <Step />
-                    <Step />
-                  </Box>
+                  {isLoading || error ? (
+                    <FetchCard
+                      m='auto'
+                      align='center'
+                      justify='center'
+                      reload={triggerReload}
+                      loading={!isLoading}
+                      error={error}
+                      text='fetching progress'
+                    />
+                  ) : (
+                    <Box>
+                      {data.length > 0 ? (
+                        data.map((activity, index) => (
+                          <Step
+                            activity={activity}
+                            key={activity.title}
+                            cutThread={data.length - 1 === index}
+                          />
+                        ))
+                      ) : (
+                        <Box textAlign='center'>Data Unavailable</Box>
+                      )}
+                    </Box>
+                  )}
                 </Box>
-                <Box d={{ base: 'none', md: 'block' }}>
+                <Box
+                  d={{ base: 'none', md: 'block' }}
+                  w={{ md: '50%' }}
+                  pos='absolute'
+                  top={{ md: 14 }}
+                  right={{ md: 0 }}
+                >
                   <Image
-                    src={require('../../assets/images/farmimg.png').default}
+                    rounded='3xl'
+                    src={
+                      farm?.order?.product?.cropVariety?.imageUrl ||
+                      require('../../assets/images/farmimg.png').default
+                    }
                   />
                 </Box>
-              </Grid>
-            </React.Fragment>
+              </Flex>
+            </>
           )}
         </Box>
       </Link>
     </ReachRouter>
-  );
-};
+  )
+}
 
 FarmCard.propTypes = {
   farm: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
     location: PropTypes.string,
-    level: PropTypes.number,
+    order: PropTypes.object
   }),
-  _small: PropTypes.bool,
-};
+  _small: PropTypes.bool
+}
 
-export default FarmCard;
+export default FarmCard

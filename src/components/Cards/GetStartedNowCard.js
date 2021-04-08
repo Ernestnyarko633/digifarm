@@ -5,7 +5,7 @@ import { MdKeyboardArrowRight } from 'react-icons/md'
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
 
 const GetStartedNowCard = () => (
-  <Box p={{ base: 4, md: 16 }} bg='cf-dark.300' mt={{ base: 16, md: 0 }}>
+  <Box p={{ base: 4, md: 16 }} bg='#ECECEC' mt={{ base: 16, md: 0 }}>
     <Box textAlign='center'>
       <Heading as='h3' fontSize={{ base: 'xl', md: '3xl' }} mt={6}>
         We are connecting the world through agriculture

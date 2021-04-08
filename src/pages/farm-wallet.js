@@ -8,6 +8,7 @@ import NoFarmsCard from 'components/Cards/NoFarmsCard'
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import FarmCard from 'components/Cards/FarmCard'
+import GetStartedNowCard from 'components/Cards/GetStartedNowCard'
 
 const FarmWallet = () => {
   document.title = 'Complete Farmer | Farm wallet'
@@ -51,7 +52,7 @@ const FarmWallet = () => {
             />
           </Box>
         )}
-        {!loading && myFarms?.length > 0 && (
+        {!loading && myFarms?.length > 0 && !error && (
           <Flex
             direction='column'
             align='center'
@@ -83,6 +84,7 @@ const FarmWallet = () => {
             </Grid>
           </Flex>
         )}
+        {!loading && !error && myFarms?.length === 0 && <GetStartedNowCard />}
       </FarmWalletEmptyState>
     </Layout>
   )

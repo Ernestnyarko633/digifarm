@@ -7,8 +7,6 @@ import useAuth from 'context/auth';
 import SignatureSetup from 'components/Signature/SignatureSetup';
 import SignatureDisplay from 'components/Signature/SignatureDisplay';
 
-// import useStartFarm from 'context/start-farm'
-
 const MotionGrid = motion.custom(Grid);
 
 const Contract = ({ farm }) => {
@@ -16,17 +14,10 @@ const Contract = ({ farm }) => {
   const { isAuthenticated } = useAuth();
   const { user } = isAuthenticated();
 
-  console.log('user', user);
-
   return (
     <MotionGrid px={10}>
       <GridItem
         overflowY='scroll'
-        // css={{
-        //   direction: 'rtl',
-        //   scrollbarColor: 'rebeccapurple',
-        //   scrollBehavior: 'smooth'
-        // }}
         mb={10}
       >
         <Box css={{ direction: 'ltr' }} p={{ base: 2, md: 10 }}>
