@@ -1,24 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Avatar,
-  Box,
-  Divider,
-  Flex,
-  Heading,
-  Image,
-  Text
-} from '@chakra-ui/react'
+import { Avatar, Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 
 import Step from 'components/Form/Step'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
+import ImageLoader from 'components/ImageLoader'
 
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 
 const FarmCard = ({ farm, _small }) => {
+  const [imageLoaded, setImageLoaded] = React.useState(false)
   const [reload, setReload] = React.useState(0)
   const { getActivities } = useApi()
   const history = useHistory()
@@ -116,7 +110,10 @@ const FarmCard = ({ farm, _small }) => {
               top={{ md: 14 }}
               right={{ md: 0 }}
             >
-              <Image
+              <ImageLoader
+                isLoaded={imageLoaded}
+                setLoading={setImageLoaded}
+                height='300'
                 rounded='3xl'
                 src={
                   farm?.order?.product?.cropVariety?.imageUrl ||
