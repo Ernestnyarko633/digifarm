@@ -93,7 +93,7 @@ export default function Tasks({
                   getTodaysTasks(scheduledTasks, 'scheduled')[0]?.task?.duration
                 }
                 subtitle={
-                  getTodaysTasks(scheduledTasks, 'scheduled')[0]?.task?.name
+                  getTodaysTasks(scheduledTasks, 'scheduled')[0]?.task?.title
                 }
                 text={getTodaysTasks(
                   scheduledTasks,
@@ -105,7 +105,7 @@ export default function Tasks({
                 <FarmUpdateCard
                   title='FARM MANAGER UPDATE'
                   duration={farmfeeds[0]?.task?.duration}
-                  subtitle={farmfeeds[0]?.task?.name}
+                  subtitle={farmfeeds[0]?.task?.title}
                   text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
                   icon={Updates}
                 />
