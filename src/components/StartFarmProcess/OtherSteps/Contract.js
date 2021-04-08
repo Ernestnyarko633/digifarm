@@ -26,18 +26,30 @@ const Contract = ({ farm }) => {
             size='lg'
             mb={6}
             color='cf.400'
+            px={{md: 5}}
             mt={{ base: 4, md: 0 }}
           >
             Complete Farmer Crowd Farming User Agreement
           </Heading>
-          <Text>
+          <Text lineHeight="60px" fontSize={{md: 'xl'}}  px={{md: 5}}>
             Please read this Crowd Farming User Agreement (the ‘Agreement’)
             carefully for your Complete Farmer (“The Company”) to complete
             yourcrowd farming subscription. This Agreement should be read
             together withour Terms & Conditions and our Privacy Policy.This
             Agreement is made between (the ‘Crowd Farmer’ or ‘You’), and
-            theCompany, and is effective upon signature or your acceptance. Use
-            of Farm Management Service FeeThe Company shall use the Farm
+            theCompany, and is effective upon signature or your acceptance.
+            <br/> 
+            <Heading
+            as='h3'
+            size='lg'
+            color='cf.400'
+            mt={{md: 5}}
+          >
+            Use
+            of Farm Management Service Fee
+          </Heading>
+             <br/>
+            The Company shall use the Farm
             Management Service Fee to take allnecessary steps to plant and
             harvest your choses produce on your chosenacreage, as described on
             the Company’s website. Complete Farmer thecultivation protocols
@@ -48,15 +60,43 @@ const Contract = ({ farm }) => {
             otherwise toprovide the Farm Management Service to you.Crowd Farmers
             will be provided with weekly updates of crop, weather andsoil
             conditions on the farm, and are welcome to schedule farm visits
-            usingthe Complete Farmer application. Independent Quality Assurance
+            usingthe Complete Farmer application. 
+            
+            
             AuditorThe Company will submit audit reports by their independent
             qualityassurance auditor upon request of the Crowd Farmer which
             shall assessthe farm processes, seed and yield of harvest, should
             any conflict ariseconcerning the above between the Crowd Farmer and
-            the Company. InsuranceThe Company strongly recommends that Crowd
+            the Company. 
+
+            <br/> 
+            <Heading
+            as='h3'
+            size='lg'
+            color='cf.400'
+            mt={{md: 5}}
+          >
+            Insurance
+          </Heading>
+             <br/>
+           
+            
+            The Company strongly recommends that Crowd
             Farmers accept thestandard insurance package offered with the Farm
             Management Service. Ifyou do not want to use the insurance package
-            provided, please notify theCompany.Term and TerminationThis
+            provided, please notify theCompany.
+            
+            <br/> 
+            <Heading
+            as='h3'
+            size='lg'
+            color='cf.400'
+            mt={{md: 5}}
+          >
+           Term and Termination
+          </Heading>
+             <br/>
+            This
             Agreement shall commence on today’s date and shall remain ineffect
             until the end of after the harvested produce have been sold.The
             Company reserves the right to terminate this Agreement if
@@ -64,8 +104,19 @@ const Contract = ({ farm }) => {
             Farmer's policiesset out in this Agreement, the Terms & Conditions,
             the Privacy Policy, orany other policy documents or community
             guidelines, or if You haveengaged in an improper or fraudulent
-            activity in connection with CompleteFarmer. Electronic
-            SignaturesEach party agrees that the electronic signatures, whether
+            activity in connection with CompleteFarmer. 
+            <br/> 
+            <Heading
+            as='h3'
+            size='lg'
+            color='cf.400'
+            mt={{md: 5}}
+          >
+           Electronic
+            Signatures
+          </Heading>
+             <br/>
+            Each party agrees that the electronic signatures, whether
             digital orencrypted, of the Parties included in this Agreement are
             intended toauthenticate this writing and to have the same force and
             effect as manualsignatures in so far as the signatures are executed
@@ -77,21 +128,55 @@ const Contract = ({ farm }) => {
             any other electronic means intended topreserve the original graphic
             and pictorial appearance of a document, willhave the same effect as
             physical delivery of the paper document bearingan original or
-            electronic signature.General TermsThe terms of this Agreement are
-            Confidential and will survive thetermination of this Agreement.A.No
+            electronic signature.
+            
+            <br/> 
+            <Heading
+            as='h3'
+            size='lg'
+            color='cf.400'
+            mt={{md: 5}}
+          >
+          General Terms
+          </Heading>
+             <br/>
+            
+            
+            The terms of this Agreement are
+            Confidential and will survive thetermination of this Agreement. 
+            <ul style={{ listStyleType: "upper-alpha"}}>
+              <li>
+              No
             term of this Agreement shall be enforceable by a third party whois
             not a party to this Agreement and has no rights under theContracts
             (Rights of Third Parties) Act to enforce or enjoy thebenefits of
-            this Agreement. B.If any provision of this Agreement or the
+            this Agreement. 
+              </li>
+              <li>
+              If any provision of this Agreement or the
             application thereof is heldinvalid or unenforceable, the invalidity
             or unenforceability thereofshall not affect any other provisions or
             applications of this Agreement that can be given effect without the
             invalid orunenforceable provision or application. To that end, the
-            provisionsof this Agreement are to be severable.C.The Parties shall
+            provisionsof this Agreement are to be severable.
+              </li>
+            
+            
+              <li>
+              The Parties shall
             use their best endeavors to reach an amicablesettlement of any
             dispute by mutual discussion between thedesignated representatives
-            of the Parties.D.This Agreement shall be governed in accordance with
-            the laws ofthe Republic of Ghana. E.Each Party warrants to the other
+            of the Parties.
+              </li>
+             
+              <li>
+              This Agreement shall be governed in accordance with
+            the laws ofthe Republic of Ghana. 
+              </li>
+            
+           
+              <li>
+              Each Party warrants to the other
             Party that it has the right, powerand authority to enter into this
             Agreement and carry out itsobligations under this Agreement.By
             clicking the "Accept" button, downloading or using the Application,
@@ -99,6 +184,9 @@ const Contract = ({ farm }) => {
             Agreement.If you do not agree to the terms of this Agreement, do not
             click on the"Accept" button and do not download or use the
             Application.
+              </li>
+            
+            </ul>
           </Text>
 
           <Box w={{ md: 90 }} mx='auto' my={{ md: 10 }}>
