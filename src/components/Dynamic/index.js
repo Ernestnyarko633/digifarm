@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import useExternalApi from 'context/external'
+//import useExternalApi from 'context/external'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
@@ -34,10 +34,9 @@ const DynamicFarm = ({
   reload,
   error
 }) => {
-  const [type, setType] = useState('/sentinel2')
+  // const [type, setType] = useState('/sentinel2')
   const SelectedFarm = components[farm]
-  const { createTask } = useApi()
-  const { getEOSViewID, getEOSWeatherForeCast } = useExternalApi()
+  const { createTask, eosSearch, eosWeather } = useApi()
 
   const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
@@ -68,10 +67,10 @@ const DynamicFarm = ({
     error: EOSViewIDHasError
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_view_id`,
-    digitalFarmerFarm?._id ? getEOSViewID : null,
+    digitalFarmerFarm?._id ? eosSearch : null,
     reload,
     eosViewIdPayload,
-    type
+    'sentinel2'
   )
 
   // payload of health eos task_id creation
@@ -115,7 +114,7 @@ const DynamicFarm = ({
     error: WeatherForeCastsHasError
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_weather_forecasts`,
-    digitalFarmerFarm?._id ? getEOSWeatherForeCast : null,
+    digitalFarmerFarm?._id ? eosWeather : null,
     reload,
     weatherForeCastsPayload
   )
@@ -165,7 +164,7 @@ const DynamicFarm = ({
           ScheduledTasks={ScheduledTasks}
           location={location}
           loading={loading || isLoading}
-          setType={setType}
+          //setType={setType}
           error={error}
           _error={eosHasError}
         />

@@ -22,7 +22,7 @@ export default function FarmLayout({
   ...rest
 }) {
   const [state, setState] = React.useState('compA')
-  const { getStats } = useApi()
+  const { eosStats } = useApi()
   // for health card stats
   const {
     data: EOSStatistics,
@@ -30,7 +30,7 @@ export default function FarmLayout({
     error: EOSStatisticsHasError
   } = useFetch(
     null,
-    eosTask?.task_id ? getStats : null,
+    eosTask?.task_id ? eosStats : null,
     reload || eosTask?.task_id,
     {
       task: eosTask?.task_id
@@ -71,7 +71,7 @@ export default function FarmLayout({
             _error={_error}
             state={state}
             reloads={reloads}
-            eosStats={EOSStatistics?.result}
+            eosStats={EOSStatistics}
             digitalFarmerFarm={digitalFarmerFarm}
             location={location}
           />

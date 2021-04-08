@@ -40,7 +40,7 @@ export default function Farm({
   ] = useState(null)
   const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({})
   const [__error, _setError] = React.useState(null)
-  const { getStats, createTask } = useApi()
+  const { eosStats, createTask } = useApi()
 
   useEffect(() => {
     let mounted = true
@@ -70,9 +70,9 @@ export default function Farm({
           setEOSTaskForStatsCreationIsLoading(true)
           const res = await createTask(payload)
           if (mounted) {
-            key && sessionStorage.setItem(key, JSON.stringify(res))
+            key && sessionStorage.setItem(key, JSON.stringify(res?.data))
           }
-          setEOSTaskForStatsCreated(res)
+          setEOSTaskForStatsCreated(res?.data)
           setEOSTaskForStatsCreationIsLoading(false)
         }
       } catch (error) {
@@ -91,7 +91,7 @@ export default function Farm({
     try {
       _setError(null)
       _setLoading(true)
-      await getStats(downloadTaskID)
+      await eosStats({ task: downloadTaskID })
       _setLoading(false)
     } catch (error) {
       _setError(error)
