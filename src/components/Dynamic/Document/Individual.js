@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Box, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React, { useEffect, useState } from 'react'
@@ -65,11 +66,23 @@ export default function Individual({
     }
     return totalAmount
   }
+  console.log(activities, tempActs, 'checking')
   return (
     <Box>
+      {tempActs?.length === 0 && (
+        <Flex w='100%' justify='center' align='center' direction='column'>
+          <Image src={Doc} py={{ md: 10 }} />
+          <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
+            Your document is empty
+          </Heading>
+          <Text fontSize='xs'>
+            Documents like receipts, contracts will show up here
+          </Text>
+        </Flex>
+      )}
       <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={10}>
-        {activities &&
-          tempActs &&
+        {activities?.length > 0 &&
+          tempActs?.length > 0 &&
           tempActs?.map(_activity => {
             return (
               <FarmDocumentCard
@@ -91,23 +104,6 @@ export default function Individual({
               />
             )
           })}
-        {!tempActs && (
-          <Flex
-            w='100%'
-            justify='center'
-            align='center'
-            direction='column'
-            py={{ md: 40 }}
-          >
-            <Image src={Doc} py={{ md: 10 }} />
-            <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
-              Your document is empty
-            </Heading>
-            <Text fontSize='xs'>
-              Documents like receipts, contracts will show up here
-            </Text>
-          </Flex>
-        )}
       </Grid>
 
       {moreButton && (
