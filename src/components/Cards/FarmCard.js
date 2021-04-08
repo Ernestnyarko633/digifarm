@@ -1,5 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+/* eslint-disable */
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Avatar,
   Box,
@@ -8,27 +9,27 @@ import {
   Heading,
   Image,
   Link,
-  Text
-} from '@chakra-ui/react'
-import { Link as ReachRouter, useHistory } from 'react-router-dom'
+  Text,
+} from '@chakra-ui/react';
+import { Link as ReachRouter, useHistory } from 'react-router-dom';
 
-import Step from 'components/Form/Step'
-import Button from 'components/Button'
-import FetchCard from 'components/FetchCard'
+import Step from 'components/Form/Step';
+import Button from 'components/Button';
+import FetchCard from 'components/FetchCard';
 
-import useFetch from 'hooks/useFetch'
-import useApi from 'context/api'
+import useFetch from 'hooks/useFetch';
+import useApi from 'context/api';
 
 const FarmCard = ({ farm, _small }) => {
-  const [reload, setReload] = React.useState(0)
-  const { getActivities } = useApi()
-  const history = useHistory()
+  const [reload, setReload] = React.useState(0);
+  const { getActivities } = useApi();
+  const history = useHistory();
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
+  const triggerReload = () => setReload((prevState) => prevState + 1);
 
   const { data, isLoading, error } = useFetch(null, getActivities, reload, {
-    farm: farm?._id
-  })
+    farm: farm?._id,
+  });
 
   return (
     <ReachRouter to={`/farms/${farm._id}`}>
@@ -85,10 +86,7 @@ const FarmCard = ({ farm, _small }) => {
               >
                 <Image
                   rounded='3xl'
-                  src={
-                    farm?.order?.product?.cropVariety?.imageUrl ||
-                    require('../../assets/images/farmimg.png').default
-                  }
+                  src={farm?.order?.product?.cropVariety?.imageUrl}
                 />
               </Box>
 
@@ -141,10 +139,7 @@ const FarmCard = ({ farm, _small }) => {
                 >
                   <Image
                     rounded='3xl'
-                    src={
-                      farm?.order?.product?.cropVariety?.imageUrl ||
-                      require('../../assets/images/farmimg.png').default
-                    }
+                    src={farm?.order?.product?.cropVariety?.imageUrl}
                   />
                 </Box>
               </Flex>
@@ -153,17 +148,17 @@ const FarmCard = ({ farm, _small }) => {
         </Box>
       </Link>
     </ReachRouter>
-  )
-}
+  );
+};
 
 FarmCard.propTypes = {
   farm: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
     location: PropTypes.string,
-    order: PropTypes.object
+    order: PropTypes.object,
   }),
-  _small: PropTypes.bool
-}
+  _small: PropTypes.bool,
+};
 
-export default FarmCard
+export default FarmCard;
