@@ -1,16 +1,17 @@
-import { Box, Flex, Heading, Text, Image, Badge, Link } from '@chakra-ui/react'
-import React from 'react'
-import { Link as ReachLink } from 'react-router-dom'
-import Button from 'components/Button/index'
-import Bitmap from 'assets/images/Bitmap.png'
+/* eslint-disable */
+import { Box, Flex, Heading, Text, Image, Badge, Link } from '@chakra-ui/react';
+import React from 'react';
+import { Link as ReachLink } from 'react-router-dom';
+import Button from 'components/Button/index';
+import Bitmap from 'assets/images/Bitmap.png';
 
 const YourFarmCard = () => {
   const dummyFarms = [
     { name: 'FarmX', color: '#FF9F9F' },
-    { name: 'FarmY', color: '#76B1F6' }
-  ]
+    { name: 'FarmY', color: '#76B1F6' },
+  ];
   return (
-    <Box bg='white' w='100%' p={16}>
+    <Box bg='white' w='100%' p={{ base: 4, md: 16 }}>
       <Flex align='center' justify='center' direction='column' w='100%'>
         <Flex align='center' direction='row' justify='space-around' w='100%'>
           <Heading as='h6' fontSize='lg'>
@@ -21,7 +22,7 @@ const YourFarmCard = () => {
           </Link>
         </Flex>
         <Flex direction='row' align='center' justify='center' my={10}>
-          {dummyFarms.map(farm => (
+          {dummyFarms.map((farm) => (
             <Flex
               direction='column'
               align='center'
@@ -32,11 +33,12 @@ const YourFarmCard = () => {
               <Text fontSize='sm' mb={3}>
                 {farm.name}
               </Text>
-              <Box w={24} h={24} rounded='100%'>
+              <Box w={24} h={24} rounded='100%' pos='relative'>
                 <Image w='100%' h='100%' rounded='100%' src={Bitmap} />
                 <Badge
                   position='absolute'
-                  top={745}
+                  top={0}
+                  left={2}
                   bg={farm.color}
                   rounded='25px'
                   w={5}
@@ -50,7 +52,7 @@ const YourFarmCard = () => {
         </Flex>
       </Flex>
     </Box>
-  )
-}
+  );
+};
 
-export default YourFarmCard
+export default YourFarmCard;

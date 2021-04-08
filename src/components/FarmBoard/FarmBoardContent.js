@@ -80,7 +80,7 @@ const FarmBoardContent = () => {
   return (
     <Flex w='100%' align='center' direction='column'>
       <YourFarmCard />
-      <Box p={16}>
+      <Box p={{ base: 4, md: 16 }}>
         <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
           See what's happening in your farm(s)
         </Heading>
