@@ -28,14 +28,9 @@ export default function FarmLayout({
     data: EOSStatistics,
     isLoading: EOSStatisticsIsLoading,
     error: EOSStatisticsHasError
-  } = useFetch(
-    null,
-    eosTask?.task_id ? eosStats : null,
-    reload || eosTask?.task_id,
-    {
-      task: eosTask?.task_id
-    }
-  )
+  } = useFetch(null, eosTask?.task_id ? eosStats : null, reload, {
+    task: eosTask?.task_id
+  })
   return (
     <Grid
       templateRows='repeat(1 1fr)'

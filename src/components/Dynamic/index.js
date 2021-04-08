@@ -36,7 +36,7 @@ const DynamicFarm = ({
 }) => {
   // const [type, setType] = useState('/sentinel2')
   const SelectedFarm = components[farm]
-  const { createTask, eosSearch, eosWeather } = useApi()
+  const { eosTask, eosSearch, eosWeather } = useApi()
 
   const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
@@ -78,7 +78,7 @@ const DynamicFarm = ({
     type: 'mt_stats',
     params: {
       bm_type: ['NDVI', 'MSI', 'EVI', 'CCCI', 'NDRE', 'GCI'],
-      date_start: dateIntervals()?.ThirtyDaysAgo,
+      date_start: dateIntervals()?.SixtyDaysAgo,
       date_end: dateIntervals()?.today,
       geometry: {
         coordinates: [location],
@@ -91,12 +91,12 @@ const DynamicFarm = ({
 
   //creates stats task_id for stats health card
   const {
-    data: eosTask,
+    data: _eosTask,
     isLoading: eosTaskIsLoading,
     error: eosTaskHasError
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_task_stats_for_health`,
-    digitalFarmerFarm?._id ? createTask : null,
+    digitalFarmerFarm?._id ? eosTask : null,
     reload,
     EOSTaskForStats
   )
@@ -158,7 +158,7 @@ const DynamicFarm = ({
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
           activities={activities}
-          eosTask={eosTask}
+          eosTask={_eosTask}
           EOSViewID={EOSViewID}
           WeatherForeCasts={WeatherForeCasts}
           ScheduledTasks={ScheduledTasks}
