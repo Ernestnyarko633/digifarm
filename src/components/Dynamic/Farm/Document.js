@@ -17,7 +17,8 @@ export default function Document({
   digitalFarmerFarm,
   activities,
   tasks,
-  ScheduledTasks
+  ScheduledTasks,
+  farmfeeds
 }) {
   let state = 'compA'
 
@@ -79,6 +80,7 @@ export default function Document({
               tasks={tasks}
               ScheduledTasks={ScheduledTasks}
               digitalFarmerFarm={digitalFarmerFarm}
+              farmfeeds={farmfeeds}
             />
           </Box>
         </Box>
@@ -138,5 +140,6 @@ Document.propTypes = {
   digitalFarmerFarm: PropTypes.any,
   activities: PropTypes.any,
   tasks: PropTypes.any,
-  ScheduledTasks: PropTypes.any
+  ScheduledTasks: PropTypes.any,
+  farmfeeds: PropTypes.any
 }

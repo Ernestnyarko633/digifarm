@@ -14,6 +14,7 @@ export default function FarmDocumentCard({
   ScheduledTasks,
   tasksNumber,
   __activityID,
+  farmfeeds,
   digitalFarmerFarm,
   amount,
   viewDoc
@@ -42,8 +43,9 @@ export default function FarmDocumentCard({
     title,
     amount,
     digitalFarmerFarm,
+    farmfeeds,
     ScheduledTasks: ScheduledTasks.filter(
-      _task => __activityID === _task.taskId.activity._id
+      _task => __activityID === _task.task.activity
     ),
     viewDoc
   }
@@ -123,5 +125,6 @@ FarmDocumentCard.propTypes = {
   ScheduledTasks: PropTypes.any,
   __activityID: PropTypes.any,
   digitalFarmerFarm: PropTypes.any,
-  viewDoc: PropTypes.bool
+  viewDoc: PropTypes.bool,
+  farmfeeds: PropTypes.any
 }

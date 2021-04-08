@@ -13,6 +13,7 @@ const DynamicDocument = ({
   document,
   digitalFarmerFarm,
   activities,
+  farmfeeds,
   ScheduledTasks,
   tasks
 }) => {
@@ -23,6 +24,7 @@ const DynamicDocument = ({
       ScheduledTasks={ScheduledTasks}
       activities={activities}
       tasks={tasks}
+      farmfeeds={farmfeeds}
       viewDoc={true}
     />
   )
@@ -33,7 +35,8 @@ DynamicDocument.propTypes = {
   digitalFarmerFarm: PropTypes.any,
   activities: PropTypes.any,
   tasks: PropTypes.any,
-  ScheduledTasks: PropTypes.any
+  ScheduledTasks: PropTypes.any,
+  farmfeeds: PropTypes.any
 }
 
 export default DynamicDocument
