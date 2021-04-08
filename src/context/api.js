@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import getConfig from 'utils/configs'
 import http from 'utils/httpFacade'
+import axios from 'axios'
 
 const ApiContext = createContext()
 
@@ -122,10 +123,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${DIGITAL_FARMER_API}/receipt`, query })
   }
 
-  const downloadOrder = async query => {
-    return await http.get({
-      url: `${DIGITAL_FARMER_API}/orders/download`,
-      query
+  const downloadFile = async (resource, params) => {
+    return await axios.get(`${DIGITAL_FARMER_API}/${resource}/download`, {
+      responseType: 'blob',
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('_cft')
+      },
+      params
     })
   }
 
@@ -190,7 +194,7 @@ export const ApiContextProvider = ({ children }) => {
         getAllTasks,
         sellProduce,
         createOrder,
-        downloadOrder,
+        downloadFile,
         getActivities,
         getMyFarmFeeds,
         changePassword,

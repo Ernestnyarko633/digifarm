@@ -40,7 +40,7 @@ export default function Gallery({ farmfeeds, loading }) {
     let array2 = []
     const feeds = () =>
       farmfeeds?.forEach(feed => {
-        array2.push(feed?.task?.activity?.name)
+        array2.push(feed?.task?.activity?.title)
       })
     feeds()
     setActivities([...new Set(array2)])
