@@ -25,24 +25,57 @@ export default function Tasks({
   weatherForeCasts,
   eosStats
 }) {
-  if (loading) {
-    return <Spinner size='lg' color='cf.400' />
+  const getTodaysTasks = (scheduledTasks, type) => {
+    let today = new Date().toLocaleDateString()
+
+    let comparant = value => new Date(value).toLocaleDateString()
+
+    if (scheduledTasks) {
+      if (type === 'today') {
+        const res = scheduledTasks?.filter(
+          task => today === comparant(task?.startDate)
+        )
+
+        return res
+      }
+
+      if (type === 'scheduled') {
+        const res = scheduledTasks?.filter(
+          task => today !== comparant(task?.startDate)
+        )
+
+        return res
+      }
+    }
+
+    return []
   }
+
+  const mapKey = index => index
+
   const health = value => {
     if (value >= 0.2 && value <= 1.0) return true
     return false
   }
 
+  if (loading) {
+    return <Spinner size='lg' color='cf.400' />
+  }
   return (
     <Box mb={8}>
-      {farmfeeds && (
-        <FarmUpdateCard
-          title='TODAY’S TASK'
-          duration={farmfeeds[0]?.task?.duration}
-          subtitle={farmfeeds[0]?.task?.name}
-          text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-          icon={BiTime}
-        />
+      {scheduledTasks.length > 0 && (
+        <>
+          {getTodaysTasks(scheduledTasks, 'today').map((today, index) => (
+            <FarmUpdateCard
+              key={mapKey(index)}
+              title='TODAY’S TASK'
+              duration={today?.task?.duration}
+              subtitle={today?.task?.name}
+              text={today[0]?.description?.replace(/<[^>]*>/g, '')}
+              icon={BiTime}
+            />
+          ))}
+        </>
       )}
       <WeatherCards
         farmfeeds={farmfeeds}
@@ -51,26 +84,34 @@ export default function Tasks({
         weatherForeCasts={weatherForeCasts}
       />
       <Grid gap={8}>
-        {farmfeeds && (
-          <React.Fragment>
-            <FarmUpdateCard
-              title='SCHEDULED TASK'
-              duration={farmfeeds[0]?.nextTask?.duration}
-              subtitle={farmfeeds[0]?.nextTask?.name}
-              text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-              icon={BiTime}
-            />
-            {scheduledTasks.length > 0 && (
+        {scheduledTasks.length > 0 &&
+          getTodaysTasks(scheduledTasks, 'scheduled') && (
+            <React.Fragment>
               <FarmUpdateCard
-                title='FARM MANAGER UPDATE'
-                duration={scheduledTasks[0]?.taskId?.duration}
-                subtitle={scheduledTasks[0]?.taskId?.name}
-                text={scheduledTasks[0]?.comments.replace(/<[^>]*>/g, '')}
-                icon={Updates}
+                title='SCHEDULED TASK'
+                duration={
+                  getTodaysTasks(scheduledTasks, 'scheduled')[0]?.task?.duration
+                }
+                subtitle={
+                  getTodaysTasks(scheduledTasks, 'scheduled')[0]?.task?.title
+                }
+                text={getTodaysTasks(
+                  scheduledTasks,
+                  'scheduled'
+                )[0]?.description.replace(/<[^>]*>/g, '')}
+                icon={BiTime}
               />
-            )}
-          </React.Fragment>
-        )}
+              {farmfeeds.length > 0 && (
+                <FarmUpdateCard
+                  title='FARM MANAGER UPDATE'
+                  duration={farmfeeds[0]?.task?.duration}
+                  subtitle={farmfeeds[0]?.task?.title}
+                  text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
+                  icon={Updates}
+                />
+              )}
+            </React.Fragment>
+          )}
         {eosStats?.length > 0 && !_error && (
           <Box
             bg='white'

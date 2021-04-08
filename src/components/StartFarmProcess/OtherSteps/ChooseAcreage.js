@@ -81,7 +81,6 @@ const ChooseAcreage = ({ farm }) => {
     }
   }, [farm])
 
-  console.log(location, center)
   let eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
     limit: 1,
@@ -104,7 +103,7 @@ const ChooseAcreage = ({ farm }) => {
       date: 'desc'
     }
   }
-  console.log(eosViewIdPayload)
+
   const {
     data: EOSViewID,
     isLoading: EOSViewIDIsLoading,
@@ -116,8 +115,6 @@ const ChooseAcreage = ({ farm }) => {
     eosViewIdPayload,
     'sentinel2'
   )
-
-  console.log(EOSViewID, 'the view')
 
   React.useEffect(() => {
     if (currency.id !== 'US') {
@@ -185,7 +182,7 @@ const ChooseAcreage = ({ farm }) => {
             error={error}
             band={null}
             center={center || location[0] || null}
-            zoom={10}
+            zoom={9}
           />
         )}
       </GridItem>
@@ -194,7 +191,7 @@ const ChooseAcreage = ({ farm }) => {
         borderLeftColor='gray.200'
         overflowY='scroll'
         css={{
-          direction: 'rtl',
+          direction: 'ltr',
           scrollbarColor: 'rebeccapurple',
           scrollBehavior: 'smooth'
         }}

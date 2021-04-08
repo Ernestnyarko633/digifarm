@@ -12,6 +12,7 @@ export default function FarmDocumentCard({
   digitalFarmerFarm,
   title,
   amount,
+  farmfeeds,
   viewDoc
 }) {
   const { isAuthenticated } = useAuth()
@@ -70,7 +71,9 @@ export default function FarmDocumentCard({
           <TasksDocuments
             open={open}
             onClose={onClose}
-            data={selectedTask?.media.filter(media => media.type === 'pdf')}
+            data={farmfeeds?.filter(
+              feed => feed?.task?._id === selectedTask?.task?._id
+            )}
           />
         )
       default:
@@ -152,12 +155,12 @@ export default function FarmDocumentCard({
               </Box>
               <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>
-                  {_key?.taskId?.name}
+                  {_key?.task?.title}
                 </Heading>
               </Box>
               <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>
-                  {_key?.taskId?.budget}
+                  {_key?.task?.budget}
                 </Heading>
               </Box>
               <Flex w='25%'>
@@ -201,5 +204,6 @@ FarmDocumentCard.propTypes = {
   title: PropTypes.any,
   amount: PropTypes.any,
   digitalFarmerFarm: PropTypes.any,
-  viewDoc: PropTypes.bool
+  viewDoc: PropTypes.bool,
+  farmfeeds: PropTypes.any
 }

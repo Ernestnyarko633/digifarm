@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Box, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React, { useEffect, useState } from 'react'
@@ -9,6 +10,7 @@ import Doc from 'assets/images/doc.png'
 export default function Individual({
   digitalFarmerFarm,
   activities,
+  farmfeeds,
   tasks,
   ScheduledTasks,
   viewDoc
@@ -30,8 +32,8 @@ export default function Individual({
       })
     const _less = () => {
       let array = []
-      if (activities?.length > 4) {
-        setShowMoreButton(true)
+      if (activities?.length) {
+        if (activities?.length > 4) setShowMoreButton(true)
         _activities(array)
       }
       if (array) {
@@ -55,9 +57,7 @@ export default function Individual({
 
   const totalAmount = __activity => {
     let totalAmount = 0
-    let tempTasks = tasks?.filter(
-      _task => _task.activity._id === __activity._id
-    )
+    let tempTasks = tasks?.filter(_task => _task.activity === __activity._id)
     if (tempTasks) {
       tempTasks.forEach(_task => {
         totalAmount = totalAmount + _task?.budget
@@ -65,23 +65,36 @@ export default function Individual({
     }
     return totalAmount
   }
+  console.log(activities, tempActs, farmfeeds, 'checking')
   return (
     <Box>
+      {tempActs?.length === 0 && (
+        <Flex w='100%' justify='center' align='center' direction='column'>
+          <Image src={Doc} py={{ md: 10 }} />
+          <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
+            Your document is empty
+          </Heading>
+          <Text fontSize='xs'>
+            Documents like receipts, contracts will show up here
+          </Text>
+        </Flex>
+      )}
       <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={10}>
-        {activities &&
-          tempActs &&
+        {activities?.length > 0 &&
+          tempActs?.length > 0 &&
           tempActs?.map(_activity => {
             return (
               <FarmDocumentCard
+                farmfeeds={farmfeeds}
                 viewDoc={viewDoc}
                 key={_activity?._id}
                 digitalFarmerFarm={digitalFarmerFarm}
                 __activityID={_activity?._id}
-                title={_activity?.name}
+                title={_activity?.title}
                 ScheduledTasks={ScheduledTasks.filter(
                   _completedTask =>
-                    _activity._id === _completedTask?.taskId?.activity?._id &&
-                    _completedTask.status === 'COMPLETED'
+                    _activity._id === _completedTask?.task?.activity &&
+                    _completedTask.status === 'PENDING'
                 )}
                 tasksNumber={
                   tasks?.filter(_task => _task.activity._id === _activity._id)
@@ -91,23 +104,6 @@ export default function Individual({
               />
             )
           })}
-        {!tempActs && (
-          <Flex
-            w='100%'
-            justify='center'
-            align='center'
-            direction='column'
-            py={{ md: 40 }}
-          >
-            <Image src={Doc} py={{ md: 10 }} />
-            <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
-              Your document is empty
-            </Heading>
-            <Text fontSize='xs'>
-              Documents like receipts, contracts will show up here
-            </Text>
-          </Flex>
-        )}
       </Grid>
 
       {moreButton && (
@@ -140,5 +136,6 @@ Individual.propTypes = {
   activities: PropTypes.any,
   tasks: PropTypes.any,
   ScheduledTasks: PropTypes.any,
-  viewDoc: PropTypes.bool
+  viewDoc: PropTypes.bool,
+  farmfeeds: PropTypes.any
 }

@@ -1,5 +1,5 @@
-/*eslint-disable */
-import { Box, Flex, Text, Avatar, Spinner, Icon } from '@chakra-ui/react';
+/* eslint-disable */
+import { Box, Flex, Text, Avatar, Icon } from '@chakra-ui/react';
 import DynamicFarm from 'components/Dynamic';
 import Header from 'container/Header';
 import useAuth from 'context/auth';
@@ -45,15 +45,15 @@ export default function Farm() {
   } = useApi();
 
   const {
-    data: yourFarm,
-    isLoading: yourFarmIsLoading,
-    error: yourFarmHasError,
+    data: farm,
+    isLoading: farmIsLoading,
+    error: farmHasError,
   } = useFetch(null, getMyFarm, reload, id);
 
   useEffect(() => {
     let location_ = [];
     let center_ = [];
-    let _location = yourFarm?.order?.product?.location;
+    let _location = farm?.order?.product?.location;
     let _center = _location?.center;
     const strToNumber = (value, array) =>
       value?.forEach((coordinate) => {
@@ -67,18 +67,18 @@ export default function Farm() {
     strToNumber(_center, center_);
     setLocation(location_);
     setCenter(center_);
-  }, [yourFarm]);
+  }, [farm]);
 
   const {
-    data: yourFarmFeeds,
-    isLoading: yourFarmFeedsIsLoading,
-    error: yourFarmFeedsHasError,
+    data: farmFeeds,
+    isLoading: farmFeedsIsLoading,
+    error: farmFeedsHasError,
   } = useFetch(
-    `${yourFarm?.order?.product?._id}_farm_feeds`,
-    yourFarm?.order?.product?._id ? getMyFarmFeeds : null,
+    `${farm?.order?.product?._id}_farm_feeds`,
+    farm?.order?.product?._id ? getMyFarmFeeds : null,
     reload,
     {
-      farm: yourFarm?.order?.product?._id,
+      farm: farm?.order?.product?._id,
     }
   );
 
@@ -87,11 +87,11 @@ export default function Farm() {
     isLoading: ScheduledTasksIsLoading,
     error: ScheduledTasksHasError,
   } = useFetch(
-    `${yourFarm?.order?.product?._id}_scheduled_tasks`,
-    yourFarm?.order?.product?._id ? getMyScheduledTasks : null,
+    `${farm?.order?.product?._id}_scheduled_tasks`,
+    farm?.order?.product?._id ? getMyScheduledTasks : null,
     reload,
     {
-      farm: yourFarm?.order?.product?._id,
+      farm: farm?.order?.product?._id,
     }
   );
 
@@ -100,11 +100,11 @@ export default function Farm() {
     isLoading: myFarmActivitiesIsLoading,
     error: myFarmActivitiesHasError,
   } = useFetch(
-    `${yourFarm?.order?.product?.protocol?._id}_activities`,
-    yourFarm?.order?.product?.protocol?._id ? getActivities : null,
+    `${farm?.order?.product?._id}_activities`,
+    farm?.order?.product?._id ? getActivities : null,
     reload,
     {
-      protocol: yourFarm?.order?.product?.protocol?._id,
+      farm: farm?.order?.product?._id,
     }
   );
 
@@ -112,17 +112,19 @@ export default function Farm() {
     data: tasks,
     isLoading: tasksIsLoading,
     error: tasksHasError,
-  } = useFetch('tasks', getAllTasks, reload);
+  } = useFetch('tasks', getAllTasks, reload, {
+    farm: farm?.order?.product?._id,
+  });
 
   const isLoading =
-    yourFarmFeedsIsLoading ||
-    yourFarmIsLoading ||
+    farmFeedsIsLoading ||
+    farmIsLoading ||
     ScheduledTasksIsLoading ||
     myFarmActivitiesIsLoading ||
     tasksIsLoading;
   const hasError =
-    yourFarmFeedsHasError ||
-    yourFarmHasError ||
+    farmFeedsHasError ||
+    farmHasError ||
     ScheduledTasksHasError ||
     myFarmActivitiesHasError ||
     tasksHasError;
@@ -151,152 +153,155 @@ export default function Farm() {
     { id: 5, name: 'Manager updates', icon: Updates, state: 'compE' },
   ];
 
-  return (
+  return isLoading || hasError ? (
+    <FetchCard
+      h='100vh'
+      direction='column'
+      align='center'
+      justify='center'
+      mx='auto'
+      reload={triggerReload}
+      loading={isLoading}
+      error={hasError}
+      text='Standby as we load your current farms and pending orders'
+    />
+  ) : (
     <Box pos='relative' ref={ref}>
       <Share isOpen={isOpen} onClose={onClose} image={image} />
       <Header />
-      {isLoading && (
-        <Flex
-          w='100%'
-          h={{ md: '900px' }}
-          align={{ md: 'center' }}
-          justify={{ md: 'center' }}
-        >
-          <Spinner color={{ md: 'cf.400' }} />
-        </Flex>
-      )}
-      <Flex
-        pos='fixed'
-        top={20}
-        w='100%'
-        bg='cf-dark.600'
-        align='center'
-        justify='space-between'
-        px={{ md: 20 }}
-        h={{ md: 16 }}
-        zIndex={50}
-        d={{ base: 'none', md: 'flex' }}
-      >
-        <Flex align='center'>
-          <Box
-            w={8}
-            h={8}
-            as={Avatar}
-            src={user?.avatar}
-            rounded='100%'
-            bg='gray.400'
-          />
-          <Text ml={5}>{`${user?.firstName}`}'s farm</Text>
-        </Flex>
-        <Flex align='center'>
-          {menus.map((menu, idx) => (
-            <Box
-              key={idx}
-              as='button'
-              role='button'
-              aria-label={`${menu.name} button`}
-              px={{ md: 6 }}
-              color={state === menu.comp ? 'cf.400' : ''}
-              onClick={() => setState(menu.comp)}
-            >
-              {menu.name}
-            </Box>
-          ))}
-        </Flex>
-      </Flex>
-
-      <Menu
-        as={Box}
-        d={{ base: 'block', md: 'none' }}
-        pos='fixed'
-        top={14}
-        zIndex={50}
-        p={6}
-        bg='#F7F7F7'
-        boxShadow='0px 1px 24px rgba(0, 0, 0, 0.1)'
-        w='100%'
-      >
-        {({ open }) => (
-          <>
-            <Menu.Button as={Box} w='100%'>
-              <Flex align='center' justify='space-between'>
-                <Box>
-                  <Text fontSize='lg' fontWeight={800}>
-                    {`${user?.firstName}`}'s farm
-                  </Text>
-                </Box>
-
-                <Box>
-                  <Icon as={open ? chevronUp : chevronDown} boxSize={6} />
-                </Box>
-              </Flex>
-            </Menu.Button>
-
-            <Menu.Items as={Box}>
-              {menus.map((menu, idx) => (
-                <Menu.Item
-                  as={Box}
-                  key={idx}
-                  py={4}
-                  borderBottomWidth={1}
-                  _last={{ borderBlockWidth: 0 }}
-                >
-                  <Box
-                    color={state === menu.comp ? 'cf.400' : ''}
-                    onClick={() => setState(menu.comp)}
-                    as='button'
-                    role='button'
-                    aria-label={`${menu.name} button`}
-                  >
-                    {menu.name}
-                  </Box>
-                </Menu.Item>
-              ))}
-            </Menu.Items>
-          </>
-        )}
-      </Menu>
-
       <Box bg='white'>
-        {!isLoading && location?.length > 0 && (
-          <DynamicFarm
-            center={center}
-            loading={isLoading}
-            error={hasError}
-            farm={state}
-            tasks={tasks}
-            activities={myFarmActivities}
-            ScheduledTasks={ScheduledTasks}
-            digitalFarmerFarm={yourFarm}
-            farmfeeds={yourFarmFeeds}
-            location={location}
-            dateIntervals={dateIntervals}
-            reload={reload}
-            onOpen={getImage}
-            reloads={[triggerReload]}
-          />
-        )}
-        {isLoading && (
-          <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            mx='auto'
-            reload={() => {
-              hasError && triggerReload();
-            }}
-            loading={isLoading}
-            error={hasError}
-            text={
-              !hasError
-                ? 'Standby as we load your current farms and pending orders'
-                : 'Something went wrong, please dont fret'
-            }
-          />
-        )}
-      </Box>
+        <Flex
+          pos='fixed'
+          top={20}
+          w='100%'
+          bg='cf-dark.600'
+          align='center'
+          justify='space-between'
+          px={{ md: 20 }}
+          h={{ md: 16 }}
+          zIndex={50}
+          d={{ base: 'none', md: 'flex' }}
+        >
+          <Flex align='center'>
+            <Box
+              w={8}
+              h={8}
+              as={Avatar}
+              src={user?.avatar}
+              rounded='100%'
+              bg='gray.400'
+            />
+            <Text ml={5}>{`${user?.firstName}`}'s farm</Text>
+          </Flex>
+          <Flex align='center'>
+            {menus.map((menu, idx) => (
+              <Box
+                key={idx}
+                as='button'
+                role='button'
+                aria-label={`${menu.name} button`}
+                px={{ md: 6 }}
+                color={state === menu.comp ? 'cf.400' : ''}
+                onClick={() => setState(menu.comp)}
+              >
+                {menu.name}
+              </Box>
+            ))}
+          </Flex>
+        </Flex>
 
-      {/* <Box d={{ base: 'block', md: 'none' }}>
+        <Menu
+          as={Box}
+          d={{ base: 'block', md: 'none' }}
+          pos='fixed'
+          top={14}
+          zIndex={50}
+          p={6}
+          bg='#F7F7F7'
+          boxShadow='0px 1px 24px rgba(0, 0, 0, 0.1)'
+          w='100%'
+        >
+          {({ open }) => (
+            <>
+              <Menu.Button as={Box} w='100%'>
+                <Flex align='center' justify='space-between'>
+                  <Box>
+                    <Text fontSize='lg' fontWeight={800}>
+                      {`${user?.firstName}`}'s farm
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Icon as={open ? chevronUp : chevronDown} boxSize={6} />
+                  </Box>
+                </Flex>
+              </Menu.Button>
+
+              <Menu.Items as={Box}>
+                {menus.map((menu, idx) => (
+                  <Menu.Item
+                    as={Box}
+                    key={idx}
+                    py={4}
+                    borderBottomWidth={1}
+                    _last={{ borderBlockWidth: 0 }}
+                  >
+                    <Box
+                      color={state === menu.comp ? 'cf.400' : ''}
+                      onClick={() => setState(menu.comp)}
+                      as='button'
+                      role='button'
+                      aria-label={`${menu.name} button`}
+                    >
+                      {menu.name}
+                    </Box>
+                  </Menu.Item>
+                ))}
+              </Menu.Items>
+            </>
+          )}
+        </Menu>
+
+        <Box>
+          {location?.length > 0 && (
+            <DynamicFarm
+              center={center}
+              loading={isLoading}
+              error={hasError}
+              farm={state}
+              tasks={tasks}
+              activities={myFarmActivities}
+              ScheduledTasks={ScheduledTasks}
+              digitalFarmerFarm={farm}
+              farmfeeds={farmFeeds}
+              location={location}
+              dateIntervals={dateIntervals}
+              reload={reload}
+              onOpen={getImage}
+              reloads={[triggerReload]}
+            />
+          )}
+          {isLoading && (
+            <FetchCard
+              direction='column'
+              align='center'
+              justify='center'
+              mx='auto'
+              reload={() => {
+                hasError && triggerReload();
+              }}
+              loading={isLoading}
+              error={hasError}
+              text={
+                !hasError
+                  ? 'Standby as we load your current farms and pending orders'
+                  : 'Something went wrong, please dont fret'
+              }
+            />
+          )}
+        </Box>
+
+        {/* <Box d={{ base: 'block', md: 'none' }}>
         {!loading && !EOSStatisticsIsLoading && (
           <FarmRightSidebar
             farmfeeds={farmfeeds}
@@ -314,35 +319,36 @@ export default function Farm() {
         )}
       </Box> */}
 
-      <Flex
-        align='center'
-        justify='space-between'
-        pos='fixed'
-        bottom={0}
-        h={16}
-        d={{ base: 'flex', md: 'none' }}
-        bg='white'
-        shadow='lg'
-        w='100%'
-        zIndex={50}
-        px={4}
-      >
-        {bottomMenus.map((item) => (
-          <Box
-            as='button'
-            role='button'
-            aria-label={`${item.name} button`}
-            key={item.id}
-            align='center'
-            // pb={5}
-            onClick={() => setState(item.state)}
-            color={state === item.state ? 'cf.400' : ''}
-          >
-            <Icon as={item.icon} />
-            <Text fontSize={9}>{item.name}</Text>
-          </Box>
-        ))}
-      </Flex>
+        <Flex
+          align='center'
+          justify='space-between'
+          pos='fixed'
+          bottom={0}
+          h={16}
+          d={{ base: 'flex', md: 'none' }}
+          bg='white'
+          shadow='lg'
+          w='100%'
+          zIndex={50}
+          px={4}
+        >
+          {bottomMenus.map((item) => (
+            <Box
+              as='button'
+              role='button'
+              aria-label={`${item.name} button`}
+              key={item.id}
+              align='center'
+              // pb={5}
+              onClick={() => setState(item.state)}
+              color={state === item.state ? 'cf.400' : ''}
+            >
+              <Icon as={item.icon} />
+              <Text fontSize={9}>{item.name}</Text>
+            </Box>
+          ))}
+        </Flex>
+      </Box>
     </Box>
   );
 }

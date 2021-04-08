@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import useExternalApi from 'context/external'
+//import useExternalApi from 'context/external'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
@@ -34,10 +34,9 @@ const DynamicFarm = ({
   reload,
   error
 }) => {
-  const [type, setType] = useState('/sentinel2')
+  // const [type, setType] = useState('/sentinel2')
   const SelectedFarm = components[farm]
-  const { createTask } = useApi()
-  const { getEOSViewID, getEOSWeatherForeCast } = useExternalApi()
+  const { eosTask, eosSearch, eosWeather } = useApi()
 
   const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
@@ -68,10 +67,10 @@ const DynamicFarm = ({
     error: EOSViewIDHasError
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_view_id`,
-    digitalFarmerFarm?._id ? getEOSViewID : null,
+    digitalFarmerFarm?._id ? eosSearch : null,
     reload,
     eosViewIdPayload,
-    type
+    'sentinel2'
   )
 
   // payload of health eos task_id creation
@@ -79,7 +78,7 @@ const DynamicFarm = ({
     type: 'mt_stats',
     params: {
       bm_type: ['NDVI', 'MSI', 'EVI', 'CCCI', 'NDRE', 'GCI'],
-      date_start: dateIntervals()?.ThirtyDaysAgo,
+      date_start: dateIntervals()?.SixtyDaysAgo,
       date_end: dateIntervals()?.today,
       geometry: {
         coordinates: [location],
@@ -92,12 +91,12 @@ const DynamicFarm = ({
 
   //creates stats task_id for stats health card
   const {
-    data: eosTask,
+    data: _eosTask,
     isLoading: eosTaskIsLoading,
     error: eosTaskHasError
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_task_stats_for_health`,
-    digitalFarmerFarm?._id ? createTask : null,
+    digitalFarmerFarm?._id ? eosTask : null,
     reload,
     EOSTaskForStats
   )
@@ -115,7 +114,7 @@ const DynamicFarm = ({
     error: WeatherForeCastsHasError
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_weather_forecasts`,
-    digitalFarmerFarm?._id ? getEOSWeatherForeCast : null,
+    digitalFarmerFarm?._id ? eosWeather : null,
     reload,
     weatherForeCastsPayload
   )
@@ -159,13 +158,13 @@ const DynamicFarm = ({
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
           activities={activities}
-          eosTask={eosTask}
+          eosTask={_eosTask}
           EOSViewID={EOSViewID}
           WeatherForeCasts={WeatherForeCasts}
           ScheduledTasks={ScheduledTasks}
           location={location}
           loading={loading || isLoading}
-          setType={setType}
+          //setType={setType}
           error={error}
           _error={eosHasError}
         />

@@ -9,14 +9,14 @@ export default function Events({ scheduledTasks, error }) {
     <React.Fragment>
       {!error && scheduledTasks && (
         <Grid gap={8} mb={8}>
-          {scheduledTasks &&
+          {scheduledTasks?.length > 0 &&
             !error &&
             scheduledTasks?.map(task => (
               <FarmUpdateCard
                 key={task._id}
-                title='TODAY’S TASK'
-                duration={`${task?.taskId.duration} h`}
-                subtitle={`${task?.taskId.name}`}
+                title='SCHEDULED TASK'
+                duration={`${task?.task?.duration} h`}
+                subtitle={`${task?.task?.title}`}
                 text={`${task?.description.replace(/<[^>]*>/g, '')}`}
                 icon={BiTime}
               />

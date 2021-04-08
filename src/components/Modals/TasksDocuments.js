@@ -49,9 +49,25 @@ const previewModal = ({ data, setShown }) => (
 )
 const TasksDocuments = ({ open, onClose, data }) => {
   const [shown, setShown] = React.useState(false)
+  const [pdfs, setPdfs] = React.useState([])
+
+  React.useEffect(() => {
+    let array = []
+    const res = () =>
+      data?.forEach(feed => {
+        let media = feed?.media?.filter(media => media.type === 'pdf')
+        array.push(...media)
+      })
+
+    res()
+    if (array.length > 0) {
+      setPdfs(array)
+    }
+  }, [data])
+
   return (
     <ModalWrapper isCentered isOpen={open} onClose={onClose} size='3xl'>
-      {data?.length > 0 && (
+      {pdfs?.length > 0 && (
         <Box w='100%'>
           <Flex
             align='center'
@@ -66,7 +82,7 @@ const TasksDocuments = ({ open, onClose, data }) => {
             </Heading>
           </Flex>
           <Grid w='100%' templateColumns={{ md: 'repeat(3, 1fr)' }}>
-            {data?.map((pdf, index) => {
+            {pdfs?.map((pdf, index) => {
               return (
                 <React.Fragment key={pdf.url}>
                   <Button
@@ -93,7 +109,7 @@ const TasksDocuments = ({ open, onClose, data }) => {
           </Grid>
         </Box>
       )}
-      {data.length === 0 && (
+      {pdfs.length === 0 && (
         <Flex
           w='100%'
           h='390px'

@@ -25,7 +25,7 @@ export default function useMapbox({
         container: ref.current,
         height,
         style: 'mapbox://styles/mapbox/light-v10',
-        center: [-1.531048, 5.578849],
+        center: center[0],
         zoom: zoom
       })
 

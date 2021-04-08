@@ -103,7 +103,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
         p={{ base: 4, md: 10 }}
         pos='relative'
         css={{
-          direction: 'rtl',
+          direction: 'ltr',
           scrollbarColor: 'rebeccapurple',
           scrollBehavior: 'smooth'
         }}

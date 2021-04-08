@@ -17,7 +17,7 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
           {text && !error && (
             <Text className='loading-text loading-text-b'>{text}</Text>
           )}
-          {error && (
+          {error && !loading && (
             <>
               <Text fontSize='md' ml={2} color='cf.400'>
                 Something went wrong
