@@ -27,7 +27,7 @@ const AccountSettings = () => {
                   <Heading
                     as='h5'
                     fontFamily='display'
-                    fontSize={{ md: '2xl' }}
+                    fontSize={{ base: 'xl', md: '2xl' }}
                     mb={2}
                   >
                     Language
@@ -38,12 +38,12 @@ const AccountSettings = () => {
                   <Heading
                     as='h5'
                     fontFamily='display'
-                    fontSize={{ md: '2xl' }}
+                    fontSize={{ base: 'xl', md: '2xl' }}
                     mb={2}
                   >
                     Time zone
                   </Heading>
-                  <Text>GMT</Text>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>GMT</Text>
                 </Box>
 
                 {/* <Box>
@@ -82,19 +82,19 @@ const AccountSettings = () => {
                 <Box>
                   <Heading
                     as='h5'
-                    fontSize={{ md: '2xl' }}
+                    fontSize={{ base: 'xl', md: '2xl' }}
                     fontFamily='display'
                     mb={2}
                   >
                     Log in options
                   </Heading>
-                  <Text>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>
                     Use your Google account, LinkedIn or Twitter <br />
                     account to log into Complete Farmer.
                   </Text>
                 </Box>
 
-                <Stack mt={6}>
+                <Stack mt={6} d={{ base: 'none', md: 'block' }}>
                   <Checkbox
                     size='lg'
                     colorScheme='cfButton'
@@ -118,6 +118,37 @@ const AccountSettings = () => {
                   </Checkbox>
                   <Checkbox
                     size='lg'
+                    colorScheme='cfButton'
+                    borderColor='black'
+                  >
+                    Use your LinkedIn account to log in
+                  </Checkbox>
+                </Stack>
+
+                <Stack mt={6} d={{ base: 'block', md: 'none' }}>
+                  <Checkbox
+                    size='md'
+                    colorScheme='cfButton'
+                    borderColor='black'
+                  >
+                    Use your Google account to log in
+                  </Checkbox>
+                  <Checkbox
+                    size='md'
+                    colorScheme='cfButton'
+                    borderColor='black'
+                  >
+                    Use your Twitter account to log in
+                  </Checkbox>
+                  <Checkbox
+                    size='md'
+                    colorScheme='cfButton'
+                    borderColor='black'
+                  >
+                    Use your Facebook account to log in
+                  </Checkbox>
+                  <Checkbox
+                    size='md'
                     colorScheme='cfButton'
                     borderColor='black'
                   >
