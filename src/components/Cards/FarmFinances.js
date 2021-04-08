@@ -20,9 +20,7 @@ const FarmFinances = ({
   const totalAmount = React.useCallback(
     (__activity, index) => {
       let totalAmount = 0
-      let tempTasks = tasks?.filter(
-        _task => _task.activity._id === __activity._id
-      )
+      let tempTasks = tasks?.filter(_task => _task.activity === __activity._id)
       if (tempTasks) {
         tempTasks.forEach(_task => {
           totalAmount = totalAmount + _task?.budget
@@ -32,13 +30,13 @@ const FarmFinances = ({
         let currentExpense = 0
         let _tasks = scheduledTasks.filter(
           completedTask =>
-            __activity._id === completedTask?.taskId?.activity?._id &&
+            __activity._id === completedTask?.task?.activity &&
             completedTask.status === 'COMPLETED'
         )
 
         if (_tasks) {
           _tasks.forEach(_task => {
-            currentExpense = currentExpense + _task?.taskId?.budget
+            currentExpense = currentExpense + _task?.task?.budget
           })
         }
 
@@ -142,42 +140,51 @@ const FarmFinances = ({
               Farm expenses
             </Heading>
           </Flex>
-          <Flex direction='column' w='100%' px={{ md: 8 }}>
-            {activities.map((_activity, index) => {
-              return (
-                <Flex
-                  key={_activity?._id}
-                  direction='row'
-                  justify='space-between'
-                  align='center'
-                  borderBottomWidth={1}
-                  borderBottomColor='gray.200'
-                  py={3}
-                >
-                  <Text
-                    color={{
-                      md: totalAmount(_activity, index)?.state
-                        ? 'gray.500'
-                        : 'gray.200'
-                    }}
-                    fontSize='sm'
+          <Flex
+            direction='column'
+            w='100%'
+            px={{ md: 8 }}
+            justify='space-between'
+            h='100%'
+          >
+            <Flex direction='column'>
+              {activities.map((_activity, index) => {
+                return (
+                  <Flex
+                    key={_activity?._id}
+                    direction='row'
+                    justify='space-between'
+                    align='center'
+                    borderBottomWidth={1}
+                    borderBottomColor='gray.200'
+                    py={3}
                   >
-                    {_activity?.name}
-                  </Text>
-                  <Heading
-                    fontSize='lg'
-                    color={{
-                      md: totalAmount(_activity, index)?.state
-                        ? null
-                        : 'gray.200'
-                    }}
-                  >
-                    {totalAmount(_activity, index)?.total}
-                  </Heading>
-                </Flex>
-              )
-            })}
-            <Flex>
+                    <Text
+                      color={{
+                        md: totalAmount(_activity, index)?.state
+                          ? 'gray.500'
+                          : 'gray.200'
+                      }}
+                      fontSize='sm'
+                    >
+                      {_activity?.title}
+                    </Text>
+                    <Heading
+                      fontSize='lg'
+                      color={{
+                        md: totalAmount(_activity, index)?.state
+                          ? null
+                          : 'gray.200'
+                      }}
+                    >
+                      {totalAmount(_activity, index)?.total}
+                    </Heading>
+                  </Flex>
+                )
+              })}
+            </Flex>
+
+            <Flex justify='flex-end'>
               <Button
                 btntitle='Rollover'
                 bg='white'

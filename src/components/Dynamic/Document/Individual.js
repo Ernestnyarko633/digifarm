@@ -94,7 +94,7 @@ export default function Individual({
                 ScheduledTasks={ScheduledTasks.filter(
                   _completedTask =>
                     _activity._id === _completedTask?.task?.activity &&
-                    _completedTask.status === 'PENDING'
+                    _completedTask.status === 'COMPLETED'
                 )}
                 tasksNumber={
                   tasks?.filter(_task => _task.activity._id === _activity._id)

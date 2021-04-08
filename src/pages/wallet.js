@@ -9,26 +9,27 @@ import { useParams } from 'react-router-dom'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
 import FarmFinances from 'components/Cards/FarmFinances'
-import Price from '../data/price.json'
+//import Price from '../data/price.json'
 
 const Wallet = () => {
   document.title = 'Complete Farmer | Farm wallet'
   const [reload, setReload] = React.useState(0)
   const { id } = useParams()
-  const [wallet, setWallet] = React.useState(Price.price)
+  const [wallet, setWallet] = React.useState(0)
   const [expenses, setExpenses] = React.useState(0)
   const {
     getAllTasks,
     getMyFarm,
     getActivities,
-    getMyScheduledTasks
+    getMyScheduledTasks,
+    getMyFarmFeeds
   } = useApi()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
   const {
-    data: yourFarm,
-    isLoading: yourFarmIsLoading,
-    error: yourFarmHasError
+    data: farm,
+    isLoading: farmIsLoading,
+    error: farmHasError
   } = useFetch(`${id}_digital_farmer_farm`, getMyFarm, reload, id)
 
   const {
@@ -36,11 +37,11 @@ const Wallet = () => {
     isLoading: myFarmActivitiesIsLoading,
     error: myFarmActivitiesHasError
   } = useFetch(
-    `${yourFarm?.order?.product?.protocol?._id}_activities`,
+    `${farm?.order?.product?.protocol?._id}_activities`,
     getActivities,
     reload,
     {
-      protocol: yourFarm?.order?.product?.protocol?._id
+      protocol: farm?.order?.product?.protocol?._id
     }
   )
 
@@ -55,35 +56,50 @@ const Wallet = () => {
     isLoading: ScheduledTasksIsLoading,
     error: ScheduledTasksHasError
   } = useFetch(
-    `${yourFarm?.order?.product?._id}_scheduled_tasks`,
+    `${farm?.order?.product?._id}_scheduled_tasks`,
     getMyScheduledTasks,
     reload,
     {
-      farm: yourFarm?.order?.product?._id
+      farm: farm?.order?.product?._id
+    }
+  )
+
+  const {
+    data: farmFeeds,
+    isLoading: farmFeedsIsLoading,
+    error: farmFeedsHasError
+  } = useFetch(
+    `${farm?.order?.product?._id}_farm_feeds`,
+    farm?.order?.product?._id ? getMyFarmFeeds : null,
+    reload,
+    {
+      farm: farm?.order?.product?._id
     }
   )
 
   const loading =
     ScheduledTasksIsLoading ||
-    yourFarmIsLoading ||
+    farmIsLoading ||
     tasksIsLoading ||
-    myFarmActivitiesIsLoading
+    myFarmActivitiesIsLoading ||
+    farmFeedsIsLoading
   const error =
     ScheduledTasksHasError ||
-    yourFarmHasError ||
+    farmHasError ||
     tasksHasError ||
-    myFarmActivitiesHasError
+    myFarmActivitiesHasError ||
+    farmFeedsHasError
 
   // eslint-disable-next-line no-console
-  console.log(yourFarm, 'hisfarm')
+  console.log(farm, 'hisfarm')
 
   React.useEffect(() => {
     let total = 0
-    if (yourFarm && yourFarm?.order?.status === 'PAID') {
-      total = 750 * yourFarm?.order?.acreage
+    if (farm && farm?.order?.status === 'PAID') {
+      total = farm?.order?.cost * farm?.order?.acreage
     }
     setWallet(total)
-  }, [yourFarm])
+  }, [farm])
   return (
     <Layout>
       <FarmWalletEmptyState>
@@ -118,7 +134,7 @@ const Wallet = () => {
                 justify='center'
                 mx='auto'
                 reload={() => {
-                  ;(!yourFarm?.length ||
+                  ;(!farm?.length ||
                     !tasks?.length ||
                     !myFarmActivities?.length ||
                     !ScheduledTasks?.length) &&
@@ -133,7 +149,7 @@ const Wallet = () => {
           {!loading && !error && (
             <Box>
               <FarmFinances
-                farm={yourFarm}
+                farm={farm}
                 activities={myFarmActivities}
                 tasks={tasks}
                 scheduledTasks={ScheduledTasks}
@@ -152,8 +168,9 @@ const Wallet = () => {
                 See and view your receipts to funds usage
               </Heading>
               <Individual
-                digitalFarmerFarm={yourFarm}
+                digitalFarmerFarm={farm}
                 activities={myFarmActivities}
+                farmfeeds={farmFeeds}
                 tasks={tasks}
                 ScheduledTasks={ScheduledTasks}
               />
