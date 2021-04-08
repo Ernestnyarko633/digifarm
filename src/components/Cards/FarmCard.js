@@ -90,7 +90,7 @@ const FarmCard = ({ farm, _small }) => {
                   align='center'
                   justify='center'
                   reload={triggerReload}
-                  loading={!isLoading}
+                  loading={isLoading}
                   error={error}
                   text='fetching progress'
                 />
