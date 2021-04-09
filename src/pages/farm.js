@@ -111,9 +111,14 @@ export default function Farm() {
     data: tasks,
     isLoading: tasksIsLoading,
     error: tasksHasError
-  } = useFetch('tasks', getAllTasks, reload, {
-    farm: farm?.order?.product?._id
-  })
+  } = useFetch(
+    'tasks',
+    farm?.order?.product?._id ? getAllTasks : null,
+    reload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
 
   const isLoading =
     farmFeedsIsLoading ||
