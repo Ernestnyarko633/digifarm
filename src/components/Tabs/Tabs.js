@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Flex } from '@chakra-ui/react'
@@ -34,7 +35,7 @@ const Tabs = ({
       >
         {children?.map(child => {
           const { label } = child.props
-
+          console.log(child, 'hurray')
           return (
             <Tab
               activeTab={activeTab}

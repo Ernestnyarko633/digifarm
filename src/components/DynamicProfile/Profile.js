@@ -89,7 +89,6 @@ const Profile = () => {
     iban: bankDetails?.length ? bankDetails[0]?.iban : ''
   }
 
-  // console.log(selectedFile)
   const onSubmit = async (
     values,
     { setSubmitting, setErrors, setStatus, resetForm }
@@ -98,7 +97,6 @@ const Profile = () => {
       let form
       // const form = new FormData()
       if (selectedFile) {
-        console.log(selectedFile)
         form = new FormData()
         form.append('avatar', selectedFile)
       }
