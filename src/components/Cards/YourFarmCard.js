@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Box, Flex, Heading, Text, Image, Badge, Link } from '@chakra-ui/react'
 import React from 'react'
 import { Link as ReachLink } from 'react-router-dom'

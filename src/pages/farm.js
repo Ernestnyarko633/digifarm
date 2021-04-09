@@ -1,17 +1,16 @@
-/* eslint-disable */
-import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react';
-import DynamicFarm from 'components/Dynamic';
-import Header from 'container/Header';
-import useAuth from 'context/auth';
-import React, { useState, useEffect, useRef } from 'react';
-import { useScreenshot } from 'use-react-screenshot';
-import useApi from 'context/api';
-import FetchCard from 'components/FetchCard';
-import { useParams } from 'react-router-dom';
-import Share from 'components/Share';
-import useFetch from 'hooks/useFetch';
-import { dateIntervals } from 'helpers/misc';
-import { Menu } from '@headlessui/react';
+import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react'
+import DynamicFarm from 'components/Dynamic'
+import Header from 'container/Header'
+import useAuth from 'context/auth'
+import React, { useState, useEffect, useRef } from 'react'
+import { useScreenshot } from 'use-react-screenshot'
+import useApi from 'context/api'
+import FetchCard from 'components/FetchCard'
+import { useParams } from 'react-router-dom'
+import Share from 'components/Share'
+import useFetch from 'hooks/useFetch'
+import { dateIntervals } from 'helpers/misc'
+import { Menu } from '@headlessui/react'
 import {
   chevronDown,
   chevronUp,
@@ -19,140 +18,141 @@ import {
   Calendar,
   Crop,
   FarmSchedule,
-  Updates,
-} from 'theme/Icons';
+  Updates
+} from 'theme/Icons'
 
 export default function Farm() {
-  const { isAuthenticated } = useAuth();
-  const { user } = isAuthenticated();
-  const { id } = useParams();
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  const { id } = useParams()
 
-  const ref = useRef(null);
-  const [state, setState] = useState('compA');
-  const [isOpen, setIsOpen] = useState(false);
-  const [image, takeScreenShot] = useScreenshot();
-  const [reload, setReload] = useState(0);
-  const [location, setLocation] = useState([]);
-  const [center, setCenter] = useState([]);
-  const triggerReload = () => setReload((prevState) => prevState + 1);
+  const ref = useRef(null)
+  const [state, setState] = useState('compA')
+  const [isOpen, setIsOpen] = useState(false)
+  const [image, takeScreenShot] = useScreenshot()
+  const [reload, setReload] = useState(0)
+  const [location, setLocation] = useState([])
+  const [center, setCenter] = useState([])
+  const triggerReload = () => setReload(prevState => prevState + 1)
 
   const {
     getMyFarmFeeds,
     getAllTasks,
     getMyFarm,
     getActivities,
-    getMyScheduledTasks,
-  } = useApi();
+    getMyScheduledTasks
+  } = useApi()
 
   const {
     data: farm,
     isLoading: farmIsLoading,
-    error: farmHasError,
-  } = useFetch(null, getMyFarm, reload, id);
+    error: farmHasError
+  } = useFetch(null, getMyFarm, reload, id)
 
   useEffect(() => {
-    let location_ = [];
-    let center_ = [];
-    let _location = farm?.order?.product?.location;
-    let _center = _location?.center;
+    let location_ = []
+    let center_ = []
+    let _location = farm?.order?.product?.location
+    let _center = _location?.center
     const strToNumber = (value, array) =>
-      value?.forEach((coordinate) => {
+      value?.forEach(coordinate => {
         return array?.push(
-          coordinate.split(',').map((item) => {
-            return parseFloat(item, 10);
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
           })
-        );
-      });
-    strToNumber(_location?.coords, location_);
-    strToNumber(_center, center_);
-    setLocation(location_);
-    setCenter(center_);
-  }, [farm]);
+        )
+      })
+    strToNumber(_location?.coords, location_)
+    strToNumber(_center, center_)
+    setLocation(location_)
+    setCenter(center_)
+  }, [farm])
 
   const {
     data: farmFeeds,
     isLoading: farmFeedsIsLoading,
-    error: farmFeedsHasError,
+    error: farmFeedsHasError
   } = useFetch(
     `${farm?.order?.product?._id}_farm_feeds`,
     farm?.order?.product?._id ? getMyFarmFeeds : null,
     reload,
     {
-      farm: farm?.order?.product?._id,
+      farm: farm?.order?.product?._id
     }
-  );
+  )
 
   const {
     data: ScheduledTasks,
     isLoading: ScheduledTasksIsLoading,
-    error: ScheduledTasksHasError,
+    error: ScheduledTasksHasError
   } = useFetch(
     `${farm?.order?.product?._id}_scheduled_tasks`,
     farm?.order?.product?._id ? getMyScheduledTasks : null,
     reload,
     {
-      farm: farm?.order?.product?._id,
+      farm: farm?.order?.product?._id
     }
-  );
+  )
 
   const {
     data: myFarmActivities,
     isLoading: myFarmActivitiesIsLoading,
-    error: myFarmActivitiesHasError,
+    error: myFarmActivitiesHasError
   } = useFetch(
     `${farm?.order?.product?._id}_activities`,
     farm?.order?.product?._id ? getActivities : null,
     reload,
     {
-      farm: farm?.order?.product?._id,
+      farm: farm?.order?.product?._id
     }
-  );
+  )
 
   const {
     data: tasks,
     isLoading: tasksIsLoading,
-    error: tasksHasError,
+    error: tasksHasError
   } = useFetch('tasks', getAllTasks, reload, {
-    farm: farm?.order?.product?._id,
-  });
+    farm: farm?.order?.product?._id
+  })
 
   const isLoading =
     farmFeedsIsLoading ||
     farmIsLoading ||
     ScheduledTasksIsLoading ||
     myFarmActivitiesIsLoading ||
-    tasksIsLoading;
+    tasksIsLoading
   const hasError =
     farmFeedsHasError ||
     farmHasError ||
     ScheduledTasksHasError ||
     myFarmActivitiesHasError ||
-    tasksHasError;
+    tasksHasError
 
-  const onClose = () => setIsOpen(false);
+  const onClose = () => setIsOpen(false)
 
-  const onOpen = () => setIsOpen(true);
+  const onOpen = () => setIsOpen(true)
 
   const getImage = () => {
-    takeScreenShot(ref.current);
-    onOpen();
-  };
+    takeScreenShot(ref.current)
+    onOpen()
+  }
 
   const menus = [
     { name: 'Farm', comp: 'compA' },
     { name: 'Documents', comp: 'compB' },
     { name: 'Gallery', comp: 'compC' },
-    { name: 'Warehouse', comp: 'compD' },
-  ];
+    { name: 'Warehouse', comp: 'compD' }
+  ]
 
   const bottomMenus = [
     { id: 1, name: 'Today’s tasks', icon: Calendar, state: 'compA' },
     { id: 2, name: 'Weather', icon: Weather, state: 'compB' },
     { id: 3, name: 'Crop health', icon: Crop, state: 'compC' },
     { id: 4, name: 'Scheduled events', icon: FarmSchedule, state: 'compD' },
-    { id: 5, name: 'Manager updates', icon: Updates, state: 'compE' },
-  ];
+    { id: 5, name: 'Manager updates', icon: Updates, state: 'compE' }
+  ]
 
+  const mapKey = index => index
   return isLoading || hasError ? (
     <FetchCard
       h='100vh'
@@ -196,11 +196,11 @@ export default function Farm() {
           <Flex align='center'>
             {menus.map((menu, idx) => (
               <Flex
-                key={idx}
-                _hover={{background: 'transparent'}}
-                bg="transparent"
-                outlineColor="none"
-                outline="none"
+                key={mapKey(idx)}
+                _hover={{ background: 'transparent' }}
+                bg='transparent'
+                outlineColor='none'
+                outline='none'
                 as={Button}
                 role='button'
                 aria-label={`${menu.name} button`}
@@ -245,7 +245,7 @@ export default function Farm() {
                 {menus.map((menu, idx) => (
                   <Menu.Item
                     as={Box}
-                    key={idx}
+                    key={mapKey(idx)}
                     py={4}
                     borderBottomWidth={1}
                     _last={{ borderBlockWidth: 0 }}
@@ -292,7 +292,7 @@ export default function Farm() {
               justify='center'
               mx='auto'
               reload={() => {
-                hasError && triggerReload();
+                hasError && triggerReload()
               }}
               loading={isLoading}
               error={hasError}
@@ -336,7 +336,7 @@ export default function Farm() {
           zIndex={50}
           px={4}
         >
-          {bottomMenus.map((item) => (
+          {bottomMenus.map(item => (
             <Box
               as='button'
               role='button'
@@ -354,5 +354,5 @@ export default function Farm() {
         </Flex>
       </Box>
     </Box>
-  );
+  )
 }

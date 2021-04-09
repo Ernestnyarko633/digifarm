@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React from 'react'
 import Layout from 'container/Layout'
 import { Box, Flex, Icon, Text, Heading } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
@@ -38,6 +37,8 @@ const Marketplace = () => {
   const [state, setState] = React.useState(0)
   const { state: myfarm } = useLocation()
 
+  const triggerReload = () => setReload(prev => prev++)
+
   const toggle = value => {
     return setState(value)
   }
@@ -63,6 +64,7 @@ const Marketplace = () => {
           p={2}
           position='absolute'
         >
+          {false && triggerReload()}
           <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
           <Text
             as='span'
@@ -139,6 +141,8 @@ const Marketplace = () => {
           </Box>
         </Flex>
         {state === 0 &&
+          !isLoading &&
+          !error &&
           data?.map(buyers => (
             // add condition for when there are no buyer and error handling
             <BuyerCard

@@ -1,33 +1,24 @@
-/* eslint-disable */
-import {
-  Box,
-  Flex,
-  Grid,
-  Text,
-  Container,
-  Input,
-  Icon,
-} from '@chakra-ui/react';
-import React from 'react';
-import DynamicProfile from 'components/DynamicProfile';
-import Header from 'container/Header';
-import { FiUser } from 'react-icons/fi';
-import { BiCog, BiLockAlt } from 'react-icons/bi';
-import { BsShield } from 'react-icons/bs';
+import { Box, Flex, Grid, Text, Container, Icon } from '@chakra-ui/react'
+import React from 'react'
+import DynamicProfile from 'components/DynamicProfile'
+import Header from 'container/Header'
+import { FiUser } from 'react-icons/fi'
+import { BiCog, BiLockAlt } from 'react-icons/bi'
+import { BsShield } from 'react-icons/bs'
 
 const Profile = () => {
-  const [page, setPage] = React.useState('compA');
+  const [page, setPage] = React.useState('compA')
 
   const menus = [
     {
       name: 'Profile',
       comp: 'compA',
-      icon: FiUser,
+      icon: FiUser
     },
     {
       name: 'Account Settings',
       comp: 'compB',
-      icon: BiCog,
+      icon: BiCog
     },
     // {
     //   name: 'Notifications',
@@ -37,7 +28,7 @@ const Profile = () => {
     {
       name: 'Security',
       comp: 'compD',
-      icon: BiLockAlt,
+      icon: BiLockAlt
     },
     {
       name: 'Privacy Policy',
@@ -54,7 +45,7 @@ const Profile = () => {
   return (
     <Box>
       <Header />
-      <Container pt={{md: 55}} maxW={{ md: '7xl' }}>
+      <Container pt={{ md: 55 }} maxW={{ md: '7xl' }}>
         {/* <Flex
           align='center'
           justify='center'
@@ -94,7 +85,7 @@ const Profile = () => {
             bg='white'
             filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
           >
-            {menus.map((menu) => (
+            {menus.map(menu => (
               <Flex
                 align='center'
                 key={menu}
@@ -105,7 +96,14 @@ const Profile = () => {
                 px={5}
                 py={2}
                 rounded='30px'
-                onClick={() => menu?.comp === 'compE' ? window.open("https://www.completefarmer.com/terms", '_blank') : setPage(menu.comp)}
+                onClick={() =>
+                  menu?.comp === 'compE'
+                    ? window.open(
+                        'https://www.completefarmer.com/terms',
+                        '_blank'
+                      )
+                    : // eslint-disable-next-line prettier/prettier
+                     setPage(menu.comp)}
               >
                 <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
                 <Text>{menu.name}</Text>
@@ -144,7 +142,7 @@ const Profile = () => {
         </Grid>
       </Container>
     </Box>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
