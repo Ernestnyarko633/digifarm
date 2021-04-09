@@ -50,7 +50,6 @@ const Map = ({
     })
   }
 
-  console.log('center', center)
   const { ref } = useMap({
     center: center,
     onInit: onInitHandler,

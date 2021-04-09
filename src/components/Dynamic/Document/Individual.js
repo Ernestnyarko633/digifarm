@@ -65,7 +65,7 @@ export default function Individual({
     }
     return totalAmount
   }
-  console.log(activities, tempActs, farmfeeds, 'checking')
+
   return (
     <Box>
       {tempActs?.length === 0 && (
