@@ -22,13 +22,14 @@ const GetStartedNowCard = () => (
         Learn more <Icon as={MdKeyboardArrowRight} />
       </Link>
 
-      <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/start-farm'>
+      <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='#'>
         <Button
           colorScheme='linear'
           rounded='30px'
           w={{ base: 56, md: 64 }}
           h={12}
           shadow='md'
+          disabled
         >
           Get me started now
         </Button>
