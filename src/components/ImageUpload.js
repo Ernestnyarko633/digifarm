@@ -13,9 +13,6 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
       acceptedFiles.forEach(async file => {
         const formData = new FormData()
         formData.append('file', file, file?.name)
-        // const res = await postImageUpload(formData);
-        // console.log('result', res);
-        // setFieldValue('file_ids', [...values, res?.data?.data?.id])
       })
       setFiles(
         acceptedFiles.map(file =>

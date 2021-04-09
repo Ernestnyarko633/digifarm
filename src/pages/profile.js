@@ -1,24 +1,33 @@
-import { Box, Flex, Grid, Text, Container, Input, Icon } from '@chakra-ui/react'
-import React from 'react'
-import DynamicProfile from 'components/DynamicProfile'
-import Header from 'container/Header'
-import { FiUser } from 'react-icons/fi'
-import { BiCog, BiLockAlt } from 'react-icons/bi'
-import { BsShield } from 'react-icons/bs'
+/* eslint-disable */
+import {
+  Box,
+  Flex,
+  Grid,
+  Text,
+  Container,
+  Input,
+  Icon,
+} from '@chakra-ui/react';
+import React from 'react';
+import DynamicProfile from 'components/DynamicProfile';
+import Header from 'container/Header';
+import { FiUser } from 'react-icons/fi';
+import { BiCog, BiLockAlt } from 'react-icons/bi';
+import { BsShield } from 'react-icons/bs';
 
 const Profile = () => {
-  const [page, setPage] = React.useState('compA')
+  const [page, setPage] = React.useState('compA');
 
   const menus = [
     {
       name: 'Profile',
       comp: 'compA',
-      icon: FiUser
+      icon: FiUser,
     },
     {
       name: 'Account Settings',
       comp: 'compB',
-      icon: BiCog
+      icon: BiCog,
     },
     // {
     //   name: 'Notifications',
@@ -28,7 +37,7 @@ const Profile = () => {
     {
       name: 'Security',
       comp: 'compD',
-      icon: BiLockAlt
+      icon: BiLockAlt,
     },
     {
       name: 'Privacy Terms',
@@ -41,7 +50,7 @@ const Profile = () => {
   return (
     <Box>
       <Header />
-      <Container maxW='7xl'>
+      <Container maxW={{ md: '7xl' }}>
         <Flex
           align='center'
           justify='center'
@@ -69,6 +78,7 @@ const Profile = () => {
         </Flex>
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Flex
+            d={{ base: 'none', md: 'flex' }}
             // align='center'
             // justify='center'
             direction='column'
@@ -80,7 +90,7 @@ const Profile = () => {
             bg='white'
             filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
           >
-            {menus.map(menu => (
+            {menus.map((menu) => (
               <Flex
                 align='center'
                 key={menu}
@@ -99,11 +109,38 @@ const Profile = () => {
             ))}
           </Flex>
 
+          <Flex
+            align='center'
+            d={{ base: 'flex', md: 'none' }}
+            overflowX='scroll'
+            mb={6}
+          >
+            {menus.map((menu) => (
+              <Flex
+                align='center'
+                justify='center'
+                key={menu}
+                as='button'
+                role='button'
+                my={3}
+                bg={page === menu.comp && 'cf.200'}
+                px={5}
+                py={2}
+                minW={48}
+                rounded='30px'
+                onClick={() => setPage(menu.comp)}
+              >
+                <Icon as={menu.icon} mr={2} boxSize={5} />
+                <Text fontSize='sm'>{menu.name}</Text>
+              </Flex>
+            ))}
+          </Flex>
+
           <DynamicProfile page={page} />
         </Grid>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

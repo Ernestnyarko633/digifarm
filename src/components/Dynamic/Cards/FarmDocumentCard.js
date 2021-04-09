@@ -21,24 +21,7 @@ export default function FarmDocumentCard({
 }) {
   const { handleModalClick } = useComponent()
 
-  // useEffect(() => {
-  //   window.html2canvas = html2canvas
-  //   var doc = new jsPDF({
-  //     orientation: 'landscape',
-  //     unit: 'px'
-  //     // format: [4, 2]
-  //   })
-
-  //   var content = document.getElementById('content-22')
-  //   console.log('content', content)
-  //   console.log('document.body', document.body)
-  //   doc.html(content, {
-  //     callback: function (doc) {
-  //       console.log('in callback')
-  //       doc.save()
-  //     }
-  //   })
-  // }, [])
+ 
   const thisData = {
     title,
     amount,

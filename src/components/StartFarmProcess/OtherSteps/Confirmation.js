@@ -6,11 +6,14 @@ import useComponent from 'context/component'
 
 import { Button } from 'components'
 import FarmInfo from 'components/Cards/FarmInfo'
+import useStartFarm from 'context/start-farm'
+import PropTypes from 'prop-types'
 
 const MotionFlex = motion.custom(Flex)
 
-const Confirmation = () => {
+const Confirmation = ({ farm }) => {
   const { handleModalClick } = useComponent()
+  const { order, currency, exchangeRate } = useStartFarm()
   return (
     <MotionFlex w='100%'>
       <Box w={{ md: '50%' }}>
@@ -32,7 +35,12 @@ const Confirmation = () => {
               Hurray! you have successfully <br /> made payment to your new farm
             </Text>
           </Box>
-          <FarmInfo />
+          <FarmInfo
+            farm={farm}
+            order={order}
+            currency={currency}
+            rate={exchangeRate}
+          />
         </Flex>
         <Flex
           direction={{ base: 'column', md: 'row' }}
@@ -51,10 +59,18 @@ const Confirmation = () => {
             color='cf.900'
             variant='outline'
             borderColor='cf.900'
-            btntitle='View farm receipt'
+            btntitle='View farm invoice'
             _hover={{ bg: 'transparent' }}
             _active={{ bg: 'transparent' }}
-            onClick={() => handleModalClick('receipt')}
+            onClick={() =>
+              handleModalClick('receipt', {
+                farm,
+                order,
+                currency,
+                exchangeRate,
+                type: 'invoice'
+                // eslint-disable-next-line prettier/prettier
+              })}
           />
           <Button
             w={64}
@@ -62,13 +78,25 @@ const Confirmation = () => {
             h={12}
             fontSize='md'
             rounded='30px'
-            btntitle='View farm contract'
-            onClick={() => handleModalClick('contract')}
+            btntitle='View farm agreement'
+            onClick={() =>
+              handleModalClick('contract', {
+                farm,
+                order,
+                currency,
+                exchangeRate,
+                type: 'agreement'
+                // eslint-disable-next-line prettier/prettier
+            })}
           />
         </Flex>
       </Box>
     </MotionFlex>
   )
+}
+
+Confirmation.propTypes = {
+  farm: PropTypes.any
 }
 
 export default Confirmation

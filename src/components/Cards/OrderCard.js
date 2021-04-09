@@ -18,19 +18,6 @@ import useStartFarm from 'context/start-farm'
 
 const OrderCard = ({ order, onOpen }) => {
   const { setOrder } = useStartFarm()
-  // const { getPaymentDetails } = useApi()
-
-  // React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await getPaymentDetails(order?._id)
-  //       console.log(res)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [getPaymentDetails, order?._id])
 
   return (
     <Box

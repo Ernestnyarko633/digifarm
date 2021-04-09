@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+import Header from 'container/Header'
 
 import useStartFarm from 'context/start-farm'
 
@@ -32,7 +33,7 @@ const Individual = props => {
 
   return (
     <Box w='100%' h='100vh' bgColor='white'>
-      <Flex
+      {/* <Flex
         h={20}
         top={0}
         bgColor='white'
@@ -43,14 +44,14 @@ const Individual = props => {
         align='center'
         px={{ base: 4, md: 20 }}
       >
-        <Box h={{ base: 10, md: 12 }}>
+        <Box h={{ base: 10, md: 12 }} bg='black'>
           <Image
             h='100%'
             src={require('../../assets/images/logo.png').default}
           />
         </Box>
-      </Flex>
-
+      </Flex> */}
+      <Header />
       {getFlow(step)}
     </Box>
   )

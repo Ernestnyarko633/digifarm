@@ -36,7 +36,7 @@ const Contract = ({ farm }) => {
             carefully for your Complete Farmer (“The Company”) to complete
             yourcrowd farming subscription. This Agreement should be read
             together withour Terms & Conditions and our Privacy Policy.This
-            Agreement is made between (the ‘Crowd Farmer’ or ‘You’), and
+            Agreement is made between (the ‘DigiFarmer’ or ‘You’), and
             theCompany, and is effective upon signature or your acceptance.
             <br/> 
             <Heading
@@ -64,9 +64,9 @@ const Contract = ({ farm }) => {
             
             
             AuditorThe Company will submit audit reports by their independent
-            qualityassurance auditor upon request of the Crowd Farmer which
+            qualityassurance auditor upon request of the DigiFarmer which
             shall assessthe farm processes, seed and yield of harvest, should
-            any conflict ariseconcerning the above between the Crowd Farmer and
+            any conflict ariseconcerning the above between the DigiFarmer and
             the Company. 
 
             <br/> 

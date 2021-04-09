@@ -6,7 +6,7 @@ import Receipt from '../Utils/Receipt'
 import ModalWrapper from './ModalWrapper'
 
 const FarmReceiptModal = () => {
-  const { isOpen, onClose } = useComponent()
+  const { isOpen, onClose, data } = useComponent()
   return (
     <ModalWrapper
       image={require('../../assets/images/logo.png').default}
@@ -20,7 +20,9 @@ const FarmReceiptModal = () => {
         description='Description'
         label="Here's the confirmation of your payment and a receipt for your farm"
         text='Have an issue with your farm receipt?'
-        buttonTitle='Download receipt'
+        buttonTitle='Download invoice'
+        type={data?.type}
+        data={data}
       />
     </ModalWrapper>
   )

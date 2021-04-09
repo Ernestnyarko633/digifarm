@@ -21,12 +21,28 @@ const PrivacyAndData = () => {
       <Divider orientation='horizontal' my={12} />
       <Box>
         <Box>
-          <Heading as='h5' fontSize={{ md: '2xl' }} fontFamily='display' mb={2}>
+          <Heading
+            as='h5'
+            fontSize={{ base: 'lg', md: '2xl' }}
+            fontFamily='display'
+            mb={2}
+          >
             Search privacy{' '}
           </Heading>
           <Flex align='center'>
-            <Checkbox size='lg' colorScheme='cfButton' borderColor='black' />{' '}
-            <Text ml={3}>
+            <Checkbox
+              size='lg'
+              colorScheme='cfButton'
+              borderColor='black'
+              d={{ base: 'none', md: 'block' }}
+            />{' '}
+            <Checkbox
+              size='md'
+              colorScheme='cfButton'
+              borderColor='black'
+              d={{ base: 'block', md: 'none' }}
+            />{' '}
+            <Text ml={3} fontSize={{ base: 'sm', md: 'md' }}>
               Hide your profile from search engines.{' '}
               <Link _hover={{ textDecor: 'none' }} color='cf.400' ml={6}>
                 Learn more <Icon as={chevronRight} />

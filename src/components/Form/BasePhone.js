@@ -33,9 +33,9 @@ const BasePhone = ({
         w={width}
       >
         <FormLabel
-          fontSize={{ md: 'xs' }}
+          fontSize='xs'
           pos='absolute'
-          left={{ md: 4 }}
+          left={{ base: 2, md: 4 }}
           top={2}
           color='gray.600'
         >
