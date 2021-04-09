@@ -54,8 +54,8 @@ const Profile = () => {
   return (
     <Box>
       <Header />
-      <Container maxW={{ md: '7xl' }}>
-        <Flex
+      <Container pt={{md: 55}} maxW={{ md: '7xl' }}>
+        {/* <Flex
           align='center'
           justify='center'
           h={70}
@@ -79,7 +79,7 @@ const Profile = () => {
               Change your header image
             </Text>
           </Box>
-        </Flex>
+        </Flex> */}
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Flex
             d={{ base: 'none', md: 'flex' }}

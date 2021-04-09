@@ -8,7 +8,6 @@ import PropTypes from 'prop-types'
 import { Link as ReachRouter } from 'react-router-dom'
 
 const YourFarmCard = ({ farms }) => {
-  console.log(farms)
   const dummyFarms = [
     { color: '#FF9F9F' },
     { color: '#76B1F6' },

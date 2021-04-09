@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { Box, Heading } from '@chakra-ui/react'
 
@@ -60,7 +62,7 @@ const CropSelection = () => {
             width={{ base: '100%', md: 'initial' }}
           >
             {categories?.map(cat => (
-              <Box key={cat._id} label={cat.name}>
+              <Box key={cat._id} label={cat.name || cat?.title}>
                 <FarmDetails
                   catName={cat.name}
                   handleNext={handleNext}
