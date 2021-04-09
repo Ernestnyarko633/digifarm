@@ -23,9 +23,9 @@ const FormTextArea = ({
       borderBottomColor={error && touched ? 'red.500' : 'cf.400'}
     >
       <FormLabel
-        fontSize={{ md: 'xs' }}
+        fontSize='xs'
         pos='absolute'
-        left={{ md: 4 }}
+        left={{ base: 2, md: 4 }}
         top={3}
         color='gray.600'
       >

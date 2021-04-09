@@ -8,10 +8,11 @@ const ActionCard = ({ title, text, btnText }) => {
     <Flex
       justify='space-between'
       rounded='30px'
+      direction={{ base: 'column', md: 'row' }}
       borderWidth={1}
       borderColor='gray.200'
       py={6}
-      px={10}
+      px={{ base: 5, md: 10 }}
     >
       <Box>
         <Heading as='h6' size='md' fontFamily='display' mb={2}>
@@ -24,7 +25,7 @@ const ActionCard = ({ title, text, btnText }) => {
         />
       </Box>
 
-      <Box>
+      <Box mt={{ base: 6, md: 0 }}>
         <Button
           bg='transparent'
           borderWidth={1}

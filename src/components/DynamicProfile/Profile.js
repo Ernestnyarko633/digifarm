@@ -107,7 +107,7 @@ const Profile = () => {
   }
 
   return (
-    <Container maxW='4xl'>
+    <Container maxW={{ md: '4xl' }}>
       <Formik
         enableReinitialize
         initialValues={initialValues}
@@ -140,7 +140,7 @@ const Profile = () => {
                 role='button'
                 type='button'
                 rounded='30px'
-                px={6}
+                px={{ base: 3, md: 6 }}
                 py={2}
                 fontSize='sm'
                 borderWidth={1}
@@ -149,7 +149,9 @@ const Profile = () => {
                 ml={6}
               >
                 <Input type='file' d='none' />
-                <Text>Upload a new image</Text>
+                <Text fontSize={{ base: 'sm', md: 'md' }}>
+                  Upload a new image
+                </Text>
               </Box>
             </Flex>
 
@@ -157,17 +159,17 @@ const Profile = () => {
               rounded='xl'
               filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               bg='white'
-              p={10}
+              p={{ base: 2, md: 10 }}
               mt={12}
             >
               <Box m={10}>
-                <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
+                <Heading as='h4' fontSize={{ base: 'xl', md: '3xl' }} mb={4}>
                   Personal Info
                 </Heading>
 
                 <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
+                  templateColumns={{ md: 'repeat(2, 1fr)' }}
+                  w='100%'
                   gap={6}
                   mb={6}
                 >
@@ -279,7 +281,7 @@ const Profile = () => {
         rounded='xl'
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
         bg='white'
-        p={10}
+        p={{ base: 2, md: 10 }}
         mt={12}
       >
         <Signature data={user?.signature} />
@@ -290,14 +292,14 @@ const Profile = () => {
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
         mt={12}
         bg='white'
-        p={10}
+        p={{ base: 2, md: 10 }}
       >
-        <Box m={10}>
-          <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
+        <Box m={{ base: 4, md: 10 }}>
+          <Heading as='h4' fontSize={{ base: 'xl', md: '3xl' }} mb={4}>
             Identification Info
           </Heading>
           <Grid
-            templateColumns='repeat(2, 1fr)'
+            templateColumns={{ md: 'repeat(2, 1fr)' }}
             w={{ md: '100%' }}
             gap={6}
             mb={6}
@@ -349,14 +351,14 @@ const Profile = () => {
               filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               my={12}
               bg='white'
-              p={10}
+              p={{ base: 2, md: 10 }}
             >
               <Box m={10}>
-                <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
+                <Heading as='h4' fontSize={{ base: 'xl', md: '3xl' }} mb={4}>
                   Bank details
                 </Heading>
                 <Grid
-                  templateColumns='repeat(2, 1fr)'
+                  templateColumns={{ md: 'repeat(2, 1fr)' }}
                   w={{ md: '100%' }}
                   gap={6}
                 >
@@ -449,10 +451,10 @@ const Profile = () => {
                   <Button
                     colorScheme='linear'
                     rounded='30px'
-                    w={40}
+                    w={{ base: '100%', md: 40 }}
                     h={12}
                     shadow='sm'
-                    ml={4}
+                    ml={{ md: 4 }}
                     type='submit'
                     isLoading={isSubmitting}
                   >
