@@ -90,9 +90,6 @@ const Wallet = () => {
     myFarmActivitiesHasError ||
     farmFeedsHasError
 
-  // eslint-disable-next-line no-console
-  console.log(farm, 'hisfarm')
-
   React.useEffect(() => {
     let total = 0
     if (farm && farm?.order?.status === 'PAID') {
