@@ -43,6 +43,11 @@ const Profile = () => {
       name: 'Privacy Policy',
       comp: 'compE',
       icon: BsShield
+    },
+    {
+      name: 'Terms & Conditions',
+      comp: 'compE',
+      icon: BsShield
     }
   ]
 
@@ -85,7 +90,7 @@ const Profile = () => {
             borderColor='gray.200'
             rounded='30px'
             p={4}
-            h={{ md: 70 }}
+            h={{ md: 85 }}
             bg='white'
             filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
           >
@@ -108,7 +113,7 @@ const Profile = () => {
             ))}
           </Flex>
 
-          <Flex
+          {/* <Flex
             align='center'
             d={{ base: 'flex', md: 'none' }}
             overflowX='scroll'
@@ -133,7 +138,7 @@ const Profile = () => {
                 <Text fontSize='sm'>{menu.name}</Text>
               </Flex>
             ))}
-          </Flex>
+          </Flex> */}
 
           <DynamicProfile page={page} />
         </Grid>
