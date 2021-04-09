@@ -16,7 +16,7 @@ const Headings = ({ title }) => {
         </Heading>
         <Flex align='center'>
           <Text fontSize={{ base: 'sm', md: 'md' }}>
-            Set your login preferences, help us personalize your <br />
+            Help us personalize your <br />
             experience and make big account changes here
           </Text>
           {/* <Flex align='center' ml={10}>

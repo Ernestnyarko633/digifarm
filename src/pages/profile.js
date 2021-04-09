@@ -1,11 +1,20 @@
-import { Box, Flex, Grid, Text, Container, Icon } from '@chakra-ui/react'
-import React from 'react'
-import DynamicProfile from 'components/DynamicProfile'
-import Header from 'container/Header'
-import { FiUser } from 'react-icons/fi'
-import { BiCog, BiLockAlt } from 'react-icons/bi'
-import { BsShield } from 'react-icons/bs'
-
+/* eslint-disable */
+import {
+  Box,
+  Flex,
+  Grid,
+  Text,
+  Container,
+  Input,
+  Icon,
+} from '@chakra-ui/react';
+import React from 'react';
+import DynamicProfile from 'components/DynamicProfile';
+import Header from 'container/Header';
+import { FiUser } from 'react-icons/fi';
+import { BiCog, BiLockAlt } from 'react-icons/bi';
+import { BsShield } from 'react-icons/bs';
+import { GrCircleInformation} from "react-icons/gr";
 const Profile = () => {
   const [page, setPage] = React.useState('compA')
 
@@ -33,11 +42,11 @@ const Profile = () => {
     {
       name: 'Privacy Policy',
       comp: 'compE',
-      icon: BsShield
+      icon: GrCircleInformation
     },
     {
       name: 'Terms & Conditions',
-      comp: 'compE',
+      comp: 'compF',
       icon: BsShield
     }
   ]
@@ -96,14 +105,7 @@ const Profile = () => {
                 px={5}
                 py={2}
                 rounded='30px'
-                onClick={() =>
-                  menu?.comp === 'compE'
-                    ? window.open(
-                        'https://www.completefarmer.com/terms',
-                        '_blank'
-                      )
-                    : // eslint-disable-next-line prettier/prettier
-                     setPage(menu.comp)}
+                onClick={() => menu?.comp === 'compE' ?  window.open("https://www.completefarmer.com/privacypolicy", '_blank') : menu?.comp === 'compF'? window.open("https://www.completefarmer.com/termsandconditions", '_blank') :setPage(menu.comp)}
               >
                 <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
                 <Text>{menu.name}</Text>
