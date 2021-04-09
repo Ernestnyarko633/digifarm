@@ -41,7 +41,7 @@ const FarmCard = ({ farm, _small }) => {
           p={10}
           bg='white'
           minW={{ base: 82, md: _small ? 85 : 130 }}
-          minH={{ md: '34rem' }}
+          minH={{ md:!_small? '34rem': 'auto' }}
           mr={{ md: 6 }}
         >
           <Flex align='center' justify='space-between'>
