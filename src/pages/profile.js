@@ -34,6 +34,7 @@ const Profile = () => {
       name: 'Privacy Terms',
       comp: 'compE',
       icon: BsShield
+      // link: 'https://www.completefarmer.com/terms'
     }
   ]
 
