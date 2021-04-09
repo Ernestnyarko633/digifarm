@@ -1,19 +1,18 @@
-/* eslint-disable */
-import { Box, Flex, Grid, GridItem, Icon, Link, Text } from '@chakra-ui/react';
-import { Link as ReachRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Header from './Header';
-import Sidebar from './Sidebar';
-import React from 'react';
-import RightSidebar from './RightSidebar';
-import { farm, home, wallet, market } from 'theme/Icons';
+import { Box, Flex, Grid, GridItem, Icon, Link, Text } from '@chakra-ui/react'
+import { Link as ReachRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import Header from './Header'
+import Sidebar from './Sidebar'
+import React from 'react'
+import RightSidebar from './RightSidebar'
+import { farm, home, wallet, market } from 'theme/Icons'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
   { icon: farm, path: '/farms', name: 'Farm board', size: 4 },
   { icon: wallet, path: '/wallet', name: 'Farm Wallet', size: 4 },
-  { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 },
-];
+  { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
+]
 
 const Layout = ({
   children,
@@ -24,6 +23,7 @@ const Layout = ({
   rightSidebar = true,
   ...rest
 }) => {
+  const mapKey = index => index
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -75,8 +75,8 @@ const Layout = ({
           zIndex={50}
           px={4}
         >
-          {menuLink.map((item) => (
-            <ReachRouter to={item.path}>
+          {menuLink.map((item, i) => (
+            <ReachRouter key={mapKey(i)} to={item.path}>
               <Link _hover={{ textDecor: 'none' }}>
                 <Box key={item.id} align='center'>
                   <Icon as={item.icon} />
@@ -97,8 +97,8 @@ const Layout = ({
         </GridItem>
       )}
     </Grid>
-  );
-};
+  )
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
@@ -107,7 +107,7 @@ Layout.propTypes = {
   px: PropTypes.any,
   leftSidebar: PropTypes.bool,
   rightSidebar: PropTypes.bool,
-  rest: PropTypes.any,
-};
+  rest: PropTypes.any
+}
 
-export default Layout;
+export default Layout

@@ -16,7 +16,6 @@ const components = {
 const DynamicProfile = ({ page }) => {
   const SelectedPage = components[page]
 
-  // eslint-disable-next-line react/react-in-jsx-scope
   return <SelectedPage />
 }
 

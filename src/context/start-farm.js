@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useContext, createContext } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'

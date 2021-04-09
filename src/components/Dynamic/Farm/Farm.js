@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
 import Button from 'components/Button'
