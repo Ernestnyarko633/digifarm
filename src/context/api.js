@@ -175,6 +175,27 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const createBankDetails = async payload => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/banking-details`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const updateBankDetails = async (id, payload) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/banking-details/${id}`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const getBankDetails = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/banking-details`,
+      query
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
@@ -202,6 +223,9 @@ export const ApiContextProvider = ({ children }) => {
         getPaymentDetails,
         getSourcingOrders,
         getCropCategories,
+        createBankDetails,
+        updateBankDetails,
+        getBankDetails,
         deleteBankTransfer,
         downloadTaskReceipt,
         getMyScheduledTasks,

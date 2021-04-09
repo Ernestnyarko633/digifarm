@@ -7,6 +7,8 @@ export default function Health({ farm, eosStats, _error }) {
   return (
     <div>
       {!_error &&
+        eosStats &&
+        eosStats?.length > 0 &&
         eosStats?.map(stat => (
           <CropHealthCard
             key={stat?.date}
@@ -16,7 +18,7 @@ export default function Health({ farm, eosStats, _error }) {
           />
         ))}
 
-      {!_error && eosStats?.length === 0 && (
+      {!_error && !eosStats?.length && (
         <Flex>
           <Text>
             CROP HEALTH IS CURRENTLY UNAVAILABLE, IT WOULD BE UPDATED AS SOON AS
