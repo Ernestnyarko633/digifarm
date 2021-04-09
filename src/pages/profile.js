@@ -14,7 +14,7 @@ import Header from 'container/Header';
 import { FiUser } from 'react-icons/fi';
 import { BiCog, BiLockAlt } from 'react-icons/bi';
 import { BsShield } from 'react-icons/bs';
-
+import { GrCircleInformation} from "react-icons/gr";
 const Profile = () => {
   const [page, setPage] = React.useState('compA');
 
@@ -42,7 +42,7 @@ const Profile = () => {
     {
       name: 'Privacy Policy',
       comp: 'compE',
-      icon: BsShield
+      icon: GrCircleInformation
     },
     {
       name: 'Terms & Conditions',
