@@ -24,11 +24,11 @@ const Profile = () => {
       comp: 'compA',
       icon: FiUser,
     },
-    // {
-    //   name: 'Account Settings',
-    //   comp: 'compB',
-    //   icon: BiCog,
-    // },
+    {
+      name: 'Account Settings',
+      comp: 'compB',
+      icon: BiCog,
+    },
     // {
     //   name: 'Notifications',
     //   comp: 'compC',
@@ -39,11 +39,11 @@ const Profile = () => {
       comp: 'compD',
       icon: BiLockAlt,
     },
-    // {
-    //   name: 'Privacy Terms',
-    //   comp: 'compE',
-    //   icon: BsShield,
-    // },
+    {
+      name: 'Privacy Terms',
+      comp: 'compE',
+      icon: BsShield,
+    },
   ];
 
   return (
