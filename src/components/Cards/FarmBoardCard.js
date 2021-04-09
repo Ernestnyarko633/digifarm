@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Flex,
@@ -9,14 +8,14 @@ import {
   Icon,
   Image,
   Tag,
-  Collapse,
-} from '@chakra-ui/react';
-import PropTypes from 'prop-types';
+  Collapse
+} from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 // import { RichText } from 'prismic-reactjs'
-import { Flower, CreditCard } from 'theme/Icons';
-import { BsHeart } from 'react-icons/bs';
-import { RiShareForwardLine } from 'react-icons/ri';
-import Button from 'components/Button';
+import { Flower, CreditCard } from 'theme/Icons'
+import { BsHeart } from 'react-icons/bs'
+import { RiShareForwardLine } from 'react-icons/ri'
+import Button from 'components/Button'
 
 const FarmBoardCard = ({
   status,
@@ -29,11 +28,11 @@ const FarmBoardCard = ({
   actionTag,
   actionText,
   actionBtnTitle,
-  news,
+  news
 }) => {
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = React.useState(false)
 
-  const handleToggle = () => setShow(!show);
+  const handleToggle = () => setShow(!show)
 
   const Detail = () => {
     return (
@@ -82,8 +81,8 @@ const FarmBoardCard = ({
           </Text>
         </Box>
       </Flex>
-    );
-  };
+    )
+  }
 
   const NewHead = () => (
     <Flex align='center' justify='space-between'>
@@ -100,7 +99,7 @@ const FarmBoardCard = ({
         <Text color='gray.500'>{timestamp}</Text>
       </Box>
     </Flex>
-  );
+  )
 
   return (
     <Box
@@ -135,7 +134,7 @@ const FarmBoardCard = ({
       )}
 
       {status === 'news' &&
-        news?.map((data) => (
+        news?.map(data => (
           <Box key={data?.id}>
             <Box pt={{ base: 4, md: 8 }} pb={2} px={{ base: 4, md: 16 }}>
               <NewHead />
@@ -159,7 +158,7 @@ const FarmBoardCard = ({
                   onClick={handleToggle}
                   cursor='pointer'
                 >
-                  {data.data.body[0].primary.description.map((item) => (
+                  {data.data.body[0].primary.description.map(item => (
                     <Text
                       color='gray.500'
                       mt={3}
@@ -238,8 +237,8 @@ const FarmBoardCard = ({
         </Box>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
 FarmBoardCard.propTypes = {
   status: PropTypes.string.isRequired,
@@ -252,7 +251,7 @@ FarmBoardCard.propTypes = {
   actionTag: PropTypes.string,
   actionText: PropTypes.string,
   actionBtnTitle: PropTypes.string,
-  news: PropTypes.array,
-};
+  news: PropTypes.array
+}
 
-export default FarmBoardCard;
+export default FarmBoardCard
