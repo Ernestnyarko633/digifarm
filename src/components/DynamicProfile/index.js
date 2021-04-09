@@ -1,5 +1,5 @@
+import React from 'react'
 import PropTypes from 'prop-types'
-
 import AccountSettings from './AccountSettings'
 // import Notifications from './Notifications'
 // import PrivacyAndData from './PrivacyAndData'
@@ -11,7 +11,6 @@ const components = {
   compB: AccountSettings,
   // compC: Notifications,
   compD: Security
-  // compE: PrivacyAndData
 }
 
 const DynamicProfile = ({ page }) => {
