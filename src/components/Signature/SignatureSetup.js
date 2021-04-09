@@ -1,73 +1,72 @@
-/*eslint-disable */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useFormik } from 'formik';
-import { Flex, Text, Checkbox, useToast } from '@chakra-ui/react';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
+import { Flex, Text, Checkbox, useToast } from '@chakra-ui/react'
 
-import { IoMdClose, IoMdCreate, IoMdImages } from 'react-icons/io';
+import { IoMdClose, IoMdCreate, IoMdImages } from 'react-icons/io'
 
-import FormInput from 'components/Form/FormInput';
-import CustomUploader from 'components/Form/CustomUploader';
-import Preview from 'components/FilePreview';
+import FormInput from 'components/Form/FormInput'
+import CustomUploader from 'components/Form/CustomUploader'
+import Preview from 'components/FilePreview'
 
-import useAuth from 'context/auth';
-import useApi from 'context/api';
+import useAuth from 'context/auth'
+import useApi from 'context/api'
 
-import { TextFormSchema, FileFormSchema } from 'helpers/validation';
-import Button from 'components/Button';
+import { TextFormSchema, FileFormSchema } from 'helpers/validation'
+import Button from 'components/Button'
 
 const SignatureSetup = ({ isEditing, setIsEditing }) => {
-  const [acceptTC, setAcceptTC] = useState(false);
-  const [withText, setWithText] = useState(false);
-  const [withImage, setWithImage] = useState(false);
+  const [acceptTC, setAcceptTC] = useState(false)
+  const [withText, setWithText] = useState(false)
+  const [withImage, setWithImage] = useState(false)
 
-  const { store, isAuthenticated, setSession } = useAuth();
-  const { patchUser } = useApi();
+  const { store, isAuthenticated, setSession } = useAuth()
+  const { patchUser } = useApi()
 
-  const user = isAuthenticated().user;
+  const user = isAuthenticated().user
 
-  const toast = useToast();
+  const toast = useToast()
 
   const formik = useFormik({
     initialValues: {
       text: '',
-      file: '',
+      file: ''
     },
     enableReinitialize: true,
     validationSchema: withImage ? FileFormSchema : TextFormSchema,
     onSubmit: async (values, { setSubmitting }) => {
       if (acceptTC) {
         try {
-          setSubmitting(true);
-          let res = null;
+          setSubmitting(true)
+          let res = null
           if (values.file) {
-            let formData = new FormData();
-            formData.append('signature', values.file);
-            res = await patchUser(user._id, formData);
+            let formData = new FormData()
+            formData.append('signature', values.file)
+            res = await patchUser(user._id, formData)
           } else {
             res = await patchUser(user._id, {
-              signature: { string: values.text, check: 'text' },
-            });
+              signature: { string: values.text, check: 'text' }
+            })
           }
-          store({ user: res.data });
+          store({ user: res.data })
           toast({
             duration: 5000,
             isClosable: true,
             status: 'success',
             position: 'top-right',
             title: 'Action successful',
-            description: res.message,
-          });
+            description: res.message
+          })
         } catch (error) {
-          let eMgs = 'Unexpected network error.';
+          let eMgs = 'Unexpected network error.'
           if (error) {
             if ([401, 403].includes(error.status)) {
-              setSession(false);
+              setSession(false)
             } else {
               eMgs =
                 (error?.data?.message ||
                   error?.message ||
-                  'Unknown error occurred') + '.';
+                  'Unknown error occurred') + '.'
             }
           }
           toast({
@@ -76,10 +75,10 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
             isClosable: true,
             position: 'top-right',
             title: 'An error occurred',
-            description: eMgs,
-          });
+            description: eMgs
+          })
         } finally {
-          setSubmitting(false);
+          setSubmitting(false)
         }
       } else {
         toast({
@@ -88,11 +87,11 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
           status: 'error',
           position: 'top-right',
           title: 'Please check form',
-          description: 'You must accept term and condition!',
-        });
+          description: 'You must accept term and condition!'
+        })
       }
-    },
-  });
+    }
+  })
 
   return (
     <>
@@ -103,12 +102,12 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
             shadow='none'
             leftIcon={<IoMdClose size={20} />}
             onClick={() => {
-              formik.setFieldValue('file');
-              formik.setFieldValue('text', '');
-              setWithText(false);
-              setWithImage(false);
-              setAcceptTC(false);
-              setIsEditing(!isEditing);
+              formik.setFieldValue('file')
+              formik.setFieldValue('text', '')
+              setWithText(false)
+              setWithImage(false)
+              setAcceptTC(false)
+              setIsEditing(!isEditing)
             }}
           />
         </Flex>
@@ -256,7 +255,7 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
                   style={{
                     width: '200px',
                     height: '120px',
-                    padding: '10px',
+                    padding: '10px'
                   }}
                   fileData={formik.values?.file}
                   handleClear={() => formik.setFieldValue('file')}
@@ -267,12 +266,12 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
         )}
       </Flex>
     </>
-  );
-};
+  )
+}
 
 SignatureSetup.propTypes = {
   isEditing: PropTypes.bool.isRequired,
-  setIsEditing: PropTypes.func.isRequired,
-};
+  setIsEditing: PropTypes.func.isRequired
+}
 
-export default SignatureSetup;
+export default SignatureSetup

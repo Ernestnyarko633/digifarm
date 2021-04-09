@@ -37,11 +37,11 @@ const Wallet = () => {
     isLoading: myFarmActivitiesIsLoading,
     error: myFarmActivitiesHasError
   } = useFetch(
-    `${farm?.order?.product?.protocol?._id}_activities`,
+    `${farm?.order?.product?._id}_activities`,
     getActivities,
     reload,
     {
-      protocol: farm?.order?.product?.protocol?._id
+      farm: farm?.order?.product?._id
     }
   )
 

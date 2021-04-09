@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import Fade from 'react-reveal/Fade'
@@ -15,7 +14,7 @@ import useAuth from 'context/auth'
 const FarmBoardContent = ({ farms }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  console.log(farms, 'this')
+
   const farmss = [
     {
       id: 1,
@@ -74,7 +73,7 @@ const FarmBoardContent = ({ farms }) => {
         const response = await Client.query(
           Prismic.Predicates.at('document.type', 'news')
         )
-        console.log(response, 'prismic')
+
         if (response) {
           setDocData(response.results)
         }

@@ -16,18 +16,18 @@ import { BiCog, BiLockAlt } from 'react-icons/bi';
 import { BsShield } from 'react-icons/bs';
 import { GrCircleInformation} from "react-icons/gr";
 const Profile = () => {
-  const [page, setPage] = React.useState('compA');
+  const [page, setPage] = React.useState('compA')
 
   const menus = [
     {
       name: 'Profile',
       comp: 'compA',
-      icon: FiUser,
+      icon: FiUser
     },
     {
       name: 'Account Settings',
       comp: 'compB',
-      icon: BiCog,
+      icon: BiCog
     },
     // {
     //   name: 'Notifications',
@@ -37,7 +37,7 @@ const Profile = () => {
     {
       name: 'Security',
       comp: 'compD',
-      icon: BiLockAlt,
+      icon: BiLockAlt
     },
     {
       name: 'Privacy Policy',
@@ -54,8 +54,8 @@ const Profile = () => {
   return (
     <Box>
       <Header />
-      <Container maxW={{ md: '7xl' }}>
-        <Flex
+      <Container pt={{ md: 55 }} maxW={{ md: '7xl' }}>
+        {/* <Flex
           align='center'
           justify='center'
           h={70}
@@ -79,7 +79,7 @@ const Profile = () => {
               Change your header image
             </Text>
           </Box>
-        </Flex>
+        </Flex> */}
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Flex
             d={{ base: 'none', md: 'flex' }}
@@ -94,7 +94,7 @@ const Profile = () => {
             bg='white'
             filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
           >
-            {menus.map((menu) => (
+            {menus.map(menu => (
               <Flex
                 align='center'
                 key={menu}
@@ -144,7 +144,7 @@ const Profile = () => {
         </Grid>
       </Container>
     </Box>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
