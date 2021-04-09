@@ -22,13 +22,14 @@ import useAuth from 'context/auth'
 import useApi from 'context/api'
 import BasePhone from 'components/Form/BasePhone'
 import Signature from 'components/Signature'
-import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 
 const Profile = () => {
   const { isAuthenticated } = useAuth()
   const [reload, setReload] = React.useState(0)
-
+  const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState(null)
+  const [bankDetails, setBankDetails] = React.useState([])
   const triggerReload = () => setReload(s => s++)
   const {
     patchUser,
@@ -40,14 +41,29 @@ const Profile = () => {
   const { user } = isAuthenticated()
   const toast = useToast()
 
-  const { data: bankDetails, isLoading: loading, error } = useFetch(
-    null,
-    getBankDetails,
-    reload,
-    {
-      user: user?._id
+  const [selectedFile, setSelectedFile] = React.useState()
+  //const [isFilePicked, setIsFilePicked] = React.useState(false)
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setError(null)
+        setLoading(true)
+        const res = await getBankDetails({ user: user?._id })
+        setBankDetails(res?.data)
+        setLoading(false)
+      } catch (error) {
+        setError(error)
+        setLoading(false)
+      }
     }
-  )
+
+    fetchData()
+  }, [])
+
+  const changeHandler = event => {
+    setSelectedFile(event.target.files[0])
+  }
   const initialValues = {
     firstName: user?.firstName,
     lastName: user?.lastName,
@@ -62,7 +78,6 @@ const Profile = () => {
     IdType: '',
     IDNumber: ''
   }
-  console.log(bankDetails, 'chec')
 
   const bankValues = {
     bankName: bankDetails?.length ? bankDetails[0]?.bankDetails?.bankName : '',
@@ -85,23 +100,32 @@ const Profile = () => {
     iban: bankDetails?.length ? bankDetails[0]?.iban : ''
   }
 
+  console.log(selectedFile)
   const onSubmit = async (
     values,
     { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
-      const data = {
-        firstName: values?.firstName,
-        lastName: values?.lastName,
-        address: {
-          street: values.address.street,
-          state: values.address.state,
-          country: values.address.country
-        },
-        dateOfBirth: values.dateOfBirth,
-        phoneNumber: values?.phoneNumber
-      }
-      const res = await patchUser(user?._id, data)
+      const form = new FormData()
+
+      form.append('firstName', values?.firstName)
+      form.append('firstName', values?.lastName)
+      form.append('firstName', values?.address)
+      form.append('firstName', values?.dateOfBirth)
+      form.append('firstName', values?.phoneNumber)
+      form.append('avatar', selectedFile)
+      // const data = {
+      //   firstName: values?.firstName,
+      //   lastName: values?.lastName,
+      //   address: {
+      //     street: values.address.street,
+      //     state: values.address.state,
+      //     country: values.address.country
+      //   },
+      //   dateOfBirth: values.dateOfBirth,
+      //   phoneNumber: values?.phoneNumber
+      // }
+      const res = await patchUser(user?._id, form)
       if (res.statusCode === 200) {
         toast({
           title: 'User successfully updated.',
@@ -112,7 +136,7 @@ const Profile = () => {
         })
         resetForm({})
         setStatus({ success: true })
-        window.location.reload()
+        // window.location.reload()
       } else if (res.statusCode === 400) {
         toast({
           title: 'Error occured',
@@ -229,7 +253,7 @@ const Profile = () => {
               borderBottomColor='gray.200'
               my={12}
             />
-
+            {false && reload}
             <Flex align='center'>
               <Avatar src={user?.avatar} size='xl' />
               <Box
@@ -245,7 +269,7 @@ const Profile = () => {
                 color='cf.400'
                 ml={6}
               >
-                <Input type='file' d='none' />
+                <Input type='file' d='none' onChange={changeHandler} />
                 <Text fontSize={{ base: 'sm', md: 'md' }}>
                   Upload a new image
                 </Text>
@@ -384,7 +408,7 @@ const Profile = () => {
         <Signature data={user?.signature} />
       </Box>
 
-      <Box
+      {/* <Box
         rounded='xl'
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
         mt={12}
@@ -438,7 +462,7 @@ const Profile = () => {
             Save
           </Button>
         </Box>
-      </Box>
+      </Box> */}
 
       {(loading || error) && (
         <FetchCard

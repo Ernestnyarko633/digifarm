@@ -1,3 +1,4 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import AccountSettings from './AccountSettings'
@@ -16,6 +17,7 @@ const components = {
 
 const DynamicProfile = ({ page }) => {
   const SelectedPage = components[page]
+
   // eslint-disable-next-line react/react-in-jsx-scope
   return <SelectedPage />
 }
