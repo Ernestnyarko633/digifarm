@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Heading, Image, Text } from '@chakra-ui/react'
@@ -68,7 +67,7 @@ const OtherSteps = ({ history: { push } }) => {
         return {
           title: 'Next',
           width: 56,
-          action: handlePayment
+          action: _ => handlePayment()
         }
       case 5:
         return {

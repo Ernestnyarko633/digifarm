@@ -37,28 +37,37 @@ const FarmBoardCard = ({
   const Detail = () => {
     return (
       <Flex
-        pb={5}
         align='center'
         borderBottomWidth={1}
         justify='space-between'
         borderBottomColor='gray.200'
+        px={{ base: 4, md: 0 }}
+        py={{ base: 4, md: 0 }}
+        pb={5}
       >
         <Flex align='center'>
           <Avatar size='md' src={avatar} />
-          <Box ml={4}>
-            <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
+          <Box ml={{ base: 2, md: 4 }}>
+            <Heading
+              as='h4'
+              fontSize={{ base: 'lg', md: 'xl' }}
+              fontWeight={700}
+            >
               {firstName}’s Farm
             </Heading>
-            <Text color='gray.600'>{location}</Text>
+            <Text color='gray.600' fontSize={{ base: 'sm', md: 'md' }}>
+              {location}
+            </Text>
           </Box>
           {status !== 'news' && (
-            <Box ml={12}>
+            <Box ml={{ base: 5, md: 12 }} d={{ base: 'none', md: 'block' }}>
               <Tag
                 bg='cf.200'
                 color='cf.400'
                 rounded='xl'
-                px={6}
+                px={{ base: 4, md: 6 }}
                 fontWeight='bold'
+                fontSize={{ base: 'sm', md: 'md' }}
               >
                 {level}
               </Tag>
@@ -67,7 +76,9 @@ const FarmBoardCard = ({
         </Flex>
 
         <Box>
-          <Text color='gray.500'>{timestamp}</Text>
+          <Text fontSize={{ base: 'sm', md: 'md' }} color='gray.500'>
+            {timestamp}
+          </Text>
         </Box>
       </Flex>
     )
@@ -93,21 +104,21 @@ const FarmBoardCard = ({
   return (
     <Box
       rounded='xl'
-      w='80%'
+      w={{ base: 82, md: '80%' }}
       mx='auto'
       bg='white'
-      mb={{ md: 10 }}
+      mb={10}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
     >
       {status === 'farm' && (
         <>
-          <Box py={{ md: 10 }} px={{ md: 16 }}>
+          <Box py={{ base: 4, md: 10 }} px={{ base: 4, md: 16 }}>
             <Detail />
             <Box mt={6}>
               <Text textTransform='uppercase' fontWeight='bold'>
                 <Icon as={Flower} /> {actionTitle}
               </Text>
-              <Text color='gray.500' mt={3}>
+              <Text color='gray.500' mt={3} fontSize={{ base: 'sm', md: 'md' }}>
                 {actionText}
               </Text>
             </Box>
@@ -125,7 +136,7 @@ const FarmBoardCard = ({
       {status === 'news' &&
         news?.map(data => (
           <Box key={data?.id}>
-            <Box pt={{ md: 8 }} pb={{ md: 2 }} px={{ md: 16 }}>
+            <Box pt={{ base: 4, md: 8 }} pb={2} px={{ base: 4, md: 16 }}>
               <NewHead />
             </Box>
             <Box>
@@ -136,7 +147,7 @@ const FarmBoardCard = ({
                 src={data.data.body[0].primary.image.url}
               />
             </Box>
-            <Box py={{ md: 4 }} px={{ md: 10 }}>
+            <Box py={4} px={{ base: 4, md: 10 }}>
               <Box mt={6}>
                 <Heading as='h5' fontSize={{ md: 'lg' }}>
                   {data.data.headline[0].text}
@@ -148,20 +159,15 @@ const FarmBoardCard = ({
                   cursor='pointer'
                 >
                   {data.data.body[0].primary.description.map(item => (
-                    <Text color='gray.500' mt={3} key={item.text}>
+                    <Text
+                      color='gray.500'
+                      mt={3}
+                      key={item.text}
+                      fontSize={{ base: 'sm', md: 'md' }}
+                    >
                       {item.text}
                     </Text>
                   ))}
-                  {/* Thank you for taking responsiblity and joining Complete
-                    Farmer to feed the work together. Thank you for taking
-                    responsiblity and joining Complete Farmer to feed the work
-                    together.Thank you for taking responsiblity and joining
-                    Complete Farmer to feed the work together. Thank you for
-                    taking responsiblity and joining Complete Farmer to feed the
-                    work together. Thank you for taking responsiblity and
-                    joining Complete Farmer to feed the work together.Thank you
-                    for taking responsiblity and joining Complete Farmer to feed
-                    the work together. */}
                 </Collapse>
               </Box>
             </Box>
@@ -169,7 +175,7 @@ const FarmBoardCard = ({
         ))}
 
       {status === 'action' && (
-        <Box py={{ md: 8 }} px={{ md: 16 }}>
+        <Box py={{ base: 4, md: 8 }} px={{ base: 4, md: 16 }}>
           <Detail />
           <Box mt={6}>
             <Flex>
@@ -192,24 +198,32 @@ const FarmBoardCard = ({
             </Flex>
             <Flex align='center'>
               <Box w={{ md: '60%' }} mr={{ md: '10%' }}>
-                <Text color='gray.500' mt={3}>
+                <Text
+                  color='gray.500'
+                  mt={3}
+                  fontSize={{ base: 'sm', md: 'md' }}
+                >
                   {actionText}
                 </Text>
               </Box>
 
-              <Box>
+              <Box d={{ base: 'none', md: 'block' }}>
                 <Button btntitle={actionBtnTitle} rounded='30px' />
               </Box>
             </Flex>
+
+            <Box d={{ base: 'block', md: 'none' }} mt={{ base: 4 }}>
+              <Button width='100%' btntitle={actionBtnTitle} rounded='30px' />
+            </Box>
           </Box>
         </Box>
       )}
 
       <Flex
         align='center'
-        py={{ md: status === 'farm' && 6 }}
-        pb={{ md: status === 'news' || status === 'action' ? 6 : 8 }}
-        px={{ md: 16 }}
+        py={{ base: 4, md: status === 'farm' && 6 }}
+        pb={{ base: 4, md: status === 'news' || status === 'action' ? 6 : 8 }}
+        px={{ base: 4, md: 16 }}
       >
         <Flex>
           <Box>

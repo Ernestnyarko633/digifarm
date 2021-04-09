@@ -8,9 +8,14 @@ import FarmBoardCard from '../Cards/FarmBoardCard'
 import YourFarmCard from '../Cards/YourFarmCard'
 import Crop from 'assets/images/crop.png'
 import SoyaBeanImg from 'assets/images/soya.png'
+import PropTypes from 'prop-types'
+import useAuth from 'context/auth'
 
-const FarmBoardContent = () => {
-  const farms = [
+const FarmBoardContent = ({ farms }) => {
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+
+  const farmss = [
     {
       id: 1,
       avatar: SoyaBeanImg,
@@ -68,6 +73,7 @@ const FarmBoardContent = () => {
         const response = await Client.query(
           Prismic.Predicates.at('document.type', 'news')
         )
+
         if (response) {
           setDocData(response.results)
         }
@@ -79,24 +85,34 @@ const FarmBoardContent = () => {
 
   return (
     <Flex w='100%' align='center' direction='column'>
-      <YourFarmCard />
-      <Box p={16}>
+      <YourFarmCard farms={farms} />
+      <Box p={{ base: 4, md: 16 }}>
         <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
           See what's happening in your farm(s)
         </Heading>
-        {farms.map(farm => {
+        {farmss.map(farm => {
           return (
             <Fade bottom key={farm.id}>
               <FarmBoardCard
                 news={doc}
                 status={farm.status}
-                level={farm.level}
-                firstName={farm.firstName}
-                location={farm.location}
+                level={farm.level || 'Lv 1'}
+                firstName={user.firstName}
+                location={
+                  farm.location ||
+                  `${farm?.order?.product?.location?.name}, ${farm?.order?.product?.location?.state}`
+                }
                 actionBtnTitle={farm.btntitle}
                 actionTag={farm.tag}
-                timestamp={farm.timepstamp}
-                avatar={farm.avatar}
+                timestamp={
+                  farm.timepstamp ||
+                  new Date(
+                    farm?.order?.product?.updatedAt
+                  )?.toLocaleDateString()
+                }
+                avatar={
+                  farm.avatar || farm?.order?.product?.cropVariety?.imageUrl
+                }
                 actionText={farm.actionText}
                 actionTitle={farm.actionTitle}
               />
@@ -106,6 +122,10 @@ const FarmBoardContent = () => {
       </Box>
     </Flex>
   )
+}
+
+FarmBoardContent.propTypes = {
+  farms: PropTypes.any
 }
 
 export default FarmBoardContent

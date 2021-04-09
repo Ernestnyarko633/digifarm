@@ -3,7 +3,7 @@ import { Box, Icon, Link, Text } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 import { farm, home, wallet, market, Guide } from 'theme/Icons'
 //import { MdChatBubbleOutline } from 'react-icons/md'
-import { IoIosHelpCircle } from 'react-icons/io'
+// import { IoIosHelpCircle } from 'react-icons/io'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
@@ -13,13 +13,13 @@ const menuLink = [
 ]
 
 const links = [
-  { icon: Guide, path: '/guide', name: 'How-To-Guide', size: 5 },
-  {
-    icon: IoIosHelpCircle,
-    path: '/support',
-    name: 'Customer Support',
-    size: 5
-  }
+  { icon: Guide, path: '/guide', name: 'How-To-Guide', size: 5 }
+  // {
+  //   icon: IoIosHelpCircle,
+  //   path: '/support',
+  //   name: 'Customer Support',
+  //   size: 5
+  // }
 ]
 
 const Sidebar = () => {

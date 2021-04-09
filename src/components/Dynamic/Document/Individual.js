@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Box, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React, { useEffect, useState } from 'react'
@@ -65,7 +64,7 @@ export default function Individual({
     }
     return totalAmount
   }
-  console.log(activities, tempActs, farmfeeds, 'checking')
+
   return (
     <Box>
       {tempActs?.length === 0 && (
@@ -94,7 +93,7 @@ export default function Individual({
                 ScheduledTasks={ScheduledTasks.filter(
                   _completedTask =>
                     _activity._id === _completedTask?.task?.activity &&
-                    _completedTask.status === 'PENDING'
+                    _completedTask.status === 'COMPLETED'
                 )}
                 tasksNumber={
                   tasks?.filter(_task => _task.activity._id === _activity._id)

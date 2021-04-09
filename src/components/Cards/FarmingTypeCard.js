@@ -29,62 +29,67 @@ const FarmingTypeCard = ({
   const { handleModalClick } = useComponent()
 
   return (
-    <Box
-      w={{ md: 85 }}
-      p={8}
-      borderWidth={1}
-      borderColor='gray.300'
-      rounded='lg'
-      textAlign='left'
-      mr={mr}
-      mb={{ base: 6, md: 0 }}
-    >
-      <Box mb={3}>
-        <Image src={image} />
-      </Box>
-
-      <Flex align='center' justify='space-between'>
-        <Box>
-          <Heading as='h5' fontSize={{ md: 'lg' }}>
-            {title}
+    <>
+      <Box
+        w={{ md: 85 }}
+        p={8}
+        borderWidth={1}
+        borderColor='gray.300'
+        rounded='lg'
+        textAlign='left'
+        mr={mr}
+        mb={{ base: 6, md: 0 }}
+        opacity={state.id === 'cooperative' ? { md: 0.5 } : null}
+      >
+        {state.id === 'cooperative' && (
+          <Heading fontSize='2xl' color='cf.400'>
+            Coming Soon
           </Heading>
-          <Text fontSize='xs' mt={-2}>
-            {subtitle}
-          </Text>
+        )}
+        <Box mb={3}>
+          <Image src={image} />
         </Box>
-      </Flex>
-
-      <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
-        {options.map(item => (
-          <ListItem key={item} py={1}>
-            {item}
-          </ListItem>
-        ))}
-      </List>
-
-      <Box>
-        <Link
-          as={ReachRouter}
-          to={{ pathname: path, state }}
-          _hover={{ textDecor: 'none' }}
-        >
-          <Button btntitle={btntitle} />
-        </Link>
-        <Box
-          d='block'
-          fontSize='xs'
-          color='cf.400'
-          mt={1}
-          fontFamily='body'
-          as='button'
-          role='button'
-          aria-label='learn more button'
-          onClick={() => handleModalClick('learnmore')}
-        >
-          Learn more <Icon as={MdKeyboardArrowRight} />
+        <Flex align='center' justify='space-between'>
+          <Box>
+            <Heading as='h5' fontSize={{ md: 'lg' }}>
+              {title}
+            </Heading>
+            <Text fontSize='xs' mt={-2}>
+              {subtitle}
+            </Text>
+          </Box>
+        </Flex>
+        <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
+          {options.map(item => (
+            <ListItem key={item} py={1}>
+              {item}
+            </ListItem>
+          ))}
+        </List>
+        <Box>
+          <Link
+            as={ReachRouter}
+            to={state.id === 'cooperative' ? '#' : { pathname: path, state }}
+            _hover={{ textDecor: 'none' }}
+          >
+            <Button btntitle={btntitle} />
+          </Link>
+          <Box
+            d='block'
+            fontSize='xs'
+            color='cf.400'
+            mt={1}
+            fontFamily='body'
+            as='button'
+            role='button'
+            aria-label='learn more button'
+            onClick={() => handleModalClick('learnmore')}
+          >
+            Learn more <Icon as={MdKeyboardArrowRight} />
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   )
 }
 

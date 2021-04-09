@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useContext, createContext } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
@@ -20,8 +19,6 @@ export const StartFarmContextProvider = ({ children }) => {
   const [paymentOption, setPaymentOption] = useState(dpo)
   const [wantCycle, setWantCycle] = React.useState('No')
   const [selectedFarm, setSelectedFarm] = useState(null)
-  //const [location, setLocation] = useState([])
-  // const [center, setCenter] = useState([])
   const [reload, setReload] = useState(0)
   const [isSubmitting, setSubmitting] = useState(false)
   const [exchangeRate, setExchangeRate] = useState(1)
@@ -42,42 +39,6 @@ export const StartFarmContextProvider = ({ children }) => {
   const toast = useToast()
 
   const triggerMapReload = () => setReload(prevState => prevState++)
-
-  // const eosViewIdPayload = {
-  //   fields: ['sceneID', 'cloudCoverage'],
-  //   limit: 1,
-  //   page: 1,
-  //   search: {
-  //     date: {
-  //       from: dateIntervals()?.ThirtyDaysAgo,
-  //       to: dateIntervals()?.today
-  //     },
-  //     cloudCoverage: {
-  //       from: 0,
-  //       to: 60
-  //     },
-  //     shape: {
-  //       type: 'Polygon',
-  //       coordinates: [location]
-  //     }
-  //   },
-  //   sort: {
-  //     date: 'desc'
-  //   }
-  // }
-  // const {
-  //   data: EOSViewID,
-  //   isLoading: EOSViewIDIsLoading,
-  //   error: EOSViewIDHasError
-  // } = useFetch(
-  //   `${selectedFarm?._id}_eos_view_id`,
-  //   selectedFarm?._id ? eosSearch : null,
-  //   reload,
-  //   eosViewIdPayload,
-  //   'sentinel2'
-  // )
-
-  // console.log(EOSViewID, 'the view')
 
   function handleNext() {
     setStep(draft => draft + 1)

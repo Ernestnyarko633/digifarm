@@ -1,5 +1,4 @@
-/*eslint-disable */
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
@@ -21,29 +20,11 @@ export default function FarmDocumentCard({
 }) {
   const { handleModalClick } = useComponent()
 
-  // useEffect(() => {
-  //   window.html2canvas = html2canvas
-  //   var doc = new jsPDF({
-  //     orientation: 'landscape',
-  //     unit: 'px'
-  //     // format: [4, 2]
-  //   })
-
-  //   var content = document.getElementById('content-22')
-  //   console.log('content', content)
-  //   console.log('document.body', document.body)
-  //   doc.html(content, {
-  //     callback: function (doc) {
-  //       console.log('in callback')
-  //       doc.save()
-  //     }
-  //   })
-  // }, [])
   const thisData = {
     title,
     amount,
     digitalFarmerFarm,
-    farmfeeds: farmfeeds.filter((feed) => __activityID === feed?.task?.activity),
+    farmfeeds: farmfeeds.filter(feed => __activityID === feed?.task?.activity),
     ScheduledTasks: ScheduledTasks.filter(
       _task => __activityID === _task.task.activity
     ),
@@ -55,7 +36,7 @@ export default function FarmDocumentCard({
   ]
   return (
     <Box
-      w="auto"
+      w='auto'
       h='236px'
       bg='white'
       rounded='lg'
@@ -106,7 +87,14 @@ export default function FarmDocumentCard({
             _hover={{ bg: 'white' }}
             shadow='none'
             fontSize='md'
-            onClick={() => handleModalClick('activity-receipts', thisData.ScheduledTasks?.length > 0 ? thisData : null)}
+            onClick={
+              () =>
+                handleModalClick(
+                  'activity-receipts',
+                  thisData.ScheduledTasks?.length > 0 ? thisData : null
+                )
+              // eslint-disable-next-line react/jsx-curly-newline
+            }
           />
         }
       </Flex>

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import {
   Box,
@@ -15,20 +16,41 @@ import {
 import { Formik } from 'formik'
 
 import Headings from './Headings'
-import { FormInput, FormTextArea } from 'components/Form'
-
+import { FormInput } from 'components/Form'
+import useFetch from 'hooks/useFetch'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import BasePhone from 'components/Form/BasePhone'
 import Signature from 'components/Signature'
+import FetchCard from 'components/FetchCard'
 
 const Profile = () => {
   const { isAuthenticated } = useAuth()
-  const { patchUser } = useApi()
+  const [reload, setReload] = React.useState(0)
+  const [urlOfSelectedImage, setUrl] = React.useState(null)
+  const [selectedFile, setSelectedFile] = React.useState(null)
+
+  const triggerReload = () => setReload(s => s++)
+  const {
+    patchUser,
+    createBankDetails,
+    updateBankDetails,
+    getBankDetails
+  } = useApi()
 
   const { user } = isAuthenticated()
   const toast = useToast()
 
+  const { data: bankDetails, isLoading: loading, error } = useFetch(
+    null,
+    getBankDetails,
+    reload,
+    { user: user?._id }
+  )
+  const changeHandler = event => {
+    setSelectedFile(event.target.files[0])
+    setUrl(URL.createObjectURL(event.target.files[0]))
+  }
   const initialValues = {
     firstName: user?.firstName,
     lastName: user?.lastName,
@@ -45,14 +67,27 @@ const Profile = () => {
   }
 
   const bankValues = {
-    bankName: '',
-    bankBranch: '',
-    branchCountry: '',
-    currency: '',
-    swiftCode: '',
-    accountName: '',
-    accountNumber: '',
-    iban: ''
+    bankName: bankDetails?.length ? bankDetails[0]?.bankDetails?.bankName : '',
+    bankBranch: bankDetails?.length
+      ? bankDetails[0]?.bankDetails?.bankBranch
+      : '',
+    branchCountry: bankDetails?.length
+      ? bankDetails[0]?.bankDetails?.bankCountry
+      : '',
+    currency: bankDetails?.length ? bankDetails[0]?.bankDetails?.currency : '',
+    swiftCode: bankDetails?.length
+      ? bankDetails[0]?.bankDetails?.swiftCode
+      : '',
+    accountName: bankDetails?.length
+      ? bankDetails[0]?.bankDetails?.accountName
+      : '',
+    accountNumber: bankDetails?.length
+      ? bankDetails[0]?.bankDetails?.accountNumber
+      : '',
+    branchAddress: bankDetails?.length
+      ? bankDetails[0]?.bankDetails?.branchAddress
+      : '',
+    iban: bankDetails?.length ? bankDetails[0]?.iban : ''
   }
 
   const onSubmit = async (
@@ -60,6 +95,18 @@ const Profile = () => {
     { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
+      let form
+      // const form = new FormData()
+      if (selectedFile) {
+        form = new FormData()
+        form.append('avatar', selectedFile)
+      }
+      // form.append('firstName', values?.firstName)
+      // form.append('lastName', values?.lastName)
+      // form.append('address', values?.address)
+      // form.append('dateOfBirth', values?.dateOfBirth)
+      // form.append('phoneNumber', values?.phoneNumber)
+      // form.append('avatar', selectedFile)
       const data = {
         firstName: values?.firstName,
         lastName: values?.lastName,
@@ -71,10 +118,79 @@ const Profile = () => {
         dateOfBirth: values.dateOfBirth,
         phoneNumber: values?.phoneNumber
       }
-      const res = await patchUser(user?._id, data)
+
+      const res = await patchUser(user?._id, form ? form : data)
       if (res.statusCode === 200) {
         toast({
           title: 'User successfully updated.',
+          description: res.message,
+          status: 'success',
+          duration: 5000,
+          position: 'top-right'
+        })
+        resetForm({})
+        setStatus({ success: true })
+        // window.location.reload()
+      } else if (res.statusCode === 400) {
+        toast({
+          title: 'Error occured',
+          description: res.message,
+          status: 'error',
+          duration: 5000,
+          position: 'top-right'
+        })
+      }
+    } catch (error) {
+      setStatus({ success: false })
+      toast({
+        title: 'Error occured',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        position: 'top-right'
+      })
+      setSubmitting(false)
+      setErrors({ submit: error.message })
+    }
+  }
+
+  const onBankSubmit = async (
+    values,
+    { setSubmitting, setErrors, setStatus, resetForm }
+  ) => {
+    try {
+      const data = {
+        user: user?._id,
+        iban: values.iban,
+        bankDetails: {
+          bankName: values.bankName,
+          bankBranch: values.bankBranch,
+          branchAddress: values.branchAddress,
+          branchCountry: values.branchCountry,
+          currency: values.currency,
+          swiftCode: values.swiftCode,
+          accountName: values.accountName,
+          accountNumber: values.accountNumber
+        }
+      }
+      const res = bankDetails?.length
+        ? await updateBankDetails(bankDetails?._id, data)
+        : await createBankDetails(data)
+
+      if (res.statusCode === 201) {
+        toast({
+          title: 'Bank details created.',
+          description: res.message,
+          status: 'success',
+          duration: 5000,
+          position: 'top-right'
+        })
+        resetForm({})
+        setStatus({ success: true })
+        window.location.reload()
+      } else if (res.statusCode === 200) {
+        toast({
+          title: 'Bank details updated.',
           description: res.message,
           status: 'success',
           duration: 5000,
@@ -107,7 +223,7 @@ const Profile = () => {
   }
 
   return (
-    <Container maxW='4xl'>
+    <Container maxW={{ md: '4xl' }}>
       <Formik
         enableReinitialize
         initialValues={initialValues}
@@ -125,7 +241,6 @@ const Profile = () => {
         }) => (
           <form onSubmit={handleSubmit}>
             <Headings title='Profile' />
-
             <Divider
               orientation='vertical'
               borderBottomWidth={1}
@@ -134,13 +249,13 @@ const Profile = () => {
             />
 
             <Flex align='center'>
-              <Avatar src={user?.avatar} size='xl' />
+              <Avatar src={urlOfSelectedImage || user?.avatar} size='xl' />
               <Box
                 as='label'
                 role='button'
                 type='button'
                 rounded='30px'
-                px={6}
+                px={{ base: 3, md: 6 }}
                 py={2}
                 fontSize='sm'
                 borderWidth={1}
@@ -148,26 +263,61 @@ const Profile = () => {
                 color='cf.400'
                 ml={6}
               >
-                <Input type='file' d='none' />
-                <Text>Upload a new image</Text>
+                <Input type='file' d='none' onChange={e => changeHandler(e)} />
+                <Text fontSize={{ base: 'sm', md: 'md' }}>
+                  Upload a new image
+                </Text>
               </Box>
             </Flex>
+            <Box textAlign='right' mt={6}>
+              <Button
+                colorScheme='linear'
+                rounded='30px'
+                w={40}
+                h={12}
+                shadow='sm'
+                ml={4}
+                type='submit'
+                isLoading={isSubmitting}
+              >
+                Save
+              </Button>
+            </Box>
+          </form>
+        )}
+      </Formik>
 
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+      >
+        {({
+          values,
+          handleChange,
+          handleBlur,
+          isSubmitting,
+          handleSubmit,
+          errors,
+          setFieldTouched,
+          setFieldValue
+        }) => (
+          <form onSubmit={handleSubmit}>
             <Box
               rounded='xl'
               filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               bg='white'
-              p={10}
+              p={{ base: 2, md: 10 }}
               mt={12}
             >
               <Box m={10}>
-                <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
+                <Heading as='h4' fontSize={{ base: 'xl', md: '3xl' }} mb={4}>
                   Personal Info
                 </Heading>
 
                 <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
+                  templateColumns={{ md: 'repeat(2, 1fr)' }}
+                  w='100%'
                   gap={6}
                   mb={6}
                 >
@@ -251,9 +401,9 @@ const Profile = () => {
                   />
                 </Grid>
 
-                <Box>
-                  <FormTextArea bg='white' label='About you' />
-                </Box>
+                {/* <Box>
+                <FormTextArea bg='white' label='About you' />
+              </Box> */}
 
                 <Box textAlign='right' mt={6}>
                   <Button
@@ -279,25 +429,25 @@ const Profile = () => {
         rounded='xl'
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
         bg='white'
-        p={10}
+        p={{ base: 2, md: 10 }}
         mt={12}
       >
         <Signature data={user?.signature} />
       </Box>
 
-      <Box
+      {/* <Box
         rounded='xl'
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
         mt={12}
         bg='white'
-        p={10}
+        p={{ base: 2, md: 10 }}
       >
-        <Box m={10}>
-          <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
+        <Box m={{ base: 4, md: 10 }}>
+          <Heading as='h4' fontSize={{ base: 'xl', md: '3xl' }} mb={4}>
             Identification Info
           </Heading>
           <Grid
-            templateColumns='repeat(2, 1fr)'
+            templateColumns={{ md: 'repeat(2, 1fr)' }}
             w={{ md: '100%' }}
             gap={6}
             mb={6}
@@ -339,131 +489,162 @@ const Profile = () => {
             Save
           </Button>
         </Box>
-      </Box>
+      </Box> */}
 
-      <Formik initialValues={bankValues}>
-        {({ values, isSubmitting, handleBlur, handleChange, handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              rounded='xl'
-              filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-              my={12}
-              bg='white'
-              p={10}
-            >
-              <Box m={10}>
-                <Heading as='h4' fontSize={{ md: '3xl' }} mb={4}>
-                  Bank details
-                </Heading>
-                <Grid
-                  templateColumns='repeat(2, 1fr)'
-                  w={{ md: '100%' }}
-                  gap={6}
-                >
-                  <FormInput
-                    label='Bank name'
-                    name='bankName'
-                    value={values.bankName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='white'
-                  />
-
-                  <FormInput
-                    label='Bank branch'
-                    name='bankBranch'
-                    value={values.bankBranch}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='white'
-                  />
-
-                  <FormInput
-                    label='Branch Country'
-                    name='branchCountry'
-                    value={values.branchCountry}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='white'
-                  />
-
-                  <FormInput
-                    label='Account Name'
-                    name='accountName'
-                    value={values.accountName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='white'
-                  />
-
-                  <FormInput
-                    label='Account Number'
-                    name='accountNumber'
-                    value={values.accountNumber}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    disabled={values.iban.length > 1}
-                    isRequired
-                    type='account'
-                    bg='white'
-                  />
-
-                  <FormInput
-                    label='IBAN Number'
-                    name='iban'
-                    value={values.iban}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    type='account'
-                    disabled={values.accountNumber.length > 1}
-                    bg='white'
-                  />
-
-                  <FormInput
-                    label='Account Currency'
-                    name='currency'
-                    value={values.currency}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='white'
-                  />
-
-                  <FormInput
-                    label='Swift Code'
-                    name='swiftCode'
-                    value={values.swiftCode}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isRequired
-                    bg='white'
-                  />
-                </Grid>
-
-                <Box textAlign='right' mt={6}>
-                  <Button
-                    colorScheme='linear'
-                    rounded='30px'
-                    w={40}
-                    h={12}
-                    shadow='sm'
-                    ml={4}
-                    type='submit'
-                    isLoading={isSubmitting}
+      {(loading || error) && (
+        <FetchCard
+          direction='column'
+          align='center'
+          justify='center'
+          mx='auto'
+          reload={() => {
+            triggerReload()
+          }}
+          loading={loading}
+          error={error}
+          text='Standby as we load your bank details'
+        />
+      )}
+      {!loading && !error && (
+        <Formik initialValues={bankValues} onSubmit={onBankSubmit}>
+          {({
+            values,
+            isSubmitting,
+            handleBlur,
+            handleChange,
+            handleSubmit
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Box
+                rounded='xl'
+                filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+                my={12}
+                bg='white'
+                p={{ base: 2, md: 10 }}
+              >
+                <Box m={10}>
+                  <Heading as='h4' fontSize={{ base: 'xl', md: '3xl' }} mb={4}>
+                    Bank details
+                  </Heading>
+                  <Grid
+                    templateColumns={{ md: 'repeat(2, 1fr)' }}
+                    w={{ md: '100%' }}
+                    gap={6}
                   >
-                    Save
-                  </Button>
+                    <FormInput
+                      label='Bank name'
+                      name='bankName'
+                      value={values.bankName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      bg='white'
+                    />
+
+                    <FormInput
+                      label='Bank branch'
+                      name='bankBranch'
+                      value={values.bankBranch}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      bg='white'
+                    />
+                    <FormInput
+                      label='Branch Address'
+                      name='branchAddress'
+                      value={values.branchAddress}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      bg='white'
+                    />
+
+                    <FormInput
+                      label='Branch Country'
+                      name='branchCountry'
+                      value={values.branchCountry}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      bg='white'
+                    />
+
+                    <FormInput
+                      label='Account Name'
+                      name='accountName'
+                      value={values.accountName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      bg='white'
+                    />
+
+                    <FormInput
+                      label='Account Number'
+                      name='accountNumber'
+                      value={values.accountNumber}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      // disabled={values?.iban?.length > 1}
+                      isRequired
+                      type='account'
+                      bg='white'
+                    />
+
+                    <FormInput
+                      label='IBAN Number'
+                      name='iban'
+                      value={values.iban}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      type='account'
+                      // disabled={values?.accountNumber?.length > 1}
+                      bg='white'
+                    />
+
+                    <FormInput
+                      label='Account Currency'
+                      name='currency'
+                      value={values.currency}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      bg='white'
+                    />
+
+                    <FormInput
+                      label='Swift Code'
+                      name='swiftCode'
+                      value={values.swiftCode}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isRequired
+                      bg='white'
+                    />
+                  </Grid>
+
+                  <Box textAlign='right' mt={6}>
+                    <Button
+                      colorScheme='linear'
+                      rounded='30px'
+                      w={{ base: '100%', md: 40 }}
+                      h={12}
+                      shadow='sm'
+                      ml={{ md: 4 }}
+                      type='submit'
+                      isLoading={isSubmitting}
+                    >
+                      Save
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          </form>
-        )}
-      </Formik>
+            </form>
+          )}
+        </Formik>
+      )}
     </Container>
   )
 }

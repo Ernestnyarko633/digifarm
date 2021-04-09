@@ -1,11 +1,20 @@
-import { Box, Flex, Grid, Text, Container, Input, Icon } from '@chakra-ui/react'
-import React from 'react'
-import DynamicProfile from 'components/DynamicProfile'
-import Header from 'container/Header'
-import { FiUser } from 'react-icons/fi'
-import { BiCog, BiLockAlt } from 'react-icons/bi'
-import { BsShield } from 'react-icons/bs'
-
+/* eslint-disable */
+import {
+  Box,
+  Flex,
+  Grid,
+  Text,
+  Container,
+  Input,
+  Icon,
+} from '@chakra-ui/react';
+import React from 'react';
+import DynamicProfile from 'components/DynamicProfile';
+import Header from 'container/Header';
+import { FiUser } from 'react-icons/fi';
+import { BiCog, BiLockAlt } from 'react-icons/bi';
+import { BsShield } from 'react-icons/bs';
+import { GrCircleInformation} from "react-icons/gr";
 const Profile = () => {
   const [page, setPage] = React.useState('compA')
 
@@ -31,8 +40,13 @@ const Profile = () => {
       icon: BiLockAlt
     },
     {
-      name: 'Privacy Terms',
+      name: 'Privacy Policy',
       comp: 'compE',
+      icon: GrCircleInformation
+    },
+    {
+      name: 'Terms & Conditions',
+      comp: 'compF',
       icon: BsShield
     }
   ]
@@ -40,8 +54,8 @@ const Profile = () => {
   return (
     <Box>
       <Header />
-      <Container maxW='7xl'>
-        <Flex
+      <Container pt={{ md: 55 }} maxW={{ md: '7xl' }}>
+        {/* <Flex
           align='center'
           justify='center'
           h={70}
@@ -65,9 +79,10 @@ const Profile = () => {
               Change your header image
             </Text>
           </Box>
-        </Flex>
+        </Flex> */}
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Flex
+            d={{ base: 'none', md: 'flex' }}
             // align='center'
             // justify='center'
             direction='column'
@@ -75,7 +90,7 @@ const Profile = () => {
             borderColor='gray.200'
             rounded='30px'
             p={4}
-            h={{ md: 70 }}
+            h={{ md: 85 }}
             bg='white'
             filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
           >
@@ -90,13 +105,40 @@ const Profile = () => {
                 px={5}
                 py={2}
                 rounded='30px'
-                onClick={() => setPage(menu.comp)}
+                onClick={() => menu?.comp === 'compE' ?  window.open("https://www.completefarmer.com/privacypolicy", '_blank') : menu?.comp === 'compF'? window.open("https://www.completefarmer.com/termsandconditions", '_blank') :setPage(menu.comp)}
               >
                 <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
                 <Text>{menu.name}</Text>
               </Flex>
             ))}
           </Flex>
+
+          {/* <Flex
+            align='center'
+            d={{ base: 'flex', md: 'none' }}
+            overflowX='scroll'
+            mb={6}
+          >
+            {menus.map((menu) => (
+              <Flex
+                align='center'
+                justify='center'
+                key={menu}
+                as='button'
+                role='button'
+                my={3}
+                bg={page === menu.comp && 'cf.200'}
+                px={5}
+                py={2}
+                minW={48}
+                rounded='30px'
+                onClick={() => setPage(menu.comp)}
+              >
+                <Icon as={menu.icon} mr={2} boxSize={5} />
+                <Text fontSize='sm'>{menu.name}</Text>
+              </Flex>
+            ))}
+          </Flex> */}
 
           <DynamicProfile page={page} />
         </Grid>
