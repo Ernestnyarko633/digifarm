@@ -85,7 +85,11 @@ const FarmCard = ({ farm, _small }) => {
 
       if (tasksCompleted?.length === _tasks?.length) return 'COMPLETED'
 
-      if (tasksInProgress.length) return 'IN_PROGRESS'
+      if (
+        tasksInProgress.length ||
+        (tasksCompleted.length && tasksCompleted.length !== _tasks.length)
+      )
+        return 'IN_PROGRESS'
 
       return 'PENDING'
     }
