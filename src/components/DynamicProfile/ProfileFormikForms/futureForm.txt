@@ -1,0 +1,55 @@
+   {/* <Box
+        rounded='xl'
+        filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+        mt={12}
+        bg='white'
+        p={{ base: 2, md: 10 }}
+      >
+        <Box m={{ base: 4, md: 10 }}>
+          <Heading as='h4' fontSize={{ base: 'xl', md: '3xl' }} mb={4}>
+            Identification Info
+          </Heading>
+          <Grid
+            templateColumns={{ md: 'repeat(2, 1fr)' }}
+            w={{ md: '100%' }}
+            gap={6}
+            mb={6}
+          >
+            <FormInput
+              label='ID Type'
+              name='IdType'
+              // value={values.IdType}
+              isRequired
+              bg='white'
+            />
+            <FormInput
+              label='ID Number'
+              name='IDNumber'
+              // value={values.IDNumber}
+              isRequired
+              bg='white'
+            />
+          </Grid>
+          <FormInput
+            label='Country'
+            // value={values.address.country}
+            isRequired
+            bg='white'
+          />
+        </Box>
+
+        <Box textAlign='right' mt={6}>
+          <Button
+            colorScheme='linear'
+            rounded='30px'
+            w={40}
+            h={12}
+            shadow='sm'
+            ml={4}
+            type='submit'
+            // isLoading={isSubmitting}
+          >
+            Save
+          </Button>
+        </Box>
+      </Box> */}
