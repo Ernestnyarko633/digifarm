@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import ModalWrapper from './ModalWrapper'
 
-import Logo from 'assets/images/white.png'
+import Logo from 'assets/images/logo.png'
 import PropTypes from 'prop-types'
 
 const ReceiptModal = ({ open, onClose, data }) => {
