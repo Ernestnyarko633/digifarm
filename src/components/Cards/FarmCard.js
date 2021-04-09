@@ -33,7 +33,7 @@ const FarmCard = ({ farm, _small }) => {
   });
 
   return (
-    <ReachRouter to={`/farms/${farm?._id}`}>
+    <ReachRouter to={ !_small ?  `/farms/${farm?._id}` : `/wallets/${farm?._id}`}>
       <Link _focus={{ textDecor: 'none' }}>
         <Box
           rounded='xl'
@@ -63,7 +63,7 @@ const FarmCard = ({ farm, _small }) => {
 
             <Box d={{ base: 'none', md: 'block' }}>
               <Button
-                btntitle='View Farm'
+                btntitle={!_small ? 'View Farm' : 'View Wallet'}
                 rounded='30px'
                 w={{ md: '190px' }}
                 h={{ md: '55px' }}
