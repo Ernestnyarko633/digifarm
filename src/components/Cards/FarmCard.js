@@ -145,7 +145,7 @@ const FarmCard = ({ farm, _small }) => {
                 alignItems='center'
                 pos='relative'
               >
-                <Box w={{ md: '40%' }}>
+                <Box w={{ md: '40%' }} maxH={{ md: 350 }}>
                   <Heading as='h4' fontSize={{ md: '2xl' }}>
                     Progress on farm
                   </Heading>

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -151,6 +152,7 @@ const AboutFarmManager = ({ farm }) => {
                               fontSize='xs'
                               textColor='gray.500'
                             >
+                              {console.log(item)}
                               {item.text}
                             </ListItem>
                           ))}
