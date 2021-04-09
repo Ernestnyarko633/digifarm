@@ -1,13 +1,13 @@
 import React from 'react'
 import {
   Box,
-  Flex,
+  // Flex,
   Text,
   Button,
   Divider,
   Container,
   Grid,
-  Switch,
+  // Switch,
   useToast
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
@@ -115,7 +115,7 @@ const Security = () => {
         </Formik>
       </Box>
       <Divider orientation='horizontal' my={12} />
-      <Flex justify='space-between'>
+      {/* <Flex justify='space-between'>
         <Box>
           <Text fontFamily='heading' fontSize={{ base: 'lg', md: 'xl' }}>
             Two-step verification
@@ -128,10 +128,7 @@ const Security = () => {
         <Box d={{ base: 'none', md: 'block' }}>
           <Switch colorScheme='cfButton' size='lg' />
         </Box>
-        <Box d={{ base: 'block', md: 'none' }}>
-          <Switch colorScheme='cfButton' size='md' />
-        </Box>
-      </Flex>
+      </Flex> */}
       <Divider orientation='horizontal' my={12} />
     </Container>
   )

@@ -5,8 +5,8 @@ import {
   Text,
   Container,
   Divider,
-  Stack,
-  Checkbox,
+  // Stack,
+  // Checkbox,
   Grid
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
@@ -78,8 +78,8 @@ const AccountSettings = () => {
                 my={12}
               />
 
-              <Box>
-                <Box>
+              {/* <Box> */}
+              {/* <Box>
                   <Heading
                     as='h5'
                     fontSize={{ base: 'xl', md: '2xl' }}
@@ -92,9 +92,9 @@ const AccountSettings = () => {
                     Use your Google account, LinkedIn or Twitter <br />
                     account to log into Complete Farmer.
                   </Text>
-                </Box>
+                </Box> */}
 
-                <Stack mt={6} d={{ base: 'none', md: 'block' }}>
+              {/* <Stack mt={6}>
                   <Checkbox
                     size='lg'
                     colorScheme='cfButton'
@@ -123,46 +123,15 @@ const AccountSettings = () => {
                   >
                     Use your LinkedIn account to log in
                   </Checkbox>
-                </Stack>
+                </Stack> */}
+              {/* </Box> */}
 
-                <Stack mt={6} d={{ base: 'block', md: 'none' }}>
-                  <Checkbox
-                    size='md'
-                    colorScheme='cfButton'
-                    borderColor='black'
-                  >
-                    Use your Google account to log in
-                  </Checkbox>
-                  <Checkbox
-                    size='md'
-                    colorScheme='cfButton'
-                    borderColor='black'
-                  >
-                    Use your Twitter account to log in
-                  </Checkbox>
-                  <Checkbox
-                    size='md'
-                    colorScheme='cfButton'
-                    borderColor='black'
-                  >
-                    Use your Facebook account to log in
-                  </Checkbox>
-                  <Checkbox
-                    size='md'
-                    colorScheme='cfButton'
-                    borderColor='black'
-                  >
-                    Use your LinkedIn account to log in
-                  </Checkbox>
-                </Stack>
-              </Box>
-
-              <Divider
+              {/* <Divider
                 orientation='vertical'
                 borderBottomWidth={1}
                 borderBottomColor='gray.200'
                 my={12}
-              />
+              /> */}
 
               <Grid gap={10} mt={10}>
                 <ActionCard
@@ -173,13 +142,13 @@ const AccountSettings = () => {
                   btnText='Deactivate account'
                 />
 
-                <ActionCard
+                {/* <ActionCard
                   title='Close your account and account data'
                   text='Set your login preferences, help us personalize your
                       <br />
                       experience and make big account changes here'
                   btnText='Close account'
-                />
+                /> */}
               </Grid>
             </Box>
           </form>
