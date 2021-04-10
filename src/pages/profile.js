@@ -100,16 +100,15 @@ const Profile = () => {
                   () =>
                     menu?.comp === 'compE'
                       ? window.open(
-                          'https://www.completefarmer.com/privacypolicy',
+                          'https://www.completefarmer.com/privacy-policy',
                           '_blank'
                         )
                       : menu?.comp === 'compF'
                       ? window.open(
-                          'https://www.completefarmer.com/termsandconditions',
+                          'https://www.completefarmer.com/terms-and-conditions',
                           '_blank'
                         )
-                      : //: // eslint-disable-next-line prettier/prettier
-                        setPage(menu.comp)
+                      : setPage(menu.comp)
                   // eslint-disable-next-line react/jsx-curly-newline
                 }
               >
