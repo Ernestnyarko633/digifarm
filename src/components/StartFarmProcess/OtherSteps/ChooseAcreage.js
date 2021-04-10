@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
@@ -22,6 +23,7 @@ import useStartFarm from 'context/start-farm'
 
 import BaseSelect from 'components/Form/BaseSelect'
 import FormRadio from 'components/Form/FormRadio'
+import Prismic from 'prismic-javascript'
 
 import { getFormattedMoney } from 'helpers/misc'
 
@@ -31,6 +33,7 @@ import AcreageInput from './AcreageInput'
 import Map from 'components/Map/Map'
 import { dateIntervals } from 'helpers/misc'
 import useApi from 'context/api'
+import getConfig from 'utils/configs'
 
 const options = ['Yes', 'No']
 
@@ -43,6 +46,7 @@ const ChooseAcreage = ({ farm }) => {
   const [center, setCenter] = React.useState([])
   const [reload, setReload] = React.useState(0)
 
+  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
   const triggerMapReload = () => setReload(prevState => prevState++)
 
   const {
@@ -58,6 +62,30 @@ const ChooseAcreage = ({ farm }) => {
   } = useStartFarm()
   const { getExchangeRate } = useExternal()
   const toast = useToast()
+  const [data, setData] = React.useState(null)
+
+  const Client = Prismic.client(PRISMIC_API, {
+    accessToken: PRISMIC_ACCESS_TOKEN
+  })
+
+  React.useState(() => {
+    let mounted = true
+
+    if (mounted && !data) {
+      const fetchData = async () => {
+        const res = await Client.getByUID('farm_details', farm._id)
+
+        console.log(res, 'chec')
+
+        if (res) {
+          setData(res)
+        }
+      }
+      fetchData()
+    }
+
+    return () => (mounted = false)
+  }, [Client, data])
 
   React.useEffect(() => {
     if (farm) {
@@ -213,19 +241,21 @@ const ChooseAcreage = ({ farm }) => {
                 <Heading as='h6' size='md'>
                   Ecological zone
                 </Heading>
-                <Text>Northern savanna</Text>
+                <Text>{data?.data?.ecologicalzone[0]?.text}</Text>
               </Box>
               <Divider orientation='horizontal' my={4} />
               <Box>
                 <Heading as='h6' size='xs' mb={4}>
                   Weather
                 </Heading>
+                <Text mb={6}>{data?.data?.weather[0]?.text}</Text>
+              </Box>
+              <Box>
+                <Heading as='h6' size='xs' mb={4}>
+                  Market Overview
+                </Heading>
                 <Text mb={6}>
-                  Weather Sandy loam soil is one of the most preferable types of
-                  soil for many types of plants. Planting in loam soil with a
-                  high percentage of sand is the same as planting in normal loam
-                  soil, but extra amendments may be made to compensate for
-                  slightly lower water
+                  {data?.data?.marketoverview[0]?.text || '---'}
                 </Text>
               </Box>
             </Box>
