@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
@@ -11,9 +12,10 @@ import PropTypes from 'prop-types'
 
 const MotionFlex = motion.custom(Flex)
 
-const Confirmation = ({ farm }) => {
+const Confirmation = ({ order }) => {
   const { handleModalClick } = useComponent()
-  const { order, currency, exchangeRate } = useStartFarm()
+  const { currency, exchangeRate } = useStartFarm()
+
   return (
     <MotionFlex w='100%'>
       <Box w={{ md: '50%' }}>
@@ -35,12 +37,7 @@ const Confirmation = ({ farm }) => {
               Hurray! you have successfully <br /> made payment to your new farm
             </Text>
           </Box>
-          <FarmInfo
-            farm={farm}
-            order={order}
-            currency={currency}
-            rate={exchangeRate}
-          />
+          <FarmInfo order={order} currency={currency} rate={exchangeRate} />
         </Flex>
         <Flex
           direction={{ base: 'column', md: 'row' }}
@@ -62,15 +59,14 @@ const Confirmation = ({ farm }) => {
             btntitle='View farm invoice'
             _hover={{ bg: 'transparent' }}
             _active={{ bg: 'transparent' }}
-            onClick={() =>
-              handleModalClick('receipt', {
-                farm,
+            onClick={() => {
+              return handleModalClick('receipt', {
                 order,
                 currency,
                 exchangeRate,
                 type: 'invoice'
-                // eslint-disable-next-line prettier/prettier
-              })}
+              })
+            }}
           />
           <Button
             w={64}
@@ -79,15 +75,14 @@ const Confirmation = ({ farm }) => {
             fontSize='md'
             rounded='30px'
             btntitle='View farm agreement'
-            onClick={() =>
-              handleModalClick('contract', {
-                farm,
+            onClick={() => {
+              return handleModalClick('contract', {
                 order,
                 currency,
                 exchangeRate,
                 type: 'agreement'
-                // eslint-disable-next-line prettier/prettier
-            })}
+              })
+            }}
           />
         </Flex>
       </Box>
@@ -96,7 +91,7 @@ const Confirmation = ({ farm }) => {
 }
 
 Confirmation.propTypes = {
-  farm: PropTypes.any
+  order: PropTypes.any
 }
 
 export default Confirmation

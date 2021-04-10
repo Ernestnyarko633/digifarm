@@ -1,12 +1,13 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
-import FarmingTypeCard from 'components/Cards/FarmingTypeCard'
+
 import Header from 'container/Header'
+import FarmingTypeCard from 'components/Cards/FarmingTypeCard'
 
 import useAuth from 'context/auth'
-
 // json
-import data from '../../data/farm.json'
+import types from '../../data/farm.json'
 
 const StartFarm = () => {
   const { isAuthenticated } = useAuth()
@@ -39,7 +40,7 @@ const StartFarm = () => {
           px={{ base: 6, md: 0 }}
           my={{ base: 10, md: 0 }}
         >
-          {data?.map((item, idx) => (
+          {types?.map((item, idx) => (
             <FarmingTypeCard
               state={item}
               key={item.id}

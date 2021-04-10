@@ -74,13 +74,12 @@ const Document = () => {
       }
     }
     news()
-  }, [])
+  }, [Client, setNewsData])
 
   return (
     <Layout>
       <Box mt='200px' mx='80px'>
         <UploadDocument />
-        {/* <ConfirmDocUpload/> */}
         <ConfirmReceiptDelete />
       </Box>
       <Box pb={10} mx={6}>

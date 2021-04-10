@@ -28,7 +28,7 @@ const CropSelection = () => {
   let categories = []
 
   if (data) {
-    categories = [{ _id: 'defualt', name: 'Top-selling farms' }, ...data]
+    categories = [{ _id: 'defualt', title: 'Top-selling farms' }, ...data]
   }
 
   return (
@@ -60,7 +60,7 @@ const CropSelection = () => {
             width={{ base: '100%', md: 'initial' }}
           >
             {categories?.map(cat => (
-              <Box key={cat._id} label={cat.name || cat?.title}>
+              <Box key={cat._id} label={cat.title}>
                 <FarmDetails
                   catName={cat.name}
                   handleNext={handleNext}

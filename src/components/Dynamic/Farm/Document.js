@@ -102,29 +102,11 @@ export default function Document({
           <Grid gap={8}>
             {digitalFarmerFarm?.order?.status === 'PAID' && (
               <React.Fragment>
-                {
-                  <FarmReceiptCard
-                    title='Agreement'
-                    type='agreement'
-                    farm={digitalFarmerFarm}
-                  />
-                }
-                {/* {(digitalFarmerFarm?.order?.status === 'PAID' ||
-                  digitalFarmerFarm?.order?.status === 'PENDING') && (
-                  <FarmReceiptCard
-                    title='Invoice'
-                    type='invoice'
-                    farm={digitalFarmerFarm}
-                  />
-                )}
-                {(digitalFarmerFarm?.order?.status === 'PAID' ||
-                  digitalFarmerFarm?.order?.status === 'PROCESSING') && (
-                  <FarmReceiptCard
-                    title='Receipt'
-                    type='receipt'
-                    farm={digitalFarmerFarm}
-                  />
-                )} */}
+                <FarmReceiptCard
+                  title='Agreement'
+                  type='agreement'
+                  farm={digitalFarmerFarm}
+                />
               </React.Fragment>
             )}
           </Grid>

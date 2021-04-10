@@ -31,7 +31,6 @@ const App = () => (
           </ExternalContextProvider>
         </ApiContextProvider>
       </ComponentContextProvider>
-      {/* <ReactQueryDevtools initialIsOpen /> */}
     </QueryClientProvider>
   </BrowserRouter>
 )

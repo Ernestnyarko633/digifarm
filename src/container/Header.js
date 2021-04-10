@@ -50,17 +50,6 @@ const Header = () => {
 
       <Flex align='center'>
         <Flex align='center' mr={{ base: 4, md: 10 }}>
-          {/* <Box
-            d={{ base: 'none', md: 'block' }}
-            as='button'
-            role='button'
-            aria-label='Support'
-          >
-            <Icon as={BsPlus} boxSize={6} />
-          </Box>
-          <Box as='button' role='button' aria-label='Support' ml={6}>
-            <Icon as={BsStar} boxSize={5} />
-          </Box> */}
           <Box as='button' role='button' aria-label='Notification' ml={6}>
             <Icon as={BsBell} boxSize={5} />
           </Box>

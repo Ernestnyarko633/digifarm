@@ -27,6 +27,8 @@ const FarmDetails = ({ query, catName, handleNext }) => {
 
   const { data, isLoading, error } = useFetch(null, getFarms, reload, query)
 
+  sessionStorage.setItem('farms', JSON.stringify(data))
+
   useEffect(() => {
     let mounted = true
     if (mounted && data) {

@@ -8,7 +8,6 @@ import useAuth from './auth'
 import useExternal from './external'
 
 import Constants from 'constant'
-//import useFetch from '../hooks/useFetch'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[0]
@@ -196,15 +195,13 @@ export const StartFarmContextProvider = ({ children }) => {
         text,
         cycle,
         order,
-
+        setStep,
         acreage,
         setOrder,
-
         isSellOn,
         contract,
         setCycle,
         currency,
-        // EOSViewID,
         wantCycle,
         otherStep,
         setAcreage,
@@ -217,9 +214,7 @@ export const StartFarmContextProvider = ({ children }) => {
         setWantCycle,
         exchangeRate,
         selectedFarm,
-        //  EOSViewIDIsLoading,
-        //EOSViewIDHasError,
-        triggerMapReload,
+        setOtherStep,
         isSubmitting,
         paymentOption,
         handlePayment,
@@ -227,6 +222,7 @@ export const StartFarmContextProvider = ({ children }) => {
         handleNextStep,
         setSelectedFarm,
         setExchangeRate,
+        triggerMapReload,
         setPaymentOption,
         handleCreateOrder
       }}

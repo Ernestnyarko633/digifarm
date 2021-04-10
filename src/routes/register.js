@@ -20,11 +20,6 @@ const Router = () => {
         <PrivateRoute exact path='/farms/:id' component={Pages.Farm} />
         <PrivateRoute exact path='/wallet' component={Pages.FarmWallet} />
         <PrivateRoute exact path='/wallets/:id' component={Pages.Wallet} />
-        {/* <PrivateRoute
-          exact
-          path='/documents/receipt'
-          component={Pages.Receipt}
-        /> */}
         <PrivateRoute
           exact
           path='/start-farm/individual'
@@ -35,6 +30,7 @@ const Router = () => {
           path='/start-farm/cooperative'
           component={Pages.Cooperative}
         />
+        <PrivateRoute exact path='/payment' component={Pages.Payment} />
         <PrivateRoute path='/marketplace' component={Pages.Marketplace} />
         <PrivateRoute path='/warehouses' component={Pages.Warehouse} />
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />

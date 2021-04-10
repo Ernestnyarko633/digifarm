@@ -47,10 +47,6 @@ const Map = () => {
       <Box style={{ position: 'absolute', top: 65, left: 5 }}>
         <NavigationControl />
       </Box>
-      {/* <Source type='geojson' data={dataJS} ref={sourceRef} cluster={false}>
-        <Layer {...layer} />
-        Type
-      </Source> */}
     </ReactMapGL>
   )
 }
