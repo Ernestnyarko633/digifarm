@@ -3,7 +3,7 @@ import { Avatar, Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu } from '@headlessui/react'
 import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
-import { BiCog, BiSupport, BiHistory } from 'react-icons/bi'
+//import { BiCog, BiSupport, BiHistory } from 'react-icons/bi'
 import { HiOutlineLogout } from 'react-icons/hi'
 import { BsBell } from 'react-icons/bs'
 import { Link as ReachRouter } from 'react-router-dom'
@@ -15,10 +15,10 @@ import Logo3 from 'assets/images/logo@3x.svg'
 import useAuth from 'context/auth'
 
 const menuLinks = [
-  { name: 'Profile', icon: FiUser, link: '/profile' },
-  { name: 'History', icon: BiHistory, link: '/history' },
-  { name: 'Settings', icon: BiCog, link: '/settings' },
-  { name: 'Help Center', icon: BiSupport, link: '/help' }
+  { name: 'Profile', icon: FiUser, link: '/profile' }
+  // { name: 'History', icon: BiHistory, link: '/history' },
+  // { name: 'Settings', icon: BiCog, link: '/settings' },
+  // { name: 'Help Center', icon: BiSupport, link: '/help' }
 ]
 
 const MotionBox = motion.custom(Box)

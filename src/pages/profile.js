@@ -1,20 +1,11 @@
-/* eslint-disable */
-import {
-  Box,
-  Flex,
-  Grid,
-  Text,
-  Container,
-  Input,
-  Icon,
-} from '@chakra-ui/react';
-import React from 'react';
-import DynamicProfile from 'components/DynamicProfile';
-import Header from 'container/Header';
-import { FiUser } from 'react-icons/fi';
-import { BiCog, BiLockAlt } from 'react-icons/bi';
-import { BsShield } from 'react-icons/bs';
-import { GrCircleInformation} from "react-icons/gr";
+import { Box, Flex, Grid, Text, Container, Icon } from '@chakra-ui/react'
+import React from 'react'
+import DynamicProfile from 'components/DynamicProfile'
+import Header from 'container/Header'
+import { FiUser } from 'react-icons/fi'
+import { BiCog, BiLockAlt } from 'react-icons/bi'
+import { BsShield } from 'react-icons/bs'
+import { GrCircleInformation } from 'react-icons/gr'
 const Profile = () => {
   const [page, setPage] = React.useState('compA')
 
@@ -105,7 +96,21 @@ const Profile = () => {
                 px={5}
                 py={2}
                 rounded='30px'
-                onClick={() => menu?.comp === 'compE' ?  window.open("https://www.completefarmer.com/privacy-policy", '_blank') : menu?.comp === 'compF'? window.open("https://www.completefarmer.com/terms-and-conditions", '_blank') :setPage(menu.comp)}
+                onClick={
+                  () =>
+                    menu?.comp === 'compE'
+                      ? window.open(
+                          'https://www.completefarmer.com/privacy-policy',
+                          '_blank'
+                        )
+                      : menu?.comp === 'compF'
+                      ? window.open(
+                          'https://www.completefarmer.com/terms-and-conditions',
+                          '_blank'
+                        )
+                      : setPage(menu.comp)
+                  // eslint-disable-next-line react/jsx-curly-newline
+                }
               >
                 <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
                 <Text>{menu.name}</Text>
