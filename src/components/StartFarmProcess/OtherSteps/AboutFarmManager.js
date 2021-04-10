@@ -33,6 +33,7 @@ const AboutFarmManager = ({ farm }) => {
   })
 
   const [doc, setDocData] = React.useState(null)
+  const [data, setData] = React.useState(null)
 
   React.useEffect(() => {
     let mounted = true
@@ -49,6 +50,24 @@ const AboutFarmManager = ({ farm }) => {
     }
     return () => (mounted = false)
   }, [Client, doc])
+
+  React.useState(() => {
+    let mounted = true
+
+    if (mounted && !data) {
+      const fetchData = async () => {
+        const response = await Client.getByUID(
+          Prismic.Predicates.at('document.type', 'farm_managers')
+        )
+        if (response) {
+          setData(response.results[0])
+        }
+      }
+      fetchData()
+    }
+
+    return () => (mounted = false)
+  }, [Client, data])
 
   return (
     <Box mx={{ base: 2, md: 0 }}>
