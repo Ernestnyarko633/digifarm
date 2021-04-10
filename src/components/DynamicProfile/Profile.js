@@ -27,6 +27,8 @@ import FetchCard from 'components/FetchCard'
 const Profile = () => {
   const { isAuthenticated } = useAuth()
   const [reload, setReload] = React.useState(0)
+  const [urlOfSelectedImage, setUrl] = React.useState(null)
+  const [selectedFile, setSelectedFile] = React.useState(null)
 
   const triggerReload = () => setReload(s => s++)
   const {
@@ -39,8 +41,6 @@ const Profile = () => {
   const { user } = isAuthenticated()
   const toast = useToast()
 
-  const [selectedFile, setSelectedFile] = React.useState(null)
-
   const { data: bankDetails, isLoading: loading, error } = useFetch(
     null,
     getBankDetails,
@@ -49,6 +49,7 @@ const Profile = () => {
   )
   const changeHandler = event => {
     setSelectedFile(event.target.files[0])
+    setUrl(URL.createObjectURL(event.target.files[0]))
   }
   const initialValues = {
     firstName: user?.firstName,
@@ -248,7 +249,7 @@ const Profile = () => {
             />
 
             <Flex align='center'>
-              <Avatar src={user?.avatar} size='xl' />
+              <Avatar src={urlOfSelectedImage || user?.avatar} size='xl' />
               <Box
                 as='label'
                 role='button'

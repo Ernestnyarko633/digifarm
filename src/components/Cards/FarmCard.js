@@ -1,6 +1,5 @@
-/* eslint-disable */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Avatar,
   Box,
@@ -8,32 +7,93 @@ import {
   Flex,
   Heading,
   Link,
-  Text,
-} from '@chakra-ui/react';
-import { Link as ReachRouter, useHistory } from 'react-router-dom';
+  Text
+} from '@chakra-ui/react'
+import { Link as ReachRouter, useHistory } from 'react-router-dom'
 
-import Step from 'components/Form/Step';
-import Button from 'components/Button';
-import FetchCard from 'components/FetchCard';
-import ImageLoader from 'components/ImageLoader';
+import Step from 'components/Form/Step'
+import Button from 'components/Button'
+import FetchCard from 'components/FetchCard'
+import ImageLoader from 'components/ImageLoader'
 
-import useFetch from 'hooks/useFetch';
-import useApi from 'context/api';
+import useFetch from 'hooks/useFetch'
+import useApi from 'context/api'
 
 const FarmCard = ({ farm, _small }) => {
-  const [imageLoaded, setImageLoaded] = React.useState(false);
-  const [reload, setReload] = React.useState(0);
-  const { getActivities } = useApi();
-  const history = useHistory();
+  const [imageLoaded, setImageLoaded] = React.useState(false)
+  const [reload, setReload] = React.useState(0)
+  const { getActivities, getAllTasks, getMyScheduledTasks } = useApi()
+  const history = useHistory()
 
-  const triggerReload = () => setReload((prevState) => prevState + 1);
+  const triggerReload = () => setReload(prevState => prevState + 1)
 
-  const { data, isLoading, error } = useFetch(null, getActivities, reload, {
-    farm: farm?._id,
-  });
+  const { data, isLoading, error: farmError } = useFetch(
+    `${farm?.order?.product?._id}_activities`,
+    getActivities,
+    reload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
 
+  const {
+    data: ScheduledTasks,
+    isLoading: ScheduledTasksIsLoading,
+    error: ScheduledTasksHasError
+  } = useFetch(
+    `${farm?.order?.product?._id}_scheduled_tasks`,
+    farm?.order?.product?._id ? getMyScheduledTasks : null,
+    reload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
+
+  const {
+    data: tasks,
+    isLoading: tasksIsLoading,
+    error: tasksHasError
+  } = useFetch(
+    'tasks',
+    farm?.order?.product?._id ? getAllTasks : null,
+    reload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
+
+  const loading = isLoading || tasksIsLoading || ScheduledTasksIsLoading
+  const error = farmError || tasksHasError || ScheduledTasksHasError
+
+  const isActivityDone = activity => {
+    if (activity) {
+      const tasksCompleted = ScheduledTasks?.filter(
+        _task =>
+          _task.task?.activity === activity?._id &&
+          _task?.status === 'COMPLETED'
+      )
+
+      const tasksInProgress = ScheduledTasks?.filter(
+        _task =>
+          _task.task?.activity === activity?._id &&
+          _task?.status === 'IN_PROGRESS'
+      )
+
+      const _tasks = tasks?.filter(
+        farmTask => farmTask?.activity === activity?._id
+      )
+
+      if (tasksCompleted?.length === _tasks?.length) return 'COMPLETED'
+
+      if (tasksInProgress.length) return 'IN_PROGRESS'
+
+      return 'PENDING'
+    }
+
+    return 'PENDING'
+  }
   return (
-    <ReachRouter to={ !_small ?  `/farms/${farm?._id}` : `/wallets/${farm?._id}`}>
+    <ReachRouter to={!_small ? `/farms/${farm?._id}` : `/wallets/${farm?._id}`}>
       <Link _focus={{ textDecor: 'none' }}>
         <Box
           rounded='xl'
@@ -41,7 +101,7 @@ const FarmCard = ({ farm, _small }) => {
           p={10}
           bg='white'
           minW={{ base: 82, md: _small ? 85 : 130 }}
-          minH={{ md:!_small? '34rem': 'auto' }}
+          minH={{ md: !_small ? '34rem' : 'auto' }}
           mr={{ md: 6 }}
         >
           <Flex align='center' justify='space-between'>
@@ -90,13 +150,13 @@ const FarmCard = ({ farm, _small }) => {
                     borderColor='gray.300'
                     my={3}
                   />
-                  {isLoading || error ? (
+                  {loading || error ? (
                     <FetchCard
                       m='auto'
                       align='center'
                       justify='center'
                       reload={triggerReload}
-                      loading={isLoading}
+                      loading={loading}
                       error={error}
                       text='fetching progress'
                     />
@@ -105,6 +165,7 @@ const FarmCard = ({ farm, _small }) => {
                       {data.length > 0 ? (
                         data.map((activity, index) => (
                           <Step
+                            isActivityCompleted={isActivityDone}
                             activity={activity}
                             key={activity.title}
                             cutThread={data.length - 1 === index}
@@ -147,17 +208,17 @@ const FarmCard = ({ farm, _small }) => {
         </Box>
       </Link>
     </ReachRouter>
-  );
-};
+  )
+}
 
 FarmCard.propTypes = {
   farm: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
     location: PropTypes.string,
-    order: PropTypes.object,
+    order: PropTypes.object
   }),
-  _small: PropTypes.bool,
-};
+  _small: PropTypes.bool
+}
 
-export default FarmCard;
+export default FarmCard
