@@ -59,6 +59,8 @@ const BankingDetailsForm = ({ bankDetails }) => {
             accountNumber: values.accountNumber
           }
         }
+        delete data.bankDetails.currency
+        delete data.bankDetails.swiftCode
         const res = bankDetails?.length
           ? await updateBankDetails(bankDetails?._id, data)
           : await createBankDetails(data)
@@ -174,7 +176,7 @@ const BankingDetailsForm = ({ bankDetails }) => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               isRequired
-              type='account'
+              type='string'
               // disabled={values?.accountNumber?.length > 1}
               bg='white'
             />
