@@ -85,7 +85,11 @@ const FarmCard = ({ farm, _small }) => {
 
       if (tasksCompleted?.length === _tasks?.length) return 'COMPLETED'
 
-      if (tasksInProgress.length) return 'IN_PROGRESS'
+      if (
+        tasksInProgress.length ||
+        (tasksCompleted.length && tasksCompleted.length !== _tasks.length)
+      )
+        return 'IN_PROGRESS'
 
       return 'PENDING'
     }
@@ -141,7 +145,7 @@ const FarmCard = ({ farm, _small }) => {
                 alignItems='center'
                 pos='relative'
               >
-                <Box w={{ md: '40%' }}>
+                <Box w={{ md: '40%' }} maxH={{ md: 350 }}>
                   <Heading as='h4' fontSize={{ md: '2xl' }}>
                     Progress on farm
                   </Heading>

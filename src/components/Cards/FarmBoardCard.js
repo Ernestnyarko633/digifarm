@@ -11,9 +11,10 @@ import {
   Collapse
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
+import useComponent from 'context/component'
 // import { RichText } from 'prismic-reactjs'
 import { Flower, CreditCard } from 'theme/Icons'
-import { BsHeart } from 'react-icons/bs'
+//import { BsHeart } from 'react-icons/bs'
 import { RiShareForwardLine } from 'react-icons/ri'
 import Button from 'components/Button'
 
@@ -28,11 +29,13 @@ const FarmBoardCard = ({
   actionTag,
   actionText,
   actionBtnTitle,
-  news
+  doc
 }) => {
   const [show, setShow] = React.useState(false)
 
   const handleToggle = () => setShow(!show)
+
+  const { handleModalClick } = useComponent()
 
   const Detail = () => {
     return (
@@ -90,8 +93,11 @@ const FarmBoardCard = ({
         <Avatar size='md' src={avatar} />
         <Box ml={4}>
           <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
-            {firstName}
+            {`${firstName}'s farm`}
           </Heading>
+          <Text color='gray.600' fontSize={{ base: 'sm', md: 'md' }}>
+            {location}
+          </Text>
         </Box>
       </Flex>
 
@@ -133,46 +139,45 @@ const FarmBoardCard = ({
         </>
       )}
 
-      {status === 'news' &&
-        news?.map(data => (
-          <Box key={data?.id}>
-            <Box pt={{ base: 4, md: 8 }} pb={2} px={{ base: 4, md: 16 }}>
-              <NewHead />
-            </Box>
-            <Box>
-              <Image
-                w='100%'
-                h={{ md: 90 }}
-                objectFit='cover'
-                src={data.data.body[0].primary.image.url}
-              />
-            </Box>
-            <Box py={4} px={{ base: 4, md: 10 }}>
-              <Box mt={6}>
-                <Heading as='h5' fontSize={{ md: 'lg' }}>
-                  {data.data.headline[0].text}
-                </Heading>
-                <Collapse
-                  startingHeight={85}
-                  in={show}
-                  onClick={handleToggle}
-                  cursor='pointer'
-                >
-                  {data.data.body[0].primary.description.map(item => (
-                    <Text
-                      color='gray.500'
-                      mt={3}
-                      key={item.text}
-                      fontSize={{ base: 'sm', md: 'md' }}
-                    >
-                      {item.text}
-                    </Text>
-                  ))}
-                </Collapse>
-              </Box>
+      {status === 'news' && (
+        <Box key={doc?.id}>
+          <Box pt={{ base: 4, md: 8 }} pb={2} px={{ base: 4, md: 16 }}>
+            <NewHead />
+          </Box>
+          <Box>
+            <Image
+              w='100%'
+              h={{ md: 90 }}
+              objectFit='cover'
+              src={doc.data.body[0].primary.image.url}
+            />
+          </Box>
+          <Box py={4} px={{ base: 4, md: 10 }}>
+            <Box mt={6}>
+              <Heading as='h5' fontSize={{ md: 'lg' }}>
+                {doc.data.headline[0].text}
+              </Heading>
+              <Collapse
+                startingHeight={85}
+                in={show}
+                onClick={handleToggle}
+                cursor='pointer'
+              >
+                {doc.data.body[0].primary.description.map(item => (
+                  <Text
+                    color='gray.500'
+                    mt={3}
+                    key={item.text}
+                    fontSize={{ base: 'sm', md: 'md' }}
+                  >
+                    {item.text}
+                  </Text>
+                ))}
+              </Collapse>
             </Box>
           </Box>
-        ))}
+        </Box>
+      )}
 
       {status === 'action' && (
         <Box py={{ base: 4, md: 8 }} px={{ base: 4, md: 16 }}>
@@ -225,15 +230,35 @@ const FarmBoardCard = ({
         pb={{ base: 4, md: status === 'news' || status === 'action' ? 6 : 8 }}
         px={{ base: 4, md: 16 }}
       >
-        <Flex>
+        {/* <Flex>
           <Box>
             <Icon as={BsHeart} mr={2} boxSize={5} />
           </Box>
           <Text>123</Text>
-        </Flex>
+        </Flex> */}
 
         <Box ml={{ md: 6 }}>
-          <Icon boxSize={6} as={RiShareForwardLine} />
+          <Icon
+            boxSize={6}
+            as={RiShareForwardLine}
+            onClick={
+              () =>
+                handleModalClick('share', {
+                  status,
+                  avatar,
+                  firstName,
+                  location,
+                  level,
+                  timestamp,
+                  actionTitle,
+                  actionTag,
+                  actionText,
+                  actionBtnTitle,
+                  doc
+                })
+              // eslint-disable-next-line react/jsx-curly-newline
+            }
+          />
         </Box>
       </Flex>
     </Box>
@@ -251,7 +276,7 @@ FarmBoardCard.propTypes = {
   actionTag: PropTypes.string,
   actionText: PropTypes.string,
   actionBtnTitle: PropTypes.string,
-  news: PropTypes.array
+  doc: PropTypes.array
 }
 
 export default FarmBoardCard
