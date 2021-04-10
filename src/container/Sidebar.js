@@ -34,7 +34,7 @@ const Sidebar = () => {
       zIndex={50}
       pt={40}
       boxShadow=' sm'
-      px={{ md: 2 }}
+      pl={{ md: 5 }}
       color='gray.600'
       pr={{ md: 5 }}
       w={{ lg: '20%', xl: '15%' }}

@@ -105,7 +105,7 @@ const Profile = () => {
                 px={5}
                 py={2}
                 rounded='30px'
-                onClick={() => menu?.comp === 'compE' ?  window.open("https://www.completefarmer.com/privacypolicy", '_blank') : menu?.comp === 'compF'? window.open("https://www.completefarmer.com/termsandconditions", '_blank') :setPage(menu.comp)}
+                onClick={() => menu?.comp === 'compE' ?  window.open("https://www.completefarmer.com/privacy-policy", '_blank') : menu?.comp === 'compF'? window.open("https://www.completefarmer.com/terms-and-conditions", '_blank') :setPage(menu.comp)}
               >
                 <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
                 <Text>{menu.name}</Text>
