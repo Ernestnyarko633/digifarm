@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Icon, Link, Text } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 import { farm, home, market, Guide } from 'theme/Icons'
+import Fade from 'react-reveal/Fade'
 //import { MdChatBubbleOutline } from 'react-icons/md'
 // import { IoIosHelpCircle } from 'react-icons/io'
 
@@ -39,69 +40,73 @@ const Sidebar = () => {
       pr={{ md: 5 }}
       w={{ lg: '20%', xl: '15%' }}
     >
-      <Text as='ul'>
-        {menuLink.map(item => (
-          <Link
-            key={item.name}
-            d='flex'
-            alignItems='center'
-            pl={{ md: 4 }}
-            pr={{ md: 4 }}
-            py={{ md: 2 }}
-            rounded='lg'
-            activeClassName='activeClasName'
-            as={NavLink}
-            to={item.path}
-            cursor='pointer'
-            className='active-link'
-            transition='background-color .2s ease-in'
-            _hover={{
-              textDecor: 'none',
-              color: 'gray.700',
-              bg: 'gray.50',
-              rounded: 'md'
-            }}
-            _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
-          >
-            <Icon as={item.icon} boxSize={item.size} mr={2} />
-            <Text fontSize='sm' textAlign='center' mt={1}>
-              {item.name}
-            </Text>
-          </Link>
-        ))}
-      </Text>
+      <Fade left>
+        <Text as='ul'>
+          {menuLink.map(item => (
+            <Link
+              key={item.name}
+              d='flex'
+              alignItems='center'
+              pl={{ md: 4 }}
+              pr={{ md: 4 }}
+              py={{ md: 2 }}
+              rounded='lg'
+              activeClassName='activeClasName'
+              as={NavLink}
+              to={item.path}
+              cursor='pointer'
+              className='active-link'
+              transition='background-color .2s ease-in'
+              _hover={{
+                textDecor: 'none',
+                color: 'gray.700',
+                bg: 'gray.50',
+                rounded: 'md'
+              }}
+              _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
+            >
+              <Icon as={item.icon} boxSize={item.size} mr={2} />
+              <Text fontSize='sm' textAlign='center' mt={1}>
+                {item.name}
+              </Text>
+            </Link>
+          ))}
+        </Text>
+      </Fade>
 
-      <Text as='ul' mt={{ md: 24 }}>
-        {links.map(item => (
-          <Link
-            key={item.name}
-            d='flex'
-            alignItems='center'
-            pl={{ md: 4 }}
-            pr={{ md: 4 }}
-            py={{ md: 2 }}
-            rounded='lg'
-            activeClassName='activeClasName'
-            as={NavLink}
-            to={item.path}
-            cursor='pointer'
-            className='active-link'
-            transition='background-color .2s ease-in'
-            _hover={{
-              textDecor: 'none',
-              color: 'gray.700',
-              bg: 'gray.50',
-              rounded: 'md'
-            }}
-            _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
-          >
-            <Icon as={item.icon} boxSize={item.size} mr={2} />
-            <Text fontSize='sm' textAlign='center' mt={1}>
-              {item.name}
-            </Text>
-          </Link>
-        ))}
-      </Text>
+      <Fade bottom>
+        <Text as='ul' mt={{ md: 24 }}>
+          {links.map(item => (
+            <Link
+              key={item.name}
+              d='flex'
+              alignItems='center'
+              pl={{ md: 4 }}
+              pr={{ md: 4 }}
+              py={{ md: 2 }}
+              rounded='lg'
+              activeClassName='activeClasName'
+              as={NavLink}
+              to={item.path}
+              cursor='pointer'
+              className='active-link'
+              transition='background-color .2s ease-in'
+              _hover={{
+                textDecor: 'none',
+                color: 'gray.700',
+                bg: 'gray.50',
+                rounded: 'md'
+              }}
+              _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
+            >
+              <Icon as={item.icon} boxSize={item.size} mr={2} />
+              <Text fontSize='sm' textAlign='center' mt={1}>
+                {item.name}
+              </Text>
+            </Link>
+          ))}
+        </Text>
+      </Fade>
     </Box>
   )
 }

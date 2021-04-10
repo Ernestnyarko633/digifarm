@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import Share from 'components/Share'
 import useFetch from 'hooks/useFetch'
 import { dateIntervals } from 'helpers/misc'
+import Fade from 'react-reveal/Fade'
 import { Menu } from '@headlessui/react'
 import {
   chevronDown,
@@ -198,25 +199,27 @@ export default function Farm() {
             />
             <Text ml={5}>{`${user?.firstName}`}'s farm</Text>
           </Flex>
-          <Flex align='center'>
-            {menus.map((menu, idx) => (
-              <Flex
-                key={mapKey(idx)}
-                _hover={{ background: 'transparent' }}
-                bg='transparent'
-                outlineColor='none'
-                outline='none'
-                as={Button}
-                role='button'
-                aria-label={`${menu.name} button`}
-                px={{ md: 6 }}
-                color={state === menu.comp ? 'cf.400' : ''}
-                onClick={() => setState(menu.comp)}
-              >
-                {menu.name}
-              </Flex>
-            ))}
-          </Flex>
+          <Fade left>
+            <Flex align='center'>
+              {menus.map((menu, idx) => (
+                <Flex
+                  key={mapKey(idx)}
+                  _hover={{ background: 'transparent' }}
+                  bg='transparent'
+                  outlineColor='none'
+                  outline='none'
+                  as={Button}
+                  role='button'
+                  aria-label={`${menu.name} button`}
+                  px={{ md: 6 }}
+                  color={state === menu.comp ? 'cf.400' : ''}
+                  onClick={() => setState(menu.comp)}
+                >
+                  {menu.name}
+                </Flex>
+              ))}
+            </Flex>
+          </Fade>
         </Flex>
 
         <Menu
