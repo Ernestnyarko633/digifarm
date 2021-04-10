@@ -64,7 +64,9 @@ const CropSelection = () => {
                 <FarmDetails
                   catName={cat.name}
                   handleNext={handleNext}
-                  query={cat._id !== 'defualt' && { category: cat._id }}
+                  query={
+                    cat._id !== 'defualt' && { category: cat._id, status: 1 }
+                  }
                 />
               </Box>
             ))}

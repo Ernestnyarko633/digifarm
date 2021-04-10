@@ -14,7 +14,7 @@ const MotionFlex = motion.custom(Flex)
 
 const Confirmation = ({ order }) => {
   const { handleModalClick } = useComponent()
-  const { currency, exchangeRate } = useStartFarm()
+  const { currency, exchangeRate, selectedFarm } = useStartFarm()
 
   return (
     <MotionFlex w='100%'>
@@ -37,7 +37,12 @@ const Confirmation = ({ order }) => {
               Hurray! you have successfully <br /> made payment to your new farm
             </Text>
           </Box>
-          <FarmInfo order={order} currency={currency} rate={exchangeRate} />
+          <FarmInfo
+            order={order}
+            farm={selectedFarm}
+            currency={currency}
+            rate={exchangeRate}
+          />
         </Flex>
         <Flex
           direction={{ base: 'column', md: 'row' }}

@@ -5,7 +5,14 @@ import { QuestionIcon } from '@chakra-ui/icons'
 import { Heading, Text, Box, Flex } from '@chakra-ui/react'
 import { getFormattedMoney } from 'helpers/misc'
 
-const FarmInfo = ({ order, currency, rate, width = 108, margin = 4 }) => {
+const FarmInfo = ({
+  order,
+  farm,
+  currency,
+  rate = 1,
+  width = 108,
+  margin = 4
+}) => {
   const getDiscount = () => {
     // if discount exist then apply discount to cost
     if (order?.product?.discounts) {
@@ -33,15 +40,19 @@ const FarmInfo = ({ order, currency, rate, width = 108, margin = 4 }) => {
           <Flex as='td' align='center' justify='space-between' pb={2}>
             <Flex direction='column'>
               <Heading as='h3' fontSize='xl' textTransform='uppercase'>
-                {order.product?.cropVariety?.crop?.name}
+                {order?.product?.cropVariety?.crop?.name || farm?.name}
               </Heading>
               <Text as='span' fontSize='xs' textColor='gray.500'>
-                ({order.product?.cropVariety?.name}) #{order.product?.name}
+                ({order?.product?.cropVariety?.name || farm?.cropVariety?.name})
+                #{order?.product?.name || farm?.name}
               </Text>
             </Flex>
             <Text>
               {currency?.currencySymbol}
-              {getFormattedMoney(order.product?.pricePerAcre * rate)}/acre
+              {getFormattedMoney(
+                order?.product?.pricePerAcre || farm?.pricePerAcre * rate
+              )}
+              /acre
             </Text>
           </Flex>
         </Box>
@@ -98,7 +109,8 @@ FarmInfo.propTypes = {
   margin: PropTypes.any,
   rate: PropTypes.number.isRequired,
   order: PropTypes.object.isRequired,
-  currency: PropTypes.object.isRequired
+  currency: PropTypes.object.isRequired,
+  farm: PropTypes.object.isRequired
 }
 
 export default FarmInfo

@@ -63,7 +63,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
       loading={isLoading}
       reload={triggerReload}
     />
-  ) : data.length > 0 ? (
+  ) : data?.filter(f => f.status === 1)?.length > 0 ? (
     <Grid
       templateColumns={{ md: '45% 55%' }}
       h={121}
@@ -86,17 +86,19 @@ const FarmDetails = ({ query, catName, handleNext }) => {
         borderBottomWidth={{ base: 1, md: 0 }}
         borderBottomColor='gray.200'
       >
-        {data?.map(farm => (
-          <CropSelectionCard
-            key={farm._id}
-            farmName={farm.name}
-            acres={farm.acreage}
-            varietyName={farm.cropVariety?.name}
-            cropName={farm.cropVariety?.crop?.name}
-            selected={farm._id === selectedFarm?._id}
-            onClick={() => setSelectedFarm(farm)}
-          />
-        ))}
+        {data
+          ?.filter(f => f.status === 1)
+          ?.map(farm => (
+            <CropSelectionCard
+              key={farm._id}
+              farmName={farm.name}
+              acres={farm.acreage}
+              varietyName={farm.cropVariety?.name}
+              cropName={farm.cropVariety?.crop?.name}
+              selected={farm._id === selectedFarm?._id}
+              onClick={() => setSelectedFarm(farm)}
+            />
+          ))}
       </GridItem>
       <GridItem
         overflowY='scroll'
