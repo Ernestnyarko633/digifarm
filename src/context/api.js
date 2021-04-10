@@ -63,6 +63,12 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const verifyPayment = async id => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/orders/verify-payment/${id}`
+    })
+  }
+
   const uploadPaymentDetails = async (id, formData) => {
     return await http.patch({
       url: `${PAYMENT_API}/payment/receipt-upload?payment_id=${id}`,
@@ -217,6 +223,7 @@ export const ApiContextProvider = ({ children }) => {
         createOrder,
         downloadFile,
         getActivities,
+        verifyPayment,
         getMyFarmFeeds,
         changePassword,
         initiatePayment,

@@ -5,16 +5,16 @@ import { QuestionIcon } from '@chakra-ui/icons'
 import { Heading, Text, Box, Flex } from '@chakra-ui/react'
 import { getFormattedMoney } from 'helpers/misc'
 
-const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
+const FarmInfo = ({ order, currency, rate, width = 108, margin = 4 }) => {
   const getDiscount = () => {
     // if discount exist then apply discount to cost
-    if (farm?.discounts) {
+    if (order?.product?.discounts) {
       // get discounts user may qualify for
-      const discounts = farm?.discounts.filter(
-        ({ point }) => point <= order?.acreage
+      const discounts = order?.product?.farm?.discounts.filter(
+        ({ point }) => point <= order?.product?.order?.acreage
       )
       // get highest discount user qualified for
-      if (discounts.length) {
+      if (discounts?.length) {
         const discountQualifiedFor = discounts.reduce((a, b) =>
           a.point > b.point ? a : b
         ).percent
@@ -33,15 +33,15 @@ const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
           <Flex as='td' align='center' justify='space-between' pb={2}>
             <Flex direction='column'>
               <Heading as='h3' fontSize='xl' textTransform='uppercase'>
-                {farm?.cropVariety?.crop?.name}
+                {order.product?.cropVariety?.crop?.name}
               </Heading>
               <Text as='span' fontSize='xs' textColor='gray.500'>
-                ({farm?.cropVariety?.name}) #{farm?.name}
+                ({order.product?.cropVariety?.name}) #{order.product?.name}
               </Text>
             </Flex>
             <Text>
               {currency?.currencySymbol}
-              {getFormattedMoney(farm?.pricePerAcre * rate)}/acre
+              {getFormattedMoney(order.product?.pricePerAcre * rate)}/acre
             </Text>
           </Flex>
         </Box>
@@ -53,7 +53,7 @@ const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
               </Text>
               <QuestionIcon color='cf.400' />
             </Flex>
-            <Text>$100.00</Text>
+            <Text>Inclusive</Text>
           </Flex>
         </Box>
         <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
@@ -61,7 +61,7 @@ const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
             <Text mr={2} color='gray.600'>
               VAT
             </Text>
-            <Text>$20.5</Text>
+            <Text>Inclusive</Text>
           </Flex>
         </Box>
         <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
@@ -96,7 +96,6 @@ const FarmInfo = ({ farm, order, currency, rate, width = 108, margin = 4 }) => {
 FarmInfo.propTypes = {
   width: PropTypes.any,
   margin: PropTypes.any,
-  farm: PropTypes.object.isRequired,
   rate: PropTypes.number.isRequired,
   order: PropTypes.object.isRequired,
   currency: PropTypes.object.isRequired

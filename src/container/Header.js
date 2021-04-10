@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu } from '@headlessui/react'
 import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
@@ -8,7 +8,10 @@ import { HiOutlineLogout } from 'react-icons/hi'
 import { BsBell } from 'react-icons/bs'
 import { Link as ReachRouter } from 'react-router-dom'
 
-import Logo from '../assets/images/logo.png'
+import Logo1 from 'assets/images/logo@1x.svg'
+import Logo2 from 'assets/images/logo@2x.svg'
+import Logo3 from 'assets/images/logo@3x.svg'
+
 import useAuth from 'context/auth'
 
 const menuLinks = [
@@ -34,33 +37,34 @@ const Header = () => {
       top={0}
       zIndex={100}
       align='center'
-      h={{ base: 14, md: 20 }}
+      h={{ base: 14, md: 20, xl: 24 }}
       gridArea='header'
       justify='space-between'
       borderBottomWidth={1}
       borderBottomColor='gray.300'
-      px={{ base: 4, md: 24 }}
+      pl={{ base: 4, md: 16 }}
+      pr={{ base: 4, md: 20 }}
       overflowX={{ base: 'hidden', md: 'visible' }}
     >
       <ReachRouter to='/dashboard'>
         <Link _hover={{ textDecor: 'none' }}>
-          <Image src={Logo} w={{ base: 8, md: 12 }} />
+          <Box
+            w={{ base: '84.47px', md: '113px', xl: '169px' }}
+            h={{ base: 6, md: 8, xl: '48px' }}
+            bgImage={{
+              base: `url('${Logo1}')`,
+              md: `url('${Logo2}')`,
+              xl: `url('${Logo3}')`
+            }}
+            bgSize='cover'
+            bgPos='center'
+            bgRepeat='no-repeat'
+          />
         </Link>
       </ReachRouter>
 
       <Flex align='center'>
         <Flex align='center' mr={{ base: 4, md: 10 }}>
-          {/* <Box
-            d={{ base: 'none', md: 'block' }}
-            as='button'
-            role='button'
-            aria-label='Support'
-          >
-            <Icon as={BsPlus} boxSize={6} />
-          </Box>
-          <Box as='button' role='button' aria-label='Support' ml={6}>
-            <Icon as={BsStar} boxSize={5} />
-          </Box> */}
           <Box as='button' role='button' aria-label='Notification' ml={6}>
             <Icon as={BsBell} boxSize={5} />
           </Box>

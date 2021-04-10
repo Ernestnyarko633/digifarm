@@ -23,7 +23,6 @@ const ReceiptModal = ({ open, onClose, data }) => {
     <ModalWrapper isCentered isOpen={open} onClose={onClose} size='3xl'>
       <Box w='100%'>
         <Box w='100%'>
-          {/*Header */}
           <Flex
             align='center'
             justify='center'
@@ -72,10 +71,6 @@ const ReceiptModal = ({ open, onClose, data }) => {
                     <Td>Activity</Td>
                     <Td>{data?.data?.activity?.title}</Td>
                   </Tr>
-                  {/* <Tr>
-                    <Td>Resources</Td>
-                    <Td>metres (m)</Td>
-                  </Tr> */}
                   <Tr>
                     <Td>Farm Manager Signature</Td>
                     <Td>
@@ -98,7 +93,6 @@ const ReceiptModal = ({ open, onClose, data }) => {
               </Table>
             </Box>
           </Box>
-          {/*Footer */}
           <Flex align='center' justify='space-between' bg='cf.400' w='100%'>
             <Flex w='50%' py={{ md: 5 }} pl={{ md: 5 }}>
               <Text color='white'>

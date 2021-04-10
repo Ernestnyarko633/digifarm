@@ -28,21 +28,6 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
           filter='drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.1))'
           p={6}
         >
-          {/* <Box>
-            <Text mb={4} fontSize='sm'>
-              Plant population
-            </Text>
-            <CircularProgress
-              value={(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
-              size='100px'
-              color='cf.400'
-            >
-              <CircularProgressLabel rounded='lg'>
-                {(eosStat?.indexes?.NDVI?.average)?.toFixed(2)}
-              </CircularProgressLabel>
-            </CircularProgress>
-          </Box> */}
-
           <Box>
             <Text mb={4} fontSize='sm'>
               Plant health
@@ -59,21 +44,6 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
               </CircularProgressLabel>
             </CircularProgress>
           </Box>
-
-          {/* <Box>
-        <Text mb={4} fontSize='sm'>
-          Growing stage
-        </Text>
-        <CircularProgress
-          value={(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
-          size='100px'
-          color='cf.400'
-        >
-          <CircularProgressLabel rounded='lg'>
-            {(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
-          </CircularProgressLabel>
-        </CircularProgress>
-      </Box> */}
 
           <Box>
             <Text mb={4} fontSize='sm'>

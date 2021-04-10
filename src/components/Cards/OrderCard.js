@@ -31,6 +31,9 @@ const OrderCard = ({ order, onOpen }) => {
     >
       <Flex>
         <Avatar
+          bgColor='white'
+          borderWidth='1px'
+          borderColor='gray.300'
           src={
             order?.product?.cropVariety?.imageUrl ||
             require('../../assets/images/soya.png').default
