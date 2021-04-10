@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import Fade from 'react-reveal/Fade'
@@ -84,7 +83,6 @@ const FarmBoardContent = ({ farms }) => {
     return () => (mounted = false)
   }, [Client, doc])
 
-  console.log(doc, 'conse')
   return (
     <Flex w='100%' align='center' direction='column'>
       <YourFarmCard farms={farms} />

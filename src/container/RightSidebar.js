@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Box, Grid, Heading, Text } from '@chakra-ui/react'
 import EventCard from 'components/Cards/EventCard'
 import React from 'react'

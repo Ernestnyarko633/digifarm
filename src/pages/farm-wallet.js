@@ -70,7 +70,6 @@ const FarmWallet = () => {
               gap={{ md: 12 }}
             >
               {myFarms.map((farm, index) => {
-                // eslint-disable-next-line no-console
                 return (
                   <Link
                     to={`/wallets/${farm._id}`}

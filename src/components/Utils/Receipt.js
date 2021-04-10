@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-curly-newline */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
@@ -87,8 +86,8 @@ const Receipt = ({
             _downloadOrder({
               reference: data?.farm?.order?.reference,
               type: type
-            })
-          }
+              // eslint-disable-next-line prettier/prettier
+            })}
         />
       </Box>
     </Box>

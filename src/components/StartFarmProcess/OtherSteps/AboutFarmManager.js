@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -127,7 +126,7 @@ const AboutFarmManager = ({ farm }) => {
                   <Grid key={manager._id} templateColumns='repeat(2, 1fr)'>
                     <Box py={10} px={2}>
                       <Avatar
-                        src={manager?.avatar}
+                        src={doc?.data?.manager_image?.url}
                         size={{ base: 4, md: 8 }}
                         justify='space-around'
                       />
@@ -152,7 +151,6 @@ const AboutFarmManager = ({ farm }) => {
                               fontSize='xs'
                               textColor='gray.500'
                             >
-                              {console.log(item)}
                               {item.text}
                             </ListItem>
                           ))}
