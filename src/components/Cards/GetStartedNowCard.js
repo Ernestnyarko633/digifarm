@@ -38,6 +38,7 @@ const GetStartedNowCard = () => (
           w={{ base: 56, md: 64 }}
           h={12}
           shadow='md'
+          // disabled
         >
           Get me started now
         </Button>

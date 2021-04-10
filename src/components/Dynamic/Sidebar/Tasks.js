@@ -163,18 +163,6 @@ export default function Tasks({
                     </CircularProgressLabel>
                   </CircularProgress>
                 </Box>
-                {/* <Box>
-                  <Text fontSize='xs' fontWeight={300}>
-                    Growing stage
-                  </Text>
-
-                  <Box mt={2}>
-                    <Image
-                      h={20}
-                      src={require('../../../assets/images/stage.png').default}
-                    />
-                  </Box>
-                </Box> */}
                 <Box>
                   <Text fontSize='xs' fontWeight={300}>
                     Crop productivity

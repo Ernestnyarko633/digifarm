@@ -13,14 +13,14 @@ import ChooseAcreage from './ChooseAcreage'
 import PaymentOption from './PaymentOption'
 import Confirmation from './Confirmation'
 
-// import InviteLink from './InviteLink'
 import Contract from './Contract'
 
 import { getformattedDate } from 'helpers/misc'
+import ReloadPage from 'components/Reload'
 
 const MotionFlex = motion.custom(Flex)
 
-const OtherSteps = ({ history: { push } }) => {
+const OtherSteps = ({ data, history: { push } }) => {
   const {
     text,
     otherStep,
@@ -46,12 +46,10 @@ const OtherSteps = ({ history: { push } }) => {
         return <Contract farm={selectedFarm} />
       case 3:
         return <PaymentOption farm={selectedFarm} />
-      // case 4:
-      //   return <InviteLink farm={selectedFarm} />
       case 4:
-        return <Confirmation farm={selectedFarm} />
+        return <Confirmation order={data} />
       default:
-        return null
+        return <ReloadPage />
     }
   }
 
@@ -69,7 +67,7 @@ const OtherSteps = ({ history: { push } }) => {
           width: 56,
           action: _ => handlePayment()
         }
-      case 5:
+      case 4:
         return {
           title: 'Continue to my Dashboard',
           width: 80,
@@ -81,6 +79,10 @@ const OtherSteps = ({ history: { push } }) => {
   }
 
   const { title, action, width } = getForwardButtonProps(otherStep)
+
+  if (!catFarms) {
+    push('/dashboard')
+  }
 
   return (
     <>
@@ -111,8 +113,16 @@ const OtherSteps = ({ history: { push } }) => {
                 align='center'
                 justify='center'
                 direction='column'
-                borderBottomWidth={farm._id === selectedFarm._id && 2}
-                borderBottomColor={farm._id === selectedFarm._id && 'cf.400'}
+                borderBottomWidth={
+                  (farm._id === selectedFarm?._id ||
+                    farm._id === data?.product?._id) &&
+                  2
+                }
+                borderBottomColor={
+                  (farm._id === selectedFarm?._id ||
+                    farm._id === data?.product?._id) &&
+                  'cf.400'
+                }
               >
                 <Text
                   px={6}
@@ -145,12 +155,15 @@ const OtherSteps = ({ history: { push } }) => {
       >
         <Text fontSize='sm' color='red.600' w={{ base: 32, md: '100%' }}>
           Farm starts :{' '}
-          {getformattedDate(selectedFarm.startDate, {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
+          {getformattedDate(
+            selectedFarm?.startDate || data?.product?.startDate,
+            {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            }
+          )}
         </Text>
         <Flex
           py={1}
@@ -219,6 +232,7 @@ const OtherSteps = ({ history: { push } }) => {
 }
 
 OtherSteps.propTypes = {
+  data: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
 }
 

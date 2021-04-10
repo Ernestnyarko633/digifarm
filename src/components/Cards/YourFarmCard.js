@@ -40,7 +40,14 @@ const YourFarmCard = ({ farms }) => {
               <Text fontSize='sm' mb={3}>
                 {farm.name}
               </Text>
-              <Box w={24} h={24} rounded='100%' pos='relative'>
+              <Box
+                w={24}
+                h={24}
+                rounded='100%'
+                borderWidth='1px'
+                pos='relative'
+                borderColor='gray.200'
+              >
                 <Image
                   w='100%'
                   h='100%'

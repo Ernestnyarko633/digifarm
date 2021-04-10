@@ -5,14 +5,9 @@ import { FiCheck } from 'react-icons/fi'
 import { GoPrimitiveDot } from 'react-icons/go'
 
 const Step = ({ activity, cutThread, isActivityCompleted }) => {
-  const isComplete =
-    isActivityCompleted(activity) === 'COMPLETED' &&
-    activity.status === 'COMPLETED'
-  const isInProgess =
-    isActivityCompleted(activity) === 'IN_PROGRESS' &&
-    activity.status === 'IN_PROGRESS'
-  const isPending =
-    isActivityCompleted(activity) === 'PENDING' && activity.status === 'PENDING'
+  const isComplete = activity.status === 'COMPLETED'
+  const isInProgess = activity.status === 'IN_PROGRESS'
+  const isPending = activity.status === 'PENDING'
 
   return (
     <Flex align='center' justify='space-between' pos='relative' mt={5}>
@@ -41,13 +36,13 @@ const Step = ({ activity, cutThread, isActivityCompleted }) => {
           <Text textColor={isPending ? 'gray.300' : 'gray.700'} as='span'>
             {activity.title}
           </Text>
-          <Text
+          {/* <Text
             fontSize='xs'
             textColor={isPending ? 'gray.300' : 'gray.500'}
             mt={-2}
           >
             Finance preparation
-          </Text>
+          </Text> */}
         </Box>
       </Flex>
       {!cutThread && (

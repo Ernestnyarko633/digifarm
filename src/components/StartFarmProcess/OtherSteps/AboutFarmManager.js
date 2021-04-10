@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -9,7 +10,6 @@ import {
   Grid,
   Heading,
   Icon,
-  Image,
   ListItem,
   Text,
   UnorderedList
@@ -19,13 +19,14 @@ import Prismic from 'prismic-javascript'
 import { BsInfoCircleFill } from 'react-icons/bs'
 import { IoLocation } from 'react-icons/io5'
 import { motion } from 'framer-motion'
-// import { RichText, KeyText } from 'prismic-reactjs'
 
 import getConfig from 'utils/configs'
+import ImageLoader from 'components/ImageLoader'
 
 const MotionGrid = motion.custom(Grid)
 
 const AboutFarmManager = ({ farm }) => {
+  const [isLoaded, setLoading] = React.useState(false)
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
   const Client = Prismic.client(PRISMIC_API, {
@@ -39,17 +40,22 @@ const AboutFarmManager = ({ farm }) => {
     let mounted = true
     if (mounted && !doc) {
       const fetchData = async () => {
-        const response = await Client.query(
-          Prismic.Predicates.at('document.type', 'farm_managers')
-        )
-        if (response) {
-          setDocData(response.results[0])
+        let data = []
+        const dataPromise = await farm.managers.map(async managers => {
+          const res = await Client.getByUID('farm_managers', managers._id)
+          return res.data
+        })
+
+        data = await Promise.all(dataPromise)
+
+        if (data) {
+          setDocData(data[0])
         }
       }
       fetchData()
     }
     return () => (mounted = false)
-  }, [Client, doc])
+  }, [Client, doc, farm.managers])
 
   React.useState(() => {
     let mounted = true
@@ -79,16 +85,18 @@ const AboutFarmManager = ({ farm }) => {
           borderRightWidth={2}
         >
           <Box>
-            <Image
-              rounded='3xl'
+            <ImageLoader
               h={{ base: 64, md: 80 }}
               w={{ base: 80, md: '100%' }}
+              height='300px'
+              isLoaded={isLoaded}
+              setLoading={setLoading}
+              rounded='3xl'
               objectFit='cover'
               src={
-                farm.cropVariety?.imageUrl ||
-                farm.cropVariety?.crop?.imageUrl ||
-                require('../../../assets/images/placeholder.png').default
+                farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl
               }
+              alt={farm.cropVariety?.crop?.name}
             />
           </Box>
           <Flex
@@ -145,7 +153,7 @@ const AboutFarmManager = ({ farm }) => {
                   <Grid key={manager._id} templateColumns='repeat(2, 1fr)'>
                     <Box py={10} px={2}>
                       <Avatar
-                        src={doc?.data?.manager_image?.url}
+                        src={doc?.manager_image?.url || manager?.avatar}
                         size={{ base: 4, md: 8 }}
                         justify='space-around'
                       />
@@ -164,7 +172,7 @@ const AboutFarmManager = ({ farm }) => {
                       <Text>Manager Profile</Text>
                       {doc ? (
                         <UnorderedList>
-                          {doc.data?.manager_profile?.map(item => (
+                          {doc?.manager_profile?.map(item => (
                             <ListItem
                               key={item.text}
                               fontSize='xs'

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { IoIosRefresh } from 'react-icons/io'
+import { IoIosRefresh, IoMdArrowBack } from 'react-icons/io'
 import { Flex, Text, Spinner, Button } from '@chakra-ui/react'
 
 const FetchCard = ({ loading, error, text, reload, ...rest }) => {
@@ -22,18 +22,23 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
               <Text fontSize='md' ml={2} color='cf.400'>
                 Something went wrong
               </Text>
+              <Text fontSize='sm' color='cf.400'>
+                {error}
+              </Text>
               <Button
-                bg='cf.800'
+                bg='cf.900'
                 variant='solid'
                 color='white'
                 size='md'
                 rounded='20px'
-                fontSize={30}
-                onClick={() => reload()}
-                leftIcon={<IoIosRefresh />}
+                fontSize={20}
+                onClick={() => {
+                  return reload ? reload() : window.location.replace('/')
+                }}
+                leftIcon={reload ? <IoIosRefresh /> : <IoMdArrowBack />}
                 _hover={{ bg: 'cf.800' }}
               >
-                <Text fontSize='md'>Try again</Text>
+                <Text fontSize='md'>{reload ? 'Try again' : 'Home'}</Text>
               </Button>
             </>
           )}
@@ -44,8 +49,8 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
 }
 
 FetchCard.propTypes = {
-  reload: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  reload: PropTypes.func,
+  loading: PropTypes.bool,
   error: PropTypes.any,
   text: PropTypes.any
 }

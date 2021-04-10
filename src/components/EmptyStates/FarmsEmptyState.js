@@ -19,10 +19,6 @@ const FarmsEmptyState = () => {
         </Box>
 
         <Box my={{ md: 10 }} textAlign='center'>
-          {/* <Link _hover={{ textDecor: 'none' }} color='cf.400' d='block' mb={4}>
-            Learn more <Icon as={MdKeyboardArrowRight} />
-          </Link> */}
-
           <Link as={ReachLink} _hover={{ textDecor: 'none' }} to='/start-farm'>
             <Button
               colorScheme='linear'

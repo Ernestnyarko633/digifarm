@@ -19,22 +19,6 @@ const Headings = ({ title }) => {
             Help us personalize your <br />
             experience and make big account changes here
           </Text>
-          {/* <Flex align='center' ml={10}>
-            <Button rounded='30px' w={40} h={12} shadow='sm'>
-              Cancel
-            </Button>
-            <Button
-              colorScheme='linear'
-              rounded='30px'
-              w={40}
-              h={12}
-              shadow='sm'
-              ml={4}
-              type='submit'
-            >
-              Save
-            </Button>
-          </Flex> */}
         </Flex>
       </Box>
     </Box>
