@@ -6,6 +6,7 @@ import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import useApi from 'context/api'
 import EmptyMap from 'assets/images/map.png'
+import Fade from 'react-reveal/Fade'
 
 import FetchCard from 'components/FetchCard'
 
@@ -114,20 +115,22 @@ export default function Farm({
     >
       <Box h={{ md: 128 }} w='100%'>
         {EOSViewID && (
-          <Box
-            h='100%'
-            w='100%'
-            objectFit='cover'
-            as={Map}
-            viewID={EOSViewID?.results[0]?.view_id}
-            loading={loading || EOSTaskForStatsCreationIsLoading}
-            error={error}
-            band={null}
-            _error={_error || EOSTaskForStatsCreationHasError}
-            center={center || location[0]}
-            zoom={zoom}
-            reloads={reloads}
-          />
+          <Fade>
+            <Box
+              h='100%'
+              w='100%'
+              objectFit='cover'
+              as={Map}
+              viewID={EOSViewID?.results[0]?.view_id}
+              loading={loading || EOSTaskForStatsCreationIsLoading}
+              error={error}
+              band={null}
+              _error={_error || EOSTaskForStatsCreationHasError}
+              center={center || location[0]}
+              zoom={zoom}
+              reloads={reloads}
+            />
+          </Fade>
         )}
         {!loading && !EOSViewID && (
           <Flex w='100%' h='100%' direction='column'>
