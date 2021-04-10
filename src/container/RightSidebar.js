@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Box, Grid, Heading, Text } from '@chakra-ui/react'
 import EventCard from 'components/Cards/EventCard'
 import React from 'react'
@@ -5,6 +6,7 @@ import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
 
 const RightSidebar = () => {
+  const mapKey = index => index
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
   const Client = Prismic.client(PRISMIC_API, {
@@ -59,8 +61,15 @@ const RightSidebar = () => {
       </Text>
 
       <Grid gap={4} mt={{ md: 4 }} maxH={{ md: 90 }}>
-        <EventCard />
-        <EventCard />
+        {doc?.map((e, i) => (
+          <EventCard
+            key={mapKey(i)}
+            href={e.data?.body[0]?.primary?.hyperlink?.url}
+            title={e.data?.title[0]?.text}
+            summary={e.data?.summary[0]?.text}
+            image={e.data?.body[0]?.primary?.media?.url}
+          />
+        ))}
       </Grid>
     </Box>
   )

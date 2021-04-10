@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import { Avatar, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const EventCard = () => {
+const EventCard = ({ href, title, summary, image }) => {
   return (
     <Box
       rounded='xl'
@@ -11,18 +13,16 @@ const EventCard = () => {
       color='white'
     >
       <Flex align='center'>
-        <Avatar
-          size='xl'
-          src={require('../../assets/images/pepper.png').default}
-        />
+        <Avatar size='xl' src={image} />
         <Box ml={2}>
           <Heading as='h5' fontSize={{ md: 'xl' }}>
-            Soy bean Farm
+            {title}
           </Heading>
-          <Text fontSize='sm'>Agyata, Eastern region</Text>
+          <Text fontSize='sm'>{summary}</Text>
 
           <Box mt={4}>
             <Button
+              href={href}
               borderWidth={1}
               borderColor='white'
               px={{ md: 4 }}
@@ -32,6 +32,7 @@ const EventCard = () => {
               _hover={{ bg: 'transparent' }}
               _active={{ bg: 'transparent' }}
               rounded='30px'
+              onClick={() => window.open(href, '_blank')}
             >
               Check it out
             </Button>
@@ -42,4 +43,10 @@ const EventCard = () => {
   )
 }
 
+EventCard.propTypes = {
+  href: PropTypes.any,
+  title: PropTypes.any,
+  summary: PropTypes.any,
+  image: PropTypes.any
+}
 export default EventCard
