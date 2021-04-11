@@ -85,10 +85,10 @@ FarmLayout.propTypes = {
   EOSViewID: PropTypes.any,
   location: PropTypes.any,
   rest: PropTypes.any,
-  farmfeeds: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
+  farmfeeds: PropTypes.array,
+  loading: PropTypes.bool,
   error: PropTypes.any,
   _error: PropTypes.any,
   reloads: PropTypes.array,
-  reload: PropTypes.number.isRequired
+  reload: PropTypes.number
 }

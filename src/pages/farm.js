@@ -74,7 +74,7 @@ export default function Farm() {
     isLoading: farmFeedsIsLoading,
     error: farmFeedsHasError
   } = useFetch(
-    `${farm?.order?.product?._id}_farm_feeds`,
+    null,
     farm?.order?.product?._id ? getMyFarmFeeds : null,
     reload,
     {
@@ -87,7 +87,7 @@ export default function Farm() {
     isLoading: ScheduledTasksIsLoading,
     error: ScheduledTasksHasError
   } = useFetch(
-    `${farm?.order?.product?._id}_scheduled_tasks`,
+    null,
     farm?.order?.product?._id ? getMyScheduledTasks : null,
     reload,
     {
@@ -99,27 +99,17 @@ export default function Farm() {
     data: myFarmActivities,
     isLoading: myFarmActivitiesIsLoading,
     error: myFarmActivitiesHasError
-  } = useFetch(
-    `${farm?.order?.product?._id}_activities`,
-    farm?.order?.product?._id ? getActivities : null,
-    reload,
-    {
-      farm: farm?.order?.product?._id
-    }
-  )
+  } = useFetch(null, farm?.order?.product?._id ? getActivities : null, reload, {
+    farm: farm?.order?.product?._id
+  })
 
   const {
     data: tasks,
     isLoading: tasksIsLoading,
     error: tasksHasError
-  } = useFetch(
-    'tasks',
-    farm?.order?.product?._id ? getAllTasks : null,
-    reload,
-    {
-      farm: farm?.order?.product?._id
-    }
-  )
+  } = useFetch(null, farm?.order?.product?._id ? getAllTasks : null, reload, {
+    farm: farm?.order?.product?._id
+  })
 
   const isLoading =
     farmFeedsIsLoading ||

@@ -55,7 +55,7 @@ const FundCard = ({ amount, label }) => {
 
 FundCard.propTypes = {
   amount: PropTypes.number.isRequired,
-  label: PropTypes.number.isRequired
+  label: PropTypes.any.isRequired
 }
 
 export default FundCard

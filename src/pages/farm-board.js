@@ -18,7 +18,7 @@ const FarmBoard = () => {
     error: myFarmsHasError
   } = useFetch('my_farms', getMyFarms, reload)
   return (
-    <Layout showRightSideContentType='events'>
+    <Layout>
       <Greetings
         title='Welcome to your farm board'
         text="Here's where you view, share and like all <br /> the news from your farm(s)"
