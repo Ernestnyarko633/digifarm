@@ -4,7 +4,7 @@ import { Box, Flex, Icon, Tag, Text } from '@chakra-ui/react'
 import { FiCheck } from 'react-icons/fi'
 import { GoPrimitiveDot } from 'react-icons/go'
 
-const Step = ({ activity, cutThread, isActivityCompleted }) => {
+const Step = ({ activity, cutThread }) => {
   const isComplete = activity.status === 'COMPLETED'
   const isInProgess = activity.status === 'IN_PROGRESS'
   const isPending = activity.status === 'PENDING'
@@ -78,8 +78,7 @@ const Step = ({ activity, cutThread, isActivityCompleted }) => {
 
 Step.propTypes = {
   cutThread: PropTypes.bool,
-  activity: PropTypes.object,
-  isActivityCompleted: PropTypes.func.isRequired
+  activity: PropTypes.object
 }
 
 export default Step

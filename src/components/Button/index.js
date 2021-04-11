@@ -30,7 +30,7 @@ Button.propTypes = {
   colorScheme: PropTypes.string,
   width: PropTypes.any,
   fontSize: PropTypes.any,
-  icon: PropTypes.object,
+  icon: PropTypes.any,
   rest: PropTypes.any
 }
 

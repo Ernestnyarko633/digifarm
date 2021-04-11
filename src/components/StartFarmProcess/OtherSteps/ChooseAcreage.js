@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
@@ -74,8 +73,6 @@ const ChooseAcreage = ({ farm }) => {
     if (mounted && !data) {
       const fetchData = async () => {
         const res = await Client.getByUID('farm_details', farm._id)
-
-        console.log(res, 'chec')
 
         if (res) {
           setData(res)

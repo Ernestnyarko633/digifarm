@@ -37,6 +37,8 @@ const FarmBoardCard = ({
 
   const { handleModalClick } = useComponent()
 
+  //const mapKey = i => i
+
   const Detail = () => {
     return (
       <Flex
@@ -266,17 +268,17 @@ const FarmBoardCard = ({
 }
 
 FarmBoardCard.propTypes = {
-  status: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
+  status: PropTypes.string,
+  avatar: PropTypes.string,
+  firstName: PropTypes.string,
+  location: PropTypes.string,
   level: PropTypes.string,
-  timestamp: PropTypes.string.isRequired,
-  actionTitle: PropTypes.string.isRequired,
+  timestamp: PropTypes.string,
+  actionTitle: PropTypes.string,
   actionTag: PropTypes.string,
   actionText: PropTypes.string,
   actionBtnTitle: PropTypes.string,
-  doc: PropTypes.array
+  doc: PropTypes.any
 }
 
 export default FarmBoardCard

@@ -142,10 +142,10 @@ export default function Farm({
                 justify='center'
                 mx='auto'
                 reload={() => {
-                  ;(error || _error) && reloads[0]()
+                  ;(error || _error || __error) && reloads[0]()
                 }}
                 loading={loading}
-                error={error || _error}
+                error={error || _error || __error}
                 text={
                   !error || !_error
                     ? 'Standby as we load your current farms and pending orders'
@@ -173,7 +173,7 @@ export default function Farm({
               shadow='none'
               isLoading={_loading}
               isDisabled={_loading || !EOSTaskForStatsCreated?.task_id}
-              isError={__error}
+              //isError={__error}
               onClick={
                 () => DownloadVisual({ task: EOSTaskForStatsCreated?.task_id })
                 // eslint-disable-next-line react/jsx-curly-newline
@@ -194,16 +194,16 @@ export default function Farm({
 }
 
 Farm.propTypes = {
-  center: PropTypes.array.isRequired,
+  center: PropTypes.array,
   reload: PropTypes.any,
   onOpen: PropTypes.func,
-  digitalFarmerFarm: PropTypes.object.isRequired,
+  digitalFarmerFarm: PropTypes.object,
   EOSStatistics: PropTypes.any,
   EOSViewID: PropTypes.any,
   WeatherForeCasts: PropTypes.any,
-  ScheduledTasks: PropTypes.array.isRequired,
-  location: PropTypes.array.isRequired,
-  farmfeeds: PropTypes.array.isRequired,
+  ScheduledTasks: PropTypes.array,
+  location: PropTypes.array,
+  farmfeeds: PropTypes.array,
   error: PropTypes.any,
   _error: PropTypes.any,
   loading: PropTypes.any,

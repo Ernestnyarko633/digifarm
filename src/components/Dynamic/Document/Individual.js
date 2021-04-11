@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import { Box, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React, { useEffect, useState } from 'react'
@@ -86,27 +84,24 @@ export default function Individual({
           tempActs?.length > 0 &&
           tempActs?.map(_activity => {
             return (
-              <>
-                {console.log(_activity, 'the activity')}
-                <FarmDocumentCard
-                  farmfeeds={farmfeeds}
-                  viewDoc={viewDoc}
-                  key={_activity?._id}
-                  digitalFarmerFarm={digitalFarmerFarm}
-                  __activityID={_activity?._id}
-                  title={_activity?.title}
-                  ScheduledTasks={ScheduledTasks.filter(
-                    _completedTask =>
-                      _activity._id === _completedTask?.task?.activity &&
-                      _completedTask.status === 'COMPLETED'
-                  )}
-                  tasksNumber={
-                    tasks?.filter(_task => _task.activity._id === _activity._id)
-                      ?.length + 1
-                  }
-                  amount={totalAmount(_activity)}
-                />
-              </>
+              <FarmDocumentCard
+                farmfeeds={farmfeeds}
+                viewDoc={viewDoc}
+                key={_activity?._id}
+                digitalFarmerFarm={digitalFarmerFarm}
+                __activityID={_activity?._id}
+                title={_activity?.title}
+                ScheduledTasks={ScheduledTasks.filter(
+                  _completedTask =>
+                    _activity._id === _completedTask?.task?.activity &&
+                    _completedTask.status === 'COMPLETED'
+                )}
+                tasksNumber={
+                  tasks?.filter(_task => _task.activity._id === _activity._id)
+                    ?.length + 1
+                }
+                amount={totalAmount(_activity)}
+              />
             )
           })}
       </Grid>

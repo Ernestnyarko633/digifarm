@@ -70,8 +70,8 @@ Map.propTypes = {
   results: PropTypes.any,
   _error: PropTypes.any,
   reloads: PropTypes.array,
-  zoom: PropTypes.number.isRequired,
-  band: PropTypes.string.isRequired,
+  zoom: PropTypes.number,
+  band: PropTypes.string,
   height: PropTypes.any
 }
 

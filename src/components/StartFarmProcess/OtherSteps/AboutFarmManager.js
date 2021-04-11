@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -40,8 +39,6 @@ const AboutFarmManager = ({ farm }) => {
     if (mounted && !doc) {
       const fetchData = async () => {
         const res = await Client.getByUID('farm_managers', farm._id)
-
-        console.log(res)
 
         if (res) {
           setDocData(res.data)

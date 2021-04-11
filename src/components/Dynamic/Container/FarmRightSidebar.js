@@ -76,7 +76,7 @@ export default function FarmRightSidebar({
 
 FarmRightSidebar.propTypes = {
   state: PropTypes.string,
-  digitalFarmerFarm: PropTypes.string.isRequired,
+  digitalFarmerFarm: PropTypes.any.isRequired,
   eosStats: PropTypes.any,
   location: PropTypes.any,
   ScheduledTasks: PropTypes.any,

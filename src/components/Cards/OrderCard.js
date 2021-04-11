@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   Avatar,
   Box,
@@ -19,7 +18,6 @@ import useStartFarm from 'context/start-farm'
 const OrderCard = ({ order, onOpen }) => {
   const { setOrder } = useStartFarm()
 
-  console.log(order, 'believe')
   return (
     <Box
       bg='white'
