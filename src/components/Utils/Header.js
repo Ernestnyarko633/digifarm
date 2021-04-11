@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Link, Text } from '@chakra-ui/react'
 
 import Logo1 from 'assets/images/logo@1x.svg'
 import Logo2 from 'assets/images/logo@2x.svg'
@@ -36,6 +36,16 @@ const Header = () => {
           bgRepeat='no-repeat'
         />
       </Box>
+      <Link
+        isExternal
+        rel='noreferrer'
+        href='https://www.completefarmer.com/support'
+        _focus={{ textDecor: 'none' }}
+      >
+        <Text fontWeight='bold' color='cf.400' fontSize={{ md: 'lg' }}>
+          Contact support
+        </Text>
+      </Link>
     </Flex>
   )
 }
