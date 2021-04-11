@@ -23,7 +23,7 @@ const Banner = () => {
           <Flex
             direction='column'
             justify='center'
-            w={{ md: '70%', xl: '50%' }}
+            w={{ md: '70%', xl: '60%' }}
             align='center'
             p={{ md: 5 }}
           >
@@ -32,14 +32,14 @@ const Banner = () => {
               as='h3'
               mt={{ md: 5 }}
               color='#022D2B'
-              fontSize={{ base: '2xl', md: '3xl', xl: '6xl' }}
+              fontSize={{ base: '3xl', md: '4xl', lg: '6xl', xl: '9xl' }}
               dangerouslySetInnerHTML={{ __html: 'Coming Soon' }}
             />
 
             <Text
               textAlign='center'
               my={{ md: 5 }}
-              fontSize={{ base: 'md', md: 'lg', xl: 'xl' }}
+              fontSize={{ base: 'md', md: 'lg', xl: '2xl' }}
               dangerouslySetInnerHTML={{
                 __html:
                   'Please wait patiently as we set up our farms to enable you farm the revolutionized way and make profit from the comfort of your home.'
@@ -86,7 +86,7 @@ const Banner = () => {
             >
               <Link
                 m={{ xl: 10 }}
-                mx={{ base: 5, xl: 0 }}
+                mx={{ base: 2, xl: 0 }}
                 href='https://www.completefarmer.com/terms-and-conditions'
               >
                 <Flex>
