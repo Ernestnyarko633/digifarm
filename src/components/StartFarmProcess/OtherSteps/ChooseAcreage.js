@@ -1,118 +1,382 @@
-import React, { useState, useEffect} from 'react'
-import { Box, Grid, Stack, Heading, Divider, Select, Button, Text, Radio, Input, HStack} from '@chakra-ui/core';
+import React from 'react'
+import PropTypes from 'prop-types'
+import FetchCard from 'components/FetchCard'
+import {
+  Box,
+  Grid,
+  Text,
+  Icon,
+  Flex,
+  Select,
+  Heading,
+  Divider,
+  useToast,
+  Skeleton,
+  GridItem
+} from '@chakra-ui/react'
+import { InfoIcon } from '@chakra-ui/icons'
+import { motion } from 'framer-motion'
+import useFetch from 'hooks/useFetch'
+import useExternal from 'context/external'
+import useStartFarm from 'context/start-farm'
 
-// google-maps configuration
-import GoogleMapReact from 'google-map-react';
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-const handleApiLoaded = (map, maps) => {
-    // use map and maps objects
-};
-import ReactMapGL from 'react-map-gl';
-import data from '../OtherSteps/data.geojson';
-const ChooseAcreage = () => {
+import BaseSelect from 'components/Form/BaseSelect'
+import FormRadio from 'components/Form/FormRadio'
+import Prismic from 'prismic-javascript'
 
-    const [viewport, setViewport] = useState({
-        latitude: 9.7267833,
-        longitude: -122.41669,
-        width: "36vw",
-        height: "70vh",
-        zoom: 10
-      });
+import { getFormattedMoney } from 'helpers/misc'
 
+import Constants from 'constant'
 
-    return (
-            <Grid templateColumns="repeat(2, 1fr)" gap={6} padding={10}>
-                <Box>
-                    <ReactMapGL
-                        {...viewport}
-                        latitude={9.7267833} 
-                        longitude={-0.49975} 
-                        zoom={10}
-                        mapboxApiAccessToken='pk.eyJ1Ijoia25pZ2h0c2hlbGwzMDEiLCJhIjoiY2l6dmVtbWMyMDAwZTJxcGZ5ajBseTE1OSJ9.C099DGKt-Xv90HMAuOGQaw'
-                        onViewportChange={viewport => {
-                            setViewport(viewport);
-                          }}
+import AcreageInput from './AcreageInput'
+import Map from 'components/Map/Map'
+import { dateIntervals } from 'helpers/misc'
+import useApi from 'context/api'
+import getConfig from 'utils/configs'
+
+const options = ['Yes', 'No']
+
+const MotionGrid = motion.custom(Grid)
+
+const ChooseAcreage = ({ farm }) => {
+  const { eosSearch } = useApi()
+  const [isLoading, setLoading] = React.useState(false)
+  const [location, setLocation] = React.useState([])
+  const [center, setCenter] = React.useState([])
+  const [reload, setReload] = React.useState(0)
+
+  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
+  const triggerMapReload = () => setReload(prevState => prevState++)
+
+  const {
+    cycle,
+    acreage,
+    setCycle,
+    currency,
+    wantCycle,
+    setCurrency,
+    setWantCycle,
+    exchangeRate,
+    setExchangeRate
+  } = useStartFarm()
+  const { getExchangeRate } = useExternal()
+  const toast = useToast()
+  const [data, setData] = React.useState(null)
+
+  const Client = Prismic.client(PRISMIC_API, {
+    accessToken: PRISMIC_ACCESS_TOKEN
+  })
+
+  React.useState(() => {
+    let mounted = true
+
+    if (mounted && !data) {
+      const fetchData = async () => {
+        const res = await Client.getByUID('farm_details', farm._id)
+
+        if (res) {
+          setData(res)
+        }
+      }
+      fetchData()
+    }
+
+    return () => (mounted = false)
+  }, [Client, data])
+
+  React.useEffect(() => {
+    if (farm) {
+      let location_ = []
+      let center_ = []
+      let _location = farm?.location
+      let _center = _location?.center
+      const strToNumber = (value, array) =>
+        value?.forEach(coordinate => {
+          return array?.push(
+            coordinate.split(',').map(item => {
+              return parseFloat(item, 10)
+            })
+          )
+        })
+      strToNumber(_location?.coords, location_)
+      strToNumber(_center, center_)
+      setLocation(location_)
+      setCenter(center_)
+    }
+  }, [farm])
+
+  let eosViewIdPayload = {
+    fields: ['sceneID', 'cloudCoverage'],
+    limit: 1,
+    page: 1,
+    search: {
+      date: {
+        from: dateIntervals()?.ThirtyDaysAgo,
+        to: dateIntervals()?.today
+      },
+      cloudCoverage: {
+        from: 0,
+        to: 60
+      },
+      shape: {
+        type: 'Polygon',
+        coordinates: [location]
+      }
+    },
+    sort: {
+      date: 'desc'
+    }
+  }
+
+  const {
+    data: EOSViewID,
+    isLoading: EOSViewIDIsLoading,
+    error: EOSViewIDHasError
+  } = useFetch(
+    null,
+    farm?._id && location.length > 0 ? eosSearch : null,
+    reload,
+    eosViewIdPayload,
+    'sentinel2'
+  )
+
+  React.useEffect(() => {
+    if (currency.id !== 'US') {
+      ;(async () => {
+        try {
+          setLoading(true)
+          const query = 'USD_' + currency.currencyId
+          const res = await getExchangeRate({ q: query })
+          if (res.data[query]) {
+            setExchangeRate(res.data[query])
+          }
+        } catch (error) {
+          toast({
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+            position: 'top-right',
+            title: 'An error occurred.',
+            description:
+              (error?.data?.message ||
+                error?.message ||
+                'Unknown error occurred') + '.'
+          })
+        } finally {
+          setLoading(false)
+        }
+      })()
+    } else {
+      setExchangeRate(1)
+    }
+  }, [setExchangeRate, getExchangeRate, currency, toast])
+
+  const loading = EOSViewIDIsLoading
+  const error = EOSViewIDHasError
+  return (
+    <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
+      <GridItem w='100%' h='100%'>
+        {(loading || error) && (
+          <Flex w='100%' h='100%'>
+            <FetchCard
+              direction='column'
+              align='center'
+              justify='center'
+              mx='auto'
+              reload={() => {
+                error && triggerMapReload()
+              }}
+              loading={loading}
+              error={error}
+              text={
+                !error
+                  ? 'Standby as we load the map'
+                  : 'Something went wrong, please dont fret'
+              }
+            />
+          </Flex>
+        )}
+        {!loading && !error && EOSViewID?.results && (
+          <Flex
+            w='100%'
+            h='90%'
+            as={Map}
+            viewID={EOSViewID?.results[0]?.view_id}
+            loading={loading}
+            error={error}
+            band={null}
+            center={center || location[0] || null}
+            zoom={9}
+          />
+        )}
+      </GridItem>
+      <GridItem
+        borderLeftWidth={1}
+        borderLeftColor='gray.200'
+        overflowY='scroll'
+        css={{
+          direction: 'ltr',
+          scrollbarColor: 'rebeccapurple',
+          scrollBehavior: 'smooth'
+        }}
+        mb={10}
+      >
+        <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
+          <Box>
+            <Heading as='h6' size='md' mb={2}>
+              About Location
+              <Icon as={InfoIcon} color='cf.400' boxSize={4} mx={2} />
+            </Heading>
+            <Box
+              rounded='md'
+              padding={10}
+              borderWidth={1}
+              overflow='hidden'
+              borderColor='gray.200'
+            >
+              <Box>
+                <Heading as='h6' size='md'>
+                  Ecological zone
+                </Heading>
+                <Text>{data?.data?.ecologicalzone[0]?.text}</Text>
+              </Box>
+              <Divider orientation='horizontal' my={4} />
+              <Box>
+                <Heading as='h6' size='xs' mb={4}>
+                  Weather
+                </Heading>
+                <Text mb={6}>{data?.data?.weather[0]?.text}</Text>
+              </Box>
+              <Box>
+                <Heading as='h6' size='xs' mb={4}>
+                  Market Overview
+                </Heading>
+                <Text mb={6}>
+                  {data?.data?.marketoverview[0]?.text || '---'}
+                </Text>
+              </Box>
+            </Box>
+          </Box>
+          <Box mt={10} px={{ base: 6, md: 0 }}>
+            <Box>
+              <Heading as='h5' size='sm'>
+                Amount to get started
+              </Heading>
+              <Skeleton
+                h={6}
+                w={60}
+                isLoaded={!isLoading}
+                startColor='cf.300'
+                endColor='cf.500'
+              >
+                <Flex alignItems='center' justifyContent='space-between'>
+                  <Heading as='h5' fontSize='lg'>
+                    {currency.currencySymbol}
+                    {getFormattedMoney(farm.pricePerAcre * exchangeRate)}/
+                    <Text as='span' fontWeight='normal' fontSize='sm'>
+                      acre
+                    </Text>
+                  </Heading>
+                  <Box>
+                    <Select
+                      w={20}
+                      borderWidth={0}
+                      defaultValue={JSON.stringify(currency)}
+                      _focus={{
+                        borderWidth: 0
+                      }}
+                      onChange={e => setCurrency(JSON.parse(e.target.value))}
+                    >
+                      {Constants.countries.map(currency => (
+                        <option
+                          key={currency.id}
+                          value={JSON.stringify(currency)}
                         >
-                    </ReactMapGL>
-
-            
-                    <Box textAlign="center" paddingTop="20px">
-                        <Heading as="h6" size="xs">
-                            <Text>What is included in this farm</Text>
-                        </Heading>
-                        <HStack spacing="24px">
-                            <Box>
-                                Icon 
-                                <Text>Farm Updates</Text>
-                            </Box>
-                            <Box>
-                                Icon
-                                <Text>Support</Text>
-                            </Box>
-                            <Box>
-                                Icon
-                                <Text>Schduled farm visits</Text>
-                            </Box>
-                        </HStack>
-
-                    </Box>
+                          {currency.currencyId}
+                        </option>
+                      ))}
+                    </Select>
+                  </Box>
+                </Flex>
+              </Skeleton>
+            </Box>
+            <Box
+              p={5}
+              mt={4}
+              rounded='md'
+              borderWidth={1}
+              borderColor='gray.200'
+            >
+              <Heading as='h5' size='sm'>
+                Choose number of acres to farm ({farm.acreage - acreage})
+              </Heading>
+              <Divider orientation='horizontal' my={5} />
+              <Flex
+                align='center'
+                justify={{ base: 'space-between', md: 'initial' }}
+              >
+                <AcreageInput totalAcres={farm.acreage} />
+                <Flex alignItems='center' marginLeft={{ md: 6 }}>
+                  <Skeleton
+                    h={6}
+                    w={20}
+                    isLoaded={!isLoading}
+                    startColor='cf.300'
+                    endColor='cf.500'
+                  >
+                    <Text fontSize='tiny' color='red.500'>
+                      +{currency.currencySymbol}
+                      {getFormattedMoney(
+                        farm.pricePerAcre * exchangeRate * (acreage - 1)
+                      )}
+                    </Text>
+                  </Skeleton>
+                </Flex>
+              </Flex>
+            </Box>
+          </Box>
+          <Box mt={10} px={{ base: 6, md: 0 }}>
+            <FormRadio
+              icon
+              state={wantCycle}
+              options={options}
+              onChange={e => {
+                if (e === 'No') {
+                  setCycle(1)
+                }
+                setWantCycle(e)
+              }}
+              title='Do you want to apply cycle for this farm?'
+            />
+          </Box>
+          <Box my={10} px={{ base: 6, md: 0 }}>
+            {wantCycle === 'Yes' && (
+              <>
+                <Heading as='h5' size='sm' mb={2}>
+                  Choose number of cycles
+                </Heading>
+                <Box w='250px'>
+                  <BaseSelect
+                    id='cycle'
+                    name='cycle'
+                    value={[cycle]}
+                    placeholder='1 cycle'
+                    options={[2, 3, 4, 5]}
+                    title='Choose number of cycle(s)'
+                    setFieldValue={(name, value) => setCycle(value[0])}
+                  />
                 </Box>
-                <Box>
-                    <Heading as="h6" size="xs" paddingBottom="4">
-                        About Location
-                    </Heading>
-                    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" padding="5">
-                        <Box paddingBottom="5">
-                            <Heading as="h6" size="xs">Ecological zone</Heading>
-                            <Heading as="h6" size="xs">Northern savanna</Heading>
-                        </Box>
-                        <Divider orientation="horizontal" />
-                        <Heading as="h6" size="xs">Weather</Heading>
-                        <Text>
-                            Weather Sandy loam soil is one of the most preferable types of soil for many types of plants. 
-                            Planting in loam soil with a high percentage of sand is the same as planting in normal loam soil, but extra amendments may be made to compensate for slightly lower water
-                        </Text>
-                    </Box>
-                    <Box marginTop="10">
-                        <Heading as="h5" size="sm">Choose number of acres to farm</Heading>
-                        <Grid templateColumns="repeat(2, 1fr)" gap={2}>
-                            <Select>
-                                <option value="option1">Option 1</option>
-                                <option value="option1">Option 1</option>
-                                <option value="option1">Option 1</option>
-                                <option value="option1">Option 1</option>
-                            </Select>
-                            <Text marginLeft="10">
-                                $ 750.000
-                            </Text>
-                        </Grid>
-                    </Box>
-                    <Box marginTop="10">
-                        <Heading as="h5" size="sm">Do you want allow cycle for this farm?</Heading>
-                        <Stack direction="row">
-                            <Radio value="1">No</Radio>
-                            <Radio value="2">Yes</Radio>
-                        </Stack>
-                    </Box>
-                    <Box marginTop="10"> 
-                        <Heading as="h5" size="sm">Choose number of acres to farm</Heading>
-                        <Select placeholder="Select option">
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
-                        </Select>
-                    </Box>
-                    <Grid templateColumns="repeat(2, 1fr)" gap={2} paddingTop={5}>
-                        <Box>
-                            <Input placeholder="Choose number of cycle" />
-                        </Box>
-                        <Box>
-                            <Button colorScheme="teal" size="lg">Continue</Button>
-                        </Box>
-                    </Grid>
-                </Box>
-            </Grid>
-    )
+              </>
+            )}
+          </Box>
+        </Box>
+      </GridItem>
+    </MotionGrid>
+  )
+}
+
+ChooseAcreage.propTypes = {
+  farm: PropTypes.object.isRequired
 }
 
 export default ChooseAcreage

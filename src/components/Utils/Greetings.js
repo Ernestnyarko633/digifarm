@@ -1,24 +1,42 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/core';
-import React from 'react';
-import IllustrationImage from '../../assets/images/home/illustration.png';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import { getCurrentDayParting } from 'helpers/misc'
+import Fade from 'react-reveal/Fade'
 
-const Greetings = () => {
+import Illustration from 'assets/images/illustration.svg'
+
+const Greetings = ({ title, text }) => {
+  const { skyColor, textColor } = getCurrentDayParting()
   return (
-    <Box pos='relative'>
-      <Image
-        src={IllustrationImage}
-        h={{ md: 115 }}
-        w='100%'
-        objectFit='cover'
-      />
-      <Box pos='absolute' top={{ md: 40 }} left={{ md: 16 }}>
-        <Heading as='h3' fontSize={{ md: '4xl' }}>
-          Welcome Farmer Kwasi
-        </Heading>
-        <Text>Get started by farming individually or with a group.</Text>
+    <Box pos='relative' bg={skyColor} textColor={textColor}>
+      <Fade top>
+        <Image
+          w='100%'
+          objectFit='cover'
+          src={Illustration}
+          h={{ base: 90, md: 115 }}
+        />
+      </Fade>
+      <Box pos='absolute' top={{ base: 48, md: 55 }} left={{ base: 6, md: 16 }}>
+        <Fade left>
+          <Heading
+            as='h3'
+            fontSize={{ base: '2xl', md: '4xl' }}
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
+        </Fade>
+        <Fade left>
+          <Text dangerouslySetInnerHTML={{ __html: text }} />
+        </Fade>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default Greetings;
+Greetings.propTypes = {
+  title: PropTypes.string,
+  text: PropTypes.string
+}
+
+export default Greetings

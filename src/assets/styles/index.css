@@ -1,5 +1,10 @@
+::selection {
+  background-color: #3c9130;
+  color: #fff;
+}
+
 @font-face {
-  font-family: 'CeraGRBold';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -7,7 +12,7 @@
 }
 
 @font-face {
-  font-family: 'CeraGRBlack';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
@@ -15,7 +20,7 @@
 }
 
 @font-face {
-  font-family: 'CeraGRThin';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 100;
   font-display: swap;
@@ -23,7 +28,7 @@
 }
 
 @font-face {
-  font-family: 'CeraGRLight';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
@@ -39,9 +44,56 @@
 }
 
 @font-face {
-  font-family: 'CeraGRMedium';
+  font-family: 'CeraGR';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
   src: url('../fonts/Cera\ GR\ Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: Smitta-Bali;
+  src: url('../fonts/Smitta-Bali-dafont.ttf') format('truetype');
+  font-weight: normal;
+}
+
+.loading-text {
+  display: inline-block;
+  top: calc(50% + 20px);
+  position: fixed;
+  z-index: 1;
+  color: #3c9130;
+}
+
+.loading-text:after {
+  content: '.';
+  animation: dots 1s steps(5, end) infinite;
+}
+
+.loading-text-b {
+  display: unset;
+  top: unset;
+  position: unset;
+}
+
+@keyframes dots {
+  0%,
+  20% {
+    color: rgba(0, 0, 0, 0);
+    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
+  40% {
+    color: #3c9130;
+    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
+  60% {
+    text-shadow: 0.25em 0 0 #3c9130, 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
+  80%,
+  100% {
+    text-shadow: 0.25em 0 0 #3c9130, 0.5em 0 0 #3c9130;
+  }
 }

@@ -1,23 +1,31 @@
 /**
  * Method to return backend services urls based on the environment
  * */
-const getConfig = () => {
+
+const configs = () => {
   // Get REACT ENV
-  const ENV = process.env.REACT_APP_ENVIRONMENT;
+  const ENV = process.env.REACT_APP_ENVIRONMENT
 
   return {
-    BUYER_API: process.env[`REACT_APP_${ENV}_BUYER_API`],
-    OPERATION_API: process.env[`REACT_APP_${ENV}_OPERATION_API`],
-    FMS_API: process.env[`REACT_APP_${ENV}_FMS_API`],
     AUTH_API: process.env[`REACT_APP_${ENV}_AUTH_API`],
     AUTH_SERVICE: process.env[`REACT_APP_${ENV}_AUTH_SERVICE`],
-    MAPBOX_TOKEN: process.env[`REACT_APP_${ENV}_MAPBOX_TOKEN`],
-    // NOTIFICATION_API: process.env[`REACT_APP_${ENV}_NOTIFICATION_API`],
-    // LOGISTICS_API: process.env[`REACT_APP_${ENV}_LOGISTICS`],
-    // JET_AUTH_API: process.env[`REACT_APP_${ENV}_JET_AUTH`],
-    // USER_API: process.env[`REACT_APP_${ENV}_USER`],
-    // PASSWORD_API: process.env[`REACT_APP_${ENV}_PASSWORD`]
-  };
-};
+    DIGITAL_FARMER_API: process.env[`REACT_APP_${ENV}_DIGITAL_FARMER_API`],
+    BUYER_API: process.env[`REACT_APP_${ENV}_BUYER_API`],
+    NOTIFICATION_API: process.env[`REACT_APP_${ENV}_NOTIFICATION_API`],
+    FMS_API: process.env[`REACT_APP_${ENV}_FMS_API`],
+    PAYMENT_API: process.env[`REACT_APP_${ENV}_PAYMENT_API`],
+    EXCHANGE_RATE_API: process.env[`REACT_APP_${ENV}_EXCHANGE_RATE_API`],
+    EXCHANGE_RATE_API_KEY:
+      process.env[`REACT_APP_${ENV}_EXCHANGE_RATE_API_KEY`],
+    MAPBOX_API: process.env.REACT_APP_MAPBOX_API,
+    EOS_API_KEY: process.env.REACT_APP_EOS_API_KEY,
+    EOS_API: process.env.REACT_APP_EOS_API,
+    PRISMIC_API: process.env.REACT_APP_PRISMIC_API,
+    PRISMIC_ACCESS_TOKEN: process.env.REACT_APP_PRISMIC_ACCESS_TOKEN,
+    REDIS_HOST: process.env[`REACT_APP_${ENV}_REDIS_HOST`],
+    REDIS_PASS: process.env.REACT_APP_REDIS_PASS,
+    REDIS_PORT: process.env[`REACT_APP_${ENV}_REDIS_PORT`]
+  }
+}
 
-export default getConfig;
+export default configs

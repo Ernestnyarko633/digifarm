@@ -1,46 +1,56 @@
-import React from 'react';
-import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/core';
-import { motion } from 'framer-motion';
-import { Menu } from '@headlessui/react';
-import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi';
-import { BiCog, BiSupport, BiHistory } from 'react-icons/bi';
-import { HiOutlineLogout } from 'react-icons/hi';
-import { BsBell, BsStar, BsPlus } from 'react-icons/bs';
-import Logo1 from '../assets/images/logo@1x.svg'
-import Logo2 from '../assets/images/logo@2x.svg'
-import Logo3 from '../assets/images/logo@3x.svg'
+import React from 'react'
+import { Avatar, Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Menu } from '@headlessui/react'
+import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
+// import { BiCog, BiSupport, BiHistory } from 'react-icons/bi'
+import { HiOutlineLogout } from 'react-icons/hi'
+import { BsBell } from 'react-icons/bs'
+import { Link as ReachRouter } from 'react-router-dom'
+import Fade from 'react-reveal/Fade'
+
+import Logo1 from 'assets/images/logo@1x.svg'
+import Logo2 from 'assets/images/logo@2x.svg'
+import Logo3 from 'assets/images/logo@3x.svg'
+
+import useAuth from 'context/auth'
 
 const menuLinks = [
-  { name: 'Profile', icon: FiUser, link: '/profile' },
-  { name: 'History', icon: BiHistory, link: '/history' },
-  { name: 'Settings', icon: BiCog, link: '/settings' },
-  { name: 'Help Center', icon: BiSupport, link: '/help' },
-  { name: 'Log out', icon: HiOutlineLogout },
-];
+  { name: 'Profile', icon: FiUser, link: '/profile' }
+  // { name: 'History', icon: BiHistory, link: '/history' },
+  // { name: 'Settings', icon: BiCog, link: '/settings' },
+  // { name: 'Help Center', icon: BiSupport, link: '/help' }
+]
 
-import Logo from '../assets/images/logo.png';
-
-const MotionBox = motion.custom(Box);
+const MotionBox = motion.custom(Box)
 
 const Header = () => {
+  const { isAuthenticated } = useAuth()
+
+  const { user } = isAuthenticated()
+
   return (
     <Flex
       as='header'
-      gridArea='header'
-      align='center'
-      justify='space-between'
       w='100%'
-      h={{base: 10, md: 20 }}
-      bg='white'
+      bgColor='white'
       pos='fixed'
       top={0}
-      zIndex={50}
+      zIndex={100}
+      align='center'
+      h={{ base: 14, md: 20, xl: 24 }}
+      gridArea='header'
+      justify='space-between'
       borderBottomWidth={1}
       borderBottomColor='gray.300'
-      px={{base:5,  md: 24 }}
+      pl={{ base: 4, md: 16 }}
+      pr={{ base: 4, md: 20 }}
+      overflowX={{ base: 'hidden', md: 'visible' }}
     >
-      <Box>
-      <Box
+      <ReachRouter to='/dashboard'>
+        <Link _hover={{ textDecor: 'none' }}>
+          <Fade left>
+            <Box
               w={{ base: '84.47px', md: '113px', xl: '169px' }}
               h={{ base: 6, md: 8, xl: '48px' }}
               bgImage={{
@@ -52,89 +62,138 @@ const Header = () => {
               bgPos='center'
               bgRepeat='no-repeat'
             />
-      </Box>
+          </Fade>
+        </Link>
+      </ReachRouter>
 
-      {/* <Flex align='center'>
-        <Flex align='center' mr={10}>
-          <Box as='button' role='button' aria-label='Support'>
-            <Icon as={BsPlus} boxSize={6} />
-          </Box>
-          <Box as='button' role='button' aria-label='Support' ml={6}>
-            <Icon as={BsStar} boxSize={5} />
-          </Box>
-          <Box as='button' role='button' aria-label='Notification' ml={6}>
-            <Icon as={BsBell} boxSize={5} />
-          </Box>
-        </Flex>
-
-        <Menu as={Box} ml={2}>
-          {({ open }) => (
-            <Box>
-              <Menu.Button
-                as={Box}
-                _focus={{ outline: 'none' }}
-                cursor='pointer'
-              >
-                <Flex align='center'>
-                  <Avatar
-                    size='sm'
-                    src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60'
-                    name='User'
-                  />
-                  <Text ml={2}>Hi Kwasi</Text>
-                  <Box>
-                    <Icon
-                      ml={2}
-                      as={open ? FiChevronUp : FiChevronDown}
-                      boxSize={6}
-                    />
-                  </Box>
-                </Flex>
-              </Menu.Button>
-              {open && (
-                <Menu.Items
-                  static
-                  as={MotionBox}
-                  initial={{ opacity: 0, height: 0 }}
-                  initial={{
-                    opacity: 1,
-                    height: 'auto',
-                    transition: { duration: 0.6 },
-                  }}
-                  exit={{ opacity: 0, height: 0 }}
-                  pos='absolute'
-                  bg='white'
-                  w={48}
-                  right={10}
-                  rounded='sm'
-                  mt={2}
-                  color='gray.600'
-                >
-                  {menuLinks.map((item, index) => (
-                    <Menu.Item key={index}>
-                      {({ active }) => (
-                        <Link
-                          py={2}
-                          px={6}
-                          _hover={{ textDecor: 'none' }}
-                          bg={active && 'cf.400'}
-                          color={active && 'white'}
-                          d='block'
-                          href={item.link}
-                        >
-                          <Icon as={item.icon} boxSize={4} mr={2} /> {item.name}
-                        </Link>
-                      )}
-                    </Menu.Item>
-                  ))}
-                </Menu.Items>
-              )}
+      <Fade right>
+        <Flex align='center'>
+          <Flex align='center' mr={{ base: 4, md: 10 }}>
+            <Box as='button' role='button' aria-label='Notification' ml={6}>
+              <Icon as={BsBell} boxSize={5} />
             </Box>
-          )}
-        </Menu>
-      </Flex> */}
-    </Flex>
-  );
-};
+          </Flex>
 
-export default Header;
+          <Menu as={Box} ml={2} userSelect='none'>
+            {({ open }) => (
+              <Box>
+                <Menu.Button
+                  as={Box}
+                  _focus={{ outline: 'none' }}
+                  cursor='pointer'
+                >
+                  <Flex align='center'>
+                    <Avatar
+                      size='sm'
+                      src={user?.avatar}
+                      name={user?.firstName}
+                    />
+                    <Text ml={2}>Hi {user?.firstName}</Text>
+                    <Box>
+                      <Icon
+                        ml={2}
+                        as={open ? FiChevronUp : FiChevronDown}
+                        boxSize={6}
+                      />
+                    </Box>
+                  </Flex>
+                </Menu.Button>
+                <AnimatePresence>
+                  {open && (
+                    <Menu.Items
+                      static
+                      as={MotionBox}
+                      initial={{ opacity: 0, y: -50 }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.3 }
+                      }}
+                      exit={{ opacity: 0, y: 50 }}
+                      pos='absolute'
+                      bg='white'
+                      w={56}
+                      right={10}
+                      rounded='sm'
+                      mt={2}
+                      color='gray.600'
+                      _focus={{ outline: 'none' }}
+                      borderWidth={1}
+                      borderColor='gray.100'
+                    >
+                      <AnimatePresence>
+                        {menuLinks.map((item, i) => (
+                          <Menu.Item
+                            key={item.name}
+                            as={MotionBox}
+                            custom={i}
+                            variants={{
+                              hidden: i => ({
+                                y: -50 * i,
+                                opacity: 0
+                              }),
+                              visible: i => ({
+                                y: 0,
+                                opacity: 1,
+                                transition: {
+                                  delay: i * 0.025
+                                }
+                              }),
+                              removed: {
+                                y: 30 * i
+                              }
+                            }}
+                            initial='hidden'
+                            animate='visible'
+                            exit='removed'
+                          >
+                            {({ active }) => (
+                              <Link
+                                py={2}
+                                px={6}
+                                _hover={{
+                                  textDecor: 'none'
+                                }}
+                                bg={active && 'cf.400'}
+                                color={active && 'white'}
+                                d='block'
+                                href={item.link}
+                              >
+                                <Icon as={item.icon} boxSize={4} mr={2} />{' '}
+                                {item.name}
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        ))}
+                      </AnimatePresence>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            py={2}
+                            px={6}
+                            _hover={{
+                              textDecor: 'none'
+                            }}
+                            bg={active && 'cf.400'}
+                            color={active && 'white'}
+                            d='block'
+                            href='/logout'
+                          >
+                            <Icon as={HiOutlineLogout} boxSize={4} mr={2} />{' '}
+                            Logout
+                          </Link>
+                        )}
+                      </Menu.Item>
+                    </Menu.Items>
+                  )}
+                </AnimatePresence>
+              </Box>
+            )}
+          </Menu>
+        </Flex>
+      </Fade>
+    </Flex>
+  )
+}
+
+export default Header

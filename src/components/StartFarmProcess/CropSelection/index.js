@@ -1,136 +1,80 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Icon,
-  Image,
-  Progress,
-  Text,
-} from '@chakra-ui/core';
-import { Button } from 'components';
-import React from 'react';
-import { BsInfoCircleFill } from 'react-icons/bs';
-import { MdLocationOn } from 'react-icons/md';
+import React, { useState } from 'react'
+import { Box, Heading } from '@chakra-ui/react'
 
-const CropSelection = ({ handleNext }) => {
+import useStartFarm from 'context/start-farm'
+import useApi from 'context/api'
+
+import useFetch from 'hooks/useFetch'
+
+import Tabs from 'components/Tabs/Tabs'
+import FetchCard from 'components/FetchCard'
+import FarmDetails from './FarmDetails'
+
+const CropSelection = () => {
+  const { handleNext } = useStartFarm()
+
+  const [reload, setReload] = useState(0)
+
+  const { getCropCategories } = useApi()
+
+  const triggerReload = () => setReload(prevState => prevState + 1)
+
+  const { data, isLoading, error } = useFetch(
+    'categories',
+    getCropCategories,
+    reload
+  )
+
+  let categories = []
+
+  if (data) {
+    categories = [{ _id: 'defualt', title: 'Top-selling farms' }, ...data]
+  }
+
   return (
-    <Box mt={{ md: 48 }} w='90%' mx='auto'>
-      <Box textAlign='center' mb={10}>
+    <Box mt={{ md: 32 }} w='90%' mx='auto'>
+      <Box textAlign='center' py={10}>
         <Heading as='h4' size='xl'>
           Which Farm is right for you.
         </Heading>
       </Box>
-      <Grid templateColumns={{ md: '20% 80%' }}>
-        <GridItem bg='gray.50'>
-          <Box bg='cf.400' color='white' p={6} w={{ md: 48 }} h={{ md: 16 }}>
-            <Text>Top-selling farm</Text>
-          </Box>
-        </GridItem>
-
-        <GridItem
-          py={6}
-          px={{ md: 10 }}
-          borderWidth={1}
-          borderColor='gray.300'
-          rounded='md'
-        >
-          <Grid templateColumns={{ md: '40% 50%' }} gap={{ md: '10%' }}>
-            <Box>
-              <Box>
-                <Heading as='h5' size='md' mb={4}>
-                  Ginger Farm
-                </Heading>
-              </Box>
-
-              <Box>
-                <Image
-                  src={require('../../../assets/images/farm.png').default}
+      <Box pos='relative'>
+        {isLoading || error ? (
+          <FetchCard
+            w='100%'
+            mx='auto'
+            align='center'
+            justify='center'
+            direction='column'
+            error={error}
+            loading={isLoading}
+            reload={triggerReload}
+          />
+        ) : (
+          <Tabs
+            py='0'
+            px='0'
+            boxWidth='100%'
+            direction={{ base: 'column', md: 'row' }}
+            display={{ base: 'flex', md: 'block' }}
+            width={{ base: '100%', md: 'initial' }}
+          >
+            {categories?.map(cat => (
+              <Box key={cat._id} label={cat.title}>
+                <FarmDetails
+                  catName={cat.name}
+                  handleNext={handleNext}
+                  query={
+                    cat._id !== 'defualt' && { category: cat._id, status: 1 }
+                  }
                 />
               </Box>
-            </Box>
-
-            <Box pos='relative'>
-              <Box>
-                <Heading as='h5' size='md'>
-                  Ginger
-                </Heading>
-                <Text fontSize='xs'>
-                  <Icon as={MdLocationOn} color='gray.400' /> Afram Plains,
-                  Eastern region <Icon as={BsInfoCircleFill} color='cf.400' />
-                </Text>
-              </Box>
-              <Divider
-                orientation='horizontal'
-                borderColor='gray.300'
-                w={90}
-                my={6}
-              />
-              <Box>
-                <Heading as='h6' size='sm'>
-                  Here’s your farm manager
-                </Heading>
-
-                <Box
-                  borderWidth={1}
-                  borderColor='gray.300'
-                  rounded='md'
-                  p={{ md: 6 }}
-                  color='gray.700'
-                  mt={4}
-                >
-                  <Flex align='center' justify='space-between' fontSize='sm'>
-                    <Text>Farm starts: 12/12/2020 </Text>
-                    <Text>Farm duration: 10 months </Text>
-                  </Flex>
-                  <Divider orientation='horizontal' mt={4} />
-                  <Progress
-                    colorScheme='cfButton'
-                    value={30}
-                    rounded='30px'
-                    borderWidth={1}
-                    borderColor='gray.300'
-                    bg='transparent'
-                    height='22px'
-                    my={{ md: 8 }}
-                  />
-                  <Flex align='center' justify='center' fontSize='sm'>
-                    <Text>0 Acres left</Text>
-                    <Divider
-                      orientation='vertical'
-                      height={4}
-                      mx={4}
-                      borderColor='gray.400'
-                    />
-                    <Text>0 Acres available</Text>
-                    <Divider
-                      orientation='vertical'
-                      height={4}
-                      mx={4}
-                      borderColor='gray.400'
-                    />
-                    <Text>0 Acres bought</Text>
-                  </Flex>
-                </Box>
-              </Box>
-
-              <Box right={0} pos='absolute' bottom={0}>
-                <Button
-                  btntitle='Continue'
-                  w={80}
-                  h={14}
-                  fontSize='md'
-                  onClick={handleNext}
-                />
-              </Box>
-            </Box>
-          </Grid>
-        </GridItem>
-      </Grid>
+            ))}
+          </Tabs>
+        )}
+      </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default CropSelection;
+export default CropSelection

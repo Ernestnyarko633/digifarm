@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Flex } from '@chakra-ui/core';
-import PropTypes from 'prop-types';
-import FormInput from './Input';
+import React from 'react'
+import { Box, Flex } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
+import FormInput from './FormInput'
 
 const ThirdPartyInput = ({
   name,
@@ -11,10 +11,10 @@ const ThirdPartyInput = ({
   errors,
   touched,
   label,
-  title,
+  title
 }) => {
-  const getForm = (title) => {
-    switch (title) {
+  const getForm = heading => {
+    switch (heading) {
       case 'KPIs':
         return (
           <FormInput
@@ -30,7 +30,7 @@ const ThirdPartyInput = ({
             inputType
             value={reference}
           />
-        );
+        )
       case 'Inputs':
         return (
           <Flex align='center' justify='space-between'>
@@ -65,14 +65,14 @@ const ThirdPartyInput = ({
               />
             </Box>
           </Flex>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
-  return <Box>{getForm(title)}</Box>;
-};
+  return <Box>{getForm(title)}</Box>
+}
 
 ThirdPartyInput.propTypes = {
   reference: PropTypes.any,
@@ -80,7 +80,9 @@ ThirdPartyInput.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   errors: PropTypes.any,
   touched: PropTypes.any,
-  name: PropTypes.string.isRequired,
-};
+  label: PropTypes.any,
+  title: PropTypes.any,
+  name: PropTypes.string.isRequired
+}
 
-export default ThirdPartyInput;
+export default ThirdPartyInput
