@@ -5,14 +5,14 @@ import Splash from 'components/Loading/Splash'
 
 import Pages from 'pages'
 
-import PrivateRoute from './private'
+// import PrivateRoute from './private'
 
 const Router = () => {
   return (
     <React.Suspense fallback={<Splash />}>
       <Switch>
         <Redirect exact from='/' to='/coming-soon' />
-        <Route path='/auth/:token' component={Pages.Auth} />
+        {/* <Route path='/auth/:token' component={Pages.Auth} />
         <Route path='/auth' component={Pages.Auth} />
         <PrivateRoute path='/logout' component={Pages.Logout} />
         <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
@@ -36,9 +36,9 @@ const Router = () => {
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />
         <PrivateRoute path='/profile' component={Pages.Profile} />
         <PrivateRoute path='/guide' component={Pages.Guide} />
-        <PrivateRoute path='/notfound' component={Pages.NotFound} />
+        <PrivateRoute path='/notfound' component={Pages.NotFound} /> */}
         <Route path='/coming-soon' component={Pages.Banner} />
-        <Redirect from='*' to='/404' />
+        <Redirect from='*' to='/coming-soon' />
       </Switch>
     </React.Suspense>
   )
