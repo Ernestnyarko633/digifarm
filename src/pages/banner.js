@@ -13,7 +13,7 @@ import {
 
 const Banner = () => {
   return (
-    <Flex w='100vw' h='100vh'>
+    <Flex w='100vw' h='100vh' bg='cf.400'>
       <Box>
         <Header />
       </Box>
@@ -23,7 +23,7 @@ const Banner = () => {
           <Flex
             direction='column'
             justify='center'
-            w={{ md: '70%', xl: '50%' }}
+            w={{ md: '70%', xl: '60%' }}
             align='center'
             p={{ md: 5 }}
           >
@@ -32,14 +32,14 @@ const Banner = () => {
               as='h3'
               mt={{ md: 5 }}
               color='#022D2B'
-              fontSize={{ base: '2xl', md: '3xl', xl: '6xl' }}
+              fontSize={{ base: '3xl', md: '4xl', lg: '6xl', xl: '9xl' }}
               dangerouslySetInnerHTML={{ __html: 'Coming Soon' }}
             />
 
             <Text
               textAlign='center'
               my={{ md: 5 }}
-              fontSize={{ base: 'md', md: 'lg', xl: 'xl' }}
+              fontSize={{ base: 'md', md: 'lg', xl: '2xl' }}
               dangerouslySetInnerHTML={{
                 __html:
                   'Please wait patiently as we set up our farms to enable you farm the revolutionized way and make profit from the comfort of your home.'
@@ -53,7 +53,7 @@ const Banner = () => {
         pos='absolute'
         w='100%'
         bottom={0}
-        h={{ md: '100px', xl: '60px' }}
+        h={{ md: '100px', xl: '100px' }}
         justify='space-between'
         align='center'
       >
@@ -86,7 +86,7 @@ const Banner = () => {
             >
               <Link
                 m={{ xl: 10 }}
-                mx={{ base: 5, xl: 0 }}
+                mx={{ base: 2, xl: 0 }}
                 href='https://www.completefarmer.com/terms-and-conditions'
               >
                 <Flex>
@@ -121,10 +121,12 @@ const Banner = () => {
               m={{ md: 5 }}
               as={Link}
               href='https://www.instagram.com/completefarmer'
+              w={{ xl: '33.33%' }}
             >
               <Icon as={AiOutlineInstagram} boxSize={8} />
             </Box>
             <Box
+              w={{ xl: '33.33%' }}
               m={{ md: 5 }}
               as={Link}
               href='https://web.facebook.com/CompleteFarmer/'
@@ -132,6 +134,7 @@ const Banner = () => {
               <Icon as={AiFillFacebook} boxSize={8} />
             </Box>
             <Box
+              w={{ xl: '33.33%' }}
               m={{ md: 5 }}
               as={Link}
               href='https://www.linkedin.com/CompleteFarmer/'
