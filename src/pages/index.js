@@ -17,6 +17,7 @@ const Farm = lazy(() => import('./farm'))
 const Guide = lazy(() => import('./guide'))
 const Wallet = lazy(() => import('./wallet'))
 const Payment = lazy(() => import('./start-farm/payment'))
+const Banner = lazy(() => import('./banner'))
 
 const Pages = {
   Auth,
@@ -35,6 +36,7 @@ const Pages = {
   Cooperative,
   Warehouse,
   Guide,
+  Banner,
   Wallet
   // Receipt
 }
