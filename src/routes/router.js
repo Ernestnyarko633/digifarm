@@ -8,9 +8,9 @@ const Router = () => (
     <Switch>
       <Route exact path='/' component={Pages.Banner} />
       <Redirect exact to='/' />
-      <Route exact path='/startfarm' component={Pages.StartFarm} />
+      {/* <Route exact path='/startfarm' component={Pages.StartFarm} />
       <Route exact path='/startfarm/:id' component={Pages.StartFarmDetails} />
-      <Route path='/notfound' component={Pages.NotFound} />
+      <Route path='/notfound' component={Pages.NotFound} /> */}
       <Redirect from='*' to='/404' />
     </Switch>
   </React.Suspense>
