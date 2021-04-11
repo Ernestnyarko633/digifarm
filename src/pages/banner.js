@@ -5,15 +5,12 @@ import Header from 'components/Utils/Header'
 import { Flex, Image, Box, Text, Heading, Link, Icon } from '@chakra-ui/react'
 import Background from 'assets/images/bgx2.png'
 
-import {
-  AiOutlineInstagram,
-  AiFillFacebook,
-  AiFillLinkedin
-} from 'react-icons/ai'
+import { FaFacebookSquare, FaInstagramSquare, FaLinkedin } from 'react-icons/fa'
 
 const Banner = () => {
+  document.title = 'Complete Farmer Digital Farmer | Coming Soon'
   return (
-    <Flex w='100vw' h='100vh'>
+    <Flex w='100vw' h='100vh' bg='cf.400'>
       <Box>
         <Header />
       </Box>
@@ -21,25 +18,21 @@ const Banner = () => {
       <Box pos='absolute' top={100} w='100%' h='50%'>
         <Flex w='100%' justify='center' align='center'>
           <Flex
+            w={{ md: 120 }}
+            textAlign='center'
             direction='column'
-            justify='center'
-            w={{ md: '70%', xl: '50%' }}
-            align='center'
-            p={{ md: 5 }}
+            mt={10}
+            px={{ base: 4, md: 0 }}
           >
             <Heading
-              textAlign='center'
               as='h3'
-              mt={{ md: 5 }}
               color='#022D2B'
-              fontSize={{ base: '2xl', md: '3xl', xl: '6xl' }}
-              dangerouslySetInnerHTML={{ __html: 'Coming Soon' }}
+              fontSize={{ base: '3xl', md: '6xl' }}
+              dangerouslySetInnerHTML={{ __html: 'Coming Soon!' }}
             />
 
             <Text
-              textAlign='center'
-              my={{ md: 5 }}
-              fontSize={{ base: 'md', md: 'lg', xl: 'xl' }}
+              fontSize={{ base: 'sm', md: 'md' }}
               dangerouslySetInnerHTML={{
                 __html:
                   'Please wait patiently as we set up our farms to enable you farm the revolutionized way and make profit from the comfort of your home.'
@@ -49,11 +42,11 @@ const Banner = () => {
         </Flex>
       </Box>
 
-      <Box
+      {/* <Box
         pos='absolute'
         w='100%'
         bottom={0}
-        h={{ md: '100px', xl: '60px' }}
+        h={{ md: '100px', xl: '100px' }}
         justify='space-between'
         align='center'
       >
@@ -86,7 +79,7 @@ const Banner = () => {
             >
               <Link
                 m={{ xl: 10 }}
-                mx={{ base: 5, xl: 0 }}
+                mx={{ base: 2, xl: 0 }}
                 href='https://www.completefarmer.com/terms-and-conditions'
               >
                 <Flex>
@@ -121,10 +114,12 @@ const Banner = () => {
               m={{ md: 5 }}
               as={Link}
               href='https://www.instagram.com/completefarmer'
+              w={{ xl: '33.33%' }}
             >
               <Icon as={AiOutlineInstagram} boxSize={8} />
             </Box>
             <Box
+              w={{ xl: '33.33%' }}
               m={{ md: 5 }}
               as={Link}
               href='https://web.facebook.com/CompleteFarmer/'
@@ -132,11 +127,147 @@ const Banner = () => {
               <Icon as={AiFillFacebook} boxSize={8} />
             </Box>
             <Box
+              w={{ xl: '33.33%' }}
               m={{ md: 5 }}
               as={Link}
-              href='https://www.linkedin.com/CompleteFarmer/'
+              href='https://www.linkedin.com/company/completefarmer/mycompany/'
             >
               <Icon as={AiFillLinkedin} boxSize={8} />
+            </Box>
+          </Flex>
+        </Flex>
+      </Box> */}
+      <Box w='100%' pos='absolute' bottom={0}>
+        <Flex
+          align={{ lg: 'center' }}
+          justify={{ base: 'center', lg: 'space-between' }}
+          bg='rgba(0, 76, 70, 0.1)'
+          w='100%'
+          h={{ base: 20, md: 16 }}
+          mt='auto'
+          px={{ base: 6, md: 20 }}
+          fontSize='sm'
+          direction={{ base: 'column', lg: 'row' }}
+          textAlign={{ base: 'center', md: 'inherit' }}
+        >
+          <Text fontSize='inherit'>
+            &copy; 2021 Completefarmer. All rights reserved
+          </Text>
+
+          <Flex align='center' d={{ base: 'none', lg: 'flex' }}>
+            <Link
+              isExternal
+              href='https://www.completefarmer.com/terms/'
+              rel='noreferrer'
+              px={{ md: 4 }}
+              _focus={{ textDecor: 'none' }}
+            >
+              Terms &amp; Conditions
+            </Link>
+            <Link
+              isExternal
+              href='https://www.completefarmer.com/privacy-policy'
+              rel='noreferrer'
+              px={{ md: 4 }}
+              _focus={{ textDecor: 'none' }}
+            >
+              Privacy Policy
+            </Link>
+
+            <Link
+              isExternal
+              href='https://twitter.com/completefarmer'
+              rel='noreferrer'
+              px={{ md: 2 }}
+              _focus={{ textDecor: 'none' }}
+              color='gray.600'
+            >
+              <Icon as={FaInstagramSquare} boxSize={5} />
+            </Link>
+
+            <Link
+              isExternal
+              href='https://www.facebook.com/CompleteFarmer/'
+              rel='noreferrer'
+              px={{ md: 2 }}
+              _focus={{ textDecor: 'none' }}
+              color='gray.600'
+            >
+              <Icon as={FaFacebookSquare} boxSize={5} />
+            </Link>
+
+            <Link
+              isExternal
+              href='https://www.instagram.com/completefarmer'
+              rel='noreferrer'
+              px={{ md: 2 }}
+              _focus={{ textDecor: 'none' }}
+              color='gray.600'
+            >
+              <Icon as={FaLinkedin} boxSize={5} />
+            </Link>
+          </Flex>
+
+          <Flex
+            align='center'
+            justify='space-between'
+            d={{ base: 'flex', lg: 'none' }}
+            direction={{ base: 'column', md: 'row' }}
+          >
+            <Box>
+              <Link
+                isExternal
+                href='https://www.completefarmer.com/terms/'
+                rel='noreferrer'
+                pr={{ base: 2, md: 4 }}
+                _focus={{ textDecor: 'none' }}
+              >
+                Terms &amp; Conditions
+              </Link>
+              <Link
+                isExternal
+                href='https://www.completefarmer.com/privacy-policy'
+                rel='noreferrer'
+                px={{ md: 4 }}
+                _focus={{ textDecor: 'none' }}
+              >
+                Privacy Policy
+              </Link>
+            </Box>
+
+            <Box>
+              <Link
+                isExternal
+                href='https://www.instagram.com/completefarmer'
+                rel='noreferrer'
+                px={{ md: 2 }}
+                _focus={{ textDecor: 'none' }}
+                color='gray.600'
+              >
+                <Icon as={FaInstagramSquare} boxSize={5} />
+              </Link>
+
+              <Link
+                isExternal
+                href='https://www.facebook.com/CompleteFarmer/'
+                rel='noreferrer'
+                px={{ md: 2 }}
+                _focus={{ textDecor: 'none' }}
+                color='gray.600'
+              >
+                <Icon as={FaFacebookSquare} boxSize={5} />
+              </Link>
+
+              <Link
+                isExternal
+                href='https://www.linkedin.com/company/completefarmer/mycompany/'
+                rel='noreferrer'
+                px={{ md: 2 }}
+                _focus={{ textDecor: 'none' }}
+                color='gray.600'
+              >
+                <Icon as={FaLinkedin} boxSize={5} />
+              </Link>
             </Box>
           </Flex>
         </Flex>

@@ -45,34 +45,9 @@ const Profile = () => {
   ]
 
   return (
-    <Box>
+    <Box bgColor='white'>
       <Header />
       <Container pt={{ md: 55 }} maxW={{ md: '7xl' }}>
-        {/* <Flex
-          align='center'
-          justify='center'
-          h={70}
-          w='100%'
-          bg='gray.100'
-          mt={20}
-        >
-          <Box
-            as='label'
-            rounded='30px'
-            px={4}
-            py={2}
-            bg='white'
-            borderWidth={1}
-            borderColor='cf.400'
-            role='button'
-            type='button'
-          >
-            <Input d='none' type='file' />
-            <Text color='cf.400' fontSize='sm'>
-              Change your header image
-            </Text>
-          </Box>
-        </Flex> */}
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Fade left>
             <Flex
