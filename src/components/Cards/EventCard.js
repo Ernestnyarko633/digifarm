@@ -12,20 +12,21 @@ const EventCard = ({ href, title, summary, image }) => {
       color='white'
     >
       <Flex align='center'>
-        <Avatar size='xl' src={image} />
+        <Avatar size='xl' bgColor='white' src={image} />
         <Box ml={2}>
           <Heading as='h5' fontSize={{ md: 'xl' }}>
             {title}
           </Heading>
-          <Text fontSize='sm'>{summary}</Text>
+          <Text fontSize='sm' w={{ md: '44' }} isTruncated>
+            {summary}
+          </Text>
 
           <Box mt={4}>
             <Button
               href={href}
               borderWidth={1}
               borderColor='white'
-              px={{ md: 4 }}
-              py={{ md: 1 }}
+              px={{ md: 6 }}
               fontSize='xs'
               bg='transparent'
               _hover={{ bg: 'transparent' }}

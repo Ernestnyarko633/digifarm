@@ -43,47 +43,20 @@ const Profile = () => {
   ]
 
   return (
-    <Box>
+    <Box bgColor='white'>
       <Header />
       <Container pt={{ md: 55 }} maxW={{ md: '7xl' }}>
-        {/* <Flex
-          align='center'
-          justify='center'
-          h={70}
-          w='100%'
-          bg='gray.100'
-          mt={20}
-        >
-          <Box
-            as='label'
-            rounded='30px'
-            px={4}
-            py={2}
-            bg='white'
-            borderWidth={1}
-            borderColor='cf.400'
-            role='button'
-            type='button'
-          >
-            <Input d='none' type='file' />
-            <Text color='cf.400' fontSize='sm'>
-              Change your header image
-            </Text>
-          </Box>
-        </Flex> */}
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Flex
             d={{ base: 'none', md: 'flex' }}
-            // align='center'
-            // justify='center'
             direction='column'
             borderWidth={1}
-            borderColor='gray.200'
+            borderColor='gray.100'
             rounded='30px'
             p={4}
             h={{ md: 85 }}
             bg='white'
-            filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+            filter='drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.1))'
           >
             {menus.map(menu => (
               <Flex
@@ -96,21 +69,19 @@ const Profile = () => {
                 px={5}
                 py={2}
                 rounded='30px'
-                onClick={
-                  () =>
-                    menu?.comp === 'compE'
-                      ? window.open(
-                          'https://www.completefarmer.com/privacy-policy',
-                          '_blank'
-                        )
-                      : menu?.comp === 'compF'
-                      ? window.open(
-                          'https://www.completefarmer.com/terms-and-conditions',
-                          '_blank'
-                        )
-                      : setPage(menu.comp)
-                  // eslint-disable-next-line react/jsx-curly-newline
-                }
+                onClick={() => {
+                  return menu?.comp === 'compE'
+                    ? window.open(
+                        'https://www.completefarmer.com/privacy-policy',
+                        '_blank'
+                      )
+                    : menu?.comp === 'compF'
+                    ? window.open(
+                        'https://www.completefarmer.com/terms-and-conditions',
+                        '_blank'
+                      )
+                    : setPage(menu.comp)
+                }}
               >
                 <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
                 <Text>{menu.name}</Text>

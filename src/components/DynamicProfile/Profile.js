@@ -1,9 +1,9 @@
 import React from 'react'
 import { Box, Container } from '@chakra-ui/react'
 
-import AvatarFormikForm from './ProfileFormikForms/AvatarFormikForm'
-import UserDetailsForm from './ProfileFormikForms/UserDetailsForm'
-import BankingDetailsForm from './ProfileFormikForms/BankingDetailsForm'
+import AvatarForm from './ProfileForms/AvatarForm'
+import UserDetailsForm from './ProfileForms/UserDetailsForm'
+import BankingDetailsForm from './ProfileForms/BankingDetailsForm'
 
 import useFetch from 'hooks/useFetch'
 import useAuth from 'context/auth'
@@ -31,7 +31,7 @@ const Profile = () => {
 
   return (
     <Container maxW={{ md: '4xl' }}>
-      <AvatarFormikForm />
+      <AvatarForm />
       <UserDetailsForm />
       <Box
         rounded='xl'
