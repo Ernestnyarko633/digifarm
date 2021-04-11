@@ -202,77 +202,80 @@ export default function Farm() {
           <Fade left>
             <Flex align='center'>
               {menus.map((menu, idx) => (
-                <Flex
-                  key={mapKey(idx)}
-                  _hover={{ background: 'transparent' }}
-                  bg='transparent'
-                  outlineColor='none'
-                  outline='none'
-                  as={Button}
-                  role='button'
-                  aria-label={`${menu.name} button`}
-                  px={{ md: 6 }}
-                  color={state === menu.comp ? 'cf.400' : ''}
-                  onClick={() => setState(menu.comp)}
-                >
-                  {menu.name}
-                </Flex>
+                <Fade key={mapKey(idx)} left>
+                  <Flex
+                    _hover={{ background: 'transparent' }}
+                    bg='transparent'
+                    outlineColor='none'
+                    outline='none'
+                    as={Button}
+                    role='button'
+                    aria-label={`${menu.name} button`}
+                    px={{ md: 6 }}
+                    color={state === menu.comp ? 'cf.400' : ''}
+                    onClick={() => setState(menu.comp)}
+                  >
+                    {menu.name}
+                  </Flex>
+                </Fade>
               ))}
             </Flex>
           </Fade>
         </Flex>
 
-        <Menu
-          as={Box}
-          d={{ base: 'block', md: 'none' }}
-          pos='fixed'
-          top={14}
-          zIndex={50}
-          p={6}
-          bg='#F7F7F7'
-          boxShadow='0px 1px 24px rgba(0, 0, 0, 0.1)'
-          w='100%'
-        >
-          {({ open }) => (
-            <>
-              <Menu.Button as={Box} w='100%'>
-                <Flex align='center' justify='space-between'>
-                  <Box>
-                    <Text fontSize='lg' fontWeight={800}>
-                      {`${user?.firstName}`}'s farm
-                    </Text>
-                  </Box>
-
-                  <Box>
-                    <Icon as={open ? chevronUp : chevronDown} boxSize={6} />
-                  </Box>
-                </Flex>
-              </Menu.Button>
-
-              <Menu.Items as={Box}>
-                {menus.map((menu, idx) => (
-                  <Menu.Item
-                    as={Box}
-                    key={mapKey(idx)}
-                    py={4}
-                    borderBottomWidth={1}
-                    _last={{ borderBlockWidth: 0 }}
-                  >
-                    <Box
-                      color={state === menu.comp ? 'cf.400' : ''}
-                      onClick={() => setState(menu.comp)}
-                      as='button'
-                      role='button'
-                      aria-label={`${menu.name} button`}
-                    >
-                      {menu.name}
+        <Fade top>
+          <Menu
+            as={Box}
+            d={{ base: 'block', md: 'none' }}
+            pos='fixed'
+            top={14}
+            zIndex={50}
+            p={6}
+            bg='#F7F7F7'
+            boxShadow='0px 1px 24px rgba(0, 0, 0, 0.1)'
+            w='100%'
+          >
+            {({ open }) => (
+              <>
+                <Menu.Button as={Box} w='100%'>
+                  <Flex align='center' justify='space-between'>
+                    <Box>
+                      <Text fontSize='lg' fontWeight={800}>
+                        {`${user?.firstName}`}'s farm
+                      </Text>
                     </Box>
-                  </Menu.Item>
-                ))}
-              </Menu.Items>
-            </>
-          )}
-        </Menu>
+
+                    <Box>
+                      <Icon as={open ? chevronUp : chevronDown} boxSize={6} />
+                    </Box>
+                  </Flex>
+                </Menu.Button>
+
+                <Menu.Items as={Box}>
+                  {menus.map((menu, idx) => (
+                    <Menu.Item
+                      as={Box}
+                      key={mapKey(idx)}
+                      py={4}
+                      borderBottomWidth={1}
+                      _last={{ borderBlockWidth: 0 }}
+                    >
+                      <Box
+                        color={state === menu.comp ? 'cf.400' : ''}
+                        onClick={() => setState(menu.comp)}
+                        as='button'
+                        role='button'
+                        aria-label={`${menu.name} button`}
+                      >
+                        {menu.name}
+                      </Box>
+                    </Menu.Item>
+                  ))}
+                </Menu.Items>
+              </>
+            )}
+          </Menu>
+        </Fade>
 
         <Box>
           {location?.length > 0 && (

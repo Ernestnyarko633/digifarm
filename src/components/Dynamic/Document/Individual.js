@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 import { Box, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React, { useEffect, useState } from 'react'
@@ -5,6 +7,7 @@ import PropTypes from 'prop-types'
 import { BsArrowRight } from 'react-icons/bs'
 import FarmDocumentCard from '../Cards/FarmDocumentCard'
 import Doc from 'assets/images/doc.png'
+import Fade from 'react-reveal/Fade'
 
 export default function Individual({
   digitalFarmerFarm,
@@ -83,48 +86,53 @@ export default function Individual({
           tempActs?.length > 0 &&
           tempActs?.map(_activity => {
             return (
-              <FarmDocumentCard
-                farmfeeds={farmfeeds}
-                viewDoc={viewDoc}
-                key={_activity?._id}
-                digitalFarmerFarm={digitalFarmerFarm}
-                __activityID={_activity?._id}
-                title={_activity?.title}
-                ScheduledTasks={ScheduledTasks.filter(
-                  _completedTask =>
-                    _activity._id === _completedTask?.task?.activity &&
-                    _completedTask.status === 'COMPLETED'
-                )}
-                tasksNumber={
-                  tasks?.filter(_task => _task.activity._id === _activity._id)
-                    ?.length + 1
-                }
-                amount={totalAmount(_activity)}
-              />
+              <>
+                {console.log(_activity, 'the activity')}
+                <FarmDocumentCard
+                  farmfeeds={farmfeeds}
+                  viewDoc={viewDoc}
+                  key={_activity?._id}
+                  digitalFarmerFarm={digitalFarmerFarm}
+                  __activityID={_activity?._id}
+                  title={_activity?.title}
+                  ScheduledTasks={ScheduledTasks.filter(
+                    _completedTask =>
+                      _activity._id === _completedTask?.task?.activity &&
+                      _completedTask.status === 'COMPLETED'
+                  )}
+                  tasksNumber={
+                    tasks?.filter(_task => _task.activity._id === _activity._id)
+                      ?.length + 1
+                  }
+                  amount={totalAmount(_activity)}
+                />
+              </>
             )
           })}
       </Grid>
 
       {moreButton && (
-        <Flex align='center' justify='center' mt={{ md: 16 }}>
-          <Button
-            btntitle={!toggleText ? 'Show more' : 'Show less'}
-            icon={BsArrowRight}
-            bg='white'
-            borderWidth={1}
-            borderColor='cf.400'
-            color='cf.400'
-            rounded='30px'
-            h={14}
-            width={56}
-            _hover={{ bg: 'white' }}
-            shadow='none'
-            fontSize='md'
-            onClick={() => {
-              toggle()
-            }}
-          />
-        </Flex>
+        <Fade bottom>
+          <Flex align='center' justify='center' mt={{ md: 16 }}>
+            <Button
+              btntitle={!toggleText ? 'Show more' : 'Show less'}
+              icon={BsArrowRight}
+              bg='white'
+              borderWidth={1}
+              borderColor='cf.400'
+              color='cf.400'
+              rounded='30px'
+              h={14}
+              width={56}
+              _hover={{ bg: 'white' }}
+              shadow='none'
+              fontSize='md'
+              onClick={() => {
+                toggle()
+              }}
+            />
+          </Flex>
+        </Fade>
       )}
     </Box>
   )

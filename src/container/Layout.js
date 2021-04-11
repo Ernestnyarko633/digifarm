@@ -6,6 +6,7 @@ import Sidebar from './Sidebar'
 import React from 'react'
 import RightSidebar from './RightSidebar'
 import { farm, home, wallet, market } from 'theme/Icons'
+import Fade from 'react-reveal/Fade'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
@@ -42,7 +43,9 @@ const Layout = ({
           bg='white'
           d={{ base: 'none', md: 'block' }}
         >
-          <Sidebar />
+          <Fade left>
+            <Sidebar />
+          </Fade>
         </GridItem>
       )}
       <GridItem pos='relative'>
@@ -93,7 +96,9 @@ const Layout = ({
           zIndex={40}
           d={{ base: 'none', md: 'none', lg: 'block' }}
         >
-          <RightSidebar />
+          <Fade right>
+            <RightSidebar />
+          </Fade>
         </GridItem>
       )}
     </Grid>
