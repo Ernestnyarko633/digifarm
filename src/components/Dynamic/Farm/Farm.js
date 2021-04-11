@@ -6,6 +6,7 @@ import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import useApi from 'context/api'
 import EmptyMap from 'assets/images/map.png'
+import Fade from 'react-reveal/Fade'
 
 import FetchCard from 'components/FetchCard'
 
@@ -141,10 +142,10 @@ export default function Farm({
                 justify='center'
                 mx='auto'
                 reload={() => {
-                  ;(error || _error) && reloads[0]()
+                  ;(error || _error || __error) && reloads[0]()
                 }}
                 loading={loading}
-                error={error || _error}
+                error={error || _error || __error}
                 text={
                   !error || !_error
                     ? 'Standby as we load your current farms and pending orders'
@@ -157,33 +158,35 @@ export default function Farm({
       </Box>
       {EOSViewID && (
         <Flex align='center' justify='flex-end' my={{ md: 6 }} px={{ md: 6 }}>
-          <Button
-            btntitle='Download'
-            bg='white'
-            borderWidth={2}
-            borderColor='cf.400'
-            rounded='30px'
-            mr={6}
-            _hover={{ bg: 'white' }}
-            color='cf.400'
-            h={12}
-            w={{ md: 40 }}
-            shadow='none'
-            isLoading={_loading}
-            isDisabled={_loading || !EOSTaskForStatsCreated?.task_id}
-            isError={__error}
-            onClick={
-              () => DownloadVisual({ task: EOSTaskForStatsCreated?.task_id })
-              // eslint-disable-next-line react/jsx-curly-newline
-            }
-          />
-          <Button
-            btntitle='Share'
-            rounded='30px'
-            h={12}
-            w={{ md: 40 }}
-            onClick={onOpen}
-          />
+          <Fade right>
+            <Button
+              btntitle='Download'
+              bg='white'
+              borderWidth={2}
+              borderColor='cf.400'
+              rounded='30px'
+              mr={6}
+              _hover={{ bg: 'white' }}
+              color='cf.400'
+              h={12}
+              w={{ md: 40 }}
+              shadow='none'
+              isLoading={_loading}
+              isDisabled={_loading || !EOSTaskForStatsCreated?.task_id}
+              //isError={__error}
+              onClick={
+                () => DownloadVisual({ task: EOSTaskForStatsCreated?.task_id })
+                // eslint-disable-next-line react/jsx-curly-newline
+              }
+            />
+            <Button
+              btntitle='Share'
+              rounded='30px'
+              h={12}
+              w={{ md: 40 }}
+              onClick={onOpen}
+            />
+          </Fade>
         </Flex>
       )}
     </FarmLayout>
@@ -191,16 +194,16 @@ export default function Farm({
 }
 
 Farm.propTypes = {
-  center: PropTypes.array.isRequired,
+  center: PropTypes.array,
   reload: PropTypes.any,
   onOpen: PropTypes.func,
-  digitalFarmerFarm: PropTypes.object.isRequired,
+  digitalFarmerFarm: PropTypes.object,
   EOSStatistics: PropTypes.any,
   EOSViewID: PropTypes.any,
   WeatherForeCasts: PropTypes.any,
-  ScheduledTasks: PropTypes.array.isRequired,
-  location: PropTypes.array.isRequired,
-  farmfeeds: PropTypes.array.isRequired,
+  ScheduledTasks: PropTypes.array,
+  location: PropTypes.array,
+  farmfeeds: PropTypes.array,
   error: PropTypes.any,
   _error: PropTypes.any,
   loading: PropTypes.any,

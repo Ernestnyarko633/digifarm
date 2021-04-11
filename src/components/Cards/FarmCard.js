@@ -54,9 +54,11 @@ const FarmCard = ({ farm, _small }) => {
               <Heading as='h4' fontSize={{ md: '2xl' }}>
                 {farm?.order?.product?.cropVariety?.crop?.name}
               </Heading>
-              <Text ml={1} as='span' fontSize='sm' color='gray.500'>
-                ({farm?.order?.product?.cropVariety?.name}) {farm.name}
-              </Text>
+              {!_small && (
+                <Text ml={1} as='span' fontSize='sm' color='gray.500'>
+                  ({farm?.order?.product?.cropVariety?.name}) {farm.name}
+                </Text>
+              )}
             </Flex>
 
             <Text color='gray.500' mt={-1}>

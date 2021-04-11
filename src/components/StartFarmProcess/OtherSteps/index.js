@@ -47,7 +47,7 @@ const OtherSteps = ({ data, history: { push } }) => {
       case 3:
         return <PaymentOption farm={selectedFarm} />
       case 4:
-        return <Confirmation order={data} />
+        return <Confirmation farm={selectedFarm} order={data} />
       default:
         return <ReloadPage />
     }

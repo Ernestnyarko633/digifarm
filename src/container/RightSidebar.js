@@ -3,6 +3,7 @@ import EventCard from 'components/Cards/EventCard'
 import React from 'react'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
+import Fade from 'react-reveal/Fade'
 
 const RightSidebar = () => {
   const mapKey = index => index
@@ -42,22 +43,25 @@ const RightSidebar = () => {
       h={{ lg: '100vh' }}
       w={{ md: '22%' }}
     >
-      <Heading
-        as='h4'
-        textTransform='uppercase'
-        fontSize={{ md: '2xl' }}
-        fontWeight={700}
-        borderBottomWidth={1}
-        borderBottomColor='gray.300'
-        pb={2}
-      >
-        Events
-      </Heading>
-
-      <Text fontSize='sm' color='gray.500' mt={3}>
-        Growing conditions are currently perfect. Some irriagation work is being
-        performed
-      </Text>
+      <Fade right>
+        <Heading
+          as='h4'
+          textTransform='uppercase'
+          fontSize={{ md: '2xl' }}
+          fontWeight={700}
+          borderBottomWidth={1}
+          borderBottomColor='gray.300'
+          pb={2}
+        >
+          Events
+        </Heading>
+      </Fade>
+      <Fade left>
+        <Text fontSize='sm' color='gray.500' mt={3}>
+          Growing conditions are currently perfect. Some irriagation work is
+          being performed
+        </Text>
+      </Fade>
 
       <Grid gap={4} mt={{ md: 4 }} maxH={{ md: 90 }}>
         {doc?.map((e, i) => (

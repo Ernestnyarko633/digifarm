@@ -38,22 +38,16 @@ const AboutFarmManager = ({ farm }) => {
     let mounted = true
     if (mounted && !doc) {
       const fetchData = async () => {
-        let data = []
-        const dataPromise = await farm.managers.map(async managers => {
-          const res = await Client.getByUID('farm_managers', managers._id)
-          return res.data
-        })
+        const res = await Client.getByUID('farm_managers', farm._id)
 
-        data = await Promise.all(dataPromise)
-
-        if (data) {
-          setDocData(data[0])
+        if (res) {
+          setDocData(res.data)
         }
       }
       fetchData()
     }
     return () => (mounted = false)
-  }, [Client, doc, farm.managers])
+  }, [Client, doc, farm._id, farm.managers])
 
   return (
     <Box mx={{ base: 2, md: 0 }}>
@@ -129,50 +123,48 @@ const AboutFarmManager = ({ farm }) => {
                 Meet the farm managers
               </Heading>
               <Box borderColor='gray.400' p={5} borderWidth={1} rounded='md'>
-                {farm.managers?.map(manager => (
-                  <Grid key={manager._id} templateColumns='repeat(2, 1fr)'>
-                    <Box py={10} px={2}>
-                      <Avatar
-                        src={doc?.manager_image?.url || manager?.avatar}
-                        size={{ base: 4, md: 8 }}
-                        justify='space-around'
-                      />
-                    </Box>
-                    <Box m={{ base: 3, md: 5 }}>
-                      <Text fontSize='md' fontWeight='800'>
-                        {manager?.firstName} {manager?.lastName}
+                <Grid key={doc?.id} templateColumns='repeat(2, 1fr)'>
+                  <Box py={10} px={2}>
+                    <Avatar
+                      src={doc?.manager_image?.url}
+                      size={{ base: 4, md: 8 }}
+                      justify='space-around'
+                    />
+                  </Box>
+                  <Box m={{ base: 3, md: 5 }}>
+                    <Text fontSize='md' fontWeight='800'>
+                      {doc?.full_name}
+                    </Text>
+                    <Text fontSize='sm'>Farm Manager</Text>
+                    <Divider
+                      orientation='horizontal'
+                      borderColor='gray.200'
+                      w={60}
+                      my={5}
+                    />
+                    <Text>Manager Profile</Text>
+                    {doc ? (
+                      <UnorderedList>
+                        {doc?.manager_profile?.map(item => (
+                          <ListItem
+                            key={item.text}
+                            fontSize='xs'
+                            textColor='gray.500'
+                          >
+                            {item.text}
+                          </ListItem>
+                        ))}
+                      </UnorderedList>
+                    ) : (
+                      <Text
+                        className='loading-text loading-text-b'
+                        fontSize='xs'
+                      >
+                        loading farm manager profile
                       </Text>
-                      <Text fontSize='sm'>Farm Manager</Text>
-                      <Divider
-                        orientation='horizontal'
-                        borderColor='gray.200'
-                        w={60}
-                        my={5}
-                      />
-                      <Text>Manager Profile</Text>
-                      {doc ? (
-                        <UnorderedList>
-                          {doc?.manager_profile?.map(item => (
-                            <ListItem
-                              key={item.text}
-                              fontSize='xs'
-                              textColor='gray.500'
-                            >
-                              {item.text}
-                            </ListItem>
-                          ))}
-                        </UnorderedList>
-                      ) : (
-                        <Text
-                          className='loading-text loading-text-b'
-                          fontSize='xs'
-                        >
-                          loading farm manager profile
-                        </Text>
-                      )}
-                    </Box>
-                  </Grid>
-                ))}
+                    )}
+                  </Box>
+                </Grid>
               </Box>
             </Box>
           </Box>

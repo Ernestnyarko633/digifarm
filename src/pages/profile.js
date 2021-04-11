@@ -6,6 +6,8 @@ import { FiUser } from 'react-icons/fi'
 import { BiCog, BiLockAlt } from 'react-icons/bi'
 import { BsShield } from 'react-icons/bs'
 import { GrCircleInformation } from 'react-icons/gr'
+import Fade from 'react-reveal/Fade'
+
 const Profile = () => {
   const [page, setPage] = React.useState('compA')
 
@@ -47,47 +49,54 @@ const Profile = () => {
       <Header />
       <Container pt={{ md: 55 }} maxW={{ md: '7xl' }}>
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
-          <Flex
-            d={{ base: 'none', md: 'flex' }}
-            direction='column'
-            borderWidth={1}
-            borderColor='gray.100'
-            rounded='30px'
-            p={4}
-            h={{ md: 85 }}
-            bg='white'
-            filter='drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.1))'
-          >
-            {menus.map(menu => (
-              <Flex
-                align='center'
-                key={menu}
-                as='button'
-                role='button'
-                my={3}
-                bg={page === menu.comp && 'cf.200'}
-                px={5}
-                py={2}
-                rounded='30px'
-                onClick={() => {
-                  return menu?.comp === 'compE'
-                    ? window.open(
-                        'https://www.completefarmer.com/privacy-policy',
-                        '_blank'
-                      )
-                    : menu?.comp === 'compF'
-                    ? window.open(
-                        'https://www.completefarmer.com/terms-and-conditions',
-                        '_blank'
-                      )
-                    : setPage(menu.comp)
-                }}
-              >
-                <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
-                <Text>{menu.name}</Text>
-              </Flex>
-            ))}
-          </Flex>
+          <Fade left>
+            <Flex
+              d={{ base: 'none', md: 'flex' }}
+              // align='center'
+              // justify='center'
+              direction='column'
+              borderWidth={1}
+              borderColor='gray.200'
+              rounded='30px'
+              p={4}
+              h={{ md: 85 }}
+              bg='white'
+              filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+            >
+              {menus.map(menu => (
+                <Fade key={menu} left>
+                  <Flex
+                    align='center'
+                    as='button'
+                    role='button'
+                    my={3}
+                    bg={page === menu.comp && 'cf.200'}
+                    px={5}
+                    py={2}
+                    rounded='30px'
+                    onClick={
+                      () =>
+                        menu?.comp === 'compE'
+                          ? window.open(
+                              'https://www.completefarmer.com/privacy-policy',
+                              '_blank'
+                            )
+                          : menu?.comp === 'compF'
+                          ? window.open(
+                              'https://www.completefarmer.com/terms-and-conditions',
+                              '_blank'
+                            )
+                          : setPage(menu.comp)
+                      // eslint-disable-next-line react/jsx-curly-newline
+                    }
+                  >
+                    <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
+                    <Text>{menu.name}</Text>
+                  </Flex>
+                </Fade>
+              ))}
+            </Flex>
+          </Fade>
 
           {/* <Flex
             align='center'

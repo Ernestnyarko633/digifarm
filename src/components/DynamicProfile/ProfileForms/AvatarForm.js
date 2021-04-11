@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import {
@@ -8,11 +7,13 @@ import {
   Input,
   Avatar,
   Divider,
+  Spinner,
   useToast
 } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import Headings from '../Headings'
+import Fade from 'react-reveal/Fade'
 
 const AvatarForm = () => {
   const [file, setFile] = React.useState(false)
@@ -28,7 +29,6 @@ const AvatarForm = () => {
     try {
       setSubmitting(true)
       let formData = new FormData()
-      console.log(value)
       formData.append('avatar', value)
       const res = await patchUser(user?._id, formData)
       toast({
@@ -38,7 +38,6 @@ const AvatarForm = () => {
         duration: 5000,
         position: 'top-right'
       })
-      // window.location.reload()
     } catch (error) {
       toast({
         title: 'Error occured',
@@ -53,7 +52,7 @@ const AvatarForm = () => {
   }
 
   return (
-    <Box>
+    <Fade bottom>
       <Headings title='Profile' />
       <Divider
         orientation='vertical'
@@ -63,10 +62,22 @@ const AvatarForm = () => {
       />
 
       <Flex align='center'>
-        <Avatar
-          src={file ? URL.createObjectURL(file) : null || user?.avatar}
-          size='2xl'
-        />
+        <Flex justify='center' align='center' pos='relative'>
+          <Avatar
+            src={file ? URL.createObjectURL(file) : null || user?.avatar}
+            size='2xl'
+            loading={isSubmitting}
+          />
+          {isSubmitting && (
+            <Spinner
+              pos='absolute'
+              speed='0.65s'
+              emptyColor='gray.200'
+              size='md'
+              color='cf.400'
+            />
+          )}
+        </Flex>
         <Flex
           w={40}
           ml={6}
@@ -101,7 +112,7 @@ const AvatarForm = () => {
           </Text>
         </Flex>
       </Flex>
-    </Box>
+    </Fade>
   )
 }
 

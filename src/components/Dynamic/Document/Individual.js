@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { BsArrowRight } from 'react-icons/bs'
 import FarmDocumentCard from '../Cards/FarmDocumentCard'
 import Doc from 'assets/images/doc.png'
+import Fade from 'react-reveal/Fade'
 
 export default function Individual({
   digitalFarmerFarm,
@@ -106,25 +107,27 @@ export default function Individual({
       </Grid>
 
       {moreButton && (
-        <Flex align='center' justify='center' mt={{ md: 16 }}>
-          <Button
-            btntitle={!toggleText ? 'Show more' : 'Show less'}
-            icon={BsArrowRight}
-            bg='white'
-            borderWidth={1}
-            borderColor='cf.400'
-            color='cf.400'
-            rounded='30px'
-            h={14}
-            width={56}
-            _hover={{ bg: 'white' }}
-            shadow='none'
-            fontSize='md'
-            onClick={() => {
-              toggle()
-            }}
-          />
-        </Flex>
+        <Fade bottom>
+          <Flex align='center' justify='center' mt={{ md: 16 }}>
+            <Button
+              btntitle={!toggleText ? 'Show more' : 'Show less'}
+              icon={BsArrowRight}
+              bg='white'
+              borderWidth={1}
+              borderColor='cf.400'
+              color='cf.400'
+              rounded='30px'
+              h={14}
+              width={56}
+              _hover={{ bg: 'white' }}
+              shadow='none'
+              fontSize='md'
+              onClick={() => {
+                toggle()
+              }}
+            />
+          </Flex>
+        </Fade>
       )}
     </Box>
   )
