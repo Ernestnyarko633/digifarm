@@ -13,7 +13,7 @@ import {
 
 const Banner = () => {
   return (
-    <Flex w='100vw' h='100vh'>
+    <Flex w='100vw' h='100vh' bg='cf.400'>
       <Box>
         <Header />
       </Box>
@@ -53,7 +53,7 @@ const Banner = () => {
         pos='absolute'
         w='100%'
         bottom={0}
-        h={{ md: '100px', xl: '60px' }}
+        h={{ md: '100px', xl: '100px' }}
         justify='space-between'
         align='center'
       >
@@ -121,10 +121,12 @@ const Banner = () => {
               m={{ md: 5 }}
               as={Link}
               href='https://www.instagram.com/completefarmer'
+              w={{ xl: '33.33%' }}
             >
               <Icon as={AiOutlineInstagram} boxSize={8} />
             </Box>
             <Box
+              w={{ xl: '33.33%' }}
               m={{ md: 5 }}
               as={Link}
               href='https://web.facebook.com/CompleteFarmer/'
@@ -132,6 +134,7 @@ const Banner = () => {
               <Icon as={AiFillFacebook} boxSize={8} />
             </Box>
             <Box
+              w={{ xl: '33.33%' }}
               m={{ md: 5 }}
               as={Link}
               href='https://www.linkedin.com/CompleteFarmer/'
