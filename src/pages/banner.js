@@ -32,14 +32,15 @@ const Banner = () => {
               as='h3'
               mt={{ md: 5 }}
               color='#022D2B'
-              fontSize={{ base: '3xl', md: '4xl', lg: '6xl', xl: '9xl' }}
+              fontSize={{ base: '3xl', md: '4xl', lg: '6xl', xl: '8xl' }}
               dangerouslySetInnerHTML={{ __html: 'Coming Soon' }}
             />
 
             <Text
+              w={{ xl: '70%' }}
               textAlign='center'
               my={{ md: 5 }}
-              fontSize={{ base: 'md', md: 'lg', xl: '2xl' }}
+              fontSize={{ base: 'md', md: 'lg', xl: 'lg' }}
               dangerouslySetInnerHTML={{
                 __html:
                   'Please wait patiently as we set up our farms to enable you farm the revolutionized way and make profit from the comfort of your home.'
