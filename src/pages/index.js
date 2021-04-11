@@ -7,6 +7,7 @@ const Marketplace = React.lazy(() => import('./Marketplace'));
 const StartFarm = React.lazy(() => import('./StartFarm/index'));
 const StartFarmDetails = React.lazy(() => import('./StartFarm/Details'));
 const Forum = React.lazy(() => import('./Forum'));
+const Banner = React.lazy(() => import('./Banner'))
 const NotFound = React.lazy(() => import('./NotFound'));
 
 const Pages = {
@@ -18,6 +19,7 @@ const Pages = {
   StartFarmDetails,
   Forum,
   NotFound,
+  Banner
 };
 
 export default Pages;

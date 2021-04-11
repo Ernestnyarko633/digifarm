@@ -6,6 +6,9 @@ import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi';
 import { BiCog, BiSupport, BiHistory } from 'react-icons/bi';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { BsBell, BsStar, BsPlus } from 'react-icons/bs';
+import Logo1 from '../assets/images/logo@1x.svg'
+import Logo2 from '../assets/images/logo@2x.svg'
+import Logo3 from '../assets/images/logo@3x.svg'
 
 const menuLinks = [
   { name: 'Profile', icon: FiUser, link: '/profile' },
@@ -27,20 +30,31 @@ const Header = () => {
       align='center'
       justify='space-between'
       w='100%'
-      h={{ md: 20 }}
+      h={{base: 10, md: 20 }}
       bg='white'
       pos='fixed'
       top={0}
       zIndex={50}
       borderBottomWidth={1}
       borderBottomColor='gray.300'
-      px={{ md: 24 }}
+      px={{base:5,  md: 24 }}
     >
       <Box>
-        <Image src={Logo} w={{ md: 12 }} />
+      <Box
+              w={{ base: '84.47px', md: '113px', xl: '169px' }}
+              h={{ base: 6, md: 8, xl: '48px' }}
+              bgImage={{
+                base: `url('${Logo1}')`,
+                md: `url('${Logo2}')`,
+                xl: `url('${Logo3}')`
+              }}
+              bgSize='cover'
+              bgPos='center'
+              bgRepeat='no-repeat'
+            />
       </Box>
 
-      <Flex align='center'>
+      {/* <Flex align='center'>
         <Flex align='center' mr={10}>
           <Box as='button' role='button' aria-label='Support'>
             <Icon as={BsPlus} boxSize={6} />
@@ -118,7 +132,7 @@ const Header = () => {
             </Box>
           )}
         </Menu>
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 };
