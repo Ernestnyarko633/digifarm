@@ -12,6 +12,7 @@ import {
 import { Link as ReachLink } from 'react-router-dom'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import CorporateIllustration from '../../assets/images/emptystate/corporate.png'
+import Fade from 'react-reveal/Fade'
 
 const GetStartedNowCard = () => (
   <Box p={{ base: 4, md: 16 }} bg='#ECECEC' mt={{ base: 16, md: 0 }}>
@@ -46,7 +47,9 @@ const GetStartedNowCard = () => (
     </Box>
 
     <Flex mx='auto' align='center' justify='center' my={{ md: 16 }}>
-      <Image src={CorporateIllustration} />
+      <Fade bottom>
+        <Image src={CorporateIllustration} />
+      </Fade>
     </Flex>
   </Box>
 )

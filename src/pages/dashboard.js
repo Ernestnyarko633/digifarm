@@ -16,6 +16,7 @@ import Greetings from 'components/Utils/Greetings'
 import { getCurrentDayParting } from 'helpers/misc'
 import useComponent from 'context/component'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
+import Fade from 'react-reveal/Fade'
 
 const Dashboard = () => {
   document.title = 'Complete Farmer | Dashboard'
@@ -69,31 +70,37 @@ const Dashboard = () => {
       />
       {isLoading || hasError ? (
         <Box p={16}>
-          <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            mx='auto'
-            reload={() => {
-              !myFarms?.length && triggerReloadMyFarms()
-              !myOrder?.length && triggerReloadMyOrders()
-            }}
-            loading={isLoading}
-            error={hasError}
-            text='Standby as we load your current farms and pending orders'
-          />
+          <Fade>
+            <FetchCard
+              direction='column'
+              align='center'
+              justify='center'
+              mx='auto'
+              reload={() => {
+                !myFarms?.length && triggerReloadMyFarms()
+                !myOrder?.length && triggerReloadMyOrders()
+              }}
+              loading={isLoading}
+              error={hasError}
+              text='Standby as we load your current farms and pending orders'
+            />
+          </Fade>
         </Box>
       ) : myFarms?.length || myOrder?.length ? (
-        <FarmOrderSection
-          farms={myFarms}
-          orders={myOrder}
-          handleClick={handleClick}
-          onOpen={onOpen}
-        />
+        <Fade bottom>
+          <FarmOrderSection
+            farms={myFarms}
+            orders={myOrder}
+            handleClick={handleClick}
+            onOpen={onOpen}
+          />
+        </Fade>
       ) : (
         <HomeEmptyState />
       )}
-      <GetStartedNowCard />
+      <Fade bottom>
+        <GetStartedNowCard />
+      </Fade>
     </Layout>
   )
 }

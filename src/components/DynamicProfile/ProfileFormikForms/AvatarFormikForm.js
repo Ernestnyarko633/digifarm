@@ -13,6 +13,7 @@ import { useFormik } from 'formik'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import Headings from '../Headings'
+import Fade from 'react-reveal/Fade'
 
 const AvatarFormikForm = () => {
   const { isAuthenticated } = useAuth()
@@ -61,56 +62,58 @@ const AvatarFormikForm = () => {
   })
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Headings title='Profile' />
-      <Divider
-        orientation='vertical'
-        borderBottomWidth={1}
-        borderBottomColor='gray.200'
-        my={12}
-      />
-
-      <Flex align='center'>
-        <Avatar
-          src={
-            formik.values.file
-              ? URL.createObjectURL(formik.values.file)
-              : null || user?.avatar
-          }
-          size='xl'
+    <Fade bottom>
+      <form onSubmit={formik.handleSubmit}>
+        <Headings title='Profile' />
+        <Divider
+          orientation='vertical'
+          borderBottomWidth={1}
+          borderBottomColor='gray.200'
+          my={12}
         />
-        <Box
-          as='label'
-          role='button'
-          type='button'
-          rounded='30px'
-          px={{ base: 3, md: 6 }}
-          py={2}
-          fontSize='sm'
-          borderWidth={1}
-          borderColor='cf.400'
-          color='cf.400'
-          ml={6}
-        >
-          <Input type='file' d='none' onChange={formik.handleChange} />
-          <Text fontSize={{ base: 'sm', md: 'md' }}>Upload a new image</Text>
+
+        <Flex align='center'>
+          <Avatar
+            src={
+              formik.values.file
+                ? URL.createObjectURL(formik.values.file)
+                : null || user?.avatar
+            }
+            size='xl'
+          />
+          <Box
+            as='label'
+            role='button'
+            type='button'
+            rounded='30px'
+            px={{ base: 3, md: 6 }}
+            py={2}
+            fontSize='sm'
+            borderWidth={1}
+            borderColor='cf.400'
+            color='cf.400'
+            ml={6}
+          >
+            <Input type='file' d='none' onChange={formik.handleChange} />
+            <Text fontSize={{ base: 'sm', md: 'md' }}>Upload a new image</Text>
+          </Box>
+        </Flex>
+        <Box textAlign='right' mt={6}>
+          <Button
+            colorScheme='linear'
+            rounded='30px'
+            w={40}
+            h={12}
+            shadow='sm'
+            ml={4}
+            type='submit'
+            isLoading={formik.isSubmitting}
+          >
+            Save
+          </Button>
         </Box>
-      </Flex>
-      <Box textAlign='right' mt={6}>
-        <Button
-          colorScheme='linear'
-          rounded='30px'
-          w={40}
-          h={12}
-          shadow='sm'
-          ml={4}
-          type='submit'
-          isLoading={formik.isSubmitting}
-        >
-          Save
-        </Button>
-      </Box>
-    </form>
+      </form>
+    </Fade>
   )
 }
 
