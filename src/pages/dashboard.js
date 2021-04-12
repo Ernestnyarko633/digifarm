@@ -46,17 +46,34 @@ const Dashboard = () => {
   } = useFetch('my_farms', getMyFarms, reloadMyFarms)
 
   const {
-    data: myOrder,
-    isLoading: myOrdersIsLoading,
-    error: myOrdersHasError
-  } = useFetch('my_orders', getMyOrders, reloadMyOrders)
+    data: myPandingOrder,
+    isLoading: myPandingOrdersIsLoading,
+    error: myPandingOrdersHasError
+  } = useFetch('my_pending_orders', getMyOrders, reloadMyOrders, {
+    status: 'PENDING'
+  })
 
-  const isLoading = myFarmsIsLoading || myOrdersIsLoading
-  const hasError = myFarmsHasError || myOrdersHasError
+  const {
+    data: myProcessingOrder,
+    isLoading: myProcessingOrdersIsLoading,
+    error: myProcessingOrdersHasError
+  } = useFetch('my_processing_orders', getMyOrders, reloadMyOrders, {
+    status: 'PROCESSING'
+  })
+
+  const isLoading =
+    myFarmsIsLoading || myPandingOrdersIsLoading || myPandingOrdersHasError
+  const hasError =
+    myFarmsHasError || myProcessingOrdersHasError || myProcessingOrdersIsLoading
+
+  const hasData =
+    myFarms?.length || myPandingOrder?.length || myProcessingOrder?.length
 
   const handleClick = direction => {
     setCurrentSlide(prevState => {
-      return (myOrder.length + prevState + direction) % myOrder.length
+      return (
+        (myPandingOrder.length + prevState + direction) % myPandingOrder.length
+      )
     })
   }
 
@@ -77,7 +94,7 @@ const Dashboard = () => {
               mx='auto'
               reload={() => {
                 !myFarms?.length && triggerReloadMyFarms()
-                !myOrder?.length && triggerReloadMyOrders()
+                !myPandingOrder?.length && triggerReloadMyOrders()
               }}
               loading={isLoading}
               error={hasError}
@@ -85,11 +102,12 @@ const Dashboard = () => {
             />
           </Fade>
         </Box>
-      ) : myFarms?.length || myOrder?.length ? (
+      ) : hasData ? (
         <Fade bottom>
           <FarmOrderSection
             farms={myFarms}
-            orders={myOrder}
+            pandingOrder={myPandingOrder}
+            processingOrder={myProcessingOrder}
             handleClick={handleClick}
             onOpen={onOpen}
           />
