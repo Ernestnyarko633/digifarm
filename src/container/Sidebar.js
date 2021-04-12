@@ -44,7 +44,7 @@ const Sidebar = () => {
       pl={{ md: 5 }}
       color='gray.600'
       pr={{ md: 5 }}
-      w={{ lg: '20%', xl: '15%' }}
+      w={{ lg: '20%', xl: '18%' }}
     >
       <Fade left>
         <Text as='ul'>

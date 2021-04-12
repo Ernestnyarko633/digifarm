@@ -14,9 +14,14 @@ const EventCard = ({ href, title, summary, image }) => {
         color='white'
       >
         <Flex align='center'>
-          <Avatar size='xl' bgColor='white' src={image} />
+          <Avatar
+            size='xl'
+            bgColor='white'
+            boxSize={{ md: 12, xl: 20 }}
+            src={image}
+          />
           <Box ml={2}>
-            <Heading as='h5' fontSize={{ md: 'xl' }}>
+            <Heading as='h5' fontSize={{ md: 'md', xl: 'xl' }}>
               {title}
             </Heading>
             <Text fontSize='sm'>{summary}</Text>

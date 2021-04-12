@@ -39,9 +39,9 @@ const RightSidebar = () => {
       as='aside'
       bottom={0}
       pos='fixed'
-      px={{ md: 10 }}
+      px={{ md: 5, xl: 10 }}
       h={{ lg: '100vh' }}
-      w={{ md: '22%' }}
+      w={{ md: '22%', xl: '25%' }}
     >
       <Fade right>
         <Heading
