@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react'
 import { IoEllipsisVertical } from 'react-icons/io5'
@@ -12,21 +13,24 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
   const [selectedImage, setSelectedImage] = React.useState({})
   const [activeIndex, setActiveIndex] = React.useState(0)
 
+  console.log(farmfeeds, 'run')
   React.useEffect(() => {
     let array = []
     const _feeds = feed => {
       return feed?.media?.forEach(_media => {
-        if (
-          _media.type === 'image' &&
-          feed?.task?.activity?.name === activityName
-        ) {
-          array.push(_media)
-        }
+        // if (
+        //   _media.type === 'image' &&
+        //   feed?.task?.activity?.name === activityName
+        // ) {
+        //   array.push(_media)
+        // }
+        console.log(_media, 'buy')
+        array.push(_media)
       })
     }
     const feeds = () =>
       farmfeeds?.forEach(feed => {
-        return _feeds(feed)
+        return _feeds(feed?.feed)
       })
     feeds()
 
@@ -49,7 +53,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
             h={{ md: 85 }}
             w='100%'
             objectFit='cover'
-            src={selectedImage.url}
+            src={selectedImage?.url}
           />
           <Flex
             align='center'

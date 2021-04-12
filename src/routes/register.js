@@ -11,10 +11,10 @@ const Router = () => {
   return (
     <React.Suspense fallback={<Splash />}>
       <Switch>
-        <Redirect exact from='/' to='/coming-soon' />
+        <Redirect exact from='/' to='/auth' />
         <Route path='/auth/:token' component={Pages.Auth} />
         <Route path='/auth' component={Pages.Auth} />
-        {/* <PrivateRoute path='/logout' component={Pages.Logout} />
+        <PrivateRoute path='/logout' component={Pages.Logout} />
         <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
         <PrivateRoute exact path='/start-farm' component={Pages.StartFarm} />
         <PrivateRoute exact path='/farms/:id' component={Pages.Farm} />
@@ -36,9 +36,9 @@ const Router = () => {
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />
         <PrivateRoute path='/profile' component={Pages.Profile} />
         <PrivateRoute path='/guide' component={Pages.Guide} />
-        <PrivateRoute path='/notfound' component={Pages.NotFound} /> */}
+        <PrivateRoute path='/notfound' component={Pages.NotFound} />
         <PrivateRoute path='/coming-soon' component={Pages.Banner} />
-        <Redirect from='*' to='/coming-soon' />
+        <Redirect from='*' to='/notfound' />
       </Switch>
     </React.Suspense>
   )
