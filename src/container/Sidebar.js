@@ -8,8 +8,14 @@ import Fade from 'react-reveal/Fade'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
-  { icon: farm, path: '/farms', name: 'Farm board', size: 4 },
-  { icon: wallet, path: '/wallet', name: 'Farm Wallet', size: 4 },
+  { icon: farm, path: '/farms', name: 'Farm board', size: 4, disabled: true },
+  {
+    icon: wallet,
+    path: '/wallet',
+    name: 'Farm Wallet',
+    size: 4,
+    disabled: true
+  },
   { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
 ]
 
@@ -54,6 +60,7 @@ const Sidebar = () => {
               activeClassName='activeClasName'
               as={NavLink}
               to={item.path}
+              onClick={e => item.disabled && e.preventDefault()}
               cursor='pointer'
               className='active-link'
               transition='background-color .2s ease-in'

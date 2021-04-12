@@ -5,10 +5,14 @@ const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
   const [session, setSession] = useState(true)
+  const [user, setUser] = useState(true)
 
   const store = ({ token, user }) => {
     if (token) window.sessionStorage.setItem('_cft', token)
-    if (user) window.sessionStorage.setItem('_cfu', JSON.stringify(user))
+    if (user) {
+      setUser(user)
+      window.sessionStorage.setItem('_cfu', JSON.stringify(user))
+    }
   }
 
   const isAuthenticated = () => {
@@ -24,6 +28,7 @@ export const AuthContextProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        user,
         store,
         session,
         setSession,

@@ -147,59 +147,45 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
               onSubmit={formik.handleSubmit}
             >
               {withImage && (
-                <>
-                  <Flex
-                    as='button'
-                    borderWidth={2}
-                    alignItems='center'
-                    borderColor='cf.400'
-                    title='Upload Signature'
-                  >
-                    <CustomUploader
-                      form={formik}
-                      field={{ name: 'file' }}
-                      accept='image/jpeg, image/png'
-                    />
+                <Flex
+                  as='button'
+                  borderWidth={2}
+                  alignItems='center'
+                  borderColor='cf.400'
+                  title='Upload Signature'
+                >
+                  <CustomUploader
+                    form={formik}
+                    field={{ name: 'file' }}
+                    accept='image/jpeg, image/png'
+                  />
 
-                    <Text
-                      px={10}
-                      as='span'
-                      color='cf.400'
-                      pos='absolute'
-                      cursor='pointer'
-                      fontWeight='600'
-                    >
-                      Click here to select your signature
-                    </Text>
-                  </Flex>
-                  {formik.errors.file && formik.touched.file && (
-                    <Text fontSize='sm' textColor='red.600'>
-                      {formik.errors.file}
-                    </Text>
-                  )}
-                </>
+                  <Text
+                    px={10}
+                    as='span'
+                    color='cf.400'
+                    pos='absolute'
+                    cursor='pointer'
+                    fontWeight='600'
+                  >
+                    Click here to select your signature
+                  </Text>
+                </Flex>
               )}
               {withText && (
-                <>
-                  <FormInput
-                    id='text'
-                    type='text'
-                    name='text'
-                    minLength='5'
-                    maxLength='30'
-                    blur={formik.handleBlur}
-                    value={formik.values.text}
-                    error={formik.errors.text}
-                    onChange={formik.handleChange}
-                    touched={formik.touched.text}
-                    placeholder='Enter your signature'
-                  />
-                  {formik.errors.text && formik.touched.text && (
-                    <Text fontSize='sm' textColor='red.600'>
-                      {formik.errors.text}
-                    </Text>
-                  )}
-                </>
+                <FormInput
+                  id='text'
+                  type='text'
+                  name='text'
+                  minLength='5'
+                  maxLength='30'
+                  blur={formik.handleBlur}
+                  value={formik.values.text}
+                  error={formik.errors.text}
+                  onChange={formik.handleChange}
+                  touched={formik.touched.text}
+                  placeholder='Enter your signature'
+                />
               )}
               <Button
                 py={3}

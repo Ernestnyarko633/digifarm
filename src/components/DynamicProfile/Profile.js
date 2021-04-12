@@ -43,7 +43,7 @@ const Profile = () => {
         <Signature data={user?.signature} />
       </Box>
 
-      {(loading || error) && (
+      {loading || error ? (
         <FetchCard
           direction='column'
           align='center'
@@ -56,8 +56,9 @@ const Profile = () => {
           error={error}
           text='Standby as we load your bank details'
         />
+      ) : (
+        <BankingDetailsForm bankDetails={bankDetails} />
       )}
-      {!loading && !error && <BankingDetailsForm bankDetails={bankDetails} />}
     </Container>
   )
 }

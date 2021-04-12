@@ -1,20 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Text,
+  Image
+} from '@chakra-ui/react'
 import { motion } from 'framer-motion'
+
 import useAuth from 'context/auth'
+
+import ModalWrapper from 'components/Modals/ModalWrapper'
 import SignatureSetup from 'components/Signature/SignatureSetup'
 import SignatureDisplay from 'components/Signature/SignatureDisplay'
+import Button from 'components/Button'
+
+import { IoMdCreate } from 'react-icons/io'
 
 const MotionGrid = motion.custom(Grid)
 
-const Contract = ({ farm }) => {
+const Contract = () => {
+  const [signatureModal, setSignatureModal] = React.useState(false)
   const [isEditing, setIsEditing] = React.useState(false)
-  const { isAuthenticated } = useAuth()
-  const { user } = isAuthenticated()
+  const { user } = useAuth()
 
   return (
     <MotionGrid px={10}>
+      <ModalWrapper
+        size='3xl'
+        onClose={setSignatureModal}
+        isOpen={signatureModal}
+        title='Set Up Signature'
+      >
+        <SignatureSetup isEditing={setIsEditing} setIsEditing={setIsEditing} />
+      </ModalWrapper>
       <GridItem overflowY='scroll' mb={10}>
         <Box css={{ direction: 'ltr' }} p={{ base: 2, md: 10 }}>
           <Heading
@@ -32,13 +54,8 @@ const Contract = ({ farm }) => {
             carefully for your Complete Farmer (“The Company”) to complete your
             crowd farming subscription. This Agreement should be read together
             withour Terms & Conditions and our Privacy Policy. This Agreement is
-            made between (the ‘DigiFarmer’ or ‘You’){' '}
-            <Text
-              as='span'
-              color='cf.400'
-            >{`${user?.firstName} ${user?.lastName}`}</Text>
-            , and the Company, and is effective upon signature or your
-            acceptance.
+            made between (the ‘DigiFarmer’ or ‘You’) , and the Company, and is
+            effective upon signature or your acceptance.
             <br />
             <Heading as='h3' size='lg' color='cf.400' mt={{ md: 5 }}>
               Use of Farm Management Service Fee
@@ -147,24 +164,45 @@ const Contract = ({ farm }) => {
             </ul>
           </Text>
 
-          <Box w={{ md: 90 }} mx='auto' my={{ md: 10 }}>
-            <Heading as='h5' fontSize={{ md: 'lg' }} mb={2}>
-              Your signature
-            </Heading>
-            {user?.signature?.string && !isEditing ? (
-              <SignatureDisplay
-                contract
-                data={user?.signature}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
+          <Flex my={{ md: 10 }} justifyContent='space-around'>
+            <Box textAlign='center' pos='relative'>
+              <Heading as='h5' fontSize={{ md: 'lg' }} mb={2}>
+                Desmony Koney
+              </Heading>
+              <Text>CEO</Text>
+              <Image
+                pos='absolute'
+                top={10}
+                src={require('assets/images/ceo-sign.png').default}
+                alt='CEO Signature'
               />
-            ) : (
-              <SignatureSetup
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-              />
-            )}
-          </Box>
+            </Box>
+            <Box textAlign='center' pos='relative'>
+              <Heading as='h5' fontSize={{ md: 'lg' }} mb={2}>
+                {user?.firstName + ' ' + user?.lastName}
+              </Heading>
+              <Text>DigiFarmer</Text>
+              {user?.signature?.string ? (
+                <Box pos='absolute' w='max-content'>
+                  <SignatureDisplay
+                    contract
+                    data={user?.signature}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                  />
+                </Box>
+              ) : (
+                <Button
+                  btntitle='Set up signature'
+                  color='white'
+                  width={48}
+                  bgColor='cf.500'
+                  leftIcon={<IoMdCreate size={20} />}
+                  onClick={() => setSignatureModal(true)}
+                />
+              )}
+            </Box>
+          </Flex>
         </Box>
       </GridItem>
     </MotionGrid>
@@ -172,7 +210,7 @@ const Contract = ({ farm }) => {
 }
 
 Contract.propTypes = {
-  farm: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 }
 
 export default Contract

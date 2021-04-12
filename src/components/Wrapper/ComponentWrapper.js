@@ -10,8 +10,10 @@ const ComponentWrapper = ({
   handleClick,
   firstStateValue,
   secondStateValue,
+  thirdStateValue,
   firstBoxTitle,
-  secondBoxTitle
+  secondBoxTitle,
+  thirdBoxTitle
 }) => {
   return (
     <Box p={{ base: 4, md: 20 }}>
@@ -54,6 +56,18 @@ const ComponentWrapper = ({
             >
               {secondBoxTitle}
             </Box>
+            <Box mx={{ base: 4, md: 10 }} />
+            <Box
+              color={state === thirdStateValue ? 'cf.400' : 'gray.700'}
+              onClick={() => setState(thirdStateValue)}
+              fontWeight={state === thirdStateValue ? 'bold' : 'normal'}
+              cursor='pointer'
+              borderBottomWidth={state === thirdStateValue && 2}
+              borderBottomColor='cf.400'
+              pb={3}
+            >
+              {thirdBoxTitle}
+            </Box>
           </Flex>
 
           <Box>
@@ -73,7 +87,9 @@ ComponentWrapper.propTypes = {
   handleClick: PropTypes.func,
   firstStateValue: PropTypes.any,
   secondStateValue: PropTypes.any,
+  thirdStateValue: PropTypes.any,
   firstBoxTitle: PropTypes.any,
-  secondBoxTitle: PropTypes.any
+  secondBoxTitle: PropTypes.any,
+  thirdBoxTitle: PropTypes.any
 }
 export default ComponentWrapper

@@ -29,14 +29,12 @@ const Security = () => {
   ) => {
     try {
       const res = await changePassword(values)
-      if (res.statusCode === 200) {
-        toast({
-          description: res.message,
-          status: 'success',
-          duration: 5000,
-          position: 'top-right'
-        })
-      }
+      toast({
+        description: res.message,
+        status: 'success',
+        duration: 5000,
+        position: 'top-right'
+      })
       resetForm({})
       setStatus({ success: true })
     } catch (error) {

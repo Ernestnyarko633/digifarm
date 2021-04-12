@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Flex, Heading, Image, Text } from '@chakra-ui/react'
+import { Flex, Heading, Image, Text, useToast } from '@chakra-ui/react'
 import { AnimateSharedLayout, motion } from 'framer-motion'
 
 import useStartFarm from 'context/start-farm'
+import useAuth from 'context/auth'
 
 import Overlay from 'components/Loading/Overlay'
 import Button from 'components/Button'
@@ -21,6 +22,7 @@ import ReloadPage from 'components/Reload'
 const MotionFlex = motion.custom(Flex)
 
 const OtherSteps = ({ data, history: { push } }) => {
+  const { user } = useAuth()
   const {
     text,
     otherStep,
@@ -36,6 +38,8 @@ const OtherSteps = ({ data, history: { push } }) => {
   const catName = sessionStorage.getItem('cat_name')
   const catFarms = JSON.parse(sessionStorage.getItem('farms'))
 
+  const toast = useToast()
+
   const getSteps = value => {
     switch (value) {
       case 0:
@@ -43,7 +47,7 @@ const OtherSteps = ({ data, history: { push } }) => {
       case 1:
         return <ChooseAcreage farm={selectedFarm} />
       case 2:
-        return <Contract farm={selectedFarm} />
+        return <Contract farm={selectedFarm} {...{ user }} />
       case 3:
         return <PaymentOption farm={selectedFarm} />
       case 4:
@@ -53,13 +57,27 @@ const OtherSteps = ({ data, history: { push } }) => {
     }
   }
 
+  const handleAcceptAgreement = () => {
+    if (user?.signature?.string) {
+      handleCreateOrder()
+    } else {
+      toast({
+        title: 'Action needed',
+        description: 'You need to set up a profile signature',
+        status: 'error',
+        duration: 5000,
+        position: 'top-right'
+      })
+    }
+  }
+
   const getForwardButtonProps = key => {
     switch (key) {
       case 2:
         return {
           title: 'Accept Agreement',
           width: 56,
-          action: handleCreateOrder
+          action: () => handleAcceptAgreement()
         }
       case 3:
         return {

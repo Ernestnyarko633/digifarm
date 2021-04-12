@@ -64,9 +64,11 @@ const OrderCard = ({ order, onOpen }) => {
             py={{ md: 2 }}
             rounded='30px'
           >
-            Pending Order
+            {order.status === 'PENDING' ? 'Pending' : 'Processing'} Order
           </Tag>
-          <Text fontSize='sm'>80% Complete</Text>
+          <Text fontSize='sm'>
+            {order.status === 'PENDING' ? '50' : '80'}% Complete
+          </Text>
         </Box>
       </Flex>
 
@@ -75,6 +77,7 @@ const OrderCard = ({ order, onOpen }) => {
           btntitle='Complete order'
           rounded='30px'
           w='100%'
+          disabled
           h={{ base: 12, md: 16 }}
           fontSize={{ md: 'lg' }}
           onClick={() => {
@@ -95,7 +98,8 @@ OrderCard.propTypes = {
     cost: PropTypes.number,
     acreage: PropTypes.number,
     product: PropTypes.object,
-    location: PropTypes.object
+    location: PropTypes.object,
+    status: PropTypes.string
   }),
   onOpen: PropTypes.func
 }

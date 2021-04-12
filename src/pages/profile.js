@@ -22,11 +22,6 @@ const Profile = () => {
       comp: 'compB',
       icon: BiCog
     },
-    // {
-    //   name: 'Notifications',
-    //   comp: 'compC',
-    //   icon: FiBell
-    // },
     {
       name: 'Security',
       comp: 'compD',
@@ -52,8 +47,6 @@ const Profile = () => {
           <Fade left>
             <Flex
               d={{ base: 'none', md: 'flex' }}
-              // align='center'
-              // justify='center'
               direction='column'
               borderWidth={1}
               borderColor='gray.200'
@@ -74,21 +67,19 @@ const Profile = () => {
                     px={5}
                     py={2}
                     rounded='30px'
-                    onClick={
-                      () =>
-                        menu?.comp === 'compE'
-                          ? window.open(
-                              'https://www.completefarmer.com/privacy-policy',
-                              '_blank'
-                            )
-                          : menu?.comp === 'compF'
-                          ? window.open(
-                              'https://www.completefarmer.com/terms-and-conditions',
-                              '_blank'
-                            )
-                          : setPage(menu.comp)
-                      // eslint-disable-next-line react/jsx-curly-newline
-                    }
+                    onClick={() => {
+                      return menu?.comp === 'compE'
+                        ? window.open(
+                            'https://www.completefarmer.com/privacy-policy',
+                            '_blank'
+                          )
+                        : menu?.comp === 'compF'
+                        ? window.open(
+                            'https://www.completefarmer.com/terms-and-conditions',
+                            '_blank'
+                          )
+                        : setPage(menu.comp)
+                    }}
                   >
                     <Icon as={menu.icon} mr={2} boxSize={{ md: 5 }} />
                     <Text>{menu.name}</Text>
@@ -97,33 +88,6 @@ const Profile = () => {
               ))}
             </Flex>
           </Fade>
-
-          {/* <Flex
-            align='center'
-            d={{ base: 'flex', md: 'none' }}
-            overflowX='scroll'
-            mb={6}
-          >
-            {menus.map((menu) => (
-              <Flex
-                align='center'
-                justify='center'
-                key={menu}
-                as='button'
-                role='button'
-                my={3}
-                bg={page === menu.comp && 'cf.200'}
-                px={5}
-                py={2}
-                minW={48}
-                rounded='30px'
-                onClick={() => setPage(menu.comp)}
-              >
-                <Icon as={menu.icon} mr={2} boxSize={5} />
-                <Text fontSize='sm'>{menu.name}</Text>
-              </Flex>
-            ))}
-          </Flex> */}
 
           <DynamicProfile page={page} />
         </Grid>
