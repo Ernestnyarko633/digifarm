@@ -34,7 +34,7 @@ const Sidebar = () => {
     <Box
       as='aside'
       pos='fixed'
-      bottom={0}
+      bottom={{ lg: 0 }}
       left={0}
       h={{ lg: '100vh' }}
       bg='white'
@@ -44,7 +44,7 @@ const Sidebar = () => {
       pl={{ md: 5 }}
       color='gray.600'
       pr={{ md: 5 }}
-      w={{ lg: '20%', xl: '18%' }}
+      w={{ md: '10%', lg: '20%', xl: '18%' }}
     >
       <Fade left>
         <Text as='ul'>

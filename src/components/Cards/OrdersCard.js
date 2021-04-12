@@ -19,6 +19,8 @@ const OrdersCard = ({ onOpen, data }) => {
       }}
       pos='relative'
       minW={{ md: 130 }}
+      maxW={{ base: 90, md: 'auto' }}
+      overflowX='scroll'
       mx='auto'
     >
       {data.map(order => (
