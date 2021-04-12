@@ -8,7 +8,7 @@ import BasePhone from 'components/Form/BasePhone'
 import Fade from 'react-reveal/Fade'
 
 const UserDetailsForm = () => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, store } = useAuth()
   const { user } = isAuthenticated()
   const { patchUser } = useApi()
   const toast = useToast()
@@ -54,6 +54,7 @@ const UserDetailsForm = () => {
         })
         resetForm({})
         setStatus({ success: true })
+        store({ user: res.data })
         window.location.reload()
       } catch (error) {
         setStatus({ success: false })

@@ -32,7 +32,7 @@ export default function FarmUpdateCard({
             {title}
           </Text>
           <Text color='gray.500' fontSize='sm'>
-            {duration} h
+            {duration}
           </Text>
         </Flex>
 
