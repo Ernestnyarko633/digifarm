@@ -2,13 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '@chakra-ui/react'
 
-const CustomUploader = ({ field, form, accept, multiple }) => {
+const CustomUploader = ({ field, form, multiple, ...rest }) => {
   return (
     <Input
       type='file'
       zIndex={1}
       opacity={0}
-      accept={accept}
       name={form.name}
       multiple={multiple}
       onClick={e => (e.target.value = '')}
@@ -16,6 +15,7 @@ const CustomUploader = ({ field, form, accept, multiple }) => {
         const files = e.currentTarget.files
         form.setFieldValue(field.name, multiple ? files : files[0])
       }}
+      {...rest}
     />
   )
 }

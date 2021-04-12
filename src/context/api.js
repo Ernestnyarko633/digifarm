@@ -20,16 +20,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
   }
 
-  const patchUser = async (id, data) => {
-    return await http.patch({
-      url: `${AUTH_API}/users/${id}`,
-      body: JSON.stringify(data)
-    })
+  const patchUser = async (id, body) => {
+    return await http.patch({ url: `${AUTH_API}/users/${id}`, body })
   }
 
   const changePassword = async payload => {
     return await http.patch({
-      url: `${AUTH_API}/users`,
+      url: `${AUTH_API}/change-password`,
       body: JSON.stringify(payload)
     })
   }

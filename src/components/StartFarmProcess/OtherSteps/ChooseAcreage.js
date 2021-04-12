@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
@@ -72,7 +73,7 @@ const ChooseAcreage = ({ farm }) => {
 
     if (mounted && !data) {
       const fetchData = async () => {
-        const res = await Client.getByUID('farm_details', farm._id)
+        const res = await Client.getByUID('farm-info', farm._id)
 
         if (res) {
           setData(res)
@@ -173,6 +174,7 @@ const ChooseAcreage = ({ farm }) => {
 
   const loading = EOSViewIDIsLoading
   const error = EOSViewIDHasError
+
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem w='100%' h='100%'>
@@ -222,42 +224,7 @@ const ChooseAcreage = ({ farm }) => {
         mb={10}
       >
         <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
-          <Box>
-            <Heading as='h6' size='md' mb={2}>
-              About Location
-              <Icon as={InfoIcon} color='cf.400' boxSize={4} mx={2} />
-            </Heading>
-            <Box
-              rounded='md'
-              padding={10}
-              borderWidth={1}
-              overflow='hidden'
-              borderColor='gray.200'
-            >
-              <Box>
-                <Heading as='h6' size='md'>
-                  Ecological zone
-                </Heading>
-                <Text>{data?.data?.ecologicalzone[0]?.text}</Text>
-              </Box>
-              <Divider orientation='horizontal' my={4} />
-              <Box>
-                <Heading as='h6' size='xs' mb={4}>
-                  Weather
-                </Heading>
-                <Text mb={6}>{data?.data?.weather[0]?.text}</Text>
-              </Box>
-              <Box>
-                <Heading as='h6' size='xs' mb={4}>
-                  Market Overview
-                </Heading>
-                <Text mb={6}>
-                  {data?.data?.marketoverview[0]?.text || '---'}
-                </Text>
-              </Box>
-            </Box>
-          </Box>
-          <Box mt={10} px={{ base: 6, md: 0 }}>
+          <Box px={{ base: 6, md: 0 }}>
             <Box>
               <Heading as='h5' size='sm'>
                 Amount to get started
@@ -349,7 +316,7 @@ const ChooseAcreage = ({ farm }) => {
               title='Do you want to apply cycle for this farm?'
             />
           </Box>
-          <Box my={10} px={{ base: 6, md: 0 }}>
+          <Box mt={10} px={{ base: 6, md: 0 }}>
             {wantCycle === 'Yes' && (
               <>
                 <Heading as='h5' size='sm' mb={2}>
@@ -368,6 +335,41 @@ const ChooseAcreage = ({ farm }) => {
                 </Box>
               </>
             )}
+          </Box>
+          <Box my={10}>
+            <Heading as='h6' size='md' mb={2}>
+              Location
+              <Icon as={InfoIcon} color='cf.400' boxSize={4} mx={2} />
+            </Heading>
+            <Box
+              rounded='md'
+              padding={10}
+              borderWidth={1}
+              overflow='hidden'
+              borderColor='gray.200'
+            >
+              <Box>
+                <Heading as='h6' size='md'>
+                  Ecological zone
+                </Heading>
+                <Text>{data?.data?.ecologicalzone[0]?.text}</Text>
+              </Box>
+              <Divider orientation='horizontal' my={4} />
+              <Box>
+                <Heading as='h6' size='xs' mb={4}>
+                  Weather
+                </Heading>
+                <Text mb={6}>{data?.data?.weather[0]?.text}</Text>
+              </Box>
+              <Box>
+                <Heading as='h6' size='xs' mb={4}>
+                  Market Overview
+                </Heading>
+                <Text mb={6}>
+                  {data?.data?.marketoverview[0]?.text || '---'}
+                </Text>
+              </Box>
+            </Box>
           </Box>
         </Box>
       </GridItem>
