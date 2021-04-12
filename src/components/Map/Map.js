@@ -31,12 +31,7 @@ const Map = ({
             band || BAND
           }/{z}/{x}/{y}?api_key=${EOS_API_KEY}`
         ],
-
-        // tiles: [
-        //   `${EOS_API}/render/${viewID}/NDVI/{z}/{x}/{y}?api_key=${EOS_API_KEY}`
-        // ],
         tileSize: 256
-        /* "bounds": [3.38, 50.73, 7.2432, 53.5455] */
       })
       map.addLayer(
         {
