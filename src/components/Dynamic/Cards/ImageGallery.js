@@ -2,7 +2,7 @@
 import React from 'react'
 import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react'
 import { IoEllipsisVertical } from 'react-icons/io5'
-//import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 
@@ -13,7 +13,17 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
   const [selectedImage, setSelectedImage] = React.useState({})
   const [activeIndex, setActiveIndex] = React.useState(0)
 
-  //const handleClick = () => setSelectedImage
+  const handleClick = value => {
+    const comparant =
+      activeIndex + value === 0 ||
+      activeIndex + value > images.length - 1 ||
+      activeIndex + value < 0
+        ? 0
+        : activeIndex + value
+
+    setActiveIndex(comparant)
+    setSelectedImage(images[comparant])
+  }
   React.useEffect(() => {
     let array = []
     const _feeds = feed => {
@@ -55,7 +65,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
             bottom={6}
             left='45%'
           >
-            {/* <Flex
+            <Flex
               as='button'
               role='button'
               aria-label='prev button'
@@ -86,10 +96,10 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
               color='cf.400'
               bg='white'
               ml={2}
-              // onClick={() => handleClick(+1)}
+              onClick={() => handleClick(+1)}
             >
               <Icon as={BsChevronRight} />
-            </Flex> */}
+            </Flex>
           </Flex>
         </Box>
 
