@@ -72,7 +72,6 @@ const FarmCard = ({ farm, _small }) => {
           <Button
             btntitle={!_small ? 'View Farm' : 'View Wallet'}
             rounded='30px'
-            disabled
             w={{ md: '190px' }}
             h={{ md: '55px' }}
             fontSize={{ md: 'lg' }}
@@ -146,7 +145,6 @@ const FarmCard = ({ farm, _small }) => {
         <Button
           btntitle='View Farm'
           rounded='30px'
-          disabled
           w={{ base: '100%', md: '190px' }}
           h={{ base: 12, md: '55px' }}
           fontSize={{ md: 'lg' }}
