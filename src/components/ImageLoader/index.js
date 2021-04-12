@@ -11,7 +11,12 @@ const ImageLoader = ({ rounded, height, isLoaded, setLoading, ...rest }) => {
       isLoaded={isLoaded}
       height={height}
     >
-      <Image {...rest} rounded={rounded} onLoad={() => setLoading(true)} />
+      <Image
+        display={{ base: 'none', md: 'flex' }}
+        {...rest}
+        rounded={rounded}
+        onLoad={() => setLoading(true)}
+      />
     </Skeleton>
   )
 }
