@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Heading, Flex, Text } from '@chakra-ui/react'
+import { Box, Heading, Flex } from '@chakra-ui/react'
 import EventsCard from '../Cards/EventsCard'
 
 const Events = () => {
@@ -12,10 +12,10 @@ const Events = () => {
           </Heading>
         </Box>
         <Box mb={4}>
-          <Text text fontSize='xs' color='#9b9b9b'>
+          {/* <Text text fontSize='xs' color='#9b9b9b'>
             Growing conditions are currently perfect. <br />
             {' Some irrigation work is being performed.'}
-          </Text>
+          </Text> */}
         </Box>
         <Box>
           <EventsCard />
