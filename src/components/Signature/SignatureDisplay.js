@@ -29,20 +29,21 @@ const SignatureDisplay = ({ data, isEditing, setIsEditing, contract }) => {
         bgColor='white'
         justifyContent='space-between'
       >
-        <Box p={5} height='100px'>
+        <Box p={contract ? 0 : 5} height='100px' width='200px'>
           {data?.check === 'image' ? (
             <Image
               p='10px'
               src={data?.string}
               alt='signature'
-              width='150px'
-              height='150px'
+              pos={contract ? 'absolute' : ''}
+              width={contract ? '200px' : '150px'}
+              height={contract ? '120px' : '150px'}
             />
           ) : (
             <Text
-              mt={10}
               as='span'
-              fontSize={{ md: '3xl' }}
+              mt={contract ? 2 : 10}
+              fontSize={contract ? { md: 'xl' } : { md: '3xl' }}
               fontWeight='bold'
               fontFamily='signature'
             >
