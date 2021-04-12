@@ -10,8 +10,14 @@ import Fade from 'react-reveal/Fade'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
-  { icon: farm, path: '/farms', name: 'Farm board', size: 4 },
-  { icon: wallet, path: '/wallet', name: 'Farm Wallet', size: 4 },
+  { icon: farm, path: '/farms', name: 'Farm board', size: 4, disabled: true },
+  {
+    icon: wallet,
+    path: '/wallet',
+    name: 'Farm Wallet',
+    size: 4,
+    disabled: true
+  },
   { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
 ]
 
@@ -79,7 +85,11 @@ const Layout = ({
           px={4}
         >
           {menuLink.map((item, i) => (
-            <ReachRouter key={mapKey(i)} to={item.path}>
+            <ReachRouter
+              key={mapKey(i)}
+              onClick={e => item.disabled === true && e.preventDefault()}
+              to={item.path}
+            >
               <Link _hover={{ textDecor: 'none' }}>
                 <Box key={item.id} align='center'>
                   <Icon as={item.icon} />
