@@ -7,11 +7,10 @@ import FarmUpdateCard from '../Cards/FarmUpdateCard'
 export default function Updates({ farmfeeds, error }) {
   const [feeds, setFeeds] = React.useState([])
   React.useEffect(() => {
-    const getFeeds = () => {
+    const getFeeds = () =>
       farmfeeds?.forEach(feed => {
         setFeeds(p => [...p, ...feed.data])
       })
-    }
 
     getFeeds()
   }, [farmfeeds])

@@ -27,18 +27,16 @@ export default function Tasks({
   eosStats
 }) {
   const [feeds, setFeeds] = React.useState([])
-  console.log(farmfeeds, 'who')
+
   React.useEffect(() => {
-    const getFeeds = () => {
+    const getFeeds = () =>
       farmfeeds?.forEach(feed => {
         setFeeds(p => [...p, ...feed.data])
       })
-    }
 
     getFeeds()
   }, [farmfeeds])
 
-  console.log(feeds, 'show')
   const getTodaysTasks = (scheduledTasks, type) => {
     let today = new Date().toLocaleDateString()
 
