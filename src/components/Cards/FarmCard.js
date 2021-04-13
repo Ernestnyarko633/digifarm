@@ -79,6 +79,7 @@ const FarmCard = ({ farm }) => {
         <Box d={{ base: 'none', xl: 'block' }}>
           <Button
             btntitle='View Farm'
+            disabled
             rounded='30px'
             w={{ md: '190px' }}
             h={{ md: '55px' }}

@@ -87,9 +87,8 @@ export const StartFarmContextProvider = ({ children }) => {
       const res = await createOrder(data)
       setOrder(res.data)
       sessionStorage.removeItem('my_farms')
-      sessionStorage.removeItem('my_processing_order')
-      sessionStorage.removeItem('my_pending_order')
-      // sessionStorage.removeItem('farms')
+      sessionStorage.removeItem('my_processing_orders')
+      sessionStorage.removeItem('my_pending_orders')
       handleNextStep()
     } catch (error) {
       if (error) {
