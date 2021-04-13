@@ -86,7 +86,9 @@ export const StartFarmContextProvider = ({ children }) => {
       const res = await createOrder(data)
       setOrder(res.data)
       sessionStorage.removeItem('my_farms')
-      sessionStorage.removeItem('my_orders')
+      sessionStorage.removeItem('my_processing_order')
+      sessionStorage.removeItem('my_pending_order')
+      // sessionStorage.removeItem('farms')
       handleNextStep()
     } catch (error) {
       if (error) {
@@ -138,28 +140,27 @@ export const StartFarmContextProvider = ({ children }) => {
           Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
         if (data.amount) {
           const res = await initiatePayment(data)
+          window.onbeforeunload = null
           window.location.href = res.message.url
         } else {
           throw new Error('Unknown error occurred, try again')
         }
       } else {
-        const res = await initiatePayment(data)
+        await initiatePayment(data)
         toast({
           duration: 9000,
           isClosable: true,
           status: 'success',
           position: 'top-right',
           title: 'Order created.',
-          description: res.message || 'Order saved successfully'
+          description: 'Order saved successfully'
         })
         handleNextStep()
       }
-      sessionStorage.removeItem('my_farms')
-      sessionStorage.removeItem('my_orders')
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
-          // setSession(false)
+          setSession(false)
         } else {
           toast({
             status: 'error',

@@ -5,7 +5,9 @@ const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
   const [session, setSession] = useState(true)
-  const [user, setUser] = useState(true)
+  const [user, setUser] = useState(
+    JSON.parse(window.sessionStorage.getItem('_cfu'))
+  )
 
   const store = ({ token, user }) => {
     if (token) window.sessionStorage.setItem('_cft', token)

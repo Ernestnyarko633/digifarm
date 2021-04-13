@@ -1,15 +1,14 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
-import PropTypes from 'prop-types'
-import useComponent from 'context/component'
-import { motion } from 'framer-motion'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { motion } from 'framer-motion'
+import { Box, Flex, Text } from '@chakra-ui/react'
+
 import FarmCard from './FarmCard'
 
 const MotionFlex = motion.custom(Flex)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-const FarmsCard = ({ data }) => {
-  const { currentSlide } = useComponent()
+const FarmsCard = ({ data, currentSlide }) => {
   return (
     <Box>
       {data.length === 0 ? (
@@ -36,6 +35,7 @@ const FarmsCard = ({ data }) => {
 }
 
 FarmsCard.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  currentSlide: PropTypes.number.isRequired
 }
 export default FarmsCard
