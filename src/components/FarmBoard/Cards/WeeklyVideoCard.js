@@ -49,7 +49,7 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
   )
 
   return (
-    <FarmBoardCardWrapper status={status}>
+    <FarmBoardCardWrapper status={status} content={content}>
       <Box>
         <Box pt={{ base: 4 }} pb={2} px={{ base: 4, md: 8 }}>
           <NewHead />

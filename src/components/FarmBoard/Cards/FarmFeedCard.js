@@ -315,7 +315,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
   }
 
   return (
-    <FarmBoardCardWrapper status={status}>
+    <FarmBoardCardWrapper status={status} content={content}>
       <FarmContent />
     </FarmBoardCardWrapper>
   )
