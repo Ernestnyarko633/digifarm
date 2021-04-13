@@ -36,7 +36,7 @@ const Step = ({ activity, cutThread }) => {
           <Text
             textColor={isPending ? 'gray.300' : 'gray.700'}
             as='span'
-            fontSize={{ base: 'xs', md: 'md' }}
+            fontSize={{ base: 'xs', md: 'sm' }}
           >
             {activity.title}
           </Text>

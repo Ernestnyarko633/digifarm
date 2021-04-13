@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Icon, Link, Text } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
+
 import { farm, home, market, Guide, wallet } from 'theme/Icons'
 //import { MdChatBubbleOutline } from 'react-icons/md'
 // import { IoIosHelpCircle } from 'react-icons/io'

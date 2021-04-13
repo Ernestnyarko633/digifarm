@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useContext, createContext } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
@@ -31,7 +32,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [text, setText] = useState(null)
   const [step, setStep] = useImmer(0)
 
-  const { createOrder, initiatePayment } = useApi()
+  const { createOrder, initiatePayment, patchOrder } = useApi()
   const { getExchangeRate } = useExternal()
   const { setSession } = useAuth()
 
@@ -146,7 +147,10 @@ export const StartFarmContextProvider = ({ children }) => {
           throw new Error('Unknown error occurred, try again')
         }
       } else {
-        await initiatePayment(data)
+        const res = await initiatePayment(data)
+        await patchOrder(res?.data?.order_id?.$oid, {
+          payment: res?.data?._id?.$oid
+        })
         toast({
           duration: 9000,
           isClosable: true,

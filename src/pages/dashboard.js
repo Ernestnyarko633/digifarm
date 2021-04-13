@@ -101,7 +101,14 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <CompleteOrderModal isOpen={isOpen} onClose={onClose} />
+      <CompleteOrderModal
+        call={() => {
+          triggerReloadMyFarms()
+          triggerReloadMyOrders()
+        }}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       <Greetings
         title={`${message} Farmer ${user?.firstName}`}
         text='Get started by farming individually or with a group.'
