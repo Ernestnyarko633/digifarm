@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   Box,
   CircularProgress,
@@ -25,6 +26,17 @@ export default function Tasks({
   weatherForeCasts,
   eosStats
 }) {
+  const [feeds, setFeeds] = React.useState([])
+
+  React.useEffect(() => {
+    const getFeeds = () =>
+      farmfeeds?.forEach(feed => {
+        setFeeds(p => [...p, ...feed.data])
+      })
+
+    getFeeds()
+  }, [farmfeeds])
+
   const getTodaysTasks = (scheduledTasks, type) => {
     let today = new Date().toLocaleDateString()
 
@@ -61,6 +73,7 @@ export default function Tasks({
   if (loading) {
     return <Spinner size='lg' color='cf.400' />
   }
+
   return (
     <Box mb={8}>
       {scheduledTasks.length > 0 && (
@@ -78,7 +91,7 @@ export default function Tasks({
         </>
       )}
       <WeatherCards
-        farmfeeds={farmfeeds}
+        farmfeeds={feeds}
         loading={loading}
         error={error}
         weatherForeCasts={weatherForeCasts}
@@ -101,17 +114,17 @@ export default function Tasks({
                 )[0]?.description.replace(/<[^>]*>/g, '')}
                 icon={BiTime}
               />
-              {farmfeeds.length > 0 && (
-                <FarmUpdateCard
-                  title='FARM MANAGER UPDATE'
-                  duration={farmfeeds[0]?.task?.duration}
-                  subtitle={farmfeeds[0]?.task?.title}
-                  text={farmfeeds[0]?.summary.replace(/<[^>]*>/g, '')}
-                  icon={Updates}
-                />
-              )}
             </React.Fragment>
           )}
+        {feeds.length && (
+          <FarmUpdateCard
+            title='FARM MANAGER UPDATE'
+            duration={feeds[0]?.task?.duration}
+            subtitle={feeds[0]?.task?.title}
+            text={feeds[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
+            icon={Updates}
+          />
+        )}
         {eosStats?.length > 0 && !_error && (
           <Box
             bg='white'

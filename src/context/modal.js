@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 import useComponent from './component'
 
 import LearnMoreModal from 'components/Modals/LearnMoreModal'
-import FarmReceiptModal from 'components/Modals/FarmReceiptModal'
-import FarmContractModal from 'components/Modals/FarmContractModal'
 import DocumentsReceipts from 'components/Modals/DocumentReceipts'
 import RolloverModal from 'components/Modals/RolloverModal'
 import PayoutModal from 'components/Modals/PayoutModal'
@@ -22,10 +20,6 @@ export const ModalContextProvider = ({ children }) => {
     switch (value) {
       case 'learnmore':
         return <LearnMoreModal />
-      case 'receipt':
-        return <FarmReceiptModal />
-      case 'contract':
-        return <FarmContractModal />
       case 'activity-receipts':
         return <DocumentsReceipts />
       case 'rollover':

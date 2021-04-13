@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useContext, createContext } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
@@ -31,7 +32,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [text, setText] = useState(null)
   const [step, setStep] = useImmer(0)
 
-  const { createOrder, initiatePayment } = useApi()
+  const { createOrder, initiatePayment, patchOrder } = useApi()
   const { getExchangeRate } = useExternal()
   const { setSession } = useAuth()
 
@@ -86,7 +87,8 @@ export const StartFarmContextProvider = ({ children }) => {
       const res = await createOrder(data)
       setOrder(res.data)
       sessionStorage.removeItem('my_farms')
-      sessionStorage.removeItem('my_orders')
+      sessionStorage.removeItem('my_processing_orders')
+      sessionStorage.removeItem('my_pending_orders')
       handleNextStep()
     } catch (error) {
       if (error) {
@@ -138,28 +140,30 @@ export const StartFarmContextProvider = ({ children }) => {
           Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
         if (data.amount) {
           const res = await initiatePayment(data)
+          window.onbeforeunload = null
           window.location.href = res.message.url
         } else {
           throw new Error('Unknown error occurred, try again')
         }
       } else {
         const res = await initiatePayment(data)
+        await patchOrder(res?.data?.order_id?.$oid, {
+          payment: res?.data?._id?.$oid
+        })
         toast({
           duration: 9000,
           isClosable: true,
           status: 'success',
           position: 'top-right',
           title: 'Order created.',
-          description: res.message || 'Order saved successfully'
+          description: 'Order saved successfully'
         })
         handleNextStep()
       }
-      sessionStorage.removeItem('my_farms')
-      sessionStorage.removeItem('my_orders')
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
-          // setSession(false)
+          setSession(false)
         } else {
           toast({
             status: 'error',

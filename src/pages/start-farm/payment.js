@@ -25,13 +25,6 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
     })
   }
 
-  React.useEffect(() => {
-    // clear cache data in session storage
-    sessionStorage.removeItem('my_orders')
-    sessionStorage.removeItem('my_pending_orders')
-    sessionStorage.removeItem('my_farms')
-  }, [])
-
   return (
     (isLoading || error) && (
       <FetchCard

@@ -13,7 +13,6 @@ import Button from 'components/Button'
 import React from 'react'
 import PropTypes from 'prop-types'
 import useStartFarm from 'context/start-farm'
-// import useApi from 'context/api'
 
 const OrderCard = ({ order, onOpen }) => {
   const { setOrder } = useStartFarm()
@@ -24,7 +23,10 @@ const OrderCard = ({ order, onOpen }) => {
       minW={{ base: 82, md: 115 }}
       p={{ base: 4, md: 8 }}
       rounded={{ base: '15px', md: '30px' }}
-      filter='drop-shadow(0px 2px 50px rgba(0, 0, 0, 0.1))'
+      filter={{
+        base: 'none',
+        lx: 'drop-shadow(0px 2px 50px rgba(0, 0, 0, 0.1))'
+      }}
       mr={6}
     >
       <Flex>
@@ -32,25 +34,41 @@ const OrderCard = ({ order, onOpen }) => {
           bgColor='white'
           borderWidth='1px'
           borderColor='gray.300'
-          src={
-            order?.product?.cropVariety?.imageUrl ||
-            require('../../assets/images/soya.png').default
-          }
+          src={order?.product?.cropVariety?.imageUrl}
         />
         <Box ml={4}>
-          <Heading as='h4' fontSize={{ md: 'lg' }}>
-            {order?.product?.cropVariety?.crop?.name}(
-            {order?.product?.cropVariety?.name}) Farm
-          </Heading>
-          <Text color='gray.600'>
-            {order?.product?.location?.name}, {order?.product?.location?.state}
+          <Flex align='center'>
+            <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
+              {order?.product?.cropVariety?.crop?.name}
+            </Heading>
+            <Text
+              ml={1}
+              as='span'
+              fontSize={{ base: 'tiny', md: 'sm' }}
+              color='gray.500'
+            >
+              ({order?.product?.cropVariety?.name}) {order?.product?.name}
+            </Text>
+          </Flex>
+
+          <Text
+            color='gray.500'
+            mt={-1}
+            fontSize={{ base: 'sm', md: 'md' }}
+            textTransform='uppercase'
+          >
+            {order?.product?.location?.name},{' '}
+            {order?.product?.location?.country}
           </Text>
         </Box>
       </Flex>
       <Divider orientation='horizontal' borderColor='gray.300' my={5} />
 
       <Flex justify='space-between'>
-        <List fontWeight='800'>
+        <List
+          fontWeight={{ base: 600, md: 800 }}
+          fontSize={{ base: 'xs', md: 'sm' }}
+        >
           <ListItem>Order number: {order?.reference}</ListItem>
           <ListItem>{order?.acreage} Acres</ListItem>
           <ListItem>USD {order?.cost}</ListItem>
@@ -60,32 +78,39 @@ const OrderCard = ({ order, onOpen }) => {
           <Tag
             bg='cf.300'
             color='cf.400'
-            px={{ md: 6 }}
+            px={{ base: 2, md: 6 }}
             py={{ md: 2 }}
+            fontSize={{ base: 'xs', md: 'sm' }}
             rounded='30px'
           >
-            {order.status === 'PENDING' ? 'Pending' : 'Processing'} Order
+            {order.payment
+              ? order.status === 'PENDING'
+                ? 'Pending'
+                : 'Processing'
+              : 'Invalid'}{' '}
+            Order
           </Tag>
-          <Text fontSize='sm'>
+          <Text fontSize={{ base: 'xs', md: 'sm' }}>
             {order.status === 'PENDING' ? '50' : '80'}% Complete
           </Text>
         </Box>
       </Flex>
 
-      <Box mt={6} w='90%' mx='auto'>
-        <Button
-          btntitle='Complete order'
-          rounded='30px'
-          w='100%'
-          disabled
-          h={{ base: 12, md: 16 }}
-          fontSize={{ md: 'lg' }}
-          onClick={() => {
-            setOrder(order)
-            onOpen()
-          }}
-        />
-      </Box>
+      {order.status === 'PENDING' && order.payment && (
+        <Box mt={6} w='90%' mx='auto'>
+          <Button
+            btntitle='Complete order'
+            rounded='30px'
+            w='100%'
+            h={{ base: 12, md: 16 }}
+            fontSize={{ md: 'lg' }}
+            onClick={() => {
+              setOrder(order)
+              onOpen()
+            }}
+          />
+        </Box>
+      )}
     </Box>
   )
 }
@@ -96,6 +121,7 @@ OrderCard.propTypes = {
     name: PropTypes.string,
     reference: PropTypes.string,
     cost: PropTypes.number,
+    payment: PropTypes.string,
     acreage: PropTypes.number,
     product: PropTypes.object,
     location: PropTypes.object,

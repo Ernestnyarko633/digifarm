@@ -25,6 +25,7 @@ const OtherSteps = ({ data, history: { push } }) => {
   const { user } = useAuth()
   const {
     text,
+    order,
     otherStep,
     handlePrev,
     handleBack,
@@ -40,6 +41,10 @@ const OtherSteps = ({ data, history: { push } }) => {
 
   const toast = useToast()
 
+  window.onbeforeunload = function (event) {
+    event.returnValue = 'Unsafed data maybe lost.'
+  }
+
   const getSteps = value => {
     switch (value) {
       case 0:
@@ -51,7 +56,7 @@ const OtherSteps = ({ data, history: { push } }) => {
       case 3:
         return <PaymentOption farm={selectedFarm} />
       case 4:
-        return <Confirmation farm={selectedFarm} order={data} />
+        return <Confirmation farm={selectedFarm} order={data || order} />
       default:
         return <ReloadPage />
     }

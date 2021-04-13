@@ -1,27 +1,54 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Text, Icon } from '@chakra-ui/react'
+import { MdRemoveShoppingCart } from 'react-icons/md'
+
 import ComponentWrapper from 'components/Wrapper/ComponentWrapper'
 import OrdersCard from 'components/Cards/OrdersCard'
 import useComponent from 'context/component'
 import FarmsCard from 'components/Cards/FarmsCard'
 
+const EmptyState = ({ text }) => {
+  return (
+    <Flex w='100%' direction='column' justify='center' align='center'>
+      <Icon
+        as={MdRemoveShoppingCart}
+        color='gray.400'
+        boxSize={{ base: 10, md: 20 }}
+      />
+      <Text color='gray.500' fontSize={{ base: 'sm', md: 'md' }}>
+        {text}
+      </Text>
+    </Flex>
+  )
+}
+
+EmptyState.propTypes = {
+  text: PropTypes.string.isRequired
+}
+
 const FarmOrderSection = ({
   farms,
-  pandingOrder,
+  PendingOrder,
   processingOrder,
   handleClick,
   onOpen
 }) => {
-  const { sliderState, setSliderState } = useComponent()
+  const {
+    sliderType,
+    setSliderType,
+    currentFarmsSlide,
+    currentProcessingOrdersSlide,
+    currentPendingOrdersSlide
+  } = useComponent()
 
   return (
     <ComponentWrapper
-      state={sliderState}
-      setState={setSliderState}
+      state={sliderType}
+      setState={setSliderType}
       firstStateValue='farms'
       secondStateValue='processing_order'
-      thirdStateValue='panding_order'
+      thirdStateValue='pending_order'
       firstBoxTitle='Current Farms'
       secondBoxTitle='Processing Orders'
       thirdBoxTitle='Pending Orders'
@@ -29,12 +56,40 @@ const FarmOrderSection = ({
     >
       <Box>
         <Flex>
-          {sliderState === 'farms' && <FarmsCard data={farms} />}
-          {sliderState === 'processing_order' && (
-            <OrdersCard data={processingOrder} onOpen={onOpen} />
+          {sliderType === 'farms' && (
+            <>
+              {farms.length > 0 ? (
+                <FarmsCard data={farms} currentSlide={currentFarmsSlide} />
+              ) : (
+                <EmptyState text='You have no farm yet' />
+              )}
+            </>
           )}
-          {sliderState === 'panding_order' && (
-            <OrdersCard data={pandingOrder} onOpen={onOpen} />
+          {sliderType === 'processing_order' && (
+            <>
+              {processingOrder.length > 0 ? (
+                <OrdersCard
+                  data={processingOrder}
+                  onOpen={onOpen}
+                  currentSlide={currentProcessingOrdersSlide}
+                />
+              ) : (
+                <EmptyState text='You have no processing order' />
+              )}
+            </>
+          )}
+          {sliderType === 'pending_order' && (
+            <>
+              {PendingOrder.length > 0 ? (
+                <OrdersCard
+                  data={PendingOrder}
+                  onOpen={onOpen}
+                  currentSlide={currentPendingOrdersSlide}
+                />
+              ) : (
+                <EmptyState text='You have no pending order' />
+              )}
+            </>
           )}
         </Flex>
       </Box>
@@ -44,7 +99,7 @@ const FarmOrderSection = ({
 
 FarmOrderSection.propTypes = {
   farms: PropTypes.array.isRequired,
-  pandingOrder: PropTypes.array.isRequired,
+  PendingOrder: PropTypes.array.isRequired,
   processingOrder: PropTypes.array.isRequired,
   handleClick: PropTypes.func,
   onOpen: PropTypes.func

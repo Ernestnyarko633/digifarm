@@ -27,7 +27,14 @@ const Dashboard = () => {
 
   const { getMyFarms, getMyOrders } = useApi()
   const { isAuthenticated } = useAuth()
-  const { setCurrentSlide } = useComponent()
+  const {
+    sliderType,
+    setCurrentFarmsSlide,
+    setCurrentPendingOrdersSlide,
+    setCurrentProcessingOrdersSlide
+  } = useComponent()
+
+  window.onbeforeunload = null
 
   const { message } = getCurrentDayParting()
 
@@ -46,9 +53,9 @@ const Dashboard = () => {
   } = useFetch('my_farms', getMyFarms, reloadMyFarms)
 
   const {
-    data: myPandingOrder,
-    isLoading: myPandingOrdersIsLoading,
-    error: myPandingOrdersHasError
+    data: myPendingOrder,
+    isLoading: myPendingOrdersIsLoading,
+    error: myPendingOrdersHasError
   } = useFetch('my_pending_orders', getMyOrders, reloadMyOrders, {
     status: 'PENDING'
   })
@@ -62,24 +69,46 @@ const Dashboard = () => {
   })
 
   const isLoading =
-    myFarmsIsLoading || myPandingOrdersIsLoading || myPandingOrdersHasError
+    myFarmsIsLoading || myProcessingOrdersIsLoading || myPendingOrdersIsLoading
   const hasError =
-    myFarmsHasError || myProcessingOrdersHasError || myProcessingOrdersIsLoading
-
+    myFarmsHasError || myProcessingOrdersHasError || myPendingOrdersHasError
   const hasData =
-    myFarms?.length || myPandingOrder?.length || myProcessingOrder?.length
+    myFarms?.length || myProcessingOrder?.length || myPendingOrder?.length
 
   const handleClick = direction => {
-    setCurrentSlide(prevState => {
-      return (
-        (myPandingOrder.length + prevState + direction) % myPandingOrder.length
-      )
-    })
+    if (sliderType === 'farms') {
+      setCurrentFarmsSlide(prevState => {
+        return (myFarms.length + prevState + direction) % myFarms.length
+      })
+    }
+    if (sliderType === 'pending_order') {
+      setCurrentPendingOrdersSlide(prevState => {
+        return (
+          (myPendingOrder.length + prevState + direction) %
+          myPendingOrder.length
+        )
+      })
+    }
+    if (sliderType === 'processing_order') {
+      setCurrentProcessingOrdersSlide(prevState => {
+        return (
+          (myProcessingOrder.length + prevState + direction) %
+          myProcessingOrder.length
+        )
+      })
+    }
   }
 
   return (
     <Layout>
-      <CompleteOrderModal isOpen={isOpen} onClose={onClose} />
+      <CompleteOrderModal
+        call={() => {
+          triggerReloadMyFarms()
+          triggerReloadMyOrders()
+        }}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       <Greetings
         title={`${message} Farmer ${user?.firstName}`}
         text='Get started by farming individually or with a group.'
@@ -93,8 +122,9 @@ const Dashboard = () => {
               justify='center'
               mx='auto'
               reload={() => {
-                !myFarms?.length && triggerReloadMyFarms()
-                !myPandingOrder?.length && triggerReloadMyOrders()
+                myFarmsHasError && triggerReloadMyFarms()
+                myPendingOrdersHasError && triggerReloadMyOrders()
+                myProcessingOrdersHasError && triggerReloadMyOrders()
               }}
               loading={isLoading}
               error={hasError}
@@ -106,7 +136,7 @@ const Dashboard = () => {
         <Fade bottom>
           <FarmOrderSection
             farms={myFarms}
-            pandingOrder={myPandingOrder}
+            PendingOrder={myPendingOrder}
             processingOrder={myProcessingOrder}
             handleClick={handleClick}
             onOpen={onOpen}

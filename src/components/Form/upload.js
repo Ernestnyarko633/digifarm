@@ -12,7 +12,7 @@ import {
 import { VscAdd } from 'react-icons/vsc'
 
 const Upload = props => {
-  const { field, form, accept, label, multiple, name } = props
+  const { field, form, accept, label, multiple, ...rest } = props
 
   const handleChange = e => {
     const files = e.currentTarget.files
@@ -22,7 +22,7 @@ const Upload = props => {
   }
 
   return (
-    <Box>
+    <Box {...rest}>
       <Text fontSize={{ md: 'sm' }} fontWeight='bold' pl={1} pt={2}>
         {label}
       </Text>
@@ -64,11 +64,14 @@ const Upload = props => {
             </Text>
             <Input
               type='file'
-              id={name}
-              name={name}
+              h='100%'
+              w='100%'
+              opacity={0}
+              pos='absolute'
+              id={field.name}
+              name={field.name}
               accept={accept}
               onChange={handleChange}
-              display='none'
             />
           </FormLabel>
         </FormControl>
@@ -82,8 +85,7 @@ Upload.propTypes = {
   form: PropTypes.object.isRequired,
   accept: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  multiple: PropTypes.bool,
-  name: PropTypes.string
+  multiple: PropTypes.bool
 }
 
 export default Upload

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react'
 import { IoEllipsisVertical } from 'react-icons/io5'
@@ -12,21 +13,27 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
   const [selectedImage, setSelectedImage] = React.useState({})
   const [activeIndex, setActiveIndex] = React.useState(0)
 
+  const handleClick = value => {
+    const comparant =
+      activeIndex + value === 0 ||
+      activeIndex + value > images.length - 1 ||
+      activeIndex + value < 0
+        ? 0
+        : activeIndex + value
+
+    setActiveIndex(comparant)
+    setSelectedImage(images[comparant])
+  }
   React.useEffect(() => {
     let array = []
     const _feeds = feed => {
       return feed?.media?.forEach(_media => {
-        if (
-          _media.type === 'image' &&
-          feed?.task?.activity?.name === activityName
-        ) {
-          array.push(_media)
-        }
+        if (_media?.type === 'image') array.push(_media)
       })
     }
     const feeds = () =>
       farmfeeds?.forEach(feed => {
-        return _feeds(feed)
+        return _feeds(feed?.feed)
       })
     feeds()
 
@@ -49,7 +56,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
             h={{ md: 85 }}
             w='100%'
             objectFit='cover'
-            src={selectedImage.url}
+            src={selectedImage?.url}
           />
           <Flex
             align='center'
@@ -71,7 +78,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
               borderColor='white'
               color='white'
               mr={2}
-              // onClick={() => handleClick(-1)}
+              onClick={() => handleClick(-1)}
             >
               <Icon as={BsChevronLeft} />
             </Flex>
@@ -89,7 +96,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
               color='cf.400'
               bg='white'
               ml={2}
-              // onClick={() => handleClick(+1)}
+              onClick={() => handleClick(+1)}
             >
               <Icon as={BsChevronRight} />
             </Flex>

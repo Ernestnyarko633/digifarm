@@ -47,6 +47,10 @@ export const ApiContextProvider = ({ children }) => {
     return await http.post({ url: `${DIGITAL_FARMER_API}/orders`, body })
   }
 
+  const patchOrder = async (id, body) => {
+    return await http.patch({ url: `${DIGITAL_FARMER_API}/orders/${id}`, body })
+  }
+
   const getPaymentDetails = async id => {
     return await http.get({
       url: `${PAYMENT_API}/payment/orderPayments?order_id=${id}&option="ONE"`
@@ -137,10 +141,7 @@ export const ApiContextProvider = ({ children }) => {
   }
 
   const downloadTaskReceipt = async query => {
-    return await http.get({
-      url: `${FMS_API}/receipt`,
-      query
-    })
+    return await http.get({ url: `${FMS_API}/receipt`, query })
   }
 
   const getUserBankingDetails = async query => {
@@ -158,10 +159,7 @@ export const ApiContextProvider = ({ children }) => {
   }
 
   const eosStats = async query => {
-    return await http.get({
-      url: `${FMS_API}/eos-task`,
-      query
-    })
+    return await http.get({ url: `${FMS_API}/eos-task`, query })
   }
 
   const eosSearch = async (payload, url = 'sentinel2') => {
@@ -208,6 +206,7 @@ export const ApiContextProvider = ({ children }) => {
         eosStats,
         getFarms,
         eosSearch,
+        patchOrder,
         patchUser,
         getMyFarm,
         getReceipt,

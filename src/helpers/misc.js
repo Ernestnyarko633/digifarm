@@ -1,7 +1,4 @@
-// configs
-/*eslint-disable */
 import configs from '../utils/configs'
-import redis from 'redis'
 
 export const replaceURI = (APP, path) =>
   window.location.replace(configs()[`${APP}_SERVICE`] + path)
@@ -38,28 +35,6 @@ export const getformattedDate = (
 ) => {
   return new Date(date).toLocaleDateString('en-GB', options)
 }
-export const getRedisClusterClient = () => {
-  const ENV = process.env.REACT_APP_ENVIRONMENT
-  const { REDIS_HOST, REDIS_PORT, REDIS_PASS } = configs()
-  try {
-    let client = null
-    client = redis.createClient(REDIS_PORT, REDIS_HOST)
-    if (ENV !== 'PROD') {
-      client.auth(REDIS_PASS, err => {
-        if (err) {
-          console.log(err, "redis error")
-          throw err
-        }
-      })
-    }
-    client.on('connect', () => {
-      console.log(`Connected to redis on ${REDIS_HOST}`)
-    })
-    return client
-  } catch (error) {
-    console.log(error, "redis")
-  }
-}
 
 export const getCurrentDayParting = () => {
   const splitAfternoon = 12 // 24hr time to split the afternoon
@@ -95,28 +70,25 @@ export const dateIntervals = () => {
 
   let yyyy = today.getFullYear()
   let _yyyy = ThirtyDaysAgo.getFullYear()
-  let __yyyy = SixtyDaysAgo.getFullYear()  
-
+  let __yyyy = SixtyDaysAgo.getFullYear()
 
   if (dd < 10) {
     dd = '0' + dd
-    
   }
-  if(_dd < 10){
+  if (_dd < 10) {
     _dd = '0' + _dd
   }
-  if(__dd < 10){
+  if (__dd < 10) {
     __dd = '0' + __dd
   }
 
-  if (mm < 10 ) {
+  if (mm < 10) {
     mm = '0' + mm
-   
   }
-  if(_mm < 10){
+  if (_mm < 10) {
     _mm = '0' + _mm
   }
-  if(__mm < 10){
+  if (__mm < 10) {
     __mm = '0' + __mm
   }
 
@@ -124,6 +96,23 @@ export const dateIntervals = () => {
   ThirtyDaysAgo = _yyyy + '-' + _mm + '-' + _dd
   SixtyDaysAgo = __yyyy + '-' + __mm + '-' + __dd
 
+  return {
+    today: today,
+    ThirtyDaysAgo: ThirtyDaysAgo,
+    SixtyDaysAgo: SixtyDaysAgo
+  }
+}
 
-  return { today: today, ThirtyDaysAgo: ThirtyDaysAgo, SixtyDaysAgo: SixtyDaysAgo  }
+export const getDiscount = (discounts, acreage) => {
+  // get discounts user may qualify for
+  const _discounts = discounts?.filter(({ point }) => point <= acreage)
+  // get highest discount user qualified for
+  if (_discounts?.length) {
+    const discountQualifiedFor = _discounts.reduce((a, b) =>
+      a.point > b.point ? a : b
+    ).percent
+
+    return `${100 - 100 * (1 - discountQualifiedFor)}% off`
+  }
+  return null
 }

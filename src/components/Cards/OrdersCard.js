@@ -1,16 +1,14 @@
-import { Flex } from '@chakra-ui/react'
-import useComponent from 'context/component'
-import { motion } from 'framer-motion'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Flex } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+
 import OrderCard from './OrderCard'
 
 const MotionFlex = motion.custom(Flex)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-const OrdersCard = ({ onOpen, data }) => {
-  const { currentSlide } = useComponent()
-
+const OrdersCard = ({ onOpen, data, currentSlide }) => {
   return (
     <MotionFlex
       animate={{
@@ -19,6 +17,8 @@ const OrdersCard = ({ onOpen, data }) => {
       }}
       pos='relative'
       minW={{ md: 130 }}
+      maxW={{ base: 90, md: 'auto', xl: 'unset' }}
+      overflowX={{ base: 'scroll', xl: 'unset' }}
       mx='auto'
     >
       {data.map(order => (
@@ -30,7 +30,8 @@ const OrdersCard = ({ onOpen, data }) => {
 
 OrdersCard.propTypes = {
   data: PropTypes.array,
-  onOpen: PropTypes.func
+  onOpen: PropTypes.func,
+  currentSlide: PropTypes.number.isRequired
 }
 
 export default OrdersCard

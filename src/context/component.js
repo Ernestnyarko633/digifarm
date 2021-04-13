@@ -11,8 +11,17 @@ export const ComponentContextProvider = ({ children }) => {
   const [mode, setMode] = useState('')
   const [modal, setModal] = useState('')
   const [clip, setClip] = useState({})
-  const [sliderState, setSliderState] = React.useState('farms')
-  const [currentSlide, setCurrentSlide] = React.useState(0)
+  const [sliderType, setSliderType] = React.useState('farms')
+  const [currentFarmsSlide, setCurrentFarmsSlide] = React.useState(0)
+  const [
+    currentProcessingOrdersSlide,
+    setCurrentProcessingOrdersSlide
+  ] = React.useState(0)
+  const [
+    currentPendingOrdersSlide,
+    setCurrentPendingOrdersSlide
+  ] = React.useState(0)
+
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleModalClick = useCallback(
@@ -40,12 +49,16 @@ export const ComponentContextProvider = ({ children }) => {
         modal,
         isOpen,
         onClose,
-        handleModalClick,
         _xclip,
-        sliderState,
-        setSliderState,
-        currentSlide,
-        setCurrentSlide
+        sliderType,
+        setSliderType,
+        handleModalClick,
+        currentFarmsSlide,
+        setCurrentFarmsSlide,
+        currentPendingOrdersSlide,
+        setCurrentPendingOrdersSlide,
+        currentProcessingOrdersSlide,
+        setCurrentProcessingOrdersSlide
       }}
     >
       {children}

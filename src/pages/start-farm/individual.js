@@ -34,10 +34,12 @@ const Individual = ({ location: { state }, history }) => {
   React.useEffect(() => {
     return () => {
       // clear cache data in session storage
+      setStep(x => x * 0)
+      setOtherStep(x => x * 0)
       sessionStorage.removeItem('categories')
       sessionStorage.removeItem('farms')
     }
-  }, [])
+  }, [setStep, setOtherStep])
 
   const getFlow = key => {
     switch (key) {
