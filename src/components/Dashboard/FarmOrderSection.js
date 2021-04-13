@@ -8,20 +8,26 @@ import FarmsCard from 'components/Cards/FarmsCard'
 
 const FarmOrderSection = ({
   farms,
-  pandingOrder,
+  PendingOrder,
   processingOrder,
   handleClick,
   onOpen
 }) => {
-  const { sliderState, setSliderState } = useComponent()
+  const {
+    sliderType,
+    setSliderType,
+    currentFarmsSlide,
+    currentProcessingOrdersSlide,
+    currentPendingOrdersSlide
+  } = useComponent()
 
   return (
     <ComponentWrapper
-      state={sliderState}
-      setState={setSliderState}
+      state={sliderType}
+      setState={setSliderType}
       firstStateValue='farms'
       secondStateValue='processing_order'
-      thirdStateValue='panding_order'
+      thirdStateValue='pending_order'
       firstBoxTitle='Current Farms'
       secondBoxTitle='Processing Orders'
       thirdBoxTitle='Pending Orders'
@@ -29,12 +35,22 @@ const FarmOrderSection = ({
     >
       <Box>
         <Flex>
-          {sliderState === 'farms' && <FarmsCard data={farms} />}
-          {sliderState === 'processing_order' && (
-            <OrdersCard data={processingOrder} onOpen={onOpen} />
+          {sliderType === 'farms' && (
+            <FarmsCard data={farms} currentSlide={currentFarmsSlide} />
           )}
-          {sliderState === 'panding_order' && (
-            <OrdersCard data={pandingOrder} onOpen={onOpen} />
+          {sliderType === 'processing_order' && (
+            <OrdersCard
+              data={processingOrder}
+              onOpen={onOpen}
+              currentSlide={currentProcessingOrdersSlide}
+            />
+          )}
+          {sliderType === 'pending_order' && (
+            <OrdersCard
+              data={PendingOrder}
+              onOpen={onOpen}
+              currentSlide={currentPendingOrdersSlide}
+            />
           )}
         </Flex>
       </Box>
@@ -44,7 +60,7 @@ const FarmOrderSection = ({
 
 FarmOrderSection.propTypes = {
   farms: PropTypes.array.isRequired,
-  pandingOrder: PropTypes.array.isRequired,
+  PendingOrder: PropTypes.array.isRequired,
   processingOrder: PropTypes.array.isRequired,
   handleClick: PropTypes.func,
   onOpen: PropTypes.func

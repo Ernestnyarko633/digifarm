@@ -1,32 +1,47 @@
 import React from 'react'
-import { Avatar, Box, Flex, Image, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
+import Fade from 'react-reveal/Fade'
+import { saveAs } from 'file-saver'
+import { Avatar, Box, Flex, Image, Text, useToast } from '@chakra-ui/react'
+
 import Button from 'components/Button'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
-import Fade from 'react-reveal/Fade'
-import { saveAs } from 'file-saver'
-
 export default function FarmReceiptCard({ farm, title, type }) {
+  const [loading, setLoading] = React.useState(false)
+
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { downloadFile } = useApi()
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState(null)
+
+  const toast = useToast()
 
   const _downloadOrder = async query => {
     try {
       setLoading(true)
-      setError(null)
       const res = await downloadFile('orders', query)
       let blob = new Blob([res.data], { type: 'application/pdf;charset=utf-8' })
-      setLoading(false)
+      toast({
+        title: 'Download starting',
+        status: 'success',
+        duration: 5000,
+        position: 'top-right'
+      })
       saveAs(blob, `${query.reference}-agreement.pdf`)
     } catch (error) {
-      setError(error)
+      toast({
+        title: 'Download failed',
+        description:
+          error?.message || error?.data?.message || 'Unexpected error.',
+        status: 'error',
+        duration: 5000,
+        position: 'top-right'
+      })
+    } finally {
       setLoading(false)
     }
   }
+
   return (
     <Fade bottom>
       <Box
@@ -69,10 +84,9 @@ export default function FarmReceiptCard({ farm, title, type }) {
               width={32}
               _hover={{ bg: 'white' }}
               shadow='none'
-              isDisabled={loading ? true : false}
-              isLoading={loading ? true : false}
+              isDisabled={loading}
+              isLoading={loading}
             />
-            {error && !loading && alert('Opps, Something went wrong')}
           </Box>
         </Flex>
 
