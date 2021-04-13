@@ -8,7 +8,7 @@ import Fade from 'react-reveal/Fade'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
-  { icon: farm, path: '/farms', name: 'Farm board', size: 4, disabled: true },
+  { icon: farm, path: '/farms', name: 'Farm board', size: 4, disabled: false },
   {
     icon: wallet,
     path: '/wallet',

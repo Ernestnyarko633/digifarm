@@ -24,6 +24,7 @@ const FarmBoardContent = ({ farms }) => {
   })
 
   const [doc, setDocData] = React.useState(null)
+  const [_doc, _setDocData] = React.useState(null)
 
   React.useEffect(() => {
     let mounted = true
@@ -44,6 +45,23 @@ const FarmBoardContent = ({ farms }) => {
 
   React.useEffect(() => {
     let mounted = true
+    if (mounted && !_doc) {
+      const fetchData = async () => {
+        const response = await Client.query(
+          Prismic.Predicates.at('document.type', 'weekly_videos')
+        )
+
+        if (response) {
+          _setDocData(response.results)
+        }
+      }
+      fetchData()
+    }
+    return () => (mounted = false)
+  }, [Client, _doc])
+
+  React.useEffect(() => {
+    let mounted = true
 
     if (mounted) {
       const fetchData = async () => {
@@ -59,12 +77,16 @@ const FarmBoardContent = ({ farms }) => {
 
         const allFeeds = await Promise.all(feedPromises)
 
-        if (allFeeds && doc) {
+        if (allFeeds && doc && _doc) {
           allFeeds.map(f => setFeeds(s => [...s, ...f]))
         }
 
         if (doc) {
           setFeeds(prev => [...prev, ...doc])
+        }
+
+        if (_doc) {
+          setFeeds(prev => [...prev, ..._doc])
         }
       }
 
@@ -72,8 +94,9 @@ const FarmBoardContent = ({ farms }) => {
     }
 
     return () => (mounted = false)
-  }, [doc, farms, getMyFarmFeeds])
+  }, [doc, farms, _doc, getMyFarmFeeds])
 
+  console.log(_doc, 'doc')
   return (
     <Flex w='100%' align='center' direction='column'>
       <YourFarmCard farms={farms} setFarmIndex={setFarmIndex} />
@@ -90,7 +113,7 @@ const FarmBoardContent = ({ farms }) => {
                   doc={farm}
                   farms={farms}
                   content={farm}
-                  status={farm?.type || farm?.status === 'COMPLETED'}
+                  status={farm?.type}
                   actionBtnTitle={farms[0]?.btntitle}
                   actionTag={farms[0]?.tag}
                   timestamp={new Date(
