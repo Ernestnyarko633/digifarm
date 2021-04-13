@@ -1,10 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Text, Icon } from '@chakra-ui/react'
+import { MdRemoveShoppingCart } from 'react-icons/md'
+
 import ComponentWrapper from 'components/Wrapper/ComponentWrapper'
 import OrdersCard from 'components/Cards/OrdersCard'
 import useComponent from 'context/component'
 import FarmsCard from 'components/Cards/FarmsCard'
+
+const EmptyState = ({ text }) => {
+  return (
+    <Flex w='100%' direction='column' justify='center' align='center'>
+      <Icon
+        as={MdRemoveShoppingCart}
+        color='gray.400'
+        boxSize={{ base: 10, md: 20 }}
+      />
+      <Text color='gray.500' fontSize={{ base: 'sm', md: 'md' }}>
+        {text}
+      </Text>
+    </Flex>
+  )
+}
+
+EmptyState.propTypes = {
+  text: PropTypes.string.isRequired
+}
 
 const FarmOrderSection = ({
   farms,
@@ -36,21 +57,39 @@ const FarmOrderSection = ({
       <Box>
         <Flex>
           {sliderType === 'farms' && (
-            <FarmsCard data={farms} currentSlide={currentFarmsSlide} />
+            <>
+              {farms.length > 0 ? (
+                <FarmsCard data={farms} currentSlide={currentFarmsSlide} />
+              ) : (
+                <EmptyState text='You have no farm yet' />
+              )}
+            </>
           )}
           {sliderType === 'processing_order' && (
-            <OrdersCard
-              data={processingOrder}
-              onOpen={onOpen}
-              currentSlide={currentProcessingOrdersSlide}
-            />
+            <>
+              {processingOrder.length > 0 ? (
+                <OrdersCard
+                  data={processingOrder}
+                  onOpen={onOpen}
+                  currentSlide={currentProcessingOrdersSlide}
+                />
+              ) : (
+                <EmptyState text='You have no processing order' />
+              )}
+            </>
           )}
           {sliderType === 'pending_order' && (
-            <OrdersCard
-              data={PendingOrder}
-              onOpen={onOpen}
-              currentSlide={currentPendingOrdersSlide}
-            />
+            <>
+              {PendingOrder.length > 0 ? (
+                <OrdersCard
+                  data={PendingOrder}
+                  onOpen={onOpen}
+                  currentSlide={currentPendingOrdersSlide}
+                />
+              ) : (
+                <EmptyState text='You have no pending order' />
+              )}
+            </>
           )}
         </Flex>
       </Box>
