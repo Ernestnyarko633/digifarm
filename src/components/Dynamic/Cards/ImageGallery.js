@@ -28,7 +28,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
     let array = []
     const _feeds = feed => {
       return feed?.media?.forEach(_media => {
-        array.push(_media)
+        if (_media?.type === 'image') array.push(_media)
       })
     }
     const feeds = () =>

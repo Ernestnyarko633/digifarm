@@ -6,7 +6,7 @@ import Button from 'components/Button/index'
 import PropTypes from 'prop-types'
 import { Link as ReachRouter } from 'react-router-dom'
 
-const YourFarmCard = ({ farms }) => {
+const YourFarmCard = ({ farms, setFarmIndex }) => {
   const dummyFarms = [
     { color: '#FF9F9F' },
     { color: '#76B1F6' },
@@ -35,7 +35,10 @@ const YourFarmCard = ({ farms }) => {
               justify='center'
               m={4}
               key={farm}
-              to={`/farms/${farm?._id}`}
+              //to={`/farms/${farm?._id}`}
+              onClick={() => {
+                setFarmIndex(farm._id)
+              }}
             >
               <Text fontSize='sm' mb={3}>
                 {farm.name}
@@ -75,7 +78,8 @@ const YourFarmCard = ({ farms }) => {
 }
 
 YourFarmCard.propTypes = {
-  farms: PropTypes.any
+  farms: PropTypes.any,
+  setFarmIndex: PropTypes.any
 }
 
 export default YourFarmCard
