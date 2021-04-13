@@ -1,13 +1,26 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
-import { Box, Flex, Avatar, Heading, Text, Icon, Image } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Avatar,
+  Heading,
+  Text,
+  Icon,
+  Image,
+  Collapse
+} from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 
 const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
+  const [show, setShow] = React.useState(false)
+  const handleToggle = () => setShow(!show)
+
   const [selectedImage, setSelectedImage] = React.useState({})
   const [selectedVideo, setSelectedVideo] = React.useState({})
 
@@ -23,7 +36,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
       index + value > array.length - 1 ||
       index + value < 0
         ? 0
-        : activeIndex + value
+        : index + value
 
     indexFunc(comparant)
     selectedItemFunc(array[comparant])
@@ -113,7 +126,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
     if (images?.length) {
       return (
         <>
-          <Box py={{ base: 4, md: 10 }} px={{ base: 4, md: 16 }}>
+          <Box py={{ base: 4 }} px={{ base: 4, md: 8 }}>
             <Detail />
           </Box>
           <Box pos='relative'>
@@ -170,7 +183,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 color='cf.400'
                 bg='white'
                 ml={2}
-                onClick={() => () => {
+                onClick={() => {
                   return handleClick(
                     +1,
                     images,
@@ -189,16 +202,27 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               {/* <Text textTransform='uppercase' fontWeight='bold'>
                     <Icon as={Flower} /> {actionTitle}
                   </Text> */}
-              <Text color='gray.500' mt={3} fontSize={{ base: 'sm', md: 'md' }}>
-                {content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
-              </Text>
+              <Collapse
+                startingHeight={85}
+                in={show}
+                onClick={handleToggle}
+                cursor='pointer'
+              >
+                <Text
+                  color='gray.500'
+                  mt={3}
+                  fontSize={{ base: 'sm', md: 'md' }}
+                >
+                  {content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
+                </Text>
+              </Collapse>
             </Box>
           </Box>
         </>
       )
     }
 
-    if (videos?.length) {
+    if (videos.length === 90) {
       return (
         <>
           <Box py={{ base: 4, md: 10 }} px={{ base: 4, md: 16 }}>

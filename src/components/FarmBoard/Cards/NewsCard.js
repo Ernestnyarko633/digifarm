@@ -44,7 +44,7 @@ const NewsCard = ({ activeFarm, timestamp, content, status }) => {
   return (
     <FarmBoardCardWrapper status={status}>
       <Box>
-        <Box pt={{ base: 4, md: 8 }} pb={2} px={{ base: 4, md: 16 }}>
+        <Box pt={{ base: 4 }} pb={2} px={{ base: 4, md: 8 }}>
           <NewHead />
         </Box>
         <Box>

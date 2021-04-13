@@ -1,12 +1,17 @@
 import React from 'react'
 import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-import { RiShareForwardLine } from 'react-icons/ri'
+import { AiOutlineShareAlt } from 'react-icons/ai'
 import useComponent from 'context/component'
 import { BsHeart } from 'react-icons/bs'
 
-const FarmBoardCardWrapper = ({ children, status }) => {
+const FarmBoardCardWrapper = ({ children, status, content }) => {
   const { handleModalClick } = useComponent()
+  //   const [isLiked, setIsLiked ] = React.useState(false)
+
+  //   const handleLike = () => {
+
+  //   }
   return (
     <Box
       rounded='xl'
@@ -25,29 +30,61 @@ const FarmBoardCardWrapper = ({ children, status }) => {
         }}
         pb={{
           base: 4,
-          md: status === 'news' || status === 'action' ? 6 : 8
+          md: status === 'news' || status === 'action' ? 3 : 3
         }}
         px={{ base: 4, md: 16 }}
       >
-        {status !== 'news' && status !== 'weekly_videos' && (
+        {status !== 'news' && status !== 'weekly_videos' && false && (
           <Flex>
-            <Box>
-              <Icon as={BsHeart} mr={2} boxSize={5} />
-            </Box>
-            <Text>123</Text>
+            <Text color='cf.400'>123</Text>
           </Flex>
         )}
 
-        <Box textAlign='right' w='100%' ml={{ md: 6 }}>
+        <Flex justify='flex-end' textAlign='right' w='100%' ml={{ md: 6 }}>
+          {status !== 'news' && status !== 'weekly_videos' && false && (
+            <Box>
+              <Icon
+                //onClick={() => handleLike()}
+                color='cf.400'
+                as={BsHeart}
+                mr={2}
+                boxSize={5}
+              />
+            </Box>
+          )}
           <Icon
             boxSize={6}
-            as={RiShareForwardLine}
+            color='cf.400'
+            as={AiOutlineShareAlt}
             onClick={
-              () => handleModalClick('share', {})
+              () =>
+                handleModalClick(
+                  'share',
+                  content?.status === 'news'
+                    ? {
+                        url: window.location.href,
+                        title:
+                          content?.data?.body[0]?.primary?.conclusion[0]?.text,
+                        quote: `Check out Complete Farmer's Youtube Channel ${content?.data?.body[0].items[0].weekly_video.author_url}`
+                      }
+                    : content?.status === 'weekly_videos'
+                    ? {
+                        url: window.location.href,
+                        title:
+                          content?.data?.body[0].items[0].weekly_video
+                            .author_name,
+                        quote: `Check out Complete Farmer's Youtube Channel ${content?.data?.body[0].items[0].weekly_video.author_url}`
+                      }
+                    : {
+                        url: window.location.href,
+                        title: content?.title,
+                        quote: content?.description
+                      }
+                )
               // eslint-disable-next-line react/jsx-curly-newline
             }
           />
-        </Box>
+        </Flex>
       </Flex>
     </Box>
   )
@@ -55,7 +92,8 @@ const FarmBoardCardWrapper = ({ children, status }) => {
 
 FarmBoardCardWrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  status: PropTypes.any
+  status: PropTypes.any,
+  content: PropTypes.any
 }
 
 export default FarmBoardCardWrapper
