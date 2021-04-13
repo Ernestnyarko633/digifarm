@@ -19,7 +19,7 @@ const AvatarForm = () => {
   const [file, setFile] = React.useState(false)
   const [isSubmitting, setSubmitting] = React.useState(false)
 
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, store } = useAuth()
   const { user } = isAuthenticated()
   const { patchUser } = useApi()
 
@@ -38,6 +38,8 @@ const AvatarForm = () => {
         duration: 5000,
         position: 'top-right'
       })
+
+      store({ user: res.data })
     } catch (error) {
       toast({
         title: 'Error occured',

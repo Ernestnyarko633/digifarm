@@ -5,17 +5,26 @@ import { Updates as FarmUpdates } from 'theme/Icons'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
 
 export default function Updates({ farmfeeds, error }) {
+  const [feeds, setFeeds] = React.useState([])
+  React.useEffect(() => {
+    const getFeeds = () =>
+      farmfeeds?.forEach(feed => {
+        setFeeds(p => [...p, ...feed.data])
+      })
+
+    getFeeds()
+  }, [farmfeeds])
   return (
     <React.Fragment>
       <Grid gap={8} mb={8}>
-        {farmfeeds?.length > 0 &&
-          farmfeeds?.map(feed => (
+        {feeds?.length > 0 &&
+          feeds?.map(feed => (
             <FarmUpdateCard
               key={feed._id}
               title='FARM MANAGER UPDATES'
               duration={`${feed?.task?.duration} h`}
               subtitle={`${feed?.task?.title}`}
-              text={feed?.summary.replace(/<[^>]*>/g, '')}
+              text={feed?.feed?.summary.replace(/<[^>]*>/g, '')}
               icon={FarmUpdates}
             />
           ))}

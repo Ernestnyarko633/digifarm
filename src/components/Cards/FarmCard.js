@@ -34,7 +34,7 @@ const FarmCard = ({ farm, _small }) => {
       shadow='md'
       p={10}
       bg='white'
-      minW={{ base: 82, md: _small ? 85 : 130 }}
+      minW={{ base: 82, md: _small ? 85 : 120, xl: _small ? 85 : 130 }}
       minH={{ md: !_small ? '34rem' : 'auto' }}
       mr={{ md: 6 }}
     >
@@ -68,11 +68,10 @@ const FarmCard = ({ farm, _small }) => {
           </Box>
         </Flex>
 
-        <Box d={{ base: 'none', md: 'block' }}>
+        <Box d={{ base: 'none', xl: 'block' }}>
           <Button
             btntitle={!_small ? 'View Farm' : 'View Wallet'}
             rounded='30px'
-            disabled
             w={{ md: '190px' }}
             h={{ md: '55px' }}
             fontSize={{ md: 'lg' }}
@@ -93,7 +92,7 @@ const FarmCard = ({ farm, _small }) => {
             alignItems='center'
             pos='relative'
           >
-            <Box w={{ md: '50%' }}>
+            <Box w={{ md: '80%', xl: '50%' }}>
               <Heading as='h4' fontSize={{ md: '2xl' }}>
                 Progress on farm
               </Heading>
@@ -124,7 +123,12 @@ const FarmCard = ({ farm, _small }) => {
                 </Box>
               )}
             </Box>
-            <Box w={{ md: '45%' }} pos='absolute' right={{ md: 0 }}>
+            <Box
+              w={{ md: '45%' }}
+              display={{ md: 'none', xl: 'flex' }}
+              pos='absolute'
+              right={{ md: 0 }}
+            >
               <ImageLoader
                 isLoaded={imageLoaded}
                 setLoading={setImageLoaded}
@@ -137,11 +141,10 @@ const FarmCard = ({ farm, _small }) => {
         </>
       )}
 
-      <Box d={{ base: 'block', md: 'none' }} mt={{ base: 4, md: 0 }}>
+      <Box d={{ base: 'block', xl: 'none' }} mt={{ base: 4, md: 10, xl: 0 }}>
         <Button
           btntitle='View Farm'
           rounded='30px'
-          disabled
           w={{ base: '100%', md: '190px' }}
           h={{ base: 12, md: '55px' }}
           fontSize={{ md: 'lg' }}

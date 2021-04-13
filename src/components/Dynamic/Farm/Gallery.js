@@ -22,43 +22,7 @@ const menus = [
   { id: 5, icon: Updates, state: 'compE' }
 ]
 
-// const images = [
-//   { id: 1, img: 'Bitmap.png' },
-//   { id: 2, img: 'Bitmap.png' },
-//   { id: 3, img: 'Bitmap.png' },
-//   { id: 4, img: 'Bitmap.png' },
-//   { id: 5, img: 'Bitmap.png' }
-// ]
-
-// const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
-
 export default function Gallery({ farmfeeds, loading }) {
-  const [activities, setActivities] = React.useState([])
-  let isAlreadyThere = []
-
-  React.useEffect(() => {
-    let array2 = []
-    const feeds = () =>
-      farmfeeds?.forEach(feed => {
-        array2.push(feed?.task?.activity?.title)
-      })
-    feeds()
-    setActivities([...new Set(array2)])
-  }, [farmfeeds])
-
-  const selectActivity = feed => {
-    if (!isAlreadyThere.includes(feed.task.activity.name)) {
-      const res = activities.find(act => feed.task.activity.name === act)
-      if (res) {
-        isAlreadyThere.push(feed.task.activity.name)
-        isAlreadyThere = [...new Set(isAlreadyThere)]
-        return { bool: true, act: feed?.task?.activity?.name }
-      } else {
-        return { bool: false, act: feed?.task?.activity?.name }
-      }
-    }
-    return { bool: false, act: feed?.task?.activity?.name }
-  }
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -114,14 +78,12 @@ export default function Gallery({ farmfeeds, loading }) {
             <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
               {farmfeeds?.map(_feed => {
                 return (
-                  selectActivity(_feed).bool && (
-                    <ImageGallery
-                      key={_feed._id}
-                      title={`${_feed?.task?.activity?.name}`}
-                      farmfeeds={farmfeeds}
-                      activityName={selectActivity(_feed).act}
-                    />
-                  )
+                  <ImageGallery
+                    key={_feed._id}
+                    title={_feed.title}
+                    farmfeeds={_feed?.data}
+                    activityName={_feed?.title}
+                  />
                 )
               })}
             </Grid>

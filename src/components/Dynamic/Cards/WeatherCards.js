@@ -26,7 +26,7 @@ export default function WeatherCard({
             </Text>
             <Flex mt={2} justify='center' align='center'>
               <Heading fontSize={{ md: '3xl' }} fontWeight={900} mt={1}>
-                {farmfeeds[0]?.plantInfo?.population}
+                {farmfeeds[0]?.feed?.plantInfo?.population}
               </Heading>
             </Flex>
           </Box>
