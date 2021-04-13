@@ -15,10 +15,15 @@ const Greetings = ({ title, text }) => {
           w='100%'
           objectFit='cover'
           src={Illustration}
-          h={{ base: 90, md: 115 }}
+          h={{ base: 80, md: 90 }}
         />
       </Fade>
-      <Box pos='absolute' top={{ base: 48, md: 55 }} left={{ base: 6, md: 16 }}>
+      <Box
+        pos='absolute'
+        top={{ base: 20, md: 55 }}
+        left={{ base: 6, md: 16 }}
+        right={{ base: 6, md: 16 }}
+      >
         <Fade left>
           <Heading
             as='h3'

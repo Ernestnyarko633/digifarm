@@ -33,7 +33,11 @@ const Step = ({ activity, cutThread }) => {
           )}
         </Flex>
         <Box ml={3}>
-          <Text textColor={isPending ? 'gray.300' : 'gray.700'} as='span'>
+          <Text
+            textColor={isPending ? 'gray.300' : 'gray.700'}
+            as='span'
+            fontSize={{ base: 'xs', md: 'md' }}
+          >
             {activity.title}
           </Text>
           {/* <Text
@@ -61,13 +65,13 @@ const Step = ({ activity, cutThread }) => {
             bg='cf.200'
             color='cf.400'
             rounded='3xl'
-            fontSize='sm'
             px={4}
             textAlign='center'
+            fontSize={{ base: 'xs', md: 'sm' }}
           >
             Completed
           </Tag>
-          <Text fontSize='xs' color='gray.500' mr={2}>
+          <Text fontSize={{ base: 'tiny', md: 'xs' }} color='gray.500' mr={2}>
             {new Date(activity?.updatedAt).toLocaleDateString()}
           </Text>
         </Box>

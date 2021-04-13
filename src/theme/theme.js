@@ -1,11 +1,12 @@
 import { extendTheme } from '@chakra-ui/react'
 
-const breakpoints = ['30em', '48em', '62em', '80em']
+const breakpoints = ['30em', '48em', '62em', '80em', '90em']
 // aliases
 breakpoints.sm = breakpoints[0]
 breakpoints.md = breakpoints[1]
 breakpoints.lg = breakpoints[2]
 breakpoints.xl = breakpoints[3]
+breakpoints.xxl = breakpoints[4]
 
 export const theme = extendTheme({
   styles: {

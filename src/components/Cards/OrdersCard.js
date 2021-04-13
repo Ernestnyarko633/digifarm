@@ -17,8 +17,8 @@ const OrdersCard = ({ onOpen, data, currentSlide }) => {
       }}
       pos='relative'
       minW={{ md: 130 }}
-      maxW={{ base: 90, md: 'auto' }}
-      overflowX='scroll'
+      maxW={{ base: 90, md: 'auto', xl: 'unset' }}
+      overflowX={{ base: 'scroll', xl: 'unset' }}
       mx='auto'
     >
       {data.map(order => (

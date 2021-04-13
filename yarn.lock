@@ -1911,10 +1911,10 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@headlessui/react@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-0.2.0.tgz#a31f90892d736243ba91c1474f534b3256d0c538"
-  integrity sha512-YV+vF+QhTRcspydPdHF3ZXe+FkOiJpRdqMjjFIIX9bSdT2O2T7GurgKQdGgamNUM+B99MZBOTRqxS8Dlh485eg==
+"@headlessui/react@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-0.3.2.tgz#fa8600fa669fe704b84e9256855fb39092b6e233"
+  integrity sha512-N8XpYJNEP1jH5V8qq2cX8pnipOd93UJNKky1B7Ac3/yFFehB/0C4k5kOHt8ShHsmcohrZUB4sOl4+m0CjQpXng==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -12031,6 +12031,13 @@ react-youtube@^7.13.1:
     fast-deep-equal "3.1.3"
     prop-types "15.7.2"
     youtube-player "5.5.2"
+
+react-zendesk@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/react-zendesk/-/react-zendesk-0.1.11.tgz#2348d5048cfc6b3b6ada1ff5e2ae24aa54149bb0"
+  integrity sha512-40u0rWhKfcA4rGVKNoXSnLMZu/ytsF/T1/0+EU/pm6zCMHuOzNSM3sTxMStDAsBY7YGqWb+weI4HnUfhs/Gn7w==
+  dependencies:
+    prop-types "^15.7.2"
 
 react@^17.0.1:
   version "17.0.2"
