@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
 import { Box, Flex, Text } from '@chakra-ui/react'
-
 import FarmCard from './FarmCard'
 
 const MotionFlex = motion.custom(Flex)
