@@ -38,7 +38,7 @@ export const StartFarmContextProvider = ({ children }) => {
 
   const toast = useToast()
 
-  const triggerMapReload = () => setReload(prevState => prevState++)
+  const triggerMapReload = () => setReload(prevState => prevState + 1)
 
   function handleNext() {
     setStep(draft => draft + 1)

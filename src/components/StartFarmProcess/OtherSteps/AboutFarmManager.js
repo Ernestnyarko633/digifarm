@@ -56,7 +56,7 @@ const AboutFarmManager = ({ farm }) => {
           px={{ base: 6, md: 20 }}
           pt={{ base: 6, md: 20 }}
           borderRightColor='gray.400'
-          borderRightWidth={2}
+          borderRightWidth={{ md: 2 }}
         >
           <Box>
             <ImageLoader
