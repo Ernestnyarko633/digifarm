@@ -84,7 +84,7 @@ const Confirmation = ({ farm, order }) => {
         <Flex direction='column' align='center' justify='center'>
           <Box textAlign='center' m='auto' mt={6}>
             <Text mb={1} fontSize={{ base: 18, md: 22 }} fontWeight='bold'>
-              {order.status !== 'PAID'
+              {order?.status !== 'PAID'
                 ? 'Order Confirmed'
                 : 'Payment Comfirmed'}
             </Text>
@@ -94,7 +94,7 @@ const Confirmation = ({ farm, order }) => {
               fontSize={{ base: 12, md: 16 }}
               dangerouslySetInnerHTML={{
                 __html:
-                  order.status !== 'PAID'
+                  order?.status !== 'PAID'
                     ? 'Weldone! your order is pending, <br /> awaiting payment approval, download invoice for payment details.'
                     : 'Hurray!  you have successfully <br />made payment to your new farm'
               }}

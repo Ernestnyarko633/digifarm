@@ -13,7 +13,6 @@ import Button from 'components/Button'
 import React from 'react'
 import PropTypes from 'prop-types'
 import useStartFarm from 'context/start-farm'
-// import useApi from 'context/api'
 
 const OrderCard = ({ order, onOpen }) => {
   const { setOrder } = useStartFarm()
@@ -26,7 +25,7 @@ const OrderCard = ({ order, onOpen }) => {
       rounded={{ base: '15px', md: '30px' }}
       filter={{
         base: 'none',
-        md: 'drop-shadow(0px 2px 50px rgba(0, 0, 0, 0.1))'
+        lx: 'drop-shadow(0px 2px 50px rgba(0, 0, 0, 0.1))'
       }}
       mr={6}
     >
@@ -35,10 +34,7 @@ const OrderCard = ({ order, onOpen }) => {
           bgColor='white'
           borderWidth='1px'
           borderColor='gray.300'
-          src={
-            order?.product?.cropVariety?.imageUrl ||
-            require('../../assets/images/soya.png').default
-          }
+          src={order?.product?.cropVariety?.imageUrl}
         />
         <Box ml={4}>
           <Flex align='center'>
@@ -87,7 +83,12 @@ const OrderCard = ({ order, onOpen }) => {
             fontSize={{ base: 'xs', md: 'sm' }}
             rounded='30px'
           >
-            {order.status === 'PENDING' ? 'Pending' : 'Processing'} Order
+            {order.payment
+              ? order.status === 'PENDING'
+                ? 'Pending'
+                : 'Processing'
+              : 'Invalid'}{' '}
+            Order
           </Tag>
           <Text fontSize={{ base: 'xs', md: 'sm' }}>
             {order.status === 'PENDING' ? '50' : '80'}% Complete
@@ -95,20 +96,21 @@ const OrderCard = ({ order, onOpen }) => {
         </Box>
       </Flex>
 
-      <Box mt={6} w='90%' mx='auto'>
-        <Button
-          btntitle='Complete order'
-          rounded='30px'
-          w='100%'
-          disabled
-          h={{ base: 12, md: 16 }}
-          fontSize={{ md: 'lg' }}
-          onClick={() => {
-            setOrder(order)
-            onOpen()
-          }}
-        />
-      </Box>
+      {order.status === 'PENDING' && order.payment && (
+        <Box mt={6} w='90%' mx='auto'>
+          <Button
+            btntitle='Complete order'
+            rounded='30px'
+            w='100%'
+            h={{ base: 12, md: 16 }}
+            fontSize={{ md: 'lg' }}
+            onClick={() => {
+              setOrder(order)
+              onOpen()
+            }}
+          />
+        </Box>
+      )}
     </Box>
   )
 }
@@ -119,6 +121,7 @@ OrderCard.propTypes = {
     name: PropTypes.string,
     reference: PropTypes.string,
     cost: PropTypes.number,
+    payment: PropTypes.string,
     acreage: PropTypes.number,
     product: PropTypes.object,
     location: PropTypes.object,

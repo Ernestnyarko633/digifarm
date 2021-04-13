@@ -73,7 +73,7 @@ const AboutFarm = ({ farm }) => {
           <Divider orientation='horizontal' my={4} />
           <Progress
             colorScheme='cfButton'
-            value={30}
+            value={(farm.acreageSold / (farm.acreage + farm.acreageSold)) * 100}
             rounded='30px'
             borderWidth={1}
             borderColor='gray.300'
@@ -82,7 +82,7 @@ const AboutFarm = ({ farm }) => {
             my={{ md: 8 }}
           />
           <Flex align='center' justify='center' fontSize='sm'>
-            <Text>{farm.acreage} Acres left</Text>
+            <Text>{farm.acreage + farm.acreageSold} Acres</Text>
             <Divider
               orientation='vertical'
               height={4}

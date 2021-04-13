@@ -4,9 +4,7 @@ import { useDropzone } from 'react-dropzone'
 import { BsX } from 'react-icons/bs'
 import PropTypes from 'prop-types'
 
-const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
-  // const { postImageUpload } = useAPI();
-
+const ImageUpload = ({ files, setFiles }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     onDrop: acceptedFiles => {
@@ -32,10 +30,8 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
   const thumbs = files.map(file => (
     <Box
       d='inline-block'
-      // mb={4}
       mr={4}
       w='100%'
-      // p={4}
       boxSizing='border-box'
       key={file.name}
       pos='relative'
@@ -81,15 +77,7 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
           </Text>
         )}
       </Box>
-      <Box
-        // borderRadius={2}
-        // borderWidth={1}
-        // borderColor='gray.600'
-        // templateColumns={{ md: 'repeat(2, 1fr)' }}
-        wrap='wrap'
-        mt={10}
-        as='aside'
-      >
+      <Box wrap='wrap' mt={10} as='aside'>
         {thumbs}
       </Box>
     </Box>
@@ -98,9 +86,7 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
 
 ImageUpload.propTypes = {
   files: PropTypes.array,
-  setFiles: PropTypes.func,
-  setFieldValue: PropTypes.func,
-  values: PropTypes.string
+  setFiles: PropTypes.func
 }
 
 export default ImageUpload

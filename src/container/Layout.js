@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Grid, GridItem, Icon, Link, Text } from '@chakra-ui/react'
 import { Link as ReachRouter } from 'react-router-dom'
-import Fade from 'react-reveal/Fade'
 import Zendesk from 'react-zendesk'
 
 import Header from './Header'
@@ -74,9 +73,7 @@ const Layout = ({
             bg='white'
             d={{ base: 'none', md: 'block' }}
           >
-            <Fade left>
-              <Sidebar />
-            </Fade>
+            <Sidebar />
           </GridItem>
         )}
         <GridItem pos='relative'>
@@ -131,9 +128,7 @@ const Layout = ({
             zIndex={40}
             d={{ base: 'none', md: 'none', lg: 'block' }}
           >
-            <Fade right>
-              <RightSidebar />
-            </Fade>
+            <RightSidebar />
           </GridItem>
         )}
       </Grid>
