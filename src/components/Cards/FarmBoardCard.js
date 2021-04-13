@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import {
   Box,
@@ -12,11 +13,13 @@ import {
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import useComponent from 'context/component'
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 // import { RichText } from 'prismic-reactjs'
-import { Flower, CreditCard } from 'theme/Icons'
+import { CreditCard } from 'theme/Icons'
 //import { BsHeart } from 'react-icons/bs'
 import { RiShareForwardLine } from 'react-icons/ri'
 import Button from 'components/Button'
+import useAuth from 'context/auth'
 
 const FarmBoardCard = ({
   status,
@@ -29,15 +32,53 @@ const FarmBoardCard = ({
   actionTag,
   actionText,
   actionBtnTitle,
+  activeFarm,
+  content,
+  farms,
   doc
 }) => {
   const [show, setShow] = React.useState(false)
-
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
   const handleToggle = () => setShow(!show)
-
   const { handleModalClick } = useComponent()
 
+  const [selectedImage, setSelectedImage] = React.useState({})
+  const [activeIndex, setActiveIndex] = React.useState(0)
+
+  const [images, setImages] = React.useState([])
+  const handleClick = value => {
+    const comparant =
+      activeIndex + value === 0 ||
+      activeIndex + value > images.length - 1 ||
+      activeIndex + value < 0
+        ? 0
+        : activeIndex + value
+
+    setActiveIndex(comparant)
+    setSelectedImage(images[comparant])
+  }
   //const mapKey = i => i
+  React.useEffect(() => {
+    let array = []
+    const _feeds = feed => {
+      return feed?.media?.forEach(_media => {
+        if (_media?.type === 'image' || _media?.type === 'video')
+          array.push(_media)
+      })
+    }
+    const feeds = () =>
+      content?.data?.map(feed => {
+        return _feeds(feed?.feed)
+      })
+
+    if (status !== 'news') {
+      feeds()
+    }
+
+    setImages(array)
+    setSelectedImage(array[0])
+  }, [content, status])
 
   const Detail = () => {
     return (
@@ -51,33 +92,36 @@ const FarmBoardCard = ({
         pb={5}
       >
         <Flex align='center'>
-          <Avatar size='md' src={avatar} />
+          <Avatar
+            size='md'
+            src={activeFarm?.order?.product?.cropVariety?.imageUrl}
+          />
           <Box ml={{ base: 2, md: 4 }}>
             <Heading
               as='h4'
               fontSize={{ base: 'lg', md: 'xl' }}
               fontWeight={700}
             >
-              {firstName}’s Farm
+              {user?.firstName}’s Farm
             </Heading>
             <Text color='gray.600' fontSize={{ base: 'sm', md: 'md' }}>
-              {location}
+              {`${activeFarm?.order?.product?.location?.name}, ${activeFarm?.order?.product?.location?.state}`}
             </Text>
           </Box>
-          {status !== 'news' && (
-            <Box ml={{ base: 5, md: 12 }} d={{ base: 'none', md: 'block' }}>
-              <Tag
-                bg='cf.200'
-                color='cf.400'
-                rounded='xl'
-                px={{ base: 4, md: 6 }}
-                fontWeight='bold'
-                fontSize={{ base: 'sm', md: 'md' }}
-              >
-                {level}
-              </Tag>
-            </Box>
-          )}
+          {/* {status !== 'news' && (
+            // <Box ml={{ base: 5, md: 12 }} d={{ base: 'none', md: 'block' }}>
+            //   <Tag
+            //     bg='cf.200'
+            //     color='cf.400'
+            //     rounded='xl'
+            //     px={{ base: 4, md: 6 }}
+            //     fontWeight='bold'
+            //     fontSize={{ base: 'sm', md: 'md' }}
+            //   >
+            //     {level}
+            //   </Tag>
+            // </Box>
+          )} */}
         </Flex>
 
         <Box>
@@ -89,16 +133,95 @@ const FarmBoardCard = ({
     )
   }
 
+  const FarmContent = () => {
+    if (images?.length) {
+      return (
+        <>
+          <Box py={{ base: 4, md: 10 }} px={{ base: 4, md: 16 }}>
+            <Detail />
+          </Box>
+          <Box pos='relative'>
+            <Image
+              rounded='lg'
+              h={{ md: 85 }}
+              w='100%'
+              objectFit='cover'
+              src={selectedImage?.url}
+            />
+            <Flex
+              align='center'
+              justify='center'
+              pos='absolute'
+              bottom={6}
+              left='45%'
+            >
+              <Flex
+                as='button'
+                role='button'
+                aria-label='prev button'
+                align='center'
+                justify='center'
+                w={10}
+                h={10}
+                rounded='100%'
+                borderWidth={1}
+                borderColor='white'
+                color='white'
+                mr={2}
+                onClick={() => handleClick(-1)}
+              >
+                <Icon as={BsChevronLeft} />
+              </Flex>
+              <Flex
+                as='button'
+                role='button'
+                aria-label='next button'
+                align='center'
+                justify='center'
+                w={10}
+                h={10}
+                rounded='100%'
+                borderWidth={1}
+                borderColor='white'
+                color='cf.400'
+                bg='white'
+                ml={2}
+                onClick={() => handleClick(+1)}
+              >
+                <Icon as={BsChevronRight} />
+              </Flex>
+            </Flex>
+          </Box>
+          <Box px={{ base: 4, md: 16 }}>
+            <Box mt={6}>
+              {/* <Text textTransform='uppercase' fontWeight='bold'>
+                <Icon as={Flower} /> {actionTitle}
+              </Text> */}
+              <Text color='gray.500' mt={3} fontSize={{ base: 'sm', md: 'md' }}>
+                {content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
+              </Text>
+            </Box>
+          </Box>
+        </>
+      )
+    }
+
+    return null
+  }
+
   const NewHead = () => (
     <Flex align='center' justify='space-between'>
       <Flex align='center'>
-        <Avatar size='md' src={avatar} />
+        <Avatar
+          size='md'
+          src={activeFarm?.order?.product?.cropVariety?.imageUrl}
+        />
         <Box ml={4}>
           <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
-            {`${firstName}'s farm`}
+            {`${user?.firstName}'s farm`}
           </Heading>
           <Text color='gray.600' fontSize={{ base: 'sm', md: 'md' }}>
-            {location}
+            {`${activeFarm?.order?.product?.location?.name}, ${activeFarm?.order?.product?.location?.state}`}
           </Text>
         </Box>
       </Flex>
@@ -118,28 +241,7 @@ const FarmBoardCard = ({
       mb={10}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
     >
-      {status === 'farm' && (
-        <>
-          <Box py={{ base: 4, md: 10 }} px={{ base: 4, md: 16 }}>
-            <Detail />
-            <Box mt={6}>
-              <Text textTransform='uppercase' fontWeight='bold'>
-                <Icon as={Flower} /> {actionTitle}
-              </Text>
-              <Text color='gray.500' mt={3} fontSize={{ base: 'sm', md: 'md' }}>
-                {actionText}
-              </Text>
-            </Box>
-          </Box>
-
-          <Box>
-            <Image
-              w='100%'
-              src={require('../../assets/images/Bitmap.png').default}
-            />
-          </Box>
-        </>
-      )}
+      {status !== 'news' && <FarmContent content={content} />}
 
       {status === 'news' && (
         <Box key={doc?.id}>
@@ -239,7 +341,7 @@ const FarmBoardCard = ({
           <Text>123</Text>
         </Flex> */}
 
-        <Box ml={{ md: 6 }}>
+        <Box textAlign='right' w='100%' ml={{ md: 6 }}>
           <Icon
             boxSize={6}
             as={RiShareForwardLine}
@@ -278,7 +380,10 @@ FarmBoardCard.propTypes = {
   actionTag: PropTypes.string,
   actionText: PropTypes.string,
   actionBtnTitle: PropTypes.string,
-  doc: PropTypes.any
+  doc: PropTypes.any,
+  activeFarm: PropTypes.any,
+  farms: PropTypes.any,
+  content: PropTypes.any
 }
 
 export default FarmBoardCard
