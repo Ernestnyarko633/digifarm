@@ -38,10 +38,9 @@ const FarmBoard = () => {
         />
       )}
 
-      {!myFarmsHasError && !myFarmsIsLoading && myFarms.length > 0 && (
+      {!myFarmsHasError && !myFarmsIsLoading && myFarms.length > 0 ? (
         <FarmBoardContent farms={myFarms} />
-      )}
-      {!myFarmsHasError && !myFarmsIsLoading && myFarms.length === 0 && (
+      ) : (
         <GetStartedNowCard />
       )}
     </Layout>

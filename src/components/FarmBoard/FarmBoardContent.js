@@ -4,9 +4,11 @@ import { Heading, Flex, Box } from '@chakra-ui/react'
 import Fade from 'react-reveal/Fade'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
-
-import FarmBoardCard from '../Cards/FarmBoardCard'
+import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
 import YourFarmCard from '../Cards/YourFarmCard'
+import FarmFeedCard from 'components/FarmBoard/Cards/FarmFeedCard'
+import NewsCard from 'components/FarmBoard/Cards/NewsCard'
+import WeeklyVideoCard from 'components/FarmBoard/Cards/WeeklyVideoCard'
 // import Crop from 'assets/images/crop.png'
 // import SoyaBeanImg from 'assets/images/soya.png'
 import PropTypes from 'prop-types'
@@ -25,6 +27,49 @@ const FarmBoardContent = ({ farms }) => {
 
   const [doc, setDocData] = React.useState(null)
   const [_doc, _setDocData] = React.useState(null)
+
+  const mapKey = i => i
+
+  const renderCard = (status, content) => {
+    switch (status) {
+      case 'news':
+        return (
+          <NewsCard
+            activeFarm={activeFarmIndex}
+            content={content}
+            farms={farms}
+            status={status}
+            timestamp={new Date(
+              content?.data?.created || new Date()
+            )?.toLocaleDateString()}
+          />
+        )
+      case 'weekly_videos':
+        return (
+          <WeeklyVideoCard
+            activeFarm={activeFarmIndex}
+            content={content}
+            farms={farms}
+            status={status}
+            timestamp={new Date(
+              content?.data?.created || new Date()
+            )?.toLocaleDateString()}
+          />
+        )
+      default:
+        return (
+          <FarmFeedCard
+            activeFarm={activeFarmIndex}
+            content={content}
+            farms={farms}
+            status={status}
+            timestamp={new Date(
+              content?.data?.created || new Date()
+            )?.toLocaleDateString()}
+          />
+        )
+    }
+  }
 
   React.useEffect(() => {
     let mounted = true
@@ -105,27 +150,17 @@ const FarmBoardContent = ({ farms }) => {
         <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
           See what's happening in your farm(s)
         </Heading>
-        {feeds?.length > 0 &&
-          feeds?.map(farm => {
+        {feeds?.length > 0 ? (
+          feeds?.map((content, index) => {
             return (
-              <Fade bottom key={farm.id}>
-                <FarmBoardCard
-                  doc={farm}
-                  farms={farms}
-                  content={farm}
-                  status={farm?.type}
-                  actionBtnTitle={farms[0]?.btntitle}
-                  actionTag={farms[0]?.tag}
-                  timestamp={new Date(
-                    farm?.data?.created || new Date()
-                  )?.toLocaleDateString()}
-                  actionText={farms[0].actionText}
-                  actionTitle={farms[0].actionTitle}
-                  activeFarm={activeFarmIndex}
-                />
+              <Fade bottom key={mapKey(index)}>
+                {renderCard(content?.type, content)}
               </Fade>
             )
-          })}
+          })
+        ) : (
+          <FarmBoardEmptyState />
+        )}
       </Box>
     </Flex>
   )
