@@ -46,7 +46,7 @@ const ChooseAcreage = ({ farm }) => {
   const [reload, setReload] = React.useState(0)
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
-  const triggerMapReload = () => setReload(prevState => prevState++)
+  const triggerMapReload = () => setReload(prevState => prevState + 1)
 
   const {
     cycle,
@@ -177,25 +177,19 @@ const ChooseAcreage = ({ farm }) => {
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem w='100%' h='100%'>
-        {(loading || error) && (
-          <Flex w='100%' h='100%'>
-            <FetchCard
-              direction='column'
-              align='center'
-              justify='center'
-              mx='auto'
-              reload={() => {
-                error && triggerMapReload()
-              }}
-              loading={loading}
-              error={error}
-              text={
-                !error
-                  ? 'Standby as we load the map'
-                  : 'Something went wrong, please dont fret'
-              }
-            />
-          </Flex>
+        {loading && (
+          <FetchCard
+            w={{ base: 48, md: '100%' }}
+            h={{ base: 48, md: '100%' }}
+            direction='column'
+            align='center'
+            justify='center'
+            mx='auto'
+            reload={() => triggerMapReload()}
+            loading={loading}
+            error={error}
+            text='Standby as we load the map'
+          />
         )}
         {!loading && !error && EOSViewID?.results && (
           <Flex

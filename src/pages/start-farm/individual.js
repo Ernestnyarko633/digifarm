@@ -72,7 +72,9 @@ const Individual = ({ location: { state }, history }) => {
       {otherStep === 4 && showConfetti && (
         <Confetti width={width} height={height} />
       )}
-      {getFlow(step)}
+      <Box as='main' mt={{ base: 14, md: 20, xl: 24 }}>
+        {getFlow(step)}
+      </Box>
     </Box>
   )
 }
