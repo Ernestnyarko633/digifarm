@@ -12,7 +12,7 @@ const ImageLoader = ({ rounded, height, isLoaded, setLoading, ...rest }) => {
       height={height}
     >
       <Image
-        display={{ base: 'none', md: 'flex' }}
+        display={{ md: 'flex' }}
         {...rest}
         rounded={rounded}
         onLoad={() => setLoading(true)}

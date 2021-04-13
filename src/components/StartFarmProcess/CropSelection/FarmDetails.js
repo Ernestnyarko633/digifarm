@@ -65,7 +65,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
     />
   ) : data?.filter(f => f.status === 1)?.length > 0 ? (
     <Grid
-      templateColumns={{ md: '45% 55%' }}
+      templateColumns={{ base: '100%', md: '40% 55%' }}
       h={121}
       w='100%'
       pos='relative'
@@ -82,7 +82,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
           scrollBehavior: 'smooth'
         }}
         display={{ base: 'grid', md: 'block' }}
-        gridTemplateColumns={{ base: 'repeat(3, 1fr)', md: '1fr' }}
+        gridTemplateColumns={{ md: '1fr' }}
         borderBottomWidth={{ base: 1, md: 0 }}
         borderBottomColor='gray.200'
       >
