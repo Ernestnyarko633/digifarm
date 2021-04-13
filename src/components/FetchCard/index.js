@@ -22,9 +22,9 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
               <Text fontSize='md' ml={2} color='cf.400'>
                 Something went wrong
               </Text>
-              <Text fontSize='sm' color='cf.400'>
+              {/* <Text fontSize='sm' color='cf.400'>
                 {error}
-              </Text>
+              </Text> */}
               <Button
                 bg='cf.900'
                 variant='solid'

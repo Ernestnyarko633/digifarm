@@ -47,10 +47,15 @@ const Contract = () => {
             px={{ md: 5 }}
             mt={{ base: 4, md: 0 }}
           >
-            Complete Farmer Crowd Farming User Agreement
+            Complete Farmer DigiFarmer User Agreement
           </Heading>
-          <Text lineHeight='60px' fontSize={{ md: 'xl' }} px={{ md: 5 }}>
-            Please read this Crowd Farming User Agreement (the ‘Agreement’)
+          <Text
+            textAlign='justify'
+            lineHeight={{ base: '35px', md: '60px' }}
+            fontSize={{ base: 'sm', md: 'xl' }}
+            px={{ md: 5 }}
+          >
+            Please read this DigiFarmer User Agreement (the ‘Agreement’)
             carefully for your Complete Farmer (“The Company”) to complete your
             crowd farming subscription. This Agreement should be read together
             withour Terms & Conditions and our Privacy Policy. This Agreement is

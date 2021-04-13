@@ -53,7 +53,7 @@ const AboutFarm = ({ farm }) => {
 
       <Box mb={{ md: 12 }}>
         <Box mt={{ base: 5, md: 10 }}>
-          <Heading as='h6' size='sm'>
+          <Heading as='h6' size={{ base: 'xs', md: 'sm' }}>
             About crop
           </Heading>
         </Box>
