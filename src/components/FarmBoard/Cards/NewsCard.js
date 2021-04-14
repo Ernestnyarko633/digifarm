@@ -77,6 +77,11 @@ const NewsCard = ({ activeFarm, timestamp, content, status }) => {
                 </Text>
               ))}
             </Collapse>
+            <Box as='button' onClick={handleToggle}>
+              <Text color='cf.400' py={{ base: 1 }}>
+                {!show ? 'Read More' : 'Collapse'}
+              </Text>
+            </Box>
           </Box>
         </Box>
       </Box>
