@@ -30,7 +30,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
         }}
         pb={{
           base: 4,
-          md: status === 'news' || status === 'action' ? 3 : 3
+          md: 3
         }}
         px={{ base: 4, md: 16 }}
       >
