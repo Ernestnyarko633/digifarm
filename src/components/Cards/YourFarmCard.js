@@ -41,9 +41,8 @@ const YourFarmCard = ({ farms, setFarmIndex }) => {
               justify='center'
               m={4}
               key={farm}
-              //to={`/farms/${farm?._id}`}
               onClick={() => {
-                setFarmIndex(farm._id)
+                setFarmIndex(index)
               }}
             >
               <Text fontSize='sm' mb={3}>
