@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-lone-blocks */
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import React from 'react'
 import PropTypes from 'prop-types'

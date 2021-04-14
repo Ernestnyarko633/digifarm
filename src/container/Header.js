@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Avatar, Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
 import { motion, AnimatePresence } from 'framer-motion'

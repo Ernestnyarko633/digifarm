@@ -7,11 +7,7 @@ import { BsHeart } from 'react-icons/bs'
 
 const FarmBoardCardWrapper = ({ children, status, content }) => {
   const { handleModalClick } = useComponent()
-  //   const [isLiked, setIsLiked ] = React.useState(false)
 
-  //   const handleLike = () => {
-
-  //   }
   return (
     <Box
       rounded='xl'
@@ -60,14 +56,14 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
               () =>
                 handleModalClick(
                   'share',
-                  content?.status === 'news'
+                  status === 'news'
                     ? {
                         url: window.location.href,
-                        title:
-                          content?.data?.body[0]?.primary?.conclusion[0]?.text,
-                        quote: `Check out Complete Farmer's Youtube Channel ${content?.data?.body[0].items[0].weekly_video.author_url}`
+                        title: content?.data?.headline[0]?.text,
+                        quote:
+                          content?.data?.body[0]?.primary?.conclusion[0]?.text
                       }
-                    : content?.status === 'weekly_videos'
+                    : status === 'weekly_videos'
                     ? {
                         url: window.location.href,
                         title:
