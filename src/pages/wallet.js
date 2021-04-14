@@ -119,7 +119,7 @@ const Wallet = () => {
               Here's how your farm is doing
             </Heading>
             <Grid
-              gap={{ base: 4, md: 8 }}
+              gap={{ base: 2, md: 8 }}
               templateColumns={{
                 base: 'repeat(3, 1fr)'
               }}

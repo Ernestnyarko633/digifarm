@@ -106,12 +106,12 @@ const FarmFinances = ({
               <Text
                 color='gray.200'
                 fontSize={{ base: 'md', xl: '2xl' }}
-                lineHeight={{ base: '10.45px', xl: '21.09px' }}
+                lineHeight={{ base: '21.09px' }}
               >
                 Growing conditions are currently perfect
               </Text>
             </Box>
-            <Box w={{ base: '280px', xl: '100%' }} overflowX='scroll'>
+            <Box w={{ base: '240px', md: '100%' }} overflowX='scroll'>
               <Box
                 w={{ base: '100%', xl: '200%' }}
                 as={Graph}
@@ -214,13 +214,14 @@ const FarmFinances = ({
                 color='cf.400'
                 rounded='30px'
                 isDisabled={true}
+                mx={{ base: 3, md: 0 }}
                 my={5}
                 colorScheme='none'
                 w='50%'
                 h={50}
                 _hover={{ bg: 'white' }}
                 shadow='none'
-                fontSize='md'
+                fontSize={{ base: 'sm', xl: 'md' }}
                 mr={{ md: 5 }}
                 onClick={() => {
                   handleModalClick('rollover')
@@ -232,10 +233,11 @@ const FarmFinances = ({
                 color='white'
                 rounded='30px'
                 isDisabled={true}
+                mx={{ base: 3, md: 0 }}
                 my={5}
                 w='50%'
                 h={50}
-                fontSize='xl'
+                fontSize={{ base: 'sm', xl: 'md' }}
                 onClick={() => {
                   handleModalClick('payout')
                 }}

@@ -11,6 +11,7 @@ const WalletCard = ({ name, acreage, price }) => {
       rounded='lg'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       p={6}
+      mb={{ base: 16, md: 0 }}
       bg='white'
     >
       <Text fontWeight={300} textAlign='center'>
