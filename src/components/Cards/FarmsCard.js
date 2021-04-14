@@ -16,6 +16,7 @@ const FarmsCard = ({ data, currentSlide }) => {
       }}
       pos='relative'
       minW={{ md: 130 }}
+      overflowX={{ base: 'scroll', xl: 'unset' }}
       mx='auto'
     >
       {data?.map(farm => (

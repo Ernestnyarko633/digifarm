@@ -36,7 +36,7 @@ const FarmCard = ({ farm }) => {
       bg='white'
       minW={{ base: 82, md: 120, xl: 125 }}
       minH={{ md: 'auto' }}
-      mr={{ md: 6 }}
+      mr={{ base: 5, md: 6 }}
     >
       <Flex align='center' justify='space-between'>
         <Flex align='center'>
