@@ -82,8 +82,8 @@ export default function FarmDocumentCard({
 
   return (
     <Box
-      w={{ md: '687px' }}
-      h={{ md: '390px' }}
+      w={{ base: '100%', md: '687px' }}
+      h={{ base: '100%', md: '390px' }}
       bg='white'
       rounded='lg'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
@@ -94,17 +94,17 @@ export default function FarmDocumentCard({
         justify='space-between'
         borderBottomWidth={1}
         borderBottomColor='gray.200'
-        px={{ md: 8 }}
-        py={4}
+        px={{ base: 4, md: 8 }}
+        py={{ base: 2, md: 4 }}
       >
-        <Heading as='h5' fontSize='lg' fontWeight={800}>
+        <Heading as='h5' fontSize={{ base: 'md', md: 'lg' }} fontWeight={800}>
           {title}
         </Heading>
-        <Heading as='h5' fontSize='lg' fontWeight={800}>
+        <Heading as='h5' fontSize={{ base: 'md', md: 'lg' }} fontWeight={800}>
           $ {amount}
         </Heading>
       </Flex>
-      <Flex direction='column' w='100%' px={{ md: 8 }}>
+      <Flex direction='column' w='100%' px={{ base: 4, md: 8 }}>
         <Flex
           direction='row'
           justify='space-between'
@@ -143,7 +143,7 @@ export default function FarmDocumentCard({
               align='center'
               borderBottomWidth={1}
               borderBottomColor='gray.200'
-              py={5}
+              py={{ base: 2, md: 5 }}
             >
               <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>

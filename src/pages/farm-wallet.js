@@ -1,14 +1,15 @@
 import React from 'react'
 import Layout from 'container/Layout'
-import { Box, Grid, Link, Heading, Flex, Text, Button } from '@chakra-ui/react'
+import { Box, Grid, Link, Heading, Flex, Text } from '@chakra-ui/react'
 import { Link as ReachRouter } from 'react-router-dom'
 import FetchCard from 'components/FetchCard'
 import FarmWalletEmptyState from 'components/EmptyStates/FarmWalletEmptyState'
 import NoFarmsCard from 'components/Cards/NoFarmsCard'
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
-import FarmCard from 'components/Cards/FarmCard'
+//import FarmCard from 'components/Cards/FarmCard'
 import GetStartedNowCard from 'components/Cards/GetStartedNowCard'
+import WalletCard from 'components/Cards/WalletCard'
 
 const FarmWallet = () => {
   document.title = 'Complete Farmer | Farm wallet'
@@ -56,28 +57,42 @@ const FarmWallet = () => {
           <Flex
             direction='column'
             align='center'
+            justify='center'
             w='100%'
-            py={{ md: 20 }}
-            px={{ md: 20 }}
+            py={{ base: 10, md: 20 }}
+            px={{ base: 10, md: 20 }}
           >
-            <Heading mb={{ md: 2 }}>Click on farm to view wallet</Heading>
+            <Heading
+              textAlign='center'
+              fontSize={{ base: '2xl', md: 'xl' }}
+              mb={{ md: 2 }}
+            >
+              Click on farm to view wallet
+            </Heading>
             <Text
-              mb={{ md: 6 }}
+              textAlign='center'
+              mb={{ base: 3, md: 6 }}
             >{`You currently have ${myFarms.length} farm wallet(s)`}</Text>
             <Grid
-              templateColumns={{ md: 'repeat(2, 1fr)' }}
+              templateColumns={{
+                base: 'repeat(1, 1fr)',
+                md: 'repeat(2, 1fr)',
+                xl: 'repeat(3, 1fr)'
+              }}
               w='100%'
-              gap={{ md: 12 }}
+              gap={{ base: 6, md: 12 }}
             >
               {myFarms.map((farm, index) => {
                 return (
-                  <Link
-                    to={`/wallets/${farm._id}`}
-                    as={ReachRouter}
-                    key={mapKey(index)}
-                  >
-                    <Button as={FarmCard} _small={true} farm={farm} />
-                  </Link>
+                  <Box key={mapKey(index)} textAlign='center'>
+                    <Link to={`/wallets/${farm._id}`} as={ReachRouter}>
+                      <WalletCard
+                        acreage={farm?.order?.acreage}
+                        name={farm?.name}
+                        price={farm?.order?.cost}
+                      />
+                    </Link>
+                  </Box>
                 )
               })}
             </Grid>

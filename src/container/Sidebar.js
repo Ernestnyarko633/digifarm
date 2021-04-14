@@ -14,7 +14,7 @@ const menuLink = [
     path: '/wallet',
     name: 'Farm Wallet',
     size: 4,
-    disabled: true
+    disabled: false
   },
   { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
 ]

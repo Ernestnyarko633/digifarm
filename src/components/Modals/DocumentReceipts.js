@@ -19,7 +19,7 @@ const DocumentsReceipts = () => {
         />
       ) : (
         <Flex
-          w='687px'
+          w={{ base: '100%', md: '687px' }}
           h='390px'
           bg='white'
           rounded='lg'

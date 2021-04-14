@@ -77,27 +77,44 @@ const FarmFinances = ({
       w='100%'
       borderRadius='20px'
     >
-      <Grid templateColumns={{ md: '60% 40%' }} width='100%'>
+      <Grid
+        templateColumns={{
+          base: 'repeat(1, 1fr)',
+          md: '50% 50%',
+          xl: '60% 40%'
+        }}
+        width='100%'
+      >
         <Flex direction='column' w='100%' h='100%'>
           <Flex w='100%' direction='column'>
-            <Flex align='center' pl={{ md: 5 }}>
+            <Flex align='center' pl={{ base: 2, md: 5 }}>
               <Box>
                 <Image src={Stack} />
               </Box>
-              <Flex ml={{ md: 4 }} justify='center' align='center'>
-                <Heading mt={{ md: 1 }} as='h6' fontSize={{ md: 'xl' }}>
+              <Flex ml={{ base: 2, md: 4 }} justify='center' align='center'>
+                <Heading
+                  mt={{ base: 1 }}
+                  as='h6'
+                  fontSize={{ base: 'md', xl: 'xl' }}
+                >
                   FARM FINANCES
                 </Heading>
               </Flex>
             </Flex>
 
             <Box py={{ md: 35 }} pl={{ md: 5 }}>
-              <Text color='gray.200' fontSize='2xl' lineHeight='21.09px'>
+              <Text
+                color='gray.200'
+                fontSize={{ base: 'md', xl: '2xl' }}
+                lineHeight={{ base: '10.45px', xl: '21.09px' }}
+              >
                 Growing conditions are currently perfect
               </Text>
             </Box>
-            <Box w='100%' overflowX='scroll'>
-              <Graph
+            <Box w={{ base: '280px', xl: '100%' }} overflowX='scroll'>
+              <Box
+                w={{ base: '100%', xl: '200%' }}
+                as={Graph}
                 farm={farm}
                 activities={activities}
                 tasks={tasks}
@@ -136,14 +153,18 @@ const FarmFinances = ({
             >
               <Image src={Money} />
             </Flex>
-            <Heading as='h5' fontSize='lg' fontWeight={800}>
+            <Heading
+              as='h5'
+              fontSize={{ base: 'md', xl: 'lg' }}
+              fontWeight={800}
+            >
               Farm expenses
             </Heading>
           </Flex>
           <Flex
             direction='column'
             w='100%'
-            px={{ md: 8 }}
+            px={{ base: 4, xl: 8 }}
             justify='space-between'
             h='100%'
           >

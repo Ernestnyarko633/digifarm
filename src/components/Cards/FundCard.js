@@ -9,38 +9,56 @@ import PropTypes from 'prop-types'
 const FundCard = ({ amount, label }) => {
   return (
     <Flex
-      w='100%'
+      w={{ base: 'auto', md: '100%' }}
       rounded='lg'
       justify='center'
       align='center'
-      height={{ md: '220px' }}
+      height={{ base: 'auto', md: '220px' }}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      p={6}
+      p={{ base: 2, md: 6 }}
       bg='white'
     >
       <Flex direction='column' align='center' mt={2} w='100%'>
         <Box>
-          <Box mx={2}>
-            <Icon boxSize={8} as={BiDollarCircle} />
+          <Box w='100%' display={{ base: 'flex', md: 'block' }} mx={2}>
+            <Icon boxSize={{ base: 4, md: 8 }} as={BiDollarCircle} />
+            <Icon
+              ml={5}
+              display={{ md: 'none' }}
+              boxSize={{ base: 5 }}
+              as={AiFillInfoCircle}
+              color='cf.400'
+            />
           </Box>
+
           <Flex ml={2} mt={2}>
-            <Text lineHeight='18px' fontSize={{ md: 'md' }} mt={1}>
+            <Text
+              lineHeight={{ base: '9px', md: '18px' }}
+              fontSize={{ base: 'sm', md: 'md' }}
+              mt={1}
+            >
               {label}
             </Text>
             <Icon
-              boxSize={5}
+              boxSize={{ base: 5 }}
               as={AiFillInfoCircle}
               color='cf.400'
               ml={1}
               pt={1}
+              display={{ base: 'none', md: 'block' }}
             />
           </Flex>
-          <Flex pr={8} mt={2}>
-            <Icon boxSize={8} as={FaDollarSign} ml={1} pt={1} />
-            <Text
-              lineHeight='18px'
+          <Flex pr={{ base: 4, md: 8 }} mt={2}>
+            <Icon
+              boxSize={{ base: 4, md: 8 }}
+              as={FaDollarSign}
+              ml={1}
               pt={1}
-              fontSize={{ md: '3xl' }}
+            />
+            <Text
+              lineHeight={{ base: '9px', md: '18px' }}
+              pt={1}
+              fontSize={{ base: 'xl', md: '3xl' }}
               fontWeight={900}
               mt={1}
             >
