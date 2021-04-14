@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Avatar, Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -151,7 +150,7 @@ const Header = () => {
                               bg={active && 'cf.400'}
                               color={active && 'white'}
                               d='block'
-                              // href={item.link}
+                              href={item.link}
                             >
                               <Icon as={item.icon} boxSize={4} mr={2} />{' '}
                               {item.name}
