@@ -151,7 +151,7 @@ const Header = () => {
                               bg={active && 'cf.400'}
                               color={active && 'white'}
                               d='block'
-                              // href={item.link}
+                              href={item.link}
                             >
                               <Icon as={item.icon} boxSize={4} mr={2} />{' '}
                               {item.name}
