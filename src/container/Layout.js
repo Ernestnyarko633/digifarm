@@ -14,13 +14,13 @@ import configs from 'utils/configs'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
-  { icon: farm, path: '/farms', name: 'Farm board', size: 4, disabled: true },
+  { icon: farm, path: '/farms', name: 'Farm board', size: 4, disabled: false },
   {
     icon: wallet,
     path: '/wallet',
     name: 'Farm Wallet',
     size: 4,
-    disabled: true
+    disabled: false
   },
   { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
 ]
