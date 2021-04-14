@@ -215,6 +215,11 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                   {content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
                 </Text>
               </Collapse>
+              <Box as='button' onClick={handleToggle}>
+                <Text color='cf.400' py={{ base: 1 }}>
+                  {!show ? 'Read More' : 'Collapse'}
+                </Text>
+              </Box>
             </Box>
           </Box>
         </>
@@ -303,6 +308,11 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                   </Text> */}
               <Text color='gray.500' mt={3} fontSize={{ base: 'sm', md: 'md' }}>
                 {content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
+              </Text>
+            </Box>
+            <Box as='button' onClick={handleToggle}>
+              <Text color='cf.400' py={{ base: 1 }}>
+                {!show ? 'Read More' : 'Collapse'}
               </Text>
             </Box>
           </Box>
