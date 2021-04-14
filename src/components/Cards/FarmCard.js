@@ -125,7 +125,7 @@ const FarmCard = ({ farm }) => {
           </Box>
           <Box
             w={{ md: '45%' }}
-            display={{ md: 'none', xl: 'flex' }}
+            display={{ base: 'none', xl: 'flex' }}
             pos='absolute'
             right={{ md: 0 }}
           >
@@ -143,6 +143,7 @@ const FarmCard = ({ farm }) => {
       <Box d={{ base: 'block', xl: 'none' }} mt={{ base: 4, md: 10, xl: 0 }}>
         <Button
           btntitle='View Farm'
+          isDisabled={true}
           rounded='30px'
           w={{ base: '100%', md: '190px' }}
           h={{ base: 12, md: '55px' }}
