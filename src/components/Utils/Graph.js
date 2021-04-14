@@ -39,7 +39,7 @@ export default function Graph({
   }
 
   return (
-    <ResponsiveContainer width='200%' height={300}>
+    <ResponsiveContainer width='300%' height={300}>
       <ComposedChart
         style={{ backgroundColor: 'white' }}
         margin={{ right: 60 }}

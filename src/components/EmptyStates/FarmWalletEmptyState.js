@@ -10,7 +10,7 @@ const FarmWalletEmptyState = ({ children }) => {
   const { message } = getCurrentDayParting()
 
   return (
-    <Box>
+    <Box w='100%'>
       <Greetings
         title={`${message} Farmer ${user?.firstName}`}
         text={"Click on the card below to view your farm's wallet"}

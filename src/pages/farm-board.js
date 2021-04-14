@@ -11,7 +11,7 @@ const FarmBoard = () => {
   document.title = 'Complete Farmer | Farmboard'
   const [reload, setReload] = React.useState(0)
   const { getMyFarms } = useApi()
-  const triggerReload = () => setReload(s => s++)
+  const triggerReload = () => setReload(s => s + 1)
   const {
     data: myFarms,
     isLoading: myFarmsIsLoading,
