@@ -78,8 +78,8 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
             align='center'
             justify='center'
             pos='absolute'
-            bottom={6}
-            left='43%'
+            bottom={{ base: 3, md: 6 }}
+            left={{ base: '35%', md: '43%' }}
           >
             <Flex
               as='button'
@@ -98,6 +98,9 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
               borderColor='white'
               color='cf.400'
               mr={2}
+              outlineColor='none'
+              outline='none'
+              disabled={activeVideoIndex === 0}
               onClick={() => {
                 return handleClick(
                   -1,
@@ -127,6 +130,9 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
               borderColor='white'
               color='cf.400'
               bg='white'
+              outlineColor='none'
+              outline='none'
+              disabled={activeVideoIndex === content?.data?.body[0].items - 1}
               ml={2}
               onClick={() => {
                 return handleClick(

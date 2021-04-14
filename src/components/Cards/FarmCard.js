@@ -125,7 +125,7 @@ const FarmCard = ({ farm }) => {
           </Box>
           <Box
             w={{ md: '45%' }}
-            display={{ md: 'none', xl: 'flex' }}
+            display={{ base: 'none', xl: 'flex' }}
             pos='absolute'
             right={{ md: 0 }}
           >
