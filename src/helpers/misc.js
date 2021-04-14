@@ -103,6 +103,11 @@ export const dateIntervals = () => {
   }
 }
 
+export const texTrancator = (length, string) => {
+  let tT = string.substring(0, length)
+  return tT
+}
+
 export const getDiscount = (discounts, acreage) => {
   // get discounts user may qualify for
   const _discounts = discounts?.filter(({ point }) => point <= acreage)
