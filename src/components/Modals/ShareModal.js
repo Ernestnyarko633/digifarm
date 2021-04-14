@@ -15,9 +15,9 @@ const ShareModal = () => {
   const { isOpen, onClose, data } = useComponent()
 
   return (
-    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='3xl'>
+    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='xl'>
       <Flex w='100%' align='center' justify='center'>
-        <Flex w='30%' direction='row' justify='space-between' align='center'>
+        <Flex w='100%' direction='row' justify='center' align='center'>
           {/* <Button
             as={FacebookShareButton}
             title={data?.title}
@@ -28,9 +28,10 @@ const ShareModal = () => {
           </Button> */}
           <Button
             as={TwitterShareButton}
-            title={data?.title}
+            title={'This is a feed from complete farmer' || data?.title}
             url={data?.url}
-            via={data?.quote}
+            via={`completefarmer ${data?.quote}`}
+            related={['completefarmer']}
           >
             <Icon boxSize={10} as={TwitterIcon} />
           </Button>

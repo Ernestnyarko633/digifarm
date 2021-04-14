@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import Fade from 'react-reveal/Fade'
@@ -15,6 +14,7 @@ import FetchCard from 'components/FetchCard/index'
 import PropTypes from 'prop-types'
 
 import useApi from 'context/api'
+//import { StyledCountrySelectDropdownDialcodeColumn } from 'baseui/phone-input'
 
 const FarmBoardContent = ({ farms }) => {
   const { getMyFarmFeeds } = useApi()
@@ -32,21 +32,6 @@ const FarmBoardContent = ({ farms }) => {
   const [_doc, _setDocData] = React.useState(null)
 
   const mapKey = i => i
-
-  // const hasBeenRendered = content => {
-  //   const isThere = cleaner.find(
-  //     feed => feed?.id === content?.id || feed?._id === content?._id
-  //   )
-  //   if (!isThere?.length) {
-  //     setCleaner(p => [...p, content])
-  //     return false
-  //   }
-
-  //   if (isThere?.length) {
-  //     setCleaner(p => [...p, ...isThere])
-  //     return true
-  //   }
-  // }
 
   const renderCard = (status, content) => {
     switch (status) {
@@ -164,24 +149,14 @@ const FarmBoardContent = ({ farms }) => {
     return () => (mounted = false)
   }, [doc, farms, _doc, getMyFarmFeeds])
 
-  // console.log(
-  //   feeds?.filter(
-  //     (v, i, a) =>
-  //       a.findIndex(t => JSON.stringify(t) === JSON.stringify(v)) === i
-  //   ),
-  //   'doc'
-  // )
-
   //larger feeds would slow down process
   const cleanedFeeds = feeds?.filter(
     (v, i, a) => a.findIndex(t => JSON.stringify(t) === JSON.stringify(v)) === i
   )
 
-  console.log(cleanedFeeds)
-
   return (
     <Flex w='100%' align='center' direction='column'>
-      {loading ? (
+      {loading && !cleanedFeeds ? (
         <FetchCard
           direction='column'
           align='center'
@@ -198,8 +173,11 @@ const FarmBoardContent = ({ farms }) => {
           <Box p={{ base: 4, md: 16 }}>
             {false && feeds}
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
-              See what's happening in your farm(s)
+              {cleanedFeeds.length
+                ? " See what's happening in your farm(s)"
+                : ''}
             </Heading>
+
             {cleanedFeeds?.length > 0 ? (
               cleanedFeeds.map((content, index) => {
                 return (

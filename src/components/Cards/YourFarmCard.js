@@ -26,7 +26,13 @@ const YourFarmCard = ({ farms, setFarmIndex }) => {
             <Button rounded='30px' btntitle='Start a farm' />
           </Link>
         </Flex>
-        <Flex direction='row' align='center' justify='center' my={10}>
+        <Flex
+          direction='row'
+          align='center'
+          justify='flex-start'
+          w='70%'
+          my={10}
+        >
           {farms?.map((farm, index) => (
             <Flex
               as={ReachRouter}
