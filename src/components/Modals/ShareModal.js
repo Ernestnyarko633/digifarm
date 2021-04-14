@@ -3,12 +3,12 @@ import useComponent from 'context/component'
 import { Flex, Button, Icon } from '@chakra-ui/react'
 import ModalWrapper from './ModalWrapper'
 import {
-  FacebookShareButton,
+  //FacebookShareButton,
   TwitterShareButton,
-  LinkedinShareButton,
-  FacebookIcon,
-  TwitterIcon,
-  LinkedinIcon
+  //LinkedinShareButton,
+  //FacebookIcon,
+  TwitterIcon
+  // LinkedinIcon
 } from 'react-share'
 
 const ShareModal = () => {
@@ -18,31 +18,31 @@ const ShareModal = () => {
     <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='3xl'>
       <Flex w='100%' align='center' justify='center'>
         <Flex w='30%' direction='row' justify='space-between' align='center'>
-          <Button
+          {/* <Button
             as={FacebookShareButton}
-            title={data?.actionTitle}
-            url={window.location.href}
-            quote={data?.doc.data.headline[0].text}
+            title={data?.title}
+            url={data?.url}
+            quote={data?.quote}
           >
             <Icon boxSize={10} as={FacebookIcon} />
-          </Button>
+          </Button> */}
           <Button
             as={TwitterShareButton}
-            title={data?.actionTitle}
-            url={window.location.href}
-            via={data?.doc.data.headline[0].text}
+            title={data?.title}
+            url={data?.url}
+            via={data?.quote}
           >
             <Icon boxSize={10} as={TwitterIcon} />
           </Button>
-          <Button
+          {/* <Button
             as={LinkedinShareButton}
             title={data?.actionTitle}
-            source={window.location.href}
-            url={window.location.href}
-            summary={data?.doc.data.headline[0].text}
+            source={data?.url}
+            url={data?.url}
+            summary={data?.quote}
           >
             <Icon boxSize={10} as={LinkedinIcon} />
-          </Button>
+          </Button> */}
         </Flex>
       </Flex>
     </ModalWrapper>
