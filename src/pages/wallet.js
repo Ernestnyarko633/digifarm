@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Box, Heading, Grid } from '@chakra-ui/react'
 import Layout from 'container/Layout'
@@ -101,15 +102,29 @@ const Wallet = () => {
     <Layout>
       <FarmWalletEmptyState>
         {!loading && !error && (
-          <Box w='100%' px={{ md: 20 }} pt={{ md: 20 }} pb={{ md: 10 }}>
-            <Heading as='h3' fontSize={{ md: '4xl' }} mt={{ md: 6 }}>
+          <Box
+            w='100%'
+            px={{ base: 10, lg: 20 }}
+            pt={{ base: 10, lg: 20 }}
+            pb={{ base: 5, lg: 10 }}
+          >
+            {false && setExpenses}
+            <Heading
+              as='h3'
+              textAlign={{ base: 'center', md: 'left' }}
+              fontSize={{ base: '2xl', md: '3xl', xl: '4xl' }}
+              mt={{ base: 3, md: 6 }}
+              my={{ base: 3, md: 0 }}
+            >
               Here's how your farm is doing
             </Heading>
             <Grid
-              gap={8}
-              templateColumns={{ md: 'repeat(3, 1fr)' }}
+              gap={{ base: 4, md: 8 }}
+              templateColumns={{
+                base: 'repeat(3, 1fr)'
+              }}
               py={{ md: 5 }}
-              w='100%'
+              w={{ base: '100%' }}
             >
               <FundCard label='Total funds' amount={wallet} />
 
@@ -122,7 +137,7 @@ const Wallet = () => {
             </Grid>
           </Box>
         )}
-        <Box w='100%' px={{ md: 20 }}>
+        <Box w='100%' px={{ base: 10, lg: 20 }}>
           {(loading || error) && (
             <Box p={16}>
               <FetchCard
@@ -145,7 +160,9 @@ const Wallet = () => {
           )}
           {!loading && !error && (
             <Box>
-              <FarmFinances
+              <Box
+                display={{ base: 'none', md: 'block' }}
+                as={FarmFinances}
                 farm={farm}
                 activities={myFarmActivities}
                 tasks={tasks}
@@ -157,10 +174,11 @@ const Wallet = () => {
           {!loading && !error && (
             <React.Fragment>
               <Heading
+                textAlign={{ base: 'center', md: 'left' }}
                 as='h3'
-                fontSize={{ md: '3xl' }}
-                pt={{ md: 20 }}
-                pb={{ md: 10 }}
+                fontSize={{ base: '2xl', md: '3xl' }}
+                pt={{ base: 10, xl: 20 }}
+                pb={{ base: 10, xl: 10 }}
               >
                 See and view your receipts to funds usage
               </Heading>

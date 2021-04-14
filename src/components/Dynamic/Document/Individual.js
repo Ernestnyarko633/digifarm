@@ -67,7 +67,7 @@ export default function Individual({
   }
 
   return (
-    <Box>
+    <Box w='100%'>
       {tempActs?.length === 0 && (
         <Flex w='100%' justify='center' align='center' direction='column'>
           <Image src={Doc} py={{ md: 10 }} />
@@ -79,7 +79,12 @@ export default function Individual({
           </Text>
         </Flex>
       )}
-      <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={10}>
+      <Grid
+        templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
+        gap={10}
+        w={{ base: '100%' }}
+        p={{ base: 5, md: 0 }}
+      >
         {activities?.length > 0 &&
           tempActs?.length > 0 &&
           tempActs?.map(_activity => {
