@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Box, Heading, Image, Text, useToast } from '@chakra-ui/react'
@@ -44,6 +45,8 @@ const OtherSteps = ({ data, history: { push } }) => {
   window.onbeforeunload = function (event) {
     event.returnValue = 'Unsafed data maybe lost.'
   }
+
+  console.log(catName)
 
   const getSteps = value => {
     switch (value) {
