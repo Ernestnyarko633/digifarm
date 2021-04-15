@@ -81,9 +81,8 @@ export default function Individual({
       )}
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
-        gap={10}
+        gap={{ base: 5, md: 10 }}
         w={{ base: '100%' }}
-        p={{ base: 5, md: 0 }}
       >
         {activities?.length > 0 &&
           tempActs?.length > 0 &&

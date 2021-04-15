@@ -155,7 +155,8 @@ export default function Farm() {
     { id: 5, name: 'Manager updates', icon: Updates, state: 'compE' },
   ];
 
-  const mapKey = (index) => index;
+  const mapKey = index => index
+
   return isLoading || hasError ? (
     <FetchCard
       h='100vh'
