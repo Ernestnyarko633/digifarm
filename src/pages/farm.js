@@ -167,7 +167,7 @@ export default function Farm() {
       reload={triggerReload}
       loading={isLoading}
       error={hasError}
-      text='Standby as we load your current farms and pending orders'
+      text={`Standby as we load your farm's view`}
     />
   ) : (
     <Box pos='relative' ref={ref}>

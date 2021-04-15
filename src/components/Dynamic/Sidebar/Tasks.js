@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   Box,
   CircularProgress,
@@ -78,14 +79,17 @@ export default function Tasks({
       {scheduledTasks.length > 0 && (
         <>
           {getTodaysTasks(scheduledTasks, 'today').map((today, index) => (
-            <FarmUpdateCard
-              key={mapKey(index)}
-              title='TODAY’S TASK'
-              duration={today?.task?.duration}
-              subtitle={today?.task?.name}
-              text={today[0]?.description?.replace(/<[^>]*>/g, '')}
-              icon={BiTime}
-            />
+            <>
+              {console.log('room', today)}
+              <FarmUpdateCard
+                key={mapKey(index)}
+                title='TODAY’S TASK'
+                duration={today?.task?.duration}
+                subtitle={today?.task?.title}
+                text={today?.task?.description?.replace(/<[^>]*>/g, '')}
+                icon={BiTime}
+              />
+            </>
           ))}
         </>
       )}
@@ -97,24 +101,20 @@ export default function Tasks({
       />
       <Grid gap={8}>
         {scheduledTasks.length > 0 &&
-          getTodaysTasks(scheduledTasks, 'scheduled') && (
-            <React.Fragment>
-              <FarmUpdateCard
-                title='SCHEDULED TASK'
-                duration={
-                  getTodaysTasks(scheduledTasks, 'scheduled')[0]?.task?.duration
-                }
-                subtitle={
-                  getTodaysTasks(scheduledTasks, 'scheduled')[0]?.task?.title
-                }
-                text={getTodaysTasks(
-                  scheduledTasks,
-                  'scheduled'
-                )[0]?.description.replace(/<[^>]*>/g, '')}
-                icon={BiTime}
-              />
+          getTodaysTasks(scheduledTasks, 'scheduled').length > 0 &&
+          getTodaysTasks(scheduledTasks, 'scheduled')?.map((today, index) => (
+            <React.Fragment key={mapKey(index)}>
+              {index === 0 && (
+                <FarmUpdateCard
+                  title='SCHEDULED TASK'
+                  duration={today?.task?.duration}
+                  subtitle={today?.task?.title}
+                  text={today?.task?.description.replace(/<[^>]*>/g, '')}
+                  icon={BiTime}
+                />
+              )}
             </React.Fragment>
-          )}
+          ))}
         {feeds.length > 0 && (
           <FarmUpdateCard
             title='FARM MANAGER UPDATE'
