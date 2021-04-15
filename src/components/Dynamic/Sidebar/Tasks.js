@@ -80,7 +80,6 @@ export default function Tasks({
         <>
           {getTodaysTasks(scheduledTasks, 'today').map((today, index) => (
             <>
-              {console.log('room', today)}
               <FarmUpdateCard
                 key={mapKey(index)}
                 title='TODAY’S TASK'
