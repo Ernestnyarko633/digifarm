@@ -1,8 +1,9 @@
-import { Box, Skeleton, Stack } from '@chakra-ui/react'
-import React from 'react'
-import PropTypes from 'prop-types'
-import DynamicCard from '../Sidebar'
-import FetchCard from 'components/FetchCard'
+/* eslint-disable */
+import { Box, Skeleton, Stack } from '@chakra-ui/react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import DynamicCard from '../Sidebar';
+import FetchCard from 'components/FetchCard';
 export default function FarmRightSidebar({
   state,
   digitalFarmerFarm,
@@ -14,7 +15,7 @@ export default function FarmRightSidebar({
   WeatherForeCasts,
   loading,
   error,
-  _error
+  _error,
 }) {
   if (loading) {
     return (
@@ -24,22 +25,23 @@ export default function FarmRightSidebar({
         <Skeleton bg='gray.100' height='200px' rounded='lg' />
         <Skeleton bg='gray.100' height='200px' rounded='lg' />
       </Stack>
-    )
+    );
   }
 
   return (
     <Box
       py={8}
-      right={0}
-      bg='white'
+      right={{ md: 0 }}
+      bg={{ md: 'white' }}
       as='rightsidebar'
       bottom={0}
-      pos='fixed'
-      px={{ md: 8 }}
+      pos={{ md: 'fixed' }}
+      px={{ base: 4, md: 8 }}
       h={{ lg: '84vh' }}
       w={{ md: '30%' }}
-      shadow='md'
-      overflowY='scroll'
+      my={{ base: 20, md: 0 }}
+      shadow={{ md: 'md' }}
+      overflowY={{ md: 'scroll' }}
     >
       <DynamicCard
         card={state}
@@ -59,7 +61,7 @@ export default function FarmRightSidebar({
           justify='center'
           mx='auto'
           reload={() => {
-            ;(error || _error) && reloads[0]()
+            (error || _error) && reloads[0]();
           }}
           loading={loading}
           error={error || _error}
@@ -71,7 +73,7 @@ export default function FarmRightSidebar({
         />
       )}
     </Box>
-  )
+  );
 }
 
 FarmRightSidebar.propTypes = {
@@ -85,5 +87,5 @@ FarmRightSidebar.propTypes = {
   loading: PropTypes.any,
   error: PropTypes.any,
   _error: PropTypes.any,
-  reloads: PropTypes.any
-}
+  reloads: PropTypes.any,
+};
