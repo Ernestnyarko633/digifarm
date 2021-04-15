@@ -34,6 +34,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
     if (mounted && data) {
       if (data.length) {
         setSelectedFarm(data[0])
+        sessionStorage.setItem('selected_farm', JSON.stringify(data[0]))
       }
 
       if (catName) {
@@ -96,7 +97,10 @@ const FarmDetails = ({ query, catName, handleNext }) => {
               varietyName={farm.cropVariety?.name}
               cropName={farm.cropVariety?.crop?.name}
               selected={farm._id === selectedFarm?._id}
-              onClick={() => setSelectedFarm(farm)}
+              onClick={() => {
+                setSelectedFarm(farm)
+                sessionStorage.setItem('selected_farm', JSON.stringify(farm))
+              }}
             />
           ))}
       </GridItem>

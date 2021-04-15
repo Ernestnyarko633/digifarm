@@ -24,6 +24,7 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
               </Text>
               <Text my={2} fontSize='sm' color='cf.400'>
                 {error}
+                {/* TODO: use a better error when it is */}
               </Text>
               <Button
                 bg='cf.900'

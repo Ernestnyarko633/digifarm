@@ -13,7 +13,9 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
 
   const { id } = qs.parse(search)
 
-  const { data, isLoading, error } = useFetch(null, verifyPayment, null, id)
+  const { data, isLoading, error } = useFetch(null, verifyPayment, null, {
+    payment_id: id
+  })
 
   if (data) {
     history.push({
@@ -25,19 +27,19 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
     })
   }
 
-  return (
-    (isLoading || error) && (
-      <FetchCard
-        h='100vh'
-        direction='column'
-        align='center'
-        justify='center'
-        mx='auto'
-        loading={isLoading}
-        error={error && 'Payment verification failed, please contact support.'}
-        text='Standby as we verify your payment'
-      />
-    )
+  return isLoading || error ? (
+    <FetchCard
+      h='100vh'
+      direction='column'
+      align='center'
+      justify='center'
+      mx='auto'
+      loading={isLoading}
+      error={error && 'Payment verification failed, please contact support.'}
+      text='Standby as we verify your payment'
+    />
+  ) : (
+    <div />
   )
 }
 

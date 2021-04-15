@@ -182,7 +182,8 @@ export default function Farm() {
           align='center'
           justify='space-between'
           px={{ md: 20 }}
-          h={{ md: 16 }}
+          pt={{ md: 10 }}
+          pb={{ md: 5 }}
           zIndex={50}
           d={{ base: 'none', md: 'flex' }}
         >

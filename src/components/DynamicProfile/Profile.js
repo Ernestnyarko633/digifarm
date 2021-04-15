@@ -22,12 +22,11 @@ const Profile = () => {
 
   const { user } = isAuthenticated()
 
-  const { data: bankDetails, isLoading: loading, error } = useFetch(
-    null,
-    getBankDetails,
-    reload,
-    { user: user?._id }
-  )
+  const {
+    data: bankDetails,
+    isLoading: loading,
+    error
+  } = useFetch('bank_details', getBankDetails, reload, { user: user?._id })
 
   return (
     <Container maxW={{ md: '4xl' }}>
@@ -44,18 +43,20 @@ const Profile = () => {
       </Box>
 
       {loading || error ? (
-        <FetchCard
-          direction='column'
-          align='center'
-          justify='center'
-          mx='auto'
-          reload={() => {
-            triggerReload()
-          }}
-          loading={loading}
-          error={error}
-          text='Standby as we load your bank details'
-        />
+        <Box y={{ md: 20 }}>
+          <FetchCard
+            direction='column'
+            align='center'
+            justify='center'
+            mx='auto'
+            reload={() => {
+              triggerReload()
+            }}
+            loading={loading}
+            error={error}
+            text='Standby as we load your bank details'
+          />
+        </Box>
       ) : (
         <BankingDetailsForm bankDetails={bankDetails} />
       )}
