@@ -21,8 +21,8 @@ export default function Health({ farm, eosStats, _error }) {
       {!_error && !eosStats?.length && (
         <Flex>
           <Text>
-            CROP HEALTH IS CURRENTLY UNAVAILABLE, IT WOULD BE UPDATED AS SOON AS
-            POSSIBLE
+            Crop health is currently unvailable, it would be updated as soon as
+            possible.
           </Text>
         </Flex>
       )}

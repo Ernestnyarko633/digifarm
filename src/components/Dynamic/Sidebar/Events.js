@@ -25,8 +25,13 @@ export default function Events({ scheduledTasks, error }) {
       )}
       {scheduledTasks?.length === 0 && (
         <Flex w='100%' justify='center' align='center'>
-          <Text w='100%' color='cf.400' fontSize='xl'>
-            NO SCHEDULED EVENTS CURRENTLY AVAILABLE
+          <Text
+            w='100%'
+            color='cf.400'
+            fontSize='xl'
+            textAlign={{ base: 'center', md: 'initial' }}
+          >
+            No scheduled events currently available.
           </Text>
         </Flex>
       )}

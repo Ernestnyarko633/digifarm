@@ -150,7 +150,14 @@ export default function Tasks({
             </Flex>
 
             {eosStats?.length > 0 && (
-              <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} gap={6} mt={5}>
+              <Grid
+                templateColumns={{
+                  base: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)'
+                }}
+                gap={6}
+                mt={5}
+              >
                 <Box>
                   <Text mb={4} fontSize='sm'>
                     Plant health
