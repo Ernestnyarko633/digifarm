@@ -75,12 +75,13 @@ const FarmWallet = () => {
             >{`You currently have ${myFarms.length} farm wallet(s)`}</Text>
             <Grid
               templateColumns={{
-                base: 'repeat(2, 1fr)',
+                base: 'repeat(1, 1fr)',
                 md: 'repeat(2, 1fr)',
                 xl: 'repeat(3, 1fr)'
               }}
               w='100%'
-              gap={{ base: 6, md: 12 }}
+              gap={{ base: 3, md: 12 }}
+              mb={{ base: 10, md: 0 }}
             >
               {myFarms.map((farm, index) => {
                 return (

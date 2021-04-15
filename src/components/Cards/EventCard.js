@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import Fade from 'react-reveal/Fade'
@@ -9,15 +9,16 @@ const EventCard = ({ href, title, summary, image }) => {
       <Box
         rounded='xl'
         bgGradient='linear(to-l, #93CF88,#5AA250)'
-        px={{ md: 3 }}
-        py={{ md: 4 }}
+        px={3}
+        py={4}
         color='white'
       >
         <Flex align='center'>
-          <Avatar
-            size='xl'
+          <Image
+            w={{ base: 16, md: 20 }}
+            h={{ base: 16, md: 20 }}
+            rounded='100%'
             bgColor='white'
-            boxSize={{ md: 12, xl: 20 }}
             src={image}
           />
           <Box ml={2}>
@@ -31,8 +32,8 @@ const EventCard = ({ href, title, summary, image }) => {
                 href={href}
                 borderWidth={1}
                 borderColor='white'
-                px={{ md: 4 }}
-                py={{ md: 1 }}
+                px={4}
+                py={1}
                 fontSize='xs'
                 bg='transparent'
                 _hover={{ bg: 'transparent' }}
