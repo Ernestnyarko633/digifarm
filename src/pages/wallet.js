@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Box, Heading, Grid } from '@chakra-ui/react'
 import Layout from 'container/Layout'
@@ -10,7 +9,6 @@ import { useParams } from 'react-router-dom'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
 import FarmFinances from 'components/Cards/FarmFinances'
-//import Price from '../data/price.json'
 
 const Wallet = () => {
   document.title = 'Complete Farmer | Farm wallet'
@@ -98,101 +96,85 @@ const Wallet = () => {
     }
     setWallet(total)
   }, [farm])
+
   return (
     <Layout>
-      <FarmWalletEmptyState>
-        {!loading && !error && (
+      {loading || error ? (
+        <FetchCard
+          direction='column'
+          align='center'
+          justify='center'
+          mx='auto'
+          reload={() => {
+            ;(!farm?.length ||
+              !tasks?.length ||
+              !myFarmActivities?.length ||
+              !ScheduledTasks?.length) &&
+              triggerReload()
+          }}
+          loading={loading}
+          error={error}
+          text='Standby as we load your wallet and receipts'
+        />
+      ) : (
+        <FarmWalletEmptyState>
           <Box
             w='100%'
             px={{ base: 10, lg: 20 }}
             pt={{ base: 10, lg: 20 }}
             pb={{ base: 5, lg: 10 }}
           >
-            {false && setExpenses}
             <Heading
               as='h3'
+              mb={{ base: 2, lg: 4 }}
               textAlign={{ base: 'center', md: 'left' }}
               fontSize={{ base: '2xl', md: '3xl', xl: '4xl' }}
-              mt={{ base: 3, md: 6 }}
-              my={{ base: 3, md: 0 }}
             >
               Here's how your farm is doing
             </Heading>
             <Grid
               gap={{ base: 2, md: 8 }}
-              templateColumns={{
-                base: 'repeat(3, 1fr)'
-              }}
-              py={{ md: 5 }}
+              templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' }}
               w={{ base: '100%' }}
+              overflowX='scroll'
             >
-              <FundCard label='Total funds' amount={wallet} />
-
-              <FundCard label='Total funds used' amount={expenses} />
-
+              <FundCard label='Total Funds' amount={wallet} />
+              <FundCard label='Total Funds Used' amount={expenses} />
               <FundCard
-                label='Total funds balance'
+                label='Total Funds Balance'
                 amount={wallet - expenses}
               />
             </Grid>
           </Box>
-        )}
-        <Box w='100%' px={{ base: 10, lg: 20 }}>
-          {(loading || error) && (
-            <Box p={16}>
-              <FetchCard
-                direction='column'
-                align='center'
-                justify='center'
-                mx='auto'
-                reload={() => {
-                  ;(!farm?.length ||
-                    !tasks?.length ||
-                    !myFarmActivities?.length ||
-                    !ScheduledTasks?.length) &&
-                    triggerReload()
-                }}
-                loading={loading}
-                error={error}
-                text='Standby as we load your wallet and receipts'
-              />
-            </Box>
-          )}
-          {!loading && !error && (
-            <Box>
-              <Box
-                display={{ base: 'none', md: 'block' }}
-                as={FarmFinances}
-                farm={farm}
-                activities={myFarmActivities}
-                tasks={tasks}
-                scheduledTasks={ScheduledTasks}
-                setExpenses={setExpenses}
-              />
-            </Box>
-          )}
-          {!loading && !error && (
-            <React.Fragment>
-              <Heading
-                textAlign={{ base: 'center', md: 'left' }}
-                as='h3'
-                fontSize={{ base: '2xl', md: '3xl' }}
-                pt={{ base: 10, xl: 20 }}
-                pb={{ base: 10, xl: 10 }}
-              >
-                See and view your receipts to funds usage
-              </Heading>
-              <Individual
-                digitalFarmerFarm={farm}
-                activities={myFarmActivities}
-                farmfeeds={farmFeeds}
-                tasks={tasks}
-                ScheduledTasks={ScheduledTasks}
-              />
-            </React.Fragment>
-          )}
-        </Box>
-      </FarmWalletEmptyState>
+          <Box w='100%' px={{ base: 10, lg: 20 }}>
+            <Box
+              display={{ base: 'none', md: 'block' }}
+              as={FarmFinances}
+              farm={farm}
+              activities={myFarmActivities}
+              tasks={tasks}
+              scheduledTasks={ScheduledTasks}
+              setExpenses={setExpenses}
+            />
+            <Heading
+              textAlign={{ base: 'center', md: 'left' }}
+              as='h3'
+              fontSize={{ base: '2xl', md: '3xl' }}
+              pt={{ base: 5, xl: 20 }}
+              pb={{ base: 5, xl: 10 }}
+            >
+              See and view your receipts to funds usage
+            </Heading>
+            <Individual
+              digitalFarmerFarm={farm}
+              activities={myFarmActivities}
+              farmfeeds={farmFeeds}
+              tasks={tasks}
+              ScheduledTasks={ScheduledTasks}
+            />
+          </Box>
+        </FarmWalletEmptyState>
+      )}
     </Layout>
   )
 }
