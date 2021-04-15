@@ -149,6 +149,7 @@ export default function Farm() {
   ]
 
   const mapKey = index => index
+
   return isLoading || hasError ? (
     <FetchCard
       h='100vh'
