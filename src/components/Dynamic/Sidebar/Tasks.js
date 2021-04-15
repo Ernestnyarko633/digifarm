@@ -115,7 +115,7 @@ export default function Tasks({
               />
             </React.Fragment>
           )}
-        {feeds.length && (
+        {feeds.length > 0 && (
           <FarmUpdateCard
             title='FARM MANAGER UPDATE'
             duration={feeds[0]?.task?.duration}
