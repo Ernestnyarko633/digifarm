@@ -1,34 +1,37 @@
-import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react'
-import React from 'react'
-import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons'
-import PropTypes from 'prop-types'
-import DynamicDocument from '../Document'
-import FarmReceiptCard from '../Cards/FarmReceiptCard'
+/* eslint-disable */
+import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react';
+import React from 'react';
+import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons';
+import PropTypes from 'prop-types';
+import DynamicDocument from '../Document';
+import FarmReceiptCard from '../Cards/FarmReceiptCard';
 
 const menus = [
   { id: 1, icon: Calendar, state: 'compA' },
   { id: 2, icon: Weather, state: 'compB' },
   { id: 3, icon: Crop, state: 'compC' },
   { id: 4, icon: FarmSchedule, state: 'compD' },
-  { id: 5, icon: Updates, state: 'compE' }
-]
+  { id: 5, icon: Updates, state: 'compE' },
+];
 
 export default function Document({
   digitalFarmerFarm,
   activities,
   tasks,
   ScheduledTasks,
-  farmfeeds
+  farmfeeds,
 }) {
-  let state = 'compA'
+  let state = 'compA';
 
   return (
     <Grid
-      templateRows='repeat(1 1fr)'
-      templateColumns='5% 65% 30%'
+      templateRows={{ md: 'repeat(1 1fr)' }}
+      templateColumns={{ md: '5% 65% 30%' }}
       pos='relative'
       fontFamily='body'
       fontSize={{ md: 'md' }}
+      d={{ base: 'block', md: 'grid' }}
+      px={{ base: 4, md: 0 }}
     >
       <GridItem>
         <Box
@@ -44,9 +47,10 @@ export default function Document({
           shadow='md'
           px={{ md: 8 }}
           color='gray.600'
+          d={{ base: 'none', md: 'block' }}
         >
           <Box as='ul'>
-            {menus.map(item => (
+            {menus.map((item) => (
               <Flex
                 as='button'
                 role='button'
@@ -66,11 +70,12 @@ export default function Document({
           minW={{ lg: '65%' }}
           as='main'
           color='gray.800'
-          bg='gray.50'
+          bg={{ md: 'gray.50' }}
           fontFamily='body'
           overflowX='hidden'
           py={{ md: 56 }}
           px={{ md: 24 }}
+          mt={{ base: 36, md: 0 }}
           minH={{ lg: '100vh' }}
         >
           <Box mt={{ md: 10 }}>
@@ -85,21 +90,21 @@ export default function Document({
           </Box>
         </Box>
       </GridItem>
-      <GridItem>
+      <GridItem mt={{ base: 16, md: 0 }} mb={{ base: 32, md: 0 }}>
         <Box
           py={8}
-          right={0}
+          right={{ md: 0 }}
           bg='white'
           as='rightsidebar'
-          bottom={0}
-          pos='fixed'
+          bottom={{ md: 0 }}
+          pos={{ md: 'fixed' }}
           px={{ md: 8 }}
           h={{ lg: '84vh' }}
           w={{ md: '30%' }}
-          shadow='md'
-          overflowY='scroll'
+          shadow={{ md: 'md' }}
+          overflowY={{ md: 'scroll' }}
         >
-          <Grid gap={8}>
+          <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
             {digitalFarmerFarm?.order?.status === 'PAID' && (
               <React.Fragment>
                 <FarmReceiptCard
@@ -113,7 +118,7 @@ export default function Document({
         </Box>
       </GridItem>
     </Grid>
-  )
+  );
 }
 
 Document.propTypes = {
@@ -121,5 +126,5 @@ Document.propTypes = {
   activities: PropTypes.any,
   tasks: PropTypes.any,
   ScheduledTasks: PropTypes.any,
-  farmfeeds: PropTypes.any
-}
+  farmfeeds: PropTypes.any,
+};

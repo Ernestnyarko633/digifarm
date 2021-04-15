@@ -32,7 +32,7 @@ const CropSelection = () => {
   }
 
   return (
-    <Box mt={{ md: 32 }} w='90%' mx='auto'>
+    <Box w='90%' mx='auto'>
       <Box textAlign='center' py={10}>
         <Heading as='h4' size='xl'>
           Which Farm is right for you.
@@ -62,7 +62,7 @@ const CropSelection = () => {
             {categories?.map(cat => (
               <Box key={cat._id} label={cat.title}>
                 <FarmDetails
-                  catName={cat.name}
+                  catName={cat.title}
                   handleNext={handleNext}
                   query={
                     cat._id !== 'defualt' && { category: cat._id, status: 1 }

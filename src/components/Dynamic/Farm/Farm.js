@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Flex, Image } from '@chakra-ui/react'
-import Button from 'components/Button'
-import PropTypes from 'prop-types'
-import FarmLayout from './FarmLayout'
-import Map from 'components/Map/Map'
-import useApi from 'context/api'
-import EmptyMap from 'assets/images/map.png'
-import Fade from 'react-reveal/Fade'
+/* eslint-disable */
+import React, { useEffect, useState } from 'react';
+import { Box, Flex, Image } from '@chakra-ui/react';
+import Button from 'components/Button';
+import PropTypes from 'prop-types';
+import FarmLayout from './FarmLayout';
+import Map from 'components/Map/Map';
+import useApi from 'context/api';
+import EmptyMap from 'assets/images/map.png';
+import Fade from 'react-reveal/Fade';
 
-import FetchCard from 'components/FetchCard'
+import FetchCard from 'components/FetchCard';
 
 export default function Farm({
   onOpen,
@@ -25,25 +26,25 @@ export default function Farm({
   error,
   _error,
   farmfeeds,
-  reloads
+  reloads,
 }) {
-  const [_loading, _setLoading] = React.useState(false)
+  const [_loading, _setLoading] = React.useState(false);
   // const [band, setBand] = React.useState('NDVI')
 
   const [
     EOSTaskForStatsCreationIsLoading,
-    setEOSTaskForStatsCreationIsLoading
-  ] = useState(false)
+    setEOSTaskForStatsCreationIsLoading,
+  ] = useState(false);
   const [
     EOSTaskForStatsCreationHasError,
-    setEOSTaskForStatsCreationHasError
-  ] = useState(null)
-  const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({})
-  const [__error, _setError] = React.useState(null)
-  const { eosStats, createTask } = useApi()
+    setEOSTaskForStatsCreationHasError,
+  ] = useState(null);
+  const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({});
+  const [__error, _setError] = React.useState(null);
+  const { eosStats, createTask } = useApi();
 
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
     let EOSTaskForStatsCreationPayload = {
       type: 'lbe',
       params: {
@@ -51,53 +52,53 @@ export default function Farm({
         bands: ['B02', 'B03', 'B04'],
         geometry: {
           type: 'Polygon',
-          coordinates: [location]
+          coordinates: [location],
         },
         merge: true,
 
-        reference: 'ref_datetime'
-      }
-    }
+        reference: 'ref_datetime',
+      },
+    };
 
-    const fetchData = async payload => {
+    const fetchData = async (payload) => {
       try {
-        let key = `${EOSViewID?.results[0]?.view_id}_os_task_stats_creation`
-        const dataFromStorage = JSON.parse(sessionStorage.getItem(key))
+        let key = `${EOSViewID?.results[0]?.view_id}_os_task_stats_creation`;
+        const dataFromStorage = JSON.parse(sessionStorage.getItem(key));
         if (dataFromStorage) {
-          return setEOSTaskForStatsCreated(dataFromStorage)
+          return setEOSTaskForStatsCreated(dataFromStorage);
         } else {
-          setEOSTaskForStatsCreationHasError(null)
-          setEOSTaskForStatsCreationIsLoading(true)
-          const res = await createTask(payload)
+          setEOSTaskForStatsCreationHasError(null);
+          setEOSTaskForStatsCreationIsLoading(true);
+          const res = await createTask(payload);
           if (mounted) {
-            key && sessionStorage.setItem(key, JSON.stringify(res?.data))
+            key && sessionStorage.setItem(key, JSON.stringify(res?.data));
           }
-          setEOSTaskForStatsCreated(res?.data)
-          setEOSTaskForStatsCreationIsLoading(false)
+          setEOSTaskForStatsCreated(res?.data);
+          setEOSTaskForStatsCreationIsLoading(false);
         }
       } catch (error) {
-        setEOSTaskForStatsCreationHasError(error)
-        setEOSTaskForStatsCreationIsLoading(false)
+        setEOSTaskForStatsCreationHasError(error);
+        setEOSTaskForStatsCreationIsLoading(false);
       }
-    }
+    };
     if (mounted) {
-      EOSViewID && location && fetchData(EOSTaskForStatsCreationPayload)
+      EOSViewID && location && fetchData(EOSTaskForStatsCreationPayload);
     }
 
-    return () => (mounted = false)
-  }, [location, EOSViewID, reload, createTask])
+    return () => (mounted = false);
+  }, [location, EOSViewID, reload, createTask]);
 
-  const DownloadVisual = async downloadTaskID => {
+  const DownloadVisual = async (downloadTaskID) => {
     try {
-      _setError(null)
-      _setLoading(true)
-      await eosStats({ task: downloadTaskID })
-      _setLoading(false)
+      _setError(null);
+      _setLoading(true);
+      await eosStats({ task: downloadTaskID });
+      _setLoading(false);
     } catch (error) {
-      _setError(error)
-      _setLoading(false)
+      _setError(error);
+      _setLoading(false);
     }
-  }
+  };
 
   return (
     <FarmLayout
@@ -113,7 +114,7 @@ export default function Farm({
       error={error}
       _error={_error}
     >
-      <Box h={{ md: 128 }} w='100%'>
+      <Box h={{ base: 90, md: 128 }} w='100%' mt={{ base: 32, md: 0 }}>
         {EOSViewID && (
           <Box
             h='100%'
@@ -142,7 +143,7 @@ export default function Farm({
                 justify='center'
                 mx='auto'
                 reload={() => {
-                  ;(error || _error || __error) && reloads[0]()
+                  (error || _error || __error) && reloads[0]();
                 }}
                 loading={loading}
                 error={error || _error || __error}
@@ -157,7 +158,7 @@ export default function Farm({
         )}
       </Box>
       {EOSViewID && (
-        <Flex align='center' justify='flex-end' my={{ md: 6 }} px={{ md: 6 }}>
+        <Flex align='center' justify='flex-end' my={6} px={{ base: 4, md: 6 }}>
           <Fade right>
             <Button
               btntitle='Download'
@@ -183,14 +184,14 @@ export default function Farm({
               btntitle='Share'
               rounded='30px'
               h={12}
-              w={{ md: 40 }}
+              w={{ base: 20, md: 40 }}
               onClick={onOpen}
             />
           </Fade>
         </Flex>
       )}
     </FarmLayout>
-  )
+  );
 }
 
 Farm.propTypes = {
@@ -210,5 +211,5 @@ Farm.propTypes = {
   reloads: PropTypes.any,
   zoom: PropTypes.number,
   band: PropTypes.string,
-  eosTask: PropTypes.any
-}
+  eosTask: PropTypes.any,
+};

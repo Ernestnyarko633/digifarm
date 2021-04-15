@@ -64,9 +64,10 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const verifyPayment = async id => {
-    return await http.get({
-      url: `${DIGITAL_FARMER_API}/orders/verify-payment/${id}`
+  const verifyPayment = async payload => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/verify-payment`,
+      body: JSON.stringify(payload)
     })
   }
 

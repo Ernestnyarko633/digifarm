@@ -79,7 +79,6 @@ const FarmCard = ({ farm }) => {
         <Box d={{ base: 'none', xl: 'block' }}>
           <Button
             btntitle='View Farm'
-            disabled
             rounded='30px'
             w={{ md: '190px' }}
             h={{ md: '55px' }}
@@ -143,7 +142,6 @@ const FarmCard = ({ farm }) => {
       <Box d={{ base: 'block', xl: 'none' }} mt={{ base: 4, md: 10, xl: 0 }}>
         <Button
           btntitle='View Farm'
-          isDisabled={true}
           rounded='30px'
           w={{ base: '100%', md: '190px' }}
           h={{ base: 12, md: '55px' }}

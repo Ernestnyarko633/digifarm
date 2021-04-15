@@ -31,8 +31,13 @@ export default function Updates({ farmfeeds, error }) {
       </Grid>
       {farmfeeds?.length === 0 && (
         <Flex w='100%' justify='center' align='center'>
-          <Text w='100%' fontSize='xl' color='cf.400'>
-            NO UPDATES CURRENTLY AVAILABLE
+          <Text
+            w='100%'
+            fontSize='xl'
+            color='cf.400'
+            textAlign={{ base: 'center', md: 'initial' }}
+          >
+            No updates currently available.
           </Text>
         </Flex>
       )}
