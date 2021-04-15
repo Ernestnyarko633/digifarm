@@ -101,7 +101,9 @@ const FarmBoardContent = ({ farms }) => {
 
   //FIXME: larger feeds would slow down process
   const cleanedFeeds = feeds?.filter(
-    (v, i, a) => a.findIndex(t => JSON.stringify(t) === JSON.stringify(v)) === i
+    (feed, index, self) =>
+      self.findIndex(item => JSON.stringify(item) === JSON.stringify(feed)) ===
+      index
   )
 
   const mapKey = i => i

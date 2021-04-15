@@ -1,43 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
-import useAuth from 'context/auth'
-import {
-  Box,
-  Flex,
-  Avatar,
-  Heading,
-  Text,
-  Image,
-  Collapse
-} from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, Image, Collapse } from '@chakra-ui/react'
 
 const NewsCard = ({ activeFarm, timestamp, content, status }) => {
-  const { isAuthenticated } = useAuth()
-  const { user } = isAuthenticated()
   const [show, setShow] = React.useState(false)
   const handleToggle = () => setShow(!show)
 
   const NewHead = () => (
     <Flex align='center' justify='space-between'>
       <Flex align='center'>
-        <Avatar
-          size='md'
-          src={activeFarm?.order?.product?.cropVariety?.imageUrl}
-        />
         <Box ml={4}>
           <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
-            {`${user?.firstName}'s farm`}
+            Weekly News
           </Heading>
-          <Text color='gray.600' fontSize={{ base: 'sm', md: 'md' }}>
-            {`${activeFarm?.order?.product?.location?.name}, ${activeFarm?.order?.product?.location?.state}`}
-          </Text>
         </Box>
       </Flex>
 
-      <Box>
+      <Flex direction='column' justify='center' align='center'>
+        <Box mx={{ base: 4 }}>
+          <Text color='cf.400'>
+            {status === 'news' ? status.toUpperCase() : null}
+          </Text>
+        </Box>
         <Text color='gray.500'>{timestamp}</Text>
-      </Box>
+      </Flex>
     </Flex>
   )
 

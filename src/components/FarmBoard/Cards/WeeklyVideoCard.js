@@ -50,9 +50,12 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
         </Box>
       </Flex>
 
-      <Box>
+      <Flex direction='column' justify='center' align='center'>
+        <Box mx={{ base: 4 }}>
+          <Text color='cf.400'>{status ? 'VIDEOS' : null}</Text>
+        </Box>
         <Text color='gray.500'>{timestamp}</Text>
-      </Box>
+      </Flex>
     </Flex>
   )
 

@@ -1,12 +1,22 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { AiOutlineShareAlt } from 'react-icons/ai'
 import useComponent from 'context/component'
 import { BsHeart } from 'react-icons/bs'
+import { texTrancator } from 'helpers/misc'
 
 const FarmBoardCardWrapper = ({ children, status, content }) => {
   const { handleModalClick } = useComponent()
+
+  const arrayToString = (array = ['']) => {
+    let aneow = []
+    array.forEach(text => aneow.push(text.text))
+
+    const string = aneow.join()
+    return string.replace(/,/g, '')
+  }
 
   return (
     <Box
@@ -61,7 +71,13 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
                         url: window.location.href,
                         title: content?.data?.headline[0]?.text,
                         quote:
-                          content?.data?.body[0]?.primary?.conclusion[0]?.text
+                          texTrancator(
+                            100,
+                            arrayToString(
+                              content?.data?.body[0]?.primary?.description
+                            )
+                          ) + '... https://digitalfarmer.completefarmer.com' ||
+                          content?.data?.body[0]?.primary?.description[0]?.text
                       }
                     : status === 'weekly_videos'
                     ? {
