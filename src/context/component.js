@@ -12,6 +12,7 @@ export const ComponentContextProvider = ({ children }) => {
   const [modal, setModal] = useState('')
   const [clip, setClip] = useState({})
   const [sliderType, setSliderType] = React.useState('farms')
+  const [compState, setCompState] = React.useState('compA')
   const [currentFarmsSlide, setCurrentFarmsSlide] = React.useState(0)
   const [
     currentProcessingOrdersSlide,
@@ -50,6 +51,8 @@ export const ComponentContextProvider = ({ children }) => {
         isOpen,
         onClose,
         _xclip,
+        compState,
+        setCompState,
         sliderType,
         setSliderType,
         handleModalClick,

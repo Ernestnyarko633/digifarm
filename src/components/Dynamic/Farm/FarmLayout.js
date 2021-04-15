@@ -1,10 +1,12 @@
-import React from 'react'
-import { Box, Grid, GridItem } from '@chakra-ui/react'
-import PropTypes from 'prop-types'
-import FarmLeftSideBar from '../Container/FarmLeftSideBar'
-import FarmRightSidebar from '../Container/FarmRightSidebar'
-import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
+/* eslint-disable */
+import React from 'react';
+import { Box, Grid, GridItem } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
+import FarmLeftSideBar from '../Container/FarmLeftSideBar';
+import FarmRightSidebar from '../Container/FarmRightSidebar';
+import useApi from 'context/api';
+import useFetch from 'hooks/useFetch';
+import useComponent from 'context/component';
 export default function FarmLayout({
   children,
   reload,
@@ -21,41 +23,43 @@ export default function FarmLayout({
   reloads,
   ...rest
 }) {
-  const [state, setState] = React.useState('compA')
-  const { eosStats } = useApi()
+  const { compState, setCompState } = useComponent();
+  const { eosStats } = useApi();
   // for health card stats
   const {
     data: EOSStatistics,
     isLoading: EOSStatisticsIsLoading,
-    error: EOSStatisticsHasError
+    error: EOSStatisticsHasError,
   } = useFetch(null, eosTask?.task_id ? eosStats : null, reload, {
-    task: eosTask?.task_id
-  })
+    task: eosTask?.task_id,
+  });
   return (
     <Grid
-      templateRows='repeat(1 1fr)'
-      templateColumns='17% 53% 30%'
+      templateRows={{ md: 'repeat(1 1fr)' }}
+      templateColumns={{ md: '17% 53% 30%' }}
       pos='relative'
       fontFamily='body'
       fontSize={{ md: 'md' }}
+      d={{ base: 'block', md: 'grid' }}
+      px={{ base: 4, md: 0 }}
     >
-      <GridItem shadow='xl'>
-        <FarmLeftSideBar state={state} setState={setState} />
+      <GridItem shadow='xl' d={{ base: 'none', md: 'block' }}>
+        <FarmLeftSideBar state={compState} setState={setCompState} />
       </GridItem>
       <GridItem>
         <Box
-          minW={{ lg: '53%' }}
+          minW={{ base: '100%', lg: '53%' }}
           as='main'
           color='gray.800'
           fontFamily='body'
           overflowX='hidden'
-          minH='100vh'
+          minH={{ md: '100vh' }}
           {...rest}
         >
           {children}
         </Box>
       </GridItem>
-      <GridItem shadow='xl'>
+      <GridItem shadow={{ md: 'xl' }}>
         {!loading && !EOSStatisticsIsLoading && (
           <FarmRightSidebar
             farmfeeds={farmfeeds}
@@ -64,7 +68,7 @@ export default function FarmLayout({
             loading={loading || EOSStatisticsIsLoading}
             error={error || EOSStatisticsHasError}
             _error={_error}
-            state={state}
+            state={compState}
             reloads={reloads}
             eosStats={EOSStatistics}
             digitalFarmerFarm={digitalFarmerFarm}
@@ -73,7 +77,7 @@ export default function FarmLayout({
         )}
       </GridItem>
     </Grid>
-  )
+  );
 }
 
 FarmLayout.propTypes = {
@@ -90,5 +94,5 @@ FarmLayout.propTypes = {
   error: PropTypes.any,
   _error: PropTypes.any,
   reloads: PropTypes.array,
-  reload: PropTypes.number
-}
+  reload: PropTypes.number,
+};

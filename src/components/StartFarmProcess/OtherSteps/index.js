@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Box, Heading, Image, Text, useToast } from '@chakra-ui/react'
 import { AnimateSharedLayout, motion } from 'framer-motion'
+import { useIntersection } from 'react-use'
 
 import useStartFarm from 'context/start-farm'
 import useAuth from 'context/auth'
@@ -46,7 +47,12 @@ const OtherSteps = ({ data, history: { push } }) => {
     event.returnValue = 'Unsafed data maybe lost.'
   }
 
-  console.log(catName)
+  const intersectionRef = React.useRef(null)
+  const intersection = useIntersection(intersectionRef, {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1
+  })
 
   const getSteps = value => {
     switch (value) {
@@ -55,7 +61,13 @@ const OtherSteps = ({ data, history: { push } }) => {
       case 1:
         return <ChooseAcreage farm={selectedFarm} />
       case 2:
-        return <Contract farm={selectedFarm} {...{ user }} />
+        return (
+          <Contract
+            farm={selectedFarm}
+            {...{ user }}
+            intersectionRef={intersectionRef}
+          />
+        )
       case 3:
         return <PaymentOption farm={selectedFarm} />
       case 4:
@@ -245,6 +257,14 @@ const OtherSteps = ({ data, history: { push } }) => {
           ml={{ base: 4, md: 6 }}
           h={12}
           fontSize={{ md: 'lg' }}
+          disabled={
+            otherStep === 2 &&
+            user?.signature?.string &&
+            intersection &&
+            intersection.intersectionRatio < 1
+              ? true
+              : false
+          }
           width={width}
           btntitle={title}
           onClick={action}
