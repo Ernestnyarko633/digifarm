@@ -85,7 +85,11 @@ const FarmWallet = () => {
               {myFarms.map((farm, index) => {
                 return (
                   <Box key={mapKey(index)} textAlign='center'>
-                    <Link to={`/wallets/${farm._id}`} as={ReachRouter}>
+                    <Link
+                      to={`/wallets/${farm._id}`}
+                      as={ReachRouter}
+                      _hover={{ textDecor: 'none' }}
+                    >
                       <WalletCard
                         acreage={farm?.order?.acreage}
                         name={farm?.name}

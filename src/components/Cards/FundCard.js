@@ -1,24 +1,25 @@
-import React from 'react'
-import { Flex, Text, Icon } from '@chakra-ui/react'
-import { FaDollarSign } from 'react-icons/fa'
+/* eslint-disable */
+import React from 'react';
+import { Flex, Text, Icon } from '@chakra-ui/react';
+import { FaDollarSign } from 'react-icons/fa';
 
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 const FundCard = ({ amount, label }) => {
   return (
     <Flex
-      w={{ base: '300px', xl: '100%' }}
+      w={{ base: 40, xl: '100%' }}
       rounded='lg'
       filter={{
         base: 'none',
-        md: 'drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+        md: 'drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))',
       }}
       p={{ base: 6, md: 8 }}
       bg='white'
     >
       <Flex direction='column' align={{ md: 'center' }} w='100%'>
         <Text
-          lineHeight={{ base: '9px', md: '18px' }}
+          lineHeight={{ base: '14px', md: '18px' }}
           fontSize={{ base: 'sm', md: 'xl' }}
           fontWeight='bold'
           mt={1}
@@ -39,12 +40,12 @@ const FundCard = ({ amount, label }) => {
         </Flex>
       </Flex>
     </Flex>
-  )
-}
+  );
+};
 
 FundCard.propTypes = {
   amount: PropTypes.number.isRequired,
-  label: PropTypes.any.isRequired
-}
+  label: PropTypes.any.isRequired,
+};
 
-export default FundCard
+export default FundCard;

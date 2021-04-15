@@ -23,7 +23,7 @@ const WalletCard = ({ name, acreage, price }) => {
           Total
         </Text>
         <Heading fontSize={{ md: '3xl' }} fontWeight={900} mt={1}>
-          {getFormattedMoney(price * acreage)}
+          ${getFormattedMoney(price * acreage)}
         </Heading>
       </Flex>
     </Box>
