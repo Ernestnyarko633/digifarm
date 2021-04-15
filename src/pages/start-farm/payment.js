@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -6,26 +7,45 @@ import FetchCard from 'components/FetchCard'
 import qs from 'query-string'
 
 import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
 
 const PaymentVerificaiton = ({ history, location: { search } }) => {
-  const { verifyPayment } = useApi()
+  const [isLoading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState(false)
+  const [checker, setChecker] = React.useState(false)
+  const { createFarm } = useApi()
 
-  const { id } = qs.parse(search)
+  const query = qs.parse(search)
 
-  const { data, isLoading, error } = useFetch(null, verifyPayment, null, {
-    payment_id: id
-  })
-
-  if (data) {
-    history.push({
-      pathname: 'start-farm/individual',
-      state: {
-        data,
-        step: 4
+  React.useEffect(() => {
+    const fetch = async (id, record_id) => {
+      try {
+        setLoading(true)
+        const res = await createFarm(id, record_id)
+        history.push({
+          pathname: 'start-farm/individual',
+          state: {
+            data: res.data,
+            step: 4
+          }
+        })
+      } catch (err) {
+        setError(true)
+      } finally {
+        setLoading(false)
       }
-    })
-  }
+    }
+
+    if (
+      query.status === 'successful' &&
+      query.status_code === '100' &&
+      !checker
+    ) {
+      setChecker(true)
+      fetch(query['metadata[order_id]'], query.id)
+    } else {
+      setError(true)
+    }
+  }, [query, createFarm, checker, history])
 
   return isLoading || error ? (
     <FetchCard

@@ -51,7 +51,10 @@ const HomeEmptyState = () => {
           </Text>
         </Flex>
         <Fade bottom>
-          <FarmDetails catName='Top Selling' handleNext={handleGoToNext} />
+          <FarmDetails
+            catName='Top-selling farms'
+            handleNext={handleGoToNext}
+          />
         </Fade>
       </Box>
     )

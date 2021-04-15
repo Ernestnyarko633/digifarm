@@ -55,8 +55,8 @@ const PaymentOption = ({ farm }) => {
               title='Card'
               theme='For card payments'
               description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
-              notice='All transactions are charged a transaction fee of'
-              extraCharge='1.95%'
+              notice=''
+              extraCharge=''
               selected={paymentOption === Constants.paymentOptions[0]}
               onClick={() => setPaymentOption(Constants.paymentOptions[0])}
             />
