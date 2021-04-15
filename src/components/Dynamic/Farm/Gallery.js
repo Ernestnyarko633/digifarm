@@ -65,20 +65,23 @@ export default function Gallery({ farmfeeds, loading }) {
           </Box>
         </Box>
       </GridItem>
-      <GridItem>
+      <GridItem bg='gray.50' px={{ base: 4, md: 24 }}>
         <Box
           minW={{ lg: '95%' }}
           as='main'
           color='gray.800'
-          bg='gray.50'
           fontFamily='body'
           overflowX='hidden'
           py={{ md: 56 }}
-          px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
           {!loading && farmfeeds && (
-            <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
+            <Grid
+              templateColumns={{ md: 'repeat(2, 1fr)' }}
+              gap={20}
+              mt={{ base: 40, md: 0 }}
+              mb={{ base: 16, md: 0 }}
+            >
               {farmfeeds?.map((_feed) => {
                 return (
                   <ImageGallery
