@@ -7,7 +7,7 @@ import { getFormattedMoney } from 'helpers/misc'
 const WalletCard = ({ name, acreage, price }) => {
   return (
     <Box
-      w={{ base: '100%', md: '100%' }}
+      w={{ base: 40, md: '100%' }}
       rounded='lg'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       p={6}
