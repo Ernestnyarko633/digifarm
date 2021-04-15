@@ -18,7 +18,7 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
   return (
     <React.Fragment>
       <Fade bottom>
-        <Box w='100%' py={{ md: 5 }}>
+        <Box w='100%' py={{ base: 3, md: 5 }}>
           <Flex w='100%' justify='flex-end'>
             <Text>{new Date(date).toLocaleDateString()}</Text>
           </Flex>

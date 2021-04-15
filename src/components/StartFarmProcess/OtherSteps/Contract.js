@@ -22,7 +22,7 @@ import { IoMdCreate } from 'react-icons/io'
 
 const MotionGrid = motion.custom(Grid)
 
-const Contract = () => {
+const Contract = ({ intersectionRef }) => {
   const [signatureModal, setSignatureModal] = React.useState(false)
   const [isEditing, setIsEditing] = React.useState(false)
   const { user } = useAuth()
@@ -51,7 +51,7 @@ const Contract = () => {
           </Heading>
           <Text
             textAlign='justify'
-            lineHeight={{ base: '35px', md: '60px' }}
+            lineHeight={{ base: '35px', md: '40px' }}
             fontSize={{ base: 'sm', md: 'xl' }}
             px={{ md: 5 }}
           >
@@ -182,7 +182,7 @@ const Contract = () => {
                 alt='CEO Signature'
               />
             </Box>
-            <Box textAlign='center' pos='relative'>
+            <Box textAlign='center' pos='relative' ref={intersectionRef}>
               <Heading as='h5' fontSize={{ md: 'lg' }} mb={2}>
                 {user?.firstName + ' ' + user?.lastName}
               </Heading>
@@ -215,7 +215,8 @@ const Contract = () => {
 }
 
 Contract.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  intersectionRef: PropTypes.object.isRequired
 }
 
 export default Contract
