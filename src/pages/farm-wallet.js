@@ -60,22 +60,22 @@ const FarmWallet = () => {
             justify='center'
             w='100%'
             py={{ base: 10, md: 20 }}
-            px={{ base: 10, md: 20 }}
+            px={{ base: 4, md: 20 }}
           >
             <Heading
               textAlign='center'
               fontSize={{ base: '2xl', md: 'xl' }}
-              mb={{ md: 2 }}
+              mb={2}
             >
               Click on farm to view wallet
             </Heading>
             <Text
               textAlign='center'
-              mb={{ base: 3, md: 6 }}
+              mb={{ base: 4, md: 6 }}
             >{`You currently have ${myFarms.length} farm wallet(s)`}</Text>
             <Grid
               templateColumns={{
-                base: 'repeat(1, 1fr)',
+                base: 'repeat(2, 1fr)',
                 md: 'repeat(2, 1fr)',
                 xl: 'repeat(3, 1fr)'
               }}
@@ -85,7 +85,11 @@ const FarmWallet = () => {
               {myFarms.map((farm, index) => {
                 return (
                   <Box key={mapKey(index)} textAlign='center'>
-                    <Link to={`/wallets/${farm._id}`} as={ReachRouter}>
+                    <Link
+                      to={`/wallets/${farm._id}`}
+                      as={ReachRouter}
+                      _hover={{ textDecor: 'none' }}
+                    >
                       <WalletCard
                         acreage={farm?.order?.acreage}
                         name={farm?.name}
