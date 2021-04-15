@@ -26,19 +26,18 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
     selectedItemFunc(array[comparant])
   }
 
-  const YoutubeSlide = ({ url, isSelected }) => (
+  const YoutubeSlide = ({ url }) => (
     <ReactPlayer
       width='100%'
       controls={true}
       loop={true}
       volume={0.3}
       url={url}
-      playing={isSelected === activeVideoIndex}
+      playing={false}
     />
   )
   YoutubeSlide.propTypes = {
-    url: PropTypes.any,
-    isSelected: PropTypes.any
+    url: PropTypes.any
   }
 
   const NewHead = () => (
@@ -71,7 +70,6 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
           <YoutubeSlide
             url={selectedVideo?.weekly_video?.embed_url}
             muted
-            isSelected={activeVideoIndex}
             playing={false}
           />
           <Flex
