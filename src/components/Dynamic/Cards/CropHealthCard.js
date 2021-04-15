@@ -18,12 +18,12 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
   return (
     <React.Fragment>
       <Fade bottom>
-        <Box w='100%' py={{ md: 5 }}>
+        <Box w='100%' py={{ base: 3, md: 5 }}>
           <Flex w='100%' justify='flex-end'>
             <Text>{new Date(date).toLocaleDateString()}</Text>
           </Flex>
           <Grid
-            templateColumns={{ md: 'repeat(3, 1fr)' }}
+            templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }}
             gap={4}
             bg='white'
             rounded='xl'

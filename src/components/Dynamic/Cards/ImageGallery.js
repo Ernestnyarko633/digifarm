@@ -1,44 +1,45 @@
-import React from 'react'
-import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react'
-import { IoEllipsisVertical } from 'react-icons/io5'
-import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import { motion } from 'framer-motion'
-import PropTypes from 'prop-types'
+/* eslint-disable */
+import React from 'react';
+import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react';
+import { IoEllipsisVertical } from 'react-icons/io5';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 
-const MotionFlex = motion.custom(Flex)
+const MotionFlex = motion.custom(Flex);
 
 export default function ImageGallery({ title, farmfeeds, activityName }) {
-  const [images, setImages] = React.useState([])
-  const [selectedImage, setSelectedImage] = React.useState({})
-  const [activeIndex, setActiveIndex] = React.useState(0)
+  const [images, setImages] = React.useState([]);
+  const [selectedImage, setSelectedImage] = React.useState({});
+  const [activeIndex, setActiveIndex] = React.useState(0);
 
-  const handleClick = value => {
+  const handleClick = (value) => {
     const comparant =
       activeIndex + value === 0 ||
       activeIndex + value > images.length - 1 ||
       activeIndex + value < 0
         ? 0
-        : activeIndex + value
+        : activeIndex + value;
 
-    setActiveIndex(comparant)
-    setSelectedImage(images[comparant])
-  }
+    setActiveIndex(comparant);
+    setSelectedImage(images[comparant]);
+  };
   React.useEffect(() => {
-    let array = []
-    const _feeds = feed => {
-      return feed?.media?.forEach(_media => {
-        if (_media?.type === 'image') array.push(_media)
-      })
-    }
+    let array = [];
+    const _feeds = (feed) => {
+      return feed?.media?.forEach((_media) => {
+        if (_media?.type === 'image') array.push(_media);
+      });
+    };
     const feeds = () =>
-      farmfeeds?.forEach(feed => {
-        return _feeds(feed?.feed)
-      })
-    feeds()
+      farmfeeds?.forEach((feed) => {
+        return _feeds(feed?.feed);
+      });
+    feeds();
 
-    setImages(array)
-    setSelectedImage(array[0])
-  }, [farmfeeds, activityName])
+    setImages(array);
+    setSelectedImage(array[0]);
+  }, [farmfeeds, activityName]);
   return (
     <Box>
       <Flex align='center' justify='space-between'>
@@ -49,10 +50,10 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
       </Flex>
 
       <Box mt={6}>
-        <Box pos='relative'>
+        <Box pos='relative' overflow='hidden'>
           <Image
             rounded='lg'
-            h={{ md: 85 }}
+            h={{ base: 80, md: 85 }}
             w='100%'
             objectFit='cover'
             src={selectedImage?.url}
@@ -62,7 +63,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
             justify='center'
             pos='absolute'
             bottom={6}
-            left='45%'
+            left={{ base: '20%', md: '45%' }}
           >
             <Flex
               as='button'
@@ -102,15 +103,15 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
           </Flex>
         </Box>
 
-        <MotionFlex pos='relative' minW={120} mt={4}>
+        <MotionFlex pos='relative' w={120} mt={4} overflowX='scroll'>
           {images.map((item, index) => (
             <Box
               as='button'
               role='button'
               aria-label='image button'
               onClick={() => {
-                setSelectedImage(item)
-                setActiveIndex(index)
+                setSelectedImage(item);
+                setActiveIndex(index);
               }}
               mr={6}
               key={item.id}
@@ -120,7 +121,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
             >
               <Image
                 h={20}
-                w={32}
+                w={{ base: 32, md: 32 }}
                 objectFit='cover'
                 rounded='md'
                 src={item.url}
@@ -130,11 +131,11 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
         </MotionFlex>
       </Box>
     </Box>
-  )
+  );
 }
 
 ImageGallery.propTypes = {
   title: PropTypes.string,
   farmfeeds: PropTypes.array.isRequired,
-  activityName: PropTypes.string.isRequired
-}
+  activityName: PropTypes.string.isRequired,
+};

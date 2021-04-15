@@ -1,43 +1,44 @@
-import { Box, Grid, Heading } from '@chakra-ui/react'
-import EventCard from 'components/Cards/EventCard'
-import React from 'react'
-import Prismic from 'prismic-javascript'
-import getConfig from 'utils/configs'
+/* eslint-disable */
+import { Box, Grid, Heading } from '@chakra-ui/react';
+import EventCard from 'components/Cards/EventCard';
+import React from 'react';
+import Prismic from 'prismic-javascript';
+import getConfig from 'utils/configs';
 
 const RightSidebar = () => {
-  const [doc, setDocData] = React.useState(null)
+  const [doc, setDocData] = React.useState(null);
 
-  const mapKey = index => index
-  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
+  const mapKey = (index) => index;
+  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig();
 
   const Client = Prismic.client(PRISMIC_API, {
-    accessToken: PRISMIC_ACCESS_TOKEN
-  })
+    accessToken: PRISMIC_ACCESS_TOKEN,
+  });
 
   React.useEffect(() => {
-    let mounted = true
+    let mounted = true;
     if (mounted && !doc) {
       const fetchData = async () => {
         const response = await Client.query(
           Prismic.Predicates.at('document.type', 'announcements')
-        )
+        );
         if (response) {
-          setDocData(response.results)
+          setDocData(response.results);
         }
-      }
-      fetchData()
+      };
+      fetchData();
     }
-    return () => (mounted = false)
-  }, [Client, doc])
+    return () => (mounted = false);
+  }, [Client, doc]);
 
   return (
     <Box
-      pt={28}
-      right={0}
-      bg='white'
+      pt={{ base: 12, md: 28 }}
+      right={{ md: 0 }}
+      bg={{ md: 'white' }}
       as='aside'
-      bottom={0}
-      pos='fixed'
+      bottom={{ md: 0 }}
+      pos={{ md: 'fixed' }}
       px={{ md: 5, xl: 10 }}
       h={{ lg: '100vh' }}
       w={{ md: '22%', xl: '25%' }}
@@ -45,7 +46,7 @@ const RightSidebar = () => {
       <Heading
         as='h4'
         textTransform='uppercase'
-        fontSize={{ md: '2xl' }}
+        fontSize={{ base: 'lg', md: '2xl' }}
         fontWeight={700}
         borderBottomWidth={1}
         borderBottomColor='gray.300'
@@ -60,7 +61,7 @@ const RightSidebar = () => {
         </Text>
       </Fade> */}
 
-      <Grid gap={4} mt={{ md: 4 }} maxH={{ md: 90 }}>
+      <Grid gap={4} mt={4} minH={{ base: 64, md: 90 }}>
         {doc?.map((e, i) => (
           <EventCard
             key={mapKey(i)}
@@ -72,7 +73,7 @@ const RightSidebar = () => {
         ))}
       </Grid>
     </Box>
-  )
-}
+  );
+};
 
-export default RightSidebar
+export default RightSidebar;
