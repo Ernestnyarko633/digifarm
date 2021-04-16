@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Box, Heading, Image, Text, useToast } from '@chakra-ui/react'
@@ -172,7 +171,10 @@ const OtherSteps = ({ data, history: { push } }) => {
                 textAlign={{ base: 'center', md: 'initial' }}
               >
                 ({farm.cropVariety?.name}){' '}
-                <Box as='br' display={{ md: 'none' }} /> #{farm?.name}
+                <Box as='br' display={{ md: 'none' }} />{' '}
+                <Text as='span' d={{ base: 'none', md: 'block' }}>
+                  #{farm?.name}
+                </Text>
               </Text>
             </Flex>
           ))}
@@ -275,7 +277,7 @@ const OtherSteps = ({ data, history: { push } }) => {
 }
 
 OtherSteps.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.object,
   history: PropTypes.object.isRequired
 }
 

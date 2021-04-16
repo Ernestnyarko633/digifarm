@@ -47,7 +47,7 @@ const ModalWrapper = ({
 
 ModalWrapper.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   size: PropTypes.string,
   isCentered: PropTypes.bool,

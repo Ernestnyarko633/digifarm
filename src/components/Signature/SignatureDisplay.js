@@ -29,15 +29,18 @@ const SignatureDisplay = ({ data, isEditing, setIsEditing, contract }) => {
         bgColor='white'
         justifyContent='space-between'
       >
-        <Box p={contract ? 0 : 5} height='100px' width='200px'>
+        <Box
+          p={contract ? 0 : 5}
+          height={contract ? 'unset' : '100px'}
+          width='200px'
+        >
           {data?.check === 'image' ? (
             <Image
-              p='10px'
               src={data?.string}
               alt='signature'
-              pos={contract ? 'absolute' : ''}
-              width={contract ? '200px' : '150px'}
-              height={contract ? '120px' : '150px'}
+              p={contract ? '0' : '10px'}
+              maxW={contract ? '200px' : '150px'}
+              maxH={contract ? '100px' : '150px'}
             />
           ) : (
             <Text
