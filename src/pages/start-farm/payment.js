@@ -14,10 +14,9 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
   const [checker, setChecker] = React.useState(false)
   const { createFarm } = useApi()
 
-  const query = qs.parse(search)
-
   React.useEffect(() => {
-    const fetch = async (id, record_id) => {
+    const query = qs.parse(search)
+    const verifyAndCreate = async (id, record_id) => {
       try {
         setLoading(true)
         const res = await createFarm(id, record_id)
@@ -41,11 +40,19 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
       !checker
     ) {
       setChecker(true)
-      fetch(query['metadata[order_id]'], query.id)
+      const queryParams = new URLSearchParams(search)
+      queryParams.delete('id')
+      queryParams.delete('status')
+      queryParams.delete('status_code')
+      queryParams.delete('metadata[order_id]')
+      history.replace({
+        search: queryParams.toString()
+      })
+      verifyAndCreate(query['metadata[order_id]'], query.id)
     } else {
       setError(true)
     }
-  }, [query, createFarm, checker, history])
+  }, [createFarm, checker, search, history])
 
   return isLoading || error ? (
     <FetchCard

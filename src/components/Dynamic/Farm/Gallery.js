@@ -1,71 +1,27 @@
-/* eslint-disable */
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Flex,
   Grid,
   GridItem,
-  Icon,
   Text,
   Image,
-  Heading,
-} from '@chakra-ui/react';
-import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons';
-import Gal from 'assets/images/gallery.png';
-import ImageGallery from '../Cards/ImageGallery';
-import PropTypes from 'prop-types';
-
-const menus = [
-  { id: 1, icon: Calendar, state: 'compA' },
-  { id: 2, icon: Weather, state: 'compB' },
-  { id: 3, icon: Crop, state: 'compC' },
-  { id: 4, icon: FarmSchedule, state: 'compD' },
-  { id: 5, icon: Updates, state: 'compE' },
-];
+  Heading
+} from '@chakra-ui/react'
+import Gal from 'assets/images/gallery.png'
+import ImageGallery from '../Cards/ImageGallery'
+import PropTypes from 'prop-types'
 
 export default function Gallery({ farmfeeds, loading }) {
   return (
     <Grid
-      templateRows={{ md: 'repeat(1 1fr)' }}
-      templateColumns={{ md: '5% 95%' }}
+      templateRows='repeat(1 1fr)'
       pos='relative'
       fontFamily='body'
       fontSize={{ md: 'md' }}
       d={{ base: 'block', md: 'grid' }}
     >
       <GridItem>
-        <Box
-          as='aside'
-          pos='fixed'
-          bottom={0}
-          left={0}
-          h={{ lg: '84vh' }}
-          w={{ md: '5%' }}
-          bg='white'
-          zIndex={50}
-          pt={10}
-          shadow='md'
-          px={{ md: 8 }}
-          color='gray.600'
-          d={{ base: 'none', md: 'block' }}
-        >
-          <Box as='ul'>
-            {menus.map((item) => (
-              <Flex
-                as='button'
-                role='button'
-                aria-label={`${item.icon} button`}
-                key={item.id}
-                align='center'
-                pb={6}
-              >
-                <Icon as={item.icon} />
-              </Flex>
-            ))}
-          </Box>
-        </Box>
-      </GridItem>
-      <GridItem bg='gray.50' px={{ base: 4, md: 24 }}>
         <Box
           minW={{ lg: '95%' }}
           as='main'
@@ -82,7 +38,7 @@ export default function Gallery({ farmfeeds, loading }) {
               mt={{ base: 40, md: 0 }}
               mb={{ base: 16, md: 0 }}
             >
-              {farmfeeds?.map((_feed) => {
+              {farmfeeds?.map(_feed => {
                 return (
                   <ImageGallery
                     key={_feed._id}
@@ -90,7 +46,7 @@ export default function Gallery({ farmfeeds, loading }) {
                     farmfeeds={_feed?.data}
                     activityName={_feed?.title}
                   />
-                );
+                )
               })}
             </Grid>
           )}
@@ -120,10 +76,10 @@ export default function Gallery({ farmfeeds, loading }) {
         </Box>
       </GridItem>
     </Grid>
-  );
+  )
 }
 
 Gallery.propTypes = {
   farmfeeds: PropTypes.array.isRequired,
-  loading: PropTypes.any,
-};
+  loading: PropTypes.any
+}

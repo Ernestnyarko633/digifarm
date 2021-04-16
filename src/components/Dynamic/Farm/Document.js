@@ -1,27 +1,17 @@
-/* eslint-disable */
-import { Box, Flex, Grid, GridItem, Icon } from '@chakra-ui/react';
-import React from 'react';
-import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons';
-import PropTypes from 'prop-types';
-import DynamicDocument from '../Document';
-import FarmReceiptCard from '../Cards/FarmReceiptCard';
-
-const menus = [
-  { id: 1, icon: Calendar, state: 'compA' },
-  { id: 2, icon: Weather, state: 'compB' },
-  { id: 3, icon: Crop, state: 'compC' },
-  { id: 4, icon: FarmSchedule, state: 'compD' },
-  { id: 5, icon: Updates, state: 'compE' },
-];
+import { Box, Grid, GridItem } from '@chakra-ui/react'
+import React from 'react'
+import PropTypes from 'prop-types'
+import DynamicDocument from '../Document'
+import FarmReceiptCard from '../Cards/FarmReceiptCard'
 
 export default function Document({
   digitalFarmerFarm,
   activities,
   tasks,
   ScheduledTasks,
-  farmfeeds,
+  farmfeeds
 }) {
-  let state = 'compA';
+  let state = 'compA'
 
   return (
     <Grid
@@ -33,38 +23,6 @@ export default function Document({
       d={{ base: 'block', md: 'grid' }}
       px={{ base: 4, md: 0 }}
     >
-      <GridItem>
-        <Box
-          as='aside'
-          pos='fixed'
-          bottom={0}
-          left={0}
-          h={{ lg: '84vh' }}
-          w={{ md: '5%' }}
-          bg='white'
-          zIndex={50}
-          pt={10}
-          shadow='md'
-          px={{ md: 8 }}
-          color='gray.600'
-          d={{ base: 'none', md: 'block' }}
-        >
-          <Box as='ul'>
-            {menus.map((item) => (
-              <Flex
-                as='button'
-                role='button'
-                aria-label={`${item.icon} button`}
-                key={item.id}
-                align='center'
-                pb={6}
-              >
-                <Icon as={item.icon} />
-              </Flex>
-            ))}
-          </Box>
-        </Box>
-      </GridItem>
       <GridItem>
         <Box
           minW={{ lg: '65%' }}
@@ -118,7 +76,7 @@ export default function Document({
         </Box>
       </GridItem>
     </Grid>
-  );
+  )
 }
 
 Document.propTypes = {
@@ -126,5 +84,5 @@ Document.propTypes = {
   activities: PropTypes.any,
   tasks: PropTypes.any,
   ScheduledTasks: PropTypes.any,
-  farmfeeds: PropTypes.any,
-};
+  farmfeeds: PropTypes.any
+}
