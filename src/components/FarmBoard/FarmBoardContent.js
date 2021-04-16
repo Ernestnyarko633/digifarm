@@ -111,7 +111,7 @@ const FarmBoardContent = ({ farms }) => {
       case 'news':
         return (
           <>
-            {(filter === 'news' || filter === 'combined') && (
+            {filter === 'news' && (
               <NewsCard
                 activeFarm={farms[activeFarmIndex]}
                 content={content}
@@ -126,7 +126,7 @@ const FarmBoardContent = ({ farms }) => {
       case 'weekly_videos':
         return (
           <React.Fragment>
-            {(filter === 'weekly videos' || filter === 'combined') && (
+            {filter === 'weekly videos' && (
               <WeeklyVideoCard
                 activeFarm={farms[activeFarmIndex]}
                 content={content}
@@ -191,7 +191,7 @@ const FarmBoardContent = ({ farms }) => {
             {feeds?.length > 0 ? (
               cleanedFeeds.map((content, index) => {
                 return (
-                  <Fade key={mapKey(index)}>
+                  <Fade bottom key={mapKey(index)}>
                     {renderCard(content?.type, content)}
                   </Fade>
                 )

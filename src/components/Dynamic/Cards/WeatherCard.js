@@ -1,7 +1,6 @@
 import { Box, Flex, Heading, Icon, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Cloud } from 'theme/Icons'
 import Fade from 'react-reveal/Fade'
 
 export default function WeatherCard({ icon, title, duration, value }) {
@@ -11,6 +10,7 @@ export default function WeatherCard({ icon, title, duration, value }) {
         w='100%'
         rounded='lg'
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+        mt={8}
         p={8}
         bg='white'
       >
@@ -31,13 +31,17 @@ export default function WeatherCard({ icon, title, duration, value }) {
         </Flex>
 
         <Box mt={2} w={{ md: 70 }}>
-          <Icon as={Cloud} boxSize={10} />
-          <Heading fontSize={{ md: '6xl' }} fontWeight={900} mt={1}>
+          <Heading
+            fontSize={{ md: '3xl' }}
+            textAlign='center'
+            fontWeight={900}
+            mt={1}
+          >
             {value?.toFixed(2)} C
           </Heading>
-          <Text fontSize='sm' color='gray.500' mt={2}>
+          {/* <Text fontSize='sm' color='gray.500' mt={2}>
             Weather is cloudy today. Looks like it might be raining on your farm
-          </Text>
+          </Text> */}
         </Box>
       </Box>
     </Fade>
