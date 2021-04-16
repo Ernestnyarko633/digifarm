@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  Avatar,
   Box,
-  Divider,
   Flex,
   Grid,
-  Heading,
   Icon,
-  ListItem,
   Text,
+  Avatar,
+  Divider,
+  Heading,
+  ListItem,
   UnorderedList
 } from '@chakra-ui/react'
 import { Support, Schedule, Update } from 'theme/Icons'
@@ -24,8 +24,29 @@ import ImageLoader from 'components/ImageLoader'
 
 const MotionGrid = motion.custom(Grid)
 
+const SupportComp = () => (
+  <>
+    <Heading as='h6' fontSize='md' mb={3}>
+      What is included in this farm
+    </Heading>
+    <Flex justify='space-between' align='center' fontSize='sm'>
+      <Flex align='center'>
+        <Icon as={Update} color='cf.400' boxSize={5} />
+        <Text ml={1}>Farm Updates</Text>
+      </Flex>
+      <Flex align='center' mx={6}>
+        <Icon as={Support} color='cf.400' boxSize={5} />
+        <Text ml={1}>Support</Text>
+      </Flex>
+      <Flex align='center'>
+        <Icon as={Schedule} color='cf.400' boxSize={5} />
+        <Text ml={1}>Scheduled Farm Visits</Text>
+      </Flex>
+    </Flex>
+  </>
+)
+
 const AboutFarmManager = ({ farm }) => {
-  const [isLoaded, setLoading] = React.useState(false)
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
   const Client = Prismic.client(PRISMIC_API, {
@@ -53,8 +74,8 @@ const AboutFarmManager = ({ farm }) => {
     <Box mx={{ base: 2, md: 0 }}>
       <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
         <Box
-          px={{ base: 6, md: 20 }}
-          pt={{ base: 6, md: 20 }}
+          px={{ base: 6, md: 20, lg: 10 }}
+          pt={{ base: 6, md: 20, lg: 10 }}
           borderRightColor='gray.400'
           borderRightWidth={{ md: 2 }}
         >
@@ -63,8 +84,6 @@ const AboutFarmManager = ({ farm }) => {
               h={{ base: 64, md: 80 }}
               w={{ base: 80, md: '100%' }}
               height='300px'
-              isLoaded={isLoaded}
-              setLoading={setLoading}
               rounded='3xl'
               objectFit='cover'
               src={
@@ -80,23 +99,7 @@ const AboutFarmManager = ({ farm }) => {
             mt={{ md: 20 }}
             display={{ base: 'none', md: 'flex' }}
           >
-            <Heading as='h6' fontSize='md' mb={3}>
-              What is included in this farm
-            </Heading>
-            <Flex justify='space-between' align='center' fontSize='sm'>
-              <Flex align='center'>
-                <Icon as={Update} color='cf.400' boxSize={5} />
-                <Text ml={1}>Farm Updates</Text>
-              </Flex>
-              <Flex align='center' mx={6}>
-                <Icon as={Support} color='cf.400' boxSize={5} />
-                <Text ml={1}>Support</Text>
-              </Flex>
-              <Flex align='center'>
-                <Icon as={Schedule} color='cf.400' boxSize={5} />
-                <Text ml={1}>Scheduled Farm Visits</Text>
-              </Flex>
-            </Flex>
+            <SupportComp />
           </Flex>
         </Box>
         <Box>
@@ -127,7 +130,8 @@ const AboutFarmManager = ({ farm }) => {
                   <Box py={10} px={2}>
                     <Avatar
                       src={doc?.manager_image?.url}
-                      size={{ base: 4, md: 8 }}
+                      // size={{ base: 4, md: 'xl' }}
+                      size='xl'
                       justify='space-around'
                     />
                   </Box>
@@ -174,26 +178,10 @@ const AboutFarmManager = ({ farm }) => {
           direction='column'
           mt={{ md: 20 }}
           display={{ base: 'flex', md: 'none' }}
-          px={{ base: 6, md: 20 }}
+          px={{ base: 6 }}
           mb={4}
         >
-          <Heading as='h6' fontSize='md' mb={3}>
-            What is included in this farm
-          </Heading>
-          <Flex fontSize='sm' direction='column'>
-            <Flex align='center'>
-              <Icon as={Update} color='cf.400' boxSize={5} />
-              <Text ml={1}>Farm Updates</Text>
-            </Flex>
-            <Flex align='center' py={3}>
-              <Icon as={Support} color='cf.400' boxSize={5} />
-              <Text ml={1}>Support</Text>
-            </Flex>
-            <Flex align='center'>
-              <Icon as={Schedule} color='cf.400' boxSize={5} />
-              <Text ml={1}>Scheduled Farm Visits</Text>
-            </Flex>
-          </Flex>
+          <SupportComp />
         </Flex>
       </MotionGrid>
     </Box>

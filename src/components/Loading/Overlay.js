@@ -8,7 +8,11 @@ const Overlay = ({ text }) => {
       <Box pos='fixed' width='100vw' bg='cf-dark.500'>
         <Flex direction='column' align='center' justify='center' h='100vh'>
           <Spinner size='lg' color='cf.400' />
-          {text && <Text className='loading-text loading-text-b'>{text}</Text>}
+          {text && (
+            <Text textAlign='center' className='loading-text loading-text-b'>
+              {text}
+            </Text>
+          )}
         </Flex>
       </Box>
     </Slide>

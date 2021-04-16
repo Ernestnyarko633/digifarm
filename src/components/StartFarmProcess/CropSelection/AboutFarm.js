@@ -16,34 +16,39 @@ import { getformattedDate } from 'helpers/misc'
 import ImageLoader from 'components/ImageLoader'
 
 const AboutFarm = ({ farm }) => {
-  const [isLoaded, setLoading] = React.useState(false)
   return (
     <Box textAlign='left' css={{ direction: 'ltr' }}>
-      <Box>
-        <Flex alignItems='center'>
-          <Heading as='h5' size='md' textTransform='uppercase'>
-            {farm.cropVariety?.crop?.name}
-          </Heading>
-          <Text ml={2} as='span' fontSize='xs' textColor='gray.500'>
-            ({farm.cropVariety?.name}) #{farm.name}
+      <Flex justifyContent='space-between'>
+        <Box>
+          <Flex alignItems='center'>
+            <Heading as='h5' size='md' textTransform='uppercase'>
+              {farm.cropVariety?.crop?.name}
+            </Heading>
+            <Text ml={2} as='span' fontSize='xs' textColor='gray.500'>
+              ({farm.cropVariety?.name}) #{farm.name}
+            </Text>
+          </Flex>
+          <Text fontSize='xs'>
+            <Icon as={IoLocation} color='cf.400' />
+            {farm.location?.name}, {farm.location?.state},{' '}
+            {farm.location?.country}
+            <Icon as={BsInfoCircleFill} color='cf.400' mx={2} />
           </Text>
-        </Flex>
-        <Text fontSize='xs'>
-          <Icon as={IoLocation} color='cf.400' />
-          {farm.location?.name}, {farm.location?.state},{' '}
-          {farm.location?.country}
-          <Icon as={BsInfoCircleFill} color='cf.400' mx={2} />
-        </Text>
-        <Divider orientation='horizontal' borderColor='gray.300' my={6} />
-      </Box>
+        </Box>
+        <Box>
+          <Heading as='h5' size='md'>
+            ${farm.pricePerAcre}/acre
+          </Heading>
+        </Box>
+      </Flex>
 
-      <Box w='100%' h='300px' rounded='lg' backgroundColor='#cccc'>
+      <Divider orientation='horizontal' borderColor='gray.300' my={6} />
+
+      <Box w='100%' h='300px' rounded='lg' backgroundColor='#fff'>
         <ImageLoader
           h='100%'
           w='100%'
           height='300px'
-          isLoaded={isLoaded}
-          setLoading={setLoading}
           rounded='lg'
           objectFit='cover'
           src={farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl}
@@ -54,7 +59,7 @@ const AboutFarm = ({ farm }) => {
       <Box mb={{ md: 12 }}>
         <Box mt={{ base: 5, md: 10 }}>
           <Heading as='h6' size={{ base: 'xs', md: 'sm' }}>
-            About crop
+            About this crop
           </Heading>
         </Box>
 

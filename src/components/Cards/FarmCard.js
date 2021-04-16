@@ -12,7 +12,6 @@ import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 
 const FarmCard = ({ farm }) => {
-  const [imageLoaded, setImageLoaded] = React.useState(false)
   const [reload, setReload] = React.useState(0)
   const { getActivities } = useApi()
   const history = useHistory()
@@ -129,8 +128,6 @@ const FarmCard = ({ farm }) => {
             right={{ md: 0 }}
           >
             <ImageLoader
-              isLoaded={imageLoaded}
-              setLoading={setImageLoaded}
               height='350'
               rounded='3xl'
               src={farm?.order?.product?.cropVariety?.imageUrl}
