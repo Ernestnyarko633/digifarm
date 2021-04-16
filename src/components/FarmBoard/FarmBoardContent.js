@@ -62,6 +62,7 @@ const FarmBoardContent = ({ farms }) => {
     let mounted = true
 
     if (mounted) {
+      setLoading(true)
       const fetchData = async () => {
         const feedPromises = farms.map(async farm => {
           const response = await getMyFarmFeeds({
@@ -101,7 +102,9 @@ const FarmBoardContent = ({ farms }) => {
 
   //FIXME: larger feeds would slow down process
   const cleanedFeeds = feeds?.filter(
-    (v, i, a) => a.findIndex(t => JSON.stringify(t) === JSON.stringify(v)) === i
+    (feed, index, self) =>
+      self.findIndex(item => JSON.stringify(item) === JSON.stringify(feed)) ===
+      index
   )
 
   const mapKey = i => i
@@ -159,7 +162,9 @@ const FarmBoardContent = ({ farms }) => {
         />
       ) : (
         <>
-          <YourFarmCard farms={farms} setFarmIndex={setFarmIndex} />
+          {cleanedFeeds?.length && (
+            <YourFarmCard farms={farms} setFarmIndex={setFarmIndex} />
+          )}
           <Box p={{ base: 4, md: 16 }}>
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
               {cleanedFeeds.length
@@ -167,7 +172,7 @@ const FarmBoardContent = ({ farms }) => {
                 : ''}
             </Heading>
 
-            {cleanedFeeds?.length > 0 ? (
+            {feeds?.length > 0 ? (
               cleanedFeeds.map((content, index) => {
                 return (
                   <Fade bottom key={mapKey(index)}>

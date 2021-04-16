@@ -18,7 +18,7 @@ export default function FarmLeftSideBar({ state, setState }) {
       pos='fixed'
       bottom={0}
       left={0}
-      h={{ lg: '84vh' }}
+      h={{ lg: '80vh' }}
       w={{ md: '17%' }}
       bg='white'
       zIndex={50}

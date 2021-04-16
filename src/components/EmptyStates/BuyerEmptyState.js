@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const BuyerEmptyState = ({ image, note, info, ml }) => {
   return (
-    <Box pb={{ md: 20 }} mt={{ md: 20 }}>
+    <Box pb={{ md: 20 }} mt={{ base: 10, md: 20 }}>
       <Image src={image} w='14' ml={ml} mb={4} />
       <Heading
         as='h4'

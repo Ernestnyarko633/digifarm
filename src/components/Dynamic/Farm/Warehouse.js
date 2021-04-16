@@ -33,6 +33,7 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
       pos='relative'
       fontFamily='body'
       fontSize={{ md: 'md' }}
+      d={{ base: 'block', md: 'grid' }}
     >
       <GridItem>
         <Box
@@ -53,9 +54,15 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
               align='center'
               direction='column'
               py={{ md: 40 }}
+              h={{ base: '100vh', md: '100%' }}
             >
-              <Image src={Ware} py={{ md: 10 }} />
-              <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
+              <Image src={Ware} py={{ base: 6, md: 10 }} />
+              <Heading
+                as='h6'
+                fontSize={{ base: 'lg', md: '2xl' }}
+                fontWeight={800}
+                mb={{ md: 5 }}
+              >
                 Warehouse is empty
               </Heading>
               <Text fontSize='xs'>

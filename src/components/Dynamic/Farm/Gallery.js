@@ -19,21 +19,25 @@ export default function Gallery({ farmfeeds, loading }) {
       pos='relative'
       fontFamily='body'
       fontSize={{ md: 'md' }}
+      d={{ base: 'block', md: 'grid' }}
     >
       <GridItem>
         <Box
           minW={{ lg: '95%' }}
           as='main'
           color='gray.800'
-          bg='gray.50'
           fontFamily='body'
           overflowX='hidden'
           py={{ md: 56 }}
-          px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
           {!loading && farmfeeds && (
-            <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={20}>
+            <Grid
+              templateColumns={{ md: 'repeat(2, 1fr)' }}
+              gap={20}
+              mt={{ base: 40, md: 0 }}
+              mb={{ base: 16, md: 0 }}
+            >
               {farmfeeds?.map(_feed => {
                 return (
                   <ImageGallery
@@ -53,9 +57,15 @@ export default function Gallery({ farmfeeds, loading }) {
               align='center'
               direction='column'
               py={{ md: 40 }}
+              h={{ base: '100vh', md: '100%' }}
             >
-              <Image src={Gal} py={{ md: 10 }} />
-              <Heading as='h6' fontSize={18} fontWeight={800} mb={{ md: 5 }}>
+              <Image src={Gal} py={{ base: 6, md: 10 }} />
+              <Heading
+                as='h6'
+                fontSize={{ base: 'lg', md: '2xl' }}
+                fontWeight={800}
+                mb={{ md: 5 }}
+              >
                 Gallery is empty
               </Heading>
               <Text fontSize='xs'>

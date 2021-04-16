@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
 import {
   Box,
+  Tag,
   Flex,
   Avatar,
   Heading,
@@ -28,7 +30,6 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
 
   const [images, setImages] = React.useState([])
   const [videos, setVideos] = React.useState([])
-
   const handleClick = (value, array, index, indexFunc, selectedItemFunc) => {
     const comparant =
       index + value === 0 ||
@@ -112,11 +113,18 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
           )} */}
         </Flex>
 
-        <Box>
+        <Flex direction='column' justify='center' align='center'>
+          <Box mx={{ base: 4 }}>
+            <Text color='cf.400'>
+              {status !== 'news' || status !== 'weekly_videos'
+                ? 'FARM FEED'
+                : null}
+            </Text>
+          </Box>
           <Text fontSize={{ base: 'sm', md: 'md' }} color='gray.500'>
             {timestamp}
           </Text>
-        </Box>
+        </Flex>
       </Flex>
     )
   }
@@ -198,22 +206,55 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
           </Box>
           <Box px={{ base: 4, md: 16 }}>
             <Box mt={6}>
-              {/* <Text textTransform='uppercase' fontWeight='bold'>
-                    <Icon as={Flower} /> {actionTitle}
-                  </Text> */}
+              <Flex direction='row' align='center'>
+                <Tag
+                  color='cf.400'
+                  justifyContent='center'
+                  bgGradient='linear(to-l, #DEECDC,#EFF6ED)'
+                  rounded={20}
+                  minW='12'
+                  maxH='5'
+                  px={5}
+                  py={3}
+                  mr={2}
+                >
+                  <Text fontWeight={600}>Activity</Text>
+                </Tag>
+                <Text fontWeight={400}>
+                  {content?.title?.toLowerCase()?.charAt(0)?.toUpperCase() +
+                    content?.title?.toLowerCase()?.slice(1)}
+                </Text>
+              </Flex>
+
               <Collapse
                 startingHeight={85}
                 in={show}
                 onClick={handleToggle}
                 cursor='pointer'
               >
-                <Text
-                  color='gray.500'
-                  mt={3}
-                  fontSize={{ base: 'sm', md: 'md' }}
-                >
-                  {content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
-                </Text>
+                {
+                  // content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')
+                  content?.data?.map(body => {
+                    return (
+                      <>
+                        <Heading
+                          as='h6'
+                          mt={6}
+                          fontSize={{ base: 'sm', md: 'xl' }}
+                        >
+                          {body?.task?.title}
+                        </Heading>
+                        <Text
+                          color='gray.500'
+                          mt={3}
+                          fontSize={{ base: 'sm', md: 'md' }}
+                        >
+                          {body?.feed?.summary?.replace(/<[^>]*>/g, '')}
+                        </Text>
+                      </>
+                    )
+                  })
+                }
               </Collapse>
               <Box as='button' onClick={handleToggle}>
                 <Text color='cf.400' py={{ base: 1 }}>
@@ -303,9 +344,9 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
           </Box>
           <Box px={{ base: 4, md: 16 }}>
             <Box mt={6}>
-              {/* <Text textTransform='uppercase' fontWeight='bold'>
-                    <Icon as={Flower} /> {actionTitle}
-                  </Text> */}
+              <Text textTransform='uppercase' fontWeight='bold'>
+                {content?.title}
+              </Text>
               <Text color='gray.500' mt={3} fontSize={{ base: 'sm', md: 'md' }}>
                 {content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
               </Text>

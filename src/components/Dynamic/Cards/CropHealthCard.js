@@ -23,7 +23,7 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
             <Text>{new Date(date).toLocaleDateString()}</Text>
           </Flex>
           <Grid
-            templateColumns={{ md: 'repeat(3, 1fr)' }}
+            templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }}
             gap={4}
             bg='white'
             rounded='xl'

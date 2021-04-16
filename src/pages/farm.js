@@ -155,7 +155,7 @@ export default function Farm() {
     { id: 5, name: 'Manager updates', icon: Updates, state: 'compE' },
   ];
 
-  const mapKey = index => index
+  const mapKey = (index) => index;
 
   return isLoading || hasError ? (
     <FetchCard
@@ -167,7 +167,7 @@ export default function Farm() {
       reload={triggerReload}
       loading={isLoading}
       error={hasError}
-      text='Standby as we load your current farms and pending orders'
+      text={`Standby as we load your farm's view`}
     />
   ) : (
     <Box pos='relative' ref={ref}>
@@ -339,34 +339,36 @@ export default function Farm() {
         )}
       </Box> */}
 
-        <Flex
-          align='center'
-          justify='space-between'
-          pos='fixed'
-          bottom={0}
-          h={16}
-          d={{ base: 'flex', md: 'none' }}
-          bg='white'
-          shadow='lg'
-          w='100%'
-          zIndex={50}
-          px={4}
-        >
-          {bottomMenus.map((item) => (
-            <Box
-              as='button'
-              role='button'
-              aria-label={`${item.name} button`}
-              key={item.id}
-              align='center'
-              onClick={() => setCompState(item.state)}
-              color={compState === item.state ? 'cf.400' : ''}
-            >
-              <Icon as={item.icon} />
-              <Text fontSize={9}>{item.name}</Text>
-            </Box>
-          ))}
-        </Flex>
+        {state === 'compA' && (
+          <Flex
+            align='center'
+            justify='space-between'
+            pos='fixed'
+            bottom={0}
+            h={16}
+            d={{ base: 'flex', md: 'none' }}
+            bg='white'
+            shadow='lg'
+            w='100%'
+            zIndex={50}
+            px={4}
+          >
+            {bottomMenus.map((item) => (
+              <Box
+                as='button'
+                role='button'
+                aria-label={`${item.name} button`}
+                key={item.id}
+                align='center'
+                onClick={() => setCompState(item.state)}
+                color={compState === item.state ? 'cf.400' : ''}
+              >
+                <Icon as={item.icon} />
+                <Text fontSize={9}>{item.name}</Text>
+              </Box>
+            ))}
+          </Flex>
+        )}
       </Box>
     </Box>
   );

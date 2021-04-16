@@ -1,6 +1,6 @@
 import React from 'react'
-import { Cloud } from 'theme/Icons'
-import { Box, Grid, Heading, Icon, Text, Flex } from '@chakra-ui/react'
+//import { Cloud } from 'theme/Icons'
+import { Box, Grid, Heading, Text, Flex } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Fade from 'react-reveal/Fade'
 
@@ -14,6 +14,7 @@ const WeatherCard = ({ farmfeeds, loading, error, weatherForeCasts }) => {
             rounded='lg'
             filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
             p={6}
+            minH={{ base: 150 }}
             bg='white'
           >
             <Text textAlign='center' fontWeight={300}>
@@ -34,13 +35,14 @@ const WeatherCard = ({ farmfeeds, loading, error, weatherForeCasts }) => {
             rounded='lg'
             filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
             p={6}
+            minH={{ base: 150 }}
             bg='white'
           >
             <Text fontWeight={300} textAlign='center'>
               Weather today
             </Text>
             <Flex mt={2} align='center' justify='center' direction='column'>
-              <Icon as={Cloud} boxSize={10} />
+              {/* <Icon as={Cloud} boxSize={10} /> */}
               <Heading fontSize={{ md: '3xl' }} fontWeight={900} mt={1}>
                 {(
                   (weatherForeCasts[0]?.Temp_land_min +

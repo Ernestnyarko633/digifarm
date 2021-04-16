@@ -15,22 +15,25 @@ export default function Document({
 
   return (
     <Grid
-      templateRows='repeat(1 1fr)'
-      templateColumns='70% 30%'
+      templateRows={{ md: 'repeat(1 1fr)' }}
+      templateColumns={{ md: '5% 65% 30%' }}
       pos='relative'
       fontFamily='body'
       fontSize={{ md: 'md' }}
+      d={{ base: 'block', md: 'grid' }}
+      px={{ base: 4, md: 0 }}
     >
       <GridItem>
         <Box
           minW={{ lg: '65%' }}
           as='main'
           color='gray.800'
-          bg='gray.50'
+          bg={{ md: 'gray.50' }}
           fontFamily='body'
           overflowX='hidden'
           py={{ md: 56 }}
           px={{ md: 24 }}
+          mt={{ base: 36, md: 0 }}
           minH={{ lg: '100vh' }}
         >
           <Box mt={{ md: 10 }}>
@@ -45,21 +48,21 @@ export default function Document({
           </Box>
         </Box>
       </GridItem>
-      <GridItem>
+      <GridItem mt={{ base: 16, md: 0 }} mb={{ base: 32, md: 0 }}>
         <Box
           py={8}
-          right={0}
+          right={{ md: 0 }}
           bg='white'
           as='rightsidebar'
-          bottom={0}
-          pos='fixed'
+          bottom={{ md: 0 }}
+          pos={{ md: 'fixed' }}
           px={{ md: 8 }}
           h={{ lg: '84vh' }}
           w={{ md: '30%' }}
-          shadow='md'
-          overflowY='scroll'
+          shadow={{ md: 'md' }}
+          overflowY={{ md: 'scroll' }}
         >
-          <Grid gap={8}>
+          <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
             {digitalFarmerFarm?.order?.status === 'PAID' && (
               <React.Fragment>
                 <FarmReceiptCard
