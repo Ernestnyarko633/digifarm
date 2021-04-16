@@ -11,12 +11,8 @@ import FarmFeedCard from 'components/FarmBoard/Cards/FarmFeedCard'
 import NewsCard from 'components/FarmBoard/Cards/NewsCard'
 import WeeklyVideoCard from 'components/FarmBoard/Cards/WeeklyVideoCard'
 import FetchCard from 'components/FetchCard/index'
-// import Crop from 'assets/images/crop.png'
-// import SoyaBeanImg from 'assets/images/soya.png'
 import PropTypes from 'prop-types'
-
 import useApi from 'context/api'
-//import { StyledCountrySelectDropdownDialcodeColumn } from 'baseui/phone-input'
 
 const FarmBoardContent = ({ farms }) => {
   const [activeFarmIndex, setFarmIndex] = React.useState(0)
@@ -25,6 +21,7 @@ const FarmBoardContent = ({ farms }) => {
   const [feeds, setFeeds] = React.useState([])
   const [news, setNewsData] = React.useState(null)
   const [videos, setVideosData] = React.useState(null)
+  const [filter, setFilter] = React.useState('combined')
 
   const { getMyFarmFeeds } = useApi()
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
@@ -113,36 +110,49 @@ const FarmBoardContent = ({ farms }) => {
     switch (status) {
       case 'news':
         return (
-          <NewsCard
-            activeFarm={farms[activeFarmIndex]}
-            content={content}
-            status={status}
-            timestamp={new Date(
-              content?.data?.created || new Date()
-            )?.toLocaleDateString()}
-          />
+          <>
+            {(filter === 'news' || filter === 'combined') && (
+              <NewsCard
+                activeFarm={farms[activeFarmIndex]}
+                content={content}
+                status={status}
+                timestamp={new Date(
+                  content?.data?.created || new Date()
+                )?.toLocaleDateString()}
+              />
+            )}
+          </>
         )
       case 'weekly_videos':
         return (
-          <WeeklyVideoCard
-            activeFarm={farms[activeFarmIndex]}
-            content={content}
-            status={status}
-            timestamp={new Date(
-              content?.data?.created || new Date()
-            )?.toLocaleDateString()}
-          />
+          <React.Fragment>
+            {(filter === 'weekly videos' || filter === 'combined') && (
+              <WeeklyVideoCard
+                activeFarm={farms[activeFarmIndex]}
+                content={content}
+                status={status}
+                timestamp={new Date(
+                  content?.data?.created || new Date()
+                )?.toLocaleDateString()}
+              />
+            )}
+          </React.Fragment>
         )
       default:
         return (
-          <FarmFeedCard
-            activeFarm={farms[activeFarmIndex]}
-            content={content}
-            status={status}
-            timestamp={new Date(
-              content?.data?.created || new Date()
-            )?.toLocaleDateString()}
-          />
+          <>
+            {filter === 'combined' &&
+            farms[activeFarmIndex].order?.product?._id === content?.farm ? (
+              <FarmFeedCard
+                activeFarm={farms[activeFarmIndex]}
+                content={content}
+                status={status}
+                timestamp={new Date(
+                  content?.data?.created || new Date()
+                )?.toLocaleDateString()}
+              />
+            ) : null}
+          </>
         )
     }
   }
@@ -163,7 +173,13 @@ const FarmBoardContent = ({ farms }) => {
       ) : (
         <>
           {cleanedFeeds?.length && (
-            <YourFarmCard farms={farms} setFarmIndex={setFarmIndex} />
+            <YourFarmCard
+              filter={filter}
+              farms={farms}
+              setFilter={setFilter}
+              activeFarmIndex={activeFarmIndex}
+              setFarmIndex={setFarmIndex}
+            />
           )}
           <Box p={{ base: 4, md: 16 }}>
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
@@ -175,7 +191,7 @@ const FarmBoardContent = ({ farms }) => {
             {feeds?.length > 0 ? (
               cleanedFeeds.map((content, index) => {
                 return (
-                  <Fade bottom key={mapKey(index)}>
+                  <Fade key={mapKey(index)}>
                     {renderCard(content?.type, content)}
                   </Fade>
                 )

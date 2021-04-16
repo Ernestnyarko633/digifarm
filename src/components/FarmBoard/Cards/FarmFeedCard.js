@@ -149,7 +149,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               justify='center'
               pos='absolute'
               bottom={6}
-              left='45%'
+              left={{ base: '45%', xl: '42%' }}
             >
               <Flex
                 as='button'
@@ -161,7 +161,11 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 h={10}
                 rounded='100%'
                 borderWidth={1}
-                borderColor='white'
+                borderColor='transparent'
+                _hover={{
+                  background: 'white',
+                  color: 'cf.400'
+                }}
                 color='white'
                 mr={2}
                 onClick={() => {
@@ -184,11 +188,14 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 justify='center'
                 w={10}
                 h={10}
+                _hover={{
+                  background: 'white',
+                  color: 'cf.400'
+                }}
                 rounded='100%'
                 borderWidth={1}
-                borderColor='white'
-                color='cf.400'
-                bg='white'
+                borderColor='transparent'
+                color='white'
                 ml={2}
                 onClick={() => {
                   return handleClick(
