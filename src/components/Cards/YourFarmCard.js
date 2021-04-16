@@ -137,7 +137,9 @@ const YourFarmCard = ({
               py={3}
               mr={2}
             >
-              <Text fontWeight={600}>All Feeds</Text>
+              <Text fontSize={{ base: '10px', md: 'sm' }} fontWeight={600}>
+                All Feeds
+              </Text>
             </Tag>
             <Tag
               my={2}
@@ -161,7 +163,9 @@ const YourFarmCard = ({
               py={3}
               mr={2}
             >
-              <Text fontWeight={600}>Weekly Videos</Text>
+              <Text fontSize={{ base: '10px', md: 'sm' }} fontWeight={600}>
+                Weekly Videos
+              </Text>
             </Tag>
             <Tag
               my={2}
@@ -184,7 +188,9 @@ const YourFarmCard = ({
               py={3}
               mr={2}
             >
-              <Text fontWeight={600}>News</Text>
+              <Text fontWeight={600} fontSize={{ base: '10px', md: 'sm' }}>
+                News
+              </Text>
             </Tag>
           </Flex>
         </Flex>
