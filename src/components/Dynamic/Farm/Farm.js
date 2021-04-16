@@ -180,13 +180,14 @@ export default function Farm({
                 // eslint-disable-next-line react/jsx-curly-newline
               }
             />
-            <Button
+            {/* <Button
               btntitle='Share'
               rounded='30px'
               h={12}
+              isDisabled
               w={{ base: 20, md: 40 }}
               onClick={onOpen}
-            />
+            /> */}
           </Fade>
         </Flex>
       )}

@@ -39,6 +39,11 @@ const AboutFarm = ({ farm }) => {
           <Heading as='h5' size='md'>
             ${farm.pricePerAcre}/acre
           </Heading>
+          <Text fontWeight='600' color='cf.400'>
+            {farm.projectedMarketReturnsRangePerAcre.min}
+            {'% - '}
+            {farm.projectedMarketReturnsRangePerAcre.max}% ROI
+          </Text>
         </Box>
       </Flex>
 

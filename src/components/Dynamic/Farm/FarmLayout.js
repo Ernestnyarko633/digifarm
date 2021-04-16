@@ -44,7 +44,9 @@ export default function FarmLayout({
       px={{ base: 4, md: 0 }}
     >
       <GridItem shadow='xl' d={{ base: 'none', md: 'block' }}>
+        <Box>
         <FarmLeftSideBar state={compState} setState={setCompState} />
+        </Box>
       </GridItem>
       <GridItem>
         <Box

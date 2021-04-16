@@ -20,7 +20,7 @@ export default function Health({ farm, eosStats, _error }) {
 
       {!_error && !eosStats?.length && (
         <Flex>
-          <Text>
+          <Text textTransform='capitalize'>
             CROP HEALTH IS CURRENTLY UNAVAILABLE, IT WOULD BE UPDATED AS SOON AS
             POSSIBLE
           </Text>
