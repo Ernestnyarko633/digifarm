@@ -27,45 +27,46 @@ const Contract = ({ intersectionRef }) => {
   const [isEditing, setIsEditing] = React.useState(false)
   const { user } = useAuth()
 
+  const headerStyleProps = {
+    as: 'h3',
+    size: 'lg',
+    color: 'cf.400',
+    mt: 5
+  }
+
+  const textStyleProps = {
+    textAlign: 'justify',
+    lineHeight: { base: '35px', md: '40px' },
+    fontSize: { base: 'sm', md: 'xl' }
+  }
+
   return (
-    <MotionGrid px={10}>
+    <MotionGrid px={{ base: 2, md: 10 }}>
       <ModalWrapper
         size='3xl'
         onClose={setSignatureModal}
         isOpen={signatureModal}
         title='Set Up Signature'
       >
-        <SignatureSetup isEditing={setIsEditing} setIsEditing={setIsEditing} />
+        <SignatureSetup isEditing={isEditing} setIsEditing={setIsEditing} />
       </ModalWrapper>
       <GridItem overflowY='scroll' mb={10}>
         <Box css={{ direction: 'ltr' }} p={{ base: 2, md: 10 }}>
-          <Heading
-            as='h3'
-            size='lg'
-            mb={6}
-            color='cf.400'
-            px={{ md: 5 }}
-            mt={{ base: 4, md: 0 }}
-          >
+          <Heading {...headerStyleProps} mt={{ base: 4, md: 0 }}>
             Complete Farmer DigiFarmer User Agreement
           </Heading>
-          <Text
-            textAlign='justify'
-            lineHeight={{ base: '35px', md: '40px' }}
-            fontSize={{ base: 'sm', md: 'xl' }}
-            px={{ md: 5 }}
-          >
+          <Text {...textStyleProps}>
             Please read this DigiFarmer User Agreement (the ‘Agreement’)
             carefully for your Complete Farmer (“The Company”) to complete your
             crowd farming subscription. This Agreement should be read together
             withour Terms & Conditions and our Privacy Policy. This Agreement is
             made between (the ‘DigiFarmer’ or ‘You’) , and the Company, and is
             effective upon signature or your acceptance.
-            <br />
-            <Heading as='h3' size='lg' color='cf.400' mt={{ md: 5 }}>
-              Use of Farm Management Service Fee
-            </Heading>
-            <br />
+          </Text>
+          <Heading {...headerStyleProps}>
+            Use of Farm Management Service Fee
+          </Heading>
+          <Text {...textStyleProps}>
             The Company shall use the Farm Management Service Fee to take all
             necessary steps to plant and harvest your choses produce on your
             chosen acreage, as described on the Company’s website. Complete
@@ -82,20 +83,16 @@ const Contract = ({ intersectionRef }) => {
             which shall assess the farm processes, seed and yield of harvest,
             should any conflict arise concerning the above between the
             DigiFarmer and the Company.
-            <br />
-            <Heading as='h3' size='lg' color='cf.400' mt={{ md: 5 }}>
-              Insurance
-            </Heading>
-            <br />
+          </Text>
+          <Heading {...headerStyleProps}>Insurance</Heading>
+          <Text {...textStyleProps}>
             The Company strongly recommends that DigiFarmers accept the standard
             insurance package offered with the Farm Management Service. If you
             do not want to use the insurance package provided, please notify the
             Company.
-            <br />
-            <Heading as='h3' size='lg' color='cf.400' mt={{ md: 5 }}>
-              Term and Termination
-            </Heading>
-            <br />
+          </Text>
+          <Heading {...headerStyleProps}>Term and Termination</Heading>
+          <Text {...textStyleProps}>
             This Agreement shall commence on today’s date and shall remain
             ineffect until the end of after the harvested produce have been
             sold. The Company reserves the right to terminate this Agreement if
@@ -104,11 +101,9 @@ const Contract = ({ intersectionRef }) => {
             the Privacy Policy, or any other policy documents or community
             guidelines, or if You have engaged in an improper or fraudulent
             activity in connection with Complete Farmer.
-            <br />
-            <Heading as='h3' size='lg' color='cf.400' mt={{ md: 5 }}>
-              Electronic Signatures
-            </Heading>
-            <br />
+          </Text>
+          <Heading {...headerStyleProps}>Electronic Signatures</Heading>
+          <Text {...textStyleProps}>
             Each party agrees that the electronic signatures, whether digital or
             encrypted, of the Parties included in this Agreement are intended to
             authenticate this writing and to have the same force and effect as
@@ -122,73 +117,72 @@ const Contract = ({ intersectionRef }) => {
             and pictorial appearance of a document, will have the same effect as
             physical delivery of the paper document bearing an original or
             electronic signature.
-            <br />
-            <Heading as='h3' size='lg' color='cf.400' mt={{ md: 5 }}>
-              General Terms
-            </Heading>
-            <br />
+          </Text>
+          <Heading {...headerStyleProps}>General Terms</Heading>
+          <Text {...textStyleProps}>
             The terms of this Agreement are Confidential and will survive the
             termination of this Agreement.
-            <ul style={{ listStyleType: 'upper-alpha' }}>
-              <li>
-                No term of this Agreement shall be enforceable by a third party
-                who is not a party to this Agreement and has no rights under the
-                Contracts (Rights of Third Parties) Act to enforce or enjoy the
-                benefits of this Agreement.
-              </li>
-              <li>
-                If any provision of this Agreement or the application thereof is
-                held invalid or unenforceable, the invalidity or
-                unenforceability thereof shall not affect any other provisions
-                or applications of this Agreement that can be given effect
-                without the invalid or unenforceable provision or application.
-                To that end, the provisions of this Agreement are to be
-                severable.
-              </li>
-
-              <li>
-                The Parties shall use their best endeavors to reach an amicable
-                settlement of any dispute by mutual discussion between the
-                designated representatives of the Parties.
-              </li>
-
-              <li>
-                This Agreement shall be governed in accordance with the laws
-                ofthe Republic of Ghana.
-              </li>
-
-              <li>
-                Each Party warrants to the other Party that it has the right,
-                power and authority to enter into this Agreement and carry out
-                its obligations under this Agreement. By clicking the "Accept"
-                button, downloading or using the Application, you are agreeing
-                to be bound by the terms and conditions of this Agreement. If
-                you do not agree to the terms of this Agreement, do not click on
-                the "Accept" button and do not download or use the Application.
-              </li>
-            </ul>
+          </Text>
+          <Text
+            {...textStyleProps}
+            as='ul'
+            style={{ listStyleType: 'upper-alpha' }}
+            px={{ md: 8 }}
+          >
+            <li>
+              No term of this Agreement shall be enforceable by a third party
+              who is not a party to this Agreement and has no rights under the
+              Contracts (Rights of Third Parties) Act to enforce or enjoy the
+              benefits of this Agreement.
+            </li>
+            <li>
+              If any provision of this Agreement or the application thereof is
+              held invalid or unenforceable, the invalidity or unenforceability
+              thereof shall not affect any other provisions or applications of
+              this Agreement that can be given effect without the invalid or
+              unenforceable provision or application. To that end, the
+              provisions of this Agreement are to be severable.
+            </li>
+            <li>
+              The Parties shall use their best endeavors to reach an amicable
+              settlement of any dispute by mutual discussion between the
+              designated representatives of the Parties.
+            </li>
+            <li>
+              This Agreement shall be governed in accordance with the laws ofthe
+              Republic of Ghana.
+            </li>
+            <li>
+              Each Party warrants to the other Party that it has the right,
+              power and authority to enter into this Agreement and carry out its
+              obligations under this Agreement. By clicking the "Accept" button,
+              downloading or using the Application, you are agreeing to be bound
+              by the terms and conditions of this Agreement. If you do not agree
+              to the terms of this Agreement, do not click on the "Accept"
+              button and do not download or use the Application.
+            </li>
           </Text>
 
-          <Flex my={{ md: 10 }} justifyContent='space-around'>
+          <Flex
+            my={{ md: 5 }}
+            flexDir={{ base: 'column', md: 'row' }}
+            justifyContent={{ base: 'center', md: 'space-around' }}
+            align='center'
+          >
             <Box textAlign='center' pos='relative'>
-              <Heading as='h5' fontSize={{ md: 'lg' }} mb={2}>
-                Desmony Koney
-              </Heading>
-              <Text>CEO</Text>
               <Image
-                pos='absolute'
-                top={10}
+                w='150px'
                 src={require('assets/images/ceo-sign.png').default}
                 alt='CEO Signature'
               />
+              <Heading as='h5' fontSize={{ md: 'lg' }}>
+                Desmony Koney
+              </Heading>
+              <Text>CEO</Text>
             </Box>
             <Box textAlign='center' pos='relative' ref={intersectionRef}>
-              <Heading as='h5' fontSize={{ md: 'lg' }} mb={2}>
-                {user?.firstName + ' ' + user?.lastName}
-              </Heading>
-              <Text>DigiFarmer</Text>
               {user?.signature?.string ? (
-                <Box pos='absolute' w='max-content'>
+                <Box>
                   <SignatureDisplay
                     contract
                     data={user?.signature}
@@ -206,6 +200,10 @@ const Contract = ({ intersectionRef }) => {
                   onClick={() => setSignatureModal(true)}
                 />
               )}
+              <Heading as='h5' fontSize={{ md: 'lg' }}>
+                {user?.firstName + ' ' + user?.lastName}
+              </Heading>
+              <Text>DigiFarmer</Text>
             </Box>
           </Flex>
         </Box>

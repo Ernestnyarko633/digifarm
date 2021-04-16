@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Skeleton } from '@chakra-ui/react'
 
-const ImageLoader = ({ rounded, height, isLoaded, setLoading, ...rest }) => {
+const ImageLoader = ({ rounded, height, ...rest }) => {
+  const [isLoaded, setLoading] = React.useState(false)
+
   return (
     <Skeleton
       startColor='gray.50'
@@ -14,6 +16,7 @@ const ImageLoader = ({ rounded, height, isLoaded, setLoading, ...rest }) => {
       <Image
         display={{ md: 'flex' }}
         {...rest}
+        loading='eager'
         rounded={rounded}
         onLoad={() => setLoading(true)}
       />
@@ -23,9 +26,7 @@ const ImageLoader = ({ rounded, height, isLoaded, setLoading, ...rest }) => {
 
 ImageLoader.propTypes = {
   rounded: PropTypes.any,
-  height: PropTypes.any,
-  isLoaded: PropTypes.bool.isRequired,
-  setLoading: PropTypes.func.isRequired
+  height: PropTypes.any
 }
 
 export default ImageLoader

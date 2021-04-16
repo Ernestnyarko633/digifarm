@@ -116,7 +116,7 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
       <Flex
         p={4}
         w='100%'
-        wrap='wrap'
+        wrap='wrap-reverse'
         rounded='md'
         pos='relative'
         bgColor='white'
@@ -218,12 +218,12 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
             </Flex>
             <Flex
               mx={2}
-              w='50%'
               mt={10}
               border='2px'
               textAlign='center'
               borderColor='cf.400'
               justifyContent='center'
+              w={{ base: '100%', lg: '47%' }}
             >
               {withText && (
                 <Text
