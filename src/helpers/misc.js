@@ -108,6 +108,17 @@ export const texTrancator = (length, string) => {
   return tT
 }
 
+export const FirstLettersToUpperCase = (value = '') => {
+  const string = value.split(' ')
+
+  let newString = []
+  string.forEach(item => {
+    newString.push(item.charAt(0).toUpperCase() + item.toLowerCase().slice(1))
+  })
+
+  return newString.join().replace(/,/g, ' ')
+}
+
 export const getDiscount = (discounts, acreage) => {
   // get discounts user may qualify for
   const _discounts = discounts?.filter(({ point }) => point <= acreage)

@@ -15,6 +15,8 @@ import {
 } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { FirstLettersToUpperCase } from 'helpers/misc'
+import ReactPlayer from 'react-player/lazy'
 
 const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
   const { isAuthenticated } = useAuth()
@@ -22,14 +24,11 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
   const [show, setShow] = React.useState(false)
   const handleToggle = () => setShow(!show)
 
-  const [selectedImage, setSelectedImage] = React.useState({})
-  const [selectedVideo, setSelectedVideo] = React.useState({})
+  const [selectedItem, setSelectedItem] = React.useState({})
 
   const [activeIndex, setActiveIndex] = React.useState(0)
-  const [activeVideoIndex, setVideoActiveIndex] = React.useState(0)
 
-  const [images, setImages] = React.useState([])
-  const [videos, setVideos] = React.useState([])
+  const [items, setItems] = React.useState([])
   const handleClick = (value, array, index, indexFunc, selectedItemFunc) => {
     const comparant =
       index + value === 0 ||
@@ -42,13 +41,26 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
     selectedItemFunc(array[comparant])
   }
 
+  const YoutubeSlide = ({ url }) => (
+    <ReactPlayer
+      width='100%'
+      controls={true}
+      loop={true}
+      volume={0.3}
+      url={url}
+      playing={false}
+    />
+  )
+  YoutubeSlide.propTypes = {
+    url: PropTypes.any
+  }
+
   React.useEffect(() => {
     let array = []
-    let _array = []
     const _feeds = feed => {
       return feed?.media?.forEach(_media => {
-        if (_media?.type === 'image') array.push(_media)
-        if (_media?.type === 'video') _array.push(_media)
+        if (_media?.type === 'image' || _media?.type === 'video')
+          array.push(_media)
       })
     }
     const feeds = () =>
@@ -59,14 +71,10 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
     if (status !== 'news' && status !== 'weekly_videos') {
       feeds()
     }
-    if (_array.length) {
-      setVideos(_array)
 
-      setSelectedVideo(_array[0])
-    }
     if (array.length) {
-      setImages(array)
-      setSelectedImage(array[0])
+      setItems(array)
+      setSelectedItem(array[0])
     }
   }, [content, status])
   const Detail = () => {
@@ -97,20 +105,6 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               {`${activeFarm?.order?.product?.location?.name}, ${activeFarm?.order?.product?.location?.state}`}
             </Text>
           </Box>
-          {/* {status !== 'news' && (
-            // <Box ml={{ base: 5, md: 12 }} d={{ base: 'none', md: 'block' }}>
-            //   <Tag
-            //     bg='cf.200'
-            //     color='cf.400'
-            //     rounded='xl'
-            //     px={{ base: 4, md: 6 }}
-            //     fontWeight='bold'
-            //     fontSize={{ base: 'sm', md: 'md' }}
-            //   >
-            //     {level}
-            //   </Tag>
-            // </Box>
-          )} */}
         </Flex>
 
         <Flex direction='column' justify='center' align='center'>
@@ -130,20 +124,26 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
   }
 
   const FarmContent = () => {
-    if (images?.length) {
+    if (items?.length) {
       return (
         <>
           <Box py={{ base: 4 }} px={{ base: 4, md: 8 }}>
             <Detail />
           </Box>
           <Box pos='relative'>
-            <Image
-              rounded='lg'
-              h={{ md: 85 }}
-              w='100%'
-              objectFit='cover'
-              src={selectedImage?.url}
-            />
+            {selectedItem?.type === 'image' && (
+              <Image
+                rounded='lg'
+                h={{ md: 85 }}
+                w='100%'
+                objectFit='cover'
+                src={selectedItem?.url}
+              />
+            )}
+
+            {selectedItem?.type === 'video' && (
+              <YoutubeSlide url={selectedItem?.url} muted playing={false} />
+            )}
             <Flex
               align='center'
               justify='center'
@@ -167,10 +167,10 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 onClick={() => {
                   return handleClick(
                     -1,
-                    images,
+                    items,
                     activeIndex,
                     setActiveIndex,
-                    setSelectedImage
+                    setSelectedItem
                   )
                 }}
               >
@@ -193,10 +193,10 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 onClick={() => {
                   return handleClick(
                     +1,
-                    images,
+                    items,
                     activeIndex,
                     setActiveIndex,
-                    setSelectedImage
+                    setSelectedItem
                   )
                 }}
               >
@@ -221,8 +221,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                   <Text fontWeight={600}>Activity</Text>
                 </Tag>
                 <Text fontWeight={400}>
-                  {content?.title?.toLowerCase()?.charAt(0)?.toUpperCase() +
-                    content?.title?.toLowerCase()?.slice(1)}
+                  {FirstLettersToUpperCase(content?.title)}
                 </Text>
               </Flex>
 
@@ -261,100 +260,6 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                   {!show ? 'Read More' : 'Collapse'}
                 </Text>
               </Box>
-            </Box>
-          </Box>
-        </>
-      )
-    }
-
-    if (videos.length === 90) {
-      return (
-        <>
-          <Box py={{ base: 4, md: 10 }} px={{ base: 4, md: 16 }}>
-            <Detail />
-          </Box>
-          <Box pos='relative' as='video' autoPlay loop>
-            <Box
-              as='source'
-              rounded='lg'
-              h={{ md: 85 }}
-              w='100%'
-              objectFit='cover'
-              src={selectedVideo?.url}
-            />
-            <Flex
-              align='center'
-              justify='center'
-              pos='absolute'
-              bottom={6}
-              left='45%'
-            >
-              <Flex
-                as='button'
-                role='button'
-                aria-label='prev button'
-                align='center'
-                justify='center'
-                w={10}
-                h={10}
-                rounded='100%'
-                borderWidth={1}
-                borderColor='white'
-                color='white'
-                mr={2}
-                onClick={() => {
-                  return handleClick(
-                    -1,
-                    videos,
-                    activeVideoIndex,
-                    setVideoActiveIndex,
-                    setSelectedVideo
-                  )
-                }}
-              >
-                <Icon as={BsChevronLeft} />
-              </Flex>
-              <Flex
-                as='button'
-                role='button'
-                aria-label='next button'
-                align='center'
-                justify='center'
-                w={10}
-                h={10}
-                rounded='100%'
-                borderWidth={1}
-                borderColor='white'
-                color='cf.400'
-                bg='white'
-                ml={2}
-                onClick={() => {
-                  return handleClick(
-                    -1,
-                    videos,
-                    activeVideoIndex,
-                    setVideoActiveIndex,
-                    setSelectedVideo
-                  )
-                }}
-              >
-                <Icon as={BsChevronRight} />
-              </Flex>
-            </Flex>
-          </Box>
-          <Box px={{ base: 4, md: 16 }}>
-            <Box mt={6}>
-              <Text textTransform='uppercase' fontWeight='bold'>
-                {content?.title}
-              </Text>
-              <Text color='gray.500' mt={3} fontSize={{ base: 'sm', md: 'md' }}>
-                {content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
-              </Text>
-            </Box>
-            <Box as='button' onClick={handleToggle}>
-              <Text color='cf.400' py={{ base: 1 }}>
-                {!show ? 'Read More' : 'Collapse'}
-              </Text>
             </Box>
           </Box>
         </>
