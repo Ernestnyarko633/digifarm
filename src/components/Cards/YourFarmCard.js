@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   Heading,
+  Grid,
   Text,
   Image,
   Badge,
@@ -23,7 +24,7 @@ const YourFarmCard = ({
   setFilter,
   filter
 }) => {
-  const dummyFarms = [
+  const randomColors = [
     { color: '#FF9F9F' },
     { color: '#76B1F6' },
     { color: '#FF9F9F' },
@@ -38,7 +39,7 @@ const YourFarmCard = ({
     { color: '#76B1F6' }
   ]
   return (
-    <Box bg='white' w='100%' p={{ base: 4, md: 16 }}>
+    <Box bg='white' w='100%' p={{ base: 0, md: 16 }}>
       <Flex align='center' justify='center' direction='column' w='100%'>
         <Flex align='center' direction='row' justify='space-around' w='100%'>
           <Heading as='h6' fontSize='lg'>
@@ -56,64 +57,72 @@ const YourFarmCard = ({
           w='70%'
           my={10}
         >
-          <Flex w='100%'>
+          <Grid
+            gap={2}
+            templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }}
+            w='100%'
+          >
             {farms?.map((farm, index) => (
-              <Flex
-                direction='column'
-                align='center'
-                justify='center'
-                m={4}
-                key={farm}
-                onClick={() => {
-                  filter === 'combined' && setFarmIndex(index)
-                }}
-              >
-                <Text
-                  fontSize='sm'
-                  color={
-                    activeFarmIndex === index && filter === 'combined'
-                      ? 'cf.400'
-                      : 'gray.200'
-                  }
-                  mb={3}
-                >
-                  {farm.name}
-                </Text>
-                <Box
-                  w={24}
-                  h={24}
-                  rounded='100%'
-                  borderWidth='1px'
-                  pos='relative'
-                  borderColor={
-                    index === activeFarmIndex ? 'cf.400' : 'gray.200'
-                  }
-                >
-                  <Image
-                    w='100%'
-                    h='100%'
-                    rounded='100%'
-                    src={farm?.order.product?.cropVariety?.imageUrl}
-                  />
-                  <Badge
-                    position='absolute'
-                    top={0}
-                    left={2}
-                    bg={
-                      activeFarmIndex === index
-                        ? 'cf.400'
-                        : dummyFarms[index]?.color || '#ff0000'
-                    }
-                    rounded='25px'
-                    w={5}
-                    h={5}
+              <>
+                {farm?.order?.product?._id && (
+                  <Flex
+                    direction='column'
+                    align='center'
+                    justify='center'
+                    m={4}
+                    key={farm}
+                    onClick={() => {
+                      filter === 'combined' && setFarmIndex(index)
+                    }}
                   >
-                    <Box rounded='25px' w='25px' h='25px'></Box>
-                  </Badge>
-                </Box>
-              </Flex>
+                    <Text
+                      fontSize='sm'
+                      color={
+                        activeFarmIndex === index && filter === 'combined'
+                          ? 'cf.400'
+                          : 'gray.200'
+                      }
+                      mb={3}
+                    >
+                      {farm.name}
+                    </Text>
+                    <Box
+                      w={24}
+                      h={24}
+                      rounded='100%'
+                      borderWidth='1px'
+                      pos='relative'
+                      borderColor={
+                        index === activeFarmIndex ? 'cf.400' : 'gray.200'
+                      }
+                    >
+                      <Image
+                        w='100%'
+                        h='100%'
+                        rounded='100%'
+                        src={farm?.order.product?.cropVariety?.imageUrl}
+                      />
+                      <Badge
+                        position='absolute'
+                        top={0}
+                        left={2}
+                        bg={
+                          activeFarmIndex === index
+                            ? 'cf.400'
+                            : randomColors[index]?.color || '#ff0000'
+                        }
+                        rounded='25px'
+                        w={5}
+                        h={5}
+                      >
+                        <Box rounded='25px' w='25px' h='25px'></Box>
+                      </Badge>
+                    </Box>
+                  </Flex>
+                )}
+              </>
             ))}
-          </Flex>
+          </Grid>
 
           <Flex direction='row' w='100%'>
             <Tag
