@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Heading, Flex, Box } from '@chakra-ui/react'
+import { Heading, Flex, Box, Text } from '@chakra-ui/react'
 import Fade from 'react-reveal/Fade'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
@@ -61,6 +61,16 @@ const FarmBoardContent = ({ farms }) => {
     if (mounted) {
       setLoading(true)
       const fetchData = async () => {
+        // news data
+        if (news) {
+          setFeeds(prev => [...prev, ...news])
+        }
+
+        // weekly videos
+        if (videos) {
+          setFeeds(prev => [...prev, ...videos])
+        }
+
         const feedPromises = farms.map(async farm => {
           const response = await getMyFarmFeeds({
             farm: farm?.order?.product?._id
@@ -72,20 +82,11 @@ const FarmBoardContent = ({ farms }) => {
         })
 
         const allFeeds = await Promise.all(feedPromises)
+        console.log('got here')
 
         //combining all data now from prismic and farm feeds
         if (allFeeds && news && videos) {
           allFeeds.map(f => setFeeds(s => [...s, ...f]))
-        }
-
-        // news data
-        if (news) {
-          setFeeds(prev => [...prev, ...news])
-        }
-
-        // weekly videos
-        if (videos) {
-          setFeeds(prev => [...prev, ...videos])
         }
 
         setLoading(false)
@@ -105,6 +106,34 @@ const FarmBoardContent = ({ farms }) => {
   )
 
   const mapKey = i => i
+  const isNotEmpty = (filter, array) => {
+    let farm = false
+    let videos = false
+    let news = false
+    const _farms = array.filter(
+      item =>
+        filter === 'combined' &&
+        farms[activeFarmIndex].order?.product?._id === item?.farm
+    )
+    const _videos = array.filter(
+      item => filter === 'weekly videos' && item?.type === 'weekly_videos'
+    )
+    const _news = array.filter(
+      item => filter === 'news' && item?.type === 'news'
+    )
+
+    console.log(_videos, _news)
+
+    if (_farms.length) farm = true
+    if (_videos.length) videos = true
+    if (_news.length) news = true
+
+    return {
+      farm,
+      videos,
+      news
+    }
+  }
 
   const renderCard = (status, content) => {
     switch (status) {
@@ -142,16 +171,18 @@ const FarmBoardContent = ({ farms }) => {
         return (
           <>
             {filter === 'combined' &&
-            farms[activeFarmIndex].order?.product?._id === content?.farm ? (
-              <FarmFeedCard
-                activeFarm={farms[activeFarmIndex]}
-                content={content}
-                status={status}
-                timestamp={new Date(
-                  content?.data?.created || new Date()
-                )?.toLocaleDateString()}
-              />
-            ) : null}
+              farms[activeFarmIndex].order?.product?._id === content?.farm && (
+                <FarmFeedCard
+                  activeFarm={farms[activeFarmIndex]}
+                  content={content}
+                  status={status}
+                  timestamp={new Date(
+                    content?.data?.created || new Date()
+                  )?.toLocaleDateString()}
+                />
+              )}
+
+            {console.log(!isNotEmpty(filter, cleanedFeeds, content))}
           </>
         )
     }
@@ -187,6 +218,29 @@ const FarmBoardContent = ({ farms }) => {
                 ? "See what's happening in your farm(s)"
                 : ''}
             </Heading>
+            {!isNotEmpty(filter, cleanedFeeds)?.farm && filter === 'combined' && (
+              <Flex w='100%' align='center' justify='center'>
+                <Text color='cf.400' fontSize={{ base: 'md' }}>
+                  Opps, Feeds unavailable currently
+                </Text>
+              </Flex>
+            )}
+            {!isNotEmpty(filter, cleanedFeeds)?.videos &&
+              filter === 'weekly videos' && (
+                <Flex w='100%' align='center' justify='center'>
+                  <Text color='cf.400' fontSize={{ base: 'md' }}>
+                    Opps, Videos unavailable currently
+                  </Text>
+                </Flex>
+              )}
+
+            {!isNotEmpty(filter, cleanedFeeds)?.news && filter === 'news' && (
+              <Flex w='100%' align='center' justify='center'>
+                <Text color='cf.400' fontSize={{ base: 'md' }}>
+                  Opps, News unavailable currently
+                </Text>
+              </Flex>
+            )}
 
             {feeds?.length > 0 ? (
               cleanedFeeds.map((content, index) => {
