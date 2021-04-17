@@ -23,7 +23,7 @@ const YourFarmCard = ({
   setFilter,
   filter
 }) => {
-  const dummyFarms = [
+  const randomColors = [
     { color: '#FF9F9F' },
     { color: '#76B1F6' },
     { color: '#FF9F9F' },
@@ -102,7 +102,7 @@ const YourFarmCard = ({
                     bg={
                       activeFarmIndex === index
                         ? 'cf.400'
-                        : dummyFarms[index]?.color || '#ff0000'
+                        : randomColors[index]?.color || '#ff0000'
                     }
                     rounded='25px'
                     w={5}
