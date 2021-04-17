@@ -81,12 +81,11 @@ const Layout = ({
         <GridItem pos='relative'>
           <Box
             px={px}
-            pt={pt}
             w={{ lg: '100%' }}
             as='main'
             bg='cf-dark.400'
             h={height}
-            mt={{ md: 20, xl: 24 }}
+            mt={{ md: 20 }}
             color='gray.800'
             fontFamily='body'
             overflowX='hidden'

@@ -28,7 +28,7 @@ const ButtonDownload = ({ type, order, ...rest }) => {
         duration: 5000,
         position: 'top-right'
       })
-      saveAs(blob, `${query.reference}-${resource}.pdf`)
+      saveAs(blob, `farm-${query.type}-for-${query.reference}.pdf`)
     } catch (error) {
       toast({
         title: 'Download failed',

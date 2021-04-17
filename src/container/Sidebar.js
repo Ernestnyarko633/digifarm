@@ -5,22 +5,23 @@ import { NavLink } from 'react-router-dom'
 import { farm, home, market, Guide, wallet } from 'theme/Icons'
 //import { MdChatBubbleOutline } from 'react-icons/md'
 // import { IoIosHelpCircle } from 'react-icons/io'
+import { FiPlay } from 'react-icons/fi'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
-  { icon: farm, path: '/farms', name: 'Farm board', size: 4, disabled: false },
+  { icon: farm, path: '/farms', name: 'Farm board', size: 4 },
   {
     icon: wallet,
     path: '/wallet',
     name: 'Farm Wallet',
-    size: 4,
-    disabled: false
+    size: 4
   },
   { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
 ]
 
 const links = [
-  { icon: Guide, path: '/guide', name: 'How-To-Guide', size: 5 }
+  { icon: Guide, path: '/guide', name: 'How-To-Guide', size: 5 },
+  { icon: FiPlay, path: '/start-farm', name: 'Start-New-Farm', size: 5 }
   // {
   //   icon: IoIosHelpCircle,
   //   path: '/support',

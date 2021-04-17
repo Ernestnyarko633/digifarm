@@ -99,8 +99,9 @@ export default function FarmReceiptCard({ farm, title, type }) {
         alignItems='center'
       >
         <Image
-          w={{ base: 10, md: '100%' }}
-          h={{ base: 10, md: '100%' }}
+          w={{ base: 10, md: 32 }}
+          h={{ base: 10, md: 32 }}
+          objectFit='contain'
           src={require('../../../assets/images/document.png').default}
         />
         <Text w={64} fontSize='sm' color='gray.600' mt={4}>

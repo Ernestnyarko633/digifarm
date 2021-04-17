@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Heading, Flex, Box } from '@chakra-ui/react'
+import { Heading, Flex, Box, Text } from '@chakra-ui/react'
 import Fade from 'react-reveal/Fade'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
@@ -11,12 +11,8 @@ import FarmFeedCard from 'components/FarmBoard/Cards/FarmFeedCard'
 import NewsCard from 'components/FarmBoard/Cards/NewsCard'
 import WeeklyVideoCard from 'components/FarmBoard/Cards/WeeklyVideoCard'
 import FetchCard from 'components/FetchCard/index'
-// import Crop from 'assets/images/crop.png'
-// import SoyaBeanImg from 'assets/images/soya.png'
 import PropTypes from 'prop-types'
-
 import useApi from 'context/api'
-//import { StyledCountrySelectDropdownDialcodeColumn } from 'baseui/phone-input'
 
 const FarmBoardContent = ({ farms }) => {
   const [activeFarmIndex, setFarmIndex] = React.useState(0)
@@ -25,6 +21,7 @@ const FarmBoardContent = ({ farms }) => {
   const [feeds, setFeeds] = React.useState([])
   const [news, setNewsData] = React.useState(null)
   const [videos, setVideosData] = React.useState(null)
+  const [filter, setFilter] = React.useState('combined')
 
   const { getMyFarmFeeds } = useApi()
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
@@ -64,6 +61,16 @@ const FarmBoardContent = ({ farms }) => {
     if (mounted) {
       setLoading(true)
       const fetchData = async () => {
+        // news data
+        if (news) {
+          setFeeds(prev => [...prev, ...news])
+        }
+
+        // weekly videos
+        if (videos) {
+          setFeeds(prev => [...prev, ...videos])
+        }
+
         const feedPromises = farms.map(async farm => {
           const response = await getMyFarmFeeds({
             farm: farm?.order?.product?._id
@@ -79,16 +86,6 @@ const FarmBoardContent = ({ farms }) => {
         //combining all data now from prismic and farm feeds
         if (allFeeds && news && videos) {
           allFeeds.map(f => setFeeds(s => [...s, ...f]))
-        }
-
-        // news data
-        if (news) {
-          setFeeds(prev => [...prev, ...news])
-        }
-
-        // weekly videos
-        if (videos) {
-          setFeeds(prev => [...prev, ...videos])
         }
 
         setLoading(false)
@@ -108,41 +105,80 @@ const FarmBoardContent = ({ farms }) => {
   )
 
   const mapKey = i => i
+  const isNotEmpty = (filter, array) => {
+    let farm = false
+    let videos = false
+    let news = false
+    const _farms = array.filter(
+      item =>
+        filter === 'combined' &&
+        farms[activeFarmIndex].order?.product?._id === item?.farm
+    )
+    const _videos = array.filter(
+      item => filter === 'weekly videos' && item?.type === 'weekly_videos'
+    )
+    const _news = array.filter(
+      item => filter === 'news' && item?.type === 'news'
+    )
+
+    if (_farms.length) farm = true
+    if (_videos.length) videos = true
+    if (_news.length) news = true
+
+    return {
+      farm,
+      videos,
+      news
+    }
+  }
 
   const renderCard = (status, content) => {
     switch (status) {
       case 'news':
         return (
-          <NewsCard
-            activeFarm={farms[activeFarmIndex]}
-            content={content}
-            status={status}
-            timestamp={new Date(
-              content?.data?.created || new Date()
-            )?.toLocaleDateString()}
-          />
+          <>
+            {filter === 'news' && (
+              <NewsCard
+                activeFarm={farms[activeFarmIndex]}
+                content={content}
+                status={status}
+                timestamp={new Date(
+                  content?.data?.created || new Date()
+                )?.toLocaleDateString()}
+              />
+            )}
+          </>
         )
       case 'weekly_videos':
         return (
-          <WeeklyVideoCard
-            activeFarm={farms[activeFarmIndex]}
-            content={content}
-            status={status}
-            timestamp={new Date(
-              content?.data?.created || new Date()
-            )?.toLocaleDateString()}
-          />
+          <React.Fragment>
+            {filter === 'weekly videos' && (
+              <WeeklyVideoCard
+                activeFarm={farms[activeFarmIndex]}
+                content={content}
+                status={status}
+                timestamp={new Date(
+                  content?.data?.created || new Date()
+                )?.toLocaleDateString()}
+              />
+            )}
+          </React.Fragment>
         )
       default:
         return (
-          <FarmFeedCard
-            activeFarm={farms[activeFarmIndex]}
-            content={content}
-            status={status}
-            timestamp={new Date(
-              content?.data?.created || new Date()
-            )?.toLocaleDateString()}
-          />
+          <>
+            {filter === 'combined' &&
+              farms[activeFarmIndex].order?.product?._id === content?.farm && (
+                <FarmFeedCard
+                  activeFarm={farms[activeFarmIndex]}
+                  content={content}
+                  status={status}
+                  timestamp={new Date(
+                    content?.data?.created || new Date()
+                  )?.toLocaleDateString()}
+                />
+              )}
+          </>
         )
     }
   }
@@ -163,7 +199,13 @@ const FarmBoardContent = ({ farms }) => {
       ) : (
         <>
           {cleanedFeeds?.length && (
-            <YourFarmCard farms={farms} setFarmIndex={setFarmIndex} />
+            <YourFarmCard
+              filter={filter}
+              farms={farms}
+              setFilter={setFilter}
+              activeFarmIndex={activeFarmIndex}
+              setFarmIndex={setFarmIndex}
+            />
           )}
           <Box p={{ base: 4, md: 16 }}>
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
@@ -171,6 +213,29 @@ const FarmBoardContent = ({ farms }) => {
                 ? "See what's happening in your farm(s)"
                 : ''}
             </Heading>
+            {!isNotEmpty(filter, cleanedFeeds)?.farm && filter === 'combined' && (
+              <Flex w='100%' align='center' justify='center'>
+                <Text color='cf.400' fontSize={{ base: 'md' }}>
+                  Opps, Feeds unavailable currently
+                </Text>
+              </Flex>
+            )}
+            {!isNotEmpty(filter, cleanedFeeds)?.videos &&
+              filter === 'weekly videos' && (
+                <Flex w='100%' align='center' justify='center'>
+                  <Text color='cf.400' fontSize={{ base: 'md' }}>
+                    Opps, Videos unavailable currently
+                  </Text>
+                </Flex>
+              )}
+
+            {!isNotEmpty(filter, cleanedFeeds)?.news && filter === 'news' && (
+              <Flex w='100%' align='center' justify='center'>
+                <Text color='cf.400' fontSize={{ base: 'md' }}>
+                  Opps, News unavailable currently
+                </Text>
+              </Flex>
+            )}
 
             {feeds?.length > 0 ? (
               cleanedFeeds.map((content, index) => {

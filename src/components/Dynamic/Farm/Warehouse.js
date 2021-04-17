@@ -1,53 +1,18 @@
-/* eslint-disable */
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Flex,
   Grid,
   GridItem,
-  Icon,
   Image,
   Heading,
-  Text,
-} from '@chakra-ui/react';
-import { Weather, Calendar, Crop, FarmSchedule, Updates } from 'theme/Icons';
-import PropTypes from 'prop-types';
-import WarehouseCard from 'components/Cards/WarehouseCard';
-import Ware from 'assets/images/warehouse.png';
-
-// import SoyaBean from '../../../assets/images/startfarm/soya-beans.svg'
-
-const menus = [
-  { id: 1, icon: Calendar, state: 'compA' },
-  { id: 2, icon: Weather, state: 'compB' },
-  { id: 3, icon: Crop, state: 'compC' },
-  { id: 4, icon: FarmSchedule, state: 'compD' },
-  { id: 5, icon: Updates, state: 'compE' },
-];
+  Text
+} from '@chakra-ui/react'
+import PropTypes from 'prop-types'
+import WarehouseCard from 'components/Cards/WarehouseCard'
+import Ware from 'assets/images/warehouse.png'
 
 // const warehouseGoods = [
-//   {
-//     id: 1,
-//     image: SoyaBean,
-//     name: 'Soya Bean Warehouse',
-//     location: 'AgyaAtta, Eastern Region',
-//     quantity: '2000 tonnes',
-//     weight: '200 kg',
-//     bags: '20 bags',
-//     condition: 'Moist',
-//     status: 'action'
-//   },
-//   {
-//     id: 2,
-//     image: SoyaBean,
-//     name: 'Soya Bean Warehouse',
-//     location: 'AgyaAtta, Eastern Region',
-//     quantity: '2010 tonnes',
-//     weight: '300 kg',
-//     bags: '30 bags',
-//     condition: 'Dry',
-//     status: 'action'
-//   },
 //   {
 //     id: 3,
 //     image: SoyaBean,
@@ -64,45 +29,12 @@ const menus = [
 export default function Warehouse({ digitalFarmerFarm, loading }) {
   return (
     <Grid
-      templateRows={{ md: 'repeat(1 1fr)' }}
-      templateColumns={{ md: '5% 95%' }}
+      templateRows='repeat(1 1fr)'
       pos='relative'
       fontFamily='body'
       fontSize={{ md: 'md' }}
       d={{ base: 'block', md: 'grid' }}
     >
-      <GridItem>
-        <Box
-          as='aside'
-          pos='fixed'
-          bottom={0}
-          left={0}
-          h={{ lg: '84vh' }}
-          w={{ md: '5%' }}
-          bg='white'
-          zIndex={50}
-          pt={10}
-          shadow='md'
-          px={{ md: 8 }}
-          color='gray.600'
-          d={{ base: 'none', md: 'block' }}
-        >
-          <Box as='ul'>
-            {menus?.map((item) => (
-              <Flex
-                as='button'
-                role='button'
-                aria-label={`${item.icon} button`}
-                key={item.id}
-                align='center'
-                pb={6}
-              >
-                <Icon as={item.icon} />
-              </Flex>
-            ))}
-          </Box>
-        </Box>
-      </GridItem>
       <GridItem>
         <Box
           minW={{ lg: '95%' }}
@@ -134,7 +66,7 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
                 Warehouse is empty
               </Heading>
               <Text fontSize='xs'>
-                Your total farms and their details will show up here
+                Your farm yield and their details will show up here
               </Text>
             </Flex>
           )}
@@ -161,9 +93,9 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
         </Box>
       </GridItem>
     </Grid>
-  );
+  )
 }
 Warehouse.propTypes = {
   digitalFarmerFarm: PropTypes.any,
-  loading: PropTypes.any,
-};
+  loading: PropTypes.any
+}
