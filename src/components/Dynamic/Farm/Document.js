@@ -16,7 +16,7 @@ export default function Document({
   return (
     <Grid
       templateRows={{ md: 'repeat(1 1fr)' }}
-      templateColumns={{ md: '5% 65% 30%' }}
+      templateColumns={{ md: '70% 30%' }}
       pos='relative'
       fontFamily='body'
       fontSize={{ md: 'md' }}
@@ -50,7 +50,7 @@ export default function Document({
       </GridItem>
       <GridItem mt={{ base: 16, md: 0 }} mb={{ base: 32, md: 0 }}>
         <Box
-          py={8}
+          py={16}
           right={{ md: 0 }}
           bg='white'
           as='rightsidebar'
