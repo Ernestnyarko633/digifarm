@@ -82,7 +82,6 @@ const FarmBoardContent = ({ farms }) => {
         })
 
         const allFeeds = await Promise.all(feedPromises)
-        console.log('got here')
 
         //combining all data now from prismic and farm feeds
         if (allFeeds && news && videos) {
@@ -121,8 +120,6 @@ const FarmBoardContent = ({ farms }) => {
     const _news = array.filter(
       item => filter === 'news' && item?.type === 'news'
     )
-
-    console.log(_videos, _news)
 
     if (_farms.length) farm = true
     if (_videos.length) videos = true
@@ -181,8 +178,6 @@ const FarmBoardContent = ({ farms }) => {
                   )?.toLocaleDateString()}
                 />
               )}
-
-            {console.log(!isNotEmpty(filter, cleanedFeeds, content))}
           </>
         )
     }
