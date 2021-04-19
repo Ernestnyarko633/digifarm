@@ -1,38 +1,79 @@
-import React from 'react'
-import { Box, Text, Icon, Flex, Heading } from '@chakra-ui/react'
-import { wallet } from 'theme/Icons'
-import PropTypes from 'prop-types'
-import { getFormattedMoney } from 'helpers/misc'
+/* eslint-disable */
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { getFormattedMoney } from 'helpers/misc';
+import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/layout';
+import { Avatar } from '@chakra-ui/avatar';
+import { Stat, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/stat';
 
-const WalletCard = ({ name, acreage, price }) => {
+const WalletCard = ({ acreage, price, farm }) => {
   return (
     <Box
-      w={{ base: '100%', md: '100%' }}
-      rounded='lg'
+      rounded='xl'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      p={6}
+      p={{ md: 8 }}
       bg='white'
+      minW={{ base: 82, md: 95 }}
+      minH={{ md: 'auto' }}
     >
-      <Text fontWeight={300} textAlign='center'>
-        {name}
-      </Text>
-      <Flex mt={2} align='center' justify='center' direction='column'>
-        <Icon as={wallet} boxSize={10} />
-        <Text mt='2px' fontWeight={300} textAlign='center'>
-          Total
-        </Text>
-        <Heading fontSize={{ md: '3xl' }} fontWeight={900} mt={1}>
-          ${getFormattedMoney(price * acreage)}
-        </Heading>
+      <Flex align='center'>
+        <Box mr={4}>
+          <Avatar
+            bgColor='white'
+            borderWidth='1px'
+            borderColor='gray.300'
+            src={farm?.order?.product?.cropVariety?.imageUrl}
+          />
+        </Box>
+
+        <Flex direction='column'>
+          <Flex align='center'>
+            <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
+              {farm?.order?.product?.cropVariety?.crop?.name}
+            </Heading>
+            <Text
+              ml={1}
+              as='span'
+              fontSize={{ base: 'tiny', md: 'sm' }}
+              color='gray.500'
+            >
+              ({farm?.order?.product?.cropVariety?.name}) {farm?.name}
+            </Text>
+          </Flex>
+
+          <Text
+            color='gray.500'
+            mt={-1}
+            fontSize={{ base: 'sm', md: 'md' }}
+            textTransform='uppercase'
+          >
+            {farm?.order?.product?.location?.name},{' '}
+            {farm?.order?.product?.location?.country}
+          </Text>
+        </Flex>
       </Flex>
+
+      <Divider orientation='horizontal' borderColor='gray.300' my={6} />
+
+      <Stat>
+        <StatLabel>Collected Fees</StatLabel>
+        <StatNumber fontFamily='sans-serif'>
+          ${getFormattedMoney(price * acreage)}
+        </StatNumber>
+        <StatHelpText>
+          {moment(farm.createdAt).format('LL')} -{' '}
+          {moment(farm.updatedAt).format('LL')}
+        </StatHelpText>
+      </Stat>
     </Box>
-  )
-}
+  );
+};
 
 WalletCard.propTypes = {
   acreage: PropTypes.any,
   price: PropTypes.any,
-  name: PropTypes.any
-}
+  name: PropTypes.any,
+};
 
-export default WalletCard
+export default WalletCard;
