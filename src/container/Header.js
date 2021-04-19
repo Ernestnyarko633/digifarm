@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { Avatar, Box, Flex, Icon, Link, Text } from '@chakra-ui/react';
+import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu } from '@headlessui/react';
 import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi';
@@ -47,22 +47,14 @@ const Header = () => {
       px={{ base: 4, md: 36 }}
       overflowX={{ base: 'hidden', md: 'visible' }}
     >
-      <ReachRouter to='/dashboard'>
-        <Link _hover={{ textDecor: 'none' }}>
-          <Box
-            w={{ base: '84.47px', md: '113px', xl: '169px' }}
-            h={{ base: 6, md: 8, xl: 16 }}
-            bgImage={{
-              base: `url('${Logo1}')`,
-              md: `url('${Logo2}')`,
-              xl: `url('${Logo3}')`,
-            }}
-            bgSize='contain'
-            bgPos='center'
-            bgRepeat='no-repeat'
+      <Link as={ReachRouter} to='/dashboard' _hover={{ textDecor: 'none' }}>
+        <Box as='picture'>
+          <Image
+            src={Logo1}
+            srcSet={`${Logo1} 300w, ${Logo2} 768w, ${Logo3} 1280w`}
           />
-        </Link>
-      </ReachRouter>
+        </Box>
+      </Link>
 
       <Flex align='center'>
         <Flex align='center' mr={{ base: 4, md: 10 }}>
