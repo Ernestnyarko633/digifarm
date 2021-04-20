@@ -1,17 +1,18 @@
+import React, { useState, useEffect, useRef } from 'react'
 import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
+import { useScreenshot } from 'use-react-screenshot'
+import { Menu } from '@headlessui/react'
+import Fade from 'react-reveal/Fade'
+import { AnimatePresence, motion } from 'framer-motion'
+
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
 import useAuth from 'context/auth'
-import React, { useState, useEffect, useRef } from 'react'
-import { useScreenshot } from 'use-react-screenshot'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
-import { useParams } from 'react-router-dom'
 import Share from 'components/Share'
-import useFetch from 'hooks/useFetch'
-import { dateIntervals } from 'helpers/misc'
-import Fade from 'react-reveal/Fade'
-import { Menu } from '@headlessui/react'
+import FarmViewBanner from 'components/Modals/FarmViewBanner'
 import {
   chevronDown,
   chevronUp,
@@ -21,9 +22,10 @@ import {
   FarmSchedule,
   Updates
 } from 'theme/Icons'
-import { AnimatePresence, motion } from 'framer-motion'
+import useFetch from 'hooks/useFetch'
 import useComponent from 'context/component'
-import FarmViewBanner from 'components/Modals/FarmViewBanner'
+
+import { dateIntervals, isDateG8Today } from 'helpers/misc'
 
 const MotionBox = motion.custom(Box)
 
@@ -173,9 +175,10 @@ export default function Farm() {
     <Box pos='relative' ref={ref}>
       <Share isOpen={isOpen} onClose={onClose} image={image} />
       <Header />
-      {farm.order?.product?.startDate && (
-        <FarmViewBanner date={farm.order?.product?.startDate} />
-      )}
+      {farm.order?.product?.startDate &&
+        !isDateG8Today(farm.order?.product?.startDate) && (
+          <FarmViewBanner date={farm.order?.product?.startDate} />
+        )}
       <Box bg='white'>
         <Flex
           pos='fixed'

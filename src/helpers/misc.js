@@ -121,3 +121,10 @@ export const getDiscount = (discounts, acreage) => {
   }
   return null
 }
+
+export const isDateG8Today = date => {
+  const today = new Date().setHours(0, 0, 0, 0)
+  const start = new Date(date).setHours(0, 0, 0, 0)
+
+  return today > start
+}
