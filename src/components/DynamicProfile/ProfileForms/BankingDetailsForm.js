@@ -60,8 +60,9 @@ const BankingDetailsForm = ({ bankDetails }) => {
             accountNumber: values.accountNumber
           }
         }
-        if (!values.iban) delete data.bankDetails.iban
-        if (!values.accountNumber) delete data.bankDetails.accountNumber
+        if (!values?.iban?.length) delete data.bankDetails.iban
+        if (!values?.accountNumber?.length)
+          delete data.bankDetails.accountNumber
         const res = bankDetails?.length
           ? await updateBankDetails(bankDetails[0]?._id, data)
           : await createBankDetails(data)
