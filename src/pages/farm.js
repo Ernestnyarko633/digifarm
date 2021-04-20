@@ -1,18 +1,18 @@
-/* eslint-disable */
-import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react';
-import DynamicFarm from 'components/Dynamic';
-import Header from 'container/Header';
-import useAuth from 'context/auth';
-import React, { useState, useEffect, useRef } from 'react';
-import { useScreenshot } from 'use-react-screenshot';
-import useApi from 'context/api';
-import FetchCard from 'components/FetchCard';
-import { useParams } from 'react-router-dom';
-import Share from 'components/Share';
-import useFetch from 'hooks/useFetch';
-import { dateIntervals } from 'helpers/misc';
-import Fade from 'react-reveal/Fade';
-import { Menu } from '@headlessui/react';
+import React, { useState, useEffect, useRef } from 'react'
+import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
+import { useScreenshot } from 'use-react-screenshot'
+import { Menu } from '@headlessui/react'
+import Fade from 'react-reveal/Fade'
+import { AnimatePresence, motion } from 'framer-motion'
+
+import DynamicFarm from 'components/Dynamic'
+import Header from 'container/Header'
+import useAuth from 'context/auth'
+import useApi from 'context/api'
+import FetchCard from 'components/FetchCard'
+import Share from 'components/Share'
+import FarmViewBanner from 'components/Modals/FarmViewBanner'
 import {
   chevronDown,
   chevronUp,
@@ -20,142 +20,144 @@ import {
   Calendar,
   Crop,
   FarmSchedule,
-  Updates,
-} from 'theme/Icons';
-import { AnimatePresence, motion } from 'framer-motion';
-import useComponent from 'context/component';
+  Updates
+} from 'theme/Icons'
+import useFetch from 'hooks/useFetch'
+import useComponent from 'context/component'
 
-const MotionBox = motion.custom(Box);
+import { dateIntervals, isDateG8Today } from 'helpers/misc'
+
+const MotionBox = motion.custom(Box)
 
 export default function Farm() {
-  const { isAuthenticated } = useAuth();
-  const { user } = isAuthenticated();
-  const { id } = useParams();
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  const { id } = useParams()
 
-  const ref = useRef(null);
-  const [state, setState] = useState('compA');
-  const [isOpen, setIsOpen] = useState(false);
-  const [image, takeScreenShot] = useScreenshot();
-  const [reload, setReload] = useState(0);
-  const [location, setLocation] = useState([]);
-  const [center, setCenter] = useState([]);
-  const triggerReload = () => setReload((prevState) => prevState + 1);
+  const ref = useRef(null)
+  const [component, setComponent] = useState('compA')
+  const [isOpen, setIsOpen] = useState(false)
+  const [image, takeScreenShot] = useScreenshot()
+  const [reload, setReload] = useState(0)
+  const [location, setLocation] = useState([])
+  const [center, setCenter] = useState([])
+  const triggerReload = () => setReload(prevState => prevState + 1)
 
-  const { compState, setCompState } = useComponent();
+  const { compState, setCompState } = useComponent()
 
   const {
     getMyFarmFeeds,
     getAllTasks,
     getMyFarm,
     getActivities,
-    getMyScheduledTasks,
-  } = useApi();
+    getMyScheduledTasks
+  } = useApi()
 
   const {
     data: farm,
     isLoading: farmIsLoading,
-    error: farmHasError,
-  } = useFetch(null, getMyFarm, reload, id);
+    error: farmHasError
+  } = useFetch('selectedFarm', getMyFarm, reload, id)
 
   useEffect(() => {
-    let location_ = [];
-    let center_ = [];
-    let _location = farm?.order?.product?.location;
-    let _center = _location?.center;
+    let location_ = []
+    let center_ = []
+    let _location = farm?.order?.product?.location
+    let _center = _location?.center
     const strToNumber = (value, array) =>
-      value?.forEach((coordinate) => {
+      value?.forEach(coordinate => {
         return array?.push(
-          coordinate.split(',').map((item) => {
-            return parseFloat(item, 10);
+          coordinate.split(',').map(item => {
+            return parseFloat(item, 10)
           })
-        );
-      });
-    strToNumber(_location?.coords, location_);
-    strToNumber(_center, center_);
-    setLocation(location_);
-    setCenter(center_);
-  }, [farm]);
+        )
+      })
+    strToNumber(_location?.coords, location_)
+    strToNumber(_center, center_)
+    setLocation(location_)
+    setCenter(center_)
+  }, [farm])
 
   const {
     data: farmFeeds,
     isLoading: farmFeedsIsLoading,
-    error: farmFeedsHasError,
+    error: farmFeedsHasError
   } = useFetch(
     null,
     farm?.order?.product?._id ? getMyFarmFeeds : null,
     reload,
     {
-      farm: farm?.order?.product?._id,
+      farm: farm?.order?.product?._id
     }
-  );
+  )
 
   const {
     data: ScheduledTasks,
     isLoading: ScheduledTasksIsLoading,
-    error: ScheduledTasksHasError,
+    error: ScheduledTasksHasError
   } = useFetch(
     null,
     farm?.order?.product?._id ? getMyScheduledTasks : null,
     reload,
     {
-      farm: farm?.order?.product?._id,
+      farm: farm?.order?.product?._id
     }
-  );
+  )
 
   const {
     data: myFarmActivities,
     isLoading: myFarmActivitiesIsLoading,
-    error: myFarmActivitiesHasError,
+    error: myFarmActivitiesHasError
   } = useFetch(null, farm?.order?.product?._id ? getActivities : null, reload, {
-    farm: farm?.order?.product?._id,
-  });
+    farm: farm?.order?.product?._id
+  })
 
   const {
     data: tasks,
     isLoading: tasksIsLoading,
-    error: tasksHasError,
+    error: tasksHasError
   } = useFetch(null, farm?.order?.product?._id ? getAllTasks : null, reload, {
-    farm: farm?.order?.product?._id,
-  });
+    farm: farm?.order?.product?._id
+  })
 
   const isLoading =
     farmFeedsIsLoading ||
     farmIsLoading ||
     ScheduledTasksIsLoading ||
     myFarmActivitiesIsLoading ||
-    tasksIsLoading;
+    tasksIsLoading
   const hasError =
     farmFeedsHasError ||
     farmHasError ||
     ScheduledTasksHasError ||
     myFarmActivitiesHasError ||
-    tasksHasError;
+    tasksHasError
 
-  const onClose = () => setIsOpen(false);
+  const onClose = () => setIsOpen(false)
 
-  const onOpen = () => setIsOpen(true);
+  const onOpen = () => setIsOpen(true)
 
   const getImage = () => {
-    takeScreenShot(ref.current);
-    onOpen();
-  };
+    takeScreenShot(ref.current)
+    onOpen()
+  }
 
   const menus = [
     { name: 'Farm', comp: 'compA' },
     { name: 'Documents', comp: 'compB' },
     { name: 'Gallery', comp: 'compC' },
-    { name: 'Warehouse', comp: 'compD' },
-  ];
+    { name: 'Warehouse', comp: 'compD' }
+  ]
 
   const bottomMenus = [
     { id: 1, name: 'Today’s tasks', icon: Calendar, state: 'compA' },
     { id: 2, name: 'Weather', icon: Weather, state: 'compB' },
     { id: 3, name: 'Crop health', icon: Crop, state: 'compC' },
     { id: 4, name: 'Scheduled events', icon: FarmSchedule, state: 'compD' },
-    { id: 5, name: 'Manager updates', icon: Updates, state: 'compE' },
-  ];
+    { id: 5, name: 'Manager updates', icon: Updates, state: 'compE' }
+  ]
 
-  const mapKey = (index) => index;
+  const mapKey = index => index
 
   return isLoading || hasError ? (
     <FetchCard
@@ -167,12 +169,16 @@ export default function Farm() {
       reload={triggerReload}
       loading={isLoading}
       error={hasError}
-      text={`Standby as we load your farm's view`}
+      text={"Standby as we load your farm's view"}
     />
   ) : (
     <Box pos='relative' ref={ref}>
       <Share isOpen={isOpen} onClose={onClose} image={image} />
       <Header />
+      {farm.order?.product?.startDate &&
+        !isDateG8Today(farm.order?.product?.startDate) && (
+          <FarmViewBanner date={farm.order?.product?.startDate} />
+        )}
       <Box bg='white'>
         <Flex
           pos='fixed'
@@ -211,8 +217,8 @@ export default function Farm() {
                     role='button'
                     aria-label={`${menu.name} button`}
                     px={{ md: 6 }}
-                    color={state === menu.comp ? 'cf.400' : ''}
-                    onClick={() => setState(menu.comp)}
+                    color={component === menu.comp ? 'cf.400' : ''}
+                    onClick={() => setComponent(menu.comp)}
                   >
                     {menu.name}
                   </Flex>
@@ -257,17 +263,16 @@ export default function Farm() {
                 exit={{ y: -200 }}
               >
                 {menus.map((menu, idx) => (
-                  <AnimatePresence>
+                  <AnimatePresence key={mapKey(idx)}>
                     <Menu.Item
                       as={Box}
-                      key={mapKey(idx)}
                       py={4}
                       borderBottomWidth={1}
                       _last={{ borderBlockWidth: 0 }}
                     >
                       <Box
-                        color={state === menu.comp ? 'cf.400' : ''}
-                        onClick={() => setState(menu.comp)}
+                        color={component === menu.comp ? 'cf.400' : ''}
+                        onClick={() => setComponent(menu.comp)}
                         as='button'
                         role='button'
                         aria-label={`${menu.name} button`}
@@ -288,7 +293,7 @@ export default function Farm() {
               center={center}
               loading={isLoading}
               error={hasError}
-              farm={state}
+              farm={component}
               tasks={tasks}
               activities={myFarmActivities}
               ScheduledTasks={ScheduledTasks}
@@ -308,7 +313,7 @@ export default function Farm() {
               justify='center'
               mx='auto'
               reload={() => {
-                hasError && triggerReload();
+                hasError && triggerReload()
               }}
               loading={isLoading}
               error={hasError}
@@ -339,7 +344,7 @@ export default function Farm() {
         )}
       </Box> */}
 
-        {state === 'compA' && (
+        {component === 'compA' && (
           <Flex
             align='center'
             justify='space-between'
@@ -353,7 +358,7 @@ export default function Farm() {
             zIndex={50}
             px={4}
           >
-            {bottomMenus.map((item) => (
+            {bottomMenus.map(item => (
               <Box
                 as='button'
                 role='button'
@@ -371,5 +376,5 @@ export default function Farm() {
         )}
       </Box>
     </Box>
-  );
+  )
 }
