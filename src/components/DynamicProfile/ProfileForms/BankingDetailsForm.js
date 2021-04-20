@@ -63,7 +63,7 @@ const BankingDetailsForm = ({ bankDetails }) => {
         if (!values.iban) delete data.bankDetails.iban
         if (!values.accountNumber) delete data.bankDetails.accountNumber
         const res = bankDetails?.length
-          ? await updateBankDetails(bankDetails?._id, data)
+          ? await updateBankDetails(bankDetails[0]?._id, data)
           : await createBankDetails(data)
 
         toast({
@@ -166,7 +166,6 @@ const BankingDetailsForm = ({ bankDetails }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 disabled={formik.values?.iban?.length > 1}
-                isRequired
                 type='account'
                 bg='white'
               />
@@ -177,7 +176,6 @@ const BankingDetailsForm = ({ bankDetails }) => {
                 value={formik.values.iban}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                isRequired
                 type='string'
                 disabled={formik.values?.accountNumber?.length > 1}
                 bg='white'
