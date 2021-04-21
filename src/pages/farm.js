@@ -37,6 +37,7 @@ export default function Farm() {
   const ref = useRef(null)
   const [component, setComponent] = useState('compA')
   const [isOpen, setIsOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const [image, takeScreenShot] = useScreenshot()
   const [reload, setReload] = useState(0)
   const [location, setLocation] = useState([])
@@ -134,6 +135,7 @@ export default function Farm() {
     tasksHasError
 
   const onClose = () => setIsOpen(false)
+  const closed = () => setOpen(false)
 
   const onOpen = () => setIsOpen(true)
 
@@ -175,10 +177,16 @@ export default function Farm() {
     <Box pos='relative' ref={ref}>
       <Share isOpen={isOpen} onClose={onClose} image={image} />
       <Header />
-      {farm.order?.product?.startDate &&
-        !isDateG8Today(farm.order?.product?.startDate) && (
-          <FarmViewBanner date={farm.order?.product?.startDate} />
-        )}
+      <AnimatePresence>
+        {farm.order?.product?.startDate &&
+          !isDateG8Today(farm.order?.product?.startDate) &&
+          open && (
+            <FarmViewBanner
+              date={farm.order?.product?.startDate}
+              closed={closed}
+            />
+          )}
+      </AnimatePresence>
       <Box bg='white'>
         <Flex
           pos='fixed'
