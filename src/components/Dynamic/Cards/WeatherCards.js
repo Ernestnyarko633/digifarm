@@ -1,5 +1,4 @@
 import React from 'react'
-//import { Cloud } from 'theme/Icons'
 import { Box, Grid, Heading, Text, Flex } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Fade from 'react-reveal/Fade'

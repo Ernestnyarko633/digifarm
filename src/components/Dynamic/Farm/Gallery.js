@@ -30,6 +30,7 @@ export default function Gallery({ farmfeeds, loading }) {
           overflowX='hidden'
           py={{ md: 56 }}
           minH={{ lg: '100vh' }}
+          px={{ base: 4, md: 20 }}
         >
           {!loading && farmfeeds && (
             <Grid

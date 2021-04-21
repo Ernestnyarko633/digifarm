@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Method to return backend services urls based on the environment
  * */

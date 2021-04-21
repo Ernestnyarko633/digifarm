@@ -21,8 +21,9 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
   return (
     <Box
       rounded='xl'
-      w={{ base: 82, md: '80%' }}
+      w={{ base: 82, md: '550px', xl: '650px' }}
       mx='auto'
+      ml={{ md: 0, lg: 16, xl: 0 }}
       bg='white'
       mb={10}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
