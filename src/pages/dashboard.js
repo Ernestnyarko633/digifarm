@@ -3,9 +3,7 @@ import { Box, useDisclosure } from '@chakra-ui/react'
 
 import Layout from 'container/Layout'
 
-import useApi from 'context/api'
 import useAuth from 'context/auth'
-import useFetch from 'hooks/useFetch'
 
 import FetchCard from 'components/FetchCard'
 import GetStartedNowCard from 'components/Cards/GetStartedNowCard'
@@ -16,16 +14,13 @@ import { getCurrentDayParting } from 'helpers/misc'
 import useComponent from 'context/component'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
 import Fade from 'react-reveal/Fade'
+import { useFarmData } from 'hooks/useFarmData'
 
 const Dashboard = () => {
   document.title = 'Complete Farmer | Dashboard'
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const [reloadMyFarms, setReloadMyFarms] = React.useState(0)
-  const [reloadMyOrders, setReloadMyOrders] = React.useState(0)
-
-  const { getMyFarms, getMyOrders } = useApi()
   const { isAuthenticated } = useAuth()
   const {
     sliderType,
@@ -34,46 +29,25 @@ const Dashboard = () => {
     setCurrentProcessingOrdersSlide
   } = useComponent()
 
+  const {
+    triggerReloadMyFarms,
+    triggerReloadMyOrders,
+    myFarms,
+    myFarmsHasError,
+    myPendingOrder,
+    myPendingOrdersHasError,
+    myProcessingOrder,
+    myProcessingOrdersHasError,
+    isLoading,
+    hasError,
+    hasData
+  } = useFarmData()
+
   window.onbeforeunload = null
 
   const { message } = getCurrentDayParting()
 
   const { user } = isAuthenticated()
-
-  const triggerReloadMyFarms = () =>
-    setReloadMyFarms(prevState => prevState + 1)
-
-  const triggerReloadMyOrders = () =>
-    setReloadMyOrders(prevState => prevState + 1)
-
-  const {
-    data: myFarms,
-    isLoading: myFarmsIsLoading,
-    error: myFarmsHasError
-  } = useFetch('my_farms', getMyFarms, reloadMyFarms)
-
-  const {
-    data: myPendingOrder,
-    isLoading: myPendingOrdersIsLoading,
-    error: myPendingOrdersHasError
-  } = useFetch('my_pending_orders', getMyOrders, reloadMyOrders, {
-    status: 'PENDING'
-  })
-
-  const {
-    data: myProcessingOrder,
-    isLoading: myProcessingOrdersIsLoading,
-    error: myProcessingOrdersHasError
-  } = useFetch('my_processing_orders', getMyOrders, reloadMyOrders, {
-    status: 'PROCESSING'
-  })
-
-  const isLoading =
-    myFarmsIsLoading || myProcessingOrdersIsLoading || myPendingOrdersIsLoading
-  const hasError =
-    myFarmsHasError || myProcessingOrdersHasError || myPendingOrdersHasError
-  const hasData =
-    myFarms?.length || myProcessingOrder?.length || myPendingOrder?.length
 
   const handleClick = direction => {
     if (sliderType === 'farms') {

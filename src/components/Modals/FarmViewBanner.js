@@ -10,15 +10,21 @@ import {
 } from '@chakra-ui/react'
 import Digifarmer from 'assets/images/digifarmer.svg'
 import { getformattedDate } from 'helpers/misc'
+import { motion } from 'framer-motion'
 
-const FarmViewBanner = ({ date }) => {
+const MotionAlert = motion.custom(Alert)
+
+const FarmViewBanner = ({ date, closed }) => {
   return (
-    <Alert
-      pos='relative'
+    <MotionAlert
+      initial={{ y: -150, opacity: 0 }}
+      animate={{ y: 0, opacity: 1, transition: { duration: 0.5 } }}
+      exit={{ y: 150, opacity: 0, transition: { duration: 0.5 } }}
+      pos='fixed'
       w='100%'
       zIndex={100}
       status='success'
-      mt={{ base: 14, md: 20, xl: 24 }}
+      top={{ base: 14, md: 20, xl: 20 }}
       py={{ base: 4, md: 8 }}
       px={{ base: 4, md: 48 }}
       flexDir={{ base: 'column', md: 'row' }}
@@ -50,13 +56,14 @@ const FarmViewBanner = ({ date }) => {
         w={{ base: '9.438rem', md: '14.438rem' }}
         h={{ base: '8.5rem', md: '13.5rem' }}
       />
-      <CloseButton position='absolute' right='8px' top='8px' />
-    </Alert>
+      <CloseButton position='absolute' right='8px' top='8px' onClick={closed} />
+    </MotionAlert>
   )
 }
 
 FarmViewBanner.propTypes = {
-  date: PropTypes.string
+  date: PropTypes.string,
+  closed: PropTypes.func
 }
 
 export default FarmViewBanner
