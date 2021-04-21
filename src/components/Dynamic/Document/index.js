@@ -25,11 +25,13 @@ const DynamicDocument = ({
   farmFeedsIsLoading,
   ScheduledTasksIsLoading,
   myFarmActivitiesIsLoading,
-  tasksIsLoading
+  tasksIsLoading,
+  reloads
 }) => {
   const SelectedCard = components[document]
   return (
     <SelectedCard
+      reloads={reloads}
       digitalFarmerFarm={digitalFarmerFarm}
       ScheduledTasks={ScheduledTasks}
       activities={activities}
@@ -64,7 +66,8 @@ DynamicDocument.propTypes = {
   farmFeedsIsLoading: PropTypes.bool,
   ScheduledTasksIsLoading: PropTypes.bool,
   myFarmActivitiesIsLoading: PropTypes.bool,
-  tasksIsLoading: PropTypes.bool
+  tasksIsLoading: PropTypes.bool,
+  reloads: PropTypes.array
 }
 
 export default DynamicDocument

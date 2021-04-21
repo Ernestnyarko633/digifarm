@@ -8,6 +8,7 @@ import Doc from 'assets/images/doc.png'
 import FetchCard from 'components/FetchCard'
 
 export default function Individual({
+  reloads,
   digitalFarmerFarm,
   activities,
   farmfeeds,
@@ -96,7 +97,12 @@ export default function Individual({
             align='center'
             justify='center'
             mx='auto'
-            reload={() => null}
+            reload={() => {
+              farmFeedsHasError && reloads[2]()
+              ScheduledTasksHasError && reloads[3]()
+              myFarmActivitiesHasError && reloads[0]()
+              tasksHasError && reloads[1]()
+            }}
             loading={loading}
             error={error}
             text='Standby as we load your documents'
@@ -188,5 +194,6 @@ Individual.propTypes = {
   farmFeedsIsLoading: PropTypes.bool,
   ScheduledTasksIsLoading: PropTypes.bool,
   myFarmActivitiesIsLoading: PropTypes.bool,
-  tasksIsLoading: PropTypes.bool
+  tasksIsLoading: PropTypes.bool,
+  reloads: PropTypes.array
 }

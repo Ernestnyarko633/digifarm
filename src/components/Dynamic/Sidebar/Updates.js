@@ -8,7 +8,8 @@ import FarmUpdateCard from '../Cards/FarmUpdateCard'
 export default function Updates({
   farmfeeds,
   farmFeedsIsLoading,
-  farmFeedsHasError
+  farmFeedsHasError,
+  reloads
 }) {
   const [feeds, setFeeds] = React.useState([])
   React.useEffect(() => {
@@ -29,7 +30,7 @@ export default function Updates({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => null}
+            reload={() => reloads[2]()}
             loading={farmFeedsIsLoading}
             error={farmFeedsHasError}
             text={"Standby as we load your farm's feed"}
@@ -70,5 +71,6 @@ export default function Updates({
 Updates.propTypes = {
   farmfeeds: PropTypes.any,
   farmFeedsIsLoading: PropTypes.bool,
-  farmFeedsHasError: PropTypes.any
+  farmFeedsHasError: PropTypes.any,
+  reloads: PropTypes.array
 }

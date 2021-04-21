@@ -39,10 +39,25 @@ export default function Farm() {
   const [isOpen, setIsOpen] = useState(false)
   const [open, setOpen] = useState(true)
   const [image, takeScreenShot] = useScreenshot()
-  const [reload, setReload] = useState(0)
   const [location, setLocation] = useState([])
   const [center, setCenter] = useState([])
-  const triggerReload = () => setReload(prevState => prevState + 1)
+
+  //reloads
+  const [farmReload, setFarmReload] = useState(0)
+  const [activitiesReload, setActivitiesReload] = useState(0)
+  const [tasksReload, setTasksReload] = useState(0)
+  const [farmFeedsReload, setFarmFeedsReload] = useState(0)
+  const [scheduledTasksReload, setScheduledTasksReload] = useState(0)
+
+  //trigger Reloads
+  const triggerFarmReload = () => setFarmReload(prevState => prevState + 1)
+  const triggerActivitiesReload = () =>
+    setActivitiesReload(prevState => prevState + 1)
+  const triggerTasksReload = () => setTasksReload(prevState => prevState + 1)
+  const triggerFarmFeedsReload = () =>
+    setFarmFeedsReload(prevState => prevState + 1)
+  const triggerScheduledTasksReload = () =>
+    setScheduledTasksReload(prevState => prevState + 1)
 
   const { compState, setCompState } = useComponent()
 
@@ -58,7 +73,7 @@ export default function Farm() {
     data: farm,
     isLoading: farmIsLoading,
     error: farmHasError
-  } = useFetch('selectedFarm', getMyFarm, reload, id)
+  } = useFetch('selectedFarm', getMyFarm, farmReload, id)
 
   useEffect(() => {
     let location_ = []
@@ -86,7 +101,7 @@ export default function Farm() {
   } = useFetch(
     null,
     farm?.order?.product?._id ? getMyFarmFeeds : null,
-    reload,
+    farmFeedsReload,
     {
       farm: farm?.order?.product?._id
     }
@@ -99,7 +114,7 @@ export default function Farm() {
   } = useFetch(
     null,
     farm?.order?.product?._id ? getMyScheduledTasks : null,
-    reload,
+    scheduledTasksReload,
     {
       farm: farm?.order?.product?._id
     }
@@ -109,17 +124,27 @@ export default function Farm() {
     data: myFarmActivities,
     isLoading: myFarmActivitiesIsLoading,
     error: myFarmActivitiesHasError
-  } = useFetch(null, farm?.order?.product?._id ? getActivities : null, reload, {
-    farm: farm?.order?.product?._id
-  })
+  } = useFetch(
+    null,
+    farm?.order?.product?._id ? getActivities : null,
+    activitiesReload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
 
   const {
     data: tasks,
     isLoading: tasksIsLoading,
     error: tasksHasError
-  } = useFetch(null, farm?.order?.product?._id ? getAllTasks : null, reload, {
-    farm: farm?.order?.product?._id
-  })
+  } = useFetch(
+    null,
+    farm?.order?.product?._id ? getAllTasks : null,
+    tasksReload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
 
   const onClose = () => setIsOpen(false)
   const closed = () => setOpen(false)
@@ -155,7 +180,7 @@ export default function Farm() {
       align='center'
       justify='center'
       mx='auto'
-      reload={triggerReload}
+      reload={triggerFarmReload}
       loading={farmIsLoading}
       error={farmHasError}
       text={"Standby as we load your farm's view"}
@@ -292,7 +317,7 @@ export default function Farm() {
               tasksIsLoading={tasksIsLoading}
               //state
               farm={component}
-              //arrays with data
+              // data
               center={center}
               tasks={tasks}
               activities={myFarmActivities}
@@ -302,9 +327,13 @@ export default function Farm() {
               location={location}
               //helpers
               dateIntervals={dateIntervals}
-              reload={reload}
               onOpen={getImage}
-              reloads={[triggerReload]}
+              reloads={[
+                triggerActivitiesReload,
+                triggerTasksReload,
+                triggerFarmFeedsReload,
+                triggerScheduledTasksReload
+              ]}
               //errors
               farmFeedsHasError={farmFeedsHasError}
               ScheduledTasksHasError={ScheduledTasksHasError}

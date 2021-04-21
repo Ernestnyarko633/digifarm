@@ -29,7 +29,8 @@ export default function Tasks({
   WeatherForeCastsHasError,
   farmFeedsHasError,
   ScheduledTasksHasError,
-  EOSStatisticsHasError
+  EOSStatisticsHasError,
+  reloads
 }) {
   const [feeds, setFeeds] = React.useState([])
 
@@ -85,7 +86,7 @@ export default function Tasks({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => null}
+            reload={() => reloads[3]()}
             loading={ScheduledTasksIsLoading}
             error={ScheduledTasksHasError}
             text={"Standby as we load your farm's scheduled tasks"}
@@ -113,6 +114,7 @@ export default function Tasks({
       )}
 
       <WeatherCards
+        reloads={reloads}
         farmfeeds={feeds}
         weatherForeCasts={weatherForeCasts}
         WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
@@ -129,7 +131,7 @@ export default function Tasks({
               justify='center'
               w='100%'
               mx='auto'
-              reload={() => null}
+              reload={() => reloads[3]()}
               loading={ScheduledTasksIsLoading}
               error={ScheduledTasksHasError}
               text={"Standby as we load your farm's scheduled tasks"}
@@ -166,7 +168,7 @@ export default function Tasks({
               justify='center'
               w='100%'
               mx='auto'
-              reload={() => null}
+              reload={() => reloads[2]()}
               loading={farmFeedsIsLoading}
               error={farmFeedsHasError}
               text={"Standby as we load your farm's feed"}
@@ -194,7 +196,7 @@ export default function Tasks({
               justify='center'
               w='100%'
               mx='auto'
-              reload={() => null}
+              reload={() => reloads[8]()}
               loading={EOSStatisticsIsLoading}
               error={EOSStatisticsHasError}
               text={"Standby as we load your farm's stats"}
@@ -328,5 +330,6 @@ Tasks.propTypes = {
   WeatherForeCastsHasError: PropTypes.any,
   farmFeedsHasError: PropTypes.any,
   ScheduledTasksHasError: PropTypes.any,
-  EOSStatisticsHasError: PropTypes.any
+  EOSStatisticsHasError: PropTypes.any,
+  reloads: PropTypes.array
 }

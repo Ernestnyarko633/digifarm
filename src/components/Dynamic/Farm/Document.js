@@ -17,7 +17,8 @@ export default function Document({
   farmFeedsIsLoading,
   ScheduledTasksIsLoading,
   myFarmActivitiesIsLoading,
-  tasksIsLoading
+  tasksIsLoading,
+  reloads
 }) {
   let state = 'compA'
 
@@ -63,6 +64,7 @@ export default function Document({
               ScheduledTasksIsLoading={ScheduledTasksIsLoading}
               myFarmActivitiesIsLoading={myFarmActivitiesIsLoading}
               tasksIsLoading={tasksIsLoading}
+              reloads={reloads}
             />
           </Box>
         </Box>
@@ -111,5 +113,6 @@ Document.propTypes = {
   farmFeedsIsLoading: PropTypes.bool,
   ScheduledTasksIsLoading: PropTypes.bool,
   myFarmActivitiesIsLoading: PropTypes.bool,
-  tasksIsLoading: PropTypes.bool
+  tasksIsLoading: PropTypes.bool,
+  reloads: PropTypes.array
 }

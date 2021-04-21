@@ -10,7 +10,8 @@ const WeatherCard = ({
   WeatherForeCastsIsLoading,
   WeatherForeCastsHasError,
   farmFeedsIsLoading,
-  farmFeedsHasError
+  farmFeedsHasError,
+  reloads
 }) => {
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
@@ -22,7 +23,7 @@ const WeatherCard = ({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => null}
+            reload={() => reloads[2]()}
             loading={farmFeedsIsLoading}
             error={farmFeedsHasError}
             text={"Standby as we load your farm's feed"}
@@ -62,7 +63,7 @@ const WeatherCard = ({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => null}
+            reload={() => reloads[7]()}
             loading={WeatherForeCastsIsLoading}
             error={WeatherForeCastsHasError}
             text={"Standby as we load your farm's feed"}
@@ -109,7 +110,8 @@ WeatherCard.propTypes = {
   WeatherForeCastsIsLoading: PropTypes.bool,
   farmFeedsIsLoading: PropTypes.bool,
   WeatherForeCastsHasError: PropTypes.any,
-  farmFeedsHasError: PropTypes.any
+  farmFeedsHasError: PropTypes.any,
+  reloads: PropTypes.array
 }
 
 export default WeatherCard

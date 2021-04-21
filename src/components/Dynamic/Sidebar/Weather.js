@@ -8,7 +8,8 @@ import FetchCard from 'components/FetchCard'
 export default function Weather({
   weatherForeCasts,
   WeatherForeCastsHasError,
-  WeatherForeCastsIsLoading
+  WeatherForeCastsIsLoading,
+  reloads
 }) {
   return (
     <Grid gap={8} mb={8}>
@@ -20,7 +21,7 @@ export default function Weather({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => null}
+            reload={() => reloads[7]()}
             loading={WeatherForeCastsIsLoading}
             error={WeatherForeCastsHasError}
             text={"Standby as we load your farm's weather forecasts"}
@@ -45,5 +46,6 @@ export default function Weather({
 Weather.propTypes = {
   weatherForeCasts: PropTypes.any,
   WeatherForeCastsHasError: PropTypes.any,
-  WeatherForeCastsIsLoading: PropTypes.bool
+  WeatherForeCastsIsLoading: PropTypes.bool,
+  reloads: PropTypes.array
 }

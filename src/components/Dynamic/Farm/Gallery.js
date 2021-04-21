@@ -16,7 +16,8 @@ import FetchCard from 'components/FetchCard'
 export default function Gallery({
   farmfeeds,
   farmFeedsIsLoading,
-  farmFeedsHasError
+  farmFeedsHasError,
+  reloads
 }) {
   return (
     <Grid
@@ -45,7 +46,7 @@ export default function Gallery({
               justify='center'
               mx='auto'
               // FIX ME
-              reload={null}
+              reload={() => reloads[2]()}
               loading={farmFeedsIsLoading}
               error={farmFeedsHasError}
               text='Standby as we load your gallery'
@@ -102,5 +103,6 @@ export default function Gallery({
 Gallery.propTypes = {
   farmfeeds: PropTypes.array.isRequired,
   farmFeedsIsLoading: PropTypes.bool.isRequired,
-  farmFeedsHasError: PropTypes.any
+  farmFeedsHasError: PropTypes.any,
+  reloads: PropTypes.array
 }

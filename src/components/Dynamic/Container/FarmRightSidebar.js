@@ -53,6 +53,8 @@ export default function FarmRightSidebar({
         farmFeedsHasError={farmFeedsHasError}
         ScheduledTasksHasError={ScheduledTasksHasError}
         EOSStatisticsHasError={EOSStatisticsHasError}
+        //helpers
+        reloads={reloads}
       />
     </Box>
   )

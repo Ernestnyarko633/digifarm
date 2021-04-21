@@ -26,7 +26,6 @@ export default function Farm({
   WeatherForeCasts,
   ScheduledTasks,
   EOSViewID,
-  reload,
   location,
   farmfeeds,
   reloads,
@@ -96,7 +95,7 @@ export default function Farm({
     }
 
     return () => (mounted = false)
-  }, [location, EOSViewID, reload, createTask])
+  }, [location, EOSViewID, createTask])
 
   const DownloadVisual = async downloadTaskID => {
     try {
@@ -145,7 +144,7 @@ export default function Farm({
                 align='center'
                 justify='center'
                 mx='auto'
-                reload={() => null}
+                reload={() => reloads[5]()}
                 loading={EOSViewIDIsLoading}
                 error={EOSViewIDHasError}
                 text={"Standby as we load your farm's map"}
@@ -217,7 +216,6 @@ export default function Farm({
 
 Farm.propTypes = {
   center: PropTypes.array,
-  reload: PropTypes.any,
   onOpen: PropTypes.func,
   digitalFarmerFarm: PropTypes.object,
   EOSStatistics: PropTypes.any,

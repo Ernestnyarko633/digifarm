@@ -8,7 +8,8 @@ import { Box } from '@chakra-ui/react'
 export default function Events({
   scheduledTasks,
   ScheduledTasksHasError,
-  ScheduledTasksIsLoading
+  ScheduledTasksIsLoading,
+  reloads
 }) {
   return (
     <>
@@ -20,7 +21,7 @@ export default function Events({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => null}
+            reload={() => reloads[3]()}
             loading={ScheduledTasksIsLoading}
             error={ScheduledTasksHasError}
             text={"Standby as we load your farm's scheduled tasks"}
@@ -62,5 +63,6 @@ export default function Events({
 Events.propTypes = {
   scheduledTasks: PropTypes.any,
   ScheduledTasksHasError: PropTypes.any,
-  ScheduledTasksIsLoading: PropTypes.bool
+  ScheduledTasksIsLoading: PropTypes.bool,
+  reloads: PropTypes.array
 }

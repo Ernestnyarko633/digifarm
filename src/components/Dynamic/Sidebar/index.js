@@ -31,7 +31,8 @@ const DynamicCard = ({
   WeatherForeCastsHasError,
   farmFeedsHasError,
   ScheduledTasksHasError,
-  EOSStatisticsHasError
+  EOSStatisticsHasError,
+  reloads
 }) => {
   const SelectedCard = components[card]
   return (
@@ -51,6 +52,8 @@ const DynamicCard = ({
       farmFeedsHasError={farmFeedsHasError}
       ScheduledTasksHasError={ScheduledTasksHasError}
       EOSStatisticsHasError={EOSStatisticsHasError}
+      //helpers
+      reloads={reloads}
     />
   )
 }
@@ -69,7 +72,8 @@ DynamicCard.propTypes = {
   WeatherForeCastsHasError: PropTypes.any,
   farmFeedsHasError: PropTypes.any,
   ScheduledTasksHasError: PropTypes.any,
-  EOSStatisticsHasError: PropTypes.any
+  EOSStatisticsHasError: PropTypes.any,
+  reloads: PropTypes.array
 }
 
 export default DynamicCard

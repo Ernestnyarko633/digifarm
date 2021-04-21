@@ -8,7 +8,6 @@ import useFetch from 'hooks/useFetch'
 import useComponent from 'context/component'
 export default function FarmLayout({
   children,
-  reload,
   digitalFarmerFarm,
   eosTask,
   WeatherForeCasts,
@@ -28,6 +27,9 @@ export default function FarmLayout({
 }) {
   const { compState, setCompState } = useComponent()
   const { eosStats } = useApi()
+  const [eosStatsReload, setEosStatsReload] = React.useState(0)
+
+  const triggerEosStatsReload = () => setEosStatsReload(prev => prev + 1)
   // for health card stats
   const {
     data: EOSStatistics,
@@ -36,7 +38,7 @@ export default function FarmLayout({
   } = useFetch(
     eosTask?.task_id ? `${eosTask?.task_id}_stats` : null,
     eosTask?.task_id ? eosStats : null,
-    reload,
+    eosStatsReload,
     {
       task: eosTask?.task_id
     }
@@ -78,7 +80,7 @@ export default function FarmLayout({
           location={location}
           state={compState}
           //extras
-          reloads={reloads}
+          reloads={[...reloads, triggerEosStatsReload]}
           //loadings
           farmFeedsIsLoading={farmFeedsIsLoading}
           WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
@@ -104,11 +106,7 @@ FarmLayout.propTypes = {
   location: PropTypes.any,
   rest: PropTypes.any,
   farmfeeds: PropTypes.array,
-  loading: PropTypes.bool,
-  error: PropTypes.any,
-  _error: PropTypes.any,
   reloads: PropTypes.array,
-  reload: PropTypes.number,
   farmFeedsIsLoading: PropTypes.bool,
   ScheduledTasksIsLoading: PropTypes.bool,
   WeatherForeCastsIsLoading: PropTypes.bool,

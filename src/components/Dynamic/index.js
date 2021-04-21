@@ -32,7 +32,6 @@ const DynamicFarm = ({
   myFarmActivitiesIsLoading,
   tasksIsLoading,
   location,
-  reload,
   farmFeedsHasError,
   ScheduledTasksHasError,
   myFarmActivitiesHasError,
@@ -41,6 +40,19 @@ const DynamicFarm = ({
   // const [type, setType] = useState('/sentinel2')
   const SelectedFarm = components[farm]
   const { eosTask, eosSearch, eosWeather } = useApi()
+
+  //reloads
+  const [eosTaskReload, setEosTaskReload] = React.useState(0)
+  const [eosSearchReload, setEosSearchReload] = React.useState(0)
+  const [eosWeatherReload, setEosWeatherReload] = React.useState(0)
+
+  //trigger Reloads
+  const triggerEosTaskReload = () =>
+    setEosTaskReload(prevState => prevState + 1)
+  const triggerEosSearchReload = () =>
+    setEosSearchReload(prevState => prevState + 1)
+  const triggerEosWeatherReload = () =>
+    setEosWeatherReload(prevState => prevState + 1)
 
   const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
@@ -72,7 +84,7 @@ const DynamicFarm = ({
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_view_id`,
     digitalFarmerFarm?._id ? eosSearch : null,
-    reload,
+    eosTaskReload,
     eosViewIdPayload,
     'sentinel2'
   )
@@ -101,7 +113,7 @@ const DynamicFarm = ({
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_task_stats_for_health`,
     digitalFarmerFarm?._id ? eosTask : null,
-    reload,
+    eosSearchReload,
     EOSTaskForStats
   )
 
@@ -119,7 +131,7 @@ const DynamicFarm = ({
   } = useFetch(
     `${digitalFarmerFarm?._id}_eos_weather_forecasts`,
     digitalFarmerFarm?._id ? eosWeather : null,
-    reload,
+    eosWeatherReload,
     weatherForeCastsPayload
   )
 
@@ -133,8 +145,12 @@ const DynamicFarm = ({
     <React.Fragment>
       {
         <SelectedFarm
-          reload={reload}
-          reloads={reloads}
+          reloads={[
+            ...reloads,
+            triggerEosTaskReload,
+            triggerEosSearchReload,
+            triggerEosWeatherReload
+          ]}
           onOpen={onOpen}
           //loadings
           farmFeedsIsLoading={farmFeedsIsLoading}
@@ -181,7 +197,6 @@ DynamicFarm.propTypes = {
   EOSTaskForStatsCreated: PropTypes.any,
   reloads: PropTypes.array,
   location: PropTypes.array.isRequired,
-  reload: PropTypes.any,
   dateIntervals: PropTypes.func.isRequired,
   activities: PropTypes.any,
   tasks: PropTypes.array.isRequired,

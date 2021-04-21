@@ -7,7 +7,8 @@ import CropHealthCard from '../Cards/CropHealthCard'
 export default function Health({
   eosStats,
   EOSStatisticsIsLoading,
-  EOSStatisticsHasError
+  EOSStatisticsHasError,
+  reloads
 }) {
   return (
     <Box>
@@ -19,7 +20,7 @@ export default function Health({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => null}
+            reload={() => reloads[8]()}
             loading={EOSStatisticsIsLoading}
             error={EOSStatisticsHasError}
             text={"Standby as we load your farm's stats"}
@@ -53,5 +54,6 @@ export default function Health({
 Health.propTypes = {
   eosStats: PropTypes.any,
   EOSStatisticsIsLoading: PropTypes.bool,
-  EOSStatisticsHasError: PropTypes.any
+  EOSStatisticsHasError: PropTypes.any,
+  reloads: PropTypes.array
 }
