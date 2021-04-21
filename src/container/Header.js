@@ -1,9 +1,9 @@
-/* eslint-disable */
-import React from 'react';
-import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu } from '@headlessui/react';
-import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi';
+import React from 'react'
+import { Avatar, Box, Flex, Icon, Image, Link, Text } from '@chakra-ui/react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu } from '@headlessui/react'
+import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
+
 // import { BiCog, BiSupport, BiHistory } from 'react-icons/bi'
 import { HiOutlineLogout } from 'react-icons/hi';
 import { BsBell } from 'react-icons/bs';

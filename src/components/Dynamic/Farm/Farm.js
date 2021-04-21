@@ -102,12 +102,12 @@ export default function Farm({
 
   return (
     <FarmLayout
-      digitalFarmerFarm={digitalFarmerFarm}
-      WeatherForeCasts={WeatherForeCasts}
-      ScheduledTasks={ScheduledTasks}
+      digitalFarmerFarm={digitalFarmerFarm || {} }
+      WeatherForeCasts={WeatherForeCasts || [] }
+      ScheduledTasks={ScheduledTasks || [] }
       EOSViewID={EOSViewID}
-      location={location}
-      farmfeeds={farmfeeds}
+      location={location || [] }
+      farmfeeds={farmfeeds || [] }
       loading={loading}
       reloads={reloads}
       eosTask={eosTask}
