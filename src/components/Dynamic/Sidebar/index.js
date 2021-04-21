@@ -20,11 +20,18 @@ const DynamicCard = ({
   scheduledTasks,
   weatherForeCasts,
   farmfeeds,
-  loading,
-  error,
   farm,
   eosStats,
-  _error
+  //loading
+  farmFeedsIsLoading,
+  ScheduledTasksIsLoading,
+  WeatherForeCastsIsLoading,
+  EOSStatisticsIsLoading,
+  //errors
+  WeatherForeCastsHasError,
+  farmFeedsHasError,
+  ScheduledTasksHasError,
+  EOSStatisticsHasError
 }) => {
   const SelectedCard = components[card]
   return (
@@ -32,11 +39,18 @@ const DynamicCard = ({
       scheduledTasks={scheduledTasks}
       weatherForeCasts={weatherForeCasts}
       farmfeeds={farmfeeds}
-      loading={loading}
-      error={error}
-      _error={_error}
       farm={farm}
       eosStats={eosStats}
+      //loadings
+      farmFeedsIsLoading={farmFeedsIsLoading}
+      WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
+      ScheduledTasksIsLoading={ScheduledTasksIsLoading}
+      EOSStatisticsIsLoading={EOSStatisticsIsLoading}
+      //errors
+      WeatherForeCastsHasError={WeatherForeCastsHasError}
+      farmFeedsHasError={farmFeedsHasError}
+      ScheduledTasksHasError={ScheduledTasksHasError}
+      EOSStatisticsHasError={EOSStatisticsHasError}
     />
   )
 }
@@ -45,12 +59,17 @@ DynamicCard.propTypes = {
   card: PropTypes.string.isRequired,
   scheduledTasks: PropTypes.any,
   farmfeeds: PropTypes.any,
-  loading: PropTypes.any,
-  error: PropTypes.any,
   farm: PropTypes.any,
   weatherForeCasts: PropTypes.any,
   eosStats: PropTypes.any,
-  _error: PropTypes.any
+  farmFeedsIsLoading: PropTypes.bool,
+  EOSStatisticsIsLoading: PropTypes.bool,
+  ScheduledTasksIsLoading: PropTypes.bool,
+  WeatherForeCastsIsLoading: PropTypes.bool,
+  WeatherForeCastsHasError: PropTypes.any,
+  farmFeedsHasError: PropTypes.any,
+  ScheduledTasksHasError: PropTypes.any,
+  EOSStatisticsHasError: PropTypes.any
 }
 
 export default DynamicCard

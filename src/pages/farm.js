@@ -121,19 +121,6 @@ export default function Farm() {
     farm: farm?.order?.product?._id
   })
 
-  const isLoading =
-    farmFeedsIsLoading ||
-    farmIsLoading ||
-    ScheduledTasksIsLoading ||
-    myFarmActivitiesIsLoading ||
-    tasksIsLoading
-  const hasError =
-    farmFeedsHasError ||
-    farmHasError ||
-    ScheduledTasksHasError ||
-    myFarmActivitiesHasError ||
-    tasksHasError
-
   const onClose = () => setIsOpen(false)
   const closed = () => setOpen(false)
 
@@ -161,7 +148,7 @@ export default function Farm() {
 
   const mapKey = index => index
 
-  return isLoading || hasError ? (
+  return farmIsLoading || farmHasError ? (
     <FetchCard
       h='100vh'
       direction='column'
@@ -169,8 +156,8 @@ export default function Farm() {
       justify='center'
       mx='auto'
       reload={triggerReload}
-      loading={isLoading}
-      error={hasError}
+      loading={farmIsLoading}
+      error={farmHasError}
       text={"Standby as we load your farm's view"}
     />
   ) : (
@@ -298,23 +285,34 @@ export default function Farm() {
         <Box>
           {location?.length > 0 && (
             <DynamicFarm
-              center={center}
-              loading={isLoading}
-              error={hasError}
+              //loading
+              farmFeedsIsLoading={farmFeedsIsLoading}
+              ScheduledTasksIsLoading={ScheduledTasksIsLoading}
+              myFarmActivitiesIsLoading={myFarmActivitiesIsLoading}
+              tasksIsLoading={tasksIsLoading}
+              //state
               farm={component}
+              //arrays with data
+              center={center}
               tasks={tasks}
               activities={myFarmActivities}
               ScheduledTasks={ScheduledTasks}
               digitalFarmerFarm={farm}
               farmfeeds={farmFeeds}
               location={location}
+              //helpers
               dateIntervals={dateIntervals}
               reload={reload}
               onOpen={getImage}
               reloads={[triggerReload]}
+              //errors
+              farmFeedsHasError={farmFeedsHasError}
+              ScheduledTasksHasError={ScheduledTasksHasError}
+              myFarmActivitiesHasError={myFarmActivitiesHasError}
+              tasksHasError={tasksHasError}
             />
           )}
-          {isLoading && (
+          {/* {isLoading && (
             <FetchCard
               direction='column'
               align='center'
@@ -331,7 +329,7 @@ export default function Farm() {
                   : 'Something went wrong, please dont fret'
               }
             />
-          )}
+          )} */}
         </Box>
 
         {/* <Box d={{ base: 'block', md: 'none' }}>

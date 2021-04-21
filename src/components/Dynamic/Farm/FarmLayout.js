@@ -1,12 +1,11 @@
-/* eslint-disable */
-import React from 'react';
-import { Box, Grid, GridItem } from '@chakra-ui/react';
-import PropTypes from 'prop-types';
-import FarmLeftSideBar from '../Container/FarmLeftSideBar';
-import FarmRightSidebar from '../Container/FarmRightSidebar';
-import useApi from 'context/api';
-import useFetch from 'hooks/useFetch';
-import useComponent from 'context/component';
+import React from 'react'
+import { Box, Grid, GridItem } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
+import FarmLeftSideBar from '../Container/FarmLeftSideBar'
+import FarmRightSidebar from '../Container/FarmRightSidebar'
+import useApi from 'context/api'
+import useFetch from 'hooks/useFetch'
+import useComponent from 'context/component'
 export default function FarmLayout({
   children,
   reload,
@@ -14,25 +13,34 @@ export default function FarmLayout({
   eosTask,
   WeatherForeCasts,
   ScheduledTasks,
-  EOSViewID,
   location,
-  loading,
   farmfeeds,
-  error,
-  _error,
   reloads,
+  //loading
+  farmFeedsIsLoading,
+  ScheduledTasksIsLoading,
+  WeatherForeCastsIsLoading,
+  //errors
+  WeatherForeCastsHasError,
+  farmFeedsHasError,
+  ScheduledTasksHasError,
   ...rest
 }) {
-  const { compState, setCompState } = useComponent();
-  const { eosStats } = useApi();
+  const { compState, setCompState } = useComponent()
+  const { eosStats } = useApi()
   // for health card stats
   const {
     data: EOSStatistics,
     isLoading: EOSStatisticsIsLoading,
-    error: EOSStatisticsHasError,
-  } = useFetch(null, eosTask?.task_id ? eosStats : null, reload, {
-    task: eosTask?.task_id,
-  });
+    error: EOSStatisticsHasError
+  } = useFetch(
+    eosTask?.task_id ? `${eosTask?.task_id}_stats` : null,
+    eosTask?.task_id ? eosStats : null,
+    reload,
+    {
+      task: eosTask?.task_id
+    }
+  )
   return (
     <Grid
       templateRows={{ md: 'repeat(1 1fr)' }}
@@ -60,24 +68,31 @@ export default function FarmLayout({
         </Box>
       </GridItem>
       <GridItem shadow={{ md: 'xl' }}>
-        {!loading && !EOSStatisticsIsLoading && (
-          <FarmRightSidebar
-            farmfeeds={farmfeeds}
-            WeatherForeCasts={WeatherForeCasts}
-            ScheduledTasks={ScheduledTasks}
-            loading={loading || EOSStatisticsIsLoading}
-            error={error || EOSStatisticsHasError}
-            _error={_error}
-            state={compState}
-            reloads={reloads}
-            eosStats={EOSStatistics}
-            digitalFarmerFarm={digitalFarmerFarm}
-            location={location}
-          />
-        )}
+        <FarmRightSidebar
+          // data
+          farmfeeds={farmfeeds}
+          WeatherForeCasts={WeatherForeCasts}
+          ScheduledTasks={ScheduledTasks}
+          eosStats={EOSStatistics}
+          digitalFarmerFarm={digitalFarmerFarm}
+          location={location}
+          state={compState}
+          //extras
+          reloads={reloads}
+          //loadings
+          farmFeedsIsLoading={farmFeedsIsLoading}
+          WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
+          ScheduledTasksIsLoading={ScheduledTasksIsLoading}
+          EOSStatisticsIsLoading={EOSStatisticsIsLoading}
+          //errors
+          WeatherForeCastsHasError={WeatherForeCastsHasError}
+          farmFeedsHasError={farmFeedsHasError}
+          ScheduledTasksHasError={ScheduledTasksHasError}
+          EOSStatisticsHasError={EOSStatisticsHasError}
+        />
       </GridItem>
     </Grid>
-  );
+  )
 }
 
 FarmLayout.propTypes = {
@@ -86,7 +101,6 @@ FarmLayout.propTypes = {
   eosTask: PropTypes.any,
   WeatherForeCasts: PropTypes.any,
   ScheduledTasks: PropTypes.any,
-  EOSViewID: PropTypes.any,
   location: PropTypes.any,
   rest: PropTypes.any,
   farmfeeds: PropTypes.array,
@@ -95,4 +109,10 @@ FarmLayout.propTypes = {
   _error: PropTypes.any,
   reloads: PropTypes.array,
   reload: PropTypes.number,
-};
+  farmFeedsIsLoading: PropTypes.bool,
+  ScheduledTasksIsLoading: PropTypes.bool,
+  WeatherForeCastsIsLoading: PropTypes.bool,
+  WeatherForeCastsHasError: PropTypes.any,
+  farmFeedsHasError: PropTypes.any,
+  ScheduledTasksHasError: PropTypes.any
+}

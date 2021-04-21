@@ -1,6 +1,6 @@
 import React from 'react'
 import useMap from '../../hooks/useMap'
-import { Box } from '@chakra-ui/react'
+import { Box, Spinner, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import configs from '../../utils/configs'
 import './Map.css'
@@ -11,10 +11,7 @@ const Map = ({
   loading,
   error,
   band,
-  digitalFarmerFarms,
-  results,
   height,
-  _error,
   reloads,
   zoom,
   ...rest
@@ -50,18 +47,22 @@ const Map = ({
     height,
     onInit: onInitHandler
   })
+  if (loading) {
+    return <Spinner color='cf.400' />
+  }
+
+  if (error) {
+    return <Text color='cf.400'>Something went wrong</Text>
+  }
 
   return viewID && <Box {...rest} ref={ref} />
 }
 
 Map.propTypes = {
-  center: PropTypes.any,
+  center: PropTypes.array,
   loading: PropTypes.any,
   error: PropTypes.any,
-  viewID: PropTypes.any,
-  digitalFarmerFarms: PropTypes.array,
-  results: PropTypes.any,
-  _error: PropTypes.any,
+  viewID: PropTypes.string,
   reloads: PropTypes.array,
   zoom: PropTypes.number,
   band: PropTypes.string,

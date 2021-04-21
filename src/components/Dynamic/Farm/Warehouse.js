@@ -12,21 +12,7 @@ import PropTypes from 'prop-types'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import Ware from 'assets/images/warehouse.png'
 
-// const warehouseGoods = [
-//   {
-//     id: 3,
-//     image: SoyaBean,
-//     name: 'Soya Bean Warehouse',
-//     location: 'Shai Osudoku, Eastern Region',
-//     quantity: '2010 tonnes',
-//     weight: '300 kg',
-//     bags: '30 bags',
-//     condition: 'Moist',
-//     status: 'sold'
-//   }
-// ]
-
-export default function Warehouse({ digitalFarmerFarm, loading }) {
+export default function Warehouse({ digitalFarmerFarm }) {
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -96,6 +82,5 @@ export default function Warehouse({ digitalFarmerFarm, loading }) {
   )
 }
 Warehouse.propTypes = {
-  digitalFarmerFarm: PropTypes.any,
-  loading: PropTypes.any
+  digitalFarmerFarm: PropTypes.object.isRequired
 }

@@ -11,8 +11,13 @@ import {
 import Gal from 'assets/images/gallery.png'
 import ImageGallery from '../Cards/ImageGallery'
 import PropTypes from 'prop-types'
+import FetchCard from 'components/FetchCard'
 
-export default function Gallery({ farmfeeds, loading }) {
+export default function Gallery({
+  farmfeeds,
+  farmFeedsIsLoading,
+  farmFeedsHasError
+}) {
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -32,7 +37,20 @@ export default function Gallery({ farmfeeds, loading }) {
           minH={{ lg: '100vh' }}
           px={{ base: 4, md: 20 }}
         >
-          {!loading && farmfeeds && (
+          {farmFeedsIsLoading || farmFeedsHasError ? (
+            <FetchCard
+              w='100%'
+              direction='column'
+              align='center'
+              justify='center'
+              mx='auto'
+              // FIX ME
+              reload={null}
+              loading={farmFeedsIsLoading}
+              error={farmFeedsHasError}
+              text='Standby as we load your gallery'
+            />
+          ) : (
             <Grid
               templateColumns={{ md: 'repeat(2, 1fr)' }}
               gap={20}
@@ -51,7 +69,8 @@ export default function Gallery({ farmfeeds, loading }) {
               })}
             </Grid>
           )}
-          {farmfeeds?.length === 0 && !loading && (
+
+          {farmfeeds?.length === 0 && !farmFeedsIsLoading && (
             <Flex
               w='100%'
               justify='center'
@@ -82,5 +101,6 @@ export default function Gallery({ farmfeeds, loading }) {
 
 Gallery.propTypes = {
   farmfeeds: PropTypes.array.isRequired,
-  loading: PropTypes.any
+  farmFeedsIsLoading: PropTypes.bool.isRequired,
+  farmFeedsHasError: PropTypes.any
 }

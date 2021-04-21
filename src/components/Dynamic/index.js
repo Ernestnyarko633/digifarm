@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 //import useExternalApi from 'context/external'
 import useFetch from 'hooks/useFetch'
-import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
 
 const { default: Document } = require('./Farm/Document')
@@ -28,10 +27,16 @@ const DynamicFarm = ({
   reloads,
   farmfeeds,
   activities,
-  loading,
+  farmFeedsIsLoading,
+  ScheduledTasksIsLoading,
+  myFarmActivitiesIsLoading,
+  tasksIsLoading,
   location,
   reload,
-  error
+  farmFeedsHasError,
+  ScheduledTasksHasError,
+  myFarmActivitiesHasError,
+  tasksHasError
 }) => {
   // const [type, setType] = useState('/sentinel2')
   const SelectedFarm = components[farm]
@@ -118,42 +123,28 @@ const DynamicFarm = ({
     weatherForeCastsPayload
   )
 
-  const isLoading =
-    EOSViewIDIsLoading || WeatherForeCastsIsLoading || eosTaskIsLoading
+  // const isLoading =
+  //   EOSViewIDIsLoading || WeatherForeCastsIsLoading || eosTaskIsLoading
 
-  const eosHasError =
-    EOSViewIDHasError || WeatherForeCastsHasError || eosTaskHasError
-
-  if (isLoading) {
-    return (
-      <FetchCard
-        direction='column'
-        align='center'
-        justify='center'
-        mx='auto'
-        reload={() => {
-          error && reloads[0]()
-        }}
-        loading={loading}
-        error={error}
-        text={
-          !error
-            ? 'Standby as we load your current farms and pending orders'
-            : 'Something went wrong, please dont fret'
-        }
-      />
-    )
-  }
+  // const eosHasError =
+  //   EOSViewIDHasError || WeatherForeCastsHasError || eosTaskHasError
 
   return (
     <React.Fragment>
-      {!loading && (
+      {
         <SelectedFarm
-          center={center}
           reload={reload}
           reloads={reloads}
           onOpen={onOpen}
-          tasks={tasks}
+          //loadings
+          farmFeedsIsLoading={farmFeedsIsLoading}
+          ScheduledTasksIsLoading={ScheduledTasksIsLoading}
+          myFarmActivitiesIsLoading={myFarmActivitiesIsLoading}
+          tasksIsLoading={tasksIsLoading}
+          EOSViewIDIsLoading={EOSViewIDIsLoading}
+          WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
+          eosTaskIsLoading={eosTaskIsLoading}
+          //data
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
           activities={activities}
@@ -162,12 +153,19 @@ const DynamicFarm = ({
           WeatherForeCasts={WeatherForeCasts}
           ScheduledTasks={ScheduledTasks}
           location={location}
-          loading={loading || isLoading}
+          tasks={tasks}
+          center={center}
+          //errors
+          EOSViewIDHasError={EOSViewIDHasError}
+          WeatherForeCastsHasError={WeatherForeCastsHasError}
+          eosTaskHasError={eosTaskHasError}
+          farmFeedsHasError={farmFeedsHasError}
+          ScheduledTasksHasError={ScheduledTasksHasError}
+          myFarmActivitiesHasError={myFarmActivitiesHasError}
+          tasksHasError={tasksHasError}
           //setType={setType}
-          error={error}
-          _error={eosHasError}
         />
-      )}
+      }
     </React.Fragment>
   )
 }
@@ -182,14 +180,20 @@ DynamicFarm.propTypes = {
   ScheduledTasks: PropTypes.array.isRequired,
   EOSTaskForStatsCreated: PropTypes.any,
   reloads: PropTypes.array,
-  error: PropTypes.any,
-  loading: PropTypes.any,
   location: PropTypes.array.isRequired,
   reload: PropTypes.any,
   dateIntervals: PropTypes.func.isRequired,
   activities: PropTypes.any,
   tasks: PropTypes.array.isRequired,
-  center: PropTypes.array.isRequired
+  center: PropTypes.array.isRequired,
+  farmFeedsIsLoading: PropTypes.bool,
+  ScheduledTasksIsLoading: PropTypes.bool,
+  myFarmActivitiesIsLoading: PropTypes.bool,
+  tasksIsLoading: PropTypes.bool,
+  farmFeedsHasError: PropTypes.any,
+  ScheduledTasksHasError: PropTypes.any,
+  myFarmActivitiesHasError: PropTypes.any,
+  tasksHasError: PropTypes.any
 }
 
 export default DynamicFarm
