@@ -14,11 +14,11 @@ import { getformattedDate } from 'helpers/misc'
 const FarmViewBanner = ({ date }) => {
   return (
     <Alert
-      pos='relative'
+      pos='fixed'
       w='100%'
       zIndex={100}
       status='success'
-      mt={{ base: 14, md: 20, xl: 24 }}
+      top={{ base: 14, md: 20, xl: 20 }}
       py={{ base: 4, md: 8 }}
       px={{ base: 4, md: 48 }}
       flexDir={{ base: 'column', md: 'row' }}

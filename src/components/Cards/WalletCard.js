@@ -1,11 +1,12 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import { GiWallet } from 'react-icons/gi';
 import { getFormattedMoney } from 'helpers/misc';
 import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/layout';
 import { Avatar } from '@chakra-ui/avatar';
 import { Stat, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/stat';
+import Icon from '@chakra-ui/icon';
 
 const WalletCard = ({ acreage, price, farm }) => {
   return (
@@ -57,14 +58,13 @@ const WalletCard = ({ acreage, price, farm }) => {
       <Divider orientation='horizontal' borderColor='gray.300' my={6} />
 
       <Stat>
-        <StatLabel>Collected Fees</StatLabel>
+        <StatLabel>
+          <Icon as={GiWallet} boxSize={10} color='gray.600' />
+        </StatLabel>
         <StatNumber fontFamily='sans-serif'>
           ${getFormattedMoney(price * acreage)}
         </StatNumber>
-        <StatHelpText>
-          {moment(farm.createdAt).format('LL')} -{' '}
-          {moment(farm.updatedAt).format('LL')}
-        </StatHelpText>
+        <StatHelpText></StatHelpText>
       </Stat>
     </Box>
   );
