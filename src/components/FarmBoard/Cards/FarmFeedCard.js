@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
 import {
@@ -124,6 +124,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
   }
 
   const FarmContent = () => {
+    const mapKey = i => i
     if (items?.length) {
       return (
         <>
@@ -240,9 +241,9 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               >
                 {
                   // content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')
-                  content?.data?.map(body => {
+                  content?.data?.map((body, i) => {
                     return (
-                      <>
+                      <Fragment key={mapKey(i)}>
                         <Heading
                           as='h6'
                           mt={6}
@@ -257,7 +258,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                         >
                           {body?.feed?.summary?.replace(/<[^>]*>/g, '')}
                         </Text>
-                      </>
+                      </Fragment>
                     )
                   })
                 }

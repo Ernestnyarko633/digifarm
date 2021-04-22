@@ -1,9 +1,7 @@
-/* eslint-disable */
-import { Box, Skeleton, Stack } from '@chakra-ui/react';
-import React from 'react';
-import PropTypes from 'prop-types';
-import DynamicCard from '../Sidebar';
-import FetchCard from 'components/FetchCard';
+import { Box } from '@chakra-ui/react'
+import React from 'react'
+import PropTypes from 'prop-types'
+import DynamicCard from '../Sidebar'
 export default function FarmRightSidebar({
   state,
   digitalFarmerFarm,
@@ -13,21 +11,19 @@ export default function FarmRightSidebar({
   reloads,
   farmfeeds,
   WeatherForeCasts,
-  loading,
-  error,
-  _error,
+  //loading
+  farmFeedsIsLoading,
+  ScheduledTasksIsLoading,
+  WeatherForeCastsIsLoading,
+  EOSStatisticsIsLoading,
+  //errors
+  WeatherForeCastsHasError,
+  farmFeedsHasError,
+  ScheduledTasksHasError,
+  EOSStatisticsHasError,
+  eosTaskIsLoading,
+  eosTaskHasError
 }) {
-  if (loading) {
-    return (
-      <Stack p={10} mt={24} spacing={4}>
-        <Skeleton bg='gray.100' height='200px' rounded='lg' />
-        <Skeleton bg='gray.100' height='200px' rounded='lg' />
-        <Skeleton bg='gray.100' height='200px' rounded='lg' />
-        <Skeleton bg='gray.100' height='200px' rounded='lg' />
-      </Stack>
-    );
-  }
-
   return (
     <Box
       py={8}
@@ -49,31 +45,23 @@ export default function FarmRightSidebar({
         weatherForeCasts={WeatherForeCasts}
         farmfeeds={farmfeeds}
         farm={digitalFarmerFarm}
-        loading={loading}
-        error={error}
-        _error={_error}
         eosStats={eosStats}
+        farmFeedsIsLoading={farmFeedsIsLoading}
+        WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
+        ScheduledTasksIsLoading={ScheduledTasksIsLoading}
+        EOSStatisticsIsLoading={EOSStatisticsIsLoading}
+        eosTaskIsLoading={eosTaskIsLoading}
+        //errors
+        WeatherForeCastsHasError={WeatherForeCastsHasError}
+        farmFeedsHasError={farmFeedsHasError}
+        ScheduledTasksHasError={ScheduledTasksHasError}
+        EOSStatisticsHasError={EOSStatisticsHasError}
+        eosTaskHasError={eosTaskHasError}
+        //helpers
+        reloads={reloads}
       />
-      {(loading || error || _error) && (
-        <FetchCard
-          direction='column'
-          align='center'
-          justify='center'
-          mx='auto'
-          reload={() => {
-            (error || _error) && reloads[0]();
-          }}
-          loading={loading}
-          error={error || _error}
-          text={
-            loading
-              ? 'Standby as we load the data'
-              : (error || _error) && "Something went wrong, don't fret"
-          }
-        />
-      )}
     </Box>
-  );
+  )
 }
 
 FarmRightSidebar.propTypes = {
@@ -88,4 +76,14 @@ FarmRightSidebar.propTypes = {
   error: PropTypes.any,
   _error: PropTypes.any,
   reloads: PropTypes.any,
-};
+  farmFeedsIsLoading: PropTypes.bool,
+  EOSStatisticsIsLoading: PropTypes.bool,
+  ScheduledTasksIsLoading: PropTypes.bool,
+  WeatherForeCastsIsLoading: PropTypes.bool,
+  eosTaskIsLoading: PropTypes.bool,
+  WeatherForeCastsHasError: PropTypes.any,
+  farmFeedsHasError: PropTypes.any,
+  ScheduledTasksHasError: PropTypes.any,
+  EOSStatisticsHasError: PropTypes.any,
+  eosTaskHasError: PropTypes.any
+}

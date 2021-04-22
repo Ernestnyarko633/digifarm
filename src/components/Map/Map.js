@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import useMap from '../../hooks/useMap'
 import { Box } from '@chakra-ui/react'
@@ -11,10 +12,7 @@ const Map = ({
   loading,
   error,
   band,
-  digitalFarmerFarms,
-  results,
   height,
-  _error,
   reloads,
   zoom,
   ...rest
@@ -50,18 +48,15 @@ const Map = ({
     height,
     onInit: onInitHandler
   })
-
-  return viewID && <Box {...rest} ref={ref} />
+  console.log(viewID, 'if')
+  return <>{viewID && <Box {...rest} ref={ref} />}</>
 }
 
 Map.propTypes = {
-  center: PropTypes.any,
+  center: PropTypes.array,
   loading: PropTypes.any,
   error: PropTypes.any,
-  viewID: PropTypes.any,
-  digitalFarmerFarms: PropTypes.array,
-  results: PropTypes.any,
-  _error: PropTypes.any,
+  viewID: PropTypes.string,
   reloads: PropTypes.array,
   zoom: PropTypes.number,
   band: PropTypes.string,
