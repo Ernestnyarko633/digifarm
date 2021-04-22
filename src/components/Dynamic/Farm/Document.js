@@ -9,7 +9,16 @@ export default function Document({
   activities,
   tasks,
   ScheduledTasks,
-  farmfeeds
+  farmfeeds,
+  farmFeedsHasError,
+  ScheduledTasksHasError,
+  myFarmActivitiesHasError,
+  tasksHasError,
+  farmFeedsIsLoading,
+  ScheduledTasksIsLoading,
+  myFarmActivitiesIsLoading,
+  tasksIsLoading,
+  reloads
 }) {
   let state = 'compA'
 
@@ -39,11 +48,23 @@ export default function Document({
           <Box mt={{ md: 10 }}>
             <DynamicDocument
               document={state}
+              //data
               activities={activities}
               tasks={tasks}
               ScheduledTasks={ScheduledTasks}
               digitalFarmerFarm={digitalFarmerFarm}
               farmfeeds={farmfeeds}
+              //errors
+              farmFeedsHasError={farmFeedsHasError}
+              ScheduledTasksHasError={ScheduledTasksHasError}
+              myFarmActivitiesHasError={myFarmActivitiesHasError}
+              tasksHasError={tasksHasError}
+              //loading
+              farmFeedsIsLoading={farmFeedsIsLoading}
+              ScheduledTasksIsLoading={ScheduledTasksIsLoading}
+              myFarmActivitiesIsLoading={myFarmActivitiesIsLoading}
+              tasksIsLoading={tasksIsLoading}
+              reloads={reloads}
             />
           </Box>
         </Box>
@@ -80,9 +101,18 @@ export default function Document({
 }
 
 Document.propTypes = {
-  digitalFarmerFarm: PropTypes.any,
-  activities: PropTypes.any,
-  tasks: PropTypes.any,
-  ScheduledTasks: PropTypes.any,
-  farmfeeds: PropTypes.any
+  digitalFarmerFarm: PropTypes.object,
+  activities: PropTypes.array,
+  tasks: PropTypes.array,
+  ScheduledTasks: PropTypes.array,
+  farmfeeds: PropTypes.array,
+  farmFeedsHasError: PropTypes.any,
+  ScheduledTasksHasError: PropTypes.any,
+  myFarmActivitiesHasError: PropTypes.any,
+  tasksHasError: PropTypes.any,
+  farmFeedsIsLoading: PropTypes.bool,
+  ScheduledTasksIsLoading: PropTypes.bool,
+  myFarmActivitiesIsLoading: PropTypes.bool,
+  tasksIsLoading: PropTypes.bool,
+  reloads: PropTypes.array
 }

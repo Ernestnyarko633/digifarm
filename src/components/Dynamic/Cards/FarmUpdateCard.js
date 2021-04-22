@@ -55,7 +55,7 @@ export default function FarmUpdateCard({
 
 FarmUpdateCard.propTypes = {
   title: PropTypes.string,
-  duration: PropTypes.string,
+  duration: PropTypes.any,
   subtitle: PropTypes.string,
   text: PropTypes.any,
   icon: PropTypes.any

@@ -1,45 +1,44 @@
-/* eslint-disable */
-import React from 'react';
-import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react';
-import { IoEllipsisVertical } from 'react-icons/io5';
-import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import { motion } from 'framer-motion';
-import PropTypes from 'prop-types';
+import React from 'react'
+import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react'
+import { IoEllipsisVertical } from 'react-icons/io5'
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { motion } from 'framer-motion'
+import PropTypes from 'prop-types'
 
-const MotionFlex = motion.custom(Flex);
+const MotionFlex = motion.custom(Flex)
 
 export default function ImageGallery({ title, farmfeeds, activityName }) {
-  const [images, setImages] = React.useState([]);
-  const [selectedImage, setSelectedImage] = React.useState({});
-  const [activeIndex, setActiveIndex] = React.useState(0);
-
-  const handleClick = (value) => {
+  const [images, setImages] = React.useState([])
+  const [selectedImage, setSelectedImage] = React.useState({})
+  const [activeIndex, setActiveIndex] = React.useState(0)
+  const mapKey = i => i
+  const handleClick = value => {
     const comparant =
       activeIndex + value === 0 ||
       activeIndex + value > images.length - 1 ||
       activeIndex + value < 0
         ? 0
-        : activeIndex + value;
+        : activeIndex + value
 
-    setActiveIndex(comparant);
-    setSelectedImage(images[comparant]);
-  };
+    setActiveIndex(comparant)
+    setSelectedImage(images[comparant])
+  }
   React.useEffect(() => {
-    let array = [];
-    const _feeds = (feed) => {
-      return feed?.media?.forEach((_media) => {
-        if (_media?.type === 'image') array.push(_media);
-      });
-    };
+    let array = []
+    const _feeds = feed => {
+      return feed?.media?.forEach(_media => {
+        if (_media?.type === 'image') array.push(_media)
+      })
+    }
     const feeds = () =>
-      farmfeeds?.forEach((feed) => {
-        return _feeds(feed?.feed);
-      });
-    feeds();
+      farmfeeds?.forEach(feed => {
+        return _feeds(feed?.feed)
+      })
+    feeds()
 
-    setImages(array);
-    setSelectedImage(array[0]);
-  }, [farmfeeds, activityName]);
+    setImages(array)
+    setSelectedImage(array[0])
+  }, [farmfeeds, activityName])
   return (
     <Box>
       <Flex align='center' justify='space-between'>
@@ -106,15 +105,15 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
         <MotionFlex pos='relative' w={120} mt={4} overflowX='scroll'>
           {images.map((item, index) => (
             <Box
+              key={mapKey(index)}
               as='button'
               role='button'
               aria-label='image button'
               onClick={() => {
-                setSelectedImage(item);
-                setActiveIndex(index);
+                setSelectedImage(item)
+                setActiveIndex(index)
               }}
               mr={6}
-              key={item.id}
               borderWidth={activeIndex === index ? 4 : 0}
               rounded='md'
               borderColor='cf.400'
@@ -131,11 +130,11 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
         </MotionFlex>
       </Box>
     </Box>
-  );
+  )
 }
 
 ImageGallery.propTypes = {
   title: PropTypes.string,
   farmfeeds: PropTypes.array.isRequired,
-  activityName: PropTypes.string.isRequired,
-};
+  activityName: PropTypes.string.isRequired
+}

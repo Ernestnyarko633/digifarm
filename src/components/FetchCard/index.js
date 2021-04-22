@@ -22,10 +22,6 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
               <Text fontSize='md' ml={2} color='cf.400'>
                 Something went wrong
               </Text>
-              <Text my={2} fontSize='sm' color='cf.400'>
-                {error}
-                {/* TODO: use a better error when it is */}
-              </Text>
               <Button
                 bg='cf.900'
                 variant='solid'
@@ -57,3 +53,8 @@ FetchCard.propTypes = {
 }
 
 export default FetchCard
+
+//<Text my={2} fontSize='sm' color='cf.400'>
+//              {error}
+//            {/* TODO: use a better error when it is */}
+//        </Text>

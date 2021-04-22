@@ -39,10 +39,25 @@ export default function Farm() {
   const [isOpen, setIsOpen] = useState(false)
   const [open, setOpen] = useState(true)
   const [image, takeScreenShot] = useScreenshot()
-  const [reload, setReload] = useState(0)
   const [location, setLocation] = useState([])
   const [center, setCenter] = useState([])
-  const triggerReload = () => setReload(prevState => prevState + 1)
+
+  //reloads
+  const [farmReload, setFarmReload] = useState(0)
+  const [activitiesReload, setActivitiesReload] = useState(0)
+  const [tasksReload, setTasksReload] = useState(0)
+  const [farmFeedsReload, setFarmFeedsReload] = useState(0)
+  const [scheduledTasksReload, setScheduledTasksReload] = useState(0)
+
+  //trigger Reloads
+  const triggerFarmReload = () => setFarmReload(prevState => prevState + 1)
+  const triggerActivitiesReload = () =>
+    setActivitiesReload(prevState => prevState + 1)
+  const triggerTasksReload = () => setTasksReload(prevState => prevState + 1)
+  const triggerFarmFeedsReload = () =>
+    setFarmFeedsReload(prevState => prevState + 1)
+  const triggerScheduledTasksReload = () =>
+    setScheduledTasksReload(prevState => prevState + 1)
 
   const { compState, setCompState } = useComponent()
 
@@ -58,7 +73,7 @@ export default function Farm() {
     data: farm,
     isLoading: farmIsLoading,
     error: farmHasError
-  } = useFetch('selectedFarm', getMyFarm, reload, id)
+  } = useFetch('selectedFarm', getMyFarm, farmReload, id)
 
   useEffect(() => {
     let location_ = []
@@ -86,7 +101,7 @@ export default function Farm() {
   } = useFetch(
     null,
     farm?.order?.product?._id ? getMyFarmFeeds : null,
-    reload,
+    farmFeedsReload,
     {
       farm: farm?.order?.product?._id
     }
@@ -99,7 +114,7 @@ export default function Farm() {
   } = useFetch(
     null,
     farm?.order?.product?._id ? getMyScheduledTasks : null,
-    reload,
+    scheduledTasksReload,
     {
       farm: farm?.order?.product?._id
     }
@@ -109,30 +124,27 @@ export default function Farm() {
     data: myFarmActivities,
     isLoading: myFarmActivitiesIsLoading,
     error: myFarmActivitiesHasError
-  } = useFetch(null, farm?.order?.product?._id ? getActivities : null, reload, {
-    farm: farm?.order?.product?._id
-  })
+  } = useFetch(
+    null,
+    farm?.order?.product?._id ? getActivities : null,
+    activitiesReload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
 
   const {
     data: tasks,
     isLoading: tasksIsLoading,
     error: tasksHasError
-  } = useFetch(null, farm?.order?.product?._id ? getAllTasks : null, reload, {
-    farm: farm?.order?.product?._id
-  })
-
-  const isLoading =
-    farmFeedsIsLoading ||
-    farmIsLoading ||
-    ScheduledTasksIsLoading ||
-    myFarmActivitiesIsLoading ||
-    tasksIsLoading
-  const hasError =
-    farmFeedsHasError ||
-    farmHasError ||
-    ScheduledTasksHasError ||
-    myFarmActivitiesHasError ||
-    tasksHasError
+  } = useFetch(
+    null,
+    farm?.order?.product?._id ? getAllTasks : null,
+    tasksReload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
 
   const onClose = () => setIsOpen(false)
   const closed = () => setOpen(false)
@@ -161,16 +173,16 @@ export default function Farm() {
 
   const mapKey = index => index
 
-  return isLoading || hasError ? (
+  return farmIsLoading || farmHasError ? (
     <FetchCard
       h='100vh'
       direction='column'
       align='center'
       justify='center'
       mx='auto'
-      reload={triggerReload}
-      loading={isLoading}
-      error={hasError}
+      reload={triggerFarmReload}
+      loading={farmIsLoading}
+      error={farmHasError}
       text={"Standby as we load your farm's view"}
     />
   ) : (
@@ -298,23 +310,38 @@ export default function Farm() {
         <Box>
           {location?.length > 0 && (
             <DynamicFarm
-              center={center}
-              loading={isLoading}
-              error={hasError}
+              //loading
+              farmFeedsIsLoading={farmFeedsIsLoading}
+              ScheduledTasksIsLoading={ScheduledTasksIsLoading}
+              myFarmActivitiesIsLoading={myFarmActivitiesIsLoading}
+              tasksIsLoading={tasksIsLoading}
+              //state
               farm={component}
-              tasks={tasks}
-              activities={myFarmActivities}
-              ScheduledTasks={ScheduledTasks}
-              digitalFarmerFarm={farm}
-              farmfeeds={farmFeeds}
-              location={location}
+              // data
+              center={center || []}
+              tasks={tasks || []}
+              activities={myFarmActivities || []}
+              ScheduledTasks={ScheduledTasks || []}
+              digitalFarmerFarm={farm || {}}
+              farmfeeds={farmFeeds || []}
+              location={location || []}
+              //helpers
               dateIntervals={dateIntervals}
-              reload={reload}
               onOpen={getImage}
-              reloads={[triggerReload]}
+              reloads={[
+                triggerActivitiesReload,
+                triggerTasksReload,
+                triggerFarmFeedsReload,
+                triggerScheduledTasksReload
+              ]}
+              //errors
+              farmFeedsHasError={farmFeedsHasError}
+              ScheduledTasksHasError={ScheduledTasksHasError}
+              myFarmActivitiesHasError={myFarmActivitiesHasError}
+              tasksHasError={tasksHasError}
             />
           )}
-          {isLoading && (
+          {/* {isLoading && (
             <FetchCard
               direction='column'
               align='center'
@@ -331,7 +358,7 @@ export default function Farm() {
                   : 'Something went wrong, please dont fret'
               }
             />
-          )}
+          )} */}
         </Box>
 
         {/* <Box d={{ base: 'block', md: 'none' }}>

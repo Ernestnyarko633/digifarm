@@ -24,6 +24,7 @@ const YourFarmCard = ({
   setFilter,
   filter
 }) => {
+  const mapKey = i => i
   const randomColors = [
     { color: '#FF9F9F' },
     { color: '#76B1F6' },
@@ -66,11 +67,11 @@ const YourFarmCard = ({
               <>
                 {farm?.order?.product?._id && (
                   <Flex
+                    key={mapKey(index)}
                     direction='column'
                     align='center'
                     justify='center'
                     m={4}
-                    key={farm}
                     onClick={() => {
                       filter === 'combined' && setFarmIndex(index)
                     }}

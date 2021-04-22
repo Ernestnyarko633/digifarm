@@ -10,7 +10,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Fade from 'react-reveal/Fade'
 
-const CropHealthCard = ({ eosStat, _error, date }) => {
+const CropHealthCard = ({ eosStat, date }) => {
   const health = value => {
     if (value >= 0.2 && value <= 1.0) return true
     return false
@@ -89,7 +89,6 @@ const CropHealthCard = ({ eosStat, _error, date }) => {
 
 CropHealthCard.propTypes = {
   eosStat: PropTypes.any,
-  _error: PropTypes.any,
   date: PropTypes.string
 }
 export default CropHealthCard
