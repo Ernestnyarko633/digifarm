@@ -318,13 +318,13 @@ export default function Farm() {
               //state
               farm={component}
               // data
-              center={center}
-              tasks={tasks}
-              activities={myFarmActivities}
-              ScheduledTasks={ScheduledTasks}
-              digitalFarmerFarm={farm}
-              farmfeeds={farmFeeds}
-              location={location}
+              center={center || []}
+              tasks={tasks || []}
+              activities={myFarmActivities || []}
+              ScheduledTasks={ScheduledTasks || []}
+              digitalFarmerFarm={farm || {}}
+              farmfeeds={farmFeeds || []}
+              location={location || []}
               //helpers
               dateIntervals={dateIntervals}
               onOpen={getImage}
