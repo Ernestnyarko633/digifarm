@@ -39,7 +39,7 @@ export default function Farm({
 }) {
   const [_loading, _setLoading] = React.useState(false)
   // const [band, setBand] = React.useState('NDVI')
-
+  const ENV = process.env.REACT_APP_ENVIRONMENT
   const [
     EOSTaskForStatsCreationIsLoading,
     setEOSTaskForStatsCreationIsLoading
@@ -164,7 +164,7 @@ export default function Farm({
           </Flex>
         ) : (
           <>
-            {EOSViewID && (
+            {EOSViewID && ENV === 'PROD' && (
               <Box
                 h='100%'
                 w='100%'
@@ -179,7 +179,21 @@ export default function Farm({
                 reloads={reloads}
               />
             )}
-            {EOSViewID && (
+            {ENV !== 'PROD' && (
+              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+                <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
+                <Box
+                  pos='absolute'
+                  top={{ md: '50%', xl: '30%' }}
+                  left={{ md: '23%' }}
+                >
+                  <Text color='white' fontWeight={900} fontSize='4xl'>
+                    Satellite Imagery is currently uavailable
+                  </Text>
+                </Box>
+              </Box>
+            )}
+            {EOSViewID && ENV === 'PROD' && (
               <Flex
                 align='center'
                 justify='space-between'

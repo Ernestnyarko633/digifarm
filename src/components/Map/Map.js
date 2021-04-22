@@ -17,6 +17,7 @@ const Map = ({
   zoom,
   ...rest
 }) => {
+  const ENV = process.env.REACT_APP_ENVIRONMENT
   const { EOS_API, EOS_API_KEY } = configs()
   const BAND = 'B11,B8A,B02'
   const onInitHandler = map => {
@@ -48,8 +49,7 @@ const Map = ({
     height,
     onInit: onInitHandler
   })
-  console.log(viewID, 'if')
-  return <>{viewID && <Box {...rest} ref={ref} />}</>
+  return <>{viewID && ENV === 'PROD' && <Box {...rest} ref={ref} />}</>
 }
 
 Map.propTypes = {
