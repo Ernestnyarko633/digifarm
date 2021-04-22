@@ -83,11 +83,7 @@ const OrderCard = ({ order, onOpen }) => {
             fontSize={{ base: 'xs', md: 'sm' }}
             rounded='30px'
           >
-            {order.payment
-              ? order.status === 'PENDING'
-                ? 'Pending'
-                : 'Processing'
-              : 'Invalid'}{' '}
+            {order.status === 'PENDING' ? 'Pending' : 'Processing'}
             Order
           </Tag>
           <Text fontSize={{ base: 'xs', md: 'sm' }}>
@@ -96,7 +92,7 @@ const OrderCard = ({ order, onOpen }) => {
         </Box>
       </Flex>
 
-      {order.status === 'PENDING' && order.payment && (
+      {order.status === 'PENDING' && (
         <Box mt={6} w='90%' mx='auto'>
           <Button
             btntitle='Complete order'

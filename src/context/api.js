@@ -71,6 +71,20 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const initiatePaystackPayment = async payload => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/orders/payment/paystack`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const verifyPaystackPayment = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/orders/payment/paystack`,
+      query
+    })
+  }
+
   const createFarm = async (id, payment) => {
     return await http.patch({
       url: `${DIGITAL_FARMER_API}/orders/${id}/verify-payment`,
@@ -242,7 +256,9 @@ export const ApiContextProvider = ({ children }) => {
         downloadTaskReceipt,
         getMyScheduledTasks,
         uploadPaymentDetails,
-        getUserBankingDetails
+        getUserBankingDetails,
+        initiatePaystackPayment,
+        verifyPaystackPayment
       }}
     >
       {children}

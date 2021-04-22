@@ -38,7 +38,7 @@ const Header = () => {
       zIndex={100}
       align='center'
       bgColor='white'
-      h={{ base: 14, md: 20 }}
+      h={{ base: 14, md: 20, xl: 24 }}
       gridArea='header'
       justify='space-between'
       borderBottomWidth={1}

@@ -31,13 +31,18 @@ const Router = () => {
           component={Pages.Cooperative}
         />
         <PrivateRoute exact path='/payment' component={Pages.Payment} />
+        <PrivateRoute
+          exact
+          path='/payment-paystack'
+          component={Pages.PaymentPaystack}
+        />
         <PrivateRoute path='/marketplace' component={Pages.Marketplace} />
         <PrivateRoute path='/warehouses' component={Pages.Warehouse} />
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />
         <PrivateRoute path='/profile' component={Pages.Profile} />
         <PrivateRoute path='/guide' component={Pages.Guide} />
         <PrivateRoute path='/notfound' component={Pages.NotFound} />
-        <PrivateRoute path='/coming-soon' component={Pages.Banner} />
+        {/* <PrivateRoute path='/coming-soon' component={Pages.Banner} /> */}
         <Redirect from='*' to='/notfound' />
       </Switch>
     </React.Suspense>

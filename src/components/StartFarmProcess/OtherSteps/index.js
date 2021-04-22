@@ -117,69 +117,73 @@ const OtherSteps = ({ data, history: { push } }) => {
 
   const { title, action, width } = getForwardButtonProps(otherStep)
 
-  if (!catFarms) {
+  if (!catFarms && otherStep !== 4) {
     push('/dashboard')
   }
 
   return (
     <>
       {isSubmitting && <Overlay text={text} />}
-      <Flex
-        mx='auto'
-        w='100%'
-        bg='cf-dark.400'
-        justify='space-between'
-        pt={{ base: 2, md: 8 }}
-        px={{ md: 20 }}
-        overflowX='scroll'
-        direction={{ base: 'column', md: 'row' }}
-        align={{ base: 'center', md: 'initial' }}
-      >
-        <Flex align='center'>
-          <Heading as='h5' size='md' mr={{ md: 40 }} mb={{ base: 4, md: 0 }}>
-            {catName}
-          </Heading>
-        </Flex>
-        <Flex justify='space-between'>
-          {catFarms?.slice(0, 4)?.map(farm => (
-            <Flex
-              key={farm._id}
-              align='center'
-              justify='center'
-              direction='column'
-              borderBottomWidth={
-                (farm._id === selectedFarm?._id ||
-                  farm._id === data?.product?._id) &&
-                2
-              }
-              borderBottomColor={
-                (farm._id === selectedFarm?._id ||
-                  farm._id === data?.product?._id) &&
-                'cf.400'
-              }
-            >
-              <Text
-                px={6}
-                textTransform='uppercase'
-                fontSize={{ base: 'xs', md: 'md' }}
+      {catFarms ? (
+        <Flex
+          mx='auto'
+          w='100%'
+          bg='cf-dark.400'
+          justify='space-between'
+          pt={{ base: 2, md: 8 }}
+          px={{ md: 20 }}
+          overflowX='scroll'
+          direction={{ base: 'column', md: 'row' }}
+          align={{ base: 'center', md: 'initial' }}
+        >
+          <Flex align='center'>
+            <Heading as='h5' size='md' mr={{ md: 40 }} mb={{ base: 4, md: 0 }}>
+              {catName}
+            </Heading>
+          </Flex>
+          <Flex justify='space-between'>
+            {catFarms?.slice(0, 4)?.map(farm => (
+              <Flex
+                key={farm._id}
+                align='center'
+                justify='center'
+                direction='column'
+                borderBottomWidth={
+                  (farm._id === selectedFarm?._id ||
+                    farm._id === data?.product?._id) &&
+                  2
+                }
+                borderBottomColor={
+                  (farm._id === selectedFarm?._id ||
+                    farm._id === data?.product?._id) &&
+                  'cf.400'
+                }
               >
-                {farm.cropVariety?.crop.name}
-              </Text>
-              <Text
-                px={{ base: 1, md: 6 }}
-                fontSize={{ base: 'x-small', md: 'tiny' }}
-                textAlign={{ base: 'center', md: 'initial' }}
-              >
-                ({farm.cropVariety?.name}){' '}
-                <Box as='br' display={{ md: 'none' }} />{' '}
-                <Text as='span' d={{ base: 'none', md: 'block' }}>
-                  #{farm?.name}
+                <Text
+                  px={6}
+                  textTransform='uppercase'
+                  fontSize={{ base: 'xs', md: 'md' }}
+                >
+                  {farm.cropVariety?.crop.name}
                 </Text>
-              </Text>
-            </Flex>
-          ))}
+                <Text
+                  px={{ base: 1, md: 6 }}
+                  fontSize={{ base: 'x-small', md: 'tiny' }}
+                  textAlign={{ base: 'center', md: 'initial' }}
+                >
+                  ({farm.cropVariety?.name}){' '}
+                  <Box as='br' display={{ md: 'none' }} />{' '}
+                  <Text as='span' d={{ base: 'none', md: 'block' }}>
+                    #{farm?.name}
+                  </Text>
+                </Text>
+              </Flex>
+            ))}
+          </Flex>
         </Flex>
-      </Flex>
+      ) : (
+        <Box pt={{ base: 1, md: 2 }} />
+      )}
 
       <Flex
         align='center'
