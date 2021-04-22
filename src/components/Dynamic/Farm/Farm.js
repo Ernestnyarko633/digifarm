@@ -6,7 +6,7 @@ import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import EmptyMap from 'assets/images/map404.png'
 import useApi from 'context/api'
-
+import Sat from 'assets/images/sateilite.png'
 import FetchCard from 'components/FetchCard'
 import FarmLegend from './FarmLegend'
 
@@ -140,12 +140,22 @@ export default function Farm({
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
                   pos='absolute'
-                  top={{ md: '50%', xl: '30%' }}
-                  left={{ md: '23%' }}
+                  top={{ md: '50%', xl: '40%' }}
+                  left={{ md: '33%' }}
+                  w='20%'
+                  h='auto'
                 >
-                  <Text color='white' fontWeight={900} fontSize='4xl'>
-                    Satellite Imagery is currently uavailable
-                  </Text>
+                  <Flex direction='column' align='center' justify='center'>
+                    <Image src={Sat} boxSize={12} />
+                    <Text
+                      textAlign='center'
+                      color='white'
+                      fontWeight={900}
+                      fontSize='xl'
+                    >
+                      satellite imagery currently not available
+                    </Text>
+                  </Flex>
                 </Box>
               </Box>
             )}
@@ -184,12 +194,22 @@ export default function Farm({
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
                   pos='absolute'
-                  top={{ md: '50%', xl: '30%' }}
-                  left={{ md: '23%' }}
+                  top={{ md: '50%', xl: '40%' }}
+                  left={{ md: '33%' }}
+                  w='20%'
+                  h='auto'
                 >
-                  <Text color='white' fontWeight={900} fontSize='4xl'>
-                    Satellite Imagery is currently uavailable
-                  </Text>
+                  <Flex direction='column' align='center' justify='center'>
+                    <Image src={Sat} boxSize={12} />
+                    <Text
+                      textAlign='center'
+                      color='white'
+                      fontWeight={900}
+                      fontSize='xl'
+                    >
+                      satellite imagery currently not available
+                    </Text>
+                  </Flex>
                 </Box>
               </Box>
             )}
