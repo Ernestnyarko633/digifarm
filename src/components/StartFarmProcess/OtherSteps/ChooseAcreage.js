@@ -12,13 +12,15 @@ import {
   Divider,
   useToast,
   Skeleton,
-  GridItem
+  GridItem,
+  Image
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import { motion } from 'framer-motion'
 import useFetch from 'hooks/useFetch'
 import useExternal from 'context/external'
 import useStartFarm from 'context/start-farm'
+import EmptyMap from 'assets/images/map404.png'
 
 import BaseSelect from 'components/Form/BaseSelect'
 // import FormRadio from 'components/Form/FormRadio'
@@ -173,36 +175,70 @@ const ChooseAcreage = ({ farm }) => {
 
   const loading = EOSViewIDIsLoading
   const error = EOSViewIDHasError
+  const ENV = process.env.REACT_APP_ENVIRONMENT
 
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem w='100%' h='100%'>
-        {loading && (
-          <FetchCard
-            w={{ base: 48, md: '100%' }}
-            h={{ base: 48, md: '100%' }}
-            direction='column'
-            align='center'
-            justify='center'
-            mx='auto'
-            reload={() => triggerMapReload()}
-            loading={loading}
-            error={error}
-            text='Standby as we load the map'
-          />
-        )}
-        {!loading && !error && EOSViewID?.results && (
-          <Flex
-            w='100%'
-            h='90%'
-            as={Map}
-            viewID={EOSViewID?.results[0]?.view_id}
-            loading={loading}
-            error={error}
-            band={null}
-            center={center || location[0] || null}
-            zoom={9}
-          />
+        {loading || error ? (
+          <>
+            {!EOSViewID?.results && (
+              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+                <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
+                <Box
+                  pos='absolute'
+                  top={{ md: '50%', xl: '50%' }}
+                  left={{ md: '19%' }}
+                >
+                  <Text color='white' fontWeight={900} fontSize='2xl'>
+                    Satellite Imagery is currently uavailable
+                  </Text>
+                </Box>
+              </Box>
+            )}
+            <FetchCard
+              w={{ base: 48, md: '100%' }}
+              h={{ base: 48, md: '100%' }}
+              direction='column'
+              align='center'
+              justify='center'
+              mx='auto'
+              reload={() => triggerMapReload()}
+              loading={loading}
+              error={error}
+              text='Standby as we load the map'
+            />
+          </>
+        ) : (
+          <>
+            {EOSViewID?.results && ENV === 'PROD' && (
+              <Flex
+                w='100%'
+                h='90%'
+                as={Map}
+                viewID={EOSViewID?.results[0]?.view_id}
+                loading={loading}
+                error={error}
+                band={null}
+                center={center || location[0] || null}
+                zoom={9}
+              />
+            )}
+            {ENV !== 'PROD' && (
+              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+                <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
+                <Box
+                  pos='absolute'
+                  top={{ md: '50%', xl: '30%' }}
+                  left={{ md: '23%' }}
+                >
+                  <Text color='white' fontWeight={900} fontSize='4xl'>
+                    Satellite Imagery is currently uavailable
+                  </Text>
+                </Box>
+              </Box>
+            )}
+          </>
         )}
       </GridItem>
       <GridItem
