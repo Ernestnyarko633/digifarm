@@ -34,7 +34,12 @@ export const StartFarmContextProvider = ({ children }) => {
   const [text, setText] = useState(null)
   const [step, setStep] = useImmer(0)
 
-  const { createOrder, initiatePayment, patchOrder } = useApi()
+  const {
+    createOrder,
+    initiatePayment,
+    initiatePaystackPayment,
+    patchOrder
+  } = useApi()
   const { getExchangeRate } = useExternal()
   const { setSession } = useAuth()
 
@@ -124,7 +129,7 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const handlePayment = async (id, cost) => {
+  const handlePayment = async (id, name, cost) => {
     try {
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
@@ -138,15 +143,35 @@ export const StartFarmContextProvider = ({ children }) => {
       if (paymentOption === Constants.paymentOptions[0]) {
         const q = 'USD_GHS'
         const res = await getExchangeRate({ q })
-        data.amount =
-          Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
-        if (data.amount) {
-          const res = await initiatePayment(data)
-          window.onbeforeunload = null
-          window.location.href = res.message.url
-        } else {
+        // data.amount =
+        //   Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
+        // if (data.amount) {
+        //   const res = await initiatePayment(data)
+        //   window.onbeforeunload = null
+        //   window.location.href = res.message.url
+        // } else {
+        //   throw new Error('Unknown error occurred, try again')
+        // }
+
+        if (!res.data) {
           throw new Error('Unknown error occurred, try again')
         }
+
+        const cediAmt = data.amount * res.data[q]
+
+        const payload = {
+          order: data.order_id,
+          name: name || selectedFarm.name,
+          amountToCharge: (cediAmt / 0.9805).toFixed(2) * 100 //paystack charges included
+        }
+
+        console.log(payload)
+        const result = await initiatePaystackPayment(payload)
+        window.onbeforeunload = null
+        if (!result?.data?.authorization_url) {
+          throw new Error('Unexpected payment gateway failure')
+        }
+        window.location.href = result.data.authorization_url
       } else {
         const res = await initiatePayment(data)
         await patchOrder(res?.data?.order_id?.$oid, {

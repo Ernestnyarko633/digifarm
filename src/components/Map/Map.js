@@ -45,15 +45,13 @@ const Map = ({
   }
 
   const { ref } = useMap({
-    center: center,
-    onInit: onInitHandler,
-    zoom: zoom,
-    height: height
+    center,
+    zoom,
+    height,
+    onInit: onInitHandler
   })
 
-  return (
-    <React.Fragment>{viewID && <Box {...rest} ref={ref} />}</React.Fragment>
-  )
+  return viewID && <Box {...rest} ref={ref} />
 }
 
 Map.propTypes = {

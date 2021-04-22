@@ -12,14 +12,14 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
   const [isLoading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(false)
   const [checker, setChecker] = React.useState(false)
-  const { createFarm } = useApi()
+  const { verifyPaystackPayment } = useApi()
 
   React.useEffect(() => {
-    const query = qs.parse(search)
-    const verifyAndCreate = async (id, record_id) => {
+    const { trxref, reference } = qs.parse(search)
+    const verifyAndCreate = async ref => {
       try {
         setLoading(true)
-        const res = await createFarm(id, record_id)
+        const res = await verifyPaystackPayment(ref)
         history.push({
           pathname: 'start-farm/individual',
           state: {
@@ -34,28 +34,22 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
       }
     }
 
-    if (
-      query.status === 'successful' &&
-      query.status_code === '100' &&
-      !checker
-    ) {
+    if (reference === trxref && !checker) {
       setChecker(true)
       const queryParams = new URLSearchParams(search)
-      queryParams.delete('id')
-      queryParams.delete('status')
-      queryParams.delete('status_code')
-      queryParams.delete('metadata[order_id]')
+      queryParams.delete('trxref')
+      queryParams.delete('reference')
       history.replace({
         search: queryParams.toString()
       })
       sessionStorage.removeItem('my_farms')
       sessionStorage.removeItem('my_processing_orders')
       sessionStorage.removeItem('my_pending_orders')
-      verifyAndCreate(query['metadata[order_id]'], query.id)
+      verifyAndCreate({ reference })
     } else {
       setError(true)
     }
-  }, [createFarm, checker, search, history])
+  }, [verifyPaystackPayment, checker, search, history])
 
   return isLoading || error ? (
     <FetchCard

@@ -97,16 +97,24 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                 isDisabled={isSubmitting}
                 py={{ base: 1, md: 7 }}
                 leftIcon={<FiCreditCard size={22} />}
-                onClick={_ => handlePayment(order?._id, order?.cost)}
-                width='45%'
+                onClick={_ => {
+                  return handlePayment(
+                    order?._id,
+                    order?.product?.name,
+                    order?.cost
+                  )
+                }}
+                width={!order?.payment ? '100%' : '45%'}
               />
-              <Button
-                btntitle='Upload payment slip'
-                leftIcon={<FiUpload size={22} />}
-                py={{ base: 1, md: 7 }}
-                onClick={_ => setShowUploadForm(true)}
-                width='45%'
-              />
+              {order?.payment && (
+                <Button
+                  btntitle='Upload payment slip'
+                  leftIcon={<FiUpload size={22} />}
+                  py={{ base: 1, md: 7 }}
+                  onClick={_ => setShowUploadForm(true)}
+                  width='45%'
+                />
+              )}
             </Flex>
           ) : success ? (
             <Box my='20px' mx={1} textAlign='center'>

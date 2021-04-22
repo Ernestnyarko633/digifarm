@@ -59,7 +59,7 @@ const Layout = ({
     <>
       <Grid
         templateRows='repeat(1 1fr)'
-        templateColumns={{ md: '20% 80%', lg: '15% 63% 22%' }}
+        templateColumns={{ md: '20% 80%', lg: '13% 65% 22%' }}
         pos='relative'
         h='100vh'
         fontFamily='body'
@@ -84,8 +84,9 @@ const Layout = ({
             w={{ lg: '100%' }}
             as='main'
             bg='cf-dark.400'
-            h={height}
-            mt={{ md: 20 }}
+            minH='100vh'
+            h='100vh'
+            mt={{ md: 20, xl: 24 }}
             color='gray.800'
             fontFamily='body'
             overflowX='hidden'

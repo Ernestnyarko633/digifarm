@@ -39,17 +39,17 @@ const BankingDetailsForm = ({ bankDetails }) => {
       branchAddress: bankDetails?.length
         ? bankDetails[0]?.bankDetails?.branchAddress
         : '',
-      iban: bankDetails?.length ? bankDetails[0]?.iban : ''
+      iban: bankDetails?.length ? bankDetails[0]?.bankDetails?.iban : ''
     },
     onSubmit: async (
       values,
       { setSubmitting, setErrors, setStatus, resetForm }
     ) => {
       try {
-        const data = {
+        let data = {
           user: user?._id,
-          iban: values.iban,
           bankDetails: {
+            iban: values.iban,
             bankName: values.bankName,
             bankBranch: values.bankBranch,
             branchAddress: values.branchAddress,
@@ -60,10 +60,11 @@ const BankingDetailsForm = ({ bankDetails }) => {
             accountNumber: values.accountNumber
           }
         }
-        delete data.bankDetails.currency
-        delete data.bankDetails.swiftCode
+        if (!values?.iban?.length) delete data.bankDetails.iban
+        if (!values?.accountNumber?.length)
+          delete data.bankDetails.accountNumber
         const res = bankDetails?.length
-          ? await updateBankDetails(bankDetails?._id, data)
+          ? await updateBankDetails(bankDetails[0]?._id, data)
           : await createBankDetails(data)
 
         toast({
@@ -165,8 +166,7 @@ const BankingDetailsForm = ({ bankDetails }) => {
                 value={formik.values.accountNumber}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                // disabled={values?.iban?.length > 1}
-                isRequired
+                disabled={formik.values?.iban?.length > 1}
                 type='account'
                 bg='white'
               />
@@ -177,9 +177,8 @@ const BankingDetailsForm = ({ bankDetails }) => {
                 value={formik.values.iban}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                isRequired
                 type='string'
-                // disabled={values?.accountNumber?.length > 1}
+                disabled={formik.values?.accountNumber?.length > 1}
                 bg='white'
               />
 

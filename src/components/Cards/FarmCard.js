@@ -30,7 +30,7 @@ const FarmCard = ({ farm }) => {
   return (
     <Box
       rounded='xl'
-      shadow='md'
+      filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       p={10}
       bg='white'
       minW={{ base: 82, md: 120, xl: 125 }}
@@ -82,7 +82,12 @@ const FarmCard = ({ farm }) => {
             w={{ md: '190px' }}
             h={{ md: '55px' }}
             fontSize={{ md: 'lg' }}
-            onClick={_ => history.push(`/farms/${farm._id}`)}
+            onClick={_ => {
+              sessionStorage.setItem('selectedFarm', JSON.stringify(farm))
+              setTimeout(() => {
+                return history.push(`/farms/${farm._id}`)
+              }, 500)
+            }}
           />
         </Box>
       </Flex>
@@ -156,8 +161,7 @@ FarmCard.propTypes = {
     name: PropTypes.string,
     location: PropTypes.string,
     order: PropTypes.object
-  }),
-  _small: PropTypes.bool
+  })
 }
 
 export default FarmCard

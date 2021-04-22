@@ -1,38 +1,34 @@
-import React from 'react'
-import Layout from 'container/Layout'
-import { Box, Grid, Link, Heading, Flex, Text } from '@chakra-ui/react'
-import { Link as ReachRouter } from 'react-router-dom'
-import FetchCard from 'components/FetchCard'
-import FarmWalletEmptyState from 'components/EmptyStates/FarmWalletEmptyState'
-import NoFarmsCard from 'components/Cards/NoFarmsCard'
-import useFetch from 'hooks/useFetch'
-import useApi from 'context/api'
-//import FarmCard from 'components/Cards/FarmCard'
-import GetStartedNowCard from 'components/Cards/GetStartedNowCard'
-import WalletCard from 'components/Cards/WalletCard'
+/* eslint-disable */
+import React from 'react';
+import Layout from 'container/Layout';
+import { Box, Grid, Link, Heading, Flex, Text } from '@chakra-ui/react';
+import { Link as ReachRouter } from 'react-router-dom';
+import FetchCard from 'components/FetchCard';
+import FarmWalletEmptyState from 'components/EmptyStates/FarmWalletEmptyState';
+import NoFarmsCard from 'components/Cards/NoFarmsCard';
+import GetStartedNowCard from 'components/Cards/GetStartedNowCard';
+import WalletCard from 'components/Cards/WalletCard';
+import { useFarmData } from 'hooks/useFarmData';
 
 const FarmWallet = () => {
-  document.title = 'Complete Farmer | Farm wallet'
-
-  const { getMyFarms } = useApi()
-  const [reloadMyFarms, setReloadMyFarms] = React.useState(0)
-
-  const triggerReloadMyFarms = () =>
-    setReloadMyFarms(prevState => prevState + 1)
+  document.title = 'Complete Farmer | Farm wallet';
 
   const {
-    data: myFarms,
-    isLoading: myFarmsIsLoading,
-    error: myFarmsHasError
-  } = useFetch('my_farms', getMyFarms, reloadMyFarms)
+    triggerReloadMyFarms,
+    myFarms,
+    myFarmsIsLoading,
+    myFarmsHasError,
+  } = useFarmData();
 
-  const loading = myFarmsIsLoading
-  const error = myFarmsHasError
+  const loading = myFarmsIsLoading;
+  const error = myFarmsHasError;
 
-  const mapKey = index => {
-    const _index = index
-    return _index
-  }
+  console.log('farms', myFarms);
+
+  const mapKey = (index) => {
+    const _index = index;
+    return _index;
+  };
   return (
     <Layout>
       <FarmWalletEmptyState>
@@ -45,7 +41,7 @@ const FarmWallet = () => {
               justify='center'
               mx='auto'
               reload={() => {
-                !myFarms?.length && triggerReloadMyFarms()
+                !myFarms?.length && triggerReloadMyFarms();
               }}
               loading={loading}
               error={error}
@@ -77,28 +73,28 @@ const FarmWallet = () => {
               templateColumns={{
                 base: 'repeat(1, 1fr)',
                 md: 'repeat(2, 1fr)',
-                xl: 'repeat(3, 1fr)'
               }}
               w='100%'
-              gap={{ base: 3, md: 12 }}
+              gap={{ base: 3, md: 6 }}
               mb={{ base: 10, md: 0 }}
             >
               {myFarms.map((farm, index) => {
                 return (
-                  <Box key={mapKey(index)} textAlign='center'>
+                  <Box key={mapKey(index)}>
                     <Link
                       to={`/wallets/${farm._id}`}
                       as={ReachRouter}
                       _hover={{ textDecor: 'none' }}
                     >
                       <WalletCard
+                        farm={farm}
                         acreage={farm?.order?.acreage}
                         name={farm?.name}
                         price={farm?.order?.cost}
                       />
                     </Link>
                   </Box>
-                )
+                );
               })}
             </Grid>
           </Flex>
@@ -106,7 +102,7 @@ const FarmWallet = () => {
         {!loading && !error && myFarms?.length === 0 && <GetStartedNowCard />}
       </FarmWalletEmptyState>
     </Layout>
-  )
-}
+  );
+};
 
-export default FarmWallet
+export default FarmWallet;

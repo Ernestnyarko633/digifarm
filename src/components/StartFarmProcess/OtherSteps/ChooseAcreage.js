@@ -21,7 +21,7 @@ import useExternal from 'context/external'
 import useStartFarm from 'context/start-farm'
 
 import BaseSelect from 'components/Form/BaseSelect'
-import FormRadio from 'components/Form/FormRadio'
+// import FormRadio from 'components/Form/FormRadio'
 import Prismic from 'prismic-javascript'
 
 import { getFormattedMoney } from 'helpers/misc'
@@ -34,7 +34,7 @@ import { dateIntervals } from 'helpers/misc'
 import useApi from 'context/api'
 import getConfig from 'utils/configs'
 
-const options = ['Yes', 'No']
+// const options = ['Yes', 'No']
 
 const MotionGrid = motion.custom(Grid)
 
@@ -55,7 +55,7 @@ const ChooseAcreage = ({ farm }) => {
     currency,
     wantCycle,
     setCurrency,
-    setWantCycle,
+    // setWantCycle,
     exchangeRate,
     setExchangeRate
   } = useStartFarm()
@@ -284,10 +284,10 @@ const ChooseAcreage = ({ farm }) => {
                     startColor='cf.300'
                     endColor='cf.500'
                   >
-                    <Text fontSize='tiny' color='red.500'>
-                      +{currency.currencySymbol}
+                    <Text fontSize='sm' color='red.500'>
+                      {currency.currencySymbol}
                       {getFormattedMoney(
-                        farm.pricePerAcre * exchangeRate * (acreage - 1)
+                        farm.pricePerAcre * exchangeRate * acreage
                       )}
                     </Text>
                   </Skeleton>
@@ -295,7 +295,7 @@ const ChooseAcreage = ({ farm }) => {
               </Flex>
             </Box>
           </Box>
-          <Box mt={10} px={{ base: 6, md: 0 }}>
+          {/* <Box mt={10} px={{ base: 6, md: 0 }}>
             <FormRadio
               icon
               state={wantCycle}
@@ -308,7 +308,7 @@ const ChooseAcreage = ({ farm }) => {
               }}
               title='Do you want to apply cycle for this farm?'
             />
-          </Box>
+          </Box> */}
           <Box mt={10} px={{ base: 6, md: 0 }}>
             {wantCycle === 'Yes' && (
               <>
