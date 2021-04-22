@@ -202,14 +202,13 @@ export default function Farm() {
       <Box bg='white'>
         <Flex
           pos='fixed'
-          top={20}
+          top={16}
           w='100%'
           bg='cf-dark.600'
           align='center'
           justify='space-between'
           px={{ md: 20 }}
-          pt={{ md: 10 }}
-          pb={{ md: 5 }}
+          py={{ base: 3, md: 5 }}
           zIndex={50}
           d={{ base: 'none', md: 'flex' }}
         >
