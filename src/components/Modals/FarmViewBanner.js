@@ -24,7 +24,7 @@ const FarmViewBanner = ({ date, closed }) => {
       w='100%'
       zIndex={100}
       status='success'
-      top={{ base: 14, md: 20, xl: 20 }}
+      top={{ base: 14, md: 16 }}
       py={{ base: 4, md: 8 }}
       px={{ base: 4, md: 48 }}
       flexDir={{ base: 'column', md: 'row' }}
