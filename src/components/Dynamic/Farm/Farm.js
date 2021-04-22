@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
+import EmptyMap from 'assets/images/map404.png'
 import useApi from 'context/api'
-import EmptyMap from 'assets/images/map.png'
 
 import FetchCard from 'components/FetchCard'
 import FarmLegend from './FarmLegend'
@@ -16,7 +16,6 @@ export default function Farm({
   myFarmActivitiesIsLoading,
   EOSViewIDIsLoading,
   WeatherForeCastsIsLoading,
-  eosTaskIsLoading,
   tasksIsLoading,
   onOpen,
   center,
@@ -32,6 +31,7 @@ export default function Farm({
   EOSViewIDHasError,
   WeatherForeCastsHasError,
   eosTaskHasError,
+  eosTaskIsLoading,
   farmFeedsHasError,
   ScheduledTasksHasError,
   myFarmActivitiesHasError,
@@ -50,7 +50,7 @@ export default function Farm({
   ] = useState(null)
   const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({})
   const [__error, _setError] = React.useState(null)
-  const { eosStats, createTask } = useApi()
+  const { eosStats, eosTask: createTask } = useApi()
 
   useEffect(() => {
     let mounted = true
@@ -122,10 +122,12 @@ export default function Farm({
       farmFeedsIsLoading={farmFeedsIsLoading}
       ScheduledTasksIsLoading={ScheduledTasksIsLoading}
       WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
+      eosTaskIsLoading={eosTaskIsLoading}
       //errors
       WeatherForeCastsHasError={WeatherForeCastsHasError}
       farmFeedsHasError={farmFeedsHasError}
       ScheduledTasksHasError={ScheduledTasksHasError}
+      eosTaskHasError={eosTaskHasError}
       //extras
       reloads={reloads}
     >
@@ -134,8 +136,17 @@ export default function Farm({
         {EOSViewIDIsLoading || EOSViewIDHasError ? (
           <Flex w='100%' h='100%' direction='column'>
             {!EOSViewID && (
-              <Box w='100%' h='100%'>
+              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
+                <Box
+                  pos='absolute'
+                  top={{ md: '50%', xl: '30%' }}
+                  left={{ md: '23%' }}
+                >
+                  <Text color='white' fontWeight={900} fontSize='4xl'>
+                    Satellite Imagery is currently uavailable
+                  </Text>
+                </Box>
               </Box>
             )}
             <Box pt={{ md: 10 }}>

@@ -23,7 +23,6 @@ const FarmWallet = () => {
   const loading = myFarmsIsLoading;
   const error = myFarmsHasError;
 
-  console.log('farms', myFarms);
 
   const mapKey = (index) => {
     const _index = index;

@@ -27,11 +27,13 @@ const DynamicCard = ({
   ScheduledTasksIsLoading,
   WeatherForeCastsIsLoading,
   EOSStatisticsIsLoading,
+  eosTaskIsLoading,
   //errors
   WeatherForeCastsHasError,
   farmFeedsHasError,
   ScheduledTasksHasError,
   EOSStatisticsHasError,
+  eosTaskHasError,
   reloads
 }) => {
   const SelectedCard = components[card]
@@ -47,11 +49,13 @@ const DynamicCard = ({
       WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
       ScheduledTasksIsLoading={ScheduledTasksIsLoading}
       EOSStatisticsIsLoading={EOSStatisticsIsLoading}
+      eosTaskIsLoading={eosTaskIsLoading}
       //errors
       WeatherForeCastsHasError={WeatherForeCastsHasError}
       farmFeedsHasError={farmFeedsHasError}
       ScheduledTasksHasError={ScheduledTasksHasError}
       EOSStatisticsHasError={EOSStatisticsHasError}
+      eosTaskHasError={eosTaskHasError}
       //helpers
       reloads={reloads}
     />
@@ -69,10 +73,12 @@ DynamicCard.propTypes = {
   EOSStatisticsIsLoading: PropTypes.bool,
   ScheduledTasksIsLoading: PropTypes.bool,
   WeatherForeCastsIsLoading: PropTypes.bool,
+  eosTaskIsLoading: PropTypes.bool,
   WeatherForeCastsHasError: PropTypes.any,
   farmFeedsHasError: PropTypes.any,
   ScheduledTasksHasError: PropTypes.any,
   EOSStatisticsHasError: PropTypes.any,
+  eosTaskHasError: PropTypes.any,
   reloads: PropTypes.array
 }
 

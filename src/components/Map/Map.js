@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import React from 'react'
 import useMap from '../../hooks/useMap'
-import { Box, Spinner, Text } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import configs from '../../utils/configs'
 import './Map.css'
@@ -47,15 +48,8 @@ const Map = ({
     height,
     onInit: onInitHandler
   })
-  if (loading) {
-    return <Spinner color='cf.400' />
-  }
-
-  if (error) {
-    return <Text color='cf.400'>Something went wrong</Text>
-  }
-
-  return viewID && <Box {...rest} ref={ref} />
+  console.log(viewID, 'if')
+  return <>{viewID && <Box {...rest} ref={ref} />}</>
 }
 
 Map.propTypes = {

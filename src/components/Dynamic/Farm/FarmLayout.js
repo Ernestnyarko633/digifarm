@@ -23,6 +23,8 @@ export default function FarmLayout({
   WeatherForeCastsHasError,
   farmFeedsHasError,
   ScheduledTasksHasError,
+  eosTaskIsLoading,
+  eosTaskHasError,
   ...rest
 }) {
   const { compState, setCompState } = useComponent()
@@ -86,11 +88,13 @@ export default function FarmLayout({
           WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
           ScheduledTasksIsLoading={ScheduledTasksIsLoading}
           EOSStatisticsIsLoading={EOSStatisticsIsLoading}
+          eosTaskIsLoading={eosTaskIsLoading}
           //errors
           WeatherForeCastsHasError={WeatherForeCastsHasError}
           farmFeedsHasError={farmFeedsHasError}
           ScheduledTasksHasError={ScheduledTasksHasError}
           EOSStatisticsHasError={EOSStatisticsHasError}
+          eosTaskHasError={eosTaskHasError}
         />
       </GridItem>
     </Grid>
@@ -109,8 +113,10 @@ FarmLayout.propTypes = {
   reloads: PropTypes.array,
   farmFeedsIsLoading: PropTypes.bool,
   ScheduledTasksIsLoading: PropTypes.bool,
+  eosTaskIsLoading: PropTypes.bool,
   WeatherForeCastsIsLoading: PropTypes.bool,
   WeatherForeCastsHasError: PropTypes.any,
   farmFeedsHasError: PropTypes.any,
-  ScheduledTasksHasError: PropTypes.any
+  ScheduledTasksHasError: PropTypes.any,
+  eosTaskHasError: PropTypes.any
 }

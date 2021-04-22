@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   Box,
   CircularProgress,
@@ -25,11 +26,13 @@ export default function Tasks({
   ScheduledTasksIsLoading,
   WeatherForeCastsIsLoading,
   EOSStatisticsIsLoading,
+  eosTaskIsLoading,
   //errors
   WeatherForeCastsHasError,
   farmFeedsHasError,
   ScheduledTasksHasError,
   EOSStatisticsHasError,
+  eosTaskHasError,
   reloads
 }) {
   const [feeds, setFeeds] = React.useState([])
@@ -188,7 +191,10 @@ export default function Tasks({
           </>
         )}
 
-        {EOSStatisticsIsLoading || EOSStatisticsHasError ? (
+        {EOSStatisticsIsLoading ||
+        EOSStatisticsHasError ||
+        eosTaskHasError ||
+        eosTaskIsLoading ? (
           <Box pt={{ md: 10 }}>
             <FetchCard
               direction='column'
@@ -196,9 +202,12 @@ export default function Tasks({
               justify='center'
               w='100%'
               mx='auto'
-              reload={() => reloads[8]()}
-              loading={EOSStatisticsIsLoading}
-              error={EOSStatisticsHasError}
+              reload={() => {
+                eosTaskHasError && reloads[4]()
+                EOSStatisticsHasError && reloads[7]()
+              }}
+              loading={EOSStatisticsIsLoading || eosTaskIsLoading}
+              error={EOSStatisticsHasError || eosTaskHasError}
               text={"Standby as we load your farm's stats"}
             />
           </Box>
@@ -331,5 +340,7 @@ Tasks.propTypes = {
   farmFeedsHasError: PropTypes.any,
   ScheduledTasksHasError: PropTypes.any,
   EOSStatisticsHasError: PropTypes.any,
+  eosTaskIsLoading: PropTypes.bool,
+  eosTaskHasError: PropTypes.any,
   reloads: PropTypes.array
 }

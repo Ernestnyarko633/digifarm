@@ -20,7 +20,9 @@ export default function FarmRightSidebar({
   WeatherForeCastsHasError,
   farmFeedsHasError,
   ScheduledTasksHasError,
-  EOSStatisticsHasError
+  EOSStatisticsHasError,
+  eosTaskIsLoading,
+  eosTaskHasError
 }) {
   return (
     <Box
@@ -48,11 +50,13 @@ export default function FarmRightSidebar({
         WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
         ScheduledTasksIsLoading={ScheduledTasksIsLoading}
         EOSStatisticsIsLoading={EOSStatisticsIsLoading}
+        eosTaskIsLoading={eosTaskIsLoading}
         //errors
         WeatherForeCastsHasError={WeatherForeCastsHasError}
         farmFeedsHasError={farmFeedsHasError}
         ScheduledTasksHasError={ScheduledTasksHasError}
         EOSStatisticsHasError={EOSStatisticsHasError}
+        eosTaskHasError={eosTaskHasError}
         //helpers
         reloads={reloads}
       />
@@ -76,8 +80,10 @@ FarmRightSidebar.propTypes = {
   EOSStatisticsIsLoading: PropTypes.bool,
   ScheduledTasksIsLoading: PropTypes.bool,
   WeatherForeCastsIsLoading: PropTypes.bool,
+  eosTaskIsLoading: PropTypes.bool,
   WeatherForeCastsHasError: PropTypes.any,
   farmFeedsHasError: PropTypes.any,
   ScheduledTasksHasError: PropTypes.any,
-  EOSStatisticsHasError: PropTypes.any
+  EOSStatisticsHasError: PropTypes.any,
+  eosTaskHasError: PropTypes.any
 }

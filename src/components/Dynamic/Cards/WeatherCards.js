@@ -63,7 +63,7 @@ const WeatherCard = ({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => reloads[7]()}
+            reload={() => reloads[6]()}
             loading={WeatherForeCastsIsLoading}
             error={WeatherForeCastsHasError}
             text={"Standby as we load your farm's feed"}
