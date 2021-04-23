@@ -1,14 +1,23 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GiWallet } from 'react-icons/gi';
-import { getFormattedMoney } from 'helpers/misc';
-import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/layout';
+import {
+  Box,
+  Divider,
+  Flex,
+  Grid,
+  Heading,
+  Link,
+  Text,
+} from '@chakra-ui/layout';
 import { Avatar } from '@chakra-ui/avatar';
-import { Stat, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/stat';
-import Icon from '@chakra-ui/icon';
+import ExpenditureCard from './ExpenditureCard';
+import { getFormattedMoney } from 'helpers/misc';
+import Button from 'components/Button';
+import { Link as ReachRouter } from 'react-router-dom';
 
 const WalletCard = ({ acreage, price, farm }) => {
+  console.log('farm', farm);
   return (
     <Box
       rounded='xl'
@@ -57,15 +66,36 @@ const WalletCard = ({ acreage, price, farm }) => {
 
       <Divider orientation='horizontal' borderColor='gray.300' my={6} />
 
-      <Stat>
-        <StatLabel>
-          <Icon as={GiWallet} boxSize={10} color='gray.600' />
-        </StatLabel>
-        <StatNumber fontFamily='sans-serif'>
-          ${getFormattedMoney(price * acreage)}
-        </StatNumber>
-        <StatHelpText></StatHelpText>
-      </Stat>
+      <Grid gap={4}>
+        <ExpenditureCard
+          bg='yellow.light'
+          amount={getFormattedMoney(price * acreage)}
+          action='spent'
+          color='yellow.deep'
+          date={farm?.order?.createdAt}
+        />
+        <ExpenditureCard
+          bg='cf.light'
+          action='available'
+          amount={getFormattedMoney(price * acreage)}
+          date={farm?.order?.updatedAt}
+        />
+      </Grid>
+
+      <Box mt={4}>
+        <Link
+          as={ReachRouter}
+          to={`/wallets/${farm?._id}`}
+          _hover={{ textDecor: 'none' }}
+        >
+          <Button
+            btntitle='View farm wallet'
+            width='100%'
+            h={12}
+            fontSize={{ base: 'md', md: 'lg' }}
+          />
+        </Link>
+      </Box>
     </Box>
   );
 };

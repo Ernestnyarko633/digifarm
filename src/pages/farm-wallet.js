@@ -23,7 +23,6 @@ const FarmWallet = () => {
   const loading = myFarmsIsLoading;
   const error = myFarmsHasError;
 
-
   const mapKey = (index) => {
     const _index = index;
     return _index;
@@ -80,18 +79,12 @@ const FarmWallet = () => {
               {myFarms.map((farm, index) => {
                 return (
                   <Box key={mapKey(index)}>
-                    <Link
-                      to={`/wallets/${farm._id}`}
-                      as={ReachRouter}
-                      _hover={{ textDecor: 'none' }}
-                    >
-                      <WalletCard
-                        farm={farm}
-                        acreage={farm?.order?.acreage}
-                        name={farm?.name}
-                        price={farm?.order?.cost}
-                      />
-                    </Link>
+                    <WalletCard
+                      farm={farm}
+                      acreage={farm?.order?.acreage}
+                      name={farm?.name}
+                      price={farm?.order?.cost}
+                    />
                   </Box>
                 );
               })}
