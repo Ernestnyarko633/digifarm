@@ -16,7 +16,7 @@ const WeatherCard = ({
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
       {farmFeedsIsLoading || farmFeedsHasError ? (
-        <Box pt={{ md: 10 }}>
+        <Box pt={{ base: 10 }}>
           <FetchCard
             direction='column'
             align='center'
