@@ -136,13 +136,13 @@ export default function Farm({
         {EOSViewIDIsLoading || EOSViewIDHasError ? (
           <Flex w='100%' h='100%' direction='column'>
             {!EOSViewID && (
-              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+              <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
                   pos='absolute'
-                  top={{ md: '50%', xl: '40%' }}
-                  left={{ md: '33%' }}
-                  w='20%'
+                  top={{ base: '20%', md: '40%' }}
+                  left={{ base: '10%', md: '33%' }}
+                  w={{ base: '80%', md: '20%' }}
                   h='auto'
                 >
                   <Flex direction='column' align='center' justify='center'>
@@ -190,13 +190,13 @@ export default function Farm({
               />
             )}
             {ENV !== 'PROD' && (
-              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+              <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
                   pos='absolute'
-                  top={{ md: '50%', xl: '40%' }}
-                  left={{ md: '33%' }}
-                  w='20%'
+                  top={{ base: '20%', md: '40%' }}
+                  left={{ base: '10%', md: '33%' }}
+                  w={{ base: '80%', md: '20%' }}
                   h='auto'
                 >
                   <Flex direction='column' align='center' justify='center'>
