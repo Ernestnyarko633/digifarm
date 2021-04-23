@@ -184,13 +184,17 @@ const ChooseAcreage = ({ farm }) => {
         {loading || error ? (
           <>
             {!EOSViewID?.results && (
-              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+              <Box
+                display={{ base: 'block' }}
+                w='100%'
+                h={{ base: '50%', md: '100%' }}
+              >
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
                   pos='absolute'
-                  top={{ md: '50%', xl: '40%' }}
-                  left={{ md: '22%' }}
-                  w='20%'
+                  top={{ base: '30%', md: '50%', xl: '40%' }}
+                  left={{ base: '10%', md: '22%' }}
+                  w={{ base: '80%', md: '20%' }}
                   h='auto'
                 >
                   <Flex direction='column' align='center' justify='center'>
@@ -236,13 +240,17 @@ const ChooseAcreage = ({ farm }) => {
               />
             )}
             {ENV !== 'PROD' && (
-              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+              <Box
+                display={{ base: 'block' }}
+                w='100%'
+                h={{ base: '50%', md: '100%' }}
+              >
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
                   pos='absolute'
-                  top={{ md: '50%', xl: '40%' }}
-                  left={{ md: '22%' }}
-                  w='20%'
+                  top={{ base: '30%', md: '50%', xl: '40%' }}
+                  left={{ base: '10%', md: '22%' }}
+                  w={{ base: '80%', md: '20%' }}
                   h='auto'
                 >
                   <Flex direction='column' align='center' justify='center'>
