@@ -73,7 +73,18 @@ export const StartFarmContextProvider = ({ children }) => {
         product: selectedFarm._id,
         cost: selectedFarm.pricePerAcre * acreage,
         projectedYield: selectedFarm.projectedYieldPerAcre * acreage,
-        projectedReturn: selectedFarm.projectedReturnsPerAcre * acreage
+        projectedMarketReturnsRange: {
+          min:
+            (acreage *
+              selectedFarm.pricePerAcre *
+              selectedFarm.projectedMarketReturnsRangePerAcre.min) /
+            100,
+          max:
+            (acreage *
+              selectedFarm.pricePerAcre *
+              selectedFarm.projectedMarketReturnsRangePerAcre.max) /
+            100
+        }
       }
 
       // if discount exist then apply discount to cost
