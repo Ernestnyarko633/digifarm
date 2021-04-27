@@ -213,113 +213,112 @@ export default function Tasks({
           </Box>
         ) : (
           <>
-            {eosStats?.length >
-              0(
-                <Box
-                  bg='white'
-                  w='100%'
-                  rounded='20px'
-                  filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-                  p={8}
-                  mt={{ base: 4, md: 0 }}
+            {eosStats?.length && (
+              <Box
+                bg='white'
+                w='100%'
+                rounded='20px'
+                filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
+                p={8}
+                mt={{ base: 4, md: 0 }}
+              >
+                <Flex
+                  align='center'
+                  justify='space-between'
+                  borderBottomWidth={1}
+                  borderBottomColor='gray.200'
+                  pb={3}
                 >
-                  <Flex
-                    align='center'
-                    justify='space-between'
-                    borderBottomWidth={1}
-                    borderBottomColor='gray.200'
-                    pb={3}
+                  <Text fontWeight={900}>
+                    <Icon as={Crop} mr={1} />
+                    CROP HEALTH
+                  </Text>
+                  <Text color='gray.500' fontSize='sm'>
+                    3m ago
+                  </Text>
+                </Flex>
+
+                {eosStats?.length > 0 && (
+                  <Grid
+                    templateColumns={{
+                      base: 'repeat(2, 1fr)',
+                      md: 'repeat(3, 1fr)'
+                    }}
+                    gap={6}
+                    mt={5}
                   >
-                    <Text fontWeight={900}>
-                      <Icon as={Crop} mr={1} />
-                      CROP HEALTH
-                    </Text>
-                    <Text color='gray.500' fontSize='sm'>
-                      3m ago
-                    </Text>
-                  </Flex>
-
-                  {eosStats?.length > 0 && (
-                    <Grid
-                      templateColumns={{
-                        base: 'repeat(2, 1fr)',
-                        md: 'repeat(3, 1fr)'
-                      }}
-                      gap={6}
-                      mt={5}
-                    >
-                      <Box>
-                        <Text mb={4} fontSize='sm'>
-                          Plant health
-                        </Text>
-                        <CircularProgress
-                          value={(
+                    <Box>
+                      <Text mb={4} fontSize='sm'>
+                        Plant health
+                      </Text>
+                      <CircularProgress
+                        value={(
+                          eosStats[eosStats?.length - 1]?.indexes?.EVI
+                            ?.average * 100
+                        )?.toFixed(0)}
+                        size='100px'
+                        color={
+                          health(
                             eosStats[eosStats?.length - 1]?.indexes?.EVI
-                              ?.average * 100
-                          )?.toFixed(0)}
-                          size='100px'
-                          color={
-                            health(
-                              eosStats[eosStats?.length - 1]?.indexes?.EVI
-                                ?.average
-                            )
-                              ? 'cf.400'
-                              : '#ff0000'
-                          }
-                        >
-                          <CircularProgressLabel rounded='lg'>
-                            {eosStats[
-                              eosStats?.length - 1
-                            ]?.indexes?.EVI?.average?.toFixed(2)}
-                          </CircularProgressLabel>
-                        </CircularProgress>
-                      </Box>
-                      <Box>
-                        <Text fontSize='xs' fontWeight={300}>
-                          Crop productivity
-                        </Text>
+                              ?.average
+                          )
+                            ? 'cf.400'
+                            : '#ff0000'
+                        }
+                      >
+                        <CircularProgressLabel rounded='lg'>
+                          {eosStats[
+                            eosStats?.length - 1
+                          ]?.indexes?.EVI?.average?.toFixed(2)}
+                        </CircularProgressLabel>
+                      </CircularProgress>
+                    </Box>
+                    <Box>
+                      <Text fontSize='xs' fontWeight={300}>
+                        Crop productivity
+                      </Text>
 
-                        <CircularProgress
-                          value={(
-                            eosStats[eosStats?.length - 1]?.indexes?.NDVI
-                              ?.average * 100
-                          )?.toFixed(0)}
-                          size='100px'
-                          color='cf.400'
-                          mt={2}
-                        >
-                          <CircularProgressLabel rounded='lg'>
-                            {eosStats[
-                              eosStats?.length - 1
-                            ]?.indexes?.NDVI?.average?.toFixed(2)}
-                          </CircularProgressLabel>
-                        </CircularProgress>
-                      </Box>
-                      <Box>
-                        <Text fontSize='xs' fontWeight={300}>
-                          Chlorophyl index
-                        </Text>
+                      <CircularProgress
+                        value={(
+                          eosStats[eosStats?.length - 1]?.indexes?.NDVI
+                            ?.average * 100
+                        )?.toFixed(0)}
+                        size='100px'
+                        color='cf.400'
+                        mt={2}
+                      >
+                        <CircularProgressLabel rounded='lg'>
+                          {eosStats[
+                            eosStats?.length - 1
+                          ]?.indexes?.NDVI?.average?.toFixed(2)}
+                        </CircularProgressLabel>
+                      </CircularProgress>
+                    </Box>
+                    <Box>
+                      <Text fontSize='xs' fontWeight={300}>
+                        Chlorophyl index
+                      </Text>
 
-                        <CircularProgress
-                          value={(
-                            eosStats[eosStats?.length - 1]?.indexes?.CCCI
-                              ?.average * 100
-                          )?.toFixed(0)}
-                          size='100px'
-                          color='cf.400'
-                          mt={2}
-                        >
-                          <CircularProgressLabel rounded='lg'>
-                            {eosStats[
-                              eosStats?.length - 1
-                            ]?.indexes?.CCCI?.average?.toFixed(2)}
-                          </CircularProgressLabel>
-                        </CircularProgress>
-                      </Box>
-                    </Grid>
-                  )}
-                </Box>
-              )}
+                      <CircularProgress
+                        value={(
+                          eosStats[eosStats?.length - 1]?.indexes?.CCCI
+                            ?.average * 100
+                        )?.toFixed(0)}
+                        size='100px'
+                        color='cf.400'
+                        mt={2}
+                      >
+                        <CircularProgressLabel rounded='lg'>
+                          {eosStats[
+                            eosStats?.length - 1
+                          ]?.indexes?.CCCI?.average?.toFixed(2)}
+                        </CircularProgressLabel>
+                      </CircularProgress>
+                    </Box>
+                  </Grid>
+                )}
+              </Box>
+            )}
           </>
         )}
       </Grid>
