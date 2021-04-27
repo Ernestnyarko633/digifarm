@@ -173,10 +173,9 @@ export const StartFarmContextProvider = ({ children }) => {
         const payload = {
           order: data.order_id,
           name: name || selectedFarm.name,
-          amountToCharge: (cediAmt / 0.9805).toFixed(2) * 100 //paystack charges included
+          amountToCharge: parseFloat(cediAmt / 0.9805).toFixed(2) * 1 //paystack charges included
         }
 
-        console.log(payload)
         const result = await initiatePaystackPayment(payload)
         window.onbeforeunload = null
         if (!result?.data?.authorization_url) {
