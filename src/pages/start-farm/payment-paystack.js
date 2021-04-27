@@ -43,8 +43,7 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
         search: queryParams.toString()
       })
       sessionStorage.removeItem('my_farms')
-      sessionStorage.removeItem('my_processing_orders')
-      sessionStorage.removeItem('my_pending_orders')
+      sessionStorage.removeItem('my_orders')
       verifyAndCreate({ reference })
     } else {
       setError(true)
