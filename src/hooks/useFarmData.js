@@ -21,27 +21,14 @@ export function useFarmData() {
   } = useFetch('my_farms', getMyFarms, reloadMyFarms)
 
   const {
-    data: myPendingOrder,
-    isLoading: myPendingOrdersIsLoading,
-    error: myPendingOrdersHasError
-  } = useFetch('my_pending_orders', getMyOrders, reloadMyOrders, {
-    status: 'PENDING'
-  })
+    data: myOrders,
+    isLoading: myOrdersIsLoading,
+    error: myOrdersHasError
+  } = useFetch('my_orders', getMyOrders, reloadMyOrders)
 
-  const {
-    data: myProcessingOrder,
-    isLoading: myProcessingOrdersIsLoading,
-    error: myProcessingOrdersHasError
-  } = useFetch('my_processing_orders', getMyOrders, reloadMyOrders, {
-    status: 'PROCESSING'
-  })
-
-  const isLoading =
-    myFarmsIsLoading || myProcessingOrdersIsLoading || myPendingOrdersIsLoading
-  const hasError =
-    myFarmsHasError || myProcessingOrdersHasError || myPendingOrdersHasError
-  const hasData =
-    myFarms?.length || myProcessingOrder?.length || myPendingOrder?.length
+  const isLoading = myFarmsIsLoading || myOrdersIsLoading
+  const hasError = myFarmsHasError || myOrdersHasError
+  const hasData = myFarms?.length || myOrders?.length
 
   return {
     reloadMyFarms,
@@ -51,12 +38,9 @@ export function useFarmData() {
     myFarms,
     myFarmsIsLoading,
     myFarmsHasError,
-    myPendingOrder,
-    myPendingOrdersIsLoading,
-    myPendingOrdersHasError,
-    myProcessingOrder,
-    myProcessingOrdersIsLoading,
-    myProcessingOrdersHasError,
+    myOrders,
+    myOrdersIsLoading,
+    myOrdersHasError,
     isLoading,
     hasError,
     hasData
