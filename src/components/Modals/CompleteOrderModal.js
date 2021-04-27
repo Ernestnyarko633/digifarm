@@ -49,8 +49,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
         })
         setSuccess(true)
         sessionStorage.removeItem('my_farms')
-        sessionStorage.removeItem('my_processing_orders')
-        sessionStorage.removeItem('my_pending_orders')
+        sessionStorage.removeItem('my_orders')
         call()
       } catch (error) {
         toast({
