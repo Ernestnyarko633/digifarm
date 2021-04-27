@@ -73,7 +73,18 @@ export const StartFarmContextProvider = ({ children }) => {
         product: selectedFarm._id,
         cost: selectedFarm.pricePerAcre * acreage,
         projectedYield: selectedFarm.projectedYieldPerAcre * acreage,
-        projectedReturn: selectedFarm.projectedReturnsPerAcre * acreage
+        projectedMarketReturnsRange: {
+          min:
+            (acreage *
+              selectedFarm.pricePerAcre *
+              selectedFarm.projectedMarketReturnsRangePerAcre.min) /
+            100,
+          max:
+            (acreage *
+              selectedFarm.pricePerAcre *
+              selectedFarm.projectedMarketReturnsRangePerAcre.max) /
+            100
+        }
       }
 
       // if discount exist then apply discount to cost
@@ -161,10 +172,9 @@ export const StartFarmContextProvider = ({ children }) => {
         const payload = {
           order: data.order_id,
           name: name || selectedFarm.name,
-          amountToCharge: (cediAmt / 0.9805).toFixed(2) * 100 //paystack charges included
+          amountToCharge: parseFloat(cediAmt / 0.9805).toFixed(2) * 1 //paystack charges included
         }
 
-        console.log(payload)
         const result = await initiatePaystackPayment(payload)
         window.onbeforeunload = null
         if (!result?.data?.authorization_url) {

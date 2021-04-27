@@ -2,7 +2,6 @@
 /* eslint-disable space-before-function-paren */
 import { useEffect, useReducer } from 'react'
 import useAuth from 'context/auth'
-import { FaCommentsDollar } from 'react-icons/fa'
 
 function fetchReducer(state, action) {
   switch (action.type) {
