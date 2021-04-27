@@ -41,7 +41,7 @@ const Router = () => {
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />
         <PrivateRoute path='/profile' component={Pages.Profile} />
         <PrivateRoute path='/guide' component={Pages.Guide} />
-        <PrivateRoute path='/notfound' component={Pages.NotFound} />
+        <Route path='/notfound' component={Pages.NotFound} />
         {/* <PrivateRoute path='/coming-soon' component={Pages.Banner} /> */}
         <Redirect from='*' to='/notfound' />
       </Switch>
