@@ -33,10 +33,7 @@ export default function Graph({
     setData(array)
   }, [activities, tasks, scheduledTasks, totalAmount])
 
-  const mapKey = index => {
-    const _index = index
-    return _index
-  }
+  const mapKey = i => i
 
   return (
     <ResponsiveContainer width='300%' height={300}>
