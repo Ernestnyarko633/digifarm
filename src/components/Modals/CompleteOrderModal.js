@@ -17,9 +17,9 @@ import { useFormik } from 'formik'
 import { FiCreditCard, FiUpload } from 'react-icons/fi'
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
-
 import Button from 'components/Button'
 import Upload from 'components/Form/upload'
+import { Status } from 'helpers/misc'
 
 const CompleteOrderModal = ({ call, isOpen, onClose }) => {
   const [showUploadForm, setShowUploadForm] = React.useState(false)
@@ -38,7 +38,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
         let formData = new FormData()
         formData.append('bank_transfer_receipt', values.file)
         const res = await uploadPaymentDetails(values.payment_id, formData)
-        await patchOrder(order._id, { status: 'PROCESSING' })
+        await patchOrder(order._id, { status: Status.PROCESSING })
         resetForm({})
         toast({
           title: 'User successfully updated.',
