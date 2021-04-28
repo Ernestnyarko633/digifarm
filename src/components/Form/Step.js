@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import { Box, Flex, Icon, Tag, Text } from '@chakra-ui/react'
 import { FiCheck } from 'react-icons/fi'
 import { GoPrimitiveDot } from 'react-icons/go'
+import { Status } from 'helpers/misc'
 
 const Step = ({ activity, cutThread }) => {
-  const isComplete = activity.status === 'COMPLETED'
-  const isInProgess = activity.status === 'IN_PROGRESS'
-  const isPending = activity.status === 'PENDING'
+  const { COMPLETED, IN_PROGRESS, PENDING } = Status
+  const isComplete = activity.status === COMPLETED
+  const isInProgess = activity.status === IN_PROGRESS
+  const isPending = activity.status === PENDING
 
   return (
     <Flex align='center' justify='space-between' pos='relative' mt={5}>
