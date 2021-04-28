@@ -39,7 +39,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
           base: 4,
           md: 3
         }}
-        px={{ base: 4, md: 16 }}
+        px={{ base: 4, md: 3 }}
       >
         {status !== 'news' && status !== 'weekly_videos' && false && (
           <Flex>
