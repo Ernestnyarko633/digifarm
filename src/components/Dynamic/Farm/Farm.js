@@ -6,7 +6,7 @@ import FarmLayout from './FarmLayout'
 import Map from 'components/Map/Map'
 import EmptyMap from 'assets/images/map404.png'
 import useApi from 'context/api'
-
+import Sat from 'assets/images/sateilite.png'
 import FetchCard from 'components/FetchCard'
 import FarmLegend from './FarmLegend'
 
@@ -136,16 +136,26 @@ export default function Farm({
         {EOSViewIDIsLoading || EOSViewIDHasError ? (
           <Flex w='100%' h='100%' direction='column'>
             {!EOSViewID && (
-              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+              <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
                   pos='absolute'
-                  top={{ md: '50%', xl: '30%' }}
-                  left={{ md: '23%' }}
+                  top={{ base: '20%', md: '40%' }}
+                  left={{ base: '10%', md: '33%' }}
+                  w={{ base: '80%', md: '20%' }}
+                  h='auto'
                 >
-                  <Text color='white' fontWeight={900} fontSize='4xl'>
-                    Satellite Imagery is currently uavailable
-                  </Text>
+                  <Flex direction='column' align='center' justify='center'>
+                    <Image src={Sat} boxSize={12} />
+                    <Text
+                      textAlign='center'
+                      color='white'
+                      fontWeight={900}
+                      fontSize='xl'
+                    >
+                      satellite imagery currently not available
+                    </Text>
+                  </Flex>
                 </Box>
               </Box>
             )}
@@ -180,16 +190,26 @@ export default function Farm({
               />
             )}
             {ENV !== 'PROD' && (
-              <Box display={{ base: 'none', md: 'block' }} w='100%' h='100%'>
+              <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
                   pos='absolute'
-                  top={{ md: '50%', xl: '30%' }}
-                  left={{ md: '23%' }}
+                  top={{ base: '20%', md: '40%' }}
+                  left={{ base: '10%', md: '33%' }}
+                  w={{ base: '80%', md: '20%' }}
+                  h='auto'
                 >
-                  <Text color='white' fontWeight={900} fontSize='4xl'>
-                    Satellite Imagery is currently uavailable
-                  </Text>
+                  <Flex direction='column' align='center' justify='center'>
+                    <Image src={Sat} boxSize={12} />
+                    <Text
+                      textAlign='center'
+                      color='white'
+                      fontWeight={900}
+                      fontSize='xl'
+                    >
+                      satellite imagery currently not available
+                    </Text>
+                  </Flex>
                 </Box>
               </Box>
             )}

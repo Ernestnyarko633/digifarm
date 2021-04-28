@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Graph from 'components/Utils/Graph';
 import { FaCircle } from 'react-icons/fa';
 import useComponent from 'context/component';
+import {Status} from 'helpers/misc'
 
 const FarmFinances = ({
   activities,
@@ -34,7 +35,7 @@ const FarmFinances = ({
         let _tasks = scheduledTasks.filter(
           (completedTask) =>
             __activity._id === completedTask?.task?.activity &&
-            completedTask.status === 'COMPLETED'
+            completedTask.status === Status.COMPLETED
         );
 
         if (_tasks) {

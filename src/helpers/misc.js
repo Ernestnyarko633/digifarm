@@ -139,3 +139,12 @@ export const isDateG8Today = date => {
 
   return today > start
 }
+
+export const Status = {
+  COMPLETED: 'COMPLETED',
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE',
+  IN_PROGRESS: 'IN_PROGRESS',
+  INACTIVE: 'INACTIVE',
+  PROCESSING: 'PROCESSING'
+}

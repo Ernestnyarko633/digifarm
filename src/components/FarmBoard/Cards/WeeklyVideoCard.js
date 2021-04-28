@@ -76,11 +76,12 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
             playing={false}
           />
           <Flex
+            w='100%'
             align='center'
-            justify='center'
+            justify='space-between'
             pos='absolute'
-            bottom={{ base: 3, md: 6 }}
-            left={{ base: '35%', md: '43%' }}
+            bottom={{ base: '50%' }}
+            left={{ base: '0%' }}
           >
             <Flex
               as='button'
@@ -91,13 +92,11 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
               w={10}
               h={10}
               rounded='100%'
-              borderWidth={1}
               _hover={{
                 background: 'cf.400',
                 color: 'white'
               }}
-              borderColor='white'
-              color='cf.400'
+              color='white'
               mr={2}
               outlineColor='none'
               outline='none'
@@ -127,10 +126,7 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
                 color: 'white'
               }}
               rounded='100%'
-              borderWidth={1}
-              borderColor='white'
-              color='cf.400'
-              bg='white'
+              color='white'
               outlineColor='none'
               outline='none'
               disabled={activeVideoIndex === content?.data?.body[0].items - 1}

@@ -34,10 +34,8 @@ const Dashboard = () => {
     triggerReloadMyOrders,
     myFarms,
     myFarmsHasError,
-    myPendingOrder,
-    myPendingOrdersHasError,
-    myProcessingOrder,
-    myProcessingOrdersHasError,
+    myOrders,
+    myOrdersHasError,
     isLoading,
     hasError,
     hasData
@@ -58,16 +56,16 @@ const Dashboard = () => {
     if (sliderType === 'pending_order') {
       setCurrentPendingOrdersSlide(prevState => {
         return (
-          (myPendingOrder.length + prevState + direction) %
-          myPendingOrder.length
+          (myOrders?.pending.length + prevState + direction) %
+          myOrders?.pending.length
         )
       })
     }
     if (sliderType === 'processing_order') {
       setCurrentProcessingOrdersSlide(prevState => {
         return (
-          (myProcessingOrder.length + prevState + direction) %
-          myProcessingOrder.length
+          (myOrders?.processing.length + prevState + direction) %
+          myOrders?.processing.length
         )
       })
     }
@@ -97,8 +95,7 @@ const Dashboard = () => {
               mx='auto'
               reload={() => {
                 myFarmsHasError && triggerReloadMyFarms()
-                myPendingOrdersHasError && triggerReloadMyOrders()
-                myProcessingOrdersHasError && triggerReloadMyOrders()
+                myOrdersHasError && triggerReloadMyOrders()
               }}
               loading={isLoading}
               error={hasError}
@@ -110,8 +107,8 @@ const Dashboard = () => {
         <Fade bottom>
           <FarmOrderSection
             farms={myFarms}
-            PendingOrder={myPendingOrder}
-            processingOrder={myProcessingOrder}
+            PendingOrder={myOrders?.pending || []}
+            processingOrder={myOrders?.processing || []}
             handleClick={handleClick}
             onOpen={onOpen}
           />
