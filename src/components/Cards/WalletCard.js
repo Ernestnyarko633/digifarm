@@ -24,7 +24,7 @@ const WalletCard = ({ acreage, price, farm }) => {
       <Box w='100%' h='11.25rem'>
         <Image roundedTop='xl' w='100%' h='100%' src={FarmImg} fit='cover' />
       </Box>
-      <Box p={{ base: 4, md: 8 }}>
+      <Box p={{ base: 4, md: 8 }} w='100%'>
         <Flex align='center' mb={4}>
           <Box mr={4}>
             <Avatar
