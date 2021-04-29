@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Icon, Image } from '@chakra-ui/react'
 import { Box, Flex, Grid, Heading, Link, Text } from '@chakra-ui/layout'
@@ -11,8 +11,52 @@ import { Link as ReachRouter } from 'react-router-dom'
 import { HiLocationMarker } from 'react-icons/hi'
 import { FirstLettersToUpperCase } from 'helpers/misc'
 import FarmImg from 'assets/images/farmimg.png'
+import useFetch from 'hooks/useFetch'
+import useApi from 'context/api'
+import FetchCard from 'components/FetchCard/index'
+import { Status } from 'helpers/misc'
 
 const WalletCard = ({ acreage, price, farm }) => {
+  const { getActivities } = useApi()
+  const [imageUrl, setImageUrl] = useState(null)
+  const [reload, setReload] = useState(0)
+
+  //trigger reload if fetch fails
+  // anyway this option would not be seen on the screen of the user on this page because it would be hidden by error checks
+  const triggerReload = () => setReload(prev => prev + 1)
+
+  //fetch activities of this farm
+  const { data, isLoading, error } = useFetch(
+    `${farm?.order?.product?._id}_activities`,
+    getActivities,
+    reload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
+
+  //lifecycle runs on mount and if farm and data changes
+  useEffect(() => {
+    let mounted = true
+    if (data && mounted && farm) {
+      let activities = data
+      // get current activities being worked on
+      const startedActivities = activities.filter(
+        activity => activity?.status === Status.IN_PROGRESS
+      )
+
+      //set image
+      if (startedActivities.length) {
+        setImageUrl(startedActivities[0]?.imageUrl)
+      } else {
+        //set default
+        setImageUrl(farm?.order?.product?.cropVariety?.imageUrl)
+      }
+    }
+    return () => (mounted = false)
+  }, [data, farm])
+
+  //render this
   return (
     <Box
       rounded='xl'
@@ -21,8 +65,22 @@ const WalletCard = ({ acreage, price, farm }) => {
       minW={{ base: 82, md: 95 }}
       minH={{ md: 'auto' }}
     >
-      <Box w='100%' h='11.25rem'>
-        <Image roundedTop='xl' w='100%' h='100%' src={FarmImg} fit='cover' />
+      <Box w='100%' h='9.25rem'>
+        {isLoading ? (
+          <FetchCard
+            m='auto'
+            align='center'
+            justify='center'
+            reload={triggerReload}
+            loading={isLoading}
+            error={error}
+            text='fetching activity image'
+          />
+        ) : !error ? (
+          <Image roundedTop='xl' w='100%' h='100%' src={imageUrl} fit='cover' />
+        ) : (
+          <Image roundedTop='xl' w='100%' h='100%' src={FarmImg} fit='cover' />
+        )}
       </Box>
       <Box p={{ base: 4, md: 8 }} w='100%'>
         <Flex align='center' mb={4}>
