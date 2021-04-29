@@ -59,7 +59,7 @@ const FarmWallet = () => {
             <Heading
               textAlign='center'
               fontSize={{ base: '2xl' }}
-              mb={2}
+              mb={10}
             >
               Your Farm Wallet(s)
             </Heading>
