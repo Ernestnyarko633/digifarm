@@ -1,6 +1,6 @@
 import React from 'react'
-import { BrowserRouter, withRouter } from 'react-router-dom'
-import ReactGA from 'react-ga'
+import { BrowserRouter } from 'react-router-dom'
+import TagManager from 'react-gtm-module'
 
 import { StartFarmContextProvider } from 'context/start-farm'
 import { ComponentContextProvider } from 'context/component'
@@ -11,12 +11,13 @@ import { ApiContextProvider } from 'context/api'
 
 import Router from 'routes/register'
 
-const TRACKING_ID = process.env.REACT_APP_GA
-ReactGA.initialize(TRACKING_ID)
+const tagManagerArgs = {
+  gtmId: process.env.REACT_APP_GTM
+}
 
 const App = () => {
   React.useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search)
+    TagManager.initialize(tagManagerArgs)
   }, [])
 
   return (
@@ -38,4 +39,4 @@ const App = () => {
   )
 }
 
-export default withRouter(App)
+export default App
