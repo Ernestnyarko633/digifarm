@@ -185,7 +185,7 @@ const FarmBoardContent = ({ farms }) => {
 
   return (
     <Flex w='100%' align='center' direction='column'>
-      {loading && !cleanedFeeds ? (
+      {loading && !cleanedFeeds.length ? (
         <FetchCard
           direction='column'
           align='center'
