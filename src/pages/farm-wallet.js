@@ -73,7 +73,7 @@ const FarmWallet = () => {
                 md: 'repeat(2, 1fr)',
               }}
               w='100%'
-              gap={{ base: 3, md: 6 }}
+              gap={{ base: 3, md: 4 }}
               mb={{ base: 10, md: 0 }}
             >
               {myFarms.map((farm, index) => {

@@ -17,16 +17,16 @@ const ExpenditureCard = ({ amount, bg, action, date, color }) => {
         <Flex
           align='center'
           justify='center'
-          w={16}
+          w={"auto"}
           h={16}
           bg={bg}
           rounded='100%'
         >
-          <Icon as={Wallet} boxSize={8} />
+          <Icon as={Wallet} boxSize={12} />
         </Flex>
         <Stat ml={6}>
-          <StatNumber fontWeight={800} fontSize="2.5rem"  color={color}>{amount}</StatNumber>
-          <StatHelpText color={color} fontSize="1rem">Amount {action}</StatHelpText>
+          <StatNumber fontWeight={800} fontSize="2xl"  color={color}>{amount}</StatNumber>
+          {/* <StatHelpText color={color} fontSize="1rem">Amount {action}</StatHelpText> */}
         </Stat>
       </Flex>
     </Box>
