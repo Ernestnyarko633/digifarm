@@ -13,8 +13,10 @@ import Button from 'components/Button'
 import React from 'react'
 import PropTypes from 'prop-types'
 import useStartFarm from 'context/start-farm'
+import { Status } from 'helpers/misc'
 
 const OrderCard = ({ order, onOpen }) => {
+  const { PENDING } = Status
   const { setOrder } = useStartFarm()
 
   return (
@@ -83,16 +85,16 @@ const OrderCard = ({ order, onOpen }) => {
             fontSize={{ base: 'xs', md: 'sm' }}
             rounded='30px'
           >
-            {order.status === 'PENDING' ? 'Pending' : 'Processing'}
+            {order.status === PENDING ? 'Pending' : 'Processing'}
             Order
           </Tag>
           <Text fontSize={{ base: 'xs', md: 'sm' }}>
-            {order.status === 'PENDING' ? '50' : '80'}% Complete
+            {order.status === PENDING ? '50' : '80'}% Complete
           </Text>
         </Box>
       </Flex>
 
-      {order.status === 'PENDING' && (
+      {order.status === PENDING && (
         <Box mt={6} w='90%' mx='auto'>
           <Button
             btntitle='Complete order'

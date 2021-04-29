@@ -11,23 +11,22 @@ const ExpenditureCard = ({ amount, bg, action, date, color }) => {
   return (
     <Box bg='gray.50' rounded='lg' py={4} px={6}>
       <Flex align='center' justify='space-between' color={color}>
-        <Text fontWeight='bold'>Total amount {action}</Text>
-        <Text fontSize='sm'>{moment(date).format('LL')}</Text>
+        <Text fontWeight='bold' color={color} >Total amount {action}</Text>
       </Flex>
       <Flex mt={4}>
         <Flex
           align='center'
           justify='center'
-          w={16}
+          w={"auto"}
           h={16}
           bg={bg}
           rounded='100%'
         >
-          <Icon as={Wallet} boxSize={8} />
+          <Icon as={Wallet} boxSize={12} />
         </Flex>
         <Stat ml={6}>
-          <StatNumber fontWeight={800}>{amount}</StatNumber>
-          <StatHelpText color={color}>Amount {action}</StatHelpText>
+          <StatNumber fontWeight={800} fontSize="2xl"  color={color}>{amount}</StatNumber>
+          {/* <StatHelpText color={color} fontSize="1rem">Amount {action}</StatHelpText> */}
         </Stat>
       </Flex>
     </Box>

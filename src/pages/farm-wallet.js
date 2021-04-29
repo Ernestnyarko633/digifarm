@@ -29,7 +29,7 @@ const FarmWallet = () => {
   };
   return (
     <Layout>
-      <FarmWalletEmptyState>
+      <FarmWalletEmptyState farms={myFarms || []}>
         {!error && !loading && !myFarms && <NoFarmsCard />}
         {(loading || error) && (
           <Box p={16}>
@@ -50,7 +50,7 @@ const FarmWallet = () => {
         {!loading && myFarms?.length > 0 && !error && (
           <Flex
             direction='column'
-            align='center'
+            align='flex-start'
             justify='center'
             w='100%'
             py={{ base: 10, md: 20 }}
@@ -58,34 +58,32 @@ const FarmWallet = () => {
           >
             <Heading
               textAlign='center'
-              fontSize={{ base: '2xl', md: 'xl' }}
+              fontSize={{ base: '2xl' }}
               mb={2}
             >
-              Click on farm to view wallet
+              Your Farm(s) Wallet
             </Heading>
-            <Text
-              textAlign='center'
-              mb={{ base: 4, md: 6 }}
-            >{`You currently have ${myFarms.length} farm wallet(s)`}</Text>
+           
             <Grid
               templateColumns={{
                 base: 'repeat(1, 1fr)',
-                md: 'repeat(2, 1fr)',
+                lg: 'repeat(2, 1fr)',
               }}
               w='100%'
-              gap={{ base: 3, md: 6 }}
+              gap={{ base: 3, md: 4 }}
               mb={{ base: 10, md: 0 }}
             >
               {myFarms.map((farm, index) => {
                 return (
-                  <Box key={mapKey(index)}>
+                  <>               
                     <WalletCard
+                    key={mapKey(index)}
                       farm={farm}
                       acreage={farm?.order?.acreage}
                       name={farm?.name}
                       price={farm?.order?.cost}
                     />
-                  </Box>
+                 </>
                 );
               })}
             </Grid>

@@ -7,7 +7,7 @@ import { BsArrowRight } from 'react-icons/bs'
 import FarmDocumentCard from '../Cards/FarmDocumentCard'
 import Doc from 'assets/images/doc.png'
 import FetchCard from 'components/FetchCard'
-
+import { Status } from 'helpers/misc'
 export default function Individual({
   reloads,
   digitalFarmerFarm,
@@ -141,7 +141,7 @@ export default function Individual({
                     ScheduledTasks={ScheduledTasks.filter(
                       _completedTask =>
                         _activity._id === _completedTask?.task?.activity &&
-                        _completedTask.status === 'COMPLETED'
+                        _completedTask.status === Status.COMPLETED
                     )}
                     tasksNumber={
                       tasks?.filter(

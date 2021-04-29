@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Avatar, Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
-
+import { Status } from 'helpers/misc'
 import Step from 'components/Form/Step'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
@@ -14,6 +14,7 @@ import useApi from 'context/api'
 const FarmCard = ({ farm }) => {
   const [reload, setReload] = React.useState(0)
   const { getActivities } = useApi()
+  const [imageUrl, setImageUrl] = React.useState(null)
   const history = useHistory()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
@@ -26,6 +27,31 @@ const FarmCard = ({ farm }) => {
       farm: farm?.order?.product?._id
     }
   )
+
+  //lifecycle runs on mount and if farm and data changes
+  React.useEffect(() => {
+    let mounted = true
+    if (data && mounted && farm) {
+      let activities = data
+      // get current activities being worked on
+      let startedActivities = activities.filter(
+        activity => activity?.status === Status.COMPLETED
+      )
+
+      startedActivities = startedActivities.sort(
+        (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
+      )
+
+      //set image
+      if (startedActivities.length) {
+        setImageUrl(startedActivities[0]?.imageUrl)
+      } else {
+        //set default
+        setImageUrl(farm?.order?.product?.cropVariety?.imageUrl)
+      }
+    }
+    return () => (mounted = false)
+  }, [data, farm])
 
   return (
     <Box
@@ -132,11 +158,7 @@ const FarmCard = ({ farm }) => {
             pos='absolute'
             right={{ md: 0 }}
           >
-            <ImageLoader
-              height='350'
-              rounded='3xl'
-              src={farm?.order?.product?.cropVariety?.imageUrl}
-            />
+            <ImageLoader height='auto' rounded='3xl' src={imageUrl} />
           </Box>
         </Flex>
       </>

@@ -40,8 +40,8 @@ const Greetings = ({ title, text }) => {
 }
 
 Greetings.propTypes = {
-  title: PropTypes.string,
-  text: PropTypes.string
+  title: PropTypes.any,
+  text: PropTypes.any
 }
 
 export default Greetings
