@@ -35,4 +35,4 @@ const ThemeApp = () => {
   )
 }
 
-ReactDOM.render(ThemeApp, document.getElementById('root'))
+ReactDOM.render(<ThemeApp />, document.getElementById('root'))
