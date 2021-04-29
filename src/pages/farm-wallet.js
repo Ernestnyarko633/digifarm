@@ -70,7 +70,7 @@ const FarmWallet = () => {
             <Grid
               templateColumns={{
                 base: 'repeat(1, 1fr)',
-                md: 'repeat(2, 1fr)',
+                lg: 'repeat(2, 1fr)',
               }}
               w='100%'
               gap={{ base: 3, md: 4 }}
