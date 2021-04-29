@@ -29,7 +29,7 @@ const FarmWallet = () => {
   };
   return (
     <Layout>
-      <FarmWalletEmptyState>
+      <FarmWalletEmptyState farms={myFarms || []}>
         {!error && !loading && !myFarms && <NoFarmsCard />}
         {(loading || error) && (
           <Box p={16}>
