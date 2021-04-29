@@ -28,7 +28,8 @@ export function useFarmData() {
 
   const isLoading = myFarmsIsLoading || myOrdersIsLoading
   const hasError = myFarmsHasError || myOrdersHasError
-  const hasData = myFarms?.length || myOrders?.length
+  const hasData =
+    myFarms?.length || myOrders?.pending?.length || myOrders?.processing?.length
 
   return {
     reloadMyFarms,
