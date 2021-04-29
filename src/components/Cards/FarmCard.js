@@ -39,7 +39,7 @@ const FarmCard = ({ farm }) => {
       )
 
       startedActivities = startedActivities.sort(
-        (a, b) => new Date(a.updatedAt) - new Date(a.updatedAt)
+        (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
       )
 
       //set image
