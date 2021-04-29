@@ -11,7 +11,7 @@ import { ApiContextProvider } from 'context/api'
 
 import Router from 'routes/register'
 
-const TRACKING_ID = '167739611-1'
+const TRACKING_ID = process.env.REACT_APP_GA
 ReactGA.initialize(TRACKING_ID)
 
 const App = () => {
