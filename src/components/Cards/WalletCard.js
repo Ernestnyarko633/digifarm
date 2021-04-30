@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Icon } from '@chakra-ui/react'
 import { Box, Flex, Grid, Heading, Link, Text } from '@chakra-ui/layout'
@@ -10,52 +10,79 @@ import Button from 'components/Button'
 import { Link as ReachRouter } from 'react-router-dom'
 import { HiLocationMarker } from 'react-icons/hi'
 import { FirstLettersToUpperCase } from 'helpers/misc'
-// import FarmImg from 'assets/images/farmimg.png'
-// import useFetch from 'hooks/useFetch'
-// import useApi from 'context/api'
-// import FetchCard from 'components/FetchCard/index'
+import useFetch from 'hooks/useFetch'
+import useApi from 'context/api'
+import FetchCard from 'components/FetchCard/index'
+import useWallet from 'context/wallet'
 
 const WalletCard = ({ acreage, price, farm }) => {
-  // const { getActivities } = useApi()
-  // const [imageUrl, setImageUrl] = useState(null)
-  // const [reload, setReload] = useState(0)
+  const [reload, setReload] = useState(0)
+  const { farmExpense } = useWallet()
+  const {
+    getAllTasks,
+    getActivities,
+    getMyScheduledTasks,
+    getMyFarmFeeds
+  } = useApi()
 
-  //trigger reload if fetch fails
-  // anyway this option would not be seen on the screen of the user on this page because it would be hidden by error checks
-  // const triggerReload = () => setReload(prev => prev + 1)
+  const triggerReload = () => setReload(prevState => prevState + 1)
 
-  // //fetch activities of this farm
-  // const { data, isLoading, error } = useFetch(
-  //   `${farm?.order?.product?._id}_activities`,
-  //   getActivities,
-  //   reload,
-  //   {
-  //     farm: farm?.order?.product?._id
-  //   }
-  // )
+  const {
+    data: myFarmActivities,
+    isLoading: myFarmActivitiesIsLoading,
+    error: myFarmActivitiesHasError
+  } = useFetch(
+    `${farm?.order?.product?._id}_activities`,
+    getActivities,
+    reload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
 
-  //lifecycle runs on mount and if farm and data changes
-  // useEffect(() => {
-  //   let mounted = true
-  //   if (data && mounted && farm) {
-  //     let activities = data
-  //     // get current activities being worked on
-  //     const startedActivities = activities.filter(
-  //       activity => activity?.status === Status.IN_PROGRESS
-  //     )
+  const {
+    data: tasks,
+    isLoading: tasksIsLoading,
+    error: tasksHasError
+  } = useFetch('tasks', getAllTasks, reload)
 
-  //     //set image
-  //     if (startedActivities.length) {
-  //       setImageUrl(startedActivities[0]?.imageUrl)
-  //     } else {
-  //       //set default
-  //       setImageUrl(farm?.order?.product?.cropVariety?.imageUrl)
-  //     }
-  //   }
-  //   return () => (mounted = false)
-  // }, [data, farm])
+  const {
+    data: ScheduledTasks,
+    isLoading: ScheduledTasksIsLoading,
+    error: ScheduledTasksHasError
+  } = useFetch(
+    `${farm?.order?.product?._id}_scheduled_tasks`,
+    getMyScheduledTasks,
+    reload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
 
-  //render this
+  const {
+    data: farmFeeds,
+    isLoading: farmFeedsIsLoading,
+    error: farmFeedsHasError
+  } = useFetch(
+    `${farm?.order?.product?._id}_farm_feeds`,
+    farm?.order?.product?._id ? getMyFarmFeeds : null,
+    reload,
+    {
+      farm: farm?.order?.product?._id
+    }
+  )
+
+  const loading =
+    ScheduledTasksIsLoading ||
+    tasksIsLoading ||
+    myFarmActivitiesIsLoading ||
+    farmFeedsIsLoading
+  const error =
+    ScheduledTasksHasError ||
+    tasksHasError ||
+    myFarmActivitiesHasError ||
+    farmFeedsHasError
+
   return (
     <Box
       rounded='xl'
@@ -110,25 +137,63 @@ const WalletCard = ({ acreage, price, farm }) => {
             </Flex>
           </Flex>
         </Flex>
-
-        <Grid gap={4}>
-          <ExpenditureCard
-            bg='yellow.light'
-            amount={getFormattedMoney(price * acreage)}
-            action='spent'
-            color='yellow.deep'
-          />
-          <ExpenditureCard
-            bg='cf.light'
-            action='available'
-            amount={getFormattedMoney(price * acreage)}
-          />
-        </Grid>
-
+        {error || loading ? (
+          <Box>
+            <FetchCard
+              direction='column'
+              align='center'
+              justify='center'
+              mx='auto'
+              reload={() => {
+                ;(!farm?.length ||
+                  !tasks?.length ||
+                  !myFarmActivities?.length ||
+                  !ScheduledTasks?.length) &&
+                  triggerReload()
+              }}
+              loading={loading}
+              error={error}
+              text='Standby as we load your wallet and receipts'
+            />
+          </Box>
+        ) : (
+          <Grid gap={4}>
+            <ExpenditureCard
+              bg='yellow.light'
+              amount={getFormattedMoney(
+                farmExpense(myFarmActivities, tasks, ScheduledTasks)
+              )}
+              action='spent'
+              color='yellow.deep'
+            />
+            <ExpenditureCard
+              bg='cf.light'
+              action='available'
+              amount={getFormattedMoney(price * acreage)}
+            />
+          </Grid>
+        )}
         <Box mt={4}>
           <Link
             as={ReachRouter}
-            to={`/wallets/${farm?._id}`}
+            to={{
+              pathname: `/wallets/${farm?._id}`,
+              state: {
+                farm: farm || {},
+                activities: myFarmActivities || [],
+                tasks: tasks || [],
+                farmfeeds: farmFeeds || [],
+                ScheduledTasks: ScheduledTasks || [],
+                wallet: getFormattedMoney(price * acreage),
+                balance: getFormattedMoney(
+                  price * acreage -
+                    farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                ),
+                expense: getFormattedMoney(
+                  farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                )
+              }
+            }}
             _hover={{ textDecor: 'none' }}
           >
             <Button
@@ -136,6 +201,7 @@ const WalletCard = ({ acreage, price, farm }) => {
               width='100%'
               h={12}
               fontSize={{ base: 'md', md: 'lg' }}
+              isDisabled={loading && !error}
             />
           </Link>
         </Box>

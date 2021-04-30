@@ -2,7 +2,11 @@ import React from 'react'
 import { Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 const FarmWalletEmptyState = ({ children, farms }) => {
-  return <Box w='100%'>{children}</Box>
+  return (
+    <Box w='100%' py={{ base: 10, md: 'auto' }}>
+      {children}
+    </Box>
+  )
 }
 
 FarmWalletEmptyState.propTypes = {
