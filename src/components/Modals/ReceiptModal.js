@@ -35,7 +35,7 @@ const ReceiptModal = ({ open, onClose, data }) => {
             </Flex>
           </Flex>
           <Flex align='center' justify='center' bg='cf.400'>
-            <Heading as='h6' py={{ md: 5 }}>
+            <Heading as='h6' py={{ md: 5 }} color='white'>
               [{data?.data?.task?.title}] Receipt
             </Heading>
           </Flex>
