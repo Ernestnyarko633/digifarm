@@ -91,13 +91,13 @@ export default function Document({
                 farm={digitalFarmerFarm}
               />
               <FarmReceiptCard
-                title='Invoice'
-                type='invoice'
+                title='Receipt'
+                type='receipt'
                 farm={digitalFarmerFarm}
               />
               <FarmReceiptCard
-                title='Receipt'
-                type='receipt'
+                title='Invoice'
+                type='invoice'
                 farm={digitalFarmerFarm}
               />
             </React.Fragment>
