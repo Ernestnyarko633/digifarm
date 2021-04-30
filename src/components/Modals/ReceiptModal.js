@@ -96,8 +96,8 @@ const ReceiptModal = ({ open, onClose, data }) => {
           <Flex align='center' justify='space-between' bg='cf.400' w='100%'>
             <Flex w='50%' py={{ md: 5 }} pl={{ md: 5 }}>
               <Text color='white'>
-                19 Banana Street, Ambassadorial <br />
-                Enclave, Eat Legon-Accra, <br />
+                No. 3, Abeasi Street <br />
+                East Legon-Accra, <br />
                 Ghana
               </Text>
             </Flex>
