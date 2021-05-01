@@ -1,74 +1,17 @@
-/* eslint-disable */
-import React from 'react';
-import { Box, Grid, Flex, Image, Heading, Text, Icon } from '@chakra-ui/react';
-import Stack from '../../assets/images/finance.svg';
-import Money from '../../assets/images/money.svg';
-import Button from 'components/Button';
-import PropTypes from 'prop-types';
-import Graph from 'components/Utils/Graph';
-import { FaCircle } from 'react-icons/fa';
-import useComponent from 'context/component';
-import {Status} from 'helpers/misc'
+import React from 'react'
+import { Box, Grid, Flex, Image, Heading, Text, Icon } from '@chakra-ui/react'
+import Stack from '../../assets/images/finance.svg'
+import Money from '../../assets/images/money.svg'
+import Button from 'components/Button'
+import PropTypes from 'prop-types'
+import Graph from 'components/Utils/Graph'
+import { FaCircle } from 'react-icons/fa'
+import useComponent from 'context/component'
+import useWallet from 'context/wallet'
 
-const FarmFinances = ({
-  activities,
-  tasks,
-  scheduledTasks,
-  farm,
-  setExpenses,
-}) => {
-  const { handleModalClick } = useComponent();
-
-  const totalAmount = React.useCallback(
-    (__activity, index) => {
-      let totalAmount = 0;
-      let tempTasks = tasks?.filter(
-        (_task) => _task.activity === __activity._id
-      );
-      if (tempTasks) {
-        tempTasks.forEach((_task) => {
-          totalAmount = totalAmount + _task?.budget;
-        });
-      }
-      if (scheduledTasks) {
-        let currentExpense = 0;
-        let _tasks = scheduledTasks.filter(
-          (completedTask) =>
-            __activity._id === completedTask?.task?.activity &&
-            completedTask.status === Status.COMPLETED
-        );
-
-        if (_tasks) {
-          _tasks.forEach((_task) => {
-            currentExpense = currentExpense + _task?.task?.budget;
-          });
-        }
-
-        return {
-          total: currentExpense ? currentExpense : totalAmount,
-          state: currentExpense ? true : false,
-        };
-      }
-    },
-    [scheduledTasks, tasks]
-  );
-
-  React.useEffect(() => {
-    let totalExpense = 0;
-    const process = (value) =>
-      value?.forEach((val) => {
-        const bool = totalAmount(val)?.state;
-
-        if (bool) {
-          totalExpense = totalExpense + totalAmount(val)?.total;
-        }
-      });
-    if (activities) {
-      process(activities);
-    }
-
-    setExpenses(totalExpense);
-  }, [activities, setExpenses, totalAmount]);
+const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
+  const { handleModalClick } = useComponent()
+  const { totalAmount } = useWallet()
 
   return (
     <Box
@@ -84,7 +27,7 @@ const FarmFinances = ({
       <Grid
         templateColumns={{
           md: '50% 50%',
-          xl: '60% 40%',
+          xl: '60% 40%'
         }}
         width='100%'
       >
@@ -185,9 +128,9 @@ const FarmFinances = ({
                   >
                     <Text
                       color={{
-                        md: totalAmount(_activity, index)?.state
+                        md: totalAmount(_activity, tasks, scheduledTasks)?.state
                           ? 'gray.500'
-                          : 'gray.200',
+                          : 'gray.200'
                       }}
                       fontSize='sm'
                     >
@@ -196,15 +139,15 @@ const FarmFinances = ({
                     <Heading
                       fontSize='lg'
                       color={{
-                        md: totalAmount(_activity, index)?.state
+                        md: totalAmount(_activity, tasks, scheduledTasks)?.state
                           ? null
-                          : 'gray.200',
+                          : 'gray.200'
                       }}
                     >
-                      {totalAmount(_activity, index)?.total}
+                      {totalAmount(_activity, tasks, scheduledTasks)?.total}
                     </Heading>
                   </Flex>
-                );
+                )
               })}
             </Flex>
 
@@ -227,7 +170,7 @@ const FarmFinances = ({
                 fontSize={{ base: 'sm', xl: 'md' }}
                 mr={{ md: 5 }}
                 onClick={() => {
-                  handleModalClick('rollover');
+                  handleModalClick('rollover')
                 }}
               />
               <Button
@@ -242,7 +185,7 @@ const FarmFinances = ({
                 h={50}
                 fontSize={{ base: 'sm', xl: 'md' }}
                 onClick={() => {
-                  handleModalClick('payout');
+                  handleModalClick('payout')
                 }}
               />
             </Flex>
@@ -250,14 +193,13 @@ const FarmFinances = ({
         </Flex>
       </Grid>
     </Box>
-  );
-};
+  )
+}
 
 FarmFinances.propTypes = {
   activities: PropTypes.array.isRequired,
   tasks: PropTypes.array.isRequired,
   scheduledTasks: PropTypes.array.isRequired,
-  farm: PropTypes.object.isRequired,
-  setExpenses: PropTypes.func.isRequired,
-};
-export default FarmFinances;
+  farm: PropTypes.object.isRequired
+}
+export default FarmFinances

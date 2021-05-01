@@ -1,18 +1,9 @@
 import React from 'react'
 import { Box } from '@chakra-ui/react'
-import Greetings from 'components/Utils/Greetings'
-import useAuth from 'context/auth'
 import PropTypes from 'prop-types'
 const FarmWalletEmptyState = ({ children, farms }) => {
-  const { isAuthenticated } = useAuth()
-  const { user } = isAuthenticated()
-
   return (
-    <Box w='100%'>
-      <Greetings
-        title={`Welcome </br> Farmer ${user?.firstName} `}
-        text={`Total farms <br/> ${farms?.length}`}
-      />
+    <Box w='100%' py={{ base: 10, md: 'auto' }}>
       {children}
     </Box>
   )

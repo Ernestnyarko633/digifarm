@@ -84,15 +84,23 @@ export default function Document({
           overflowY={{ md: 'scroll' }}
         >
           <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
-            {digitalFarmerFarm?.order?.status === 'PAID' && (
-              <React.Fragment>
-                <FarmReceiptCard
-                  title='Agreement'
-                  type='agreement'
-                  farm={digitalFarmerFarm}
-                />
-              </React.Fragment>
-            )}
+            <React.Fragment>
+              <FarmReceiptCard
+                title='Agreement'
+                type='agreement'
+                farm={digitalFarmerFarm}
+              />
+              <FarmReceiptCard
+                title='Receipt'
+                type='receipt'
+                farm={digitalFarmerFarm}
+              />
+              <FarmReceiptCard
+                title='Invoice'
+                type='invoice'
+                farm={digitalFarmerFarm}
+              />
+            </React.Fragment>
           </Grid>
         </Box>
       </GridItem>

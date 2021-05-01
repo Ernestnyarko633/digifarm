@@ -59,17 +59,18 @@ const FarmWallet = () => {
             <Heading
               textAlign='center'
               fontSize={{ base: '2xl' }}
-              mb={2}
+              mb={10}
             >
-              Your Farm(s) Wallet
+              Your Farm Wallet(s)
             </Heading>
            
             <Grid
               templateColumns={{
                 base: 'repeat(1, 1fr)',
                 lg: 'repeat(2, 1fr)',
+                xl: 'repeat(2, 1fr)',
+                "2xl": 'repeat(3, 1fr)'
               }}
-              w='100%'
               gap={{ base: 3, md: 4 }}
               mb={{ base: 10, md: 0 }}
             >
@@ -77,12 +78,13 @@ const FarmWallet = () => {
                 return (
                   <>               
                     <WalletCard
-                    key={mapKey(index)}
+                      key={mapKey(index)}
                       farm={farm}
                       acreage={farm?.order?.acreage}
                       name={farm?.name}
                       price={farm?.order?.cost}
                     />
+                    
                  </>
                 );
               })}
