@@ -19,6 +19,7 @@ const Wallet = lazy(() => import('./wallet'))
 const Payment = lazy(() => import('./start-farm/payment'))
 const PaymentPaystack = lazy(() => import('./start-farm/payment-paystack'))
 const Banner = lazy(() => import('./banner'))
+const Downloads = lazy(() => import('./downloads'))
 
 const Pages = {
   Auth,
@@ -39,7 +40,8 @@ const Pages = {
   Guide,
   Banner,
   Wallet,
-  PaymentPaystack
+  PaymentPaystack,
+  Downloads
   // Receipt
 }
 
