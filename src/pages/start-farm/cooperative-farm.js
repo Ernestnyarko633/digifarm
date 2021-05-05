@@ -1,9 +1,10 @@
 import React from 'react'
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 
 import useStartFarm from 'context/start-farm'
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import OtherSteps from 'components/StartFarmProcess/OtherSteps'
+import Header from '../../container/Header'
 
 const CooperativeFarm = () => {
   document.title = 'Complete Farmer | Cooperative'
@@ -23,25 +24,7 @@ const CooperativeFarm = () => {
 
   return (
     <Box>
-      <Flex
-        align='center'
-        w='100vw'
-        h={{ md: 20 }}
-        bgColor='white'
-        pos='fixed'
-        top={0}
-        bg='white'
-        shadow='md'
-        px={{ md: 20 }}
-      >
-        <Box h={{ md: 12 }}>
-          <Image
-            h='100%'
-            src={require('../../assets/images/logo.png').default}
-          />
-        </Box>
-      </Flex>
-
+      <Header />
       {getContent(step)}
     </Box>
   )
