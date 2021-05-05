@@ -1,29 +1,28 @@
+/* eslint-disable */
 import {
   Box,
   Flex,
   Heading,
   Icon,
   Image,
-  Link,
   List,
+  ListIcon,
   ListItem,
   Text
 } from '@chakra-ui/react'
-import { Link as ReachRouter } from 'react-router-dom'
 import { MdKeyboardArrowRight } from 'react-icons/md'
+import { FaCheckCircle } from 'react-icons/fa'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'components'
 import useComponent from 'context/component'
 
 const FarmingTypeCard = ({
-  btntitle,
   subtitle,
   options,
   image,
   title,
-  state,
-  path,
+  selected,
+  onClick,
   mr
 }) => {
   const { handleModalClick } = useComponent()
@@ -33,28 +32,28 @@ const FarmingTypeCard = ({
       <Box
         w={{ md: 85 }}
         p={8}
-        borderWidth={1}
-        borderColor='gray.300'
+        borderWidth={selected ? 2 : 1}
+        borderColor={selected ? 'cf.400' : 'gray.300'}
         rounded='lg'
         textAlign='left'
         mr={mr}
         mb={{ base: 6, md: 0 }}
-        opacity={state.id === 'cooperative' ? { md: 0.5 } : null}
+        onClick={onClick}
       >
-        {state.id === 'cooperative' && (
-          <Heading fontSize='2xl' color='cf.400'>
-            Coming Soon
-          </Heading>
-        )}
+        {/*{state.id === 'cooperative' && (*/}
+        {/*  <Heading fontSize='2xl' color='cf.400'>*/}
+        {/*    Coming Soon*/}
+        {/*  </Heading>*/}
+        {/*)}*/}
         <Box mb={3}>
           <Image src={image} />
         </Box>
-        <Flex align='center' justify='space-between'>
+        <Flex align='center' justify='space-between' borderBottomWidth={1} borderBottomColor="gray.200" pb={2}>
           <Box>
-            <Heading as='h5' fontSize={{ md: 'lg' }}>
+            <Heading as='h5' fontSize={{ md: 'xl' }}>
               {title}
             </Heading>
-            <Text fontSize='xs' mt={-2}>
+            <Text fontSize='sm' mt={-1} color="gray.500">
               {subtitle}
             </Text>
           </Box>
@@ -62,18 +61,12 @@ const FarmingTypeCard = ({
         <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
           {options.map(item => (
             <ListItem key={item} py={1}>
+              <ListIcon as={FaCheckCircle} color='cf.400' />
               {item}
             </ListItem>
           ))}
         </List>
         <Box>
-          <Link
-            as={ReachRouter}
-            to={state.id === 'cooperative' ? '#' : { pathname: path, state }}
-            _hover={{ textDecor: 'none' }}
-          >
-            <Button btntitle={btntitle} />
-          </Link>
           <Box
             d='block'
             fontSize='xs'
@@ -101,7 +94,9 @@ FarmingTypeCard.propTypes = {
   subtitle: PropTypes.string,
   options: PropTypes.array,
   state: PropTypes.object,
-  mr: PropTypes.any
+  mr: PropTypes.any,
+  selected: PropTypes.bool,
+  onClick: PropTypes.func
 }
 
 export default FarmingTypeCard

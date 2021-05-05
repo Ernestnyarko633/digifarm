@@ -1,15 +1,21 @@
+/* eslint-disable */
 import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import {Link} from "@chakra-ui/layout";
+import { Link as ReachRouter } from 'react-router-dom'
 
 import Header from 'container/Header'
 import FarmingTypeCard from 'components/Cards/FarmingTypeCard'
 
 import useAuth from 'context/auth'
 // json
-import types from '../../data/farm.json'
+import types from 'data/farm.json'
+import { Button } from 'components'
+
 
 const StartFarm = () => {
   const { isAuthenticated } = useAuth()
+  const [selected, setSelected] = React.useState('')
 
   const { user } = isAuthenticated()
 
@@ -52,9 +58,17 @@ const StartFarm = () => {
               image={
                 require(`../../assets/images/startfarm/${item.img}`).default
               }
+              selected={selected.name === item.name}
+              onClick={() => setSelected(item)}
             />
           ))}
         </Flex>
+
+        <Box mt={10}>
+          <Link as={ReachRouter} to={{ pathname:`/start-farm/${selected.id}`, selected }} _hover={{ textDecor: 'none' }}>
+            <Button btntitle='Continue' px={{base: 10, md: 20}} h={{base: 10, md: 12}} fontSize={{base: 'sm', md: 'md'}} disabled={!selected} />
+          </Link>
+        </Box>
       </Flex>
     </>
   )

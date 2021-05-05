@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 
 const Cooperative = lazy(() => import('./start-farm/cooperative'))
+const CooperativeFarm = lazy(() => import('./start-farm/cooperative-farm'))
 const Individual = lazy(() => import('./start-farm/individual'))
 const StartFarm = lazy(() => import('./start-farm/index'))
 const Marketplace = lazy(() => import('./market-place'))
@@ -39,7 +40,8 @@ const Pages = {
   Guide,
   Banner,
   Wallet,
-  PaymentPaystack
+  PaymentPaystack,
+  CooperativeFarm
   // Receipt
 }
 
