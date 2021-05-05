@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 
 const Cooperative = lazy(() => import('./start-farm/cooperative'))
+const CooperativeFarm = lazy(() => import('./start-farm/cooperative-farm'))
 const Individual = lazy(() => import('./start-farm/individual'))
 const StartFarm = lazy(() => import('./start-farm/index'))
 const Marketplace = lazy(() => import('./market-place'))
@@ -19,7 +20,6 @@ const Wallet = lazy(() => import('./wallet'))
 const Payment = lazy(() => import('./start-farm/payment'))
 const PaymentPaystack = lazy(() => import('./start-farm/payment-paystack'))
 const Banner = lazy(() => import('./banner'))
-const Downloads = lazy(() => import('./downloads'))
 
 const Pages = {
   Auth,
@@ -41,7 +41,7 @@ const Pages = {
   Banner,
   Wallet,
   PaymentPaystack,
-  Downloads
+  CooperativeFarm
   // Receipt
 }
 
