@@ -1,14 +1,13 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import TagManager from 'react-gtm-module'
-
 import { StartFarmContextProvider } from 'context/start-farm'
 import { ComponentContextProvider } from 'context/component'
 import { ExternalContextProvider } from 'context/external'
 import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
 import { ApiContextProvider } from 'context/api'
-
+import { WalletContextProvider } from 'context/wallet'
 import Router from 'routes/register'
 
 const tagManagerArgs = {
@@ -28,7 +27,9 @@ const App = () => {
             <AuthContextProvider>
               <StartFarmContextProvider>
                 <ModalContextProvider>
-                  <Router />
+                  <WalletContextProvider>
+                    <Router />
+                  </WalletContextProvider>
                 </ModalContextProvider>
               </StartFarmContextProvider>
             </AuthContextProvider>

@@ -14,6 +14,7 @@ const Router = () => {
         <Redirect exact from='/' to='/auth' />
         <Route path='/auth/:token' component={Pages.Auth} />
         <Route path='/auth' component={Pages.Auth} />
+        <PrivateRoute path='/downloads' component={Pages.Downloads} />
         <PrivateRoute path='/logout' component={Pages.Logout} />
         <PrivateRoute exact path='/dashboard' component={Pages.Dashboard} />
         <PrivateRoute exact path='/start-farm' component={Pages.StartFarm} />

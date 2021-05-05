@@ -7,18 +7,51 @@ import {
   List,
   ListItem,
   Tag,
-  Text
+  Text,
+  useToast
 } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React from 'react'
 import PropTypes from 'prop-types'
 import useStartFarm from 'context/start-farm'
 import { Status } from 'helpers/misc'
+import { saveAs } from 'file-saver'
+import useApi from 'context/api'
 
 const OrderCard = ({ order, onOpen }) => {
   const { PENDING } = Status
   const { setOrder } = useStartFarm()
+  const [loading, setLoading] = React.useState(false)
+  const toast = useToast()
+  const { downloadFile } = useApi()
 
+  const _downloadOrder = async query => {
+    try {
+      setLoading(true)
+      const res = await downloadFile('orders', query)
+      let blob = new Blob([res.data], {
+        type: 'application/pdf;charset=utf-8'
+      })
+      toast({
+        title: 'Download starting',
+        status: 'success',
+        duration: 5000,
+        position: 'top-right'
+      })
+      saveAs(blob, `${query.reference}-agreement.pdf`)
+    } catch (error) {
+      toast({
+        title: 'Download failed',
+        description:
+          error?.message || error?.data?.message || 'Unexpected error.',
+        status: 'error',
+        duration: 5000,
+        position: 'top-right'
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
     <Box
       bg='white'
@@ -105,6 +138,28 @@ const OrderCard = ({ order, onOpen }) => {
             onClick={() => {
               setOrder(order)
               onOpen()
+            }}
+          />
+        </Box>
+      )}
+
+      {order.status === PENDING && (
+        <Box mt={6} w='90%' mx='auto'>
+          <Button
+            btntitle='Download invoice'
+            rounded='30px'
+            colorScheme='none'
+            color='cf.400'
+            w='100%'
+            isLoading={loading}
+            isDisabled={loading}
+            h={{ base: 8 }}
+            fontSize={{ md: 'lg' }}
+            onClick={() => {
+              return _downloadOrder({
+                reference: order?.reference,
+                type: 'invoice'
+              })
             }}
           />
         </Box>

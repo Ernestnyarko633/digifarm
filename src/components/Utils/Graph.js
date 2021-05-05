@@ -26,7 +26,9 @@ export default function Graph({
       activities.forEach(activity => {
         array.push({
           name: activity?.title,
-          amount: totalAmount(activity).state ? totalAmount(activity).total : 0
+          amount: totalAmount(activity, tasks, scheduledTasks).state
+            ? totalAmount(activity, tasks, scheduledTasks).total
+            : 0
         })
       })
     }
