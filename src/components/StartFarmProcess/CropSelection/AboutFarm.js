@@ -18,7 +18,10 @@ import ImageLoader from 'components/ImageLoader'
 const AboutFarm = ({ farm }) => {
   return (
     <Box textAlign='left' css={{ direction: 'ltr' }}>
-      <Flex justifyContent='space-between'>
+      <Flex
+        justifyContent={{ md: 'space-between' }}
+        direction={{ base: 'column', md: 'row' }}
+      >
         <Box>
           <Flex alignItems='center'>
             <Heading as='h5' size='md' textTransform='uppercase'>
@@ -35,7 +38,7 @@ const AboutFarm = ({ farm }) => {
             <Icon as={BsInfoCircleFill} color='cf.400' mx={2} />
           </Text>
         </Box>
-        <Box>
+        <Box mt={{ base: 2, md: 0 }}>
           <Heading as='h5' size='md'>
             ${farm.pricePerAcre}/acre
           </Heading>

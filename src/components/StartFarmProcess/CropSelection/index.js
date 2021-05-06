@@ -32,9 +32,9 @@ const CropSelection = () => {
   }
 
   return (
-    <Box w='90%' mx='auto'>
+    <Box w='90%' mx='auto' mt={{ base: 20, md: 0 }}>
       <Box textAlign='center' py={10}>
-        <Heading as='h4' size='xl'>
+        <Heading as='h4' size={{ base: 'lg', md: 'xl' }}>
           Which Farm is right for you.
         </Heading>
       </Box>
