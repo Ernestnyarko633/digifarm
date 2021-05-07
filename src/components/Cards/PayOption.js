@@ -1,5 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+/* eslint-disable */
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Flex,
   Text,
@@ -8,13 +9,16 @@ import {
   Box,
   useDisclosure,
   Collapse,
-  Icon
-} from '@chakra-ui/react'
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import BankDetails from './BankDetails'
+  Icon,
+} from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import BankDetails from './BankDetails';
+import { FaCheckCircle } from 'react-icons/fa';
 
 const PayOption = ({
-  icon,
+  leftImage,
+  rightImage,
+  height,
   title,
   theme,
   notice,
@@ -22,15 +26,15 @@ const PayOption = ({
   selected,
   dropDown,
   extraCharge,
-  description
+  description,
 }) => {
-  const { isOpen, onToggle } = useDisclosure()
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Flex
       m={4}
-      py={6}
-      px={10}
+      py={4}
+      px={8}
       w={{ md: 108 }}
       as='button'
       rounded='md'
@@ -39,39 +43,80 @@ const PayOption = ({
       onClick={onClick}
       direction='column'
       borderWidth={selected ? 2 : 1}
-      borderColor={selected ? 'cf.400' : 'gray.400'}
-      _focus={{ outline: 'none', borderColor: 'cf.400' }}
+      borderColor={selected ? 'cf.800' : 'gray.400'}
+      _focus={{ outline: 'none', borderColor: 'cf.800' }}
+      pos='relative'
     >
-      <Flex align='center' justify={{ base: 'space-between', md: 'initial' }}>
-        <Image src={icon} alt='Card Image' />
-        <Text fontSize='lg' fontWeight={500} ml={4} fontFamily='body'>
+      <Box pos='absolute' top={2} right={2}>
+        {selected ? (
+          <Icon as={FaCheckCircle} color='cf.800' boxSize={4} />
+        ) : (
+          <Box
+            borderWidth={1}
+            borderColor='gray.200'
+            rounded='100%'
+            w={4}
+            h={4}
+          />
+        )}
+      </Box>
+
+      <Flex
+        align='center'
+        justify='space-between'
+        borderBottomWidth={1}
+        borderBottomColor='gray.200'
+        pb={3}
+      >
+        <Text fontSize='lg' fontWeight={700} fontFamily='heading'>
           {title}
         </Text>
+
+        <Flex align='center' h={height}>
+          <Image
+            h='100%'
+            mr={2}
+            src={require(`../../assets/images/${leftImage}.png`).default}
+            alt='Card Image'
+          />
+          <Image
+            h='100%'
+            src={require(`../../assets/images/${rightImage}.png`).default}
+            alt='Card Image'
+          />
+        </Flex>
       </Flex>
-      <Box borderWidth={1} borderColor='gray.100' w={{ md: '80%' }} mt={2} />
-      <Flex direction='column'>
-        <Heading as='h6' fontSize='sm'>
+      <Flex direction='column' mt={2}>
+        <Heading as='h6' fontSize='md' mb={1}>
           {theme}
         </Heading>
-        <Text w={{ md: 72 }} fontSize='sm' fontWeight={500} fontFamily='body'>
-          {description}
-        </Text>
-        <Text mt={4} fontSize='sm' fontWeight={500} fontFamily='body'>
-          {notice}{' '}
-          <Text as='span' color='cf.400' fontFamily='body'>
-            {extraCharge}
+        <Box color='gray.500' fontSize='sm'>
+          <Text>{description}</Text>
+          <Text mt={4}>
+            {notice}{' '}
+            <Text as='span' color='cf.800'>
+              {extraCharge}
+            </Text>
           </Text>
-        </Text>
+        </Box>
       </Flex>
       {dropDown && (
         <>
-          <Flex align='center' onClick={onToggle} _focus={{ outline: 'none' }}>
-            <Heading as='h6' fontSize='sm' color='cf.400' mr={1}>
+          <Flex
+            align='center'
+            onClick={onToggle}
+            _focus={{ outline: 'none' }}
+            borderTopWidth={1}
+            borderTopColor='gray.200'
+            pt={2}
+            mt={2}
+          >
+            <Heading as='h6' fontSize='sm' color='cf.800' mr={1}>
               View bank details
             </Heading>
             <Icon
               as={isOpen ? ChevronUpIcon : ChevronDownIcon}
-              color='cf.400'
+              color='cf.800'
               boxSize={6}
             />
           </Flex>
@@ -81,19 +126,21 @@ const PayOption = ({
         </>
       )}
     </Flex>
-  )
-}
+  );
+};
 
 PayOption.propTypes = {
   dropDown: PropTypes.bool,
   extraCharge: PropTypes.any,
   theme: PropTypes.any.isRequired,
-  icon: PropTypes.string.isRequired,
+  height: PropTypes.any,
+  leftImage: PropTypes.string.isRequired,
+  rightImage: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   notice: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired
-}
+  description: PropTypes.string.isRequired,
+};
 
-export default PayOption
+export default PayOption;

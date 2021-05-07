@@ -156,8 +156,8 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
                 btntitle='Rollover'
                 bg='white'
                 borderWidth={1}
-                borderColor='cf.400'
-                color='cf.400'
+                borderColor='cf.800'
+                color='cf.800'
                 rounded='30px'
                 isDisabled={true}
                 mx={{ base: 3, md: 0 }}
@@ -175,7 +175,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
               />
               <Button
                 btntitle='Payout'
-                borderColor='cf.400'
+                borderColor='cf.800'
                 color='white'
                 rounded='30px'
                 isDisabled={true}

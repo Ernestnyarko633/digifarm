@@ -17,9 +17,9 @@ const Tab = ({ activeTab, label, onClick }) => {
       mr={10}
       cursor='pointer'
       onClick={handleClick}
-      bg={activeTab === label ? 'cf.400' : 'white'}
+      bg={activeTab === label ? 'cf.800' : 'white'}
       borderWidth={1}
-      borderColor={activeTab === label ? 'cf.400' : 'gray.400'}
+      borderColor={activeTab === label ? 'cf.800' : 'gray.400'}
       borderBottomWidth={activeTab === label ? 3 : 1}
       borderBottomColor={activeTab === label ? 'brand.dark' : ''}
       color={activeTab === label ? 'white' : 'gray.700'}

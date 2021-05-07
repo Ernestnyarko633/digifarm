@@ -36,7 +36,7 @@ const RolloverModal = () => {
           </Text>
           <Button
             btntitle='Rollover'
-            borderColor='cf.400'
+            borderColor='cf.800'
             color='white'
             rounded='30px'
             mt={5}

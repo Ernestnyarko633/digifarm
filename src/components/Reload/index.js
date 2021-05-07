@@ -18,7 +18,7 @@ const ReloadPage = () => {
         justify='center'
         direction='column'
       >
-        <Text fontSize='md' ml={2} color='cf.400'>
+        <Text fontSize='md' ml={2} color='cf.800'>
           Something went wrong
         </Text>
 

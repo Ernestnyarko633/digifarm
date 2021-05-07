@@ -19,7 +19,7 @@ const NewsCard = ({ activeFarm, timestamp, content, status }) => {
 
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
-          <Text color='cf.400'>
+          <Text color='cf.800'>
             {status === 'news' ? status.toUpperCase() : null}
           </Text>
         </Box>
@@ -65,7 +65,7 @@ const NewsCard = ({ activeFarm, timestamp, content, status }) => {
               ))}
             </Collapse>
             <Box as='button' onClick={handleToggle}>
-              <Text color='cf.400' py={{ base: 1 }}>
+              <Text color='cf.800' py={{ base: 1 }}>
                 {!show ? 'Read More' : 'Collapse'}
               </Text>
             </Box>

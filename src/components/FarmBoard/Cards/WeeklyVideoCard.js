@@ -52,7 +52,7 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
 
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
-          <Text color='cf.400'>{status ? 'VIDEOS' : null}</Text>
+          <Text color='cf.800'>{status ? 'VIDEOS' : null}</Text>
         </Box>
         <Text color='gray.500'>{timestamp}</Text>
       </Flex>
@@ -93,7 +93,7 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
               h={10}
               rounded='100%'
               _hover={{
-                background: 'cf.400',
+                background: 'cf.800',
                 color: 'white'
               }}
               color='white'
@@ -122,7 +122,7 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
               w={10}
               h={10}
               _hover={{
-                background: 'cf.400',
+                background: 'cf.800',
                 color: 'white'
               }}
               rounded='100%'

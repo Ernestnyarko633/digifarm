@@ -29,15 +29,15 @@ const Contract = ({ intersectionRef }) => {
 
   const headerStyleProps = {
     as: 'h3',
-    size: 'lg',
-    color: 'cf.400',
+    fontSize: { base: 'lg', md: 'xl' },
+    color: 'cf.800',
     mt: 5
   }
 
   const textStyleProps = {
     textAlign: 'justify',
-    lineHeight: { base: '35px', md: '40px' },
-    fontSize: { base: 'sm', md: 'xl' }
+    lineHeight: { base: '30px', md: '35px' },
+    fontSize: { base: 'sm', md: 'md' }
   }
 
   return (

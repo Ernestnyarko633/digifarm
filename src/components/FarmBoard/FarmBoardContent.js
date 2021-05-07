@@ -220,7 +220,7 @@ const FarmBoardContent = ({ farms }) => {
             </Heading>
             {!isNotEmpty(filter, cleanedFeeds)?.farm && filter === 'combined' && (
               <Flex w='100%' align='center' justify='center'>
-                <Text color='cf.400' fontSize={{ base: 'md' }}>
+                <Text color='cf.800' fontSize={{ base: 'md' }}>
                   Opps, Feeds unavailable currently
                 </Text>
               </Flex>
@@ -228,7 +228,7 @@ const FarmBoardContent = ({ farms }) => {
             {!isNotEmpty(filter, cleanedFeeds)?.videos &&
               filter === 'weekly videos' && (
                 <Flex w='100%' align='center' justify='center'>
-                  <Text color='cf.400' fontSize={{ base: 'md' }}>
+                  <Text color='cf.800' fontSize={{ base: 'md' }}>
                     Opps, Videos unavailable currently
                   </Text>
                 </Flex>
@@ -236,7 +236,7 @@ const FarmBoardContent = ({ farms }) => {
 
             {!isNotEmpty(filter, cleanedFeeds)?.news && filter === 'news' && (
               <Flex w='100%' align='center' justify='center'>
-                <Text color='cf.400' fontSize={{ base: 'md' }}>
+                <Text color='cf.800' fontSize={{ base: 'md' }}>
                   Opps, News unavailable currently
                 </Text>
               </Flex>

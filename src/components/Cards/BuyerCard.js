@@ -74,7 +74,7 @@ const BuyerCard = ({ buyers, myfarm }) => {
             mt={1}
             borderWidth={1}
             color='white'
-            borderColor='cf.400'
+            borderColor='cf.800'
             px={10}
             onClick={onOpenx}
           >
@@ -178,7 +178,7 @@ const BuyerCard = ({ buyers, myfarm }) => {
         <Center>
           <Button
             pt={4}
-            color='cf.400'
+            color='cf.800'
             size='16px'
             pb={-8}
             isDisabled='true'

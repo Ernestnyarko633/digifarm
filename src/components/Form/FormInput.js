@@ -37,7 +37,7 @@ const FormInput = ({
       borderWidth={1}
       borderColor='gray.100'
       borderBottomColor={
-        error && touched ? 'red.500' : borderBottomColor || 'cf.400'
+        error && touched ? 'red.500' : borderBottomColor || 'cf.800'
       }
       w={w}
       h={h}

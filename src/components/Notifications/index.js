@@ -25,7 +25,7 @@ const Notification = ({ amtBought, name }) => (
           </Heading>
           <Tag
             as='tag'
-            color='cf.400'
+            color='cf.800'
             fontSize='10px'
             bg='cf.200'
             borderRadius='none'

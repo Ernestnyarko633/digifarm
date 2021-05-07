@@ -164,7 +164,7 @@ export default function FarmDocumentCard({
               </Box>
               <Flex w='25%'>
                 <Button
-                  color='cf.400'
+                  color='cf.800'
                   onError={() => error}
                   onClick={() => _downloadPDF(_key)}
                   isLoading={loading}
@@ -179,7 +179,7 @@ export default function FarmDocumentCard({
                   <Button
                     bg='white'
                     _hover={{ backgroundColor: 'white' }}
-                    color='cf.400'
+                    color='cf.800'
                     onClick={() => {
                       setSelectedTask(_key)
                       onOpen('viewdocuments')

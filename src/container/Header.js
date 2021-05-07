@@ -50,7 +50,7 @@ const Header = () => {
       <Link as={ReachRouter} to='/dashboard' _hover={{ textDecor: 'none' }}>
         <Box as='picture'>
           <Image
-            h={{ md: 10 }}
+            h={{ base: 8, md: 10 }}
             src={Logo1}
             srcSet={`${Logo1} 300w, ${Logo2} 768w, ${Logo3} 1280w`}
           />
@@ -140,7 +140,7 @@ const Header = () => {
                               _hover={{
                                 textDecor: 'none',
                               }}
-                              bg={active && 'cf.400'}
+                              bg={active && 'cf.800'}
                               color={active && 'white'}
                               d='block'
                               href={item.link}

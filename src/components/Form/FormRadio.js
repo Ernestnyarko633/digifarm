@@ -49,7 +49,7 @@ const FormRadio = ({ state, onChange, icon, title, options, width }) => {
                 _active={{ bg: 'trannsparent' }}
                 _hover={{ bg: 'trannsparent' }}
               >
-                <Icon as={InfoIcon} color='cf.400' />
+                <Icon as={InfoIcon} color='cf.800' />
               </Button>
             </PopoverTrigger>
             <PopoverContent>

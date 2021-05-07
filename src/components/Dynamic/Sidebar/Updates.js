@@ -56,7 +56,7 @@ export default function Updates({
               <Text
                 w='100%'
                 fontSize='xl'
-                color='cf.400'
+                color='cf.800'
                 textAlign={{ base: 'center', md: 'initial' }}
               >
                 No updates currently available.

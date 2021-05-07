@@ -6,7 +6,7 @@ const BankDetails = () => (
     as='table'
     p='40px'
     mt='4'
-    bg='cf.300'
+    bg='cf.200'
     rounded='md'
     shadow='md'
     fontSize='sm'
@@ -20,10 +20,10 @@ const BankDetails = () => (
           w={{ md: 80 }}
           p={{ md: 4 }}
         >
-          <Text color='gray.400' w={{ md: 40 }}>
+          <Text color='gray.600' w={{ md: 40 }}>
             Bank:
           </Text>
-          <Text fontWeight={500} textAlign='left' w={{ md: 72 }}>
+          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
             ABSA Bank Ghana
           </Text>
         </Flex>
@@ -36,10 +36,10 @@ const BankDetails = () => (
           w={{ md: 80 }}
           p={{ md: 4 }}
         >
-          <Text color='gray.400' w={{ md: 40 }}>
+          <Text color='gray.600' w={{ md: 40 }}>
             Branch:
           </Text>
-          <Text fontWeight={500} textAlign='left' w={{ md: 72 }}>
+          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
             High Street
           </Text>
         </Flex>
@@ -52,10 +52,10 @@ const BankDetails = () => (
           w={{ md: 80 }}
           p={{ md: 4 }}
         >
-          <Text color='gray.400' w={{ md: 40 }}>
+          <Text color='gray.600' w={{ md: 40 }}>
             Account no:
           </Text>
-          <Text fontWeight={500} textAlign='left' w={{ md: 72 }}>
+          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
             0641409553 - USD
           </Text>
         </Flex>
@@ -68,10 +68,10 @@ const BankDetails = () => (
           w={{ md: 80 }}
           p={{ md: 4 }}
         >
-          <Text color='gray.400' w={{ md: 40 }}>
+          <Text color='gray.600' w={{ md: 40 }}>
             Swift code:
           </Text>
-          <Text fontWeight={500} textAlign='left' w={{ md: 72 }}>
+          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
             BARCGHAC
           </Text>
         </Flex>
@@ -84,10 +84,10 @@ const BankDetails = () => (
           w={{ md: 80 }}
           p={{ md: 4 }}
         >
-          <Text color='gray.400' w={{ md: 40 }}>
+          <Text color='gray.600' w={{ md: 40 }}>
             Account name:
           </Text>
-          <Text fontWeight={500} textAlign='left' w={{ md: 72 }}>
+          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
             Complete Farmer Limited
           </Text>
         </Flex>
