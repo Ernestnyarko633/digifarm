@@ -73,7 +73,8 @@ const YourFarmCard = ({
                     justify='center'
                     m={4}
                     onClick={() => {
-                      filter === 'combined' && setFarmIndex(index)
+                      setFarmIndex(index)
+                      setFilter('single')
                     }}
                   >
                     <Text
@@ -131,7 +132,7 @@ const YourFarmCard = ({
               as={ChakraButton}
               onClick={() => {
                 setFilter('combined')
-                setFarmIndex(0)
+                setFarmIndex(null)
               }}
               color={filter === 'combined' ? 'cf.800' : 'gray.400'}
               justifyContent='center'
