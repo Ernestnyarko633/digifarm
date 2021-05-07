@@ -3,7 +3,6 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import useComponent from 'context/component'
-//import Fade from 'react-reveal'
 export default function FarmDocumentCard({
   title,
   subtitle,
