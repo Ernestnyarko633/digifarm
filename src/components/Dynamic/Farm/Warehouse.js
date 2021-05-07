@@ -33,7 +33,7 @@ export default function Warehouse({ digitalFarmerFarm }) {
           px={{ md: 24 }}
           minH={{ lg: '100vh' }}
         >
-          {!digitalFarmerFarm.digitalFarmerFarm?.storage.quantity && (
+          {!digitalFarmerFarm?.storage.quantity && (
             <Flex
               w='100%'
               justify='center'
