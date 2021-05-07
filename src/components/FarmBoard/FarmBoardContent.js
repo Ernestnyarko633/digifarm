@@ -109,7 +109,6 @@ const FarmBoardContent = ({ farms }) => {
       index
   )
 
-  console.log(cleanedFeeds)
   const loading = loadingDoc || loadingfeeds
   const isNotEmpty = (filter, array) => {
     let farm = false
