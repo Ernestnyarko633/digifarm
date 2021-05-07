@@ -169,7 +169,12 @@ const WalletCard = ({ acreage, price, farm }) => {
             <ExpenditureCard
               bg='cf.light'
               action='available'
-              amount={getFormattedMoney(price * acreage)}
+              amount={
+                farmExpense(myFarmActivities, tasks, ScheduledTasks) >
+                price * acreage
+                  ? `(${getFormattedMoney(price * acreage)})`
+                  : getFormattedMoney(price * acreage)
+              }
             />
           </Grid>
         )}

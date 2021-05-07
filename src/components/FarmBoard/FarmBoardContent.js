@@ -15,8 +15,10 @@ import useApi from 'context/api'
 
 const FarmBoardContent = ({ farms }) => {
   const [activeFarmIndex, setFarmIndex] = React.useState(0)
-  const [loading, setLoading] = React.useState(false)
+  const [loadingDoc, setLoadingDoc] = React.useState(false)
+  const [loadingfeeds, setLoadingFeeds] = React.useState(false)
   const [error, setError] = React.useState(false)
+  const [errorFarmFeeds, setFarmFeedsError] = React.useState(false)
   const [feeds, setFeeds] = React.useState([])
   const [news, setNewsData] = React.useState(null)
   const [videos, setVideosData] = React.useState(null)
@@ -31,10 +33,10 @@ const FarmBoardContent = ({ farms }) => {
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted && !news && !videos) {
+    if (mounted && !news && !videos && !error) {
       const fetchData = async () => {
         try {
-          setLoading(true)
+          setLoadingDoc(true)
           const [res1, res2] = await Promise.all([
             Client.query(Prismic.Predicates.at('document.type', 'news')),
             Client.query(
@@ -46,55 +48,59 @@ const FarmBoardContent = ({ farms }) => {
         } catch (err) {
           setError('Could not fetch data')
         } finally {
-          setLoading(false)
+          setLoadingDoc(false)
         }
       }
       fetchData()
+
+      if (news) {
+        setFeeds(prev => [...prev, ...news])
+      }
+
+      // weekly videos
+      if (videos) {
+        setFeeds(prev => [...prev, ...videos])
+      }
     }
     return () => (mounted = false)
-  }, [Client, news, videos])
+  }, [Client, news, videos, error])
 
   React.useEffect(() => {
     let mounted = true
 
-    if (mounted) {
-      setLoading(true)
+    if (mounted && !errorFarmFeeds) {
+      setLoadingFeeds(true)
       const fetchData = async () => {
-        // news data
-        if (news) {
-          setFeeds(prev => [...prev, ...news])
-        }
-
-        // weekly videos
-        if (videos) {
-          setFeeds(prev => [...prev, ...videos])
-        }
-
-        const feedPromises = farms.map(async farm => {
-          const response = await getMyFarmFeeds({
-            farm: farm?.order?.product?._id
+        try {
+          const feedPromises = farms.map(async farm => {
+            const response = await getMyFarmFeeds({
+              farm: farm?.order?.product?._id
+            })
+            if (response.data) {
+              return response.data
+            }
+            return []
           })
-          if (response.data) {
-            return response.data
+
+          const allFeeds = await Promise.all(feedPromises)
+
+          //combining all data now from prismic and farm feeds
+          if (allFeeds) {
+            allFeeds.map(f => setFeeds(s => [...s, ...f]))
           }
-          return []
-        })
-
-        const allFeeds = await Promise.all(feedPromises)
-
-        //combining all data now from prismic and farm feeds
-        if (allFeeds && news && videos) {
-          allFeeds.map(f => setFeeds(s => [...s, ...f]))
+        } catch (error) {
+          setFarmFeedsError(error?.message || 'Could not fetch data')
+        } finally {
+          setLoadingFeeds(false)
         }
-
-        setLoading(false)
+        // news data
       }
 
       fetchData()
     }
 
     return () => (mounted = false)
-  }, [news, farms, videos, getMyFarmFeeds])
+  }, [news, farms, videos, getMyFarmFeeds, errorFarmFeeds])
 
   //FIXME: larger feeds would slow down process
   const cleanedFeeds = feeds?.filter(
@@ -103,7 +109,7 @@ const FarmBoardContent = ({ farms }) => {
       index
   )
 
-  const mapKey = i => i
+  const loading = loadingDoc || loadingfeeds
   const isNotEmpty = (filter, array) => {
     let farm = false
     let videos = false
