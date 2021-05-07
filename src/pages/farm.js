@@ -3,7 +3,6 @@ import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { useScreenshot } from 'use-react-screenshot'
 import { Menu } from '@headlessui/react'
-import Fade from 'react-reveal/Fade'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import DynamicFarm from 'components/Dynamic'
@@ -223,28 +222,25 @@ export default function Farm() {
             />
             <Text ml={5}>{`${user?.firstName}`}'s farm</Text>
           </Flex>
-          <Fade left>
-            <Flex align='center'>
-              {menus.map((menu, idx) => (
-                <Fade key={mapKey(idx)} left>
-                  <Flex
-                    _hover={{ background: 'transparent' }}
-                    bg='transparent'
-                    outlineColor='none'
-                    outline='none'
-                    as={Button}
-                    role='button'
-                    aria-label={`${menu.name} button`}
-                    px={{ md: 6 }}
-                    color={component === menu.comp ? 'cf.400' : ''}
-                    onClick={() => setComponent(menu.comp)}
-                  >
-                    {menu.name}
-                  </Flex>
-                </Fade>
-              ))}
-            </Flex>
-          </Fade>
+          <Flex align='center'>
+            {menus.map((menu, idx) => (
+              <Flex
+                key={mapKey(idx)}
+                _hover={{ background: 'transparent' }}
+                bg='transparent'
+                outlineColor='none'
+                outline='none'
+                as={Button}
+                role='button'
+                aria-label={`${menu.name} button`}
+                px={{ md: 6 }}
+                color={component === menu.comp ? 'cf.400' : ''}
+                onClick={() => setComponent(menu.comp)}
+              >
+                {menu.name}
+              </Flex>
+            ))}
+          </Flex>
         </Flex>
 
         <Menu

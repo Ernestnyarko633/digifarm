@@ -4,6 +4,7 @@ import { IoEllipsisVertical } from 'react-icons/io5'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
+import ReactPlayer from 'react-player/lazy'
 
 const MotionFlex = motion.custom(Flex)
 
@@ -23,11 +24,25 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
     setActiveIndex(comparant)
     setSelectedImage(images[comparant])
   }
+  const YoutubeSlide = ({ url }) => (
+    <ReactPlayer
+      width='100%'
+      controls={true}
+      loop={true}
+      volume={0.3}
+      url={url}
+      playing={false}
+    />
+  )
+  YoutubeSlide.propTypes = {
+    url: PropTypes.any
+  }
   React.useEffect(() => {
     let array = []
     const _feeds = feed => {
       return feed?.media?.forEach(_media => {
-        if (_media?.type === 'image') array.push(_media)
+        if (_media?.type === 'image' || _media?.type === 'video')
+          array.push(_media)
       })
     }
     const feeds = () =>
@@ -50,13 +65,19 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
 
       <Box mt={6}>
         <Box pos='relative' overflow='hidden'>
-          <Image
-            rounded='lg'
-            h={{ base: 80, md: 85 }}
-            w='100%'
-            objectFit='cover'
-            src={selectedImage?.url}
-          />
+          {selectedImage?.type === 'image' && (
+            <Image
+              rounded='lg'
+              h={{ md: 85 }}
+              w='100%'
+              objectFit='cover'
+              src={selectedImage?.url}
+            />
+          )}
+
+          {selectedImage?.type === 'video' && (
+            <YoutubeSlide url={selectedImage?.url} muted playing={false} />
+          )}
           <Flex
             align='center'
             justify='center'

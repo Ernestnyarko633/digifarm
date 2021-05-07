@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { Heading, Flex, Box, Text } from '@chakra-ui/react'
-import Fade from 'react-reveal/Fade'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
@@ -239,11 +238,7 @@ const FarmBoardContent = ({ farms }) => {
 
             {feeds?.length > 0 ? (
               cleanedFeeds.map((content, index) => {
-                return (
-                  <Fade bottom key={mapKey(index)}>
-                    {renderCard(content?.type, content)}
-                  </Fade>
-                )
+                return <>{renderCard(content?.type, content)}</>
               })
             ) : (
               <FarmBoardEmptyState />

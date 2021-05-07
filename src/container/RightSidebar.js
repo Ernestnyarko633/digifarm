@@ -54,12 +54,7 @@ const RightSidebar = () => {
       >
         Events
       </Heading>
-      {/* <Fade left>
-        <Text fontSize='sm' color='gray.500' mt={3}>
-          Growing conditions are currently perfect. Some irriagation work is
-          being performed
-        </Text>
-      </Fade> */}
+      
 
       <Grid gap={4} mt={4} minH={{ base: 64, md: 90 }}>
         {doc?.map((e, i) => (
