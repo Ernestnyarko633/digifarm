@@ -397,7 +397,7 @@ const ChooseAcreage = ({ farm }) => {
           <Box my={10}>
             <Heading as='h6' size='md' mb={2}>
               Location
-              <Icon as={InfoIcon} color='cf.400' boxSize={4} mx={2} />
+              <Icon as={InfoIcon} color='cf.800' boxSize={4} mx={2} />
             </Heading>
             <Box
               rounded='md'

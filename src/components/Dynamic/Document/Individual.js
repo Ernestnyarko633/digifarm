@@ -161,8 +161,8 @@ export default function Individual({
                 icon={BsArrowRight}
                 bg='white'
                 borderWidth={1}
-                borderColor='cf.400'
-                color='cf.400'
+                borderColor='cf.800'
+                color='cf.800'
                 rounded='30px'
                 h={{ base: 10, md: 14 }}
                 width={{ base: 40, md: 56 }}

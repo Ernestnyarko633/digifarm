@@ -92,7 +92,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
               rounded='100%'
               borderWidth={1}
               borderColor='white'
-              color='cf.400'
+              color='cf.800'
               bg='white'
               ml={2}
               onClick={() => handleClick(+1)}
@@ -116,7 +116,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
               mr={6}
               borderWidth={activeIndex === index ? 4 : 0}
               rounded='md'
-              borderColor='cf.400'
+              borderColor='cf.800'
             >
               <Image
                 h={20}

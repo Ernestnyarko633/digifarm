@@ -109,9 +109,9 @@ const Marketplace = () => {
             fontWeight={state === 0 ? 'bold' : 'normal'}
             onClick={() => toggle(0)}
             borderBottomWidth={state === 0 && 2}
-            borderBottomColor='cf.400'
+            borderBottomColor='cf.800'
             pb={3}
-            color={state === 0 ? 'cf.400' : 'gray.700'}
+            color={state === 0 ? 'cf.800' : 'gray.700'}
           >
             Ready Buyers
           </Box>
@@ -121,9 +121,9 @@ const Marketplace = () => {
             fontWeight={state === 1 ? 'bold' : 'normal'}
             onClick={() => toggle(1)}
             borderBottomWidth={state === 1 && 2}
-            borderBottomColor='cf.400'
+            borderBottomColor='cf.800'
             pb={3}
-            color={state === 1 ? 'cf.400' : 'gray.700'}
+            color={state === 1 ? 'cf.800' : 'gray.700'}
           >
             Ongoing Transactions
           </Box>
@@ -133,9 +133,9 @@ const Marketplace = () => {
             fontWeight={state === 2 ? 'bold' : 'normal'}
             onClick={() => toggle(2)}
             borderBottomWidth={state === 2 && 2}
-            borderBottomColor='cf.400'
+            borderBottomColor='cf.800'
             pb={3}
-            color={state === 2 ? 'cf.400' : 'gray.700'}
+            color={state === 2 ? 'cf.800' : 'gray.700'}
           >
             Past Transactions
           </Box>

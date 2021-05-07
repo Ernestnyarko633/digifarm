@@ -4,13 +4,15 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { Link } from "@chakra-ui/layout";
 import { Link as ReachRouter } from "react-router-dom";
 
+//components
 import Header from "container/Header";
 import FarmingTypeCard from "components/Cards/FarmingTypeCard";
+import { Button } from "components";
 
+//context
 import useAuth from "context/auth";
 // json
 import types from "data/farm.json";
-import { Button } from "components";
 
 const StartFarm = () => {
   const { isAuthenticated } = useAuth();
@@ -49,6 +51,8 @@ const StartFarm = () => {
             <FarmingTypeCard
               state={item}
               key={item.id}
+              id={item.id}
+              disabled={item.id === "cooperative"}
               btntitle="Select"
               title={item.name}
               options={item.benefits}

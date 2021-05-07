@@ -31,7 +31,7 @@ const previewModal = ({ data, setShown }) => (
       <Box position='absolute' right={0} top={4} pr={{ md: 6 }}>
         <Icon
           as={closeIcon}
-          color='cf.400'
+          color='cf.800'
           boxSize={8}
           onClick={() => {
             setShown(false)
@@ -119,7 +119,7 @@ const TasksDocuments = ({ open, onClose, data }) => {
           align='center'
           justify='center'
         >
-          <Text fontSize='xl' color='cf.400'>
+          <Text fontSize='xl' color='cf.800'>
             NO DOCUMENT CURRENTLY AVAILABLE FOR THIS TASK
           </Text>
         </Flex>

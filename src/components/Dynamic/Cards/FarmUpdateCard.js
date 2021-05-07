@@ -44,7 +44,7 @@ export default function FarmUpdateCard({
         </Box>
 
         <Box mt={3}>
-          <Link color='cf.400'>
+          <Link color='cf.800'>
             Learn more <Icon as={ChevronRightIcon} />
           </Link>
         </Box>

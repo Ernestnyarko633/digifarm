@@ -42,7 +42,7 @@ const Header = () => {
         href='https://www.completefarmer.com/support'
         _focus={{ textDecor: 'none' }}
       >
-        <Text fontWeight='bold' color='cf.400' fontSize={{ md: 'lg' }}>
+        <Text fontWeight='bold' color='cf.800' fontSize={{ md: 'lg' }}>
           Contact support
         </Text>
       </Link>

@@ -43,7 +43,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
       >
         {status !== 'news' && status !== 'weekly_videos' && false && (
           <Flex>
-            <Text color='cf.400'>123</Text>
+            <Text color='cf.800'>123</Text>
           </Flex>
         )}
 
@@ -52,7 +52,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
             <Box>
               <Icon
                 //onClick={() => handleLike()}
-                color='cf.400'
+                color='cf.800'
                 as={BsHeart}
                 mr={2}
                 boxSize={5}
@@ -61,7 +61,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
           )}
           <Icon
             boxSize={6}
-            color='cf.400'
+            color='cf.800'
             as={AiOutlineShareAlt}
             onClick={
               () =>

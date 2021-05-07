@@ -72,7 +72,7 @@ const Sidebar = () => {
               bg: 'gray.50',
               rounded: 'md',
             }}
-            _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
+            _activeLink={{ color: 'cf.800', bg: 'cf.300' }}
           >
             <Icon as={item.icon} boxSize={item.size} mr={2} />
             <Text fontSize='sm' textAlign='center' mt={1}>
@@ -105,7 +105,7 @@ const Sidebar = () => {
               bg: 'gray.50',
               rounded: 'md',
             }}
-            _activeLink={{ color: 'cf.400', bg: 'cf.300' }}
+            _activeLink={{ color: 'cf.800', bg: 'cf.300' }}
           >
             <Icon as={item.icon} boxSize={item.size} mr={2} />
             <Text fontSize='sm' textAlign='center' mt={1}>

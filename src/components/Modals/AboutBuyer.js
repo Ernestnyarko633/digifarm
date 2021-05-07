@@ -61,9 +61,9 @@ const AboutBuyer = ({ buyers }) => {
         ml={2}
         mt={1}
         borderWidth={1}
-        color='cf.400'
+        color='cf.800'
         mr={2}
-        borderColor='cf.400'
+        borderColor='cf.800'
         px={10}
         onClick={onOpen}
         ref={btnRef}
@@ -176,7 +176,7 @@ const AboutBuyer = ({ buyers }) => {
                   <Text fontSize='md' fontWeight='bold' mt={2}>
                     {buyers?.crop?.variety?.name} . {buyers?.demand} tonnes
                   </Text>
-                  <Text color='cf.400' fontSize='lg' fontWeight={600}>
+                  <Text color='cf.800' fontSize='lg' fontWeight={600}>
                     ${buyers?.buyingAt}
                   </Text>
                 </Flex>

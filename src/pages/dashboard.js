@@ -13,7 +13,6 @@ import Greetings from 'components/Utils/Greetings'
 import { getCurrentDayParting } from 'helpers/misc'
 import useComponent from 'context/component'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
-import Fade from 'react-reveal/Fade'
 import { useFarmData } from 'hooks/useFarmData'
 
 const Dashboard = () => {
@@ -87,38 +86,34 @@ const Dashboard = () => {
       />
       {isLoading || hasError ? (
         <Box p={16}>
-          <Fade>
-            <FetchCard
-              direction='column'
-              align='center'
-              justify='center'
-              mx='auto'
-              reload={() => {
-                myFarmsHasError && triggerReloadMyFarms()
-                myOrdersHasError && triggerReloadMyOrders()
-              }}
-              loading={isLoading}
-              error={hasError}
-              text='Standby as we load your current farms and pending orders'
-            />
-          </Fade>
+          <FetchCard
+            direction='column'
+            align='center'
+            justify='center'
+            mx='auto'
+            reload={() => {
+              myFarmsHasError && triggerReloadMyFarms()
+              myOrdersHasError && triggerReloadMyOrders()
+            }}
+            loading={isLoading}
+            error={hasError}
+            text='Standby as we load your current farms and pending orders'
+          />
         </Box>
       ) : hasData ? (
-        <Fade bottom>
-          <FarmOrderSection
-            farms={myFarms}
-            PendingOrder={myOrders?.pending || []}
-            processingOrder={myOrders?.processing || []}
-            handleClick={handleClick}
-            onOpen={onOpen}
-          />
-        </Fade>
+        <FarmOrderSection
+          farms={myFarms}
+          PendingOrder={myOrders?.pending || []}
+          processingOrder={myOrders?.processing || []}
+          handleClick={handleClick}
+          onOpen={onOpen}
+        />
       ) : (
         <HomeEmptyState />
       )}
-      <Fade bottom>
+      <Box>
         <GetStartedNowCard />
-      </Fade>
+      </Box>
     </Layout>
   )
 }

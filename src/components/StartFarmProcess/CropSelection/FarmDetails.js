@@ -1,10 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-
 import { Box, Grid, GridItem, Heading } from '@chakra-ui/react'
-import { useIntersection } from 'react-use'
-import { Button } from 'components'
-import { motion } from 'framer-motion'
 
 import useApi from 'context/api'
 import useStartFarm from 'context/start-farm'
@@ -14,8 +10,6 @@ import useFetch from 'hooks/useFetch'
 import CropSelectionCard from 'components/Cards/CropSelectionCard'
 import FetchCard from 'components/FetchCard'
 import AboutFarm from './AboutFarm'
-
-const MotionBox = motion.custom(Box)
 
 const FarmDetails = ({ query, catName, handleNext }) => {
   const { selectedFarm, setSelectedFarm } = useStartFarm()
@@ -43,13 +37,6 @@ const FarmDetails = ({ query, catName, handleNext }) => {
     }
     return () => (mounted = false)
   }, [data, catName, setSelectedFarm])
-
-  const intersectionRef = useRef(null)
-  const intersection = useIntersection(intersectionRef, {
-    root: null,
-    rootMargin: '0px',
-    threshold: 1
-  })
 
   return isLoading || error ? (
     <FetchCard
@@ -119,32 +106,6 @@ const FarmDetails = ({ query, catName, handleNext }) => {
         {selectedFarm && (
           <>
             <AboutFarm farm={selectedFarm} />
-            <Box my={10} ref={intersectionRef}>
-              {intersection && intersection.intersectionRatio < 1 ? (
-                <Box>&nbsp;</Box>
-              ) : (
-                <MotionBox
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{
-                    opacity:
-                      intersection && intersection.intersectionRatio < 1
-                        ? 0
-                        : 1,
-                    y: 0
-                  }}
-                  px={{ base: 4, md: 0 }}
-                >
-                  <Button
-                    btntitle='Start this farm'
-                    w={{ base: 70, md: 80 }}
-                    h={14}
-                    ms
-                    fontSize='md'
-                    onClick={handleNext}
-                  />
-                </MotionBox>
-              )}
-            </Box>
           </>
         )}
       </GridItem>

@@ -236,7 +236,7 @@ export default function Farm() {
                     role='button'
                     aria-label={`${menu.name} button`}
                     px={{ md: 6 }}
-                    color={component === menu.comp ? 'cf.400' : ''}
+                    color={component === menu.comp ? 'cf.800' : ''}
                     onClick={() => setComponent(menu.comp)}
                   >
                     {menu.name}
@@ -290,7 +290,7 @@ export default function Farm() {
                       _last={{ borderBlockWidth: 0 }}
                     >
                       <Box
-                        color={component === menu.comp ? 'cf.400' : ''}
+                        color={component === menu.comp ? 'cf.800' : ''}
                         onClick={() => setComponent(menu.comp)}
                         as='button'
                         role='button'
@@ -400,7 +400,7 @@ export default function Farm() {
                 key={item.id}
                 align='center'
                 onClick={() => setCompState(item.state)}
-                color={compState === item.state ? 'cf.400' : ''}
+                color={compState === item.state ? 'cf.800' : ''}
               >
                 <Icon as={item.icon} />
                 <Text fontSize={9}>{item.name}</Text>

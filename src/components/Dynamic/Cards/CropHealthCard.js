@@ -38,7 +38,7 @@ const CropHealthCard = ({ eosStat, date }) => {
                 value={(eosStat?.indexes?.EVI?.average * 100)?.toFixed(0)}
                 size='100px'
                 color={
-                  health(eosStat?.indexes?.EVI?.average) ? 'cf.400' : '#ff0000'
+                  health(eosStat?.indexes?.EVI?.average) ? 'cf.800' : '#ff0000'
                 }
               >
                 <CircularProgressLabel rounded='lg'>
@@ -55,7 +55,7 @@ const CropHealthCard = ({ eosStat, date }) => {
                 value={(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
                 size='100px'
                 color={
-                  health(eosStat?.indexes?.EVI?.average) ? 'cf.400' : '#ff0000'
+                  health(eosStat?.indexes?.EVI?.average) ? 'cf.800' : '#ff0000'
                 }
               >
                 <CircularProgressLabel rounded='lg'>
@@ -72,7 +72,7 @@ const CropHealthCard = ({ eosStat, date }) => {
                 value={(eosStat?.indexes?.NDVI?.average * 100)?.toFixed(0)}
                 size='100px'
                 color={
-                  health(eosStat?.indexes?.EVI?.average) ? 'cf.400' : '#ff0000'
+                  health(eosStat?.indexes?.EVI?.average) ? 'cf.800' : '#ff0000'
                 }
               >
                 <CircularProgressLabel rounded='lg'>

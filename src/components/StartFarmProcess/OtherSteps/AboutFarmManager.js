@@ -13,7 +13,6 @@ import {
   ListItem,
   UnorderedList
 } from '@chakra-ui/react'
-import { Support, Schedule, Update } from 'theme/Icons'
 import Prismic from 'prismic-javascript'
 import { BsInfoCircleFill } from 'react-icons/bs'
 import { IoLocation } from 'react-icons/io5'
@@ -21,30 +20,9 @@ import { motion } from 'framer-motion'
 
 import getConfig from 'utils/configs'
 import ImageLoader from 'components/ImageLoader'
+import Support from 'components/Support'
 
 const MotionGrid = motion.custom(Grid)
-
-const SupportComp = () => (
-  <>
-    <Heading as='h6' fontSize='md' mb={3}>
-      What is included in this farm
-    </Heading>
-    <Flex justify='space-between' align='center' fontSize='sm'>
-      <Flex align='center'>
-        <Icon as={Update} color='cf.400' boxSize={5} />
-        <Text ml={1}>Farm Updates</Text>
-      </Flex>
-      <Flex align='center' mx={6}>
-        <Icon as={Support} color='cf.400' boxSize={5} />
-        <Text ml={1}>Support</Text>
-      </Flex>
-      <Flex align='center'>
-        <Icon as={Schedule} color='cf.400' boxSize={5} />
-        <Text ml={1}>Scheduled Farm Visits</Text>
-      </Flex>
-    </Flex>
-  </>
-)
 
 const AboutFarmManager = ({ farm }) => {
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
@@ -99,7 +77,7 @@ const AboutFarmManager = ({ farm }) => {
             mt={{ md: 20 }}
             display={{ base: 'none', md: 'flex' }}
           >
-            <SupportComp />
+            <Support />
           </Flex>
         </Box>
         <Box>
@@ -114,10 +92,10 @@ const AboutFarmManager = ({ farm }) => {
                 </Text>
               </Flex>
               <Flex fontSize='sm' alignItems='center'>
-                <Icon as={IoLocation} color='cf.400' />
+                <Icon as={IoLocation} color='cf.800' />
                 {farm.location?.name}, {farm.location?.state},{' '}
                 {farm.location?.country}
-                <Icon as={BsInfoCircleFill} color='cf.400' mx={2} />
+                <Icon as={BsInfoCircleFill} color='cf.800' mx={2} />
               </Flex>
             </Box>
             <Divider />
@@ -181,7 +159,7 @@ const AboutFarmManager = ({ farm }) => {
           px={{ base: 6 }}
           mb={4}
         >
-          <SupportComp />
+          <Support />
         </Flex>
       </MotionGrid>
     </Box>

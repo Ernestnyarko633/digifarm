@@ -32,7 +32,7 @@ const FundCard = ({ amount, label }) => {
           >
             {label}
           </Text>
-          <Icon ml={2} color='cf.400' as={BsFillInfoCircleFill} boxSize={4} />
+          <Icon ml={2} color='cf.800' as={BsFillInfoCircleFill} boxSize={4} />
         </Flex>
         <Flex align='center' pr={{ base: 4, md: 0 }} w='100%'>
           <Icon
