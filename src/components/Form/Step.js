@@ -22,7 +22,7 @@ const Step = ({ activity, cutThread }) => {
           h={8}
           borderWidth={1}
           borderColor='gray.300'
-          bg={isComplete ? 'cf.400' : 'transparent'}
+          bg={isComplete ? 'cf.800' : 'transparent'}
           color='white'
         >
           {isComplete ? (
@@ -30,7 +30,7 @@ const Step = ({ activity, cutThread }) => {
           ) : (
             <Icon
               as={GoPrimitiveDot}
-              color={isInProgess ? 'cf.400' : 'gray.300'}
+              color={isInProgess ? 'cf.800' : 'gray.300'}
             />
           )}
         </Flex>
@@ -65,7 +65,7 @@ const Step = ({ activity, cutThread }) => {
         <Box textAlign='right'>
           <Tag
             bg='cf.200'
-            color='cf.400'
+            color='cf.800'
             rounded='3xl'
             px={4}
             textAlign='center'

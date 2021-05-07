@@ -46,7 +46,7 @@ export default function Events({
             <Flex w='100%' justify='center' align='center'>
               <Text
                 w='100%'
-                color='cf.400'
+                color='cf.800'
                 fontSize='xl'
                 textAlign={{ base: 'center', md: 'initial' }}
               >

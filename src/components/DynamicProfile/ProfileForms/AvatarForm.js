@@ -75,7 +75,7 @@ const AvatarForm = () => {
               speed='0.65s'
               emptyColor='gray.200'
               size='md'
-              color='cf.400'
+              color='cf.800'
             />
           )}
         </Flex>
@@ -86,12 +86,12 @@ const AvatarForm = () => {
           cursor='pointer'
           rounded='30px'
           fontSize='sm'
-          color='cf.400'
+          color='cf.800'
           align='center'
           borderWidth={1}
           pos='relative'
           py={{ base: 1 }}
-          borderColor='cf.400'
+          borderColor='cf.800'
           justifyContent='center'
           px={{ base: 3, md: 5 }}
         >

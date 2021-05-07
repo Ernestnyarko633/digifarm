@@ -80,7 +80,7 @@ const YourFarmCard = ({
                       fontSize='sm'
                       color={
                         activeFarmIndex === index && filter === 'combined'
-                          ? 'cf.400'
+                          ? 'cf.800'
                           : 'gray.200'
                       }
                       mb={3}
@@ -94,7 +94,7 @@ const YourFarmCard = ({
                       borderWidth='1px'
                       pos='relative'
                       borderColor={
-                        index === activeFarmIndex ? 'cf.400' : 'gray.200'
+                        index === activeFarmIndex ? 'cf.800' : 'gray.200'
                       }
                     >
                       <Image
@@ -109,7 +109,7 @@ const YourFarmCard = ({
                         left={2}
                         bg={
                           activeFarmIndex === index
-                            ? 'cf.400'
+                            ? 'cf.800'
                             : randomColors[index]?.color || '#ff0000'
                         }
                         rounded='25px'
@@ -133,7 +133,7 @@ const YourFarmCard = ({
                 setFilter('combined')
                 setFarmIndex(0)
               }}
-              color={filter === 'combined' ? 'cf.400' : 'gray.400'}
+              color={filter === 'combined' ? 'cf.800' : 'gray.400'}
               justifyContent='center'
               bgGradient={
                 filter === 'combined'
@@ -159,7 +159,7 @@ const YourFarmCard = ({
 
                 setFilter('weekly videos')
               }}
-              color={filter === 'weekly videos' ? 'cf.400' : 'gray.400'}
+              color={filter === 'weekly videos' ? 'cf.800' : 'gray.400'}
               justifyContent='center'
               bgGradient={
                 filter === 'weekly videos'
@@ -184,7 +184,7 @@ const YourFarmCard = ({
                 setFilter('news')
               }}
               as={ChakraButton}
-              color={filter === 'news' ? 'cf.400' : 'gray.400'}
+              color={filter === 'news' ? 'cf.800' : 'gray.400'}
               justifyContent='center'
               bgGradient={
                 filter === 'news'

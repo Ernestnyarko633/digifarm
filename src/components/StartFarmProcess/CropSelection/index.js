@@ -9,6 +9,7 @@ import useFetch from 'hooks/useFetch'
 import Tabs from 'components/Tabs/Tabs'
 import FetchCard from 'components/FetchCard'
 import FarmDetails from './FarmDetails'
+import { Button } from '../../index'
 
 const CropSelection = () => {
   const { handleNext } = useStartFarm()
@@ -63,7 +64,6 @@ const CropSelection = () => {
               <Box key={cat._id} label={cat.title}>
                 <FarmDetails
                   catName={cat.title}
-                  handleNext={handleNext}
                   query={
                     cat._id !== 'defualt' && { category: cat._id, status: 1 }
                   }
@@ -71,6 +71,18 @@ const CropSelection = () => {
               </Box>
             ))}
           </Tabs>
+        )}
+      </Box>
+      <Box textAlign='right' mt={6}>
+        {!isLoading && (
+          <Button
+            btntitle='Continue'
+            w={{ base: 70, md: 40 }}
+            h={12}
+            ms
+            fontSize='md'
+            onClick={handleNext}
+          />
         )}
       </Box>
     </Box>

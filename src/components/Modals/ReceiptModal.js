@@ -26,7 +26,7 @@ const ReceiptModal = ({ open, onClose, data }) => {
           <Flex
             align='center'
             justify='center'
-            bg='cf.400'
+            bg='cf.800'
             borderBottomWidth={{ md: '1px' }}
             borderBottomColor={{ md: 'white' }}
           >
@@ -34,7 +34,7 @@ const ReceiptModal = ({ open, onClose, data }) => {
               <Image src={Logo} boxSize={10} />
             </Flex>
           </Flex>
-          <Flex align='center' justify='center' bg='cf.400'>
+          <Flex align='center' justify='center' bg='cf.800'>
             <Heading as='h6' py={{ md: 5 }} color='white'>
               [{data?.data?.task?.title}] Receipt
             </Heading>
@@ -93,7 +93,7 @@ const ReceiptModal = ({ open, onClose, data }) => {
               </Table>
             </Box>
           </Box>
-          <Flex align='center' justify='space-between' bg='cf.400' w='100%'>
+          <Flex align='center' justify='space-between' bg='cf.800' w='100%'>
             <Flex w='50%' py={{ md: 5 }} pl={{ md: 5 }}>
               <Text color='white'>
                 No. 3, Abeasi Street <br />

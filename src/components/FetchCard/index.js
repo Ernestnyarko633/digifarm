@@ -13,13 +13,13 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
         direction='column'
       >
         <>
-          {loading && <Spinner size='lg' color='cf.400' />}
+          {loading && <Spinner size='lg' color='cf.800' />}
           {text && !error && (
             <Text className='loading-text loading-text-b'>{text}</Text>
           )}
           {error && !loading && (
             <>
-              <Text fontSize='md' ml={2} color='cf.400'>
+              <Text fontSize='md' ml={2} color='cf.800'>
                 Something went wrong
               </Text>
               <Button
@@ -54,7 +54,7 @@ FetchCard.propTypes = {
 
 export default FetchCard
 
-//<Text my={2} fontSize='sm' color='cf.400'>
+//<Text my={2} fontSize='sm' color='cf.800'>
 //              {error}
 //            {/* TODO: use a better error when it is */}
 //        </Text>

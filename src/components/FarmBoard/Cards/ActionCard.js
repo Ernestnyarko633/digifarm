@@ -51,7 +51,7 @@ const ActionCard = ({
                 // <Box ml={{ base: 5, md: 12 }} d={{ base: 'none', md: 'block' }}>
                 //   <Tag
                 //     bg='cf.200'
-                //     color='cf.400'
+                //     color='cf.800'
                 //     rounded='xl'
                 //     px={{ base: 4, md: 6 }}
                 //     fontWeight='bold'
@@ -84,7 +84,7 @@ const ActionCard = ({
             <Box ml={12}>
               <Tag
                 bg='cf.200'
-                color='cf.400'
+                color='cf.800'
                 rounded='xl'
                 px={6}
                 fontWeight='bold'

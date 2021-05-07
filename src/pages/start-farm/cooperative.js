@@ -6,6 +6,7 @@ import { Link as ReachRouter } from "react-router-dom";
 import CooperativeCard from "components/Cards/CooperativeCard";
 import { Button } from "components";
 import useAuth from "context/auth";
+import PropTypes from "prop-types";
 
 const types = [
   {
@@ -42,7 +43,7 @@ const types = [
   },
 ];
 
-const Cooperative = () => {
+const Cooperative = ({ location: { selected }, history }) => {
   const { isAuthenticated } = useAuth();
   const { user } = isAuthenticated();
   document.title = "Complete Farmer | Cooperative";
@@ -103,7 +104,7 @@ const Cooperative = () => {
 
           <Link
             as={ReachRouter}
-            to={{ pathname: "/start-farm/cooperative-farms", selectedType }}
+            to={{ pathname: "/start-farm/cooperative-farms", selected }}
             _hover={{ textDecor: "none" }}
           >
             <Button
@@ -118,6 +119,11 @@ const Cooperative = () => {
       </Flex>
     </Box>
   );
+};
+
+Cooperative.propTypes = {
+  location: PropTypes.object,
+  history: PropTypes.object,
 };
 
 export default Cooperative;

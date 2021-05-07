@@ -36,7 +36,7 @@ const ModalWrapper = ({
             {image && <Image width={12} src={image} alt={alt} />}
           </Box>
         </ModalHeader>
-        <ModalCloseButton color='cf.400' />
+        <ModalCloseButton color='cf.800' />
         <ModalBody px={{ base: 4, md: 10 }} py={5}>
           {children}
         </ModalBody>

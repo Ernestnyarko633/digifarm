@@ -26,7 +26,9 @@ const Receipt = ({
       setLoading(true)
       setError(null)
       const res = await downloadFile('orders', query)
-      let blob = new Blob([res.data], { type: 'application/pdf;charset=utf-8' })
+      let blob = new Blob([res.data], {
+        type: 'application/pdf;charset=utf-8'
+      })
       setLoading(false)
       saveAs(blob, `${query.reference}-agreement.pdf`)
     } catch (error) {
@@ -60,8 +62,8 @@ const Receipt = ({
           btntitle='Contact support'
           fontSize='xs'
           borderWidth={1}
-          borderColor='cf.400'
-          color='cf.400'
+          borderColor='cf.800'
+          color='cf.800'
           rounded='30px'
           bg='white'
           h={6}

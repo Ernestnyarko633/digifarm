@@ -34,7 +34,7 @@ const CooperativeCard = ({ item, onClick, selected }) => {
         />
         <Box pos='absolute' right={4} top={4}>
           {selected ? (
-            <Icon as={FaCheckCircle} boxSize={8} color='cf.400' />
+            <Icon as={FaCheckCircle} boxSize={8} color='cf.800' />
           ) : (
             <Box h={8} w={8} bg='white' rounded='100%' />
           )}
@@ -54,15 +54,15 @@ const CooperativeCard = ({ item, onClick, selected }) => {
         <Box>
           <List fontSize='sm'>
             <ListItem d='flex' alignItems='center'>
-              <ListIcon as={FaCheckCircle} color='cf.400' boxSize={3} />
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
               {item.minAcres} mininum number of acre
             </ListItem>
             <ListItem d='flex' alignItems='center' py={1}>
-              <ListIcon as={FaCheckCircle} color='cf.400' boxSize={3} />
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
               Up to {item.discount} cooperative discount
             </ListItem>
             <ListItem d='flex' alignItems='center'>
-              <ListIcon as={FaCheckCircle} color='cf.400' boxSize={3} />
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
               Plus all what is included in cooperative farms
             </ListItem>
           </List>

@@ -47,7 +47,7 @@ const DocumentCard = ({ title, description, link, mt }) => {
         align='center'
         justify='center'
         direction='column'
-        bg='cf.400'
+        bg='cf.800'
         w={60}
         h={60}
         p={1}
@@ -65,7 +65,7 @@ const DocumentCard = ({ title, description, link, mt }) => {
             w={5}
             h={5}
             rounded='100%'
-            bg='cf.400'
+            bg='cf.800'
             color='white'
             boxShadow='lg'
             aria-labelledby='download button'
@@ -75,7 +75,7 @@ const DocumentCard = ({ title, description, link, mt }) => {
               as={arrowDown}
               bg='white'
               rounded='lg'
-              color='cf.400'
+              color='cf.800'
               pl='1'
             />
           </Flex>
