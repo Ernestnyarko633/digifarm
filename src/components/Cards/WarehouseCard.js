@@ -40,7 +40,7 @@ const WarehouseCard = ({
       pb={1}
       my={6}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      w='50%'
+      w='100%'
       mx='auto'
       borderRadius='20px'
     >
@@ -78,8 +78,8 @@ const WarehouseCard = ({
               colorScheme='none'
               rounded='30px'
               borderWidth={1}
-              color='cf.400'
-              borderColor='cf.400'
+              color='cf.800'
+              borderColor='cf.800'
               px={8}
             >
               View Farm
@@ -171,7 +171,7 @@ const WarehouseCard = ({
         <Center>
           <Button
             pt={4}
-            color='cf.400'
+            color='cf.800'
             size='16px'
             pb={-8}
             isDisabled='true'

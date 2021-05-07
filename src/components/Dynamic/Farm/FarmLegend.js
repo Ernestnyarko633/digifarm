@@ -19,7 +19,7 @@ const FarmLegend = () => {
     <Popover placement='top-start' outline='none'>
       <PopoverTrigger>
         <Box>
-          <Icon as={FaInfoCircle} color='cf.400' />{' '}
+          <Icon as={FaInfoCircle} color='cf.800' />{' '}
           <Text as='span'>Map legend</Text>
         </Box>
       </PopoverTrigger>
@@ -30,7 +30,7 @@ const FarmLegend = () => {
         <PopoverBody>
           {/* <List fontSize='sm'>
             <ListItem>
-              <ListIcon as={AiTwotoneCheckSquare} color='cf.400' />
+              <ListIcon as={AiTwotoneCheckSquare} color='cf.800' />
               This should be describing what the color on the map to the users.
               This should be describing what the color on the map to the
               users.This should be describing what the color on the map to the

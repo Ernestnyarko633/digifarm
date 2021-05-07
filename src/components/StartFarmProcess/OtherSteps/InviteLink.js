@@ -55,15 +55,15 @@ const InviteLink = () => {
             </Heading>
             <Flex justify='space-between' align='center' fontSize='sm'>
               <Flex align='center'>
-                <Icon as={Update} color='cf.400' boxSize={5} />
+                <Icon as={Update} color='cf.800' boxSize={5} />
                 <Text ml={1}>Farm Updates</Text>
               </Flex>
               <Flex align='center' px={4}>
-                <Icon as={Support} color='cf.400' boxSize={5} />
+                <Icon as={Support} color='cf.800' boxSize={5} />
                 <Text ml={1}>Support</Text>
               </Flex>
               <Flex align='center'>
-                <Icon as={Schedule} color='cf.400' boxSize={5} />
+                <Icon as={Schedule} color='cf.800' boxSize={5} />
                 <Text ml={1}>Scheduled Farm Visits</Text>
               </Flex>
             </Flex>
@@ -135,7 +135,7 @@ const InviteLink = () => {
 
                 <Box ml={4}>
                   <Text>Joe Biney Stews</Text>
-                  <Text fontSize='sm' color='cf.400' mt={-2}>
+                  <Text fontSize='sm' color='cf.800' mt={-2}>
                     Admin
                   </Text>
                 </Box>

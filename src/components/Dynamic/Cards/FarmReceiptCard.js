@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Fade from 'react-reveal/Fade';
 import { saveAs } from 'file-saver';
 import { Avatar, Box, Flex, Image, Text, useToast } from '@chakra-ui/react';
 
@@ -79,8 +78,8 @@ export default function FarmReceiptCard({ farm, title, type }) {
             }}
             bg='white'
             borderWidth={1}
-            borderColor='cf.400'
-            color='cf.400'
+            borderColor='cf.800'
+            color='cf.800'
             rounded='30px'
             h={10}
             width={32}
@@ -124,8 +123,8 @@ export default function FarmReceiptCard({ farm, title, type }) {
           }}
           bg='white'
           borderWidth={1}
-          borderColor='cf.400'
-          color='cf.400'
+          borderColor='cf.800'
+          color='cf.800'
           rounded='30px'
           h={10}
           width='100%'

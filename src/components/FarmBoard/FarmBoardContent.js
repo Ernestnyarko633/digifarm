@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { Heading, Flex, Box, Text } from '@chakra-ui/react'
-import Fade from 'react-reveal/Fade'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
@@ -15,9 +14,11 @@ import PropTypes from 'prop-types'
 import useApi from 'context/api'
 
 const FarmBoardContent = ({ farms }) => {
-  const [activeFarmIndex, setFarmIndex] = React.useState(0)
-  const [loading, setLoading] = React.useState(false)
+  const [activeFarmIndex, setFarmIndex] = React.useState(null)
+  const [loadingDoc, setLoadingDoc] = React.useState(false)
+  const [loadingfeeds, setLoadingFeeds] = React.useState(false)
   const [error, setError] = React.useState(false)
+  const [errorFarmFeeds, setFarmFeedsError] = React.useState(false)
   const [feeds, setFeeds] = React.useState([])
   const [news, setNewsData] = React.useState(null)
   const [videos, setVideosData] = React.useState(null)
@@ -32,10 +33,10 @@ const FarmBoardContent = ({ farms }) => {
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted && !news && !videos) {
+    if (mounted && !news && !videos && !error) {
       const fetchData = async () => {
         try {
-          setLoading(true)
+          setLoadingDoc(true)
           const [res1, res2] = await Promise.all([
             Client.query(Prismic.Predicates.at('document.type', 'news')),
             Client.query(
@@ -47,55 +48,59 @@ const FarmBoardContent = ({ farms }) => {
         } catch (err) {
           setError('Could not fetch data')
         } finally {
-          setLoading(false)
+          setLoadingDoc(false)
         }
       }
       fetchData()
+
+      if (news) {
+        setFeeds(prev => [...prev, ...news])
+      }
+
+      // weekly videos
+      if (videos) {
+        setFeeds(prev => [...prev, ...videos])
+      }
     }
     return () => (mounted = false)
-  }, [Client, news, videos])
+  }, [Client, news, videos, error])
 
   React.useEffect(() => {
     let mounted = true
 
-    if (mounted) {
-      setLoading(true)
+    if (mounted && !errorFarmFeeds) {
+      setLoadingFeeds(true)
       const fetchData = async () => {
-        // news data
-        if (news) {
-          setFeeds(prev => [...prev, ...news])
-        }
-
-        // weekly videos
-        if (videos) {
-          setFeeds(prev => [...prev, ...videos])
-        }
-
-        const feedPromises = farms.map(async farm => {
-          const response = await getMyFarmFeeds({
-            farm: farm?.order?.product?._id
+        try {
+          const feedPromises = farms.map(async farm => {
+            const response = await getMyFarmFeeds({
+              farm: farm?.order?.product?._id
+            })
+            if (response.data) {
+              return response.data
+            }
+            return []
           })
-          if (response.data) {
-            return response.data
+
+          const allFeeds = await Promise.all(feedPromises)
+
+          //combining all data now from prismic and farm feeds
+          if (allFeeds) {
+            allFeeds.map(f => setFeeds(s => [...s, ...f]))
           }
-          return []
-        })
-
-        const allFeeds = await Promise.all(feedPromises)
-
-        //combining all data now from prismic and farm feeds
-        if (allFeeds && news && videos) {
-          allFeeds.map(f => setFeeds(s => [...s, ...f]))
+        } catch (error) {
+          setFarmFeedsError(error?.message || 'Could not fetch data')
+        } finally {
+          setLoadingFeeds(false)
         }
-
-        setLoading(false)
+        // news data
       }
 
       fetchData()
     }
 
     return () => (mounted = false)
-  }, [news, farms, videos, getMyFarmFeeds])
+  }, [news, farms, videos, getMyFarmFeeds, errorFarmFeeds])
 
   //FIXME: larger feeds would slow down process
   const cleanedFeeds = feeds?.filter(
@@ -104,16 +109,19 @@ const FarmBoardContent = ({ farms }) => {
       index
   )
 
-  const mapKey = i => i
+  const loading = loadingDoc || loadingfeeds
   const isNotEmpty = (filter, array) => {
     let farm = false
     let videos = false
     let news = false
-    const _farms = array.filter(
-      item =>
-        filter === 'combined' &&
-        farms[activeFarmIndex].order?.product?._id === item?.farm
-    )
+    const _farms =
+      filter === 'combined'
+        ? array
+        : array.filter(
+            item =>
+              filter === 'single' &&
+              farms[activeFarmIndex].order?.product?._id === item?.farm
+          )
     const _videos = array.filter(
       item => filter === 'weekly videos' && item?.type === 'weekly_videos'
     )
@@ -131,6 +139,7 @@ const FarmBoardContent = ({ farms }) => {
       news
     }
   }
+  const mapKey = i => i
 
   const renderCard = (status, content) => {
     switch (status) {
@@ -167,7 +176,25 @@ const FarmBoardContent = ({ farms }) => {
       default:
         return (
           <>
-            {filter === 'combined' &&
+            {filter === 'combined' && (
+              <FarmFeedCard
+                activeFarm={
+                  farms?.filter(f => f.order?.product?._id === content?.farm)
+                    .length
+                    ? farms?.filter(
+                        f => f.order?.product?._id === content?.farm
+                      )[0]
+                    : {}
+                }
+                content={content}
+                status={status}
+                timestamp={new Date(
+                  content?.data?.created || new Date()
+                )?.toLocaleDateString()}
+              />
+            )}
+
+            {filter === 'single' &&
               farms[activeFarmIndex].order?.product?._id === content?.farm && (
                 <FarmFeedCard
                   activeFarm={farms[activeFarmIndex]}
@@ -213,17 +240,18 @@ const FarmBoardContent = ({ farms }) => {
                 ? "See what's happening in your farm(s)"
                 : ''}
             </Heading>
-            {!isNotEmpty(filter, cleanedFeeds)?.farm && filter === 'combined' && (
-              <Flex w='100%' align='center' justify='center'>
-                <Text color='cf.400' fontSize={{ base: 'md' }}>
-                  Opps, Feeds unavailable currently
-                </Text>
-              </Flex>
-            )}
+            {!isNotEmpty(filter, cleanedFeeds)?.farm &&
+              (filter === 'combined' || filter === 'single') && (
+                <Flex w='100%' align='center' justify='center'>
+                  <Text color='cf.800' fontSize={{ base: 'md' }}>
+                    Opps, Feeds unavailable currently
+                  </Text>
+                </Flex>
+              )}
             {!isNotEmpty(filter, cleanedFeeds)?.videos &&
               filter === 'weekly videos' && (
                 <Flex w='100%' align='center' justify='center'>
-                  <Text color='cf.400' fontSize={{ base: 'md' }}>
+                  <Text color='cf.800' fontSize={{ base: 'md' }}>
                     Opps, Videos unavailable currently
                   </Text>
                 </Flex>
@@ -231,7 +259,7 @@ const FarmBoardContent = ({ farms }) => {
 
             {!isNotEmpty(filter, cleanedFeeds)?.news && filter === 'news' && (
               <Flex w='100%' align='center' justify='center'>
-                <Text color='cf.400' fontSize={{ base: 'md' }}>
+                <Text color='cf.800' fontSize={{ base: 'md' }}>
                   Opps, News unavailable currently
                 </Text>
               </Flex>
@@ -239,11 +267,7 @@ const FarmBoardContent = ({ farms }) => {
 
             {feeds?.length > 0 ? (
               cleanedFeeds.map((content, index) => {
-                return (
-                  <Fade bottom key={mapKey(index)}>
-                    {renderCard(content?.type, content)}
-                  </Fade>
-                )
+                return <>{renderCard(content?.type, content)}</>
               })
             ) : (
               <FarmBoardEmptyState />

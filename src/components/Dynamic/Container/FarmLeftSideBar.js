@@ -43,7 +43,7 @@ export default function FarmLeftSideBar({ state, setState }) {
             align='center'
             justify='flex-start'
             onClick={() => setState(item.state)}
-            color={state === item.state ? 'cf.400' : ''}
+            color={state === item.state ? 'cf.800' : ''}
           >
             <Icon as={item.icon} />
             <Text ml={2}>{item.name}</Text>

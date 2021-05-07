@@ -1,19 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import {
-  Box,
-  Flex,
-  Text,
-  Input,
-  Avatar,
-  Divider,
-  Spinner,
-  useToast
-} from '@chakra-ui/react'
+import { Flex, Text, Input, Avatar, Spinner, useToast } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import Headings from '../Headings'
-import Fade from 'react-reveal/Fade'
 
 const AvatarForm = () => {
   const [file, setFile] = React.useState(false)
@@ -54,14 +44,8 @@ const AvatarForm = () => {
   }
 
   return (
-    <Fade bottom>
+    <>
       <Headings title='Profile' />
-      <Divider
-        orientation='vertical'
-        borderBottomWidth={1}
-        borderBottomColor='gray.200'
-        my={12}
-      />
 
       <Flex align='center'>
         <Flex justify='center' align='center' pos='relative'>
@@ -69,6 +53,7 @@ const AvatarForm = () => {
             src={file ? URL.createObjectURL(file) : null || user?.avatar}
             size='2xl'
             loading={isSubmitting}
+            mt={6}
           />
           {isSubmitting && (
             <Spinner
@@ -76,7 +61,7 @@ const AvatarForm = () => {
               speed='0.65s'
               emptyColor='gray.200'
               size='md'
-              color='cf.400'
+              color='cf.800'
             />
           )}
         </Flex>
@@ -87,12 +72,12 @@ const AvatarForm = () => {
           cursor='pointer'
           rounded='30px'
           fontSize='sm'
-          color='cf.400'
+          color='cf.800'
           align='center'
           borderWidth={1}
           pos='relative'
           py={{ base: 1 }}
-          borderColor='cf.400'
+          borderColor='cf.800'
           justifyContent='center'
           px={{ base: 3, md: 5 }}
         >
@@ -114,7 +99,7 @@ const AvatarForm = () => {
           </Text>
         </Flex>
       </Flex>
-    </Fade>
+    </>
   )
 }
 

@@ -225,11 +225,11 @@ export default function Farm({
                   btntitle='Download'
                   bg='white'
                   borderWidth={2}
-                  borderColor='cf.400'
+                  borderColor='cf.800'
                   rounded='30px'
                   mr={6}
                   _hover={{ bg: 'white' }}
-                  color='cf.400'
+                  color='cf.800'
                   h={12}
                   w={{ md: 40 }}
                   shadow='none'

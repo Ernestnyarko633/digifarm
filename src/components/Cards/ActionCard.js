@@ -29,8 +29,8 @@ const ActionCard = ({ title, text, btnText }) => {
         <Button
           bg='transparent'
           borderWidth={1}
-          borderColor='cf.400'
-          color='cf.400'
+          borderColor='cf.800'
+          color='cf.800'
           rounded='30px'
           fontSize='sm'
           px={8}

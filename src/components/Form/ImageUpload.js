@@ -83,7 +83,7 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
           h={32}
           borderWidth={1}
           borderBottomWidth={2}
-          borderBottomColor='cf.400'
+          borderBottomColor='cf.800'
           {...getRootProps({ className: 'dropzone' })}
         >
           <Input {...getInputProps()} />
@@ -95,7 +95,7 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
                 w={8}
                 h={8}
                 rounded='100%'
-                bg='cf.400'
+                bg='cf.800'
                 color='white'
               >
                 <Icon as={Add} />

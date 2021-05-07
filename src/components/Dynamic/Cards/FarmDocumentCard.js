@@ -3,7 +3,6 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import useComponent from 'context/component'
-//import Fade from 'react-reveal'
 export default function FarmDocumentCard({
   title,
   subtitle,
@@ -77,8 +76,8 @@ export default function FarmDocumentCard({
             btntitle={!viewDoc ? 'View all receipts' : 'View all Documents'}
             bg='white'
             borderWidth={1}
-            borderColor='cf.400'
-            color='cf.400'
+            borderColor='cf.800'
+            color='cf.800'
             rounded='30px'
             my={5}
             colorScheme='none'

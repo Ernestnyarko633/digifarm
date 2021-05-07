@@ -23,13 +23,13 @@ const AcreageInput = ({ totalAcres }) => {
           type='number'
           roundedBottom='0px'
           value={acreage}
-          borderBottomColor='cf.400'
+          borderBottomColor='cf.800'
           borderBottomWidth={2}
           _hover={{
-            borderBottomColor: 'cf.400'
+            borderBottomColor: 'cf.800'
           }}
           _focus={{
-            borderBottomColor: 'cf.400'
+            borderBottomColor: 'cf.800'
           }}
           placeholder='How many acres?'
           onChange={e => {
@@ -63,7 +63,7 @@ const AcreageInput = ({ totalAcres }) => {
             aria-label='Reduce acreage'
             fontSize='25px'
             bg='transparent'
-            color='cf.400'
+            color='cf.800'
             _hover={{
               bg: 'transparent'
             }}

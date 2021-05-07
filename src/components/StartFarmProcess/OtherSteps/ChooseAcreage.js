@@ -193,7 +193,7 @@ const ChooseAcreage = ({ farm }) => {
                 <Box
                   pos='absolute'
                   top={{ base: '30%', md: '50%', xl: '40%' }}
-                  left={{ base: '10%', md: '22%' }}
+                  left={{ base: '10%', md: '18%', '2xl': '25%' }}
                   w={{ base: '80%', md: '20%' }}
                   h='auto'
                 >
@@ -249,7 +249,7 @@ const ChooseAcreage = ({ farm }) => {
                 <Box
                   pos='absolute'
                   top={{ base: '30%', md: '50%', xl: '40%' }}
-                  left={{ base: '10%', md: '22%' }}
+                  left={{ base: '10%', md: '18%', '2xl': '25%' }}
                   w={{ base: '80%', md: '20%' }}
                   h='auto'
                 >
@@ -397,7 +397,7 @@ const ChooseAcreage = ({ farm }) => {
           <Box my={10}>
             <Heading as='h6' size='md' mb={2}>
               Location
-              <Icon as={InfoIcon} color='cf.400' boxSize={4} mx={2} />
+              <Icon as={InfoIcon} color='cf.800' boxSize={4} mx={2} />
             </Heading>
             <Box
               rounded='md'

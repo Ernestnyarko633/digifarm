@@ -85,8 +85,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
         justify='space-between'
         borderBottomColor='gray.200'
         px={{ base: 4, md: 0 }}
-        py={{ base: 4, md: 0 }}
-        pb={5}
+        py={4}
       >
         <Flex align='center'>
           <Avatar
@@ -109,13 +108,13 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
 
         <Flex direction='column' justify='center' align='center'>
           <Box mx={{ base: 4 }}>
-            <Text color='cf.400'>
+            <Text color='cf.800'>
               {status !== 'news' || status !== 'weekly_videos'
                 ? 'FARM FEED'
                 : null}
             </Text>
           </Box>
-          <Text fontSize={{ base: 'sm', md: 'md' }} color='gray.500'>
+          <Text fontSize={{ base: 'xs', md: 'sm' }} color='gray.500'>
             {timestamp}
           </Text>
         </Flex>
@@ -165,7 +164,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 borderColor='transparent'
                 _hover={{
                   background: 'white',
-                  color: 'cf.400'
+                  color: 'cf.800'
                 }}
                 color='white'
                 mr={2}
@@ -191,7 +190,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 h={10}
                 _hover={{
                   background: 'white',
-                  color: 'cf.400'
+                  color: 'cf.800'
                 }}
                 rounded='100%'
                 borderWidth={1}
@@ -216,7 +215,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
             <Box mt={6}>
               <Flex direction='row' align='center'>
                 <Tag
-                  color='cf.400'
+                  color='cf.800'
                   justifyContent='center'
                   bgGradient='linear(to-l, #DEECDC,#EFF6ED)'
                   rounded={20}
@@ -264,7 +263,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 }
               </Collapse>
               <Box as='button' onClick={handleToggle}>
-                <Text color='cf.400' py={{ base: 1 }}>
+                <Text color='cf.800' py={{ base: 1 }}>
                   {!show ? 'Read More' : 'Collapse'}
                 </Text>
               </Box>
