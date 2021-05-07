@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Fade from 'react-reveal/Fade';
 import { saveAs } from 'file-saver';
 import { Avatar, Box, Flex, Image, Text, useToast } from '@chakra-ui/react';
 

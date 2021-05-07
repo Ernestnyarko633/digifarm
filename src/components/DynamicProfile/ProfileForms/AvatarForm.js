@@ -13,7 +13,6 @@ import {
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import Headings from '../Headings'
-import Fade from 'react-reveal/Fade'
 
 const AvatarForm = () => {
   const [file, setFile] = React.useState(false)
@@ -54,7 +53,7 @@ const AvatarForm = () => {
   }
 
   return (
-    <Fade bottom>
+    <>
       <Headings title='Profile' />
       <Divider
         orientation='vertical'
@@ -114,7 +113,7 @@ const AvatarForm = () => {
           </Text>
         </Flex>
       </Flex>
-    </Fade>
+    </>
   )
 }
 

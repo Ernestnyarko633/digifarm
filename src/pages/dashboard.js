@@ -111,9 +111,7 @@ const Dashboard = () => {
       ) : (
         <HomeEmptyState />
       )}
-      <Box>
-        <GetStartedNowCard />
-      </Box>
+      <GetStartedNowCard />
     </Layout>
   )
 }
