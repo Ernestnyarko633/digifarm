@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
 import useApi from 'context/api'
 
 const FarmBoardContent = ({ farms }) => {
-  const [activeFarmIndex, setFarmIndex] = React.useState(0)
+  const [activeFarmIndex, setFarmIndex] = React.useState(null)
   const [loadingDoc, setLoadingDoc] = React.useState(false)
   const [loadingfeeds, setLoadingFeeds] = React.useState(false)
   const [error, setError] = React.useState(false)
@@ -109,16 +109,20 @@ const FarmBoardContent = ({ farms }) => {
       index
   )
 
+  console.log(cleanedFeeds)
   const loading = loadingDoc || loadingfeeds
   const isNotEmpty = (filter, array) => {
     let farm = false
     let videos = false
     let news = false
-    const _farms = array.filter(
-      item =>
-        filter === 'combined' &&
-        farms[activeFarmIndex].order?.product?._id === item?.farm
-    )
+    const _farms =
+      filter === 'combined'
+        ? array
+        : array.filter(
+            item =>
+              filter === 'single' &&
+              farms[activeFarmIndex].order?.product?._id === item?.farm
+          )
     const _videos = array.filter(
       item => filter === 'weekly videos' && item?.type === 'weekly_videos'
     )
@@ -136,6 +140,7 @@ const FarmBoardContent = ({ farms }) => {
       news
     }
   }
+  const mapKey = i => i
 
   const renderCard = (status, content) => {
     switch (status) {
@@ -172,7 +177,25 @@ const FarmBoardContent = ({ farms }) => {
       default:
         return (
           <>
-            {filter === 'combined' &&
+            {filter === 'combined' && (
+              <FarmFeedCard
+                activeFarm={
+                  farms?.filter(f => f.order?.product?._id === content?.farm)
+                    .length
+                    ? farms?.filter(
+                        f => f.order?.product?._id === content?.farm
+                      )[0]
+                    : {}
+                }
+                content={content}
+                status={status}
+                timestamp={new Date(
+                  content?.data?.created || new Date()
+                )?.toLocaleDateString()}
+              />
+            )}
+
+            {filter === 'single' &&
               farms[activeFarmIndex].order?.product?._id === content?.farm && (
                 <FarmFeedCard
                   activeFarm={farms[activeFarmIndex]}
@@ -218,13 +241,14 @@ const FarmBoardContent = ({ farms }) => {
                 ? "See what's happening in your farm(s)"
                 : ''}
             </Heading>
-            {!isNotEmpty(filter, cleanedFeeds)?.farm && filter === 'combined' && (
-              <Flex w='100%' align='center' justify='center'>
-                <Text color='cf.800' fontSize={{ base: 'md' }}>
-                  Opps, Feeds unavailable currently
-                </Text>
-              </Flex>
-            )}
+            {!isNotEmpty(filter, cleanedFeeds)?.farm &&
+              (filter === 'combined' || filter === 'single') && (
+                <Flex w='100%' align='center' justify='center'>
+                  <Text color='cf.800' fontSize={{ base: 'md' }}>
+                    Opps, Feeds unavailable currently
+                  </Text>
+                </Flex>
+              )}
             {!isNotEmpty(filter, cleanedFeeds)?.videos &&
               filter === 'weekly videos' && (
                 <Flex w='100%' align='center' justify='center'>
