@@ -193,7 +193,7 @@ const ChooseAcreage = ({ farm }) => {
                 <Box
                   pos='absolute'
                   top={{ base: '30%', md: '50%', xl: '40%' }}
-                  left={{ base: '10%', md: '22%' }}
+                  left={{ base: '10%', '2xl': '25%' }}
                   w={{ base: '80%', md: '20%' }}
                   h='auto'
                 >
@@ -249,7 +249,7 @@ const ChooseAcreage = ({ farm }) => {
                 <Box
                   pos='absolute'
                   top={{ base: '30%', md: '50%', xl: '40%' }}
-                  left={{ base: '10%', md: '22%' }}
+                  left={{ base: '10%', md: '20%', '2xl': '25%' }}
                   w={{ base: '80%', md: '20%' }}
                   h='auto'
                 >
