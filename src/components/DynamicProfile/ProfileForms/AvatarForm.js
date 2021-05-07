@@ -1,15 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import {
-  Box,
-  Flex,
-  Text,
-  Input,
-  Avatar,
-  Divider,
-  Spinner,
-  useToast
-} from '@chakra-ui/react'
+import { Flex, Text, Input, Avatar, Spinner, useToast } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import Headings from '../Headings'
@@ -55,12 +46,6 @@ const AvatarForm = () => {
   return (
     <>
       <Headings title='Profile' />
-      <Divider
-        orientation='vertical'
-        borderBottomWidth={1}
-        borderBottomColor='gray.200'
-        my={12}
-      />
 
       <Flex align='center'>
         <Flex justify='center' align='center' pos='relative'>
@@ -68,6 +53,7 @@ const AvatarForm = () => {
             src={file ? URL.createObjectURL(file) : null || user?.avatar}
             size='2xl'
             loading={isSubmitting}
+            mt={6}
           />
           {isSubmitting && (
             <Spinner

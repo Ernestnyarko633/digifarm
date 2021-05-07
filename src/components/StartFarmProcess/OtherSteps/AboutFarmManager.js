@@ -11,7 +11,8 @@ import {
   Divider,
   Heading,
   ListItem,
-  UnorderedList
+  UnorderedList,
+  GridItem
 } from '@chakra-ui/react'
 import Prismic from 'prismic-javascript'
 import { BsInfoCircleFill } from 'react-icons/bs'
@@ -51,36 +52,40 @@ const AboutFarmManager = ({ farm }) => {
   return (
     <Box mx={{ base: 2, md: 0 }}>
       <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
-        <Box
-          px={{ base: 6, md: 20, lg: 10 }}
-          pt={{ base: 6, md: 20, lg: 10 }}
+        <GridItem
           borderRightColor='gray.400'
-          borderRightWidth={{ md: 2 }}
+          borderRightWidth={{ md: 1 }}
+          h={123}
         >
-          <Box>
-            <ImageLoader
-              h={{ base: 64, md: 80 }}
-              w={{ base: 80, md: '100%' }}
-              height='300px'
-              rounded='3xl'
-              objectFit='cover'
-              src={
-                farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl
-              }
-              alt={farm.cropVariety?.crop?.name}
-            />
-          </Box>
-          <Flex
-            direction='column'
-            align='center'
-            justify='space-between'
-            mt={{ md: 20 }}
-            display={{ base: 'none', md: 'flex' }}
+          <Box
+            px={{ base: 6, md: 20, lg: 10 }}
+            pt={{ base: 6, md: 20, lg: 10 }}
           >
-            <Support />
-          </Flex>
-        </Box>
-        <Box>
+            <Box>
+              <ImageLoader
+                h={{ base: 64, md: 80 }}
+                w={{ base: 80, md: '100%' }}
+                height='300px'
+                rounded='3xl'
+                objectFit='cover'
+                src={
+                  farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl
+                }
+                alt={farm.cropVariety?.crop?.name}
+              />
+            </Box>
+            <Flex
+              direction='column'
+              align='center'
+              justify='space-between'
+              mt={{ md: 20 }}
+              display={{ base: 'none', md: 'flex' }}
+            >
+              <Support />
+            </Flex>
+          </Box>
+        </GridItem>
+        <GridItem>
           <Box px={{ base: 6, md: 20 }} pt={{ base: 6, md: 20 }}>
             <Box py={4}>
               <Flex alignItems='center'>
@@ -150,17 +155,17 @@ const AboutFarmManager = ({ farm }) => {
               </Box>
             </Box>
           </Box>
-        </Box>
+        </GridItem>
 
-        <Flex
-          direction='column'
-          mt={{ md: 20 }}
-          display={{ base: 'flex', md: 'none' }}
-          px={{ base: 6 }}
-          mb={4}
-        >
-          <Support />
-        </Flex>
+        {/*<Flex*/}
+        {/*  direction='column'*/}
+        {/*  mt={{ md: 20 }}*/}
+        {/*  display={{ base: 'flex', md: 'none' }}*/}
+        {/*  px={{ base: 6 }}*/}
+        {/*  mb={4}*/}
+        {/*>*/}
+        {/*  <Support />*/}
+        {/*</Flex>*/}
       </MotionGrid>
     </Box>
   )
