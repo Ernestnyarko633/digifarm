@@ -25,7 +25,7 @@ const PaymentOption = ({ farm }) => {
 
   return (
     <MotionGrid templateColumns={{ md: "repeat(2, 1fr)" }}>
-      <GridItem p={{ md: 10 }}>
+      <GridItem p={{ base: 4, md: 10 }}>
         <Box>
           <FarmInfo
             farm={farm}
@@ -43,7 +43,7 @@ const PaymentOption = ({ farm }) => {
         borderLeftWidth={1}
         borderLeftColor="gray.200"
         overflowY="scroll"
-        p={{ md: 10 }}
+        p={{ base: 4, md: 10 }}
         css={{
           direction: "rtl",
           scrollbarColor: "rebeccapurple",
