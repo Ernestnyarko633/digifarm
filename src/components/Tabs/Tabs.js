@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 import Tab from './Tab'
 
-const MotionFlex = motion.custom(Flex)
+const MotionFlex = motion(Flex)
 
 const Tabs = ({
   children,

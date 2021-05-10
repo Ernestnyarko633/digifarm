@@ -39,7 +39,7 @@ import getConfig from 'utils/configs'
 
 // const options = ['Yes', 'No']
 
-const MotionGrid = motion.custom(Grid)
+const MotionGrid = motion(Grid)
 
 const ChooseAcreage = ({ farm }) => {
   const { eosSearch } = useApi()

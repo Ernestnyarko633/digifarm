@@ -13,24 +13,21 @@ const data = [
     title: 'Receipt',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tempor tellus et .',
-    link:
-      'https://completefarmer.s3.us-east-2.amazonaws.com/app/test/user/docs/CF-1587062346517.pdf'
+    link: 'https://completefarmer.s3.us-east-2.amazonaws.com/app/test/user/docs/CF-1587062346517.pdf'
   },
   {
     id: 2,
     title: 'Invoice',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tempor tellus et .',
-    link:
-      'https://completefarmer.s3.us-east-2.amazonaws.com/app/test/user/docs/CF-1587062346517.pdf'
+    link: 'https://completefarmer.s3.us-east-2.amazonaws.com/app/test/user/docs/CF-1587062346517.pdf'
   },
   {
     id: 3,
     title: 'Contract',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tempor tellus et nulla mattis cursus.',
-    link:
-      'https://completefarmer.s3.us-east-2.amazonaws.com/app/test/user/docs/CF-1587062346517.pdf'
+    link: 'https://completefarmer.s3.us-east-2.amazonaws.com/app/test/user/docs/CF-1587062346517.pdf'
   }
 ]
 

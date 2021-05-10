@@ -144,22 +144,21 @@ export default function Tasks({
           <>
             {scheduledTasks.length > 0 &&
               getTodaysTasks(scheduledTasks, 'scheduled').length > 0 &&
-              getTodaysTasks(
-                scheduledTasks,
-                'scheduled'
-              )?.map((today, index) => (
-                <React.Fragment key={mapKey(index)}>
-                  {index === 0 && (
-                    <FarmUpdateCard
-                      title='SCHEDULED TASK'
-                      duration={today?.task?.duration}
-                      subtitle={today?.task?.title}
-                      text={today?.task?.description.replace(/<[^>]*>/g, '')}
-                      icon={BiTime}
-                    />
-                  )}
-                </React.Fragment>
-              ))}
+              getTodaysTasks(scheduledTasks, 'scheduled')?.map(
+                (today, index) => (
+                  <React.Fragment key={mapKey(index)}>
+                    {index === 0 && (
+                      <FarmUpdateCard
+                        title='SCHEDULED TASK'
+                        duration={today?.task?.duration}
+                        subtitle={today?.task?.title}
+                        text={today?.task?.description.replace(/<[^>]*>/g, '')}
+                        icon={BiTime}
+                      />
+                    )}
+                  </React.Fragment>
+                )
+              )}
           </>
         )}
 

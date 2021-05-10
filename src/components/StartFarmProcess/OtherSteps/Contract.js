@@ -20,7 +20,7 @@ import Button from 'components/Button'
 
 import { IoMdCreate } from 'react-icons/io'
 
-const MotionGrid = motion.custom(Grid)
+const MotionGrid = motion(Grid)
 
 const Contract = ({ intersectionRef }) => {
   const [signatureModal, setSignatureModal] = React.useState(false)

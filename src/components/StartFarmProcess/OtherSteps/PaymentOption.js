@@ -12,7 +12,7 @@ import PayOption from "components/Cards/PayOption";
 import Constants from "constant";
 import Support from "components/Support";
 
-const MotionGrid = motion.custom(Grid);
+const MotionGrid = motion(Grid);
 
 const PaymentOption = ({ farm }) => {
   const {
@@ -51,7 +51,7 @@ const PaymentOption = ({ farm }) => {
         }}
       >
         <Box css={{ direction: "ltr" }}>
-          <Flex direction="column">
+          <Flex direction="column" align={{ base: "center", md: "initial" }}>
             <Heading as="h6" fontSize="xl" ml={{ md: 5 }}>
               Choose your payment Option
             </Heading>

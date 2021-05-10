@@ -14,14 +14,10 @@ export const ComponentContextProvider = ({ children }) => {
   const [sliderType, setSliderType] = React.useState('farms')
   const [compState, setCompState] = React.useState('compA')
   const [currentFarmsSlide, setCurrentFarmsSlide] = React.useState(0)
-  const [
-    currentProcessingOrdersSlide,
-    setCurrentProcessingOrdersSlide
-  ] = React.useState(0)
-  const [
-    currentPendingOrdersSlide,
-    setCurrentPendingOrdersSlide
-  ] = React.useState(0)
+  const [currentProcessingOrdersSlide, setCurrentProcessingOrdersSlide] =
+    React.useState(0)
+  const [currentPendingOrdersSlide, setCurrentPendingOrdersSlide] =
+    React.useState(0)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 

@@ -34,12 +34,8 @@ export const StartFarmContextProvider = ({ children }) => {
   const [text, setText] = useState(null)
   const [step, setStep] = useImmer(0)
 
-  const {
-    createOrder,
-    initiatePayment,
-    initiatePaystackPayment,
-    patchOrder
-  } = useApi()
+  const { createOrder, initiatePayment, initiatePaystackPayment, patchOrder } =
+    useApi()
   const { getExchangeRate } = useExternal()
   const { setSession } = useAuth()
 
