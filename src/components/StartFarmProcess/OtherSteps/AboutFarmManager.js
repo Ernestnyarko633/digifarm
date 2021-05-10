@@ -55,7 +55,7 @@ const AboutFarmManager = ({ farm }) => {
         <GridItem
           borderRightColor='gray.400'
           borderRightWidth={{ md: 1 }}
-          h={123}
+          h={{ md: 123 }}
         >
           <Box
             px={{ base: 6, md: 20, lg: 10 }}
@@ -86,7 +86,7 @@ const AboutFarmManager = ({ farm }) => {
           </Box>
         </GridItem>
         <GridItem>
-          <Box px={{ base: 6, md: 20 }} pt={{ base: 6, md: 20 }}>
+          <Box px={{ md: 20 }} pt={{ base: 6, md: 20 }}>
             <Box py={4}>
               <Flex alignItems='center'>
                 <Heading as='h2' size='lg' textTransform='uppercase'>
@@ -108,12 +108,16 @@ const AboutFarmManager = ({ farm }) => {
               <Heading pb={5} as='h5' size='md'>
                 Meet the farm managers
               </Heading>
-              <Box borderColor='gray.400' p={5} borderWidth={1} rounded='md'>
-                <Grid key={doc?.id} templateColumns='repeat(2, 1fr)'>
-                  <Box py={10} px={2}>
+              <Box
+                borderColor='gray.400'
+                p={{ md: 5 }}
+                borderWidth={1}
+                rounded='md'
+              >
+                <Grid key={doc?.id} templateColumns={{ md: 'repeat(2, 1fr)' }}>
+                  <Box py={{ base: 4, md: 10 }} px={2}>
                     <Avatar
                       src={doc?.manager_image?.url}
-                      // size={{ base: 4, md: 'xl' }}
                       size='xl'
                       justify='space-around'
                     />
