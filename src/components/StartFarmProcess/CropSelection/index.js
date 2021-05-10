@@ -73,7 +73,7 @@ const CropSelection = () => {
           </Tabs>
         )}
       </Box>
-      <Box textAlign='right' mt={6}>
+      <Box textAlign='right' my={6}>
         {!isLoading && (
           <Button
             btntitle='Continue'
