@@ -23,7 +23,7 @@ import getConfig from 'utils/configs'
 import ImageLoader from 'components/ImageLoader'
 import Support from 'components/Support'
 
-const MotionGrid = motion.custom(Grid)
+const MotionGrid = motion(Grid)
 
 const AboutFarmManager = ({ farm }) => {
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()

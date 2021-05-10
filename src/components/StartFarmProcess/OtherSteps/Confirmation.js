@@ -8,7 +8,7 @@ import { Button } from 'components'
 import FarmInfo from 'components/Cards/FarmInfo'
 import useApi from 'context/api'
 
-const MotionFlex = motion.custom(Flex)
+const MotionFlex = motion(Flex)
 
 const ButtonDownload = ({ type, order, ...rest }) => {
   const [loading, setLoading] = React.useState(false)
@@ -21,7 +21,9 @@ const ButtonDownload = ({ type, order, ...rest }) => {
     try {
       setLoading(true)
       const res = await downloadFile(resource, query)
-      let blob = new Blob([res.data], { type: 'application/pdf;charset=utf-8' })
+      let blob = new Blob([res.data], {
+        type: 'application/pdf;charset=utf-8'
+      })
       toast({
         title: 'Download starting',
         status: 'success',

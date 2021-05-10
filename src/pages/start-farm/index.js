@@ -52,7 +52,6 @@ const StartFarm = () => {
               state={item}
               key={item.id}
               id={item.id}
-              disabled={item.id === "cooperative"}
               btntitle="Select"
               title={item.name}
               options={item.benefits}
