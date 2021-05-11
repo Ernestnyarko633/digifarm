@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React from 'react';
-import Overlay from '../../Loading/Overlay';
+import React from "react";
+import Overlay from "../../Loading/Overlay";
 import {
   Box,
   Flex,
@@ -9,22 +9,23 @@ import {
   Link,
   Text,
   useToast,
-} from '@chakra-ui/react';
-import { getformattedDate } from '../../../helpers/misc';
-import { AnimateSharedLayout, motion } from 'framer-motion';
-import Button from '../../Button';
-import useAuth from '../../../context/auth';
-import useStartFarm from '../../../context/start-farm';
-import { useIntersection } from 'react-use';
-import AboutFarmManager from '../OtherSteps/AboutFarmManager';
-import ChooseAcreage from '../OtherSteps/ChooseAcreage';
-import Contract from '../OtherSteps/Contract';
-import PaymentOption from '../OtherSteps/PaymentOption';
-import Confirmation from '../OtherSteps/Confirmation';
-import ReloadPage from '../../Reload';
-import CooperativeName from '../OtherSteps/CooperativeName';
+} from "@chakra-ui/react";
+import { getformattedDate } from "../../../helpers/misc";
+import { AnimateSharedLayout, motion } from "framer-motion";
+import Button from "../../Button";
+import useAuth from "../../../context/auth";
+import useStartFarm from "../../../context/start-farm";
+import { useIntersection } from "react-use";
+import AboutFarmManager from "../OtherSteps/AboutFarmManager";
+import ChooseAcreage from "../OtherSteps/ChooseAcreage";
+import Contract from "../OtherSteps/Contract";
+import PaymentOption from "../OtherSteps/PaymentOption";
+import Confirmation from "../OtherSteps/Confirmation";
+import ReloadPage from "../../Reload";
+import CooperativeName from "../OtherSteps/CooperativeName";
+import Acreage from "./Acreage";
 
-const MotionFlex = motion.custom(Flex);
+const MotionFlex = motion(Flex);
 
 const CooperativeSteps = ({ data, history }) => {
   const { user } = useAuth();
@@ -41,19 +42,22 @@ const CooperativeSteps = ({ data, history }) => {
     handleCreateOrder,
   } = useStartFarm();
 
-  const catName = sessionStorage.getItem('cat_name');
-  const catFarms = JSON.parse(sessionStorage.getItem('farms'));
+  const catFarms = JSON.parse(sessionStorage.getItem("farms"));
+
+  const {
+    location: { selectedType },
+  } = history;
 
   const toast = useToast();
 
   window.onbeforeunload = function (event) {
-    event.returnValue = 'Unsafed data maybe lost.';
+    event.returnValue = "Unsaved data maybe lost.";
   };
 
   const intersectionRef = React.useRef(null);
   const intersection = useIntersection(intersectionRef, {
     root: null,
-    rootMargin: '0px',
+    rootMargin: "0px",
     threshold: 1,
   });
 
@@ -67,15 +71,23 @@ const CooperativeSteps = ({ data, history }) => {
         return <CooperativeName />;
       case 3:
         return (
+          <Acreage
+            farm={selectedFarm}
+            order={data || order}
+            selectedType={selectedType}
+          />
+        );
+      case 4:
+        return (
           <Contract
             farm={selectedFarm}
             {...{ user }}
             intersectionRef={intersectionRef}
           />
         );
-      case 4:
-        return <PaymentOption farm={selectedFarm} />;
       case 5:
+        return <PaymentOption farm={selectedFarm} />;
+      case 6:
         return <Confirmation farm={selectedFarm} order={data || order} />;
       default:
         return <ReloadPage />;
@@ -87,201 +99,160 @@ const CooperativeSteps = ({ data, history }) => {
       handleCreateOrder();
     } else {
       toast({
-        title: 'Action needed',
-        description: 'You need to set up a profile signature',
-        status: 'error',
+        title: "Action needed",
+        description: "You need to set up a profile signature",
+        status: "error",
         duration: 5000,
-        position: 'top-right',
+        position: "top-right",
       });
     }
   };
 
   const getForwardButtonProps = (key) => {
     switch (key) {
-      case 3:
+      case 4:
         return {
-          title: 'Accept Agreement',
+          title: "Accept Agreement",
           width: 56,
           action: () => handleAcceptAgreement(),
         };
-      case 4:
-        return {
-          title: 'Next',
-          width: 56,
-          action: (_) => handlePayment(),
-        };
       case 5:
         return {
-          title: 'Continue to my Dashboard',
+          title: "Next",
+          width: 48,
+          action: (_) => handlePayment(),
+        };
+      case 6:
+        return {
+          title: "Continue to my Dashboard",
           width: 80,
-          action: () => history.push('/dashboard'),
+          action: () => history.push("/dashboard"),
         };
       default:
-        return { title: 'Next', width: 56, action: handleNextStep };
+        return { title: "Next", width: 56, action: handleNextStep };
     }
   };
 
   const { title, action, width } = getForwardButtonProps(otherStep);
 
   if (!catFarms && otherStep !== 4) {
-    history.push('/dashboard');
+    history.push("/dashboard");
   }
 
   return (
-    <>
+    <Flex
+      align="center"
+      justify="center"
+      h={{ md: "calc(100vh - 6rem)" }}
+      direction="column"
+    >
       {isSubmitting && <Overlay text={text} />}
-      {catFarms ? (
-        <Flex
-          mx='auto'
-          w='100%'
-          bg='cf-dark.400'
-          justify='space-between'
-          pt={{ base: 2, md: 8 }}
-          px={{ md: 20 }}
-          overflowX='scroll'
-          direction={{ base: 'column', md: 'row' }}
-          align={{ base: 'center', md: 'initial' }}
-        >
-          <Flex align='center'>
-            <Heading as='h5' size='md' mr={{ md: 40 }} mb={{ base: 4, md: 0 }}>
-              {catName}
-            </Heading>
-          </Flex>
-          <Flex justify='space-between'>
-            {catFarms?.slice(0, 4)?.map((farm) => (
-              <Flex
-                key={farm._id}
-                align='center'
-                justify='center'
-                direction='column'
-                borderBottomWidth={
-                  (farm._id === selectedFarm?._id ||
-                    farm._id === data?.product?._id) &&
-                  2
-                }
-                borderBottomColor={
-                  (farm._id === selectedFarm?._id ||
-                    farm._id === data?.product?._id) &&
-                  'cf.800'
-                }
-                mr={{ base: 0, md: 5 }}
-              >
-                <Text
-                  px={6}
-                  textTransform='uppercase'
-                  fontSize={{ base: 'xs', md: 'md' }}
-                >
-                  {farm.cropVariety?.crop.name}
-                </Text>
-                <Flex
-                  align='center'
-                  direction={{ base: 'column', md: 'row' }}
-                  fontSize={{ base: 'x-small', md: 'tiny' }}
-                >
-                  <Text
-                    pr={{ base: 1, md: 2 }}
-                    textAlign={{ base: 'center', md: 'initial' }}
-                  >
-                    ({farm.cropVariety?.name}){' '}
-                  </Text>
-                  <Text as='span' d={{ base: 'none', md: 'block' }}>
-                    #{farm?.name}
-                  </Text>
-                </Flex>
-              </Flex>
-            ))}
-          </Flex>
-        </Flex>
-      ) : (
-        <Box pt={{ base: 1, md: 2 }} />
-      )}
 
-      <Flex
-        align='center'
-        justify='space-between'
-        w={{ md: 143 }}
-        mx='auto'
-        mt={{ base: 5, md: 12 }}
-        mb={4}
-        px={{ base: 2, md: 0 }}
-      >
-        <Text fontSize={{ base: 'xs', md: 'sm' }} color='red.600' w='50%'>
-          Farm starts :{' '}
-          {getformattedDate(
-            selectedFarm?.startDate || data?.product?.startDate,
-            {
-              weekday: 'short',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            }
-          )}
-        </Text>
-        <Link
-          href='https://gaip-info.com/multi-peril-crop-insurance'
-          isExternal
-          rel='noreferrer'
-          _hover={{ textDecor: 'none' }}
+      {otherStep !== 2 && (
+        <Flex
+          align="center"
+          justify="space-between"
+          w={{ base: 82, md: 143 }}
+          mx="auto"
+          mt={{ base: 5, md: 12 }}
+          mb={4}
+          px={{ base: 2, md: 0 }}
         >
-          <Flex
-            py={1}
-            align='center'
-            rounded='30px'
-            w={{ md: '11rem' }}
-            px={{ base: 2, md: 4 }}
-            borderWidth={1}
-            borderColor='cf.800'
+          <Text
+            fontSize={{ base: "sm", md: "md" }}
+            color="red.600"
+            w="50%"
+            fontWeight={700}
           >
-            <Image
-              h={4}
-              src={
-                require('../../../assets/images/startfarm/insurance.png')
-                  .default
-              }
-            />
-            <Text fontSize='sm' ml={2} color='cf.800'>
-              Farm is insured
+            Farm starts :{" "}
+            <Text
+              d={{ base: "block", md: "inline-block" }}
+              mt={{ base: -1, md: 0 }}
+            >
+              {getformattedDate(
+                selectedFarm?.startDate || data?.product?.startDate,
+                {
+                  weekday: "short",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }
+              )}
             </Text>
-          </Flex>
-        </Link>
-      </Flex>
+          </Text>
+          <Link
+            href="https://gaip-info.com/multi-peril-crop-insurance"
+            isExternal
+            rel="noreferrer"
+            _hover={{ textDecor: "none" }}
+          >
+            <Flex
+              py={1}
+              align="center"
+              rounded="30px"
+              w={{ md: "11rem" }}
+              px={{ base: 2, md: 4 }}
+              borderWidth={1}
+              borderColor="cf.800"
+              bg="cf.200"
+              color="cf.800"
+            >
+              <Image
+                h={4}
+                src={
+                  require("../../../assets/images/startfarm/insurance.png")
+                    .default
+                }
+              />
+              <Text fontSize="sm" ml={2} color="cf.800">
+                Farm is insured
+              </Text>
+            </Flex>
+          </Link>
+        </Flex>
+      )}
 
       <AnimateSharedLayout>
         <MotionFlex
-          w={{ md: 143 }}
-          h={{ md: 120 }}
-          mx='auto'
-          borderWidth={1}
-          borderColor='gray.200'
-          rounded='md'
-          bgColor='white'
-          overflow='hidden'
+          w={{ md: otherStep !== 2 && 143 }}
+          h={{
+            base: otherStep === 2 && "80vh",
+            md: otherStep !== 2 ? 120 : "80vh",
+          }}
+          mx="auto"
+          borderWidth={otherStep !== 2 && 1}
+          borderColor="gray.200"
+          align={otherStep === 2 && "center"}
+          justify={otherStep === 2 && "center"}
+          rounded="md"
+          bgColor={otherStep !== 2 && "white"}
+          overflow="hidden"
         >
           {getSteps(otherStep)}
         </MotionFlex>
       </AnimateSharedLayout>
 
       <Flex
-        align='center'
-        justify='center'
+        align="center"
+        justify="center"
         mt={6}
         px={{ base: 4, md: 0 }}
         mb={{ base: 4, md: 0 }}
       >
         <Button
           h={12}
-          width={40}
-          fontSize='md'
-          btntitle='Prev'
-          color='gray.700'
-          colorScheme='white'
+          width={32}
+          fontSize="md"
+          btntitle="Prev"
+          color="gray.700"
+          colorScheme="white"
           onClick={otherStep <= 0 ? handleBack : handlePrev}
           borderWidth={1}
         />
         <Button
           ml={{ base: 4, md: 6 }}
           h={12}
-          fontSize={{ md: 'lg' }}
+          fontSize={{ md: "lg" }}
           disabled={
             otherStep === 2 &&
             user?.signature?.string &&
@@ -295,7 +266,7 @@ const CooperativeSteps = ({ data, history }) => {
           onClick={action}
         />
       </Flex>
-    </>
+    </Flex>
   );
 };
 

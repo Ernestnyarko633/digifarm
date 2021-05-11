@@ -36,7 +36,7 @@ const CropSelection = () => {
     <Box w='90%' mx='auto' mt={{ base: 20, md: 0 }}>
       <Box textAlign='center' py={10}>
         <Heading as='h4' size={{ base: 'lg', md: 'xl' }}>
-          Which Farm is right for you.
+          Which Farm is right for you?
         </Heading>
       </Box>
       <Box pos='relative'>
@@ -73,7 +73,7 @@ const CropSelection = () => {
           </Tabs>
         )}
       </Box>
-      <Box textAlign='right' mt={6}>
+      <Box textAlign='right' my={6}>
         {!isLoading && (
           <Button
             btntitle='Continue'

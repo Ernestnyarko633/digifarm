@@ -18,12 +18,8 @@ import useWallet from 'context/wallet'
 const WalletCard = ({ acreage, price, farm }) => {
   const [reload, setReload] = useState(0)
   const { farmExpense } = useWallet()
-  const {
-    getAllTasks,
-    getActivities,
-    getMyScheduledTasks,
-    getMyFarmFeeds
-  } = useApi()
+  const { getAllTasks, getActivities, getMyScheduledTasks, getMyFarmFeeds } =
+    useApi()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 

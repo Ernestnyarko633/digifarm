@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:10-alpine as builder
+FROM node:14-alpine as builder
 
 # Run container as unprivileged user
 USER node

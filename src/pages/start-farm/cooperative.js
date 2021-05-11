@@ -104,7 +104,7 @@ const Cooperative = ({ location: { selected }, history }) => {
 
           <Link
             as={ReachRouter}
-            to={{ pathname: "/start-farm/cooperative-farms", selected }}
+            to={{ pathname: "/start-farm/cooperative-farms", selectedType }}
             _hover={{ textDecor: "none" }}
           >
             <Button

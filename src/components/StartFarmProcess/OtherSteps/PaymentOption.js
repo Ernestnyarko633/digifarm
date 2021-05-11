@@ -12,7 +12,7 @@ import PayOption from "components/Cards/PayOption";
 import Constants from "constant";
 import Support from "components/Support";
 
-const MotionGrid = motion.custom(Grid);
+const MotionGrid = motion(Grid);
 
 const PaymentOption = ({ farm }) => {
   const {
@@ -25,7 +25,7 @@ const PaymentOption = ({ farm }) => {
 
   return (
     <MotionGrid templateColumns={{ md: "repeat(2, 1fr)" }}>
-      <GridItem p={{ md: 10 }}>
+      <GridItem p={{ base: 4, md: 10 }}>
         <Box>
           <FarmInfo
             farm={farm}
@@ -43,7 +43,7 @@ const PaymentOption = ({ farm }) => {
         borderLeftWidth={1}
         borderLeftColor="gray.200"
         overflowY="scroll"
-        p={{ md: 10 }}
+        p={{ base: 4, md: 10 }}
         css={{
           direction: "rtl",
           scrollbarColor: "rebeccapurple",
@@ -51,8 +51,8 @@ const PaymentOption = ({ farm }) => {
         }}
       >
         <Box css={{ direction: "ltr" }}>
-          <Flex direction="column">
-            <Heading as="h6" fontSize="xl" ml={5}>
+          <Flex direction="column" align={{ base: "center", md: "initial" }}>
+            <Heading as="h6" fontSize="xl" ml={{ md: 5 }}>
               Choose your payment Option
             </Heading>
             <PayOption

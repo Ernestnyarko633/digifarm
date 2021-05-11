@@ -31,7 +31,7 @@ import { getformattedDate } from "helpers/misc";
 import ReloadPage from "components/Reload";
 import { Safety } from "../../../theme/Icons";
 
-const MotionFlex = motion.custom(Flex);
+const MotionFlex = motion(Flex);
 
 const OtherSteps = ({ data, history: { push } }) => {
   const { user } = useAuth();

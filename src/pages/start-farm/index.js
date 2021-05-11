@@ -38,7 +38,7 @@ const StartFarm = () => {
             Welcome {user?.firstName}
           </Text>
           <Heading as="h4" size="xl">
-            How would you like to farm with us
+            How would you like to farm with us?
           </Heading>
         </Box>
 
@@ -52,7 +52,6 @@ const StartFarm = () => {
               state={item}
               key={item.id}
               id={item.id}
-              disabled={item.id === "cooperative"}
               btntitle="Select"
               title={item.name}
               options={item.benefits}
