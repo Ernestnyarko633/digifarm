@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 import OrderCard from './OrderCard'
 
-const MotionFlex = motion.custom(Flex)
+const MotionFlex = motion(Flex)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 const OrdersCard = ({ onOpen, data, currentSlide }) => {
