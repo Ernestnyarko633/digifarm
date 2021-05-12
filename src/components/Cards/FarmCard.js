@@ -35,16 +35,25 @@ const FarmCard = ({ farm }) => {
       let activities = data
       // get current activities being worked on
       let startedActivities = activities.filter(
+        activity => activity?.status === Status.IN_PROGRESS
+      )
+      let completedActivities = activities.filter(
         activity => activity?.status === Status.COMPLETED
       )
 
       startedActivities = startedActivities.sort(
-        (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+      )
+
+      completedActivities = completedActivities.sort(
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
       )
 
       //set image
       if (startedActivities.length) {
         setImageUrl(startedActivities[0]?.imageUrl)
+      } else if (completedActivities.length) {
+        setImageUrl(completedActivities[0]?.imageUrl)
       } else {
         //set default
         setImageUrl(farm?.order?.product?.cropVariety?.imageUrl)
