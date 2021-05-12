@@ -26,7 +26,7 @@ import useComponent from 'context/component'
 
 import { dateIntervals, isDateG8Today } from 'helpers/misc'
 
-const MotionBox = motion.custom(Box)
+const MotionBox = motion(Box)
 
 export default function Farm() {
   const { isAuthenticated } = useAuth()
