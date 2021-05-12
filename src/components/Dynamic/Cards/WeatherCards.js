@@ -44,7 +44,10 @@ const WeatherCard = ({
               </Text>
               <Flex mt={2} justify='center' align='center'>
                 <Heading fontSize={{ md: '3xl' }} fontWeight={900} mt={1}>
-                  {farmfeeds[0]?.feed?.plantInfo?.population}
+                  {
+                    farmfeeds[farmfeeds?.length - 1]?.feed?.plantInfo
+                      ?.population
+                  }
                 </Heading>
               </Flex>
             </Box>

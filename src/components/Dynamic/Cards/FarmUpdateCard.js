@@ -1,7 +1,7 @@
-import { Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
+import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ChevronRightIcon } from '@chakra-ui/icons'
+//import { ChevronRightIcon } from '@chakra-ui/icons'
 
 export default function FarmUpdateCard({
   title,
@@ -41,11 +41,11 @@ export default function FarmUpdateCard({
         </Text>
       </Box>
 
-      <Box mt={3}>
+      {/* <Box mt={3}>
         <Link color='cf.400'>
           Learn more <Icon as={ChevronRightIcon} />
         </Link>
-      </Box>
+      </Box> */}
     </Box>
   )
 }

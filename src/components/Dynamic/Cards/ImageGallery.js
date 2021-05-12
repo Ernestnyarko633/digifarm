@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react'
 import { IoEllipsisVertical } from 'react-icons/io5'
@@ -9,6 +10,7 @@ import ReactPlayer from 'react-player/lazy'
 const MotionFlex = motion(Flex)
 
 export default function ImageGallery({ title, farmfeeds, activityName }) {
+  console.log(farmfeeds, 'whole room')
   const [images, setImages] = React.useState([])
   const [selectedImage, setSelectedImage] = React.useState({})
   const [activeIndex, setActiveIndex] = React.useState(0)
