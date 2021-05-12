@@ -67,6 +67,7 @@ const PayOption = ({
         borderBottomWidth={1}
         borderBottomColor="gray.200"
         pb={3}
+        w="100%"
       >
         <Text fontSize="lg" fontWeight={700} fontFamily="heading">
           {title}

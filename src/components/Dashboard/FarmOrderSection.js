@@ -42,6 +42,13 @@ const FarmOrderSection = ({
     currentPendingOrdersSlide
   } = useComponent()
 
+  const sortedPendingOrders = PendingOrder?.slice()?.sort(
+    (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+  )
+  const sortedProcessingOrders = processingOrder
+    ?.slice()
+    ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+
   return (
     <ComponentWrapper
       state={sliderType}
@@ -67,9 +74,9 @@ const FarmOrderSection = ({
           )}
           {sliderType === 'processing_order' && (
             <>
-              {processingOrder.length > 0 ? (
+              {sortedProcessingOrders.length > 0 ? (
                 <OrdersCard
-                  data={processingOrder}
+                  data={sortedProcessingOrders}
                   onOpen={onOpen}
                   currentSlide={currentProcessingOrdersSlide}
                 />
@@ -80,9 +87,9 @@ const FarmOrderSection = ({
           )}
           {sliderType === 'pending_order' && (
             <>
-              {PendingOrder.length > 0 ? (
+              {sortedPendingOrders.length > 0 ? (
                 <OrdersCard
-                  data={PendingOrder}
+                  data={sortedPendingOrders}
                   onOpen={onOpen}
                   currentSlide={currentPendingOrdersSlide}
                 />
