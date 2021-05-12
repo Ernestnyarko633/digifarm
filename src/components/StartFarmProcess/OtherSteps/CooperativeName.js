@@ -7,7 +7,6 @@ import { FormControl, FormLabel, Icon, Input } from "@chakra-ui/react";
 import { HiPencil } from "react-icons/all";
 
 const CooperativeName = ({ farm }) => {
-  console.log("farm", farm);
   return (
     <Flex align="center" justify="center" direction="column">
       <Box pos="relative">

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Grid, Text, Flex, Box } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -20,6 +21,15 @@ export default function Updates({
 
     getFeeds()
   }, [farmfeeds])
+  const sortedFeeds = feeds
+    ?.slice()
+    ?.sort((a, b) => new Date(b.feed?.updatedAt) - new Date(a.feed?.updatedAt))
+    ?.filter(
+      (feed, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(feed)
+        ) === index
+    )
   return (
     <>
       {farmFeedsIsLoading || farmFeedsHasError ? (
@@ -39,19 +49,21 @@ export default function Updates({
       ) : (
         <>
           <Grid gap={8} mb={8}>
-            {feeds?.length > 0 &&
-              feeds?.map(feed => (
+            {sortedFeeds?.length > 0 &&
+              sortedFeeds?.map(feed => (
                 <FarmUpdateCard
                   key={feed._id}
                   title='FARM MANAGER UPDATES'
-                  duration={`${feed?.task?.duration} h`}
+                  duration={new Date(
+                    feed?.feed?.updatedAt
+                  ).toLocaleDateString()}
                   subtitle={`${feed?.task?.title}`}
                   text={feed?.feed?.summary.replace(/<[^>]*>/g, '')}
                   icon={FarmUpdates}
                 />
               ))}
           </Grid>
-          {farmfeeds?.length === 0 && (
+          {sortedFeeds?.length === 0 && (
             <Flex w='100%' justify='center' align='center'>
               <Text
                 w='100%'

@@ -18,4 +18,8 @@
     padding: 6px;
     font-weight: bold;
   }
+
+section#chakra-modal-4[style] {
+    opacity: 1;
+}
   

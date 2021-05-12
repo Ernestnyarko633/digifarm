@@ -42,12 +42,23 @@ const FarmOrderSection = ({
     currentPendingOrdersSlide
   } = useComponent()
 
-  const sortedPendingOrders = PendingOrder?.slice()?.sort(
-    (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
-  )
+  const sortedPendingOrders = PendingOrder?.slice()
+    ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+    .filter(
+      (pendingOrder, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(pendingOrder)
+        ) === index
+    )
   const sortedProcessingOrders = processingOrder
     ?.slice()
     ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+    .filter(
+      (processingOrder, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(processingOrder)
+        ) === index
+    )
 
   return (
     <ComponentWrapper

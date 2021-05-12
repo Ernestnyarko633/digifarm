@@ -97,3 +97,7 @@
     text-shadow: 0.25em 0 0 #3c9130, 0.5em 0 0 #3c9130;
   }
 }
+
+section#chakra-modal-4[style] {
+  opacity: 1 !important;
+}
