@@ -9,7 +9,7 @@ import ReactGA from 'react-ga'
 import App from 'container/App'
 import { theme } from 'theme/theme'
 
-import './assets/styles/index.css'
+import 'assets/styles/index.css'
 
 const engine = new Styletron()
 
