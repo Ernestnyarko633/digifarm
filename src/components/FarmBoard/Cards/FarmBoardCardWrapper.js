@@ -21,7 +21,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
   return (
     <Box
       rounded='xl'
-      w={{ base: 82, md: '550px', xl: '650px' }}
+      w={{ base: 82, md: '550px', xl: 125 }}
       mx='auto'
       ml={{ md: 0, lg: 16, xl: 0 }}
       bg='white'
@@ -47,7 +47,13 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
           </Flex>
         )}
 
-        <Flex justify='flex-end' textAlign='right' w='100%' ml={{ md: 6 }}>
+        <Flex
+          justify='flex-end'
+          textAlign='right'
+          w='100%'
+          ml={{ md: 6 }}
+          cursor='pointer'
+        >
           {status !== 'news' && status !== 'weekly_videos' && false && (
             <Box>
               <Icon

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
 import { Box, Flex, Heading, Text, Image, Collapse } from '@chakra-ui/react'
 
-const NewsCard = ({ activeFarm, timestamp, content, status }) => {
+const NewsCard = ({ timestamp, content, status }) => {
   const [show, setShow] = React.useState(false)
   const handleToggle = () => setShow(!show)
 
@@ -19,11 +19,13 @@ const NewsCard = ({ activeFarm, timestamp, content, status }) => {
 
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
-          <Text color='cf.800'>
+          <Text color='cf.800' fontWeight={700}>
             {status === 'news' ? status.toUpperCase() : null}
           </Text>
         </Box>
-        <Text color='gray.500'>{timestamp}</Text>
+        <Text color='gray.500' fontSize={{ base: 'xs', md: 'sm' }} mt={-1}>
+          {timestamp}
+        </Text>
       </Flex>
     </Flex>
   )
