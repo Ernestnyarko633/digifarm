@@ -17,7 +17,7 @@ import useApi from "context/api";
 const FarmBoardContent = ({ farms }) => {
   const [activeFarmIndex, setActiveFarmIndex] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [setError] = React.useState(false);
+  const [error, setError] = React.useState(null);
   const [feeds, setFeeds] = React.useState([]);
   const [news, setNewsData] = React.useState(null);
   const [videos, setVideosData] = React.useState(null);
@@ -195,7 +195,7 @@ const FarmBoardContent = ({ farms }) => {
           mx="auto"
           reload={() => null}
           loading={loading}
-          error={null}
+          error={error}
           text="Stand by as we load your farm board"
         />
       ) : (
