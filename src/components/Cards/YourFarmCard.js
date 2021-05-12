@@ -12,9 +12,12 @@ import {
 import React from "react";
 import { Link as ReachLink } from "react-router-dom";
 import Button from "components/Button/index";
-//import Bitmap from 'assets/images/Bitmap.png'
 import PropTypes from "prop-types";
-//import { Link as ReachRouter } from 'react-router-dom'
+import { motion } from "framer-motion";
+import ArrowButton from "../Button/ArrowButton";
+
+const MotionFlex = motion(Flex);
+const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 
 const ItemTag = ({
   setFilter,
@@ -44,15 +47,6 @@ const ItemTag = ({
     </Text>
   </Tag>
 );
-
-ItemTag.propTypes = {
-  id: PropTypes.number,
-  setFilter: PropTypes.func,
-  setFarmIndex: PropTypes.func,
-  filter: PropTypes.string,
-  title: PropTypes.string,
-  text: PropTypes.string,
-};
 
 const items = [
   { id: 0, title: "All Feeds", filter: "all" },
@@ -84,9 +78,29 @@ const YourFarmCard = ({
     { color: "#76B1F6" },
   ];
 
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+
+  // let arr = new Array(10).fill({
+  //   name: "Jeff's farm",
+  //   img: "https://completefarmer.s3.us-east-2.amazonaws.com/app/images/crops/solo-gold.png",
+  //   _id: "606f58a1cf286d001193cf93",
+  // });
+
+  const handleClick = (direction) => {
+    setCurrentSlide((prevState) => {
+      return (farms.length + prevState + direction) % farms.length;
+    });
+  };
+
   return (
     <Box bg="white" w="100%" p={{ base: 0, md: 16 }}>
-      <Flex align="center" justify="center" direction="column" w="100%">
+      <Flex
+        align="center"
+        justify="center"
+        direction="column"
+        w="100%"
+        pos="relative"
+      >
         <Flex align="center" direction="row" justify="space-around" w="100%">
           <Heading as="h6" fontSize="lg">
             Your Farm(s)
@@ -96,14 +110,32 @@ const YourFarmCard = ({
           </Link>
         </Flex>
 
+        <Box
+          pos={{ md: "absolute" }}
+          left={{ md: -12 }}
+          d={farms.length > 8 ? "block" : "none"}
+        >
+          <ArrowButton handleClick={handleClick} />
+        </Box>
+
         <Flex
           direction="column"
           align="center"
           justify="flex-start"
-          w="70%"
+          maxW={{ md: 130 }}
+          w={{ md: 130 }}
+          overflow="hidden"
           my={10}
         >
-          <Flex align="center" w="100%">
+          <MotionFlex
+            align="center"
+            animate={{
+              x: `-${7 * currentSlide}rem`,
+              transition: { duration: 0.6, ...transition },
+            }}
+            pos="relative"
+            w="100%"
+          >
             {farms?.map((farm, index) => (
               <>
                 {farm?.order?.product?._id && (
@@ -139,7 +171,7 @@ const YourFarmCard = ({
                         w="100%"
                         h="100%"
                         rounded="100%"
-                        src={farm?.order.product?.cropVariety?.imageUrl}
+                        src={farm?.order?.product?.cropVariety?.imageUrl}
                       />
                       <Badge
                         position="absolute"
@@ -161,7 +193,7 @@ const YourFarmCard = ({
                 )}
               </>
             ))}
-          </Flex>
+          </MotionFlex>
 
           <Flex direction="row" w="100%" mt={1}>
             {items.map((item) => (
@@ -175,84 +207,20 @@ const YourFarmCard = ({
                 filter={filter}
               />
             ))}
-            {/*<Tag*/}
-            {/*  my={2}*/}
-            {/*  onClick={() => {*/}
-            {/*    setFilter("combined");*/}
-            {/*    setActiveFarmIndex(0);*/}
-            {/*  }}*/}
-            {/*  color={filter === "combined" ? "cf.800" : "gray.400"}*/}
-            {/*  justifyContent="center"*/}
-            {/*  bgGradient={*/}
-            {/*    filter === "combined"*/}
-            {/*      ? "linear(to-l, #DEECDC,#EFF6ED)"*/}
-            {/*      : "linear(to-l, #fff)"*/}
-            {/*  }*/}
-            {/*  rounded={20}*/}
-            {/*  minW="12"*/}
-            {/*  maxH="5"*/}
-            {/*  px={5}*/}
-            {/*  py={3}*/}
-            {/*  mr={2}*/}
-            {/*>*/}
-            {/*  <Text fontSize={{ base: "10px", md: "sm" }} fontWeight={600}>*/}
-            {/*    All Feeds*/}
-            {/*  </Text>*/}
-            {/*</Tag>*/}
-            {/*<Tag*/}
-            {/*  my={2}*/}
-            {/*  onClick={() => {*/}
-            {/*    setActiveFarmIndex(null);*/}
-
-            {/*    setFilter("weekly videos");*/}
-            {/*  }}*/}
-            {/*  color={filter === "weekly videos" ? "cf.800" : "gray.400"}*/}
-            {/*  justifyContent="center"*/}
-            {/*  bgGradient={*/}
-            {/*    filter === "weekly videos"*/}
-            {/*      ? "linear(to-l, #DEECDC,#EFF6ED)"*/}
-            {/*      : "linear(to-l, #fff)"*/}
-            {/*  }*/}
-            {/*  rounded={20}*/}
-            {/*  minW="12"*/}
-            {/*  maxH="5"*/}
-            {/*  px={5}*/}
-            {/*  py={3}*/}
-            {/*  mr={2}*/}
-            {/*>*/}
-            {/*  <Text fontSize={{ base: "10px", md: "sm" }} fontWeight={600}>*/}
-            {/*    Weekly Videos*/}
-            {/*  </Text>*/}
-            {/*</Tag>*/}
-            {/*<Tag*/}
-            {/*  my={2}*/}
-            {/*  onClick={() => {*/}
-            {/*    setActiveFarmIndex(null);*/}
-            {/*    setFilter("news");*/}
-            {/*  }}*/}
-            {/*  color={filter === "news" ? "cf.800" : "gray.400"}*/}
-            {/*  justifyContent="center"*/}
-            {/*  bgGradient={*/}
-            {/*    filter === "news"*/}
-            {/*      ? "linear(to-l, #DEECDC,#EFF6ED)"*/}
-            {/*      : "linear(to-l, #fff)"*/}
-            {/*  }*/}
-            {/*  rounded={20}*/}
-            {/*  minW="12"*/}
-            {/*  maxH="5"*/}
-            {/*  px={5}*/}
-            {/*  py={3}*/}
-            {/*  mr={2}*/}
-            {/*>*/}
-            {/*  <Text fontWeight={600} fontSize={{ base: "10px", md: "sm" }}>*/}
-            {/*    News*/}
-            {/*  </Text>*/}
-            {/*</Tag>*/}
           </Flex>
         </Flex>
       </Flex>
     </Box>
   );
+};
+
+ItemTag.propTypes = {
+  id: PropTypes.number,
+  setFilter: PropTypes.func,
+  setFarmIndex: PropTypes.func,
+  filter: PropTypes.string,
+  title: PropTypes.string,
+  text: PropTypes.string,
 };
 
 YourFarmCard.propTypes = {
