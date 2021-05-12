@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 import ReactPlayer from 'react-player/lazy'
 
-const MotionFlex = motion.custom(Flex)
+const MotionFlex = motion(Flex)
 
 export default function ImageGallery({ title, farmfeeds, activityName }) {
   const [images, setImages] = React.useState([])
