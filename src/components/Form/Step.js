@@ -30,7 +30,7 @@ const Step = ({ activity, cutThread }) => {
           ) : (
             <Icon
               as={GoPrimitiveDot}
-              color={isInProgess ? 'cf.800' : 'gray.300'}
+              color={isInProgess ? 'black' : 'gray.300'}
             />
           )}
         </Flex>
