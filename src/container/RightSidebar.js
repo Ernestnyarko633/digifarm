@@ -1,9 +1,9 @@
 /* eslint-disable */
-import { Box, Grid, Heading } from '@chakra-ui/react';
-import EventCard from 'components/Cards/EventCard';
-import React from 'react';
-import Prismic from 'prismic-javascript';
-import getConfig from 'utils/configs';
+import { Box, Grid, Heading } from "@chakra-ui/react";
+import EventCard from "components/Cards/EventCard";
+import React from "react";
+import Prismic from "prismic-javascript";
+import getConfig from "utils/configs";
 
 const RightSidebar = () => {
   const [doc, setDocData] = React.useState(null);
@@ -20,7 +20,7 @@ const RightSidebar = () => {
     if (mounted && !doc) {
       const fetchData = async () => {
         const response = await Client.query(
-          Prismic.Predicates.at('document.type', 'announcements')
+          Prismic.Predicates.at("document.type", "announcements")
         );
         if (response) {
           setDocData(response.results);
@@ -35,26 +35,26 @@ const RightSidebar = () => {
     <Box
       pt={{ base: 12, md: 28 }}
       right={{ md: 0 }}
-      bg={{ md: 'white' }}
-      as='aside'
+      bg={{ md: "white" }}
+      as="aside"
       bottom={{ md: 0 }}
-      pos={{ md: 'fixed' }}
+      pos={{ md: "fixed" }}
       px={{ md: 5, xl: 10 }}
-      h={{ lg: '100vh' }}
-      w={{ md: '22%', xl: '25%' }}
+      h={{ lg: "100vh" }}
+      w={{ md: "22%", xl: "25%" }}
+      overflowY="scroll"
     >
       <Heading
-        as='h4'
-        textTransform='uppercase'
-        fontSize={{ base: 'lg', md: '2xl' }}
+        as="h4"
+        textTransform="uppercase"
+        fontSize={{ base: "lg", md: "2xl" }}
         fontWeight={700}
         borderBottomWidth={1}
-        borderBottomColor='gray.300'
+        borderBottomColor="gray.300"
         pb={2}
       >
         Events
       </Heading>
-      
 
       <Grid gap={4} mt={4} minH={{ base: 64, md: 90 }}>
         {doc?.map((e, i) => (
