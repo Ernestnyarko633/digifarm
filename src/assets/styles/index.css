@@ -98,6 +98,6 @@
   }
 }
 
-section#chakra-modal-4[style] {
+section[style] {
   opacity: 1 !important;
 }
