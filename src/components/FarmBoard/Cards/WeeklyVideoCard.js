@@ -8,7 +8,7 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 //import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import ReactPlayer from 'react-player/lazy'
 
-const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
+const WeeklyVideoCard = ({ status, timestamp, content }) => {
   const [activeVideoIndex, setVideoActiveIndex] = React.useState(0)
   const [selectedVideo, setSelectedVideo] = React.useState(
     content?.data?.body[0].items[0]
@@ -52,9 +52,13 @@ const WeeklyVideoCard = ({ activeFarm, status, timestamp, content }) => {
 
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
-          <Text color='cf.800'>{status ? 'VIDEOS' : null}</Text>
+          <Text color='cf.800' fontWeight={700}>
+            {status ? 'VIDEOS' : null}
+          </Text>
         </Box>
-        <Text color='gray.500'>{timestamp}</Text>
+        <Text color='gray.500' fontSize={{ base: 'xs', md: 'sm' }} mt={-1}>
+          {timestamp}
+        </Text>
       </Flex>
     </Flex>
   )

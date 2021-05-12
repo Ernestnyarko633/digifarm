@@ -77,6 +77,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
       setSelectedItem(array[0])
     }
   }, [content, status])
+
   const Detail = () => {
     return (
       <Flex
@@ -100,7 +101,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
             >
               {user?.firstName}’s Farm
             </Heading>
-            <Text color='gray.600' fontSize={{ base: 'sm', md: 'md' }}>
+            <Text color='gray.500' fontSize={{ base: 'xs', md: 'sm' }} mt={-1}>
               {`${activeFarm?.order?.product?.location?.name}, ${activeFarm?.order?.product?.location?.state}`}
             </Text>
           </Box>
@@ -108,13 +109,13 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
 
         <Flex direction='column' justify='center' align='center'>
           <Box mx={{ base: 4 }}>
-            <Text color='cf.800'>
+            <Text color='cf.800' fontWeight={700}>
               {status !== 'news' || status !== 'weekly_videos'
                 ? 'FARM FEED'
                 : null}
             </Text>
           </Box>
-          <Text fontSize={{ base: 'xs', md: 'sm' }} color='gray.500'>
+          <Text fontSize={{ base: 'xs', md: 'sm' }} color='gray.500' mt={-1}>
             {timestamp}
           </Text>
         </Flex>
@@ -133,7 +134,6 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
           <Box pos='relative'>
             {selectedItem?.type === 'image' && (
               <Image
-                rounded='lg'
                 h={{ md: 85 }}
                 w='100%'
                 objectFit='cover'
@@ -233,7 +233,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               </Flex>
 
               <Collapse
-                startingHeight={85}
+                startingHeight={108}
                 in={show}
                 onClick={handleToggle}
                 cursor='pointer'
