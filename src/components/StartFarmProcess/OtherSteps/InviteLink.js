@@ -20,7 +20,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { Schedule, Support, Update } from 'theme/Icons'
 
-const MotionGrid = motion.custom(Grid)
+const MotionGrid = motion(Grid)
 
 const InviteLink = () => {
   const [files, setFiles] = React.useState([])
