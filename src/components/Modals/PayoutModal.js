@@ -53,17 +53,6 @@ const PayoutModal = () => {
     homeAddress: ''
   }
 
-  //   const bankValues = {
-  //     bankName: '',
-  //     bankBranch: '',
-  //     branchCountry: '',
-  //     currency: '',
-  //     swiftCode: '',
-  //     accountName: '',
-  //     accountNumber: '',
-  //     iban: ''
-  //   }
-
   const onSubmit = async (
     values,
     { setSubmitting, setErrors, setStatus, resetForm }
