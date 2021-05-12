@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react'
 import { IoEllipsisVertical } from 'react-icons/io5'

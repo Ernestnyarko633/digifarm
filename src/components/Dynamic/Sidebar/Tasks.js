@@ -15,7 +15,7 @@ import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
-
+import { Status } from 'helpers/misc'
 export default function Tasks({
   scheduledTasks,
   farmfeeds,
@@ -46,6 +46,28 @@ export default function Tasks({
     getFeeds()
   }, [farmfeeds])
 
+  //sort to current to startDate
+  const sortedScheduledTasks = scheduledTasks
+    ?.slice()
+    ?.sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
+    ?.filter(task => task.status !== Status.COMPLETED)
+    .filter(
+      (task, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(task)
+        ) === index
+    )
+
+  const sortedFeeds = feeds
+    ?.slice()
+    ?.sort((a, b) => new Date(b.feed?.updatedAt) - new Date(a.feed?.updatedAt))
+    .filter(
+      (feed, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(feed)
+        ) === index
+    )
+  //get Todays task
   const getTodaysTasks = (scheduledTasks, type) => {
     let today = new Date().toLocaleDateString()
 
@@ -99,18 +121,20 @@ export default function Tasks({
         <>
           {scheduledTasks.length > 0 && (
             <>
-              {getTodaysTasks(scheduledTasks, 'today').map((today, index) => (
-                <>
-                  <FarmUpdateCard
-                    key={mapKey(index)}
-                    title='TODAY’S TASK'
-                    duration={today?.task?.duration}
-                    subtitle={today?.task?.title}
-                    text={today?.task?.description?.replace(/<[^>]*>/g, '')}
-                    icon={BiTime}
-                  />
-                </>
-              ))}
+              {getTodaysTasks(sortedScheduledTasks, 'today').map(
+                (today, index) => (
+                  <>
+                    <FarmUpdateCard
+                      key={mapKey(index)}
+                      title='TODAY’S TASK'
+                      duration={new Date(today?.startDate).toLocaleDateString()}
+                      subtitle={today?.task?.title}
+                      text={today?.task?.description?.replace(/<[^>]*>/g, '')}
+                      icon={BiTime}
+                    />
+                  </>
+                )
+              )}
             </>
           )}
         </>
@@ -142,23 +166,20 @@ export default function Tasks({
           </Box>
         ) : (
           <>
-            {scheduledTasks.length > 0 &&
-              getTodaysTasks(scheduledTasks, 'scheduled').length > 0 &&
-              getTodaysTasks(scheduledTasks, 'scheduled')?.map(
-                (today, index) => (
-                  <React.Fragment key={mapKey(index)}>
-                    {index === 0 && (
-                      <FarmUpdateCard
-                        title='SCHEDULED TASK'
-                        duration={today?.task?.duration}
-                        subtitle={today?.task?.title}
-                        text={today?.task?.description.replace(/<[^>]*>/g, '')}
-                        icon={BiTime}
-                      />
-                    )}
-                  </React.Fragment>
-                )
-              )}
+            {sortedScheduledTasks.length > 0 && (
+              <FarmUpdateCard
+                title='SCHEDULED TASK'
+                duration={new Date(
+                  sortedScheduledTasks[0]?.startDate
+                ).toLocaleDateString()}
+                subtitle={sortedScheduledTasks[0]?.task?.title}
+                text={sortedScheduledTasks[0]?.task?.description.replace(
+                  /<[^>]*>/g,
+                  ''
+                )}
+                icon={BiTime}
+              />
+            )}
           </>
         )}
 
@@ -178,7 +199,7 @@ export default function Tasks({
           </Box>
         ) : (
           <>
-            {feeds.length > 0 && (
+            {sortedFeeds.length > 0 && (
               <FarmUpdateCard
                 title='FARM MANAGER UPDATE'
                 duration={feeds[0]?.task?.duration}
