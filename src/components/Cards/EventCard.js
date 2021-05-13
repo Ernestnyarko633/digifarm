@@ -12,7 +12,7 @@ const EventCard = ({ href, title, summary, image }) => {
       color='white'
       maxH={{ md: 56 }}
     >
-      <Flex align='center'>
+      <Flex>
         <Image
           w={{ base: 16, md: 20 }}
           h={{ base: 16, md: 20 }}

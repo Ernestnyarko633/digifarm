@@ -202,7 +202,9 @@ export default function Tasks({
             {sortedFeeds.length > 0 && (
               <FarmUpdateCard
                 title='FARM MANAGER UPDATE'
-                duration={feeds[0]?.task?.duration}
+                duration={new Date(
+                  feeds[0]?.feed?.updatedAt
+                ).toLocaleDateString()}
                 subtitle={feeds[0]?.task?.title}
                 text={feeds[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
                 icon={Updates}

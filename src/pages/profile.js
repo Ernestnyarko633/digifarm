@@ -42,7 +42,11 @@ const Profile = () => {
   return (
     <Box bgColor='white'>
       <Header />
-      <Container pt={{ md: 55 }} maxW={{ md: '7xl' }}>
+      <Container
+        pt={{ md: 55 }}
+        maxW={{ md: '7xl' }}
+        h={{ md: 'calc(100vh - 4rem)' }}
+      >
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Flex
             d={{ base: 'none', md: 'flex' }}
