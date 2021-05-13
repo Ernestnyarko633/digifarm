@@ -8,8 +8,13 @@ import axios from 'axios'
 const ApiContext = createContext()
 
 export const ApiContextProvider = ({ children }) => {
-  const { FMS_API, AUTH_API, PAYMENT_API, DIGITAL_FARMER_API, BUYER_API } =
-    getConfig()
+  const {
+    FMS_API,
+    AUTH_API,
+    PAYMENT_API,
+    DIGITAL_FARMER_API,
+    BUYER_API
+  } = getConfig()
 
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })

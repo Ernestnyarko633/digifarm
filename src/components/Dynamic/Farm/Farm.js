@@ -44,8 +44,10 @@ export default function Farm({
     EOSTaskForStatsCreationIsLoading,
     setEOSTaskForStatsCreationIsLoading
   ] = useState(false)
-  const [EOSTaskForStatsCreationHasError, setEOSTaskForStatsCreationHasError] =
-    useState(null)
+  const [
+    EOSTaskForStatsCreationHasError,
+    setEOSTaskForStatsCreationHasError
+  ] = useState(null)
   const [EOSTaskForStatsCreated, setEOSTaskForStatsCreated] = useState({})
   const [__error, _setError] = React.useState(null)
   const { eosStats, eosTask: createTask } = useApi()
