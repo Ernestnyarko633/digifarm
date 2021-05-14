@@ -15,7 +15,7 @@ import { Button } from "../index";
 
 const EventModal = ({ isOpen, onClose, selectedData }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="3xl">
+    <Modal isOpen={isOpen} onClose={onClose} isCentered size="5xl">
       <ModalOverlay />
       <ModalContent rounded="lg">
         <ModalCloseButton color="cf.400" />
@@ -27,7 +27,7 @@ const EventModal = ({ isOpen, onClose, selectedData }) => {
                 src={selectedData?.data?.body[0]?.primary?.media?.url}
               />
             </Box>
-            <Box>
+            <Box px={{ md: 10 }}>
               <Heading as="h3" fontSize={{ md: "3xl" }}>
                 {selectedData?.data?.title[0]?.text}
               </Heading>
