@@ -5,7 +5,7 @@ import React from "react";
 import Prismic from "prismic-javascript";
 import getConfig from "utils/configs";
 
-const RightSidebar = () => {
+const RightSidebar = ({ onOpen, setSelectedData }) => {
   const [doc, setDocData] = React.useState(null);
 
   const mapKey = (index) => index;
@@ -57,13 +57,12 @@ const RightSidebar = () => {
       </Heading>
 
       <Grid gap={4} mt={4} minH={{ base: 64, md: 90 }}>
-        {doc?.map((e, i) => (
+        {doc?.map((event, i) => (
           <EventCard
             key={mapKey(i)}
-            href={e.data?.body[0]?.primary?.hyperlink?.url}
-            title={e.data?.title[0]?.text}
-            summary={e.data?.summary[0]?.text}
-            image={e.data?.body[0]?.primary?.media?.url}
+            onOpen={onOpen}
+            setSelectedData={setSelectedData}
+            event={event}
           />
         ))}
       </Grid>
