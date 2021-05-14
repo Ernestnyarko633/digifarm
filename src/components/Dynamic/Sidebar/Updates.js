@@ -30,6 +30,7 @@ export default function Updates({
           item => JSON.stringify(item) === JSON.stringify(feed)
         ) === index
     )
+
   return (
     <>
       {farmFeedsIsLoading || farmFeedsHasError ? (
