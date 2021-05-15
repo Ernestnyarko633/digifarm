@@ -48,7 +48,7 @@ const EventCard = ({ event, onOpen, setSelectedData }) => {
             <Text>
               Time{" "}
               <Text as="span" fontWeight={700}>
-                {moment.utc(event.data.publishing_date).format("HH:mm A")}
+                {moment.utc(event.data.publishing_date).format("HH:mm")} GMT
               </Text>
             </Text>
           </Box>
