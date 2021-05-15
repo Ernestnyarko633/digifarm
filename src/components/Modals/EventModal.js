@@ -54,8 +54,9 @@ const EventModal = ({ isOpen, onClose, selectedData }) => {
                     Time:{" "}
                     <Text as="span" color="black" fontWeight={700} ml={2}>
                       {moment(selectedData?.data?.publishing_date).format(
-                        "HH:mm A"
-                      )}
+                        "HH:mm"
+                      )}{" "}
+                      GMT
                     </Text>
                   </Text>
                 </Flex>
