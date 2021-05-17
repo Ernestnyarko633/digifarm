@@ -139,7 +139,6 @@ section[style] {
 @media screen and (min-width: 62em) {
   .intl-tel-input input {
     font-size: var(--chakra-fontSizes-sm);
-    height: var(--chakra-sizes-16);
   }
 }
 
