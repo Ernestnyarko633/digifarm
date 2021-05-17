@@ -1,3 +1,5 @@
+/*eslint-disable*/
+
 import { Box, useToast, Heading, Button, Grid } from '@chakra-ui/react'
 import React from 'react'
 import { useFormik } from 'formik'
@@ -5,6 +7,7 @@ import useAuth from 'context/auth'
 import useApi from 'context/api'
 import { FormInput } from 'components/Form'
 import BasePhone from 'components/Form/BasePhone'
+import CustomPhoneInput from 'components/Form/CustomPhoneInput'
 
 const UserDetailsForm = () => {
   const { isAuthenticated, store } = useAuth()
@@ -149,7 +152,7 @@ const UserDetailsForm = () => {
               bg='white'
             />
 
-            <BasePhone
+            {/* <BasePhone
               country={formik.values.address.country}
               value={formik.values.phoneNumber.replace(/\D/g, '').substr(3, 10)}
               setFieldTouched={formik.setFieldTouched}
@@ -157,7 +160,16 @@ const UserDetailsForm = () => {
               phoneNumber='phoneNumber'
               error={formik.errors.phoneNumber}
               bg='white'
-            />
+            /> */}
+
+          <CustomPhoneInput
+            name='phoneNumber'
+            error={formik.errors.phoneNumber}
+            value={formik.values.phoneNumber}
+            touched={formik.touched.phoneNumber}
+            setFieldValue={formik.setFieldValue}
+            setFieldTouched={formik.setFieldTouched}
+          />
 
             <FormInput
               label='Email'
