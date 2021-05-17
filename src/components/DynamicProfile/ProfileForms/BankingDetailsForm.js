@@ -13,7 +13,6 @@ const BankingDetailsForm = ({ bankDetails }) => {
   const { createBankDetails, updateBankDetails } = useApi()
   const toast = useToast()
 
-  console.log(bankDetails, 'details')
   const formik = useFormik({
     initialValues: {
       bankName: bankDetails?.length
