@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { Box, useToast, Heading, Button, Grid } from '@chakra-ui/react'
 import React from 'react'
 import { useFormik } from 'formik'
@@ -12,6 +13,7 @@ const BankingDetailsForm = ({ bankDetails }) => {
   const { createBankDetails, updateBankDetails } = useApi()
   const toast = useToast()
 
+  console.log(bankDetails, 'details')
   const formik = useFormik({
     initialValues: {
       bankName: bankDetails?.length
@@ -21,7 +23,7 @@ const BankingDetailsForm = ({ bankDetails }) => {
         ? bankDetails[0]?.bankDetails?.bankBranch
         : '',
       branchCountry: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.bankCountry
+        ? bankDetails[0]?.bankDetails?.branchCountry
         : '',
       currency: bankDetails?.length
         ? bankDetails[0]?.bankDetails?.currency
