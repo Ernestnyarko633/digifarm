@@ -139,7 +139,11 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
                     title={data.title}
                     quote={data.quote}
                   >
-                    <Icon as={FaFacebookF} boxSize={5} />
+                    <Icon
+                      as={FaFacebookF}
+                      boxSize={5}
+                      onClick={() => setShow(false)}
+                    />
                   </FacebookShareButton>
 
                   <LinkedinShareButton
@@ -147,7 +151,12 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
                     title={data.title}
                     source={data.url}
                   >
-                    <Icon as={FaLinkedinIn} boxSize={5} mx={3} />
+                    <Icon
+                      as={FaLinkedinIn}
+                      boxSize={5}
+                      mx={3}
+                      onClick={() => setShow(false)}
+                    />
                   </LinkedinShareButton>
 
                   <TwitterShareButton
@@ -156,7 +165,11 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
                     via={`completefarmer ${data.quote}`}
                     related={["@completefarmer"]}
                   >
-                    <Icon as={FaTwitter} boxSize={5} />
+                    <Icon
+                      as={FaTwitter}
+                      boxSize={5}
+                      onClick={() => setShow(false)}
+                    />
                   </TwitterShareButton>
                 </MotionFlex>
               )}
