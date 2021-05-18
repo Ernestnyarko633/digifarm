@@ -21,7 +21,9 @@ const FarmBoardContent = ({ farms = [] }) => {
   const [filter, setFilter] = React.useState(
     farms.length ? 'all' : 'weekly videos'
   )
-  const [farmName, setFarmName] = React.useState("Felix's Farm")
+  const [farmName, setFarmName] = React.useState(
+    farms?.length ? farms[0]?.name : null
+  )
 
   const { getMyFarmFeeds } = useApi()
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
