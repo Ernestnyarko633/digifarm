@@ -40,7 +40,7 @@ const FarmBoard = () => {
         <FarmBoardContent farms={myFarms || []} />
       )}
 
-      <GetStartedNowCard />
+      {!myFarms?.length && <GetStartedNowCard />}
     </Layout>
   )
 }
