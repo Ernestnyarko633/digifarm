@@ -3,6 +3,10 @@
   color: #fff;
 }
 
+*,*:focus,*:hover{
+  outline:none;
+}
+
 @font-face {
   font-family: 'CeraGR';
   font-style: normal;
@@ -101,3 +105,40 @@
 section[style] {
   opacity: 1 !important;
 }
+
+.intl-tel-input:focus {
+  outline: none;
+}
+.intl-tel-input{
+  border-bottom: var(--chakra-colors-cf-400);
+}
+.intl-tel-input input {
+  width: 100%;
+  min-width: 0px;
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  height: var(--chakra-sizes-12);
+  font-size: var(--chakra-fontSizes-xs);
+  border-radius: var(--chakra-radii-md);
+  border: 1px #3c9130 !important;
+  background: #fff !important;
+  background-color: var(--chakra-colors-gray-50);
+}
+.intl-tel-input.allow-dropdown .flag-container {
+  width: unset !important;
+}
+
+.intl-tel-input input:focus {
+  border: none !important;
+}
+@media screen and (min-width: 62em) {
+  .intl-tel-input input {
+    font-size: var(--chakra-fontSizes-sm);
+  }
+}
+

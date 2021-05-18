@@ -100,6 +100,7 @@ const YourFarmCard = ({
         direction="column"
         w="100%"
         pos="relative"
+        pt={{ base: 16, md: 0 }}
       >
         <Flex align="center" direction="row" justify="space-around" w="100%">
           <Heading as="h6" fontSize="lg">
