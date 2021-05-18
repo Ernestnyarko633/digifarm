@@ -21,7 +21,7 @@ const FarmBoardContent = ({ farms }) => {
   const [feeds, setFeeds] = React.useState([]);
   const [news, setNewsData] = React.useState(null);
   const [videos, setVideosData] = React.useState(null);
-  const [filter, setFilter] = React.useState("all");
+  const [filter, setFilter] = React.useState(farms.length ? "all" : 'weekly videos');
   const [farmName, setFarmName] = React.useState("Felix's Farm");
 
   const { getMyFarmFeeds } = useApi();

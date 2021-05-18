@@ -48,11 +48,6 @@ const ItemTag = ({
   </Tag>
 );
 
-const items = [
-  { id: 0, title: "All Feeds", filter: "all" },
-  { id: 1, title: "Weekly Videos", filter: "weekly videos" },
-  { id: 2, title: "News", filter: "news" },
-];
 
 const YourFarmCard = ({
   farms,
@@ -63,6 +58,12 @@ const YourFarmCard = ({
   filter,
 }) => {
   // const mapKey = (i) => i;
+  const items = [
+    { id: 0, title: "All Feeds", filter: "all" },
+    { id: 1, title: "Weekly Videos", filter: "weekly videos" },
+    { id: 2, title: "News", filter: "news" },
+  ];
+  
   const randomColors = [
     { color: "#FF9F9F" },
     { color: "#76B1F6" },
@@ -195,19 +196,39 @@ const YourFarmCard = ({
               </>
             ))}
           </MotionFlex>
+         {!farms.length && <Flex>
+            <Text> You currently have no farms </Text>
+          </Flex>}
 
           <Flex direction="row" w="100%" mt={1}>
-            {items.map((item) => (
-              <ItemTag
-                key={item.id}
-                setFilter={setFilter}
-                setActiveFarmIndex={setActiveFarmIndex}
-                id={item.id}
-                title={item.title}
-                text={item.filter}
-                filter={filter}
-              />
-            ))}
+            {items.map((item) => 
+              {
+                if(item.title === 'All Feeds' && farms.length){
+                  return(
+                    <ItemTag
+                    key={item.id}
+                    setFilter={setFilter}
+                    setActiveFarmIndex={setActiveFarmIndex}
+                    id={item.id}
+                    title={item.title}
+                    text={item.filter}
+                    filter={filter} />
+                  )
+                }
+                if(item.title !== 'All Feeds'){
+                  return(
+                    <ItemTag
+                    key={item.id}
+                    setFilter={setFilter}
+                    setActiveFarmIndex={setActiveFarmIndex}
+                    id={item.id}
+                    title={item.title}
+                    text={item.filter}
+                    filter={filter} />
+                  )
+                }        
+              }
+            )}
           </Flex>
         </Flex>
       </Flex>

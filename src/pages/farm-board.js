@@ -23,7 +23,7 @@ const FarmBoard = () => {
         title='Welcome to your farm board'
         text="Here's where you view, share and like all <br /> the news from your farm(s)"
       />
-      {(myFarmsIsLoading || myFarmsHasError) && (
+      {myFarmsIsLoading || myFarmsHasError ? (
         <FetchCard
           direction='column'
           align='center'
@@ -36,13 +36,11 @@ const FarmBoard = () => {
           error={myFarmsHasError}
           text='Standby as we load your current farms and pending orders'
         />
+      ) : (
+        <FarmBoardContent farms={myFarms || []} />
       )}
 
-      {!myFarmsHasError && !myFarmsIsLoading && myFarms.length > 0 ? (
-        <FarmBoardContent farms={myFarms} />
-      ) : (
-        <GetStartedNowCard />
-      )}
+      <GetStartedNowCard />
     </Layout>
   )
 }
