@@ -1,23 +1,24 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import { Box, useToast, Heading, Button, Grid, Flex } from '@chakra-ui/react'
-import Constants from 'constant/index'
 import CustomInput from 'components/Form/CustomInput'
 import CustomSelect from 'components/Form/CustomSelect'
+import Currencies from 'currencies.json'
 
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 
 import { BankDetailsSchema } from 'helpers/validation'
 import { objDiff } from 'helpers/misc'
+import Constants from 'constant'
 
 const BankingDetailsForm = ({ bankDetails }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { createBankDetails, updateBankDetails } = useApi()
   const toast = useToast()
-
   const formik = useFormik({
     initialValues: {
       bankName: bankDetails?.bankName || '',
@@ -133,10 +134,12 @@ const BankingDetailsForm = ({ bankDetails }) => {
               placeholder='Enter your bank branch address'
             />
 
-            <CustomInput
-              type='text'
+            <CustomSelect
               isRequired
+              labelKey='name'
+              valueKey='name'
               name='branchCountry'
+              options={Constants.countrys}
               onBlur={handleBlur}
               label='Bank Branch Country'
               onChange={handleChange}
@@ -185,11 +188,11 @@ const BankingDetailsForm = ({ bankDetails }) => {
 
             <CustomSelect
               isRequired
-              labelKey='currencyName'
+              labelKey='name'
+              valueKey='name'
               name='currency'
-              valueKey='currencyName'
               onBlur={handleBlur}
-              options={Constants.countries}
+              options={Currencies.currencies}
               label='Account Currency'
               value={values.currency}
               error={errors.currency}
