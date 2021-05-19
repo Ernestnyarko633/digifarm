@@ -1,13 +1,15 @@
-/*eslint-disable*/
-
-import { Box, useToast, Heading, Button, Grid } from '@chakra-ui/react'
 import React from 'react'
+import { Box, Flex, useToast, Heading, Button, Grid } from '@chakra-ui/react'
 import { useFormik } from 'formik'
+
 import useAuth from 'context/auth'
 import useApi from 'context/api'
-import { FormInput } from 'components/Form'
-import BasePhone from 'components/Form/BasePhone'
+
 import CustomPhoneInput from 'components/Form/CustomPhoneInput'
+import CustomInput from 'components/Form/CustomInput'
+
+import { PersonalInfoSchema } from 'helpers/validation'
+import { objDiff } from 'helpers/misc'
 
 const UserDetailsForm = () => {
   const { isAuthenticated, store } = useAuth()
@@ -17,36 +19,25 @@ const UserDetailsForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: user?.firstName,
-      lastName: user?.lastName,
+      email: user?.email || '',
+      lastName: user?.lastName || '',
+      firstName: user?.firstName || '',
+      dateOfBirth: user?.dateOfBirth
+        ? new Date(user?.dateOfBirth).toISOString().substr(0, 10)
+        : '',
+      phoneNumber: user?.phoneNumber || '',
       address: {
-        street: user?.address?.street,
-        state: user?.address?.state,
-        country: user?.address?.country
-      },
-      dateOfBirth: user?.dateOfBirth,
-      email: user?.email,
-      phoneNumber: user?.phoneNumber
+        state: user?.address?.state || '',
+        street: user?.address?.street || '',
+        country: user?.address?.country || ''
+      }
     },
-    onSubmit: async (
-      values,
-      { setSubmitting, setErrors, setStatus, resetForm }
-    ) => {
+    enableReinitialize: true,
+    validationSchema: PersonalInfoSchema,
+    onSubmit: async (values, { setSubmitting }) => {
       try {
-        const data = {
-          firstName: values?.firstName,
-          lastName: values?.lastName,
-          address: {
-            street: values.address.street,
-            state: values.address.state,
-            country: values.address.country
-          },
-          dateOfBirth: values.dateOfBirth,
-          phoneNumber: values?.phoneNumber
-        }
-
-        const res = await patchUser(user?._id, data)
-
+        let updatedValue = objDiff(values, user)
+        const res = await patchUser(user?._id, updatedValue)
         toast({
           title: 'User successfully updated.',
           description: res.message,
@@ -54,12 +45,9 @@ const UserDetailsForm = () => {
           duration: 5000,
           position: 'top-right'
         })
-        resetForm({})
-        setStatus({ success: true })
         store({ user: res.data })
         window.location.reload()
       } catch (error) {
-        setStatus({ success: false })
         toast({
           title: 'Error occured',
           description: error.message,
@@ -68,13 +56,24 @@ const UserDetailsForm = () => {
           position: 'top-right'
         })
         setSubmitting(false)
-        setErrors({ submit: error.message })
       }
     }
   })
 
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    setFieldValue,
+    setFieldTouched
+  } = formik
+
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Box
         rounded='xl'
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
@@ -93,113 +92,121 @@ const UserDetailsForm = () => {
             gap={6}
             mb={6}
           >
-            <FormInput
-              label='First Name'
+            <CustomInput
+              type='text'
+              isRequired
               name='firstName'
-              value={formik.values.firstName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
-            />
-            <FormInput
-              label='Last Name'
-              name='lastName'
-              value={formik.values.lastName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
+              onBlur={handleBlur}
+              label='First Name'
+              onChange={handleChange}
+              value={values.firstName}
+              error={errors.firstName}
+              touched={touched.firstName}
+              placeholder='Enter your first name'
             />
 
-            <FormInput
-              label='Date of birth'
-              name='dateOfBirth'
-              value={formik.values.dateOfBirth}
-              onChange={formik.handleChange}
-              disabled
-              onBlur={formik.handleBlur}
+            <CustomInput
+              type='text'
               isRequired
-              bg='white'
-              type='date'
+              name='lastName'
+              onBlur={handleBlur}
+              label='Last Name'
+              onChange={handleChange}
+              value={values.lastName}
+              error={errors.lastName}
+              touched={touched.lastName}
+              placeholder='Enter your last name'
             />
-            <FormInput
+
+            <CustomInput
+              isRequired
+              type='date'
+              label='Birthday'
+              name='dateOfBirth'
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.dateOfBirth}
+              error={errors.dateOfBirth}
+              touched={touched.dateOfBirth}
+            />
+
+            <CustomInput
+              type='text'
+              isDisabled
+              isRequired
+              name='email'
+              onBlur={handleBlur}
+              label='Email Address'
+              value={values.email}
+              error={errors.email}
+              touched={touched.email}
+              onChange={handleChange}
+              placeholder='Enter your email address'
+            />
+
+            <CustomPhoneInput
+              isRequired={true}
+              error={errors.phoneNumber}
+              value={values.phoneNumber}
+              touched={touched.phoneNumber}
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+            />
+
+            <CustomInput
+              type='text'
+              isRequired
               label='Street'
               name='address.street'
-              value={formik.values.address.street}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
-            />
-            <FormInput
-              label='State'
-              name='address.state'
-              value={formik.values.address.state}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.address?.street}
+              error={errors.address?.street}
+              touched={touched.address?.street}
+              placeholder='Enter your street name'
             />
 
-            <FormInput
+            <CustomInput
+              type='text'
+              isRequired
+              label='State/Region'
+              name='address.state'
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.address?.state}
+              error={errors.address?.state}
+              touched={touched.address?.state}
+              placeholder='Enter your state/region'
+            />
+
+            <CustomInput
+              type='text'
+              isRequired
               label='Country'
               name='address.country'
-              value={formik.values.address.country}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
-            />
-
-            {/* <BasePhone
-              country={formik.values.address.country}
-              value={formik.values.phoneNumber.replace(/\D/g, '').substr(3, 10)}
-              setFieldTouched={formik.setFieldTouched}
-              setFieldValue={formik.setFieldValue}
-              phoneNumber='phoneNumber'
-              error={formik.errors.phoneNumber}
-              bg='white'
-            /> */}
-
-          <CustomPhoneInput
-            name='phoneNumber'
-            error={formik.errors.phoneNumber}
-            value={formik.values.phoneNumber}
-            touched={formik.touched.phoneNumber}
-            setFieldValue={formik.setFieldValue}
-            setFieldTouched={formik.setFieldTouched}
-          />
-
-            <FormInput
-              label='Email'
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
-              disabled
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.address?.country}
+              error={errors.address?.country}
+              touched={touched.address?.country}
+              placeholder='Enter your country of residence'
             />
           </Grid>
 
-          {/* <Box>
-                <FormTextArea bg='white' label='About you' />
-              </Box> */}
-
-          <Box textAlign='right' mt={6}>
+          <Flex justify='flex-end' mt={6}>
             <Button
-              colorScheme='linear'
-              rounded='30px'
               w={40}
               h={12}
-              shadow='sm'
               ml={4}
+              shadow='sm'
               type='submit'
-              isLoading={formik.isSubmitting}
+              rounded='30px'
+              colorScheme='linear'
+              isLoading={isSubmitting}
             >
               Save
             </Button>
-          </Box>
+          </Flex>
         </Box>
       </Box>
     </form>

@@ -15,9 +15,7 @@ const Profile = () => {
   const { isAuthenticated } = useAuth()
   const [reload, setReload] = React.useState(0)
 
-  // const [selectedFile, setSelectedFile] = React.useState(null)
-
-  const triggerReload = () => setReload(s => s++)
+  const triggerReload = () => setReload(s => s + 1)
   const { getBankDetails } = useApi()
 
   const { user } = isAuthenticated()
@@ -26,40 +24,37 @@ const Profile = () => {
     data: bankDetails,
     isLoading: loading,
     error
-  } = useFetch('bank_details', getBankDetails, reload, { user: user?._id })
+  } = useFetch(null, getBankDetails, reload)
 
-  return (
+  return loading || error ? (
+    <Box y={{ md: 20 }}>
+      <FetchCard
+        direction='column'
+        align='center'
+        justify='center'
+        mx='auto'
+        reload={() => {
+          triggerReload()
+        }}
+        loading={loading}
+        error={error}
+        text='Standby as we load your bank details'
+      />
+    </Box>
+  ) : (
     <Container maxW={{ md: '4xl' }}>
       <AvatarForm />
       <UserDetailsForm />
       <Box
-        rounded='xl'
-        filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-        bg='white'
-        p={{ base: 2, md: 10 }}
         mt={12}
+        bg='white'
+        rounded='xl'
+        p={{ base: 2, md: 10 }}
+        filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       >
         <Signature data={user?.signature} />
       </Box>
-
-      {loading || error ? (
-        <Box y={{ md: 20 }}>
-          <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            mx='auto'
-            reload={() => {
-              triggerReload()
-            }}
-            loading={loading}
-            error={error}
-            text='Standby as we load your bank details'
-          />
-        </Box>
-      ) : (
-        <BankingDetailsForm bankDetails={bankDetails} />
-      )}
+      <BankingDetailsForm bankDetails={bankDetails || {}} />
     </Container>
   )
 }

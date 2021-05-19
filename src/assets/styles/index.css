@@ -109,12 +109,11 @@ section[style] {
 .intl-tel-input:focus {
   outline: none;
 }
-.intl-tel-input{
-  border-bottom: var(--chakra-colors-cf-400);
-}
+
 .intl-tel-input input {
   width: 100%;
   min-width: 0px;
+  outline: 0;
   position: relative;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -122,20 +121,40 @@ section[style] {
   appearance: none;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
-  height: var(--chakra-sizes-12);
   font-size: var(--chakra-fontSizes-xs);
-  border-radius: var(--chakra-radii-md);
-  border: 1px #3c9130 !important;
-  background: #fff !important;
-  background-color: var(--chakra-colors-gray-50);
-}
-.intl-tel-input.allow-dropdown .flag-container {
-  width: unset !important;
+  -webkit-padding-start: var(--chakra-space-4);
+  padding-inline-start: var(--chakra-space-4);
+  -webkit-padding-end: var(--chakra-space-4);
+  padding-inline-end: var(--chakra-space-4);
+  height: var(--chakra-sizes-14);
+  border-radius: 0px;
+  border: 1px solid;
+  border-color: inherit;
+  background: inherit;
+  padding-top: var(--chakra-space-2);
+  border-width: 1px;
+  background-color: var(--chakra-colors-white);
 }
 
-.intl-tel-input input:focus {
-  border: none !important;
+.intl-tel-input.allow-dropdown .country-list {
+  position: relative;
+  z-index: 2;
 }
+
+.intl-tel-input input-error {
+  border-color: #E53E3E;
+  box-shadow: 0 0 0 1px #e53e3e
+}
+
+.intl-tel-input.allow-dropdown .selected-flag {
+  padding-top: 8px;
+  padding-left: 14px;
+}
+
+.intl-tel-input.allow-dropdown .selected-flag:hover {
+  background-color: transparent !important;
+}
+
 @media screen and (min-width: 62em) {
   .intl-tel-input input {
     font-size: var(--chakra-fontSizes-sm);
