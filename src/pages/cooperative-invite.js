@@ -1,25 +1,32 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { decode } from 'js-base64'
 import { Box } from '@chakra-ui/react'
 
 import { replaceURI } from 'helpers/misc'
 import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
+import { useLocation } from 'react-router-dom'
 
-const CooperativeInvite = ({ history: { replace }, match: { params } }) => {
+const CooperativeInvite = ({ history: { replace } }) => {
   document.title = 'Cooperative invite...'
   const [isLoading, setIsLoading] = useState(0)
   const [reload, setReload] = useState(0)
   const [error, setError] = useState(false)
+  const useQuery = () => new URLSearchParams(useLocation().search)
+  let query = useQuery()
+  let token = query.get('token')
 
+  let decoded = atob(token)
+  decoded = JSON.parse(decoded)
+  const { email, _id } = decoded
   const { acceptInvite } = useApi()
-  const { email, _id } = decode(params.token)
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   useEffect(() => {
     let mounted = true
+    let _faks = false
     const runAcceptInvite = async () => {
       try {
         setIsLoading(true)
@@ -27,6 +34,7 @@ const CooperativeInvite = ({ history: { replace }, match: { params } }) => {
         // setTimeout(() => {
         //   replace(JSON.parse(to || null) || '/dashboard')
         // }, 1000)
+        console.log(res.data)
       } catch (error) {
         if (error) {
           if ([401, 403].includes(error.status)) {
@@ -41,7 +49,7 @@ const CooperativeInvite = ({ history: { replace }, match: { params } }) => {
         setIsLoading(false)
       }
     }
-    if (mounted && email && _id) {
+    if (mounted && email && _id && _faks) {
       runAcceptInvite()
     }
     return () => (mounted = false)
@@ -66,7 +74,6 @@ const CooperativeInvite = ({ history: { replace }, match: { params } }) => {
 }
 
 CooperativeInvite.propTypes = {
-  match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
 }
 
