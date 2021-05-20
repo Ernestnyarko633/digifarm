@@ -1,11 +1,28 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
 import { Box, Flex, Heading, Text, Image, Collapse } from '@chakra-ui/react'
-
+import ReactPlayer from 'react-player/lazy'
+import { urlify } from 'helpers/misc'
+//import { urlify } from 'helpers/misc'
 const NewsCard = ({ timestamp, content, status }) => {
   const [show, setShow] = React.useState(false)
   const handleToggle = () => setShow(!show)
+
+  const YoutubeSlide = ({ url }) => (
+    <ReactPlayer
+      width='100%'
+      controls={true}
+      loop={true}
+      volume={0.3}
+      url={url}
+      playing={false}
+    />
+  )
+  YoutubeSlide.propTypes = {
+    url: PropTypes.any
+  }
 
   const NewHead = () => (
     <Flex align='center' justify='space-between'>
@@ -37,33 +54,33 @@ const NewsCard = ({ timestamp, content, status }) => {
           <NewHead />
         </Box>
         <Box>
-          <Image
-            w='100%'
-            h={{ md: 90 }}
-            objectFit='cover'
-            src={content?.data?.body[0]?.primary?.image?.url}
-          />
+          {content?.data?.body[0]?.primary?.image?.url ? (
+            <Image
+              w='100%'
+              h={{ md: 90 }}
+              objectFit='cover'
+              src={content?.data?.body[0]?.primary?.image?.url}
+            />
+          ) : (
+            <YoutubeSlide url={content?.data?.body[0]?.primary?.video?.url} />
+          )}
         </Box>
         <Box py={4} px={{ base: 4, md: 10 }}>
           <Box mt={6}>
             <Heading as='h5' fontSize={{ md: 'lg' }}>
               {content?.data?.headline[0]?.text}
             </Heading>
-            <Collapse
-              startingHeight={85}
-              in={show}
-              onClick={handleToggle}
-              cursor='pointer'
-            >
+            <Collapse startingHeight={85} in={show} cursor='pointer'>
               {content?.data?.body[0]?.primary?.description?.map(item => (
-                <Text
-                  color='gray.500'
-                  mt={3}
-                  key={item.text}
-                  fontSize={{ base: 'sm', md: 'md' }}
-                >
-                  {item.text}
-                </Text>
+                <>
+                  <Text
+                    color='gray.500'
+                    mt={3}
+                    key={item.text}
+                    dangerouslySetInnerHTML={{ __html: urlify(item.text) }}
+                    fontSize={{ base: 'sm', md: 'md' }}
+                  />
+                </>
               ))}
             </Collapse>
             <Box as='button' onClick={handleToggle}>
