@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+import _ from 'lodash'
 import configs from '../utils/configs'
 
 export const replaceURI = (APP, path) =>
@@ -138,6 +140,46 @@ export const isDateG8Today = date => {
   const start = new Date(date).setHours(0, 0, 0, 0)
 
   return today > start
+}
+
+export const objDiff = (object, base) => {
+  function changes(object, base) {
+    return _.transform(object, (result, value, key) => {
+      if (!_.isEqual(value, base[key])) {
+        result[key] =
+          _.isObject(value) && _.isObject(base[key])
+            ? changes(value, base[key])
+            : value
+      }
+    })
+  }
+  return changes(object, base)
+}
+
+export const urlify = text => {
+  var exp =
+    /(\b(((https?|ftp|file|):\/\/)|www[.])[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+  var temp = text.replace(
+    exp,
+    '<a href="$1" style={{color: "cf.400"}} target="_blank">$1</a>'
+  )
+  var result = ''
+
+  while (temp.length > 0) {
+    var pos = temp.indexOf('href="')
+    if (pos === -1) {
+      result += temp
+      break
+    }
+    result += temp.substring(0, pos + 6)
+
+    temp = temp.substring(pos + 6, temp.length)
+    if (temp.indexOf('://') > 8 || temp.indexOf('://') === -1) {
+      result += 'http://'
+    }
+  }
+
+  return result
 }
 
 export const Status = {

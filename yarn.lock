@@ -5359,6 +5359,11 @@ csstype@^3.0.2, csstype@^3.0.6:
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.0.7.tgz"
   integrity sha512-KxnUB0ZMlnUWCsx2Z8MUsr6qV6ja1w9ArPErJaJaF8a5SOWoHLIszeCTKGRGRgtLgYrs1E8CHkNSP1VZTTPc9g==
 
+currencies.json@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/currencies.json/-/currencies.json-1.0.2.tgz#f76fedc7f4089bf95bed1bb71a77993e95787487"
+  integrity sha512-5a9gHuZTS+s228BCF/nTWt+UP5RIZMs9f9oEryFHHvqNd+1qrSVeLJfxmCRlHlfLm8YDGRXfRRtkwru5LBd3mg==
+
 currently-unhandled@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmjs.org/currently-unhandled/-/currently-unhandled-0.4.1.tgz"
@@ -9105,6 +9110,11 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+libphonenumber-js-utils@^8.10.5:
+  version "8.10.5"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js-utils/-/libphonenumber-js-utils-8.10.5.tgz#778cb7633c94e2524f08c3109a7450095b4e6727"
+  integrity sha512-VxpwgrAGps1p5avOVQVBTCpUQwkrJZqptV2DoTimY3VXTzm0EetbT73sWVTkg8FmreVmM2qwwFl7yqymdOkFug==
+
 lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.1.6.tgz"
@@ -11491,7 +11501,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^4.0.0"
 
-prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -12198,6 +12208,17 @@ react-input-mask@^2.0.4:
     invariant "^2.2.4"
     warning "^4.0.2"
 
+react-intl-tel-input@^8.0.4:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/react-intl-tel-input/-/react-intl-tel-input-8.0.4.tgz#4cc02466f629be56d53b66571ee13d789e612979"
+  integrity sha512-ANF49ltQDzsWt4NAN6QNmAQLTDIPd7e/2LuM1FMrhCctpNxGuifZ4RUzVXSnyt0dfZkqjfDu1Q4hACAhuiFXag==
+  dependencies:
+    classnames "^2.2.5"
+    libphonenumber-js-utils "^8.10.5"
+    prop-types "^15.6.1"
+    react-style-proptype "^3.0.0"
+    underscore.deferred "^0.4.0"
+
 react-is@16.10.2:
   version "16.10.2"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.10.2.tgz"
@@ -12421,6 +12442,13 @@ react-smooth@^2.0.0:
     fast-equals "^2.0.0"
     raf "^3.4.0"
     react-transition-group "2.9.0"
+
+react-style-proptype@^3.0.0:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/react-style-proptype/-/react-style-proptype-3.2.2.tgz#d8e998e62ce79ec35b087252b90f19f1c33968a0"
+  integrity sha512-ywYLSjNkxKHiZOqNlso9PZByNEY+FTyh3C+7uuziK0xFXu9xzdyfHwg4S9iyiRRoPCR4k2LqaBBsWVmSBwCWYQ==
+  dependencies:
+    prop-types "^15.5.4"
 
 react-style-singleton@^2.1.0:
   version "2.1.1"
@@ -14591,6 +14619,11 @@ unbox-primitive@^1.0.0:
     has-symbols "^1.0.2"
     which-boxed-primitive "^1.0.2"
 
+underscore.deferred@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/underscore.deferred/-/underscore.deferred-0.4.0.tgz#2753de633b9ff7db601a2f3fa2af92b3dd290e6c"
+  integrity sha1-J1PeYzuf99tgGi8/oq+Ss90pDmw=
+
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-1.0.4.tgz"
@@ -14845,6 +14878,11 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+validator@^13.6.0:
+  version "13.6.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.6.0.tgz#1e71899c14cdc7b2068463cb24c1cc16f6ec7059"
+  integrity sha512-gVgKbdbHgtxpRyR8K0O6oFZPhhB5tT1jeEHZR0Znr9Svg03U0+r9DXWMrnRAB+HtCStDQKlaIZm42tVsVjqtjg==
 
 value-equal@^1.0.1:
   version "1.0.1"

@@ -57,7 +57,7 @@ export default function Warehouse({ digitalFarmerFarm }) {
             </Flex>
           )}
           <Grid templateColumns={{ md: 'repeat(1, 1fr)' }} gap={10} w='100%'>
-            {digitalFarmerFarm?.storage.quantity && (
+            {digitalFarmerFarm?.storage.quantity ? (
               <WarehouseCard
                 sellButton={false}
                 name={
@@ -74,7 +74,7 @@ export default function Warehouse({ digitalFarmerFarm }) {
                 ml={14}
                 status={digitalFarmerFarm?.status}
               />
-            )}
+            ) : null}
           </Grid>
         </Box>
       </GridItem>

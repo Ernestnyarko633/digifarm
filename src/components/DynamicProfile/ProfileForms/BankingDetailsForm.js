@@ -1,98 +1,84 @@
-import { Box, useToast, Heading, Button, Grid } from '@chakra-ui/react'
+/* eslint-disable no-console */
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
+import { Box, useToast, Heading, Button, Grid, Flex } from '@chakra-ui/react'
+import CustomInput from 'components/Form/CustomInput'
+import CustomSelect from 'components/Form/CustomSelect'
+import Currencies from 'currencies.json'
+
 import useAuth from 'context/auth'
 import useApi from 'context/api'
-import { FormInput } from 'components/Form'
-import PropTypes from 'prop-types'
+
+import { BankDetailsSchema } from 'helpers/validation'
+import { objDiff } from 'helpers/misc'
+import Constants from 'constant'
 
 const BankingDetailsForm = ({ bankDetails }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { createBankDetails, updateBankDetails } = useApi()
   const toast = useToast()
-
   const formik = useFormik({
     initialValues: {
-      bankName: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.bankName
-        : '',
-      bankBranch: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.bankBranch
-        : '',
-      branchCountry: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.bankCountry
-        : '',
-      currency: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.currency
-        : '',
-      swiftCode: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.swiftCode
-        : '',
-      accountName: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.accountName
-        : '',
-      accountNumber: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.accountNumber
-        : '',
-      branchAddress: bankDetails?.length
-        ? bankDetails[0]?.bankDetails?.branchAddress
-        : '',
-      iban: bankDetails?.length ? bankDetails[0]?.bankDetails?.iban : ''
+      bankName: bankDetails?.bankName || '',
+      bankBranch: bankDetails?.bankBranch || '',
+      branchCountry: bankDetails?.branchCountry || '',
+      currency: bankDetails?.currency || '',
+      swiftCode: bankDetails?.swiftCode || '',
+      accountName: bankDetails?.accountName || '',
+      accountNumber: bankDetails?.accountNumber || '',
+      branchAddress: bankDetails?.branchAddress || '',
+      iban: bankDetails?.iban || ''
     },
-    onSubmit: async (
-      values,
-      { setSubmitting, setErrors, setStatus, resetForm }
-    ) => {
+    enableReinitialize: true,
+    validationSchema: BankDetailsSchema,
+    onSubmit: async (values, { setSubmitting }) => {
       try {
-        let data = {
-          user: user?._id,
-          bankDetails: {
-            iban: values.iban,
-            bankName: values.bankName,
-            bankBranch: values.bankBranch,
-            branchAddress: values.branchAddress,
-            branchCountry: values.branchCountry,
-            currency: values.currency,
-            swiftCode: values.swiftCode,
-            accountName: values.accountName,
-            accountNumber: values.accountNumber
-          }
+        let res
+        if (bankDetails._id) {
+          let updatedValue = objDiff(values, user)
+          res = await updateBankDetails(bankDetails._id, updatedValue)
+        } else {
+          res = await createBankDetails({
+            ...values,
+            user: user._id
+          })
         }
-        if (!values?.iban?.length) delete data.bankDetails.iban
-        if (!values?.accountNumber?.length)
-          delete data.bankDetails.accountNumber
-        const res = bankDetails?.length
-          ? await updateBankDetails(bankDetails[0]?._id, data)
-          : await createBankDetails(data)
 
         toast({
-          title: 'User successfully updated.',
+          title: 'Profile successfully updated.',
           description: res.message,
           status: 'success',
           duration: 5000,
           position: 'top-right'
         })
-        resetForm({})
-        setStatus({ success: true })
         window.location.reload()
       } catch (error) {
-        setStatus({ success: false })
         toast({
-          title: 'Error occured',
-          description: error.message,
           status: 'error',
           duration: 5000,
-          position: 'top-right'
+          position: 'top-right',
+          title: 'Error occured',
+          description: error.message
         })
         setSubmitting(false)
-        setErrors({ submit: error.message })
       }
     }
   })
 
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    isSubmitting
+  } = formik
+
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Box
         rounded='xl'
         filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
@@ -109,112 +95,140 @@ const BankingDetailsForm = ({ bankDetails }) => {
             w={{ md: '100%' }}
             gap={6}
           >
-            <FormInput
-              label='Bank name'
+            <CustomInput
+              type='text'
+              isRequired
               name='bankName'
-              value={formik.values.bankName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
+              onBlur={handleBlur}
+              label='Bank Name'
+              onChange={handleChange}
+              value={values.bankName}
+              error={errors.bankName}
+              touched={touched.bankName}
+              placeholder='Enter your bank name'
             />
 
-            <FormInput
-              label='Bank branch'
+            <CustomInput
+              type='text'
+              isRequired
               name='bankBranch'
-              value={formik.values.bankBranch}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
+              onBlur={handleBlur}
+              label='Bank Branch'
+              onChange={handleChange}
+              value={values.bankBranch}
+              error={errors.bankBranch}
+              touched={touched.bankBranch}
+              placeholder='Enter your bank branch'
             />
-            <FormInput
-              label='Branch Address'
+
+            <CustomInput
+              type='text'
+              isRequired
               name='branchAddress'
-              value={formik.values.branchAddress}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
+              onBlur={handleBlur}
+              label='Bank Branch Address'
+              onChange={handleChange}
+              value={values.branchAddress}
+              error={errors.branchAddress}
+              touched={touched.branchAddress}
+              placeholder='Enter your bank branch address'
             />
 
-            <FormInput
-              label='Branch Country'
+            <CustomSelect
+              isRequired
+              labelKey='name'
+              valueKey='name'
               name='branchCountry'
-              value={formik.values.branchCountry}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
+              options={Constants.countrys}
+              onBlur={handleBlur}
+              label='Bank Branch Country'
+              onChange={handleChange}
+              value={values.branchCountry}
+              error={errors.branchCountry}
+              touched={touched.branchCountry}
+              placeholder='Enter your bank branch country'
             />
 
-            <FormInput
-              label='Account Name'
+            <CustomInput
+              type='text'
+              isRequired
               name='accountName'
-              value={formik.values.accountName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
+              onBlur={handleBlur}
+              label='Account Name'
+              onChange={handleChange}
+              value={values.accountName}
+              error={errors.accountName}
+              touched={touched.accountName}
+              placeholder='Enter your bank account name'
             />
 
-            <FormInput
-              label='Account Number'
+            <CustomInput
+              type='number'
               name='accountNumber'
-              value={formik.values.accountNumber}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              disabled={formik.values?.iban?.length > 1}
-              type='account'
-              bg='white'
+              onBlur={handleBlur}
+              label='Account Number'
+              onChange={handleChange}
+              value={values.accountNumber}
+              error={errors.accountNumber}
+              touched={touched.accountNumber}
+              placeholder='Enter your bank account number'
             />
 
-            <FormInput
-              label='IBAN Number'
+            <CustomInput
+              type='text'
               name='iban'
-              value={formik.values.iban}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              type='string'
-              disabled={formik.values?.accountNumber?.length > 1}
-              bg='white'
+              onBlur={handleBlur}
+              label='IBAN Number'
+              value={values.iban}
+              error={errors.iban}
+              touched={touched.iban}
+              onChange={handleChange}
+              placeholder='Enter your IBAN number'
             />
 
-            <FormInput
-              label='Account Currency'
+            <CustomSelect
+              isRequired
+              labelKey='name'
+              valueKey='name'
               name='currency'
-              value={formik.values.currency}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isRequired
-              bg='white'
+              onBlur={handleBlur}
+              options={Currencies.currencies}
+              label='Account Currency'
+              value={values.currency}
+              error={errors.currency}
+              touched={touched.currency}
+              onChange={handleChange}
+              placeholder='Enter your account currency'
             />
 
-            <FormInput
-              label='Swift Code'
-              name='swiftCode'
-              value={formik.values.swiftCode}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+            <CustomInput
               isRequired
-              bg='white'
+              type='text'
+              name='swiftCode'
+              onBlur={handleBlur}
+              label='Swift Code'
+              value={values.swiftCode}
+              error={errors.swiftCode}
+              touched={touched.swiftCode}
+              onChange={handleChange}
+              placeholder='Enter your bank swift code'
             />
           </Grid>
 
-          <Box textAlign='right' mt={6}>
+          <Flex justify='flex-end' mt={6}>
             <Button
-              colorScheme='linear'
-              rounded='30px'
-              w={{ base: '100%', md: 40 }}
               h={12}
               shadow='sm'
-              ml={{ md: 4 }}
               type='submit'
-              isLoading={formik.isSubmitting}
+              rounded='30px'
+              ml={{ md: 4 }}
+              colorScheme='linear'
+              isLoading={isSubmitting}
+              w={{ base: '100%', md: 40 }}
             >
               Save
             </Button>
-          </Box>
+          </Flex>
         </Box>
       </Box>
     </form>
