@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import configs from '../utils/configs'
 
 export const replaceURI = (APP, path) =>
@@ -138,6 +139,20 @@ export const isDateG8Today = date => {
   const start = new Date(date).setHours(0, 0, 0, 0)
 
   return today > start
+}
+
+export const objDiff = (object, base) => {
+  function changes(object, base) {
+    return _.transform(object, (result, value, key) => {
+      if (!_.isEqual(value, base[key])) {
+        result[key] =
+          _.isObject(value) && _.isObject(base[key])
+            ? changes(value, base[key])
+            : value
+      }
+    })
+  }
+  return changes(object, base)
 }
 
 export const Status = {
