@@ -216,14 +216,14 @@ const YourFarmCard = ({
   );
 };
 
-ItemTag.propTypes = {
-  id: PropTypes.number,
-  setFilter: PropTypes.func,
-  setFarmIndex: PropTypes.func,
-  filter: PropTypes.string,
-  title: PropTypes.string,
-  text: PropTypes.string,
-};
+// ItemTag.propTypes = {
+//   id: PropTypes.number,
+//   setFilter: PropTypes.func,
+//   setFarmIndex: PropTypes.func,
+//   filter: PropTypes.string,
+//   title: PropTypes.string,
+//   text: PropTypes.string,
+// };
 
 YourFarmCard.propTypes = {
   farms: PropTypes.any,
