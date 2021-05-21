@@ -180,7 +180,12 @@ const NewsCard = ({ timestamp, content, status }) => {
             <Heading as='h5' fontSize={{ md: 'lg' }}>
               {content?.data?.headline[0]?.text}
             </Heading>
-            <Collapse startingHeight={85} in={show} cursor='pointer'>
+            <Collapse
+              startingHeight={85}
+              in={show}
+              cursor='pointer'
+              onClick={handleToggle}
+            >
               {content?.data?.body[0]?.primary?.description?.map(item => (
                 <>
                   <Text
