@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -14,7 +13,7 @@ import {
 import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { urlify } from 'helpers/misc'
-//import { urlify } from 'helpers/misc'
+
 const NewsCard = ({ timestamp, content, status }) => {
   const [show, setShow] = React.useState(false)
   const handleToggle = () => setShow(!show)
@@ -22,7 +21,6 @@ const NewsCard = ({ timestamp, content, status }) => {
   const [selectedItem, setSelectedItem] = React.useState({})
   const [activeIndex, setActiveIndex] = React.useState(0)
 
-  console.log(content)
   const handleClick = (value, array, index, indexFunc, selectedItemFunc) => {
     const comparant =
       index + value === 0 ||
