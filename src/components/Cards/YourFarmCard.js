@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   Box,
   Flex,
@@ -139,7 +138,6 @@ const YourFarmCard = ({
           >
             {farms?.map((farm, index) => (
               <>
-                {console.log(farm.name, farmName)}
                 {farm?.order?.product?._id && (
                   <Flex
                     key={mapKey(index)}
