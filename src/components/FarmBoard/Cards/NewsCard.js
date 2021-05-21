@@ -77,7 +77,7 @@ const NewsCard = ({ timestamp, content, status }) => {
           </Text>
         </Box>
         <Text color='gray.500' fontSize={{ base: 'xs', md: 'sm' }} mt={-1}>
-          {timestamp}
+          {new Date(content?.first_publication_date)?.toLocaleDateString()}
         </Text>
       </Flex>
     </Flex>
@@ -108,11 +108,12 @@ const NewsCard = ({ timestamp, content, status }) => {
           )}
           {content?.data?.body?.length > 1 && (
             <Flex
+              w='100%'
               align='center'
-              justify='center'
+              justify='space-between'
               pos='absolute'
-              bottom={6}
-              left={{ base: '45%', xl: '42%' }}
+              bottom={{ base: '50%' }}
+              left={{ base: '0%' }}
             >
               <Flex
                 as='button'
@@ -123,14 +124,14 @@ const NewsCard = ({ timestamp, content, status }) => {
                 w={10}
                 h={10}
                 rounded='100%'
-                borderWidth={1}
-                borderColor='transparent'
                 _hover={{
-                  background: 'white',
-                  color: 'cf.800'
+                  background: 'cf.800',
+                  color: 'white'
                 }}
                 color='white'
                 mr={2}
+                outlineColor='none'
+                outline='none'
                 onClick={() => {
                   return handleClick(
                     -1,
@@ -152,13 +153,13 @@ const NewsCard = ({ timestamp, content, status }) => {
                 w={10}
                 h={10}
                 _hover={{
-                  background: 'white',
-                  color: 'cf.800'
+                  background: 'cf.800',
+                  color: 'white'
                 }}
                 rounded='100%'
-                borderWidth={1}
-                borderColor='transparent'
                 color='white'
+                outlineColor='none'
+                outline='none'
                 ml={2}
                 onClick={() => {
                   return handleClick(
