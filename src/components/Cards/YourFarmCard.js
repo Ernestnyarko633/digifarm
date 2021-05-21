@@ -197,7 +197,12 @@ const YourFarmCard = ({
             ))}
           </MotionFlex>
 
-          <Flex direction="row" w={{ md: "100%" }} mt={1} overflowX="scroll">
+          <Flex
+            direction="row"
+            w={{ md: "100%" }}
+            mt={1}
+            overflowX={items.length > 6 ? "scroll" : "visible"}
+          >
             {items.map((item) => (
               <ItemTag
                 key={item.id}
