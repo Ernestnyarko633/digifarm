@@ -101,6 +101,14 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const acceptInvite = async ({ email, _id }) => {
+    const query = { email: email }
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept`,
+      query
+    })
+  }
+
   const deleteBankTransfer = async id => {
     return await http.patch({
       url: `${PAYMENT_API}/payment/receipt-delete?payment_id=${id}`
@@ -236,6 +244,7 @@ export const ApiContextProvider = ({ children }) => {
         sellProduce,
         createOrder,
         downloadFile,
+        acceptInvite,
         getActivities,
         verifyPayment,
         getMyFarmFeeds,

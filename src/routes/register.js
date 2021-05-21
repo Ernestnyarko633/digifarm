@@ -36,6 +36,11 @@ const Router = () => {
           path='/start-farm/cooperative-farms'
           component={Pages.CooperativeFarm}
         />
+        <PrivateRoute
+          exact
+          path='/cooperative-invite'
+          component={Pages.CooperativeInvite}
+        />
         <PrivateRoute exact path='/payment' component={Pages.Payment} />
         <PrivateRoute
           exact
