@@ -200,7 +200,7 @@ const YourFarmCard = ({
           <Flex
             direction="row"
             w={{ md: "100%" }}
-            mt={1}
+            mt={3}
             overflowX={items.length > 6 ? "scroll" : "visible"}
           >
             {items.map((item) => (
