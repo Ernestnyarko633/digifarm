@@ -115,6 +115,7 @@ const YourFarmCard = ({
           pos={{ md: "absolute" }}
           left={{ md: -12 }}
           d={farms.length > 8 ? "block" : "none"}
+          mt={{ base: 6, md: 0 }}
         >
           <ArrowButton handleClick={handleClick} />
         </Box>
@@ -196,7 +197,7 @@ const YourFarmCard = ({
             ))}
           </MotionFlex>
 
-          <Flex direction="row" w="100%" mt={1}>
+          <Flex direction="row" w={{ md: "100%" }} mt={1} overflowX="scroll">
             {items.map((item) => (
               <ItemTag
                 key={item.id}
