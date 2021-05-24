@@ -106,7 +106,7 @@ const AboutFarmManager = ({ farm }) => {
               <Heading pb={5} as='h5' size='md'>
                 Meet the farm managers
               </Heading>
-              <ManagerProfile item={doc} />
+              <ManagerProfile item={doc} px={2} />
             </Box>
           </Box>
         </GridItem>
