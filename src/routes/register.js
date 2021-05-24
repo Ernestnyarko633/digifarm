@@ -59,7 +59,7 @@ const Router = () => {
         <PrivateRoute path='/guide' component={Pages.Guide} />
         <Route path='/notfound' component={Pages.NotFound} />
         {/* <PrivateRoute path='/coming-soon' component={Pages.Banner} /> */}
-        <Redirect from='*' to='/notfound' />
+        {/* <Redirect from='*' to='/notfound' /> */}
       </Switch>
     </React.Suspense>
   )
