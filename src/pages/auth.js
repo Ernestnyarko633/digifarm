@@ -70,12 +70,12 @@ const Auth = ({
 
   return (
     <FetchCard
-      direction='column'
+      error={error}
       align='center'
       justify='center'
-      reload={triggerReload}
+      direction='column'
       loading={isLoading}
-      error={error}
+      reload={triggerReload}
     />
   )
 }
