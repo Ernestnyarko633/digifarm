@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -14,7 +15,7 @@ import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { urlify } from 'helpers/misc'
 
-const NewsCard = ({ timestamp, content, status }) => {
+const NewsCard = ({ content, status }) => {
   const [show, setShow] = React.useState(false)
   const handleToggle = () => setShow(!show)
   const [items, setItems] = React.useState([])
@@ -187,7 +188,35 @@ const NewsCard = ({ timestamp, content, status }) => {
               cursor='pointer'
               onClick={handleToggle}
             >
-              {content?.data?.body[0]?.primary?.description?.map(item => (
+              {content?.data?.body?.map((details, index) => (
+                <>
+                  {index > 0 && (
+                    <Box p={15}>
+                      <Image
+                        h={{ md: 85 }}
+                        w='100%'
+                        objectFit='cover'
+                        src={details?.primary?.image?.url}
+                      />
+                    </Box>
+                  )}
+                  {details?.slice_type === 'details' &&
+                    details?.primary?.description?.map(item => (
+                      <>
+                        <Text
+                          color='gray.500'
+                          mt={3}
+                          key={item.text}
+                          dangerouslySetInnerHTML={{
+                            __html: urlify(item.text)
+                          }}
+                          fontSize={{ base: 'sm', md: 'md' }}
+                        />
+                      </>
+                    ))}
+                </>
+              ))}
+              {/* {content?.data?.body[0]?.primary?.description?.map(item => (
                 <>
                   <Text
                     color='gray.500'
@@ -197,7 +226,7 @@ const NewsCard = ({ timestamp, content, status }) => {
                     fontSize={{ base: 'sm', md: 'md' }}
                   />
                 </>
-              ))}
+              ))} */}
             </Collapse>
             <Box as='button' onClick={handleToggle}>
               <Text color='cf.800' py={{ base: 1 }}>
@@ -213,7 +242,6 @@ const NewsCard = ({ timestamp, content, status }) => {
 
 NewsCard.propTypes = {
   activeFarm: PropTypes.object,
-  timestamp: PropTypes.any,
   content: PropTypes.any,
   status: PropTypes.any
 }

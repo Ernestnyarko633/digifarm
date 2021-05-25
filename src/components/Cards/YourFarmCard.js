@@ -21,17 +21,16 @@ const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 
 const ItemTag = ({
   setFilter,
-  setActiveFarmIndex,
   filter,
   title,
-  id,
+  setActiveFarmIndex,
   text,
 }) => (
   <Tag
     my={2}
     onClick={() => {
       setFilter(text);
-      setActiveFarmIndex(id);
+      setActiveFarmIndex(text === 'all' ? 0 : null)
     }}
     color={filter === text ? "cf.800" : "gray.500"}
     textAlign="center"
@@ -59,6 +58,7 @@ const YourFarmCard = ({
   setActiveFarmIndex,
   farmName,
   setFarmName,
+  activeFarmIndex,
   setFilter,
   filter,
 }) => {
@@ -150,11 +150,12 @@ const YourFarmCard = ({
                     onClick={() => {
                       setFarmName(farm.name);
                       setFilter("all");
+                      setActiveFarmIndex(index)
                     }}
                   >
                     <Text
                       fontSize="sm"
-                      color={farmName === farm.name ? "cf.800" : "gray.200"}
+                      color={index === activeFarmIndex ? "cf.800" : "gray.200"}
                       mb={3}
                     >
                       {farm.name}
@@ -166,7 +167,7 @@ const YourFarmCard = ({
                       borderWidth="1px"
                       pos="relative"
                       borderColor={
-                        farmName === farm.name ? "cf.800" : "gray.200"
+                        index === activeFarmIndex ? "cf.800" : "gray.200"
                       }
                     >
                       <Image
@@ -180,7 +181,7 @@ const YourFarmCard = ({
                         top={0}
                         left={2}
                         bg={
-                          farmName === farm.name
+                          index === activeFarmIndex
                             ? "cf.800"
                             : randomColors[index]?.color || "#ff0000"
                         }
@@ -208,7 +209,6 @@ const YourFarmCard = ({
                 key={item.id}
                 setFilter={setFilter}
                 setActiveFarmIndex={setActiveFarmIndex}
-                id={item.id}
                 title={item.title}
                 text={item.filter}
                 filter={filter}

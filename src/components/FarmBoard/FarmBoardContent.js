@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Heading, Flex, Box, Text } from '@chakra-ui/react'
 import Prismic from 'prismic-javascript'
@@ -32,6 +33,15 @@ const FarmBoardContent = ({ farms = [] }) => {
     accessToken: PRISMIC_ACCESS_TOKEN
   })
 
+  const latestDateForFarmFeed = feed => {
+    const { data } = feed
+
+    let array = []
+    data.forEach(realFeed => array.push(realFeed?.updatedAt))
+
+    if (array.length)
+      return new Date(Math.max(...array.map(date => new Date(date))))
+  }
   React.useEffect(() => {
     let mounted = true
     if (mounted && !news && !videos) {
@@ -62,14 +72,7 @@ const FarmBoardContent = ({ farms = [] }) => {
 
     if (mounted) {
       setLoading(true)
-      if (news) {
-        setFeeds(prev => [...prev, ...news])
-      }
 
-      // weekly videos
-      if (videos) {
-        setFeeds(prev => [...prev, ...videos])
-      }
       const fetchData = async () => {
         // news data
 
@@ -102,38 +105,55 @@ const FarmBoardContent = ({ farms = [] }) => {
   }, [news, farms, videos, getMyFarmFeeds])
 
   //FIXME: larger feeds would slow down process
-  const cleanedFeeds = feeds?.filter(
-    (feed, index, self) =>
-      self.findIndex(item => JSON.stringify(item) === JSON.stringify(feed)) ===
-      index
-  )
+  let cleanedFeeds = feeds
+    ?.filter(
+      (feed, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(feed)
+        ) === index
+    )
+    ?.slice()
+    ?.sort(
+      (a, b) =>
+        new Date(latestDateForFarmFeed(b)) - new Date(latestDateForFarmFeed(a))
+    )
+
+  let cleanedNews = news
+    ?.filter(
+      (feed, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(feed)
+        ) === index
+    )
+    ?.slice()
+    ?.sort(
+      (a, b) =>
+        new Date(b.first_publication_date) - new Date(a.first_publication_date)
+    )
+
+  let cleanedVideos = videos
+    ?.filter(
+      (feed, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(feed)
+        ) === index
+    )
+    ?.slice()
+    ?.sort(
+      (a, b) =>
+        new Date(b.first_publication_date) - new Date(a.first_publication_date)
+    )
 
   // const mapKey = (i) => i;
-  const isNotEmpty = (filter, array) => {
-    let farm = false
-    let videos = false
-    let news = false
-    const _farms = array.filter(
-      item =>
-        filter === 'all' &&
-        farms[activeFarmIndex]?.order?.product?._id === item?.farm
-    )
-    const _videos = array.filter(
-      item => filter === 'weekly videos' && item?.type === 'weekly_videos'
-    )
-    const _news = array.filter(
-      item => filter === 'news' && item?.type === 'news'
-    )
 
-    if (_farms.length) farm = true
-    if (_videos.length) videos = true
-    if (_news.length) news = true
-
-    return {
-      farm,
-      videos,
-      news
-    }
+  const renderEmpty = ({ type }) => {
+    return (
+      <Flex w='100%' align='center' justify='center'>
+        <Text color='cf.800' fontSize={{ base: 'md' }}>
+          Oops, {`${type}`} unavailable currently
+        </Text>
+      </Flex>
+    )
   }
 
   const renderCard = (status, content) => {
@@ -221,35 +241,24 @@ const FarmBoardContent = ({ farms = [] }) => {
                 ? "See what's happening"
                 : ''}
             </Heading>
-            {!isNotEmpty(filter, cleanedFeeds)?.farm && filter === 'all' && (
-              <Flex w='100%' align='center' justify='center'>
-                <Text color='cf.800' fontSize={{ base: 'md' }}>
-                  Oops, Feeds unavailable currently
-                </Text>
-              </Flex>
-            )}
-            {!isNotEmpty(filter, cleanedFeeds)?.videos &&
-              filter === 'weekly videos' && (
-                <Flex w='100%' align='center' justify='center'>
-                  <Text color='cf.800' fontSize={{ base: 'md' }}>
-                    Oops, Videos unavailable currently
-                  </Text>
-                </Flex>
-              )}
 
-            {!isNotEmpty(filter, cleanedFeeds)?.news && filter === 'news' && (
-              <Flex w='100%' align='center' justify='center'>
-                <Text color='cf.800' fontSize={{ base: 'md' }}>
-                  Oops, News unavailable currently
-                </Text>
-              </Flex>
-            )}
+            {feeds?.length > 0 && filter === 'all'
+              ? cleanedFeeds.map(content => {
+                  return <>{renderCard(content?.type, content)}</>
+                })
+              : filter === 'all' && renderEmpty('Feeds')}
+            {news?.length > 0 && filter === 'news'
+              ? cleanedNews?.map(content => {
+                  return <>{renderCard(content?.type, content)}</>
+                })
+              : filter === 'news' && renderEmpty('News')}
+            {videos?.length > 0 && filter === 'weekly videos'
+              ? cleanedVideos?.map(content => {
+                  return <>{renderCard(content?.type, content)}</>
+                })
+              : filter === 'weekly videos' && renderEmpty('Videos')}
 
-            {feeds?.length > 0 ? (
-              cleanedFeeds.map(content => {
-                return <>{renderCard(content?.type, content)}</>
-              })
-            ) : (
+            {!feeds?.length && !news?.length && !videos?.length && (
               <FarmBoardEmptyState />
             )}
           </Box>
