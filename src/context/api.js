@@ -214,6 +214,20 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const getCooperativeTypes = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/cooperative-types`,
+      query
+    })
+  }
+
+  const createCooperative = async payload => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/cooperatives`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
@@ -247,9 +261,11 @@ export const ApiContextProvider = ({ children }) => {
         createBankDetails,
         updateBankDetails,
         getBankDetails,
+        createCooperative,
         deleteBankTransfer,
         downloadTaskReceipt,
         getMyScheduledTasks,
+        getCooperativeTypes,
         uploadPaymentDetails,
         getUserBankingDetails,
         initiatePaystackPayment,

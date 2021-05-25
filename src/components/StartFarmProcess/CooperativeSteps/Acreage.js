@@ -17,8 +17,16 @@ import { HiLocationMarker } from "react-icons/hi";
 
 const MotionGrid = motion(Grid);
 import PropTypes from "prop-types";
+import useStartFarm from "context/start-farm";
+import AcreageInput from "../OtherSteps/AcreageInput";
 
-const Acreage = ({ farm, order, selectedType }) => {
+const Acreage = ({ farm, order, selectedType, name }) => {
+ const {setAdminAcres, adminAcres, acreage} = useStartFarm()
+  const handleChange = (e) => {
+    setAdminAcres(e.target.value)
+  }
+  console.log(selectedType, "heat from above")
+
   return (
     <Box>
       <MotionGrid templateColumns={{ md: "repeat(2, 1fr)" }}>
@@ -51,7 +59,7 @@ const Acreage = ({ farm, order, selectedType }) => {
                 {selectedType.type}
               </Text>
               <Text mt={-2}>
-                Cooperative name: <Text as="span">Name</Text>
+                Cooperative name: <Text as="span">{name}</Text>
               </Text>
             </Box>
           </Flex>
@@ -105,13 +113,21 @@ const Acreage = ({ farm, order, selectedType }) => {
 
             <Box>
               <Box bg="gray.100" w="100%" p={2} mb={2}>
-                <Text>1 acres = $1500</Text>
+                <Text>{`1 acres = $${farm?.pricePerAcre}`}</Text>
               </Box>
               <FormControl>
-                <Input
+              <AcreageInput
+                  totalAcres={farm.acreage}
+                  value={adminAcres || 1}
+                  setValue={setAdminAcres}
+                />
+                {/* <Input
+                  type="number"
+                  defaultValue={0}
                   placeholder="Eg. 10"
                   _focus={{ borderColor: "cf.800" }}
-                />
+                  onChange={handleChange}
+                /> */}
               </FormControl>
             </Box>
           </Box>
@@ -123,6 +139,7 @@ const Acreage = ({ farm, order, selectedType }) => {
 
 Acreage.propTypes = {
   farm: PropTypes.object,
+  name: PropTypes.string,
   order: PropTypes.object,
   selectedType: PropTypes.object,
 };

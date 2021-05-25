@@ -7,48 +7,23 @@ import CooperativeCard from "components/Cards/CooperativeCard";
 import { Button } from "components";
 import useAuth from "context/auth";
 import PropTypes from "prop-types";
+import useFetch from "hooks/useFetch";
+import useApi from "context/api";
+import FetchCard from "components/FetchCard";
 
-const types = [
-  {
-    type: "Tribe",
-    members: "five (5)",
-    minAcres: "No",
-    discount: "1.3%",
-    image: "tribe.png",
-    alt: "tribe-image",
-  },
-  {
-    type: "Village",
-    members: "five (5)",
-    minAcres: 10,
-    discount: "3%",
-    image: "village.png",
-    alt: "village-image",
-  },
-  {
-    type: "City",
-    members: "Ten (10)",
-    minAcres: 100,
-    discount: "7.5%",
-    image: "city.png",
-    alt: "city-image",
-  },
-  {
-    type: "Nation",
-    members: "Twenty-five (25)",
-    minAcres: 250,
-    discount: "10%",
-    image: "nation.png",
-    alt: "nation-image",
-  },
-];
 
 const Cooperative = ({ location: { selected }, history }) => {
   const { isAuthenticated } = useAuth();
   const { user } = isAuthenticated();
+  const { getCooperativeTypes } =  useApi()
   document.title = "Complete Farmer | Cooperative";
   const [selectedType, setSelectedType] = React.useState("");
+  const [reload, setReload] = React.useState(0)
+  const {data: cooperativeTypes, isLoading, error} =  useFetch("cooperative-types", getCooperativeTypes, reload)
 
+  const triggerReload = () => setReload((p) => p + 1)
+
+  
   return (
     <Box>
       <Header />
@@ -60,6 +35,19 @@ const Cooperative = ({ location: { selected }, history }) => {
         justify="center"
         mt={{ base: 32, md: 0 }}
       >
+      { (isLoading || error) ?
+      <FetchCard
+            direction='column'
+            align='center'
+            justify='center'
+            w='100%'
+            mx='auto'
+            reload={() => triggerReload()}
+            loading={isLoading}
+            error={error}
+            text={"Standby as we load cooperative types"}
+          />:
+      <>
         <Box textAlign="center" mb={20}>
           <Text>Welcome {user?.firstName}</Text>
           <Heading as="h4" fontSize={{ base: "xl", md: "2xl" }}>
@@ -71,11 +59,11 @@ const Cooperative = ({ location: { selected }, history }) => {
           gap={6}
           px={{ base: 4, md: 0 }}
         >
-          {types.map((item) => (
+          {cooperativeTypes.map((item) => (
             <CooperativeCard
-              key={item.type}
+              key={item?.name}
               item={item}
-              selected={selectedType.type === item.type}
+              selected={selectedType?.name === item?.name}
               onClick={() => setSelectedType(item)}
             />
           ))}
@@ -116,6 +104,8 @@ const Cooperative = ({ location: { selected }, history }) => {
             />
           </Link>
         </Flex>
+        </>
+        }
       </Flex>
     </Box>
   );

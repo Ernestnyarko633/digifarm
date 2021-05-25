@@ -33,9 +33,18 @@ export const StartFarmContextProvider = ({ children }) => {
   const [cycle, setCycle] = useState(1)
   const [text, setText] = useState(null)
   const [step, setStep] = useImmer(0)
+  const [cooperativeName, setCooperativeName] = React.useState(null)
+  const [coopType, setCoopType] = React.useState(null)
+  const [adminAcres, setAdminAcres] = React.useState(null)
+  const [cooperative, setCooperative] = React.useState(null)
 
-  const { createOrder, initiatePayment, initiatePaystackPayment, patchOrder } =
-    useApi()
+  const {
+    createOrder,
+    initiatePayment,
+    initiatePaystackPayment,
+    patchOrder,
+    createCooperative
+  } = useApi()
   const { getExchangeRate } = useExternal()
   const { setSession } = useAuth()
 
@@ -55,39 +64,46 @@ export const StartFarmContextProvider = ({ children }) => {
     setOtherStep(draft => draft + 1)
   }
 
+  function skipNextStep() {
+    setOtherStep(draft => draft + 2)
+  }
+
   function handlePrev() {
     setOtherStep(draft => draft - 1)
   }
 
-  const handleCreateOrder = async () => {
+  const handleCreateOrder = async (cooperative, cooperativeUserAcreage) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
-      const data = {
+      let data = {
         cycle,
-        acreage,
+        acreage: cooperativeUserAcreage || acreage,
         product: selectedFarm._id,
-        cost: selectedFarm.pricePerAcre * acreage,
-        projectedYield: selectedFarm.projectedYieldPerAcre * acreage,
+        cost: selectedFarm.pricePerAcre * (cooperativeUserAcreage || acreage),
+        projectedYield:
+          selectedFarm.projectedYieldPerAcre *
+          (cooperativeUserAcreage || acreage),
         projectedMarketReturnsRange: {
           min:
-            (acreage *
+            ((cooperativeUserAcreage || acreage) *
               selectedFarm.pricePerAcre *
               selectedFarm.projectedMarketReturnsRangePerAcre.min) /
             100,
           max:
-            (acreage *
+            ((cooperativeUserAcreage || acreage) *
               selectedFarm.pricePerAcre *
               selectedFarm.projectedMarketReturnsRangePerAcre.max) /
             100
         }
       }
+      if (cooperative?._id) data.cooperative = cooperative._id
 
       // if discount exist then apply discount to cost
       if (selectedFarm.discounts) {
         // get discounts user may qualify for
         const discounts = selectedFarm.discounts.filter(
-          ({ point }) => point <= acreage
+          ({ point }) => point <= (cooperativeUserAcreage || acreage)
         )
         // get highest discount user qualified for
         if (discounts.length) {
@@ -103,6 +119,52 @@ export const StartFarmContextProvider = ({ children }) => {
       sessionStorage.removeItem('my_farms')
       sessionStorage.removeItem('my_orders')
       handleNextStep()
+    } catch (error) {
+      if (error) {
+        if ([401, 403].includes(error.status)) {
+          setSession(false)
+        } else {
+          toast({
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+            position: 'top-right',
+            title: 'An error occurred.',
+            description:
+              (error?.data?.message ||
+                error?.message ||
+                'Unknown error occurred') + '.'
+          })
+        }
+      } else {
+        toast({
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+          title: 'An error occurred.',
+          description: 'Unexpected network error.'
+        })
+      }
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleCreateCooperative = async cooperativeTypeId => {
+    try {
+      setText("Preparing payment option, please don't reload/refresh page")
+      setSubmitting(true)
+      const data = {
+        name: cooperativeName,
+        type: cooperativeTypeId,
+        product: selectedFarm?._id,
+        acreage: adminAcres
+      }
+
+      const res = await createCooperative(data)
+      setCooperative(res.data)
+      handleCreateOrder(res.data, adminAcres)
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
@@ -233,34 +295,44 @@ export const StartFarmContextProvider = ({ children }) => {
         order,
         setStep,
         acreage,
+        coopType,
         setOrder,
         isSellOn,
         contract,
         setCycle,
         currency,
+        adminAcres,
         wantCycle,
         otherStep,
         setAcreage,
         handleNext,
         handlePrev,
         handleBack,
+        setCoopType,
         setCurrency,
         setIsSellOn,
         setContract,
+        cooperative,
         setWantCycle,
         exchangeRate,
         selectedFarm,
         setOtherStep,
         isSubmitting,
+        skipNextStep,
+        setAdminAcres,
         paymentOption,
         handlePayment,
         setSubmitting,
+        setCooperative,
         handleNextStep,
+        cooperativeName,
         setSelectedFarm,
         setExchangeRate,
         triggerMapReload,
         setPaymentOption,
-        handleCreateOrder
+        handleCreateOrder,
+        setCooperativeName,
+        handleCreateCooperative
       }}
     >
       {false && reload}
