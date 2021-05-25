@@ -26,7 +26,6 @@ const FarmBoardContent = ({ farms = [] }) => {
     farms?.length ? farms[0]?.name : null
   )
 
-  console.log(activeFarmIndex, 'huge chunks')
   const { getMyFarmFeeds } = useApi()
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
@@ -147,7 +146,6 @@ const FarmBoardContent = ({ farms = [] }) => {
 
   // const mapKey = (i) => i;
 
-  console.log(cleanedNews, 'news')
   const renderEmpty = ({ type }) => {
     return (
       <Flex w='100%' align='center' justify='center'>

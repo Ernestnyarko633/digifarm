@@ -190,7 +190,6 @@ const NewsCard = ({ content, status }) => {
             >
               {content?.data?.body?.map((details, index) => (
                 <>
-                  {console.log(details)}
                   {index > 0 && (
                     <Box p={15}>
                       <Image
