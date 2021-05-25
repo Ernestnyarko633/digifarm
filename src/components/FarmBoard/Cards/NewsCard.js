@@ -15,7 +15,7 @@ import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { urlify } from 'helpers/misc'
 
-const NewsCard = ({ timestamp, content, status }) => {
+const NewsCard = ({ content, status }) => {
   const [show, setShow] = React.useState(false)
   const handleToggle = () => setShow(!show)
   const [items, setItems] = React.useState([])
@@ -243,7 +243,6 @@ const NewsCard = ({ timestamp, content, status }) => {
 
 NewsCard.propTypes = {
   activeFarm: PropTypes.object,
-  timestamp: PropTypes.any,
   content: PropTypes.any,
   status: PropTypes.any
 }
