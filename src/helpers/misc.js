@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-useless-escape */
 import _ from 'lodash'
 import configs from '../utils/configs'
@@ -30,8 +31,10 @@ export const latestDateForFarmFeed = feed => {
   const { data } = feed
 
   let array = []
-  data.forEach(realFeed => array.push(realFeed?.updatedAt))
+  data.forEach(realFeed => array.push(realFeed?.feed?.updatedAt))
 
+  console.log(data, array, 'data')
+  console.log(new Date(Math.max(...array.map(date => new Date(date)))))
   if (array.length)
     return new Date(Math.max(...array.map(date => new Date(date))))
 }
