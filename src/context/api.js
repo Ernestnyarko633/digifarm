@@ -101,14 +101,28 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  //Cooperative
+  //#region
+
   const acceptInvite = async ({ email, _id }) => {
-    const query = { email: email }
     return await http.patch({
-      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept`,
-      query
+      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept?email=${email}`
     })
   }
 
+  const getCooperatives = async () => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/cooperatives`
+    })
+  }
+
+  const getCooperativeById = async id => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}`
+    })
+  }
+
+  //#endregion
   const deleteBankTransfer = async id => {
     return await http.patch({
       url: `${PAYMENT_API}/payment/receipt-delete?payment_id=${id}`
@@ -244,7 +258,7 @@ export const ApiContextProvider = ({ children }) => {
         sellProduce,
         createOrder,
         downloadFile,
-        acceptInvite,
+
         getActivities,
         verifyPayment,
         getMyFarmFeeds,
@@ -262,7 +276,12 @@ export const ApiContextProvider = ({ children }) => {
         uploadPaymentDetails,
         getUserBankingDetails,
         initiatePaystackPayment,
-        verifyPaystackPayment
+        verifyPaystackPayment,
+
+        //cooperative
+        acceptInvite,
+        getCooperatives,
+        getCooperativeById
       }}
     >
       {children}

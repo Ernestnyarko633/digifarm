@@ -7,11 +7,8 @@ import {
   Grid,
   Icon,
   Text,
-  Avatar,
   Divider,
   Heading,
-  ListItem,
-  UnorderedList,
   GridItem
 } from '@chakra-ui/react'
 import Prismic from 'prismic-javascript'
@@ -22,6 +19,7 @@ import { motion } from 'framer-motion'
 import getConfig from 'utils/configs'
 import ImageLoader from 'components/ImageLoader'
 import Support from 'components/Support'
+import ManagerProfile from './ManagerProfile'
 
 const MotionGrid = motion(Grid)
 
@@ -108,55 +106,7 @@ const AboutFarmManager = ({ farm }) => {
               <Heading pb={5} as='h5' size='md'>
                 Meet the farm managers
               </Heading>
-              <Box
-                borderColor='gray.400'
-                p={{ md: 5 }}
-                borderWidth={1}
-                rounded='md'
-              >
-                <Grid key={doc?.id} templateColumns={{ md: 'repeat(2, 1fr)' }}>
-                  <Box py={{ base: 4, md: 10 }} px={2}>
-                    <Avatar
-                      src={doc?.manager_image?.url}
-                      size='xl'
-                      justify='space-around'
-                    />
-                  </Box>
-                  <Box m={{ base: 3, md: 5 }}>
-                    <Text fontSize='md' fontWeight='800'>
-                      {doc?.full_name}
-                    </Text>
-                    <Text fontSize='sm'>Farm Manager</Text>
-                    <Divider
-                      orientation='horizontal'
-                      borderColor='gray.200'
-                      w={60}
-                      my={5}
-                    />
-                    <Text>Manager Profile</Text>
-                    {doc ? (
-                      <UnorderedList>
-                        {doc?.manager_profile?.map(item => (
-                          <ListItem
-                            key={item.text}
-                            fontSize='xs'
-                            textColor='gray.500'
-                          >
-                            {item.text}
-                          </ListItem>
-                        ))}
-                      </UnorderedList>
-                    ) : (
-                      <Text
-                        className='loading-text loading-text-b'
-                        fontSize='xs'
-                      >
-                        loading farm manager profile
-                      </Text>
-                    )}
-                  </Box>
-                </Grid>
-              </Box>
+              <ManagerProfile item={doc} px={2} />
             </Box>
           </Box>
         </GridItem>

@@ -21,6 +21,7 @@ const Payment = lazy(() => import('./start-farm/payment'))
 const PaymentPaystack = lazy(() => import('./start-farm/payment-paystack'))
 const Banner = lazy(() => import('./banner'))
 const CooperativeInvite = lazy(() => import('./cooperative-invite'))
+const Cooperative_ = lazy(() => import('./cooperative'))
 
 const Pages = {
   Auth,
@@ -43,7 +44,8 @@ const Pages = {
   Wallet,
   PaymentPaystack,
   CooperativeFarm,
-  CooperativeInvite
+  CooperativeInvite,
+  Cooperative_
   // Receipt
 }
 
