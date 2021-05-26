@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Splash from 'components/Loading/Splash'
 
-// import { replaceURI } from 'helpers/misc'
+import { replaceURI } from 'helpers/misc'
 
 import useAuth from 'context/auth'
 import useApi from 'context/api'
@@ -14,18 +14,18 @@ const LogOut = ({ location: { state } }) => {
 
   const { user } = isAuthenticated()
 
-  // const APP = 'AUTH'
-  // const PATH = '/redirects?from=DIGITAL_FARMER&off=true'
+  const APP = 'AUTH'
+  const PATH = '/redirects?from=DIGITAL_FARMER&off=true'
 
   React.useEffect(() => {
     setTimeout(async () => {
       try {
-        // await logout()
-        // replaceURI(APP, PATH)
+        await logout()
+        replaceURI(APP, PATH)
       } catch (_) {
-        // replaceURI(APP, PATH)
+        replaceURI(APP, PATH)
       }
-      // sessionStorage.clear()
+      sessionStorage.clear()
     }, 200)
   }, [logout])
 
