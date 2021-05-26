@@ -124,13 +124,13 @@ const Cooperative = ({ location: { state } }) => {
                   </Text>
                   <Text fontSize='20px'>
                     Cooperative type:
-                    <Text as='span' fontWeight='bold'>
-                      Village
+                    <Text as='span' fontWeight='bold' ml={2}>
+                      {data?.type?.name}
                     </Text>
                   </Text>
                   <Text fontSize='20px'>
                     Cooperative Admin:
-                    <Text as='span' fontWeight='bold'>
+                    <Text as='span' fontWeight='bold' ml={2}>
                       {data?.users[0]?.firstName +
                         ' ' +
                         data?.users[0]?.lastName}
