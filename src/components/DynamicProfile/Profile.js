@@ -24,7 +24,7 @@ const Profile = () => {
     data: bankDetails,
     isLoading: loading,
     error
-  } = useFetch('bank_details', getBankDetails, reload, { user: user?._id })
+  } = useFetch(null, getBankDetails, reload)
 
   return loading || error ? (
     <Box y={{ md: 20 }}>
@@ -54,9 +54,7 @@ const Profile = () => {
       >
         <Signature data={user?.signature} />
       </Box>
-      <BankingDetailsForm
-        bankDetails={bankDetails?.length ? bankDetails[0] : {}}
-      />
+      <BankingDetailsForm bankDetails={bankDetails || {}} />
     </Container>
   )
 }

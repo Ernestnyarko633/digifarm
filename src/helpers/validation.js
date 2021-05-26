@@ -1,6 +1,15 @@
 import * as Yup from 'yup'
 import validator from 'validator'
 
+Yup.addMethod(Yup.object, 'atLeastOneOf', function (list) {
+  return this.test({
+    name: 'atLeastOneOf',
+    message: 'one of these must be provided at least',
+    exclusive: true,
+    params: { keys: list.join(', ') },
+    test: value => value == null || list.some(f => !!value[f])
+  })
+})
 const fileValidation = (size, allowed) =>
   Yup.mixed()
     .required('No file selected!')
@@ -53,14 +62,19 @@ export const PersonalInfoSchema = Yup.object().shape({
   })
 })
 
-export const BankDetailsSchema = Yup.object().shape({
-  bankName: Yup.string().required('This field is required*'),
-  bankBranch: Yup.string().required('This field is required*'),
-  branchCountry: Yup.string().required('This field is required*'),
-  currency: Yup.string().required('This field is required*'),
-  swiftCode: Yup.string().required('This field is required*'),
-  accountName: Yup.string().required('This field is required*'),
-  accountNumber: Yup.number().required('This field is required*'),
-  branchAddress: Yup.string().required('This field is required*'),
-  iban: Yup.number().required('This field is required*')
-})
+export const BankDetailsSchema = Yup.object()
+  .shape({
+    bankName: Yup.string().required('This field is required*'),
+    bankBranch: Yup.string().required('This field is required*'),
+    branchCountry: Yup.string().required('This field is required*'),
+    currency: Yup.string().required('This field is required*'),
+    swiftCode: Yup.string().required('This field is required*'),
+    accountName: Yup.string().required('This field is required*'),
+    accountNumber: Yup.number(),
+    branchAddress: Yup.string().required('This field is required*'),
+    iban: Yup.string()
+  })
+  .atLeastOneOf(['iban', 'accountNumber'])
+
+BankDetailsSchema.isValidSync({ iban: 9 }) // false
+BankDetailsSchema.isValidSync({ accountNumber: 7, iban: 9 })

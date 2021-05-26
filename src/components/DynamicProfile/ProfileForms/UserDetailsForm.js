@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, useToast, Heading, Button, Grid } from '@chakra-ui/react'
 import { useFormik } from 'formik'
@@ -7,6 +8,8 @@ import useApi from 'context/api'
 
 import CustomPhoneInput from 'components/Form/CustomPhoneInput'
 import CustomInput from 'components/Form/CustomInput'
+import CustomSelect from 'components/Form/CustomSelect'
+import Constants from 'constant'
 
 import { PersonalInfoSchema } from 'helpers/validation'
 import { objDiff } from 'helpers/misc'
@@ -37,6 +40,15 @@ const UserDetailsForm = () => {
     onSubmit: async (values, { setSubmitting }) => {
       try {
         let updatedValue = objDiff(values, user)
+        delete updatedValue?.country
+        Object.keys(values.address).forEach(function (key) {
+          Object.keys(updatedValue.address).forEach(function (_key) {
+            if (key === _key) {
+              values.address[key] = updatedValue.address[_key]
+            }
+          })
+        })
+        updatedValue.address = values.address
         const res = await patchUser(user?._id, updatedValue)
         toast({
           title: 'User successfully updated.',
@@ -179,11 +191,13 @@ const UserDetailsForm = () => {
               placeholder='Enter your state/region'
             />
 
-            <CustomInput
-              type='text'
+            <CustomSelect
               isRequired
+              labelKey='name'
+              valueKey='name'
               label='Country'
               name='address.country'
+              options={Constants.countrys}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.address?.country}
