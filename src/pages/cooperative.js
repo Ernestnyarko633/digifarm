@@ -4,6 +4,7 @@ import { Box, Text, Heading, Flex, Avatar, Spacer } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
+import PropTypes from 'prop-types'
 
 import FetchCard from 'components/FetchCard'
 import useFetch from 'hooks/useFetch'
@@ -11,15 +12,19 @@ import useApi from 'context/api'
 import Header from 'container/Header'
 import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfile'
 
-const Cooperative = () => {
+const Cooperative = ({ location: { state } }) => {
   document.title = 'Cooperative ...'
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [reload, setReload] = useState(0)
 
-  const { getCooperatives } = useApi()
-  const { data, isLoading, error } = useFetch(null, getCooperatives, reload)
-  console.log('data', data)
+  const { getCooperativeById } = useApi()
+  const { data, isLoading, error } = useFetch(
+    null,
+    getCooperativeById,
+    reload,
+    state._id
+  )
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
@@ -51,18 +56,21 @@ const Cooperative = () => {
   }
 
   return (
-    <Box bg='white'>
+    <Box>
       {isLoading || error ? (
-        <FetchCard
-          direction='column'
-          align='center'
-          justify='center'
-          reload={triggerReload}
-          loading={isLoading}
-          error={error}
-        />
+        <Box my={60}>
+          <FetchCard
+            direction='column'
+            align='center'
+            justify='center'
+            reload={triggerReload}
+            loading={isLoading}
+            error={error}
+            text='loading cooperative...'
+          />
+        </Box>
       ) : (
-        <Box>
+        <Box bg='white'>
           <Header />
           <Box py={{ md: 24 }}>
             <Heading fontSize='24px' textAlign='center'>
@@ -121,7 +129,7 @@ const Cooperative = () => {
                     </Text>
                   </Text>
                   <Text fontSize='20px'>
-                    Cooperative Admin:{' '}
+                    Cooperative Admin:
                     <Text as='span' fontWeight='bold'>
                       {data?.users[0]?.firstName +
                         ' ' +
@@ -186,6 +194,8 @@ const Cooperative = () => {
   )
 }
 
-Cooperative.propTypes = {}
+Cooperative.propTypes = {
+  location: PropTypes.object.isRequired
+}
 
 export default Cooperative

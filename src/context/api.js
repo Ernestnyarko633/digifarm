@@ -103,17 +103,22 @@ export const ApiContextProvider = ({ children }) => {
 
   //Cooperative
   //#region
+
   const acceptInvite = async ({ email, _id }) => {
-    const query = { email: email }
     return await http.patch({
-      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept`,
-      query
+      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept?email=${email}`
     })
   }
 
   const getCooperatives = async () => {
     return await http.get({
       url: `${DIGITAL_FARMER_API}/cooperatives`
+    })
+  }
+
+  const getCooperativeById = async id => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}`
     })
   }
 
@@ -272,9 +277,11 @@ export const ApiContextProvider = ({ children }) => {
         getUserBankingDetails,
         initiatePaystackPayment,
         verifyPaystackPayment,
+
         //cooperative
         acceptInvite,
-        getCooperatives
+        getCooperatives,
+        getCooperativeById
       }}
     >
       {children}
