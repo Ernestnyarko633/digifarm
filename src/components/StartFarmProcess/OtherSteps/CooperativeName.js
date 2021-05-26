@@ -9,7 +9,7 @@ import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 
 const CooperativeName = ({ farm }) => {
-  const { setCooperativeName } = useStartFarm()
+  const { setCooperativeName, cooperativeName } = useStartFarm()
   const handleChange = e => {
     setCooperativeName(e.target.value)
   }
@@ -45,6 +45,7 @@ const CooperativeName = ({ farm }) => {
               w='100%'
               opacity={0}
               pos='absolute'
+              value={cooperativeName}
               //id={field.name}
               //name={field.name}
               // accept={accept}
