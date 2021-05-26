@@ -26,6 +26,15 @@ export const getFormattedMoney = val => {
     .format(number)
     .split('$')[1]
 }
+export const latestDateForFarmFeed = feed => {
+  const { data } = feed
+
+  let array = []
+  data.forEach(realFeed => array.push(realFeed?.updatedAt))
+
+  if (array.length)
+    return new Date(Math.max(...array.map(date => new Date(date))))
+}
 
 export const getformattedDate = (
   date,

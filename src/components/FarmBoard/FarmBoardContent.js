@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react'
 import { Heading, Flex, Box, Text } from '@chakra-ui/react'
-import Prismic from 'prismic-javascript'
-import getConfig from 'utils/configs'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
 import YourFarmCard from '../Cards/YourFarmCard'
 import FarmFeedCard from 'components/FarmBoard/Cards/FarmFeedCard'
@@ -10,147 +8,27 @@ import NewsCard from 'components/FarmBoard/Cards/NewsCard'
 import WeeklyVideoCard from 'components/FarmBoard/Cards/WeeklyVideoCard'
 import FetchCard from 'components/FetchCard/index'
 import PropTypes from 'prop-types'
-import useApi from 'context/api'
+import { useNews, useVideos, useFeeds } from 'hooks/useFarmBoard'
 
 const FarmBoardContent = ({ farms = [] }) => {
   const [activeFarmIndex, setActiveFarmIndex] = React.useState(0)
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState(null)
-  const [feeds, setFeeds] = React.useState([])
-  const [news, setNewsData] = React.useState(null)
-  const [videos, setVideosData] = React.useState(null)
+  const { loading: newsLoading, news, error: newsError } = useNews()
+  const { loading: videosLoading, videos, error: videosError } = useVideos()
+  const { loading: feedsLoading, feeds, error: feedsError } = useFeeds()
   const [filter, setFilter] = React.useState(
     farms.length ? 'all' : 'weekly videos'
   )
   const [farmName, setFarmName] = React.useState(
     farms?.length ? farms[0]?.name : null
   )
-
-  const { getMyFarmFeeds } = useApi()
-  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
-
-  const Client = Prismic.client(PRISMIC_API, {
-    accessToken: PRISMIC_ACCESS_TOKEN
-  })
-
-  const latestDateForFarmFeed = feed => {
-    const { data } = feed
-
-    let array = []
-    data.forEach(realFeed => array.push(realFeed?.updatedAt))
-
-    if (array.length)
-      return new Date(Math.max(...array.map(date => new Date(date))))
-  }
-  React.useEffect(() => {
-    let mounted = true
-    if (mounted && !news && !videos) {
-      const fetchData = async () => {
-        try {
-          setLoading(true)
-          const [res1, res2] = await Promise.all([
-            Client.query(Prismic.Predicates.at('document.type', 'news')),
-            Client.query(
-              Prismic.Predicates.at('document.type', 'weekly_videos')
-            )
-          ])
-          if (res1) setNewsData(res1.results)
-          if (res2) setVideosData(res2.results)
-        } catch (err) {
-          setError('Could not fetch data')
-        } finally {
-          setLoading(false)
-        }
-      }
-      fetchData()
-    }
-    return () => (mounted = false)
-  }, [Client, news, videos])
-
-  React.useEffect(() => {
-    let mounted = true
-
-    if (mounted) {
-      setLoading(true)
-
-      const fetchData = async () => {
-        // news data
-
-        const feedPromises = farms.map(async farm => {
-          const response = await getMyFarmFeeds({
-            farm: farm?.order?.product?._id
-          })
-          if (response.data) {
-            return response.data
-          }
-          return []
-        })
-
-        const allFeeds = await Promise.all(feedPromises)
-
-        //combining all data now from prismic and farm feeds
-        if (allFeeds) {
-          allFeeds.map(f => setFeeds(s => [...s, ...f]))
-        }
-
-        setLoading(false)
-      }
-
-      if (farms) {
-        fetchData()
-      }
-    }
-
-    return () => (mounted = false)
-  }, [news, farms, videos, getMyFarmFeeds])
-
-  //FIXME: larger feeds would slow down process
-  let cleanedFeeds = feeds
-    ?.filter(
-      (feed, index, self) =>
-        self.findIndex(
-          item => JSON.stringify(item) === JSON.stringify(feed)
-        ) === index
-    )
-    ?.slice()
-    ?.sort(
-      (a, b) =>
-        new Date(latestDateForFarmFeed(b)) - new Date(latestDateForFarmFeed(a))
-    )
-
-  let cleanedNews = news
-    ?.filter(
-      (feed, index, self) =>
-        self.findIndex(
-          item => JSON.stringify(item) === JSON.stringify(feed)
-        ) === index
-    )
-    ?.slice()
-    ?.sort(
-      (a, b) =>
-        new Date(b.first_publication_date) - new Date(a.first_publication_date)
-    )
-
-  let cleanedVideos = videos
-    ?.filter(
-      (feed, index, self) =>
-        self.findIndex(
-          item => JSON.stringify(item) === JSON.stringify(feed)
-        ) === index
-    )
-    ?.slice()
-    ?.sort(
-      (a, b) =>
-        new Date(b.first_publication_date) - new Date(a.first_publication_date)
-    )
-
-  // const mapKey = (i) => i;
+  let loading = newsLoading || videosLoading || feedsLoading
+  let error = newsError || videosError || feedsError
 
   const renderEmpty = ({ type }) => {
     return (
       <Flex w='100%' align='center' justify='center'>
         <Text color='cf.800' fontSize={{ base: 'md' }}>
-          Oops, {`${type}`} unavailable currently
+          Oops, unavailable currently
         </Text>
       </Flex>
     )
@@ -209,7 +87,7 @@ const FarmBoardContent = ({ farms = [] }) => {
 
   return (
     <Flex w='100%' align='center' direction='column'>
-      {loading && !cleanedFeeds.length ? (
+      {loading && !feeds.length ? (
         <FetchCard
           direction='column'
           align='center'
@@ -222,7 +100,7 @@ const FarmBoardContent = ({ farms = [] }) => {
         />
       ) : (
         <>
-          {cleanedFeeds?.length && (
+          {feeds?.length > 0 && (
             <YourFarmCard
               filter={filter}
               farms={farms}
@@ -235,25 +113,25 @@ const FarmBoardContent = ({ farms = [] }) => {
           )}
           <Box p={{ base: 4, md: 16 }}>
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
-              {cleanedFeeds?.length && farms?.length
+              {feeds?.length && farms?.length
                 ? "See what's happening in your farm(s)"
-                : cleanedFeeds?.length
+                : news?.length || videos?.length
                 ? "See what's happening"
                 : ''}
             </Heading>
 
             {feeds?.length > 0 && filter === 'all'
-              ? cleanedFeeds.map(content => {
+              ? feeds.map(content => {
                   return <>{renderCard(content?.type, content)}</>
                 })
               : filter === 'all' && renderEmpty('Feeds')}
             {news?.length > 0 && filter === 'news'
-              ? cleanedNews?.map(content => {
+              ? news?.map(content => {
                   return <>{renderCard(content?.type, content)}</>
                 })
               : filter === 'news' && renderEmpty('News')}
             {videos?.length > 0 && filter === 'weekly videos'
-              ? cleanedVideos?.map(content => {
+              ? videos?.map(content => {
                   return <>{renderCard(content?.type, content)}</>
                 })
               : filter === 'weekly videos' && renderEmpty('Videos')}
