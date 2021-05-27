@@ -62,7 +62,10 @@ const StartFarm = () => {
                 require(`../../assets/images/startfarm/${item.img}`).default
               }
               selected={selected.name === item.name}
-              onClick={() => setSelected(item)}
+              onClick={(e) => {
+                if(item.disabled) return e.preventDefault()   
+                return setSelected(item)
+              }}
             />
           ))}
         </Flex>
