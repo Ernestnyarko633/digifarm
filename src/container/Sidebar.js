@@ -55,8 +55,7 @@ const Sidebar = () => {
             d='flex'
             alignItems='center'
             flexDirection={{ base: 'column', xl: 'row' }}
-            pl={{ md: 4 }}
-            pr={{ md: 4 }}
+            px={{ md: 4 }}
             py={{ md: 2 }}
             rounded='lg'
             activeClassName='activeClasName'
