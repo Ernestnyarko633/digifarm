@@ -141,11 +141,6 @@ section[style] {
   z-index: 2;
 }
 
-.intl-tel-input input-error {
-  border-color: #E53E3E;
-  box-shadow: 0 0 0 1px #e53e3e
-}
-
 .intl-tel-input.allow-dropdown .selected-flag {
   padding-top: 8px;
   padding-left: 14px;
