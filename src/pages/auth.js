@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import QueryString from 'query-string'
@@ -22,8 +21,8 @@ const Auth = ({
   const { store, isAuthenticated } = useAuth()
   const { getUser } = useApi()
 
-  const { to } = QueryString.parse(search, { parseBooleans: true })
-  const { token } = params
+  const { to } = QueryString.parse(search, { parseBooleans: true }) || {}
+  const { token } = params || {}
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -70,12 +69,12 @@ const Auth = ({
 
   return (
     <FetchCard
-      direction='column'
+      error={error}
       align='center'
       justify='center'
-      reload={triggerReload}
+      direction='column'
       loading={isLoading}
-      error={error}
+      reload={triggerReload}
     />
   )
 }

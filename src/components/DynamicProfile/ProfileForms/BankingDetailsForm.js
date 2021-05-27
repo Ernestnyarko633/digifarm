@@ -1,22 +1,24 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import { Box, useToast, Heading, Button, Grid, Flex } from '@chakra-ui/react'
-
 import CustomInput from 'components/Form/CustomInput'
+import CustomSelect from 'components/Form/CustomSelect'
+import Currencies from 'currencies.json'
 
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 
 import { BankDetailsSchema } from 'helpers/validation'
 import { objDiff } from 'helpers/misc'
+import Constants from 'constant'
 
 const BankingDetailsForm = ({ bankDetails }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { createBankDetails, updateBankDetails } = useApi()
   const toast = useToast()
-
   const formik = useFormik({
     initialValues: {
       bankName: bankDetails?.bankName || '',
@@ -132,10 +134,12 @@ const BankingDetailsForm = ({ bankDetails }) => {
               placeholder='Enter your bank branch address'
             />
 
-            <CustomInput
-              type='text'
+            <CustomSelect
               isRequired
+              labelKey='name'
+              valueKey='name'
               name='branchCountry'
+              options={Constants.countrys}
               onBlur={handleBlur}
               label='Bank Branch Country'
               onChange={handleChange}
@@ -159,7 +163,6 @@ const BankingDetailsForm = ({ bankDetails }) => {
             />
 
             <CustomInput
-              isRequired
               type='number'
               name='accountNumber'
               onBlur={handleBlur}
@@ -168,13 +171,11 @@ const BankingDetailsForm = ({ bankDetails }) => {
               value={values.accountNumber}
               error={errors.accountNumber}
               touched={touched.accountNumber}
-              isDisabled={values?.iban?.length > 1}
               placeholder='Enter your bank account number'
             />
 
             <CustomInput
-              isRequired
-              type='number'
+              type='text'
               name='iban'
               onBlur={handleBlur}
               label='IBAN Number'
@@ -182,15 +183,16 @@ const BankingDetailsForm = ({ bankDetails }) => {
               error={errors.iban}
               touched={touched.iban}
               onChange={handleChange}
-              isDisabled={values?.accountNumber?.length > 1}
               placeholder='Enter your IBAN number'
             />
 
-            <CustomInput
+            <CustomSelect
               isRequired
-              type='number'
+              labelKey='name'
+              valueKey='name'
               name='currency'
               onBlur={handleBlur}
+              options={Currencies.currencies}
               label='Account Currency'
               value={values.currency}
               error={errors.currency}

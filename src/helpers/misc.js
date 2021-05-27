@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-useless-escape */
 import _ from 'lodash'
 import configs from '../utils/configs'
 
@@ -24,6 +26,15 @@ export const getFormattedMoney = val => {
   })
     .format(number)
     .split('$')[1]
+}
+export const latestDateForFarmFeed = feed => {
+  const { data } = feed
+
+  let array = []
+  data.forEach(realFeed => array.push(realFeed?.feed?.updatedAt))
+
+  if (array.length)
+    return new Date(Math.max(...array.map(date => new Date(date))))
 }
 
 export const getformattedDate = (
@@ -153,6 +164,32 @@ export const objDiff = (object, base) => {
     })
   }
   return changes(object, base)
+}
+
+export const urlify = text => {
+  var exp =
+    /(\b(((https?|ftp|file|):\/\/)|www[.])[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+  var temp = text?.replace(
+    exp,
+    '<a href="$1" style={{color: "cf.400"}} target="_blank">$1</a>'
+  )
+  var result = ''
+
+  while (temp?.length > 0) {
+    var pos = temp?.indexOf('href="')
+    if (pos === -1) {
+      result += temp
+      break
+    }
+    result += temp?.substring(0, pos + 6)
+
+    temp = temp?.substring(pos + 6, temp?.length)
+    if (temp?.indexOf('://') > 8 || temp?.indexOf('://') === -1) {
+      result += 'http://'
+    }
+  }
+
+  return result
 }
 
 export const Status = {
