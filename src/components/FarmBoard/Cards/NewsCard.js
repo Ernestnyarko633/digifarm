@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import { urlify } from 'helpers/misc'
+// import { urlify } from 'helpers/misc'
 
 const NewsCard = ({ content, status }) => {
   const [show, setShow] = React.useState(false)
@@ -208,7 +208,7 @@ const NewsCard = ({ content, status }) => {
                           mt={3}
                           key={item.text}
                           dangerouslySetInnerHTML={{
-                            __html: urlify(item.text)
+                            __html: item.text
                           }}
                           fontSize={{ base: 'sm', md: 'md' }}
                         />
