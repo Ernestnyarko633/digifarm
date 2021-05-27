@@ -147,7 +147,7 @@ const Cooperative = ({ location: { state } }) => {
               </Box>
             </Flex>
           </Box>
-          <Box>
+          <Box pb={{ md: 10 }}>
             <Flex py='25px' justify='center'>
               <Box
                 w={{ md: '328px', lg: '506px' }}
@@ -162,7 +162,7 @@ const Cooperative = ({ location: { state } }) => {
                     Cooperative members
                   </Text>
                 </Flex>
-                {data?.users?.map(item => (
+                {data?.users?.info?.map(item => (
                   <Flex py='5px' px={{ md: '15px', lg: '20px' }} key={item?.id}>
                     <Text fontSize='16px' fontWeight='bold'>
                       {item?.firstName || item?.lastName

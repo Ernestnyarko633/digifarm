@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Flex, Heading, Link } from '@chakra-ui/react'
+import { Box, Heading, Flex, Link } from '@chakra-ui/react'
 
 import { replaceURI } from 'helpers/misc'
 import FetchCard from 'components/FetchCard'
@@ -9,16 +9,14 @@ import useApi from 'context/api'
 import { useLocation } from 'react-router-dom'
 import { Link as ReachRouter } from 'react-router-dom'
 import { Button } from 'components'
-import Confetti from 'react-confetti'
-import useWindowSize from 'react-use/lib/useWindowSize'
 
 const CooperativeInvite = () => {
   document.title = 'Cooperative invite...'
-  const { width, height } = useWindowSize()
 
   const [isLoading, setIsLoading] = useState(false)
   const [reload, setReload] = useState(0)
   const [error, setError] = useState(false)
+  const [stsCode, setstsCode] = useState(null)
 
   const useQuery = useLocation()
   let query = useQuery
@@ -40,10 +38,12 @@ const CooperativeInvite = () => {
           await acceptInvite({ email, _id })
         } catch (error) {
           if (error) {
+            console.log('err', error?.data?.statusCode)
             if ([401, 403].includes(error.status)) {
               replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=true')
             } else {
-              setError(error.message)
+              setError(error?.data?.message)
+              setstsCode(error?.data?.statusCode)
             }
           } else {
             setError('Unexpected network error')
@@ -56,10 +56,12 @@ const CooperativeInvite = () => {
     }
     return () => (mounted = false)
   }, [email, _id, acceptInvite, reload])
+  console.log('e', error)
+  console.log('code', stsCode)
 
   return (
     <Box py={{ md: '10%', lg: '18%' }}>
-      {isLoading || error ? (
+      {isLoading && error === false ? (
         <FetchCard
           direction='column'
           align='center'
@@ -68,11 +70,23 @@ const CooperativeInvite = () => {
           loading={isLoading}
           error={error}
         />
-      ) : (
-        <>
-          <Flex justify='center'>
-            <Confetti width={width} height={height} />
+      ) : null}
+      {error === "Cannot read property 'users' of null" ? (
+        <Box>
+          <Heading textAlign='center'> Cooperative doesn't exit</Heading>
+          <Flex justify='center' my={10}>
+            <Link
+              href='/dashboard'
+              _hover={{ textDecor: 'none' }}
+              textAlign='center'
+            >
+              <Button btntitle='Go back' />
+            </Link>
           </Flex>
+        </Box>
+      ) : null}
+      {stsCode === 200 && (
+        <Box>
           <Heading w='45%' textAlign='center' m='auto'>
             Congratulations on accepting your invitation. Click on the button to
             view your cooperative
@@ -94,7 +108,7 @@ const CooperativeInvite = () => {
               />
             </Link>
           </Flex>
-        </>
+        </Box>
       )}
     </Box>
   )
