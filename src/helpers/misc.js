@@ -33,8 +33,6 @@ export const latestDateForFarmFeed = feed => {
   let array = []
   data.forEach(realFeed => array.push(realFeed?.feed?.updatedAt))
 
-  console.log(data, array, 'data')
-  console.log(new Date(Math.max(...array.map(date => new Date(date)))))
   if (array.length)
     return new Date(Math.max(...array.map(date => new Date(date))))
 }
@@ -171,22 +169,22 @@ export const objDiff = (object, base) => {
 export const urlify = text => {
   var exp =
     /(\b(((https?|ftp|file|):\/\/)|www[.])[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
-  var temp = text.replace(
+  var temp = text?.replace(
     exp,
     '<a href="$1" style={{color: "cf.400"}} target="_blank">$1</a>'
   )
   var result = ''
 
-  while (temp.length > 0) {
-    var pos = temp.indexOf('href="')
+  while (temp?.length > 0) {
+    var pos = temp?.indexOf('href="')
     if (pos === -1) {
       result += temp
       break
     }
-    result += temp.substring(0, pos + 6)
+    result += temp?.substring(0, pos + 6)
 
-    temp = temp.substring(pos + 6, temp.length)
-    if (temp.indexOf('://') > 8 || temp.indexOf('://') === -1) {
+    temp = temp?.substring(pos + 6, temp?.length)
+    if (temp?.indexOf('://') > 8 || temp?.indexOf('://') === -1) {
       result += 'http://'
     }
   }
