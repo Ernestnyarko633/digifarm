@@ -8,8 +8,14 @@ import axios from 'axios'
 const ApiContext = createContext()
 
 export const ApiContextProvider = ({ children }) => {
-  const { FMS_API, AUTH_API, PAYMENT_API, DIGITAL_FARMER_API, BUYER_API } =
-    getConfig()
+  const {
+    FMS_API,
+    AUTH_API,
+    PAYMENT_API,
+    DIGITAL_FARMER_API,
+    BUYER_API,
+    NOTIFICATION_API
+  } = getConfig()
 
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
@@ -43,7 +49,10 @@ export const ApiContextProvider = ({ children }) => {
   }
 
   const patchOrder = async (id, body) => {
-    return await http.patch({ url: `${DIGITAL_FARMER_API}/orders/${id}`, body })
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/${id}`,
+      body
+    })
   }
 
   const getPaymentDetails = async id => {
@@ -236,6 +245,20 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const getNotifications = async query => {
+    return await http.get({
+      url: `${NOTIFICATION_API}/notification`,
+      query
+    })
+  }
+
+  const updateNotification = async (id, userId, query) => {
+    return await http.patch({
+      url: `${NOTIFICATION_API}/notification/generic-update/${id}/${userId}`,
+      query
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
@@ -281,7 +304,9 @@ export const ApiContextProvider = ({ children }) => {
         //cooperative
         acceptInvite,
         getCooperatives,
-        getCooperativeById
+        getCooperativeById,
+        getNotifications,
+        updateNotification
       }}
     >
       {children}
