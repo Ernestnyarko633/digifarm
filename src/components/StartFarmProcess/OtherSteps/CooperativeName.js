@@ -9,7 +9,8 @@ import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 
 const CooperativeName = ({ farm }) => {
-  const { setCooperativeName, cooperativeName } = useStartFarm()
+  const { setCooperativeName, cooperativeName, coopImg, setCoopImg } =
+    useStartFarm()
   const handleChange = e => {
     setCooperativeName(e.target.value)
   }
@@ -19,7 +20,11 @@ const CooperativeName = ({ farm }) => {
       {false && handleChange}
       <Box pos='relative'>
         <Avatar
-          src={require('../../../assets/images/user-avatar.png').default}
+          src={
+            coopImg
+              ? URL.createObjectURL(coopImg)
+              : require('../../../assets/images/user-avatar.png').default
+          }
           size='xl'
         />
         <FormControl>
@@ -45,7 +50,9 @@ const CooperativeName = ({ farm }) => {
               w='100%'
               opacity={0}
               pos='absolute'
-              value={cooperativeName}
+              onChange={async e => {
+                setCoopImg(e.currentTarget.files[0])
+              }}
               //id={field.name}
               //name={field.name}
               // accept={accept}
@@ -60,6 +67,7 @@ const CooperativeName = ({ farm }) => {
 
         <FormControl mt={4}>
           <Input
+            value={cooperativeName}
             placeholder='Eg. CompleteNation'
             rounded={0}
             _focus={{ borderColor: 'cf.800' }}

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
@@ -33,6 +34,7 @@ const FarmBoardContent = ({ farms = [] }) => {
           <RenderCards
             key={mapKey(index)}
             filter={filter}
+            comparant={key}
             farms={farms}
             activeFarmIndex={activeFarmIndex}
             status={content?.type}
@@ -47,6 +49,8 @@ const FarmBoardContent = ({ farms = [] }) => {
       return array
     })
   }
+
+  console.log(news, 'news')
 
   return (
     <Flex w='100%' align='center' direction='column'>

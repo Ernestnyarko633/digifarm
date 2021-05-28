@@ -10,18 +10,16 @@ import PropTypes from "prop-types";
 import useFetch from "hooks/useFetch";
 import useApi from "context/api";
 import FetchCard from "components/FetchCard";
+import useStartFarm from "context/start-farm";
 
 
 const Cooperative = ({ location: { selected }, history }) => {
   const { isAuthenticated } = useAuth();
   const { user } = isAuthenticated();
-  const { getCooperativeTypes } =  useApi()
+  const {triggerReload, cooperativeTypes, coopTError, coopTLoading, setSelectedCooperativeType} = useStartFarm()
   document.title = "Complete Farmer | Cooperative";
   const [selectedType, setSelectedType] = React.useState("");
-  const [reload, setReload] = React.useState(0)
-  const {data: cooperativeTypes, isLoading, error} =  useFetch("cooperative-types", getCooperativeTypes, reload)
 
-  const triggerReload = () => setReload((p) => p + 1)
 
   
   return (
@@ -35,7 +33,7 @@ const Cooperative = ({ location: { selected }, history }) => {
         justify="center"
         mt={{ base: 32, md: 0 }}
       >
-      { (isLoading || error) ?
+      { (coopTLoading || coopTError) ?
       <FetchCard
             direction='column'
             align='center'
@@ -43,8 +41,8 @@ const Cooperative = ({ location: { selected }, history }) => {
             w='100%'
             mx='auto'
             reload={() => triggerReload()}
-            loading={isLoading}
-            error={error}
+            loading={coopTLoading}
+            error={coopTError}
             text={"Standby as we load cooperative types"}
           />:
       <>
@@ -64,7 +62,9 @@ const Cooperative = ({ location: { selected }, history }) => {
               key={item?.name}
               item={item}
               selected={selectedType?.name === item?.name}
-              onClick={() => setSelectedType(item)}
+              onClick={() => {
+                setSelectedCooperativeType(item)
+                return setSelectedType(item)}}
             />
           ))}
         </Grid>

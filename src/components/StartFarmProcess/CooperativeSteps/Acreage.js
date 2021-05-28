@@ -21,7 +21,7 @@ import useStartFarm from "context/start-farm";
 import AcreageInput from "../OtherSteps/AcreageInput";
 
 const Acreage = ({ farm, order, selectedType, name }) => {
- const {setAdminAcres, adminAcres, acreage} = useStartFarm()
+ const {setAdminAcres, adminAcres, acreage, coopImg} = useStartFarm()
   const handleChange = (e) => {
     setAdminAcres(e.target.value)
   }
@@ -38,7 +38,7 @@ const Acreage = ({ farm, order, selectedType, name }) => {
           borderBottomWidth={{ base: 1, md: 0 }}
           py={{ base: 10, md: 6 }}
         >
-          <Image src={require("../../../assets/images/invite.png").default} />
+          <Image src={    require("../../../assets/images/invite.png").default} />
           <Box mt={10}>
             <Support />
           </Box>
@@ -51,7 +51,8 @@ const Acreage = ({ farm, order, selectedType, name }) => {
             mt={{ base: 6, md: 0 }}
           >
             <Avatar
-              src={require("../../../assets/images/user-avatar.png").default}
+              src={coopImg
+                ? URL.createObjectURL(coopImg) : require("../../../assets/images/user-avatar.png").default}
               size="lg"
             />
             <Box ml={2}>
@@ -100,7 +101,7 @@ const Acreage = ({ farm, order, selectedType, name }) => {
 
           <Box p={{ base: 4, md: 6, lg: 10 }}>
             <Heading as="h4" fontSize={{ md: "xl" }}>
-              Total Number of acres
+             Your Total Number of Acres
             </Heading>
             <Text color="gray.500" fontSize="sm">
               Enter the total number of acres you want to farm with your

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState, useContext, createContext } from 'react'
+import React, { useState, useContext, createContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
 import { useToast } from '@chakra-ui/react'
@@ -9,6 +9,7 @@ import useAuth from './auth'
 import useExternal from './external'
 
 import Constants from 'constant'
+import useFetch from 'hooks/useFetch'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[0]
@@ -21,6 +22,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [selectedFarm, setSelectedFarm] = useState(
     JSON.parse(sessionStorage.getItem('selected_farm'))
   )
+  const [barrier, setBarrier] = useState(null)
   const [isSubmitting, setSubmitting] = useState(false)
   const [exchangeRate, setExchangeRate] = useState(1)
   const [isSellOn, setIsSellOn] = useState(true)
@@ -35,16 +37,44 @@ export const StartFarmContextProvider = ({ children }) => {
   const [step, setStep] = useImmer(0)
   const [cooperativeName, setCooperativeName] = React.useState(null)
   const [coopType, setCoopType] = React.useState(null)
-  const [adminAcres, setAdminAcres] = React.useState(null)
+  const [adminAcres, setAdminAcres] = React.useState(1)
   const [cooperative, setCooperative] = React.useState(null)
+  const [coopImg, setCoopImg] = React.useState(false)
+  const [reloadT, setReloadT] = React.useState(0)
+  const [selectedCooperativeType, setSelectedCooperativeType] =
+    React.useState(null)
+
+  const triggerReload = () => setReloadT(p => p + 1)
 
   const {
     createOrder,
     initiatePayment,
     initiatePaystackPayment,
     patchOrder,
-    createCooperative
+    createCooperative,
+    getCooperativeTypes
   } = useApi()
+  const {
+    data: cooperativeTypes,
+    coopTLoading,
+    coopTError
+  } = useFetch('cooperative-types', getCooperativeTypes, reloadT)
+
+  useEffect(() => {
+    let mounted = true
+    const types = ['tribe', 'village', 'city', 'nation']
+
+    const Barrier = type => {
+      const num = types.findIndex(value => value === type?.name)
+
+      const newNum = num + 1
+      if (newNum < 3) setBarrier(cooperativeTypes[newNum]?.minAcre)
+    }
+
+    if (mounted && selectedCooperativeType) Barrier(selectedCooperativeType)
+    return () => (mounted = false)
+  }, [cooperativeTypes, selectedCooperativeType])
+
   const { getExchangeRate } = useExternal()
   const { setSession } = useAuth()
 
@@ -293,7 +323,9 @@ export const StartFarmContextProvider = ({ children }) => {
         text,
         cycle,
         order,
+        barrier,
         setStep,
+        coopImg,
         acreage,
         coopType,
         setOrder,
@@ -301,9 +333,12 @@ export const StartFarmContextProvider = ({ children }) => {
         contract,
         setCycle,
         currency,
-        adminAcres,
         wantCycle,
         otherStep,
+        adminAcres,
+        coopTError,
+        setReloadT,
+        setCoopImg,
         setAcreage,
         handleNext,
         handlePrev,
@@ -313,6 +348,7 @@ export const StartFarmContextProvider = ({ children }) => {
         setIsSellOn,
         setContract,
         cooperative,
+        coopTLoading,
         setWantCycle,
         exchangeRate,
         selectedFarm,
@@ -320,6 +356,7 @@ export const StartFarmContextProvider = ({ children }) => {
         isSubmitting,
         skipNextStep,
         setAdminAcres,
+        triggerReload,
         paymentOption,
         handlePayment,
         setSubmitting,
@@ -329,10 +366,13 @@ export const StartFarmContextProvider = ({ children }) => {
         setSelectedFarm,
         setExchangeRate,
         triggerMapReload,
+        cooperativeTypes,
         setPaymentOption,
         handleCreateOrder,
         setCooperativeName,
-        handleCreateCooperative
+        handleCreateCooperative,
+        selectedCooperativeType,
+        setSelectedCooperativeType
       }}
     >
       {false && reload}

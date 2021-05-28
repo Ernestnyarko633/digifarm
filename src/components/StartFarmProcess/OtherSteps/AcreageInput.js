@@ -10,9 +10,10 @@ import {
 } from '@chakra-ui/react'
 
 import { IoAddCircleSharp, IoRemoveCircleOutline } from 'react-icons/io5'
+import useStartFarm from 'context/start-farm'
 
 const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
-  console.log(cooperativeOps, 'teams')
+  const { barrier } = useStartFarm()
   useEffect(() => {
     let mounted = true
     if (mounted && cooperativeOps) {
@@ -24,6 +25,7 @@ const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
     return () => (mounted = false)
   }, [cooperativeOps, setValue])
 
+  console.log(barrier, 'room')
   return (
     <Box w={{ base: 48, md: 80 }}>
       <InputGroup>
@@ -99,8 +101,14 @@ const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
             }}
             icon={<IoAddCircleSharp />}
             onClick={() => {
-              if (value < totalAcres) {
-                setValue(draft => draft + 1)
+              if (barrier) {
+                if (value < barrier) {
+                  setValue(draft => draft + 1)
+                }
+              } else {
+                if (value < totalAcres) {
+                  setValue(draft => draft + 1)
+                }
               }
             }}
           />
