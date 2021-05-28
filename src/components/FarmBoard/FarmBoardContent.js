@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
@@ -20,12 +21,15 @@ const FarmBoardContent = ({ farms = [] }) => {
   let loading = newsLoading || videosLoading || feedsLoading
   let error = newsError || videosError || feedsError
 
+  console.log(news, videos, feeds)
   const RenderDataType = filter => {
     const mapKey = i => i
+
     const data = { news, feeds, videos }
     if (!feeds?.length && !news?.length && !videos?.length) {
       return <FarmBoardEmptyState />
     }
+
     return Object.keys(data).map(key => {
       let array = []
       if (key === filter && data[key].length) {
@@ -34,6 +38,7 @@ const FarmBoardContent = ({ farms = [] }) => {
             key={mapKey(index)}
             filter={filter}
             farms={farms}
+            comparant={key}
             activeFarmIndex={activeFarmIndex}
             status={content?.type}
             content={content}
