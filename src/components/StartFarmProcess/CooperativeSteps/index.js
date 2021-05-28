@@ -50,7 +50,6 @@ const CooperativeSteps = ({ data, history }) => {
     location: { selectedType },
   } = history;
 
-  console.log(selectedType, "king")
   const toast = useToast();
 
   window.onbeforeunload = function (event) {
@@ -63,7 +62,6 @@ const CooperativeSteps = ({ data, history }) => {
     rootMargin: "0px",
     threshold: 1,
   });
-  console.log(selectedType, "from space")
 
   const getSteps = (value) => {
     switch (value) {

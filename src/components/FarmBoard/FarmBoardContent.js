@@ -21,7 +21,6 @@ const FarmBoardContent = ({ farms = [] }) => {
   let loading = newsLoading || videosLoading || feedsLoading
   let error = newsError || videosError || feedsError
 
-  console.log(news, videos, feeds)
   const RenderDataType = filter => {
     const mapKey = i => i
 
