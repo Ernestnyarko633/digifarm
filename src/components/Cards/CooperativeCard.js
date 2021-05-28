@@ -11,8 +11,10 @@ import {
 } from '@chakra-ui/react'
 import { FaCheckCircle } from 'react-icons/fa'
 import PropTypes from 'prop-types'
-
+import converter from 'number-to-words'
 const CooperativeCard = ({ item, onClick, selected }) => {
+  const { name, maxMember, minAcre, discount } = item
+
   return (
     <Box
       css={{ mixBlendMode: 'normal' }}
@@ -29,8 +31,8 @@ const CooperativeCard = ({ item, onClick, selected }) => {
           w='100%'
           h={64}
           object-fit='scale-down'
-          src={require(`../../assets/images/${item.image}`).default}
-          alt={item.type}
+          src={require(`../../assets/images/${name}.png`).default}
+          alt={name + '-image'}
         />
         <Box pos='absolute' right={4} top={4}>
           {selected ? (
@@ -44,10 +46,10 @@ const CooperativeCard = ({ item, onClick, selected }) => {
       <Box p={4}>
         <Box borderBottomWidth={1} borderBottomColor='gray.200' pb={2} mb={3}>
           <Heading as='h5' fontSize='lg'>
-            {item.type}
+            {name.charAt(0).toUpperCase() + name.slice(1)}
           </Heading>
           <Text color='gray.500' fontSize='xs'>
-            Up to {item.members} members
+            Up to {`${converter.toWords(maxMember)} (${maxMember})`} members
           </Text>
         </Box>
 
@@ -55,11 +57,11 @@ const CooperativeCard = ({ item, onClick, selected }) => {
           <List fontSize='sm'>
             <ListItem d='flex' alignItems='center'>
               <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
-              {item.minAcres} mininum number of acre
+              {minAcre === 0 ? 1 : minAcre} mininum number of acre
             </ListItem>
             <ListItem d='flex' alignItems='center' py={1}>
               <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
-              Up to {item.discount} cooperative discount
+              Up to {discount}% cooperative discount
             </ListItem>
             <ListItem d='flex' alignItems='center'>
               <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
