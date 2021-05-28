@@ -41,7 +41,7 @@ import getConfig from 'utils/configs'
 
 const MotionGrid = motion(Grid)
 
-const ChooseAcreage = ({ farm }) => {
+const ChooseAcreage = ({ farm, selectedType }) => {
   const { eosSearch } = useApi()
   const [isLoading, setLoading] = React.useState(false)
   const [location, setLocation] = React.useState([])
@@ -60,7 +60,8 @@ const ChooseAcreage = ({ farm }) => {
     setCurrency,
     // setWantCycle,
     exchangeRate,
-    setExchangeRate
+    setExchangeRate,
+    setAcreage
   } = useStartFarm()
   const { getExchangeRate } = useExternal()
   const toast = useToast()
@@ -340,7 +341,12 @@ const ChooseAcreage = ({ farm }) => {
                 align='center'
                 justify={{ base: 'space-between', md: 'initial' }}
               >
-                <AcreageInput totalAcres={farm.acreage} />
+                <AcreageInput
+                  totalAcres={farm.acreage}
+                  value={acreage}
+                  setValue={setAcreage}
+                  cooperativeOps={selectedType}
+                />
                 <Flex alignItems='center' marginLeft={{ md: 6 }}>
                   <Skeleton
                     h={6}
@@ -436,7 +442,8 @@ const ChooseAcreage = ({ farm }) => {
 }
 
 ChooseAcreage.propTypes = {
-  farm: PropTypes.object.isRequired
+  farm: PropTypes.object.isRequired,
+  selectedType: PropTypes.object
 }
 
 export default ChooseAcreage

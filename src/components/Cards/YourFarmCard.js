@@ -22,17 +22,13 @@ const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
   const location = useLocation();
   const query = location.search.split("?")[1];
-
   const newState = query === text ? query : text;
-
-  console.log("filter", filter);
-
   return (
     <Tag
       my={2}
       onClick={() => {
         setFilter(newState);
-        setActiveFarmIndex(text === "all" ? 0 : null);
+        setActiveFarmIndex(text === "feeds" ? 0 : null);
       }}
       color={filter === text ? "cf.800" : "gray.500"}
       textAlign="center"
@@ -51,8 +47,8 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 };
 
 const items = [
-  { id: 0, title: "All Feeds", filter: "all" },
-  { id: 1, title: "Weekly Videos", filter: "weekly videos" },
+  { id: 0, title: "All Feeds", filter: "feeds" },
+  { id: 1, title: "Weekly Videos", filter: "videos" },
   { id: 2, title: "News", filter: "news" },
 ];
 
@@ -107,7 +103,7 @@ const YourFarmCard = ({
       >
         <Flex align="center" direction="row" justify="space-around" w="100%">
           <Heading as="h6" fontSize="lg">
-            Your Farm(s)
+            {farms.length ? "Your Farm(s)" : ""}
           </Heading>
           <Link as={ReachLink} to="/start-farm" _hover={{ textDecor: "none" }}>
             <Button rounded="30px" btntitle="Start a farm" />
@@ -152,7 +148,7 @@ const YourFarmCard = ({
                     mr={4}
                     onClick={() => {
                       setFarmName(farm.name);
-                      setFilter("all");
+                      setFilter("feeds");
                       setActiveFarmIndex(index);
                     }}
                   >
@@ -207,16 +203,36 @@ const YourFarmCard = ({
             mt={3}
             overflowX={items.length > 6 ? "scroll" : "visible"}
           >
-            {items.map((item) => (
-              <ItemTag
-                key={item.id}
-                setFilter={setFilter}
-                setActiveFarmIndex={setActiveFarmIndex}
-                title={item.title}
-                text={item.filter}
-                filter={filter}
-              />
-            ))}
+            {items.map((item) => {
+              if(farms.length && item.filter === 'feeds'){
+                return(
+                  <ItemTag
+                      key={item.id}
+                      setFilter={setFilter}
+                      setActiveFarmIndex={setActiveFarmIndex}
+                      title={item.title}
+                      text={item.filter}
+                      filter={filter}
+                  />
+                )
+              } else {
+              if(item.filter !== 'feeds' ){
+                return(
+                  <ItemTag
+                  key={item.id}
+                  setFilter={setFilter}
+                  setActiveFarmIndex={setActiveFarmIndex}
+                  title={item.title}
+                  text={item.filter}
+                  filter={filter}
+                />
+                )
+              }
+            }
+            
+            return null
+          
+          })}
           </Flex>
         </Flex>
       </Flex>

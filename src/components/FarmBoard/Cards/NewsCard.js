@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-// import { urlify } from 'helpers/misc'
+import { urlify } from 'helpers/misc'
 
 const NewsCard = ({ content, status }) => {
   const [show, setShow] = React.useState(false)
@@ -201,19 +201,38 @@ const NewsCard = ({ content, status }) => {
                     </Box>
                   )}
                   {details?.slice_type === 'details' &&
-                    details?.primary?.description?.map(item => (
-                      <>
-                        <Text
-                          color='gray.500'
-                          mt={3}
-                          key={item.text}
-                          dangerouslySetInnerHTML={{
-                            __html: item.text
-                          }}
-                          fontSize={{ base: 'sm', md: 'md' }}
-                        />
-                      </>
-                    ))}
+                    details?.primary?.description?.map(item => {
+                      if (item?.type === 'paragraph') {
+                        return (
+                          <>
+                            <Text
+                              color='gray.500'
+                              mt={3}
+                              key={item.text}
+                              dangerouslySetInnerHTML={{
+                                __html: urlify(item.text)
+                              }}
+                              fontSize={{ base: 'sm', md: 'md' }}
+                            />
+                          </>
+                        )
+                      }
+
+                      if (item?.type === 'image') {
+                        return (
+                          <Box p={15}>
+                            <Image
+                              h={{ md: 85 }}
+                              w='100%'
+                              objectFit='cover'
+                              src={item?.url}
+                            />
+                          </Box>
+                        )
+                      }
+
+                      return null
+                    })}
                 </>
               ))}
               {/* {content?.data?.body[0]?.primary?.description?.map(item => (
