@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import {
   Box,
   Flex,
-  Checkbox,
   Text,
   Avatar,
   GridItem,
@@ -24,14 +23,14 @@ import Header from 'container/Header'
 import { Button } from 'components'
 import { MdDashboard } from 'react-icons/md'
 import { BiCreditCard } from 'react-icons/bi'
+import { getformattedDate, getFormattedMoney } from 'helpers/misc'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Dashboard | The GCU Application Portal'
-  const [checkedItems, setCheckedItems] = useState(null)
-  //   const [filterKey] = useState('')
   const [reload, setReload] = useState(0)
-  const [, setInitialTableData] = useState([])
   const [tableData, setTableData] = useState([])
+
+  const triggerReload = () => setReload(prevState => prevState + 1)
 
   const { getCooperativeById } = useApi()
   const { data, isLoading, error } = useFetch(
@@ -41,112 +40,120 @@ const CooperativeMain = ({ location: { state } }) => {
     state._id
   )
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
-
-  const allChecked = checkedItems?.every(e => e?.checked === true)
-  const isIndeterminate =
-    checkedItems?.some(e => e.checked === true) && !allChecked
-
-  //   const handleSearch = event => {
-  //     let value = event.target.value ? event.target.value : ''
-  //     value = value.trim().toLowerCase()
-  //     let filtered = []
-  //     if (value) {
-  //       filtered = initialTableData.filter(item => {
-  //         const columnData = item[filterKey]?.toLowerCase()
-  //         return !!columnData?.match(new RegExp(value, 'i'))
-  //       })
-  //     } else {
-  //       filtered = JSON.parse(JSON.stringify(initialTableData))
-  //     }
-  //     setTableData(filtered)
-  //   }
-
-  //   const selectedItems = checkedItems?.filter(e => e.checked === true)
-
   const _columns = [
     {
-      Header: ({ data }) => (
-        <Flex w='100%' justify='center'>
-          <Checkbox
-            colorScheme='gcuButton'
-            isChecked={allChecked}
-            isIndeterminate={isIndeterminate}
-            onChange={event => {
-              const checked = data.map(e => ({
-                _id: e._id,
-                checked: event.target.checked
-              }))
-              setCheckedItems(checked)
-            }}
-          />
-        </Flex>
+      Header: () => (
+        <Text fontSize='16px' fontWeight='bold' color='black'>
+          Names
+        </Text>
       ),
-      accessor: '_id',
+      accessor: 'info',
       Cell: ({ row }) => (
-        <Flex w='100%' justify='center'>
-          <Checkbox
-            colorScheme='gcuButton'
-            isChecked={
-              checkedItems?.find(e => e._id === row.original._id)?.checked ||
-              false
+        <Flex>
+          <Avatar
+            name={
+              row.values.info?.firstName ||
+              row.values.info.avatar ||
+              'Annonymous'
             }
-            id={row.original._id}
-            onChange={event => {
-              let newCheckItems = []
-              if (checkedItems) {
-                newCheckItems = checkedItems.filter(
-                  e => e._id !== row.original._id
-                )
-              }
-              setCheckedItems([
-                ...newCheckItems,
-                { _id: row.original._id, checked: event.target.checked }
-              ])
-            }}
+            size='md'
           />
+          <Box pl='12px' pt={1}>
+            <Flex>
+              <Text fontSize='16px' fontWeight='semibold'>
+                {row.values.info?.firstName
+                  ? `${
+                      row.values.info?.firstName +
+                      ' ' +
+                      row.values.info?.lastName
+                    }`
+                  : 'Annonymous'}
+              </Text>
+              {row.index === 0 && (
+                <Box bg='#D6F2D5' rounded='4px' ml='7px'>
+                  <Text
+                    fontSize='10px'
+                    textAlign='center'
+                    color='#004C46'
+                    py='4px'
+                    px='5.5px'
+                  >
+                    Admin
+                  </Text>
+                </Box>
+              )}
+            </Flex>
+            <Text fontSize='12px' color='gray.600'>
+              {row.values.info?.email || row.original.email}
+            </Text>
+          </Box>
         </Flex>
       )
     },
+
     {
-      Header: 'Full Name',
-      id: 'fullName',
-      accessor: row => row.firstName + ' ' + row.lastName
+      Header: () => (
+        <Text fontSize='16px' fontWeight='bold' color='black'>
+          Cost
+        </Text>
+      ),
+      accessor: 'cost',
+      Cell: ({ row }) => (
+        <Text fontWeight='semibold'>
+          $
+          {getFormattedMoney(
+            row.values.acreage *
+              data?.product?.pricePerAcre *
+              data?.type?.discount
+          )}
+        </Text>
+      )
     },
     {
-      Header: 'Email address',
-      accessor: 'email'
+      Header: () => (
+        <Text fontSize='16px' fontWeight='bold' color='black'>
+          Acres assigned
+        </Text>
+      ),
+      accessor: 'acreage',
+      Cell: ({ row }) => <Text fontWeight='semibold'>{row.values.acreage}</Text>
+    },
+    {
+      Header: () => (
+        <Text fontSize='16px' fontWeight='bold' color='black'>
+          Status
+        </Text>
+      ),
+      accessor: 'status',
+      Cell: ({ row }) => (
+        <Box>
+          {row.values.status === 'PAID' ? (
+            <Box bg='#D6F2D5' w='99px' rounded='4px'>
+              <Text fontSize='14px' color='#004C46' textAlign='center' py='4px'>
+                {row.values.status}
+              </Text>
+            </Box>
+          ) : (
+            <Box bg='#F2F2F2' w='99px' rounded='4px'>
+              <Text fontSize='14px' color='#828282' textAlign='center' py='4px'>
+                {row.values.status}
+              </Text>
+            </Box>
+          )}
+        </Box>
+      )
     }
   ]
 
-  //   const filterOpts = [
-  //     { name: 'Application Code', value: 'code' },
-  //     { name: 'Phone Number', value: 'phoneNumber' },
-  //     { name: 'Email', value: 'email' },
-  //     { name: 'First Name', value: 'firstName' },
-  //     { name: 'Last Name', value: 'lastName' }
-  //   ]
-
   React.useEffect(() => {
-    if (data?.length) {
-      const checked = data.map(e => ({
-        _id: e._id,
-        checked: false
-      }))
-      setCheckedItems(checked)
-      setInitialTableData(data || [])
-      setTableData(data || [])
+    if (data?.users?.length) {
+      setTableData(data.users || [])
     }
   }, [data])
 
-  const date = () => {
-    const date = new Date(data?.product?.startDate)
-    return date.toLocaleDateString('en-GB')
-  }
-
   const Details = ({ title, subtitle, image, name, variety, cropCode }) => {
     return (
-      <Box borderBottomWidth={1} borderColor='gray.300'>
+      <Box>
         {image ? (
           <Flex p={3}>
             <Avatar name={image} size='sm' mt={2} />
@@ -158,7 +165,7 @@ const CooperativeMain = ({ location: { state } }) => {
             </Box>
           </Flex>
         ) : (
-          <Box>
+          <Box borderTopWidth={1} borderColor='gray.300'>
             <Flex p={3}>
               <Text fontSize='16px'>{title}: </Text>
               <Text fontSize='16px' fontWeight='bold' ml={2}>
@@ -179,43 +186,51 @@ const CooperativeMain = ({ location: { state } }) => {
     variety: PropTypes.any,
     cropCode: PropTypes.any
   }
+
   return (
-    <Box>
-      {isLoading || error ? (
-        <Box my={60}>
-          <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            reload={triggerReload}
-            loading={isLoading}
-            error={error}
-            text='loading cooperative...'
-          />
-        </Box>
-      ) : (
-        <Box bg='white'>
-          <Header />
-          <Box mt={36}>
-            <Grid
-              templateRows='repeat(2, 1fr)'
-              templateColumns='repeat(5, 1fr)'
-              gap={4}
-              p='41px'
-            >
-              <GridItem
-                rowSpan={2}
-                colSpan={1}
-                w='294px'
-                borderRadius='3px'
+    <>
+      <Header />
+      <Box mt={30}>
+        <Grid
+          templateRows='repeat(2, 1fr)'
+          templateColumns='repeat(5, 1fr)'
+          bg='white'
+        >
+          <GridItem
+            rowSpan={2}
+            colSpan={1}
+            borderRadius='3px'
+            bg='#FAFBFB'
+            pt='70px'
+            pb='100px'
+            h='100%'
+          >
+            {isLoading || error ? (
+              <Box my={60}>
+                <FetchCard
+                  direction='column'
+                  align='center'
+                  justify='center'
+                  reload={triggerReload}
+                  loading={isLoading}
+                  error={error}
+                  text='loading cooperative info'
+                />
+              </Box>
+            ) : (
+              <Box
+                w='292px'
+                ml='49px'
+                mr='25px'
                 borderWidth={1}
-                borderColor='gray.400'
+                borderColor='gray.300'
+                rounded='4px'
               >
-                <Box bg='#F8F8F8' p='5px'>
-                  <Text color='red.200' textAlign='center'>
+                <Box bg='#F6F6F6' p='5px'>
+                  <Text color='red.300' textAlign='center'>
                     Farm starts:
                     <Text as='span' color='#D0021B' fontWeight='bold' ml={2}>
-                      {date()}
+                      {getformattedDate(data?.product?.startDate)}
                     </Text>
                   </Text>
                 </Box>
@@ -226,7 +241,9 @@ const CooperativeMain = ({ location: { state } }) => {
                   borderColor='gray.300'
                 >
                   <Flex justify='center'>
-                    <Avatar name={data?.name} size='xl' />
+                    <Box>
+                      <Avatar name={data?.name} size='xl' />
+                    </Box>
                   </Flex>
                   <Text fontWeight='bold' fontSize='24px' textAlign='center'>
                     {data?.name}
@@ -253,7 +270,6 @@ const CooperativeMain = ({ location: { state } }) => {
                   />
                   <Details title='Members' subtitle={data?.users?.length} />
                   <Details title='Acreage' subtitle={data?.product?.acreage} />
-                  <Details title='Price' />
                   <Details
                     title='Farm Manager'
                     subtitle={
@@ -264,67 +280,65 @@ const CooperativeMain = ({ location: { state } }) => {
                   />
                   <Details title='Farm Contract' />
                 </Box>
-              </GridItem>
-              <GridItem colSpan={4}>
-                <Box w='100%' bg='white' rounded='md'>
-                  {isLoading || error ? (
-                    <FetchCard
-                      h='60vh'
-                      align='center'
-                      justify='center'
-                      direction='column'
-                      error={error}
-                      loading={isLoading}
-                      reload={triggerReload}
-                      text='Loading'
-                    />
-                  ) : (
-                    <>
-                      <Flex
-                        ml='88px'
-                        borderBottomWidth={1}
-                        borderColor='gray.300'
-                        py={2}
-                      >
-                        <Heading fontSize='24px'>Cooperative Overview</Heading>
-                        <Spacer />
-                        <Flex justify='flex-end'>
-                          <Button
-                            btntitle='Pay'
-                            colorScheme='linear'
-                            width='140px'
-                            py='10px'
-                            leftIcon={<BiCreditCard size={20} />}
-                          />
-                          <Link href='/dahboard' _hover={{ textDecor: 'none' }}>
-                            <Button
-                              btntitle='Goto dashboard'
-                              colorScheme='transparent'
-                              color='gray.400'
-                              width='180px'
-                              py='10px'
-                              ml={3}
-                              borderWidth={1}
-                              borderColor='gray.400'
-                              leftIcon={<MdDashboard size={20} />}
-                            />
-                          </Link>
-                        </Flex>
-                      </Flex>
-                      <CustomTable
-                        variant='simple'
-                        _columns={_columns}
-                        _data={tableData}
+              </Box>
+            )}
+          </GridItem>
+          <GridItem colSpan={4} px='61px' bg='white' pt='70px' h='100%'>
+            {isLoading || error ? (
+              <FetchCard
+                h='60vh'
+                align='center'
+                justify='center'
+                direction='column'
+                error={error}
+                loading={isLoading}
+                reload={triggerReload}
+                text='loading cooperative'
+              />
+            ) : (
+              <>
+                <Flex borderBottomWidth={1} borderColor='gray.200' py='16px'>
+                  <Heading fontSize='24px' ml={5}>
+                    Cooperative Overview
+                  </Heading>
+                  <Spacer />
+                  <Flex justify='flex-end'>
+                    {data?.users[0] ? null : (
+                      <Button
+                        btntitle='Pay'
+                        colorScheme='linear'
+                        width='120px'
+                        py='10px'
+                        leftIcon={<BiCreditCard size={20} />}
                       />
-                    </>
-                  )}
-                </Box>
-              </GridItem>
-            </Grid>
-          </Box>
-        </Box>
-      )}
-    </Box>
+                    )}
+                    <Link href='/dahboard' _hover={{ textDecor: 'none' }}>
+                      <Button
+                        btntitle='Goto dashboard'
+                        colorScheme='transparent'
+                        color='gray.600'
+                        width='160px'
+                        py='10px'
+                        ml={3}
+                        borderWidth={1}
+                        borderColor='gray.300'
+                        leftIcon={<MdDashboard size={20} />}
+                      />
+                    </Link>
+                  </Flex>
+                </Flex>
+
+                <CustomTable
+                  variant='simple'
+                  _columns={_columns}
+                  _data={tableData}
+                />
+              </>
+            )}
+          </GridItem>
+        </Grid>
+      </Box>
+    </>
   )
 }
 
