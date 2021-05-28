@@ -9,7 +9,6 @@ import useAuth from './auth'
 import useExternal from './external'
 
 import Constants from 'constant'
-import useFetch from 'hooks/useFetch'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[0]
@@ -40,25 +39,17 @@ export const StartFarmContextProvider = ({ children }) => {
   const [adminAcres, setAdminAcres] = React.useState(1)
   const [cooperative, setCooperative] = React.useState(null)
   const [coopImg, setCoopImg] = React.useState(false)
-  const [reloadT, setReloadT] = React.useState(0)
+  let cooperativeTypes = JSON.parse(sessionStorage.getItem('cooperative-types'))
   const [selectedCooperativeType, setSelectedCooperativeType] =
     React.useState(null)
-
-  const triggerReload = () => setReloadT(p => p + 1)
 
   const {
     createOrder,
     initiatePayment,
     initiatePaystackPayment,
     patchOrder,
-    createCooperative,
-    getCooperativeTypes
+    createCooperative
   } = useApi()
-  const {
-    data: cooperativeTypes,
-    coopTLoading,
-    coopTError
-  } = useFetch('cooperative-types', getCooperativeTypes, reloadT)
 
   useEffect(() => {
     let mounted = true
@@ -336,8 +327,6 @@ export const StartFarmContextProvider = ({ children }) => {
         wantCycle,
         otherStep,
         adminAcres,
-        coopTError,
-        setReloadT,
         setCoopImg,
         setAcreage,
         handleNext,
@@ -348,7 +337,6 @@ export const StartFarmContextProvider = ({ children }) => {
         setIsSellOn,
         setContract,
         cooperative,
-        coopTLoading,
         setWantCycle,
         exchangeRate,
         selectedFarm,
@@ -356,7 +344,6 @@ export const StartFarmContextProvider = ({ children }) => {
         isSubmitting,
         skipNextStep,
         setAdminAcres,
-        triggerReload,
         paymentOption,
         handlePayment,
         setSubmitting,
