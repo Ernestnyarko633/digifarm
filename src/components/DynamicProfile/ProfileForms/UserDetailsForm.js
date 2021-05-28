@@ -157,7 +157,7 @@ const UserDetailsForm = () => {
             />
 
             <CustomPhoneInput
-              isRequired={true}
+              isRequired
               error={errors.phoneNumber}
               value={values.phoneNumber}
               touched={touched.phoneNumber}

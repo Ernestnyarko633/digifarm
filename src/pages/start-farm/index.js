@@ -63,6 +63,7 @@ const StartFarm = () => {
               }
               selected={selected.name === item.name}
               onClick={() => setSelected(item)}
+              disabled={item.name === "Cooperative"}
             />
           ))}
         </Flex>

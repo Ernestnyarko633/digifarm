@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import QueryString from 'query-string'
 
-// import { replaceURI } from 'helpers/misc'
+import { replaceURI } from 'helpers/misc'
 
 import FetchCard from 'components/FetchCard'
 import useAuth from 'context/auth'
@@ -49,7 +48,7 @@ const Auth = ({
             } catch (error) {
               if (error) {
                 if ([401, 403].includes(error.status)) {
-                  // replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=true')
+                  replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=true')
                 } else {
                   setError(error.message)
                 }
@@ -61,7 +60,7 @@ const Auth = ({
             }
           }, 500)
         } else {
-          // replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=false')
+          replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=false')
         }
       }
     }

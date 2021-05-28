@@ -10,7 +10,7 @@ import {
   Tag,
 } from "@chakra-ui/react";
 import React from "react";
-import { Link as ReachLink } from "react-router-dom";
+import { Link as ReachLink, useLocation } from "react-router-dom";
 import Button from "components/Button/index";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
@@ -19,37 +19,38 @@ import ArrowButton from "../Button/ArrowButton";
 const MotionFlex = motion(Flex);
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 
-const ItemTag = ({
-  setFilter,
-  filter,
-  title,
-  setActiveFarmIndex,
-  text,
-}) => (
-  <Tag
-    my={2}
-    onClick={() => {
-      setFilter(text);
-      setActiveFarmIndex(text === 'feeds' ? 0 : null)
-    }}
-    color={filter === text ? "cf.800" : "gray.500"}
-    textAlign="center"
-    bg={filter === text ? "cf.200" : "gray.100"}
-    rounded={20}
-    px={5}
-    py={3}
-    mr={2}
-    cursor="pointer"
-  >
-    <Text fontSize={{ base: "xs", md: "sm" }} fontWeight={600}>
-      {title}
-    </Text>
-  </Tag>
-);
+const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
+  const location = useLocation();
+  const query = location.search.split("?")[1];
+
+  const newState = query === text ? query : text;
+
+  return (
+    <Tag
+      my={2}
+      onClick={() => {
+        setFilter(newState);
+        setActiveFarmIndex(text === "all" ? 0 : null);
+      }}
+      color={filter === text ? "cf.800" : "gray.500"}
+      textAlign="center"
+      bg={filter === text ? "cf.200" : "gray.100"}
+      rounded={20}
+      px={5}
+      py={3}
+      mr={2}
+      cursor="pointer"
+    >
+      <Text fontSize={{ base: "xs", md: "sm" }} fontWeight={600}>
+        {title}
+      </Text>
+    </Tag>
+  );
+};
 
 const items = [
-  { id: 0, title: "All Feeds", filter: "feeds" },
-  { id: 1, title: "Weekly Videos", filter: "videos" },
+  { id: 0, title: "All Feeds", filter: "all" },
+  { id: 1, title: "Weekly Videos", filter: "weekly videos" },
   { id: 2, title: "News", filter: "news" },
 ];
 
@@ -149,8 +150,8 @@ const YourFarmCard = ({
                     mr={4}
                     onClick={() => {
                       setFarmName(farm.name);
-                      setFilter("feeds");
-                      setActiveFarmIndex(index)
+                      setFilter("all");
+                      setActiveFarmIndex(index);
                     }}
                   >
                     <Text
