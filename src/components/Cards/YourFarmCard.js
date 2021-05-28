@@ -25,6 +25,8 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 
   const newState = query === text ? query : text;
 
+  console.log("filter", filter);
+
   return (
     <Tag
       my={2}
@@ -105,7 +107,7 @@ const YourFarmCard = ({
       >
         <Flex align="center" direction="row" justify="space-around" w="100%">
           <Heading as="h6" fontSize="lg">
-            Your Farm(s)
+            {farms.length ? "Your Farm(s)" : ""}
           </Heading>
           <Link as={ReachLink} to="/start-farm" _hover={{ textDecor: "none" }}>
             <Button rounded="30px" btntitle="Start a farm" />
@@ -205,16 +207,36 @@ const YourFarmCard = ({
             mt={3}
             overflowX={items.length > 6 ? "scroll" : "visible"}
           >
-            {items.map((item) => (
-              <ItemTag
-                key={item.id}
-                setFilter={setFilter}
-                setActiveFarmIndex={setActiveFarmIndex}
-                title={item.title}
-                text={item.filter}
-                filter={filter}
-              />
-            ))}
+            {items.map((item) => {
+              if(farms.length && item.filter === 'feeds'){
+                return(
+                  <ItemTag
+                      key={item.id}
+                      setFilter={setFilter}
+                      setActiveFarmIndex={setActiveFarmIndex}
+                      title={item.title}
+                      text={item.filter}
+                      filter={filter}
+                  />
+                )
+              } else {
+              if(item.filter !== 'feeds' ){
+                return(
+                  <ItemTag
+                  key={item.id}
+                  setFilter={setFilter}
+                  setActiveFarmIndex={setActiveFarmIndex}
+                  title={item.title}
+                  text={item.filter}
+                  filter={filter}
+                />
+                )
+              }
+            }
+            
+            return null
+          
+          })}
           </Flex>
         </Flex>
       </Flex>

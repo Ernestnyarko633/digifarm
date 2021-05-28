@@ -71,17 +71,15 @@ const FarmBoardContent = ({ farms = [] }) => {
         </>
       ) : (
         <>
-          {feeds?.length > 0 && (
-            <YourFarmCard
-              filter={filter}
-              farms={farms}
-              setFilter={setFilter}
-              activeFarmIndex={activeFarmIndex}
-              setActiveFarmIndex={setActiveFarmIndex}
-              farmName={farmName}
-              setFarmName={setFarmName}
-            />
-          )}
+          <YourFarmCard
+            filter={filter}
+            farms={farms}
+            setFilter={setFilter}
+            activeFarmIndex={activeFarmIndex}
+            setActiveFarmIndex={setActiveFarmIndex}
+            farmName={farmName}
+            setFarmName={setFarmName}
+          />
           <Box p={{ base: 4, md: 16 }}>
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
               {feeds?.length && farms?.length
