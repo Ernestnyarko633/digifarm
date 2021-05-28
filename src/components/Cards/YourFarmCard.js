@@ -25,8 +25,6 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 
   const newState = query === text ? query : text;
 
-  console.log("filter", filter);
-
   return (
     <Tag
       my={2}
