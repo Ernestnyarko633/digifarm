@@ -35,7 +35,6 @@ const Header = () => {
       fetchNotifications();
     } catch (error) {
       setError(true);
-      console.log("error", error.message);
     }
   }, []);
 

@@ -38,7 +38,6 @@ const CooperativeInvite = () => {
           await acceptInvite({ email, _id })
         } catch (error) {
           if (error) {
-            console.log('err', error?.data?.statusCode)
             if ([401, 403].includes(error.status)) {
               replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=true')
             } else {
@@ -56,8 +55,6 @@ const CooperativeInvite = () => {
     }
     return () => (mounted = false)
   }, [email, _id, acceptInvite, reload])
-  console.log('e', error)
-  console.log('code', stsCode)
 
   return (
     <Box py={{ md: '10%', lg: '18%' }}>

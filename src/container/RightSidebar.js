@@ -18,9 +18,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
   const { getCooperatives } = useApi()
   const triggerReload = () => setReload(prevState => prevState + 1)
 
-
   const {data, isLoading, error} =useFetch(null, getCooperatives, reload)
-  console.log('data',data)
 
 
   const mapKey = (index) => index;
