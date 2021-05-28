@@ -18,6 +18,7 @@ import useAuth from "context/auth";
 import useApi from "../context/api";
 import { FARMB } from "../theme/Icons";
 import useAPICalls from "../hooks/useApiCalls";
+import moment from "moment";
 
 const menuLinks = [
   { name: "Profile", icon: FiUser, link: "/profile" },
@@ -93,7 +94,23 @@ const Header = () => {
                 _focus={{ outline: "none" }}
                 cursor="pointer"
                 mr={{ md: 4 }}
+                pos="relative"
               >
+                <Flex
+                  pos="absolute"
+                  top={0}
+                  right={0}
+                  align="center"
+                  justify="center"
+                  fontSize="tiny"
+                  w={3}
+                  h={3}
+                  rounded="100%"
+                  bg="red.500"
+                  color="white"
+                >
+                  {notifications.length}
+                </Flex>
                 <Icon as={BsBell} boxSize={5} />
               </Menu.Button>
               <AnimatePresence>
@@ -109,7 +126,7 @@ const Header = () => {
                     }}
                     exit={{ opacity: 0, y: 50 }}
                     pos={{ base: "fixed", md: "absolute" }}
-                    w={85}
+                    w={{ base: 82, md: 85 }}
                     maxH={90}
                     overflowY="scroll"
                     mt={3}
@@ -150,30 +167,7 @@ const Header = () => {
                           </Flex>
                         ) : (
                           notifications.map((item, i) => (
-                            <Menu.Item
-                              key={item?._id}
-                              as={MotionBox}
-                              // custom={i}
-                              // variants={{
-                              //   hidden: (i) => ({
-                              //     y: -50 * i,
-                              //     opacity: 0,
-                              //   }),
-                              //   visible: (i) => ({
-                              //     y: 0,
-                              //     opacity: 1,
-                              //     transition: {
-                              //       delay: i * 0.025,
-                              //     },
-                              //   }),
-                              //   removed: {
-                              //     y: 30 * i,
-                              //   },
-                              // }}
-                              // initial="hidden"
-                              // animate="visible"
-                              exit="removed"
-                            >
+                            <Menu.Item key={item?._id} as={MotionBox}>
                               {({ active }) => (
                                 <Link
                                   py={2}
@@ -184,29 +178,53 @@ const Header = () => {
                                   bg={active && "cf.200"}
                                   color={active && "gray.600"}
                                   d="flex"
+                                  justifyContent="space-between"
                                   href={
                                     item?.message?.type === "weekly_videos" ||
                                     item?.message?.type === "news"
                                       ? `/farms?${item?.message?.type}`
                                       : ""
                                   }
+                                  borderBottomWidth={1}
+                                  borderBottomColor="gray.100"
                                 >
-                                  {item?.message?.entity === "GENERIC" && (
-                                    <Flex
-                                      align="center"
-                                      justify="center"
-                                      w={8}
-                                      h={8}
-                                      rounded="100%"
-                                      as="span"
-                                      bg="cf.200"
+                                  <Box w="2%" mr={8}>
+                                    {item?.message?.entity === "GENERIC" && (
+                                      <Flex
+                                        align="center"
+                                        justify="center"
+                                        w={8}
+                                        h={8}
+                                        rounded="100%"
+                                        as="span"
+                                        bg="cf.200"
+                                      >
+                                        <Icon as={FARMB} boxSize={4} />
+                                      </Flex>
+                                    )}
+                                  </Box>
+                                  <Box w="95%">
+                                    <Text>
+                                      {item?.message?.entity === "GENERIC" &&
+                                        item?.message?.title}
+                                    </Text>
+                                    <Text
+                                      fontSize="xs"
+                                      color="gray.400"
+                                      mt={1}
+                                      d="flex"
+                                      alignItems="center"
                                     >
-                                      <Icon as={FARMB} boxSize={4} />
-                                    </Flex>
-                                  )}
-                                  <Box ml={2}>
-                                    {item?.message?.entity === "GENERIC" &&
-                                      item?.message?.title}
+                                      {item.message.type === "weekly_videos"
+                                        ? item.message.type.split("_").join(" ")
+                                        : item.message.type}
+                                      <Text as="span" fontSize="lg" mx={1}>
+                                        &middot;
+                                      </Text>
+                                      <Text as="span">
+                                        {moment(item.created).fromNow()}
+                                      </Text>
+                                    </Text>
                                   </Box>
                                 </Link>
                               )}
