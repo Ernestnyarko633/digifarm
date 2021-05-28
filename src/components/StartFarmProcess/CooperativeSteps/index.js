@@ -35,11 +35,13 @@ const CooperativeSteps = ({ data, history }) => {
     otherStep,
     handlePrev,
     handleBack,
+    skipNextStep,
     selectedFarm,
     isSubmitting,
     handlePayment,
     handleNextStep,
-    handleCreateOrder,
+    cooperativeName,
+    handleCreateCooperative
   } = useStartFarm();
 
   const catFarms = JSON.parse(sessionStorage.getItem("farms"));
@@ -48,6 +50,7 @@ const CooperativeSteps = ({ data, history }) => {
     location: { selectedType },
   } = history;
 
+  console.log(selectedType, "king")
   const toast = useToast();
 
   window.onbeforeunload = function (event) {
@@ -60,18 +63,20 @@ const CooperativeSteps = ({ data, history }) => {
     rootMargin: "0px",
     threshold: 1,
   });
+  console.log(selectedType, "from space")
 
   const getSteps = (value) => {
     switch (value) {
       case 0:
         return <AboutFarmManager farm={selectedFarm} />;
-      case 1:
-        return <ChooseAcreage farm={selectedFarm} />;
+      // case 1:
+      //   return <ChooseAcreage farm={selectedFarm} selectedType={selectedType} />;
       case 2:
         return <CooperativeName />;
       case 3:
         return (
           <Acreage
+            name={cooperativeName}
             farm={selectedFarm}
             order={data || order}
             selectedType={selectedType}
@@ -94,22 +99,37 @@ const CooperativeSteps = ({ data, history }) => {
     }
   };
 
-  const handleAcceptAgreement = () => {
-    if (user?.signature?.string) {
-      handleCreateOrder();
-    } else {
+  const handleAcceptAgreement = async () => {
+    try {
+      if (user?.signature?.string) {
+      await handleCreateCooperative(selectedType?._id) 
+      } else {
+        toast({
+          title: "Action needed",
+          description: "You need to set up a profile signature",
+          status: "error",
+          duration: 5000,
+          position: "top-right",
+        });
+      }
+    } catch (error) {
       toast({
-        title: "Action needed",
-        description: "You need to set up a profile signature",
-        status: "error",
+        title: "Error Occured",
+        description: "Something went wrong",
+        status: error?.statusCode,
         duration: 5000,
         position: "top-right",
       });
     }
+    
   };
 
   const getForwardButtonProps = (key) => {
     switch (key) {
+      case 0:
+        return {
+          title: "Next", width: 56, action: skipNextStep
+        }
       case 4:
         return {
           title: "Accept Agreement",

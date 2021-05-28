@@ -25,14 +25,12 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 
   const newState = query === text ? query : text;
 
-  console.log("filter", filter);
-
   return (
     <Tag
       my={2}
       onClick={() => {
         setFilter(newState);
-        setActiveFarmIndex(text === "all" ? 0 : null);
+        setActiveFarmIndex(text === "feeds" ? 0 : null);
       }}
       color={filter === text ? "cf.800" : "gray.500"}
       textAlign="center"
@@ -51,8 +49,8 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 };
 
 const items = [
-  { id: 0, title: "All Feeds", filter: "all" },
-  { id: 1, title: "Weekly Videos", filter: "weekly videos" },
+  { id: 0, title: "All Feeds", filter: "feeds" },
+  { id: 1, title: "Weekly Videos", filter: "videos" },
   { id: 2, title: "News", filter: "news" },
 ];
 
@@ -152,7 +150,7 @@ const YourFarmCard = ({
                     mr={4}
                     onClick={() => {
                       setFarmName(farm.name);
-                      setFilter("all");
+                      setFilter("feeds");
                       setActiveFarmIndex(index);
                     }}
                   >
