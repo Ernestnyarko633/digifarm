@@ -17,8 +17,16 @@ import { HiLocationMarker } from "react-icons/hi";
 
 const MotionGrid = motion(Grid);
 import PropTypes from "prop-types";
+import useStartFarm from "context/start-farm";
+import AcreageInput from "../OtherSteps/AcreageInput";
 
-const Acreage = ({ farm, order, selectedType }) => {
+const Acreage = ({ farm, order, selectedType, name }) => {
+ const {setAdminAcres, adminAcres, acreage, coopImg} = useStartFarm()
+  const handleChange = (e) => {
+    setAdminAcres(e.target.value)
+  }
+  console.log(selectedType, "heat from above")
+
   return (
     <Box>
       <MotionGrid templateColumns={{ md: "repeat(2, 1fr)" }}>
@@ -30,7 +38,7 @@ const Acreage = ({ farm, order, selectedType }) => {
           borderBottomWidth={{ base: 1, md: 0 }}
           py={{ base: 10, md: 6 }}
         >
-          <Image src={require("../../../assets/images/invite.png").default} />
+          <Image src={    require("../../../assets/images/invite.png").default} />
           <Box mt={10}>
             <Support />
           </Box>
@@ -43,7 +51,8 @@ const Acreage = ({ farm, order, selectedType }) => {
             mt={{ base: 6, md: 0 }}
           >
             <Avatar
-              src={require("../../../assets/images/user-avatar.png").default}
+              src={coopImg
+                ? URL.createObjectURL(coopImg) : require("../../../assets/images/user-avatar.png").default}
               size="lg"
             />
             <Box ml={2}>
@@ -51,7 +60,7 @@ const Acreage = ({ farm, order, selectedType }) => {
                 {selectedType.type}
               </Text>
               <Text mt={-2}>
-                Cooperative name: <Text as="span">Name</Text>
+                Cooperative name: <Text as="span">{name}</Text>
               </Text>
             </Box>
           </Flex>
@@ -92,7 +101,7 @@ const Acreage = ({ farm, order, selectedType }) => {
 
           <Box p={{ base: 4, md: 6, lg: 10 }}>
             <Heading as="h4" fontSize={{ md: "xl" }}>
-              Total Number of acres
+             Your Total Number of Acres
             </Heading>
             <Text color="gray.500" fontSize="sm">
               Enter the total number of acres you want to farm with your
@@ -105,13 +114,21 @@ const Acreage = ({ farm, order, selectedType }) => {
 
             <Box>
               <Box bg="gray.100" w="100%" p={2} mb={2}>
-                <Text>1 acres = $1500</Text>
+                <Text>{`1 acres = $${farm?.pricePerAcre}`}</Text>
               </Box>
               <FormControl>
-                <Input
+              <AcreageInput
+                  totalAcres={farm.acreage}
+                  value={adminAcres || 1}
+                  setValue={setAdminAcres}
+                />
+                {/* <Input
+                  type="number"
+                  defaultValue={0}
                   placeholder="Eg. 10"
                   _focus={{ borderColor: "cf.800" }}
-                />
+                  onChange={handleChange}
+                /> */}
               </FormControl>
             </Box>
           </Box>
@@ -123,6 +140,7 @@ const Acreage = ({ farm, order, selectedType }) => {
 
 Acreage.propTypes = {
   farm: PropTypes.object,
+  name: PropTypes.string,
   order: PropTypes.object,
   selectedType: PropTypes.object,
 };

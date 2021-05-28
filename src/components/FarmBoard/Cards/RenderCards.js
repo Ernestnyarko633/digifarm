@@ -7,43 +7,36 @@ import NewsCard from 'components/FarmBoard/Cards/NewsCard'
 import WeeklyVideoCard from 'components/FarmBoard/Cards/WeeklyVideoCard'
 import { latestDateForFarmFeed } from 'helpers/misc'
 
-const RenderCards = ({ status, content, filter, farms, activeFarmIndex }) => {
+const RenderCards = ({
+  status,
+  content,
+  filter,
+  farms,
+  activeFarmIndex,
+  comparant
+}) => {
   const renderCard = (status, content) => {
     switch (status) {
       case 'news':
         return (
           <>
-            {filter === 'news' && (
-              <NewsCard
-                activeFarm={farms[activeFarmIndex]}
-                content={content}
-                status={status}
-                timestamp={new Date(
-                  content?.data?.created || new Date()
-                )?.toLocaleDateString()}
-              />
+            {filter === comparant && (
+              <NewsCard content={content} status={status} />
             )}
           </>
         )
       case 'weekly_videos':
         return (
           <>
-            {filter === 'videos' && (
-              <WeeklyVideoCard
-                activeFarm={farms[activeFarmIndex]}
-                content={content}
-                status={status}
-                timestamp={new Date(
-                  content?.data?.created || new Date()
-                )?.toLocaleDateString()}
-              />
+            {filter === comparant && (
+              <WeeklyVideoCard content={content} status={status} />
             )}
           </>
         )
       default:
         return (
           <>
-            {filter === 'feeds' &&
+            {filter === comparant &&
               farms[activeFarmIndex]?.order?.product?._id === content?.farm && (
                 <FarmFeedCard
                   activeFarm={farms[activeFarmIndex]}
@@ -77,7 +70,8 @@ RenderCards.propTypes = {
   content: PropTypes.object,
   filter: PropTypes.string,
   farms: PropTypes.array,
-  activeFarmIndex: PropTypes.number
+  activeFarmIndex: PropTypes.number,
+  comparant: PropTypes.string
 }
 
 export default RenderCards
