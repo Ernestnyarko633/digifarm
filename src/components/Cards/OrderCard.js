@@ -118,7 +118,7 @@ const OrderCard = ({ order, onOpen }) => {
             fontSize={{ base: 'xs', md: 'sm' }}
             rounded='30px'
           >
-            {order.status === PENDING ? 'Pending' : 'Processing'}
+            {order.status === PENDING ? 'Pending ' : 'Processing '}
             Order
           </Tag>
           <Text fontSize={{ base: 'xs', md: 'sm' }}>

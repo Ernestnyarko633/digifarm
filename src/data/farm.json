@@ -9,7 +9,8 @@
       "Earn rewards",
       "Schedule farm visits",
       "Receive continuous farm updates"
-    ]
+    ],
+    "disabled": false
   },
   {
     "id": "cooperative",
@@ -21,6 +22,7 @@
       "Co-share your rewards",
       "Schedule farm visits",
       "Receive continuous farm updates"
-    ]
+    ],
+    "disabled": true
   }
 ]
