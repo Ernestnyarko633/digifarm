@@ -22,11 +22,7 @@ const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
   const location = useLocation();
   const query = location.search.split("?")[1];
-
   const newState = query === text ? query : text;
-
-  console.log("filter", filter);
-
   return (
     <Tag
       my={2}
