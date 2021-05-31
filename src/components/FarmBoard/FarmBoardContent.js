@@ -54,7 +54,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                     content={content}
                   />
                 )))
-            : renderEmpty()
+            : renderEmpty(key)
         array = data[key]?.map((content, index) => (
           <RenderCards
             key={mapKey(index)}
@@ -68,7 +68,7 @@ const FarmBoardContent = ({ farms = [] }) => {
         ))
       } else {
         if (filter === key) {
-          return renderEmpty()
+          return renderEmpty(filter)
         }
       }
       return array
