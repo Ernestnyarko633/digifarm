@@ -166,7 +166,7 @@ const WalletCard = ({ acreage, price, farm }) => {
             <ExpenditureCard
               bg="cf.light"
               action="available"
-              amount={getFormattedMoney((price * acreage) || farm?.order?.cost)}
+              amount={getFormattedMoney(farm?.order?.cost  || (price * acreage)  )}
             />
           </Grid>
         )}
@@ -181,11 +181,12 @@ const WalletCard = ({ acreage, price, farm }) => {
                 tasks: tasks || [],
                 farmfeeds: farmFeeds || [],
                 ScheduledTasks: ScheduledTasks || [],
-                wallet: getFormattedMoney(price * acreage || farm?.order?.cost),
-                balance: getFormattedMoney(
-                  price * acreage -
+                wallet: getFormattedMoney( farm?.order?.cost || price * acreage ),
+                balance:farm?.order?.cost >=
+                farmExpense(myFarmActivities, tasks, ScheduledTasks)  ? getFormattedMoney(
+                  farm?.order?.cost -
                     farmExpense(myFarmActivities, tasks, ScheduledTasks)
-                ),
+                ) : 0,
                 expense: getFormattedMoney(
                   farmExpense(myFarmActivities, tasks, ScheduledTasks)
                 ),
