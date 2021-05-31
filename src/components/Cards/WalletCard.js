@@ -182,10 +182,11 @@ const WalletCard = ({ acreage, price, farm }) => {
                 farmfeeds: farmFeeds || [],
                 ScheduledTasks: ScheduledTasks || [],
                 wallet: getFormattedMoney( farm?.order?.cost || price * acreage ),
-                balance: getFormattedMoney(
+                balance:farm?.order?.cost >=
+                farmExpense(myFarmActivities, tasks, ScheduledTasks)  ? getFormattedMoney(
                   farm?.order?.cost -
                     farmExpense(myFarmActivities, tasks, ScheduledTasks)
-                ),
+                ) : 0,
                 expense: getFormattedMoney(
                   farmExpense(myFarmActivities, tasks, ScheduledTasks)
                 ),
