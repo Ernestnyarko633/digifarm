@@ -1,22 +1,28 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Heading, Flex, Link } from '@chakra-ui/react'
+import { Box, Heading, Flex, Link, Text, Image } from '@chakra-ui/react'
 
 import { replaceURI } from 'helpers/misc'
 import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
 import { useLocation } from 'react-router-dom'
+import useAuth from 'context/auth'
+
 import { Link as ReachRouter } from 'react-router-dom'
 import { Button } from 'components'
 
 const CooperativeInvite = () => {
   document.title = 'Cooperative invite...'
 
+  const { isAuthenticated } = useAuth()
+
+  const { user } = isAuthenticated()
+
   const [isLoading, setIsLoading] = useState(false)
   const [reload, setReload] = useState(0)
   const [error, setError] = useState(false)
-  const [stsCode, setstsCode] = useState(null)
+  const [stsCode, setStsCode] = useState(null)
 
   const useQuery = useLocation()
   let query = useQuery
@@ -35,14 +41,14 @@ const CooperativeInvite = () => {
       const runAcceptInvite = async () => {
         try {
           setIsLoading(true)
-          await acceptInvite({ email, _id })
+          const res = await acceptInvite({ email, _id })
+          setStsCode(res?.statusCode)
         } catch (error) {
           if (error) {
             if ([401, 403].includes(error.status)) {
               replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=true')
             } else {
               setError(error?.data?.message)
-              setstsCode(error?.data?.statusCode)
             }
           } else {
             setError('Unexpected network error')
@@ -54,10 +60,10 @@ const CooperativeInvite = () => {
       runAcceptInvite()
     }
     return () => (mounted = false)
-  }, [email, _id, acceptInvite, reload])
+  }, [email, _id, acceptInvite, reload, setStsCode])
 
   return (
-    <Box py={{ md: '10%', lg: '18%' }}>
+    <Box>
       {isLoading && error === false ? (
         <FetchCard
           direction='column'
@@ -83,12 +89,18 @@ const CooperativeInvite = () => {
         </Box>
       ) : null}
       {stsCode === 200 && (
-        <Box>
-          <Heading w='45%' textAlign='center' m='auto'>
-            Congratulations on accepting your invitation. Click on the button to
-            view your cooperative
+        <Box mt={32}>
+          <Flex justify='center' p={3}>
+            <Image src='https://completefarmer.s3.us-east-2.amazonaws.com/Email+Template/conffeti.png' />
+          </Flex>
+          <Heading textAlign='center' fontSize='24px' p={2}>
+            Congratulations {user.firstName}
           </Heading>
-          <Flex justify='center' my={16}>
+          <Text textAlign='center' m='auto' w='50%' py='24px'>
+            Farm together with friends and family. Share costs as well as the
+            assets and rewards. Begin your cooperative journey now.
+          </Text>
+          <Flex justify='center' my={5}>
             <Link
               as={ReachRouter}
               to={{
@@ -98,10 +110,12 @@ const CooperativeInvite = () => {
               _hover={{ textDecor: 'none' }}
             >
               <Button
-                btntitle='View Cooperative'
+                btntitle='Join cooperative'
                 colorScheme='linear'
-                width='200px'
-                py='10px'
+                width='310px'
+                fontSize='16px'
+                py='14px'
+                height='48px'
               />
             </Link>
           </Flex>

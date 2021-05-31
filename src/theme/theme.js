@@ -49,7 +49,8 @@ export const theme = extendTheme({
       700: '#307926',
       800: '#5AA250',
       900: 'linear-gradient(#93CF88, #5AA250)',
-      light: 'rgba(49, 188, 46, 0.2)'
+      light: 'rgba(49, 188, 46, 0.2)',
+      gray: '#F0F0F0'
     },
     red: {
       dark: '#9A4848'
@@ -113,7 +114,8 @@ export const theme = extendTheme({
     137: '65rem',
     140: '70rem',
     143: '72rem',
-    145: '76rem'
+    145: '76rem',
+    150: '80rem'
   },
   sizes: {
     14: '3.5rem',
@@ -144,7 +146,8 @@ export const theme = extendTheme({
     137: '65rem',
     140: '70rem',
     143: '72rem',
-    145: '76rem'
+    145: '76rem',
+    150: '80rem'
   },
   shadows: {
     1000: '0 10px 20px 0 rgba(97, 111, 57, 0.5)',

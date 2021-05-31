@@ -109,7 +109,8 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
                       notifications.map((item, i) => (
                         <Menu.Item key={item?._id} as={MotionBox}>
                           {({ active }) =>
-                            item.status === "NEW" && (
+                            item?.status === "NEW" &&
+                            item?.message?.entity === "GENERIC" && (
                               <Link
                                 py={2}
                                 px={6}
