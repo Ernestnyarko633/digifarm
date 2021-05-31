@@ -41,7 +41,7 @@ const CooperativeSteps = ({ data, history }) => {
     handlePayment,
     handleNextStep,
     cooperativeName,
-    handleCreateCooperative
+    handleCreateCooperative,
   } = useStartFarm();
 
   const catFarms = JSON.parse(sessionStorage.getItem("farms"));
@@ -69,9 +69,9 @@ const CooperativeSteps = ({ data, history }) => {
         return <AboutFarmManager farm={selectedFarm} />;
       // case 1:
       //   return <ChooseAcreage farm={selectedFarm} selectedType={selectedType} />;
-      case 2:
+      case 1:
         return <CooperativeName />;
-      case 3:
+      case 2:
         return (
           <Acreage
             name={cooperativeName}
@@ -80,7 +80,7 @@ const CooperativeSteps = ({ data, history }) => {
             selectedType={selectedType}
           />
         );
-      case 4:
+      case 3:
         return (
           <Contract
             farm={selectedFarm}
@@ -88,9 +88,9 @@ const CooperativeSteps = ({ data, history }) => {
             intersectionRef={intersectionRef}
           />
         );
-      case 5:
+      case 4:
         return <PaymentOption farm={selectedFarm} />;
-      case 6:
+      case 5:
         return <Confirmation farm={selectedFarm} order={data || order} />;
       default:
         return <ReloadPage />;
@@ -100,7 +100,7 @@ const CooperativeSteps = ({ data, history }) => {
   const handleAcceptAgreement = async () => {
     try {
       if (user?.signature?.string) {
-      await handleCreateCooperative(selectedType?._id) 
+        await handleCreateCooperative(selectedType?._id);
       } else {
         toast({
           title: "Action needed",
@@ -119,15 +119,16 @@ const CooperativeSteps = ({ data, history }) => {
         position: "top-right",
       });
     }
-    
   };
 
   const getForwardButtonProps = (key) => {
     switch (key) {
       case 0:
         return {
-          title: "Next", width: 56, action: skipNextStep
-        }
+          title: "Next",
+          width: 56,
+          action: skipNextStep,
+        };
       case 4:
         return {
           title: "Accept Agreement",
@@ -166,11 +167,11 @@ const CooperativeSteps = ({ data, history }) => {
     >
       {isSubmitting && <Overlay text={text} />}
 
-      {otherStep !== 2 && (
+      {otherStep !== 1 && (
         <Flex
           align="center"
           justify="space-between"
-          w={{ base: 82, md: 143 }}
+          w={{ base: 82, md: otherStep === 2 ? "82rem" : 143 }}
           mx="auto"
           mt={{ base: 5, md: 12 }}
           mb={4}
@@ -232,18 +233,20 @@ const CooperativeSteps = ({ data, history }) => {
 
       <AnimateSharedLayout>
         <MotionFlex
-          w={{ md: otherStep !== 2 && 143 }}
+          w={{
+            md: otherStep === 2 ? "82rem" : otherStep !== 1 ? 143 : "",
+          }}
           h={{
-            base: otherStep === 2 && "80vh",
-            md: otherStep !== 2 ? 120 : "80vh",
+            base: otherStep === 1 && "80vh",
+            md: otherStep !== 1 ? 120 : "80vh",
           }}
           mx="auto"
-          borderWidth={otherStep !== 2 && 1}
+          borderWidth={otherStep !== 1 && 1}
           borderColor="gray.200"
-          align={otherStep === 2 && "center"}
-          justify={otherStep === 2 && "center"}
+          align={otherStep === 1 && "center"}
+          justify={otherStep === 1 && "center"}
           rounded="md"
-          bgColor={otherStep !== 2 && "white"}
+          bgColor={otherStep !== 1 && "white"}
           overflow="hidden"
         >
           {getSteps(otherStep)}
