@@ -5,12 +5,13 @@ import { Menu } from "@headlessui/react";
 import { BsBell } from "react-icons/bs";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "react-loader-spinner";
+import { Link as ReachRouter } from "react-router-dom";
 import moment from "moment";
 import { ANNOUNCEMENT, NEWS, WEEKLYVIDEOS } from "theme/Icons";
 
 const MotionBox = motion(Box);
 
-const Notifications = ({ notifications, loading }) => {
+const Notifications = ({ notifications, loading, updateNotification }) => {
   const renderNotificationIcons = (value) => {
     switch (value) {
       case "news":
@@ -107,69 +108,73 @@ const Notifications = ({ notifications, loading }) => {
                     ) : (
                       notifications.map((item, i) => (
                         <Menu.Item key={item?._id} as={MotionBox}>
-                          {({ active }) => (
-                            <Link
-                              py={2}
-                              px={6}
-                              _hover={{
-                                textDecor: "none",
-                              }}
-                              bg={active && "cf.200"}
-                              color={active && "gray.600"}
-                              d="flex"
-                              justifyContent="space-between"
-                              href={
-                                item?.message?.type === "weekly_videos" ||
-                                item?.message?.type === "news"
-                                  ? `/farms?${item?.message?.type}`
-                                  : ""
-                              }
-                              borderBottomWidth={1}
-                              borderBottomColor="gray.100"
-                            >
-                              <Box w="2%" mr={8}>
-                                {item?.message?.entity === "GENERIC" && (
-                                  <Flex
-                                    align="center"
-                                    justify="center"
-                                    w={8}
-                                    h={8}
-                                    rounded="100%"
-                                    as="span"
-                                    bg="cf.200"
+                          {({ active }) =>
+                            item.status === "NEW" && (
+                              <Link
+                                py={2}
+                                px={6}
+                                as={ReachRouter}
+                                _hover={{
+                                  textDecor: "none",
+                                }}
+                                bg={active && "cf.200"}
+                                color={active && "gray.600"}
+                                d="flex"
+                                justifyContent="space-between"
+                                onClick={() => updateNotification(item._id)}
+                                to={
+                                  item?.message?.type === "weekly_videos" ||
+                                  item?.message?.type === "news"
+                                    ? `/farms?${item?.message?.type}`
+                                    : ""
+                                }
+                                borderBottomWidth={1}
+                                borderBottomColor="gray.100"
+                              >
+                                <Box w="2%" mr={8}>
+                                  {item?.message?.entity === "GENERIC" && (
+                                    <Flex
+                                      align="center"
+                                      justify="center"
+                                      w={8}
+                                      h={8}
+                                      rounded="100%"
+                                      as="span"
+                                      bg="cf.200"
+                                    >
+                                      {renderNotificationIcons(
+                                        item?.message?.type
+                                      )}
+                                    </Flex>
+                                  )}
+                                </Box>
+                                <Box w="95%">
+                                  <Text>
+                                    {item?.message?.entity === "GENERIC" &&
+                                      item?.message?.title}
+                                  </Text>
+                                  <Text
+                                    fontSize="xs"
+                                    color="gray.400"
+                                    mt={1}
+                                    d="flex"
+                                    alignItems="center"
+                                    textTransform="capitalize"
                                   >
-                                    {renderNotificationIcons(
-                                      item?.message?.type
-                                    )}
-                                  </Flex>
-                                )}
-                              </Box>
-                              <Box w="95%">
-                                <Text>
-                                  {item?.message?.entity === "GENERIC" &&
-                                    item?.message?.title}
-                                </Text>
-                                <Text
-                                  fontSize="xs"
-                                  color="gray.400"
-                                  mt={1}
-                                  d="flex"
-                                  alignItems="center"
-                                  textTransform="capitalize"
-                                >
-                                  {item.message.type === "weekly_videos"
-                                    ? item.message.type.split("_").join(" ")
-                                    : item.message.type}
-                                  <Text as="span" fontSize="lg" mx={1}>
-                                    &middot;
+                                    {item.message.type === "weekly_videos"
+                                      ? item.message.type.split("_").join(" ")
+                                      : item.message.type}
+                                    <Text as="span" fontSize="lg" mx={1}>
+                                      &middot;
+                                    </Text>
+                                    <Text as="span">
+                                      {moment(item.created).fromNow()}
+                                    </Text>
                                   </Text>
-                                  <Text as="span">
-                                    {moment(item.created).fromNow()}
-                                  </Text>
-                                </Text>
-                              </Box>
-                            </Link>
-                          )}
+                                </Box>
+                              </Link>
+                            )
+                          }
                         </Menu.Item>
                       ))
                     )}

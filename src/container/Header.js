@@ -19,7 +19,7 @@ const Header = () => {
   const [error, setError] = React.useState(null);
   const [notifications, setNotifications] = React.useState([]);
 
-  const { getNotifications } = useApi();
+  const { getNotifications, updateNotification } = useApi();
 
   React.useEffect(() => {
     try {
@@ -35,9 +35,13 @@ const Header = () => {
       fetchNotifications();
     } catch (error) {
       setError(true);
-      console.log("error", error.message);
     }
   }, []);
+
+  const notificationUpdate = async (id) => {
+    const data = await updateNotification(id, user._id);
+    console.log("data", data);
+  };
 
   return (
     <Flex
@@ -67,7 +71,11 @@ const Header = () => {
       </Link>
 
       <Flex align="center">
-        <Notifications notifications={notifications} loading={loading} />
+        <Notifications
+          notifications={notifications}
+          loading={loading}
+          updateNotification={notificationUpdate}
+        />
 
         <Profile user={user} />
       </Flex>

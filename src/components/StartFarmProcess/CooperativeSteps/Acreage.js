@@ -25,7 +25,6 @@ const Acreage = ({ farm, order, selectedType, name }) => {
   const handleChange = (e) => {
     setAdminAcres(e.target.value)
   }
-  console.log(selectedType, "heat from above")
 
   return (
     <Box>

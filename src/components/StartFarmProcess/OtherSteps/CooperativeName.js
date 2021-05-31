@@ -14,7 +14,6 @@ const CooperativeName = ({ farm }) => {
   const handleChange = e => {
     setCooperativeName(e.target.value)
   }
-  console.log('in this')
   return (
     <Flex align='center' justify='center' direction='column'>
       {false && handleChange}

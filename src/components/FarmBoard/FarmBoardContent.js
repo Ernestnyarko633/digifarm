@@ -21,7 +21,6 @@ const FarmBoardContent = ({ farms = [] }) => {
   let loading = newsLoading || videosLoading || feedsLoading
   let error = newsError || videosError || feedsError
 
-  console.log(news, videos, feeds)
   const RenderDataType = filter => {
     const mapKey = i => i
 
@@ -33,6 +32,29 @@ const FarmBoardContent = ({ farms = [] }) => {
     return Object.keys(data).map(key => {
       let array = []
       if (key === filter && data[key].length) {
+        if (key === filter)
+          return data[key]?.filter(
+            content =>
+              farms[activeFarmIndex]?.order?.product?._id === content?.farm
+          ).length
+            ? (array = data[key]
+                ?.filter(
+                  content =>
+                    farms[activeFarmIndex]?.order?.product?._id ===
+                    content?.farm
+                )
+                .map((content, index) => (
+                  <RenderCards
+                    key={mapKey(index)}
+                    filter={filter}
+                    farms={farms}
+                    comparant={key}
+                    activeFarmIndex={activeFarmIndex}
+                    status={content?.type}
+                    content={content}
+                  />
+                )))
+            : renderEmpty()
         array = data[key]?.map((content, index) => (
           <RenderCards
             key={mapKey(index)}
