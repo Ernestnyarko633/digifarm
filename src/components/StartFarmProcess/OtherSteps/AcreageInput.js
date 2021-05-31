@@ -25,7 +25,6 @@ const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
     return () => (mounted = false)
   }, [cooperativeOps, setValue])
 
-  console.log(barrier, 'room')
   return (
     <Box w={{ base: 48, md: 80 }}>
       <InputGroup>
