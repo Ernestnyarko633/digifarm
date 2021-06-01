@@ -123,12 +123,6 @@ const CooperativeSteps = ({ data, history }) => {
 
   const getForwardButtonProps = (key) => {
     switch (key) {
-      case 0:
-        return {
-          title: "Next",
-          width: 56,
-          action: skipNextStep,
-        };
       case 4:
         return {
           title: "Accept Agreement",

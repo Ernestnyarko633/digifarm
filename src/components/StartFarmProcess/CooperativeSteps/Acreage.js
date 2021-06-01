@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, {useEffect} from "react";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { motion } from "framer-motion";
 import {
@@ -21,13 +21,25 @@ import useStartFarm from "context/start-farm";
 import AcreageInput from "../OtherSteps/AcreageInput";
 import { FormInput } from "../../Form";
 import CooperativeMemberCard from "../../Cards/CooperativeMemberCard";
+import useAuth from "context/auth";
 
 const Acreage = ({ farm, order, selectedType, name }) => {
-  const { setAdminAcres, adminAcres, acreage, coopImg } = useStartFarm();
+  const { setAdminAcres, cooperativeName, adminAcres, acreage, coopImg, setCooperativeName } = useStartFarm();
   const handleChange = (e) => {
     setAdminAcres(e.target.value);
   };
 
+    const {isAuthenticated} = useAuth()
+    const {user} = isAuthenticated()
+
+  useEffect(() => {
+    let mounted = true 
+    if(!cooperativeName && mounted)return setCooperativeName(`${user?.lastName}'s Cooperative`)
+
+    return () => (mounted = false)
+  }, [cooperativeName])
+
+  
   return (
     <MotionGrid templateColumns={{ md: "repeat(2, 1fr)" }}>
       <GridItem

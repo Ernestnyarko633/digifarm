@@ -32,7 +32,7 @@ const FarmBoardContent = ({ farms = [] }) => {
     return Object.keys(data).map(key => {
       let array = []
       if (key === filter && data[key].length) {
-        if (key === filter)
+        if (key === 'feeds')
           return data[key]?.filter(
             content =>
               farms[activeFarmIndex]?.order?.product?._id === content?.farm
