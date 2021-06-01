@@ -18,10 +18,11 @@ import { HiLocationMarker } from "react-icons/hi";
 const MotionGrid = motion(Grid);
 import PropTypes from "prop-types";
 import useStartFarm from "context/start-farm";
-import AcreageInput from "../OtherSteps/AcreageInput";
-import { FormInput } from "../../Form";
 import CooperativeMemberCard from "../../Cards/CooperativeMemberCard";
 import useAuth from "context/auth";
+import { Button } from "../../index";
+import { BsPlus } from "react-icons/all";
+import { FieldArray } from "formik";
 
 const Acreage = ({ farm, order, selectedType, name }) => {
   const { setAdminAcres, cooperativeName, adminAcres, acreage, coopImg, setCooperativeName } = useStartFarm();
@@ -60,7 +61,6 @@ const Acreage = ({ farm, order, selectedType, name }) => {
       </GridItem>
 
       <GridItem
-        mt={{ base: 6, md: 0 }}
         overflowY="scroll"
         css={{
           direction: "rtl",
@@ -165,8 +165,28 @@ const Acreage = ({ farm, order, selectedType, name }) => {
               </Box>
             </Flex>
 
-            <CooperativeMemberCard />
-            <CooperativeMemberCard />
+            <FieldArray name="">
+              {({ push, remove }) => (
+                <>
+                  <CooperativeMemberCard remove={remove} />
+
+                  <Box mb={10}>
+                    <Button
+                      btntitle="Add another"
+                      leftIcon={<BsPlus />}
+                      color="cf.800"
+                      borderWidth={1}
+                      borderColor="cf.800"
+                      bg="transparent"
+                      fontSize={{ md: "md" }}
+                      width={{ md: 48 }}
+                      _hover={{ bg: "transparent" }}
+                      onClick={() => push({ name: "", email: "" })}
+                    />
+                  </Box>
+                </>
+              )}
+            </FieldArray>
           </Box>
         </Box>
       </GridItem>

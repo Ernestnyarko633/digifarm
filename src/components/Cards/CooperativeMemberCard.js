@@ -6,7 +6,14 @@ import { FormInput } from "../Form";
 import Icon from "@chakra-ui/icon";
 import { MdClose } from "react-icons/all";
 
-const CooperativeMemberCard = () => {
+const CooperativeMemberCard = ({
+  values,
+  value,
+  name,
+  onChange,
+  onBlur,
+  remove,
+}) => {
   return (
     <Box bg="gray.50" rounded="md" p={4} my={5} pos="relative">
       <Flex align="center" fontSize="sm">
@@ -26,16 +33,19 @@ const CooperativeMemberCard = () => {
         </Box>
       </Flex>
 
-      <Box
-        pos="absolute"
-        right={3}
-        top={3}
-        as="button"
-        role="button"
-        aria-label="close button"
-      >
-        <Icon as={MdClose} />
-      </Box>
+      {values.length > 1 && (
+        <Box
+          pos="absolute"
+          right={3}
+          top={3}
+          as="button"
+          role="button"
+          aria-label="close button"
+          onClick={() => remove(values.length - 1)}
+        >
+          <Icon as={MdClose} />
+        </Box>
+      )}
 
       <Grid templateColumns={{ md: "repeat(5, 1fr)" }} gap={4} mt={4}>
         <GridItem colSpan={3}>
@@ -44,6 +54,10 @@ const CooperativeMemberCard = () => {
             placeholder="email@example.com"
             bg="gray.100"
             borderBottomColor="none"
+            value={value.email}
+            name={`${name}email`}
+            onChange={onChange}
+            onBlur={onBlur}
           />
         </GridItem>
         <GridItem colSpan={2}>
@@ -51,6 +65,10 @@ const CooperativeMemberCard = () => {
             placeholder="10 Acres"
             bg="gray.100"
             borderBottomColor="none"
+            value={value.acreage}
+            name={`${name}acreage`}
+            onChange={onChange}
+            onBlur={onBlur}
           />
         </GridItem>
       </Grid>
