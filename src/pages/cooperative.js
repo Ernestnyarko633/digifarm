@@ -68,19 +68,19 @@ const Cooperative = ({ location: { state } }) => {
             reload={triggerReload}
             loading={isLoading}
             error={error}
-            text='loading cooperative...'
+            text='loading cooperative'
           />
         </Box>
       ) : (
         <Box bg='white' h='100vh'>
           <Header />
-          <Box py={{ md: 24 }}>
-            <Heading fontSize='24px' textAlign='center'>
+          <Box pb={{ base: 10, md: 16 }} pt={{ base: 20, md: 28 }}>
+            <Heading fontSize={{ base: '16px', md: '24px' }} textAlign='center'>
               Welcome {user.firstName}
             </Heading>
           </Box>
           <Box
-            width={{ md: '670px', lg: '1034px' }}
+            width={{ base: '340px', md: '670px', lg: '1034px' }}
             h={{ md: '33vh', lg: '330px' }}
             mx='auto'
             borderWidth={1}
@@ -89,12 +89,26 @@ const Cooperative = ({ location: { state } }) => {
             borderRadius='md'
           >
             <Flex bg='#F8F8F8' p='17px'>
-              <Text fontWeight='bold' fontSize='20px'>
-                Your Cooperative
+              <Text fontWeight='bold' fontSize={{ base: '10px', md: '20px' }}>
+                Your
+                <Text
+                  as='span'
+                  fontSize={{ base: '15px', md: '20px' }}
+                  pl={{ base: '10px' }}
+                >
+                  Cooperative
+                </Text>
               </Text>
               <Spacer />
-              <Text color='#D0021B' fontWeight='bold'>
-                Farm starts: {date()}
+              <Text
+                color='#D0021B'
+                fontWeight='bold'
+                fontSize={{ base: '10px', md: '20px' }}
+              >
+                Farm starts:{' '}
+                <Text as='span' fontSize={{ base: '15px', md: '20px' }} pl={2}>
+                  {date()}
+                </Text>
               </Text>
             </Flex>
             <Flex p='32px'>
