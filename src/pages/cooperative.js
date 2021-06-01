@@ -72,7 +72,7 @@ const Cooperative = ({ location: { state } }) => {
           />
         </Box>
       ) : (
-        <Box bg='white'>
+        <Box bg='white' h='100vh'>
           <Header />
           <Box py={{ md: 24 }}>
             <Heading fontSize='24px' textAlign='center'>
@@ -81,7 +81,7 @@ const Cooperative = ({ location: { state } }) => {
           </Box>
           <Box
             width={{ md: '670px', lg: '1034px' }}
-            h={{ md: '59px', lg: '330px' }}
+            h={{ md: '33vh', lg: '330px' }}
             mx='auto'
             borderWidth={1}
             borderColor='gray.400'
@@ -101,7 +101,8 @@ const Cooperative = ({ location: { state } }) => {
               <Box>
                 <Flex>
                   <Avatar
-                    name={data?.product?.cropVariety?.crop?.imageUrl}
+                    name={data?.product?.cropVariety?.crop?.name}
+                    src={data?.product?.cropVariety?.crop?.imageUrl}
                     size='lg'
                   />
                   <Box px='13px'>
@@ -141,7 +142,7 @@ const Cooperative = ({ location: { state } }) => {
                 </Box>
               </Box>
               <Spacer />
-              <Box pr='66px' py='32px'>
+              <Box pr={{ md: '20px', lg: '66px' }} py='32px'>
                 <Avatar size='2xl' name={data?.name} />
                 <Text fontWeight='bold' textAlign='center' py='5px'>
                   {data?.name}
@@ -149,7 +150,7 @@ const Cooperative = ({ location: { state } }) => {
               </Box>
             </Flex>
           </Box>
-          <Box pb={{ md: 10 }}>
+          <Box>
             <Flex py='25px' justify='center'>
               <Box
                 w={{ md: '328px', lg: '506px' }}
@@ -184,13 +185,13 @@ const Cooperative = ({ location: { state } }) => {
                 item={doc}
                 width={{ md: '328px', lg: '506px' }}
                 height={{ md: '292px', lg: '316px' }}
-                size='2xl'
+                size={{ md: 'sm', lg: '2xl' }}
                 py='15px'
                 px={4}
               />
             </Flex>
           </Box>
-          <Flex justify='flex-end' mr={20} py={4}>
+          <Flex justify='flex-end' mr={20} py={8}>
             <Link href='/dashboard'>
               <Button
                 btntitle='Get Started'

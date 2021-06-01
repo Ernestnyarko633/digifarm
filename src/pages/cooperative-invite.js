@@ -11,6 +11,7 @@ import useAuth from 'context/auth'
 
 import { Link as ReachRouter } from 'react-router-dom'
 import { Button } from 'components'
+import Header from 'container/Header'
 
 const CooperativeInvite = () => {
   document.title = 'Cooperative invite...'
@@ -64,6 +65,7 @@ const CooperativeInvite = () => {
 
   return (
     <Box>
+      <Header />
       {isLoading && error === false ? (
         <FetchCard
           direction='column'
@@ -74,6 +76,7 @@ const CooperativeInvite = () => {
           error={error}
         />
       ) : null}
+
       {error === "Cannot read property 'users' of null" ? (
         <Box>
           <Heading textAlign='center'> Cooperative doesn't exit</Heading>
@@ -88,15 +91,21 @@ const CooperativeInvite = () => {
           </Flex>
         </Box>
       ) : null}
+
       {stsCode === 200 && (
-        <Box mt={32}>
+        <Box pt={{ base: 28, md: 48 }} bg='white' h='100vh'>
           <Flex justify='center' p={3}>
             <Image src='https://completefarmer.s3.us-east-2.amazonaws.com/Email+Template/conffeti.png' />
           </Flex>
           <Heading textAlign='center' fontSize='24px' p={2}>
             Congratulations {user.firstName}
           </Heading>
-          <Text textAlign='center' m='auto' w='50%' py='24px'>
+          <Text
+            textAlign='center'
+            m='auto'
+            w={{ base: '80%', md: '50%' }}
+            py='24px'
+          >
             Farm together with friends and family. Share costs as well as the
             assets and rewards. Begin your cooperative journey now.
           </Text>
