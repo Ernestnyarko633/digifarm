@@ -27,7 +27,8 @@ function ManagerProfile({ item, width, height, size, py, px }) {
           <Box py={{ base: 2, md: 5 }} px={px}>
             <Avatar
               src={item?.manager_image?.url}
-              size={size ? size : 'xl'}
+              size='xl'
+              // size={size ? size : 'xl'}
               justify='space-around'
             />
           </Box>

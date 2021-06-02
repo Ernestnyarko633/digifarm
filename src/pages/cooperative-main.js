@@ -25,6 +25,10 @@ import { MdDashboard } from 'react-icons/md'
 import { BiCreditCard } from 'react-icons/bi'
 import { getformattedDate, getFormattedMoney } from 'helpers/misc'
 import useAuth from 'context/auth'
+import Details from 'components/Cards/CooperativeDashboard/Details'
+import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
+// import { BiMenuAltLeft } from 'react-icons/bi'
+//color='#31BC2E'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Dashboard | The GCU Application Portal'
@@ -154,42 +158,6 @@ const CooperativeMain = ({ location: { state } }) => {
     }
   }, [data])
 
-  const Details = ({ title, subtitle, image, name, variety, cropCode }) => {
-    return (
-      <Box>
-        {image ? (
-          <Flex p={3}>
-            <Avatar name={name} src={image} size='sm' mt={2} />
-            <Box px={3}>
-              <Text fontWeight='bold'>{name}</Text>
-              <Text fontSize='12px'>
-                ( {variety} ) <Text as='span'> #{cropCode}</Text>
-              </Text>
-            </Box>
-          </Flex>
-        ) : (
-          <Box borderTopWidth={1} borderColor='gray.300'>
-            <Flex p={3}>
-              <Text fontSize='16px'>{title}: </Text>
-              <Text fontSize='16px' fontWeight='bold' ml={2}>
-                {subtitle}
-              </Text>
-            </Flex>
-          </Box>
-        )}
-      </Box>
-    )
-  }
-
-  Details.propTypes = {
-    title: PropTypes.any,
-    subtitle: PropTypes.any,
-    image: PropTypes.any,
-    name: PropTypes.any,
-    variety: PropTypes.any,
-    cropCode: PropTypes.any
-  }
-
   return (
     <>
       <Header />
@@ -205,7 +173,6 @@ const CooperativeMain = ({ location: { state } }) => {
             borderRadius='3px'
             bg='#FAFBFB'
             pt='70px'
-            pb='100px'
             h='100%'
           >
             {isLoading || error ? (
@@ -305,6 +272,8 @@ const CooperativeMain = ({ location: { state } }) => {
             ) : (
               <>
                 <Flex borderBottomWidth={1} borderColor='gray.200' py='16px'>
+                  <SideBar data={data} />
+
                   <Heading fontSize='24px' ml={5}>
                     Cooperative Overview
                   </Heading>

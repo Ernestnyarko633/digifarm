@@ -94,7 +94,7 @@ const Cooperative = ({ location: { state } }) => {
                 <Text
                   as='span'
                   fontSize={{ base: '15px', md: '20px' }}
-                  pl={{ base: '10px' }}
+                  pl={{ base: '5px' }}
                 >
                   Cooperative
                 </Text>
@@ -111,7 +111,7 @@ const Cooperative = ({ location: { state } }) => {
                 </Text>
               </Text>
             </Flex>
-            <Flex p='32px'>
+            <Flex p='32px' wrap={{ base: 'wrap-reverse' }}>
               <Box>
                 <Flex>
                   <Avatar
@@ -131,7 +131,7 @@ const Cooperative = ({ location: { state } }) => {
                   </Box>
                 </Flex>
                 <Box py='26px'>
-                  <Text fontSize='20px'>
+                  <Text fontSize={{ base: '16px', md: '20px' }}>
                     Location:{' '}
                     <Text as='span' fontWeight='bold'>
                       {data?.product?.location?.name +
@@ -139,13 +139,13 @@ const Cooperative = ({ location: { state } }) => {
                         data?.product?.location?.state}
                     </Text>
                   </Text>
-                  <Text fontSize='20px'>
+                  <Text fontSize={{ base: '16px', md: '20px' }}>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {data?.type?.name.toUpperCase()}
                     </Text>
                   </Text>
-                  <Text fontSize='20px'>
+                  <Text fontSize={{ base: '16px', md: '20px' }}>
                     Cooperative Admin:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {data?.users[0]?.info?.firstName +
@@ -155,32 +155,40 @@ const Cooperative = ({ location: { state } }) => {
                   </Text>
                 </Box>
               </Box>
-              <Spacer />
-              <Box pr={{ md: '20px', lg: '66px' }} py='32px'>
-                <Avatar size='2xl' name={data?.name} />
-                <Text fontWeight='bold' textAlign='center' py='5px'>
-                  {data?.name}
-                </Text>
-              </Box>
+              <Flex mx='auto'>
+                <Box py={{ base: '24px', md: '32px' }}>
+                  <Avatar size='2xl' name={data?.name} />
+                  <Text fontWeight='bold' textAlign='center' py='5px'>
+                    {data?.name}
+                  </Text>
+                </Box>
+              </Flex>
             </Flex>
           </Box>
           <Box>
-            <Flex py='25px' justify='center'>
+            <Flex py='25px' justify='center' wrap={{ base: 'wrap' }} bg='white'>
               <Box
-                w={{ md: '328px', lg: '506px' }}
-                h={{ md: '292px', lg: '316px' }}
+                w={{ base: '339px', md: '328px', lg: '506px' }}
+                h={{ base: '292px', md: '292px', lg: '316px' }}
                 mr={{ md: 5, lg: 8 }}
                 borderWidth={1}
                 borderColor='gray.400'
                 borderRadius='md'
+                mb={{ base: '17px' }}
+                overflowY='scroll'
               >
                 <Flex bg='#F8F8F8' p='17px'>
                   <Text fontWeight='bold' fontSize='20px'>
                     Cooperative members
                   </Text>
                 </Flex>
+
                 {data?.users?.map(item => (
-                  <Flex py='5px' px={{ md: '15px', lg: '20px' }} key={item?.id}>
+                  <Flex
+                    py='5px'
+                    px={{ base: '24px', md: '15px', lg: '20px' }}
+                    key={item?.id}
+                  >
                     <Text fontSize='16px' fontWeight='bold'>
                       {item?.info?.firstName || item?.info?.lastName
                         ? item?.info?.firstName + ' ' + item?.info?.lastName
@@ -197,15 +205,20 @@ const Cooperative = ({ location: { state } }) => {
               </Box>
               <ManagerProfile
                 item={doc}
-                width={{ md: '328px', lg: '506px' }}
+                width={{ base: '341px', md: '328px', lg: '506px' }}
                 height={{ md: '292px', lg: '316px' }}
-                size={{ md: 'sm', lg: '2xl' }}
-                py='15px'
+                size={{ base: 'sm', md: 'sm', lg: '2xl' }}
+                py={{ base: '8px', md: '15px' }}
                 px={4}
               />
             </Flex>
           </Box>
-          <Flex justify='flex-end' mr={20} py={8}>
+          <Flex
+            justify={{ base: 'center', md: 'flex-end' }}
+            mr={{ md: 20 }}
+            py={{ base: '32px', md: '48px' }}
+            bg='white'
+          >
             <Link href='/dashboard'>
               <Button
                 btntitle='Get Started'
