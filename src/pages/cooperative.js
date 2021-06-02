@@ -11,6 +11,8 @@ import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import Header from 'container/Header'
 import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfile'
+import { Link } from 'carbon-components-react'
+import { Button } from 'components'
 
 const Cooperative = ({ location: { state } }) => {
   document.title = 'Cooperative ...'
@@ -58,7 +60,7 @@ const Cooperative = ({ location: { state } }) => {
   return (
     <Box>
       {isLoading || error ? (
-        <Box my={60}>
+        <Box my={60} bg='none'>
           <FetchCard
             direction='column'
             align='center'
@@ -125,15 +127,15 @@ const Cooperative = ({ location: { state } }) => {
                   <Text fontSize='20px'>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
-                      {data?.type?.name}
+                      {data?.type?.name.toUpperCase()}
                     </Text>
                   </Text>
                   <Text fontSize='20px'>
                     Cooperative Admin:
                     <Text as='span' fontWeight='bold' ml={2}>
-                      {data?.users[0]?.firstName +
+                      {data?.users[0]?.info?.firstName +
                         ' ' +
-                        data?.users[0]?.lastName}
+                        data?.users[0]?.info?.lastName}
                     </Text>
                   </Text>
                 </Box>
@@ -162,16 +164,16 @@ const Cooperative = ({ location: { state } }) => {
                     Cooperative members
                   </Text>
                 </Flex>
-                {data?.users?.info?.map(item => (
+                {data?.users?.map(item => (
                   <Flex py='5px' px={{ md: '15px', lg: '20px' }} key={item?.id}>
                     <Text fontSize='16px' fontWeight='bold'>
-                      {item?.firstName || item?.lastName
-                        ? item?.firstName + ' ' + item?.lastName
+                      {item?.info?.firstName || item?.info?.lastName
+                        ? item?.info?.firstName + ' ' + item?.info?.lastName
                         : 'Annonymous'}
                     </Text>
                     <Spacer />
                     <Text fontSize='16px'>
-                      {item?.firstName || item?.lastName
+                      {item?.info?.firstName || item?.info?.lastName
                         ? 'Accepted'
                         : 'Invited'}
                     </Text>
@@ -188,6 +190,16 @@ const Cooperative = ({ location: { state } }) => {
               />
             </Flex>
           </Box>
+          <Flex justify='flex-end' mr={20} py={4}>
+            <Link href='/dashboard'>
+              <Button
+                btntitle='Get Started'
+                w='310px'
+                fontSize='16px'
+                h='48px'
+              />
+            </Link>
+          </Flex>
         </Box>
       )}
     </Box>

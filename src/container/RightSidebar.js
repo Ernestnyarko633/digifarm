@@ -80,34 +80,22 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         ))}
       </Grid>
       <Box mt='76px'>
-          <Heading
-            as="h4"
-            fontSize={{ base: "lg", md: "2xl" }}
-            fontWeight={700}
-            borderBottomWidth={1}
-            borderBottomColor="gray.300"
-            pb={2}
-          >
-            My cooperatives
-          </Heading>
-
           {
-            isLoading || error ?(
-              <Box  my={4}>
-                  <FetchCard
-                  direction='column'
-                  align='center'
-                  justify='center'
-                  reload={triggerReload}
-                  loading={isLoading}
-                  error={error}
-                  text='loading cooperatives...'
-                />
-              </Box>
-            ): (
+            data?.name ? (
+            <>
+              <Heading
+                  as="h4"
+                  fontSize={{ base: "lg", md: "2xl" }}
+                  fontWeight={700}
+                  borderBottomWidth={1}
+                  borderBottomColor="gray.300"
+                  pb={2}
+                >
+                  My cooperatives
+                </Heading>
                 <Box borderWidth={1} borderColor='gray.300' borderRadius='10px'  maxW={{ md: 87 }} w={{ md: 87 }} h={{ md:'199px'}} my='16px'>
                   <Flex p='16px'>
-                    <Avatar name='Kim' size='xl' />
+                    <Avatar name={data?.name}  src={data?.imageUrl} size='xl' />
                     <Box ml={3}>
                       <Heading fontSize='20px' >{data?.name}</Heading>
                       <Text fontSize='14px' pt='10px'>{data?.product?.cropVariety?.crop?.name} <Text as='span'>(  {data?.product?.cropVariety?.crop?.sciName})</Text> <Text as='span'> # {data?.product?.name}</Text></Text>
@@ -122,13 +110,14 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                       }}
                       _hover={{ textDecor: 'none' }}
                     >
-                      <Button btntitle='View details' color='#31BC2E' colorScheme='none' borderWidth={1} w='345px' 
+                      <Button btntitle='View details' color='#31BC2E' colorScheme='none' borderWidth={1} w={{ base:'250px', md:'345px'}}
                           borderColor='gray.300'
                           borderRadius='md' fontSize='14px'/>
                     </Link>
                   </Flex>
                 </Box>
-            )
+                </>
+            ): null
           }
       </Box>
     </Box>

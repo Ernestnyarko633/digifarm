@@ -24,11 +24,14 @@ import { Button } from 'components'
 import { MdDashboard } from 'react-icons/md'
 import { BiCreditCard } from 'react-icons/bi'
 import { getformattedDate, getFormattedMoney } from 'helpers/misc'
+import useAuth from 'context/auth'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Dashboard | The GCU Application Portal'
   const [reload, setReload] = useState(0)
   const [tableData, setTableData] = useState([])
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -156,7 +159,7 @@ const CooperativeMain = ({ location: { state } }) => {
       <Box>
         {image ? (
           <Flex p={3}>
-            <Avatar name={image} size='sm' mt={2} />
+            <Avatar name={name} src={image} size='sm' mt={2} />
             <Box px={3}>
               <Text fontWeight='bold'>{name}</Text>
               <Text fontSize='12px'>
@@ -242,7 +245,11 @@ const CooperativeMain = ({ location: { state } }) => {
                 >
                   <Flex justify='center'>
                     <Box>
-                      <Avatar name={data?.name} size='xl' />
+                      <Avatar
+                        name={data?.name}
+                        src={data?.imageUrl}
+                        size='xl'
+                      />
                     </Box>
                   </Flex>
                   <Text fontWeight='bold' fontSize='24px' textAlign='center'>
@@ -303,7 +310,8 @@ const CooperativeMain = ({ location: { state } }) => {
                   </Heading>
                   <Spacer />
                   <Flex justify='flex-end'>
-                    {data?.users[0] ? null : (
+                    {/* Not showing payment button for admins */}
+                    {user?.email === data?.users[0].email ? null : (
                       <Button
                         btntitle='Pay'
                         colorScheme='linear'
@@ -312,7 +320,7 @@ const CooperativeMain = ({ location: { state } }) => {
                         leftIcon={<BiCreditCard size={20} />}
                       />
                     )}
-                    <Link href='/dahboard' _hover={{ textDecor: 'none' }}>
+                    <Link href='/dashboard' _hover={{ textDecor: 'none' }}>
                       <Button
                         btntitle='Goto dashboard'
                         colorScheme='transparent'
