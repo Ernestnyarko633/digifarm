@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, {useEffect} from "react";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { FormInput } from "../Form";
@@ -13,12 +13,31 @@ const CooperativeMemberCard = ({
   onChange,
   onBlur,
   remove,
+  setAcres,
+  member,
+  isDisabled,
 }) => {
+
+  useEffect(() => {
+    let mounted = true
+    let total = 0
+    if(mounted && value?.acreage){
+      values?.map((member) => {
+        const { acreage } = member 
+       if(acreage) total = total + acreage
+      })
+    }
+    setAcres(total) 
+    return () => (mounted = false)    
+  }, [value.acreage])
+
+
+
   return (
     <Box bg="gray.50" rounded="md" p={4} my={5} pos="relative">
       <Flex align="center" fontSize="sm">
         <Text color="black" fontWeight={700}>
-          Member 1
+          {member === 1 ? 'You (Member)' : 'Member'} {member}
         </Text>
         <Box
           bg="gray.100"
@@ -33,7 +52,7 @@ const CooperativeMemberCard = ({
         </Box>
       </Flex>
 
-      {values.length > 1 && (
+      {values?.length > 2 && (
         <Box
           pos="absolute"
           right={3}
@@ -41,7 +60,7 @@ const CooperativeMemberCard = ({
           as="button"
           role="button"
           aria-label="close button"
-          onClick={() => remove(values.length - 1)}
+          onClick={() => remove(values?.length - 1)}
         >
           <Icon as={MdClose} />
         </Box>
@@ -50,6 +69,7 @@ const CooperativeMemberCard = ({
       <Grid templateColumns={{ md: "repeat(5, 1fr)" }} gap={4} mt={4}>
         <GridItem colSpan={3}>
           <FormInput
+            disabled={isDisabled}
             type="email"
             placeholder="email@example.com"
             bg="gray.100"
@@ -62,12 +82,15 @@ const CooperativeMemberCard = ({
         </GridItem>
         <GridItem colSpan={2}>
           <FormInput
+            type='number'
             placeholder="10 Acres"
             bg="gray.100"
             borderBottomColor="none"
             value={value.acreage}
             name={`${name}acreage`}
-            onChange={onChange}
+            onChange={(e) => {
+              return onChange(e)
+            }}
             onBlur={onBlur}
           />
         </GridItem>
