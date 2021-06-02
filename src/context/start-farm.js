@@ -178,15 +178,15 @@ export const StartFarmContextProvider = ({ children }) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
-      const data = {
-        name: cooperativeName,
-        type: cooperativeTypeId,
-        product: selectedFarm?._id,
-        admin: user?._id,
-        users: invites
-      }
+      let formData = new FormData()
+      formData.append('name', cooperativeName)
+      formData.append('type', cooperativeTypeId)
+      formData.append('product', selectedFarm?._id)
+      formData.append('admin', user?._id)
+      formData.append('users', JSON.stringify(invites))
+      formData.append('cooperativeImg', coopImg)
 
-      const res = await createCooperative(data)
+      const res = await createCooperative(formData)
       setCooperative(res.data)
       handleCreateOrder(res.data, invites[0]?.acreage)
     } catch (error) {
