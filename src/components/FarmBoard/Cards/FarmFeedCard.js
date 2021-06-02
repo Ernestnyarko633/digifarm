@@ -133,7 +133,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
           <Box pos='relative'>
             {selectedItem?.type === 'image' && (
               <Image
-                h={{ md: 85 }}
+                h={{ md: 110 }}
                 w='100%'
                 objectFit='cover'
                 src={selectedItem?.url}
@@ -144,12 +144,11 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               <YoutubeSlide url={selectedItem?.url} muted playing={false} />
             )}
             <Flex
-              w='100%'
               align='center'
-              justify='space-between'
+              justify='center'
               pos='absolute'
-              bottom={{ base: '50%' }}
-              left={{ base: '0%' }}
+              bottom={6}
+              left={{ base: '20%', md: '45%' }}
             >
               <Flex
                 as='button'
@@ -157,13 +156,15 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 aria-label='prev button'
                 align='center'
                 justify='center'
+                borderColor='white'
+                borderWidth={1}
                 w={10}
                 h={10}
                 rounded='100%'
-                _hover={{
-                  background: 'cf.800',
-                  color: 'white'
-                }}
+                // _hover={{
+                //   background: 'cf.800',
+                //   color: 'white'
+                // }}
                 color='white'
                 mr={2}
                 outlineColor='none'
@@ -186,16 +187,18 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 aria-label='next button'
                 align='center'
                 justify='center'
+                borderColor='white'
+                bg='white'
                 w={10}
                 h={10}
-                _hover={{
-                  background: 'cf.800',
-                  color: 'white'
-                }}
+                // _hover={{
+                //   background: 'cf.800',
+                //   color: 'white'
+                // }}
                 rounded='100%'
-                color='white'
-                outlineColor='none'
-                outline='none'
+                color='cf.800'
+                outlineColor='black'
+                outline='black'
                 ml={2}
                 onClick={() => {
                   return handleClick(
