@@ -55,11 +55,11 @@ const RenderCards = ({
   return renderCard(status, content)
 }
 
-export const renderEmpty = () => {
+export const renderEmpty = type => {
   return (
     <Flex w='100%' align='center' justify='center'>
       <Text color='cf.800' fontSize={{ base: 'md' }}>
-        Oops, unavailable currently
+        Oops, {type} unavailable currently
       </Text>
     </Flex>
   )

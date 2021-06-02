@@ -29,6 +29,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [currency, setCurrency] = useState(dcc)
   const [contract, setContract] = useState('')
   const [acreage, setAcreage] = useState(1)
+  const [acres, setAcres] = useState(0)
   const [order, setOrder] = useState(null)
   const [reload, setReload] = useState(0)
   const [cycle, setCycle] = useState(1)
@@ -37,12 +38,12 @@ export const StartFarmContextProvider = ({ children }) => {
   const [cooperativeName, setCooperativeName] = React.useState(null)
   const [coopType, setCoopType] = React.useState(null)
   const [adminAcres, setAdminAcres] = React.useState(1)
+  const [invites, setInvites] = React.useState([])
   const [cooperative, setCooperative] = React.useState(null)
   const [coopImg, setCoopImg] = React.useState(false)
   let cooperativeTypes = JSON.parse(sessionStorage.getItem('cooperative-types'))
   const [selectedCooperativeType, setSelectedCooperativeType] =
     React.useState(null)
-
   const {
     createOrder,
     initiatePayment,
@@ -67,7 +68,8 @@ export const StartFarmContextProvider = ({ children }) => {
   }, [cooperativeTypes, selectedCooperativeType])
 
   const { getExchangeRate } = useExternal()
-  const { setSession } = useAuth()
+  const { setSession, isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
 
   const toast = useToast()
 
@@ -176,16 +178,17 @@ export const StartFarmContextProvider = ({ children }) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
-      const data = {
-        name: cooperativeName,
-        type: cooperativeTypeId,
-        product: selectedFarm?._id,
-        acreage: adminAcres
-      }
+      let formData = new FormData()
+      formData.append('name', cooperativeName)
+      formData.append('type', cooperativeTypeId)
+      formData.append('product', selectedFarm?._id)
+      formData.append('admin', user?._id)
+      formData.append('users', JSON.stringify(invites))
+      formData.append('cooperativeImg', coopImg)
 
-      const res = await createCooperative(data)
+      const res = await createCooperative(formData)
       setCooperative(res.data)
-      handleCreateOrder(res.data, adminAcres)
+      handleCreateOrder(res.data, invites[0]?.acreage)
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
@@ -313,11 +316,14 @@ export const StartFarmContextProvider = ({ children }) => {
         step,
         text,
         cycle,
+        acres,
         order,
+        invites,
         barrier,
         setStep,
         coopImg,
         acreage,
+        setAcres,
         coopType,
         setOrder,
         isSellOn,
@@ -329,6 +335,7 @@ export const StartFarmContextProvider = ({ children }) => {
         adminAcres,
         setCoopImg,
         setAcreage,
+        setInvites,
         handleNext,
         handlePrev,
         handleBack,

@@ -47,7 +47,7 @@ const FarmBoardContent = ({ farms = [] }) => {
     return Object.keys(data).map(key => {
       let array = []
       if (key === filter && data[key].length) {
-        if (key === filter)
+        if (key === 'feeds')
           return data[key]?.filter(
             content =>
               farms[activeFarmIndex]?.order?.product?._id === content?.farm
@@ -69,7 +69,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                     content={content}
                   />
                 )))
-            : renderEmpty()
+            : renderEmpty(key)
         array = data[key]?.map((content, index) => (
           <RenderCards
             key={mapKey(index)}
@@ -83,7 +83,7 @@ const FarmBoardContent = ({ farms = [] }) => {
         ))
       } else {
         if (filter === key) {
-          return renderEmpty()
+          return renderEmpty(filter)
         }
       }
       return array

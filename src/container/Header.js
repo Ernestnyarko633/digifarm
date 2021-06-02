@@ -40,7 +40,6 @@ const Header = () => {
 
   const notificationUpdate = async (id) => {
     const data = await updateNotification(id, user._id);
-    console.log("data", data);
   };
 
   return (
