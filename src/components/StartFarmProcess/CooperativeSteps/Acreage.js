@@ -26,13 +26,10 @@ const Acreage = ({ name, farm, order, selectedType }) => {
     selectedCooperativeType,
     setCooperativeName,
     setInvites,
-    invites
+    acres
   } = useStartFarm()
-
-  console.log(invites, 'expe')
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  const [acres, setAcres] = useState(0)
   const mapKeys = i => i
   const initialValues = {
     users: [
@@ -41,6 +38,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
     ]
   }
 
+  console.log('roman', acres)
   useEffect(() => {
     let mounted = true
     if (!cooperativeName && mounted)
@@ -205,7 +203,6 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                       <>
                         {values?.users?.map((value, i) => (
                           <CooperativeMemberCard
-                            setAcres={setAcres}
                             acres={acres}
                             isDisabled={i === 0 ? true : false}
                             member={i + 1}

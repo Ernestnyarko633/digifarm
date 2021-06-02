@@ -29,6 +29,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [currency, setCurrency] = useState(dcc)
   const [contract, setContract] = useState('')
   const [acreage, setAcreage] = useState(1)
+  const [acres, setAcres] = useState(0)
   const [order, setOrder] = useState(null)
   const [reload, setReload] = useState(0)
   const [cycle, setCycle] = useState(1)
@@ -43,7 +44,6 @@ export const StartFarmContextProvider = ({ children }) => {
   let cooperativeTypes = JSON.parse(sessionStorage.getItem('cooperative-types'))
   const [selectedCooperativeType, setSelectedCooperativeType] =
     React.useState(null)
-
   const {
     createOrder,
     initiatePayment,
@@ -68,7 +68,8 @@ export const StartFarmContextProvider = ({ children }) => {
   }, [cooperativeTypes, selectedCooperativeType])
 
   const { getExchangeRate } = useExternal()
-  const { setSession } = useAuth()
+  const { setSession, isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
 
   const toast = useToast()
 
@@ -181,12 +182,13 @@ export const StartFarmContextProvider = ({ children }) => {
         name: cooperativeName,
         type: cooperativeTypeId,
         product: selectedFarm?._id,
-        acreage: adminAcres
+        admin: user?._id,
+        users: invites
       }
 
       const res = await createCooperative(data)
       setCooperative(res.data)
-      handleCreateOrder(res.data, adminAcres)
+      handleCreateOrder(res.data, invites[0]?.acreage)
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
@@ -314,12 +316,14 @@ export const StartFarmContextProvider = ({ children }) => {
         step,
         text,
         cycle,
+        acres,
         order,
         invites,
         barrier,
         setStep,
         coopImg,
         acreage,
+        setAcres,
         coopType,
         setOrder,
         isSellOn,

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect } from 'react'
 import { Box, Flex, Text } from '@chakra-ui/layout'
@@ -6,6 +7,7 @@ import { FormInput } from '../Form'
 import Icon from '@chakra-ui/icon'
 import { MdClose } from 'react-icons/all'
 import PropTypes from 'prop-types'
+import useStartFarm from 'context/start-farm'
 
 const CooperativeMemberCard = ({
   values,
@@ -14,13 +16,18 @@ const CooperativeMemberCard = ({
   onChange,
   onBlur,
   remove,
-  setAcres,
   member,
   isDisabled,
   setInvites
 }) => {
+  const { setAcres } = useStartFarm()
+
   useEffect(() => {
     let mounted = true
+    if (mounted && values) {
+      setInvites(values)
+    }
+
     let total = 0
     if (mounted && value?.acreage) {
       values?.map(member => {
@@ -28,20 +35,10 @@ const CooperativeMemberCard = ({
         if (acreage) return (total = total + acreage)
         return null
       })
+      setAcres(total)
     }
-    setAcres(total)
     return () => (mounted = false)
-  }, [setAcres, value?.acreage, values])
-
-  useEffect(() => {
-    let mounted = true
-    let total = 0
-    if (mounted && values) {
-      setInvites(values)
-    }
-    setAcres(total)
-    return () => (mounted = false)
-  }, [values, setAcres, setInvites])
+  }, [values, setInvites, value?.acreage, setAcres])
 
   return (
     <Box bg='gray.50' rounded='md' p={4} my={5} pos='relative'>
@@ -116,7 +113,6 @@ CooperativeMemberCard.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   remove: PropTypes.func,
-  setAcres: PropTypes.func,
   member: PropTypes.number,
   isDisabled: PropTypes.bool,
   setInvites: PropTypes.func
