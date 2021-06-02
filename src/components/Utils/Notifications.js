@@ -38,15 +38,15 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
           >
             <Flex
               pos="absolute"
-              top={0}
-              right={0}
+              top={-1}
+              right={-1}
               align="center"
               justify="center"
-              fontSize="tiny"
-              w={3}
-              h={3}
+              fontSize="sm"
+              w={4}
+              h={4}
               rounded="100%"
-              bg="red.600"
+              bg="red.500"
               color="white"
             >
               {notifications.length}
