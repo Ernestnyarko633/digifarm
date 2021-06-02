@@ -35,6 +35,8 @@ const CooperativeSteps = ({ data, history }) => {
     otherStep,
     handlePrev,
     handleBack,
+    invites,
+    selectedCooperativeType,
     skipNextStep,
     selectedFarm,
     isSubmitting,
@@ -123,6 +125,10 @@ const CooperativeSteps = ({ data, history }) => {
 
   const getForwardButtonProps = (key) => {
     switch (key) {
+      case 2: 
+        return {
+          title: "Next", width: 56, action: handleNextStep , disabled: invites?.length === selectedCooperativeType?.maxMember ? false : true
+        }
       case 4:
         return {
           title: "Accept Agreement",
@@ -146,7 +152,7 @@ const CooperativeSteps = ({ data, history }) => {
     }
   };
 
-  const { title, action, width } = getForwardButtonProps(otherStep);
+  const { title, action, width, disabled } = getForwardButtonProps(otherStep);
 
   if (!catFarms && otherStep !== 4) {
     history.push("/dashboard");
@@ -269,6 +275,7 @@ const CooperativeSteps = ({ data, history }) => {
           h={12}
           fontSize={{ md: "lg" }}
           disabled={
+            disabled ||
             otherStep === 2 &&
             user?.signature?.string &&
             intersection &&

@@ -37,6 +37,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [cooperativeName, setCooperativeName] = React.useState(null)
   const [coopType, setCoopType] = React.useState(null)
   const [adminAcres, setAdminAcres] = React.useState(1)
+  const [invites, setInvites] = React.useState([])
   const [cooperative, setCooperative] = React.useState(null)
   const [coopImg, setCoopImg] = React.useState(false)
   let cooperativeTypes = JSON.parse(sessionStorage.getItem('cooperative-types'))
@@ -314,6 +315,7 @@ export const StartFarmContextProvider = ({ children }) => {
         text,
         cycle,
         order,
+        invites,
         barrier,
         setStep,
         coopImg,
@@ -329,6 +331,7 @@ export const StartFarmContextProvider = ({ children }) => {
         adminAcres,
         setCoopImg,
         setAcreage,
+        setInvites,
         handleNext,
         handlePrev,
         handleBack,
