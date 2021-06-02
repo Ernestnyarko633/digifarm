@@ -1,45 +1,52 @@
-/* eslint-disable no-console */
-import React from 'react'
-import { Heading, Flex, Box } from '@chakra-ui/react'
-import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
-import YourFarmCard from '../Cards/YourFarmCard'
-import FetchCard from 'components/FetchCard/index'
-import RenderCards from 'components/FarmBoard/Cards/RenderCards'
-import PropTypes from 'prop-types'
-import { renderEmpty } from './Cards/RenderCards'
-import { useNews, useVideos, useFeeds } from 'hooks/useFarmBoard'
+/* eslint-disable */
+import React from "react";
+import { Heading, Flex, Box } from "@chakra-ui/react";
+import FarmBoardEmptyState from "components/FarmBoard/EmptyState/FarmBoardEmptyState";
+import YourFarmCard from "../Cards/YourFarmCard";
+import FetchCard from "components/FetchCard/index";
+import RenderCards from "components/FarmBoard/Cards/RenderCards";
+import PropTypes from "prop-types";
+import { renderEmpty } from "./Cards/RenderCards";
+import { useNews, useVideos, useFeeds } from "hooks/useFarmBoard";
+import { useLocation } from "react-router-dom";
 
 const FarmBoardContent = ({ farms = [] }) => {
-  const [activeFarmIndex, setActiveFarmIndex] = React.useState(0)
-  const { loading: newsLoading, news, error: newsError } = useNews()
-  const { loading: videosLoading, videos, error: videosError } = useVideos()
-  const { loading: feedsLoading, feeds, error: feedsError } = useFeeds()
-  const [filter, setFilter] = React.useState(farms.length ? 'feeds' : 'videos')
+  const location = useLocation();
+  const query = location.search.split("?")[1];
+  const newQuery =
+    query === "weekly_videos" ? query.split("weekly_")[1] : query;
+  const [activeFarmIndex, setActiveFarmIndex] = React.useState(0);
+  const { loading: newsLoading, news, error: newsError } = useNews();
+  const { loading: videosLoading, videos, error: videosError } = useVideos();
+  const { loading: feedsLoading, feeds, error: feedsError } = useFeeds();
+  const [filter, setFilter] = React.useState(
+    farms.length && newQuery ? newQuery : "feeds"
+  );
   const [farmName, setFarmName] = React.useState(
     farms?.length ? farms[0]?.name : null
-  )
-  let loading = newsLoading || videosLoading || feedsLoading
-  let error = newsError || videosError || feedsError
+  );
+  let loading = newsLoading || videosLoading || feedsLoading;
+  let error = newsError || videosError || feedsError;
 
-  const RenderDataType = filter => {
-    const mapKey = i => i
+  const RenderDataType = (filter) => {
+    const mapKey = (i) => i;
 
-    const data = { news, feeds, videos }
+    const data = { news, feeds, videos };
     if (!feeds?.length && !news?.length && !videos?.length) {
-      return <FarmBoardEmptyState />
+      return <FarmBoardEmptyState />;
     }
 
-    return Object.keys(data).map(key => {
-      let array = []
+    return Object.keys(data).map((key) => {
+      let array = [];
       if (key === filter && data[key].length) {
         if (key === filter)
           return data[key]?.filter(
-            content =>
+            (content) =>
               farms[activeFarmIndex]?.order?.product?._id === content?.farm
           ).length
             ? (array = data[key]
                 ?.filter(
-                  content =>
+                  (content) =>
                     farms[activeFarmIndex]?.order?.product?._id ===
                     content?.farm
                 )
@@ -54,7 +61,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                     content={content}
                   />
                 )))
-            : renderEmpty()
+            : renderEmpty();
         array = data[key]?.map((content, index) => (
           <RenderCards
             key={mapKey(index)}
@@ -65,30 +72,30 @@ const FarmBoardContent = ({ farms = [] }) => {
             status={content?.type}
             content={content}
           />
-        ))
+        ));
       } else {
         if (filter === key) {
-          return renderEmpty()
+          return renderEmpty();
         }
       }
-      return array
-    })
-  }
+      return array;
+    });
+  };
 
   return (
-    <Flex w='100%' align='center' direction='column'>
+    <Flex w="100%" align="center" direction="column">
       {loading || error ? (
         <>
           <FetchCard
             p={15}
-            direction='column'
-            align='center'
-            justify='center'
-            mx='auto'
+            direction="column"
+            align="center"
+            justify="center"
+            mx="auto"
             reload={() => null}
             loading={loading}
             error={error}
-            text='Stand by as we load your farm board'
+            text="Stand by as we load your farm board"
           />
         </>
       ) : (
@@ -103,23 +110,23 @@ const FarmBoardContent = ({ farms = [] }) => {
             setFarmName={setFarmName}
           />
           <Box p={{ base: 4, md: 16 }}>
-            <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
+            <Heading as="h3" fontSize={{ md: "xl" }} textAlign="center" mb={10}>
               {feeds?.length && farms?.length
                 ? "See what's happening in your farm(s)"
                 : news?.length || videos?.length
                 ? "See what's happening"
-                : ''}
+                : ""}
             </Heading>
             {RenderDataType(filter)}
           </Box>
         </>
       )}
     </Flex>
-  )
-}
+  );
+};
 
 FarmBoardContent.propTypes = {
-  farms: PropTypes.array.isRequired
-}
+  farms: PropTypes.array.isRequired,
+};
 
-export default FarmBoardContent
+export default FarmBoardContent;
