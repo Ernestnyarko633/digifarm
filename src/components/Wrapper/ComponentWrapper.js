@@ -47,7 +47,7 @@ const ComponentWrapper = ({
             >
               {firstBoxTitle}
             </Box>
-            <Box mx={{ base: 4, md: 10 }} />
+            <Box mx={{ base: 4, md: 6, '2xl': 10 }} />
             <Box
               color={state === secondStateValue ? 'cf.800' : 'gray.700'}
               onClick={() => setState(secondStateValue)}
@@ -60,7 +60,7 @@ const ComponentWrapper = ({
             >
               {secondBoxTitle}
             </Box>
-            <Box mx={{ base: 4, md: 10 }} />
+            <Box mx={{ base: 4, md: 6, '2xl': 10 }} />
             <Box
               color={state === thirdStateValue ? 'cf.800' : 'gray.700'}
               onClick={() => setState(thirdStateValue)}

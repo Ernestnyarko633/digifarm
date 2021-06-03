@@ -68,7 +68,7 @@ const FarmCard = ({ farm }) => {
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       p={10}
       bg='white'
-      minW={{ base: 82, md: 120, xl: 125 }}
+      minW={{ base: 82, md: 120, xl: 123, '2xl': 125 }}
       minH={{ md: 'auto' }}
       mr={{ base: 5, md: 6 }}
     >
