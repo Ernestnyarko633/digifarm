@@ -136,7 +136,7 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
                                   color={active && 'gray.600'}
                                   d='flex'
                                   justifyContent='space-between'
-                                  // onClick={() => updateNotification(item._id)}
+                                  onClick={() => updateNotification(item._id)}
                                   to={toFarmBoard(item?.message?.type, item)}
                                   borderBottomWidth={1}
                                   borderBottomColor='gray.100'
