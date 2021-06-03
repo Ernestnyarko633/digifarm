@@ -84,38 +84,26 @@ const FarmCard = ({ farm }) => {
           </Box>
 
           <Box>
-            <Flex align='center'>
-              <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
-                {farm?.order?.product?.cropVariety?.crop?.name}
-              </Heading>
-              <Text
-                ml={1}
-                as='span'
-                fontSize={{ base: 'tiny', md: 'sm' }}
-                color='gray.500'
-              >
-                ({farm?.order?.product?.cropVariety?.name}) {farm.name}
-              </Text>
-            </Flex>
-
+            <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
+              {farm?.order?.product?.cropVariety?.crop?.name}
+            </Heading>
             <Text
+              as='span'
+              fontSize={{ base: 'tiny', md: 'sm' }}
               color='gray.500'
-              mt={-1}
-              fontSize={{ base: 'sm', md: 'md' }}
-              textTransform='uppercase'
             >
-              {farm?.order?.product?.location?.name},{' '}
-              {farm?.order?.product?.location?.country}
+              ({farm?.order?.product?.cropVariety?.name}) {farm.name}
             </Text>
           </Box>
         </Flex>
 
         <Box d={{ base: 'none', xl: 'block' }}>
           <Button
+            rounded='full'
+            h={{ md: 12, '2xl': 14 }}
             btntitle='View Farm'
-            rounded='30px'
-            w={{ md: '190px' }}
-            h={{ md: '55px' }}
+            w={{ md: 44, '2xl': 52 }}
+            fontWeight='bold'
             fontSize={{ md: 'lg' }}
             onClick={_ => {
               sessionStorage.setItem('selectedFarm', JSON.stringify(farm))
@@ -128,11 +116,27 @@ const FarmCard = ({ farm }) => {
       </Flex>
       <>
         <Divider orientation='horizontal' borderColor='gray.300' my={6} />
+        <Flex justify='space-between'>
+          <Text color='gray.400'>
+            Number of acres:{' '}
+            <Text as='span' color='gray.700' fontWeight='bold'>
+              {farm?.order?.acreage} acres
+            </Text>
+          </Text>
+          <Text color='gray.400'>
+            Location:{' '}
+            <Text as='span' color='gray.700' fontWeight='bold'>
+              {farm?.order?.product?.location?.name}
+            </Text>
+          </Text>
+        </Flex>
+
+        <Divider orientation='horizontal' borderColor='gray.300' my={6} />
 
         <Flex justifyContent='space-between' alignItems='center' pos='relative'>
           <Box w={{ base: '100%', md: '80%', xl: '50%' }}>
             <Heading as='h4' fontSize={{ md: '2xl' }}>
-              Progress on farm
+              Farm Progress
             </Heading>
             <Divider orientation='horizontal' borderColor='gray.300' my={3} />
             {isLoading || error ? (
