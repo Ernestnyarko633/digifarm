@@ -85,7 +85,7 @@ const WalletCard = ({ acreage, price, farm }) => {
       rounded="xl"
       filter="drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))"
       bg="white"
-      maxW={{ md: 82 }}
+      w={{ base: 82, md: 82 }}
       minH={{ md: "auto" }}
     >
       <Box p={{ base: 4, md: 6 }} w="100%">
@@ -166,7 +166,7 @@ const WalletCard = ({ acreage, price, farm }) => {
             <ExpenditureCard
               bg="cf.light"
               action="available"
-              amount={getFormattedMoney(farm?.order?.cost  || (price * acreage)  )}
+              amount={getFormattedMoney(farm?.order?.cost || price * acreage)}
             />
           </Grid>
         )}
@@ -181,12 +181,15 @@ const WalletCard = ({ acreage, price, farm }) => {
                 tasks: tasks || [],
                 farmfeeds: farmFeeds || [],
                 ScheduledTasks: ScheduledTasks || [],
-                wallet: getFormattedMoney( farm?.order?.cost || price * acreage ),
-                balance:farm?.order?.cost >=
-                farmExpense(myFarmActivities, tasks, ScheduledTasks)  ? getFormattedMoney(
-                  farm?.order?.cost -
-                    farmExpense(myFarmActivities, tasks, ScheduledTasks)
-                ) : 0,
+                wallet: getFormattedMoney(farm?.order?.cost || price * acreage),
+                balance:
+                  farm?.order?.cost >=
+                  farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                    ? getFormattedMoney(
+                        farm?.order?.cost -
+                          farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                      )
+                    : 0,
                 expense: getFormattedMoney(
                   farmExpense(myFarmActivities, tasks, ScheduledTasks)
                 ),
