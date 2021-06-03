@@ -140,7 +140,6 @@ const Layout = ({
             zIndex={40}
             px={{ base: 4, md: 0 }}
             mb={{ base: 32, md: 0 }}
-            // d={{ base: 'none', md: 'none', lg: 'block' }}
           >
             <RightSidebar onOpen={onOpen} setSelectedData={setSelectedData} />
           </GridItem>
