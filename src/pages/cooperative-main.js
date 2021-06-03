@@ -164,18 +164,21 @@ const CooperativeMain = ({ location: { state } }) => {
       accessor: 'payment',
       Cell: ({ row }) => (
         <>
-          {row.original.email === user?.email && (
-            <Button
-              btntitle='Pay'
-              colorScheme='linear'
-              width='120px'
-              py='10px'
-              disabled
-              leftIcon={<BiCreditCard size={20} />}
-              onClick={() => {
-                handleModalClick('farmCard')
-              }}
-            />
+          {row.values.status === 'PENDING' && (
+            <>
+              {row.original.email === user?.email && (
+                <Button
+                  btntitle='Pay'
+                  colorScheme='linear'
+                  width='120px'
+                  py='10px'
+                  leftIcon={<BiCreditCard size={20} />}
+                  onClick={() => {
+                    handleModalClick('farmCard')
+                  }}
+                />
+              )}
+            </>
           )}
         </>
       )

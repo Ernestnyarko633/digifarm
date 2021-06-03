@@ -13,11 +13,11 @@ import OrderCard from '../OrderCard'
 const Payment = ({ data, onOpen }) => {
   const { isOpen, onClose } = useComponent()
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered size='xl'>
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody h='600px'>
           <OrderCard order={data} onOpen={onOpen} />
         </ModalBody>
       </ModalContent>

@@ -19,6 +19,8 @@ import { saveAs } from 'file-saver'
 import useApi from 'context/api'
 
 const OrderCard = ({ order, onOpen }) => {
+  // eslint-disable-next-line no-console
+  console.log('order', order)
   const { PENDING } = Status
   const { setOrder } = useStartFarm()
   const [loading, setLoading] = React.useState(false)
