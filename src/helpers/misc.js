@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-useless-escape */
 import _ from 'lodash'
 import configs from '../utils/configs'
@@ -22,6 +21,15 @@ export const validateEmailAndAcrege = (email, acreage) => {
     re.test(String(email).toLowerCase()) &&
     (typeof acreage === 'number' ? true : false)
   )
+}
+
+export const checkProperties = obj => {
+  for (var key in obj) {
+    if (obj[key] === null || obj[key] === undefined) {
+      return false
+    }
+  }
+  return true
 }
 
 export const getFormattedMoney = val => {
