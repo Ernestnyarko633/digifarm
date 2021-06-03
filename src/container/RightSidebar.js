@@ -19,7 +19,6 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
 
   const { data, isLoading, error } = useFetch(null, getCooperatives, reload)
 
-  console.log(data, 'removed')
 
   const mapKey = index => index
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
