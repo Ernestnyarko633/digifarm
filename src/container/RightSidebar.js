@@ -152,7 +152,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                   <Link
                     as={ReachRouter}
                     to={{
-                      pathname: `/cooperative-main/${coop?._id}`,
+                      pathname: `/cooperative-main/${coop?.name}`,
                       state: { _id: coop?._id }
                     }}
                     _hover={{ textDecor: 'none' }}
