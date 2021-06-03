@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import { motion } from 'framer-motion'
 import { Grid, GridItem, Heading, Image, Icon } from '@chakra-ui/react'
@@ -173,11 +171,11 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                         acres <= barrier
                           ? 'cf.400'
                           : acres > barrier
-                          ? 'red.dark'
+                          ? 'red.500'
                           : 'gray.500'
                       }
                     >
-                      Meet the minimum acreage:{' '}
+                      Meet the maximum acreage:{' '}
                       <Text
                         as='span'
                         fontWeight={900}
@@ -186,7 +184,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                           acres <= barrier
                             ? 'cf.400'
                             : acres > barrier
-                            ? 'red.dark'
+                            ? 'red.500'
                             : 'black'
                         }
                       >

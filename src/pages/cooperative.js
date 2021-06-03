@@ -1,6 +1,14 @@
-/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Box, Text, Heading, Flex, Avatar, Spacer } from '@chakra-ui/react'
+import {
+  Box,
+  Text,
+  Heading,
+  Flex,
+  Avatar,
+  Spacer,
+  Container
+} from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
@@ -11,21 +19,22 @@ import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import Header from 'container/Header'
 import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfile'
-import { Link } from 'carbon-components-react'
 import { Button } from 'components'
+import { NavLink } from 'react-router-dom'
 
 const Cooperative = ({ location: { state } }) => {
-  document.title = 'Cooperative ...'
+  document.title = `Welcome to ${state?.data.name} Cooperative`
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [reload, setReload] = useState(0)
 
   const { getCooperativeById } = useApi()
   const { data, isLoading, error } = useFetch(
-    null,
+    `welcome_to_coop_${state?.data?._id}`,
+    // null,
     getCooperativeById,
     reload,
-    state._id
+    state?.data?._id
   )
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
@@ -38,13 +47,13 @@ const Cooperative = ({ location: { state } }) => {
 
   useEffect(() => {
     let mounted = true
-    if (mounted && !doc) {
-      const fetchData = async () => {
-        const res = await Client.getByUID('farm_managers', data?.product._id)
-        if (res) {
-          setDocData(res.data)
-        }
+    const fetchData = async () => {
+      const res = await Client.getByUID('farm_managers', data?.product._id)
+      if (res) {
+        setDocData(res.data)
       }
+    }
+    if (mounted && !doc) {
       fetchData()
     }
     return () => (mounted = false)
@@ -53,40 +62,34 @@ const Cooperative = ({ location: { state } }) => {
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const date = () => {
-    const date = new Date(data?.product?.startDate)
-    return date.toLocaleDateString('en-GB')
+    return new Date(data?.product?.startDate).toLocaleDateString('en-GB')
   }
 
   return (
-    <Box>
+    <Box bg='white'>
+      <Header />
       {isLoading || error ? (
-        <Box my={60} bg='none'>
-          <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            reload={triggerReload}
-            loading={isLoading}
-            error={error}
-            text='loading cooperative...'
-          />
-        </Box>
+        <FetchCard
+          h='100vh'
+          w='100vw'
+          direction='column'
+          align='center'
+          justify='center'
+          reload={triggerReload}
+          loading={isLoading}
+          error={error}
+          text='loading cooperative...'
+        />
       ) : (
-        <Box bg='white'>
-          <Header />
-          <Box py={{ md: 24 }}>
-            <Heading fontSize='24px' textAlign='center'>
-              Welcome {user.firstName}
-            </Heading>
-          </Box>
+        <Container maxW={{ xl: '5xl' }} py={{ md: 24 }}>
+          <Heading fontSize='24px' mb={{ md: 10 }} textAlign='center'>
+            Welcome {user.firstName}
+          </Heading>
           <Box
-            width={{ md: '670px', lg: '1034px' }}
-            h={{ md: '59px', lg: '330px' }}
-            mx='auto'
-            borderWidth={1}
-            borderColor='gray.400'
             bg='white'
+            borderWidth={1}
             borderRadius='md'
+            borderColor='gray.300'
           >
             <Flex bg='#F8F8F8' p='17px'>
               <Text fontWeight='bold' fontSize='20px'>
@@ -97,7 +100,7 @@ const Cooperative = ({ location: { state } }) => {
                 Farm starts: {date()}
               </Text>
             </Flex>
-            <Flex p='32px'>
+            <Flex p={{ lg: 8 }} justify='space-between'>
               <Box>
                 <Flex>
                   <Avatar
@@ -140,8 +143,7 @@ const Cooperative = ({ location: { state } }) => {
                   </Text>
                 </Box>
               </Box>
-              <Spacer />
-              <Box pr='66px' py='32px'>
+              <Box pr='66px' py={{ lg: 8 }}>
                 <Avatar size='2xl' name={data?.name} />
                 <Text fontWeight='bold' textAlign='center' py='5px'>
                   {data?.name}
@@ -150,14 +152,15 @@ const Cooperative = ({ location: { state } }) => {
             </Flex>
           </Box>
           <Box pb={{ md: 10 }}>
-            <Flex py='25px' justify='center'>
+            <Flex py={{ lg: '25px' }} justify='center'>
               <Box
-                w={{ md: '328px', lg: '506px' }}
-                h={{ md: '292px', lg: '316px' }}
-                mr={{ md: 5, lg: 8 }}
+                w='50%'
+                height='full'
+                pb={{ lg: 5 }}
                 borderWidth={1}
-                borderColor='gray.400'
+                mr={{ md: 5, lg: 8 }}
                 borderRadius='md'
+                borderColor='gray.300'
               >
                 <Flex bg='#F8F8F8' p='17px'>
                   <Text fontWeight='bold' fontSize='20px'>
@@ -182,25 +185,25 @@ const Cooperative = ({ location: { state } }) => {
               </Box>
               <ManagerProfile
                 item={doc}
-                width={{ md: '328px', lg: '506px' }}
-                height={{ md: '292px', lg: '316px' }}
+                width='50%'
+                height='full'
                 size='2xl'
                 py='15px'
                 px={4}
               />
             </Flex>
+            <Flex justify='flex-end'>
+              <NavLink to='/dashboard'>
+                <Button
+                  btntitle='Get Started'
+                  w='310px'
+                  fontSize='16px'
+                  h='48px'
+                />
+              </NavLink>
+            </Flex>
           </Box>
-          <Flex justify='flex-end' mr={20} py={4}>
-            <Link href='/dashboard'>
-              <Button
-                btntitle='Get Started'
-                w='310px'
-                fontSize='16px'
-                h='48px'
-              />
-            </Link>
-          </Flex>
-        </Box>
+        </Container>
       )}
     </Box>
   )

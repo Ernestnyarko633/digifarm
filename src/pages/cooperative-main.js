@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -27,7 +26,7 @@ import { getformattedDate, getFormattedMoney } from 'helpers/misc'
 import useAuth from 'context/auth'
 
 const CooperativeMain = ({ location: { state } }) => {
-  document.title = 'Dashboard | The GCU Application Portal'
+  document.title = 'Cooperative Dashboard'
   const [reload, setReload] = useState(0)
   const [tableData, setTableData] = useState([])
   const { isAuthenticated } = useAuth()

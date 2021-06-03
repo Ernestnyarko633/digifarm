@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
@@ -22,8 +21,6 @@ const FarmBoardContent = ({ farms = [] }) => {
   )
   let loading = newsLoading || videosLoading || feedsLoading
   let error = newsError || videosError || feedsError
-
-  console.log(useQuery.search)
 
   useEffect(() => {
     let mounted = true
