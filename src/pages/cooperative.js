@@ -1,5 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Box, Text, Heading, Flex, Avatar, Spacer } from '@chakra-ui/react'
+import {
+  Box,
+  Text,
+  Heading,
+  Flex,
+  Avatar,
+  Spacer,
+  Container
+} from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
@@ -10,21 +19,22 @@ import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import Header from 'container/Header'
 import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfile'
-import { Link } from 'carbon-components-react'
 import { Button } from 'components'
+import { NavLink } from 'react-router-dom'
 
 const Cooperative = ({ location: { state } }) => {
-  document.title = 'Cooperative ...'
+  document.title = `Welcome to ${state?.data.name} Cooperative`
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [reload, setReload] = useState(0)
 
   const { getCooperativeById } = useApi()
   const { data, isLoading, error } = useFetch(
-    null,
+    `welcome_to_coop_${state?.data?._id}`,
+    // null,
     getCooperativeById,
     reload,
-    state._id
+    state?.data?._id
   )
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
@@ -37,13 +47,13 @@ const Cooperative = ({ location: { state } }) => {
 
   useEffect(() => {
     let mounted = true
-    if (mounted && !doc) {
-      const fetchData = async () => {
-        const res = await Client.getByUID('farm_managers', data?.product._id)
-        if (res) {
-          setDocData(res.data)
-        }
+    const fetchData = async () => {
+      const res = await Client.getByUID('farm_managers', data?.product._id)
+      if (res) {
+        setDocData(res.data)
       }
+    }
+    if (mounted && !doc) {
       fetchData()
     }
     return () => (mounted = false)
@@ -52,70 +62,49 @@ const Cooperative = ({ location: { state } }) => {
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const date = () => {
-    const date = new Date(data?.product?.startDate)
-    return date.toLocaleDateString('en-GB')
+    return new Date(data?.product?.startDate).toLocaleDateString('en-GB')
   }
 
   return (
-    <Box>
+    <Box bg='white'>
+      <Header />
       {isLoading || error ? (
-        <Box my={60} bg='none'>
-          <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            reload={triggerReload}
-            loading={isLoading}
-            error={error}
-            text='loading cooperative'
-          />
-        </Box>
+        <FetchCard
+          h='100vh'
+          w='100vw'
+          direction='column'
+          align='center'
+          justify='center'
+          reload={triggerReload}
+          loading={isLoading}
+          error={error}
+          text='loading cooperative...'
+        />
       ) : (
-        <Box bg='white' h='100vh'>
-          <Header />
-          <Box pb={{ base: 10, md: 16 }} pt={{ base: 20, md: 28 }}>
-            <Heading fontSize={{ base: '16px', md: '24px' }} textAlign='center'>
-              Welcome {user.firstName}
-            </Heading>
-          </Box>
+        <Container maxW={{ xl: '5xl' }} py={{ md: 24 }}>
+          <Heading fontSize='24px' mb={{ md: 10 }} textAlign='center'>
+            Welcome {user.firstName}
+          </Heading>
           <Box
-            width={{ base: '340px', md: '670px', lg: '1034px' }}
-            h={{ md: '33vh', lg: '330px' }}
-            mx='auto'
-            borderWidth={1}
-            borderColor='gray.400'
             bg='white'
+            borderWidth={1}
             borderRadius='md'
+            borderColor='gray.300'
           >
             <Flex bg='#F8F8F8' p='17px'>
-              <Text fontWeight='bold' fontSize={{ base: '10px', md: '20px' }}>
-                Your
-                <Text
-                  as='span'
-                  fontSize={{ base: '15px', md: '20px' }}
-                  pl={{ base: '5px' }}
-                >
-                  Cooperative
-                </Text>
+              <Text fontWeight='bold' fontSize='20px'>
+                Your Cooperative
               </Text>
               <Spacer />
-              <Text
-                color='#D0021B'
-                fontWeight='bold'
-                fontSize={{ base: '10px', md: '20px' }}
-              >
-                Farm starts:{' '}
-                <Text as='span' fontSize={{ base: '15px', md: '20px' }} pl={2}>
-                  {date()}
-                </Text>
+              <Text color='#D0021B' fontWeight='bold'>
+                Farm starts: {date()}
               </Text>
             </Flex>
-            <Flex p='32px' wrap={{ base: 'wrap-reverse' }}>
+            <Flex p={{ lg: 8 }} justify='space-between'>
               <Box>
                 <Flex>
                   <Avatar
-                    name={data?.product?.cropVariety?.crop?.name}
-                    src={data?.product?.cropVariety?.crop?.imageUrl}
+                    name={data?.product?.cropVariety?.crop?.imageUrl}
                     size='lg'
                   />
                   <Box px='13px'>
@@ -130,7 +119,7 @@ const Cooperative = ({ location: { state } }) => {
                   </Box>
                 </Flex>
                 <Box py='26px'>
-                  <Text fontSize={{ base: '16px', md: '20px' }}>
+                  <Text fontSize='20px'>
                     Location:{' '}
                     <Text as='span' fontWeight='bold'>
                       {data?.product?.location?.name +
@@ -138,13 +127,13 @@ const Cooperative = ({ location: { state } }) => {
                         data?.product?.location?.state}
                     </Text>
                   </Text>
-                  <Text fontSize={{ base: '16px', md: '20px' }}>
+                  <Text fontSize='20px'>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {data?.type?.name.toUpperCase()}
                     </Text>
                   </Text>
-                  <Text fontSize={{ base: '16px', md: '20px' }}>
+                  <Text fontSize='20px'>
                     Cooperative Admin:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {data?.users[0]?.info?.firstName +
@@ -154,40 +143,32 @@ const Cooperative = ({ location: { state } }) => {
                   </Text>
                 </Box>
               </Box>
-              <Flex mx='auto'>
-                <Box py={{ base: '24px', md: '32px' }}>
-                  <Avatar size='2xl' name={data?.name} />
-                  <Text fontWeight='bold' textAlign='center' py='5px'>
-                    {data?.name}
-                  </Text>
-                </Box>
-              </Flex>
+              <Box pr='66px' py={{ lg: 8 }}>
+                <Avatar size='2xl' name={data?.name} />
+                <Text fontWeight='bold' textAlign='center' py='5px'>
+                  {data?.name}
+                </Text>
+              </Box>
             </Flex>
           </Box>
-          <Box>
-            <Flex py='25px' justify='center' wrap={{ base: 'wrap' }} bg='white'>
+          <Box pb={{ md: 10 }}>
+            <Flex py={{ lg: '25px' }} justify='center'>
               <Box
-                w={{ base: '339px', md: '328px', lg: '506px' }}
-                h={{ base: '292px', md: '292px', lg: '316px' }}
-                mr={{ md: 5, lg: 8 }}
+                w='50%'
+                height='full'
+                pb={{ lg: 5 }}
                 borderWidth={1}
-                borderColor='gray.400'
+                mr={{ md: 5, lg: 8 }}
                 borderRadius='md'
-                mb={{ base: '17px' }}
-                overflowY='scroll'
+                borderColor='gray.300'
               >
                 <Flex bg='#F8F8F8' p='17px'>
                   <Text fontWeight='bold' fontSize='20px'>
                     Cooperative members
                   </Text>
                 </Flex>
-
                 {data?.users?.map(item => (
-                  <Flex
-                    py='5px'
-                    px={{ base: '24px', md: '15px', lg: '20px' }}
-                    key={item?.id}
-                  >
+                  <Flex py='5px' px={{ md: '15px', lg: '20px' }} key={item?.id}>
                     <Text fontSize='16px' fontWeight='bold'>
                       {item?.info?.firstName || item?.info?.lastName
                         ? item?.info?.firstName + ' ' + item?.info?.lastName
@@ -204,30 +185,25 @@ const Cooperative = ({ location: { state } }) => {
               </Box>
               <ManagerProfile
                 item={doc}
-                width={{ base: '341px', md: '328px', lg: '506px' }}
-                height={{ md: '292px', lg: '316px' }}
-                size={{ base: 'sm', md: 'sm', lg: '2xl' }}
-                py={{ base: '8px', md: '15px' }}
+                width='50%'
+                height='full'
+                size='2xl'
+                py='15px'
                 px={4}
               />
             </Flex>
+            <Flex justify='flex-end'>
+              <NavLink to='/dashboard'>
+                <Button
+                  btntitle='Get Started'
+                  w='310px'
+                  fontSize='16px'
+                  h='48px'
+                />
+              </NavLink>
+            </Flex>
           </Box>
-          <Flex
-            justify={{ base: 'center', md: 'flex-end' }}
-            mr={{ md: 20 }}
-            py={{ base: '32px', md: '48px' }}
-            bg='white'
-          >
-            <Link href='/dashboard'>
-              <Button
-                btntitle='Get Started'
-                w='310px'
-                fontSize='16px'
-                h='48px'
-              />
-            </Link>
-          </Flex>
-        </Box>
+        </Container>
       )}
     </Box>
   )

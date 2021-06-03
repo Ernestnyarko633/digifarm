@@ -8,9 +8,13 @@ import PropTypes from 'prop-types'
 import { renderEmpty } from './Cards/RenderCards'
 import { useNews, useVideos, useFeeds } from 'hooks/useFarmBoard'
 import { useLocation } from 'react-router-dom'
+import { checkProperties } from 'helpers/misc'
 
 const FarmBoardContent = ({ farms = [] }) => {
-  const useQuery = useLocation()
+  //using function to query search params
+  const useQuery = () => new URLSearchParams(useLocation().search)
+
+  //initial states
   const [activeFarmIndex, setActiveFarmIndex] = React.useState(0)
   const { loading: newsLoading, news, error: newsError } = useNews()
   const { loading: videosLoading, videos, error: videosError } = useVideos()
@@ -19,31 +23,55 @@ const FarmBoardContent = ({ farms = [] }) => {
   const [farmName, setFarmName] = React.useState(
     farms?.length ? farms[0]?.name : null
   )
+
+  //changing state variables
   let loading = newsLoading || videosLoading || feedsLoading
   let error = newsError || videosError || feedsError
 
-  useEffect(() => {
-    let mounted = true
+  // initialising useQuery hook
+  let q = useQuery()
 
-    if (mounted && useQuery.search) {
-      if (useQuery.search === '?weekly_videos') setFilter('videos')
-      if (useQuery.search === '?news') setFilter('news')
-      if (useQuery.search === '?weekly_videos' || useQuery.search === '?news')
-        setActiveFarmIndex(null)
+  // returns a memorised value. antime q changes
+  const query = React.useMemo(
+    () => [
+      {
+        type: q.get('type'),
+        id: q.get('id'),
+        title: q.get('title')
+      }
+    ],
+    [q]
+  )
+
+  //this hook runs if theres query
+  useEffect(() => {
+    //if all values of query are present
+    if (checkProperties(query[0])) {
+      //set filter to type 'news' or 'videos'
+      setFilter(query[0].type)
+
+      // make sure index of farm is null
+      setActiveFarmIndex(null)
     }
-    return () => (mounted = false)
-  }, [useQuery.search])
+  }, [query])
+
+  //handles all rending of the board's content
   const RenderDataType = filter => {
     const mapKey = i => i
-
+    // data is an object with fields newsm feeds and videos represents each board data type
     const data = { news, feeds, videos }
+
+    //if we dont have any data return empty state
     if (!feeds?.length && !news?.length && !videos?.length) {
       return <FarmBoardEmptyState />
     }
 
+    //proceed to render.
     return Object.keys(data).map(key => {
       let array = []
+      // if filter is equal to current key and has data
       if (key === filter && data[key].length) {
+        // if key is feeds filter the feed by farm and render else render empty for that farm
         if (key === 'feeds')
           return data[key]?.filter(
             content =>
@@ -67,22 +95,30 @@ const FarmBoardContent = ({ farms = [] }) => {
                   />
                 )))
             : renderEmpty(key)
-        array = data[key]?.map((content, index) => (
-          <RenderCards
-            key={mapKey(index)}
-            filter={filter}
-            farms={farms}
-            comparant={key}
-            activeFarmIndex={activeFarmIndex}
-            status={content?.type}
-            content={content}
-          />
-        ))
+
+        //if key was not equal to feed filter if there is query[0] in params else return all data if there's none. key should be equal to filter as usual
+        array = data[key]
+          ?.filter(content =>
+            checkProperties(query[0]) ? content.id === query[0]?.id : {}
+          )
+          .map((content, index) => (
+            <RenderCards
+              key={mapKey(index)}
+              filter={filter}
+              farms={farms}
+              comparant={key}
+              activeFarmIndex={activeFarmIndex}
+              status={content?.type}
+              content={content}
+            />
+          ))
       } else {
+        //if empty render empty component
         if (filter === key) {
           return renderEmpty(filter)
         }
       }
+      // return array
       return array
     })
   }

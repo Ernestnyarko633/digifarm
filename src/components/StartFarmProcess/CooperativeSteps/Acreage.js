@@ -171,11 +171,11 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                         acres <= barrier
                           ? 'cf.400'
                           : acres > barrier
-                          ? 'red.dark'
+                          ? 'red.500'
                           : 'gray.500'
                       }
                     >
-                      Meet the minimum acreage:{' '}
+                      Meet the maximum acreage:{' '}
                       <Text
                         as='span'
                         fontWeight={900}
@@ -184,7 +184,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                           acres <= barrier
                             ? 'cf.400'
                             : acres > barrier
-                            ? 'red.dark'
+                            ? 'red.500'
                             : 'black'
                         }
                       >

@@ -27,7 +27,7 @@ import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
 
 const CooperativeMain = ({ location: { state } }) => {
-  document.title = 'Dashboard | Cooperative Cooperative'
+  document.title = 'Cooperative Dashboard'
   const [reload, setReload] = useState(0)
   const [tableData, setTableData] = useState([])
 
