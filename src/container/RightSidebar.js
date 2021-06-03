@@ -18,11 +18,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
   const { getCooperatives } = useApi()
   const triggerReload = () => setReload(prevState => prevState + 1)
 
-  const { data, isLoading, error } = useFetch(
-    'my_coop',
-    getCooperatives,
-    reload
-  )
+  const { data, isLoading, error } = useFetch(null, getCooperatives, reload)
 
   const mapKey = index => index
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()

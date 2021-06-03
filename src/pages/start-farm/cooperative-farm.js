@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
@@ -36,7 +37,13 @@ const CooperativeFarm = ({ location, history }) => {
       case 0:
         return <CropSelection />
       case 1:
-        return <CooperativeSteps data={selected} history={history} />
+        return (
+          <CooperativeSteps
+            asMember={state}
+            data={selected}
+            history={history}
+          />
+        )
       default:
         return null
     }

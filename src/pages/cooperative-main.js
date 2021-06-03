@@ -25,12 +25,17 @@ import { BiCreditCard } from 'react-icons/bi'
 import { getFormattedMoney } from 'helpers/misc'
 import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
+import useAuth from 'context/auth'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Cooperative Dashboard'
   const [reload, setReload] = useState(0)
   const [tableData, setTableData] = useState([])
 
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  // eslint-disable-next-line no-console
+  console.log(user)
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const { getCooperativeById } = useApi()
@@ -148,6 +153,9 @@ const CooperativeMain = ({ location: { state } }) => {
       Header: '',
       accessor: 'payment',
       Cell: ({ row }) => (
+        //if authenticated user is part of users
+        // { row.values.email.filter(item => item.email === user?.email)}
+
         <Button
           btntitle='Pay'
           colorScheme='linear'
