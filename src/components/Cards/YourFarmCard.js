@@ -20,14 +20,11 @@ const MotionFlex = motion(Flex);
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 
 const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
-  const location = useLocation();
-  const query = location.search.split("?")[1];
-  const newState = query === text ? query : text;
   return (
     <Tag
       my={2}
       onClick={() => {
-        setFilter(newState);
+        setFilter(text);
         setActiveFarmIndex(text === "feeds" ? 0 : null);
       }}
       color={filter === text ? "cf.800" : "gray.500"}
@@ -204,35 +201,34 @@ const YourFarmCard = ({
             overflowX={items.length > 6 ? "scroll" : "visible"}
           >
             {items.map((item) => {
-              if(farms.length && item.filter === 'feeds'){
-                return(
+              if (farms.length && item.filter === "feeds") {
+                return (
                   <ItemTag
+                    key={item.id}
+                    setFilter={setFilter}
+                    setActiveFarmIndex={setActiveFarmIndex}
+                    title={item.title}
+                    text={item.filter}
+                    filter={filter}
+                  />
+                );
+              } else {
+                if (item.filter !== "feeds") {
+                  return (
+                    <ItemTag
                       key={item.id}
                       setFilter={setFilter}
                       setActiveFarmIndex={setActiveFarmIndex}
                       title={item.title}
                       text={item.filter}
                       filter={filter}
-                  />
-                )
-              } else {
-              if(item.filter !== 'feeds' ){
-                return(
-                  <ItemTag
-                  key={item.id}
-                  setFilter={setFilter}
-                  setActiveFarmIndex={setActiveFarmIndex}
-                  title={item.title}
-                  text={item.filter}
-                  filter={filter}
-                />
-                )
+                    />
+                  );
+                }
               }
-            }
-            
-            return null
-          
-          })}
+
+              return null;
+            })}
           </Flex>
         </Flex>
       </Flex>

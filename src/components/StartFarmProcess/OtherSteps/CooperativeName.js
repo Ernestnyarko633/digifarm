@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react'
 import { Box, Flex, Heading } from '@chakra-ui/layout'
@@ -14,6 +13,7 @@ const CooperativeName = ({ farm }) => {
   const handleChange = e => {
     setCooperativeName(e.target.value)
   }
+
   return (
     <Flex align='center' justify='center' direction='column'>
       {false && handleChange}

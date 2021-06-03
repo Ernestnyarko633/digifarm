@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
 import { Box, Text, Heading, Flex, Avatar, Spacer } from '@chakra-ui/react'
 import useAuth from 'context/auth'

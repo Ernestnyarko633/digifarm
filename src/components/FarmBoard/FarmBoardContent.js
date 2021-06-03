@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
 import YourFarmCard from '../Cards/YourFarmCard'
@@ -8,8 +7,10 @@ import RenderCards from 'components/FarmBoard/Cards/RenderCards'
 import PropTypes from 'prop-types'
 import { renderEmpty } from './Cards/RenderCards'
 import { useNews, useVideos, useFeeds } from 'hooks/useFarmBoard'
+import { useLocation } from 'react-router-dom'
 
 const FarmBoardContent = ({ farms = [] }) => {
+  const useQuery = useLocation()
   const [activeFarmIndex, setActiveFarmIndex] = React.useState(0)
   const { loading: newsLoading, news, error: newsError } = useNews()
   const { loading: videosLoading, videos, error: videosError } = useVideos()
@@ -21,6 +22,17 @@ const FarmBoardContent = ({ farms = [] }) => {
   let loading = newsLoading || videosLoading || feedsLoading
   let error = newsError || videosError || feedsError
 
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted && useQuery.search) {
+      if (useQuery.search === '?weekly_videos') setFilter('videos')
+      if (useQuery.search === '?news') setFilter('news')
+      if (useQuery.search === '?weekly_videos' || useQuery.search === '?news')
+        setActiveFarmIndex(null)
+    }
+    return () => (mounted = false)
+  }, [useQuery.search])
   const RenderDataType = filter => {
     const mapKey = i => i
 
@@ -32,7 +44,7 @@ const FarmBoardContent = ({ farms = [] }) => {
     return Object.keys(data).map(key => {
       let array = []
       if (key === filter && data[key].length) {
-        if (key === filter)
+        if (key === 'feeds')
           return data[key]?.filter(
             content =>
               farms[activeFarmIndex]?.order?.product?._id === content?.farm
@@ -54,7 +66,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                     content={content}
                   />
                 )))
-            : renderEmpty()
+            : renderEmpty(key)
         array = data[key]?.map((content, index) => (
           <RenderCards
             key={mapKey(index)}
@@ -68,7 +80,7 @@ const FarmBoardContent = ({ farms = [] }) => {
         ))
       } else {
         if (filter === key) {
-          return renderEmpty()
+          return renderEmpty(filter)
         }
       }
       return array
