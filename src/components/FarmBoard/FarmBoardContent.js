@@ -20,9 +20,12 @@ const FarmBoardContent = ({ farms = [] }) => {
   const { loading: videosLoading, videos, error: videosError } = useVideos()
   const { loading: feedsLoading, feeds, error: feedsError } = useFeeds()
   const [filter, setFilter] = React.useState(farms.length ? 'feeds' : 'videos')
+  const queriedElement = React.useRef(null)
   const [farmName, setFarmName] = React.useState(
     farms?.length ? farms[0]?.name : null
   )
+
+  const executeScroll = () => queriedElement?.current?.scrollIntoView()
 
   //changing state variables
   let loading = newsLoading || videosLoading || feedsLoading
@@ -103,6 +106,7 @@ const FarmBoardContent = ({ farms = [] }) => {
           )
           .map((content, index) => (
             <RenderCards
+              ref={queriedElement}
               key={mapKey(index)}
               filter={filter}
               farms={farms}
@@ -122,6 +126,12 @@ const FarmBoardContent = ({ farms = [] }) => {
       return array
     })
   }
+
+  useEffect(() => {
+    let mounted = true
+    if (mounted) executeScroll()
+    return () => (mounted = false)
+  }, [filter, activeFarmIndex, query])
 
   return (
     <Flex w='100%' align='center' direction='column'>
@@ -158,7 +168,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                 ? "See what's happening"
                 : ''}
             </Heading>
-            {RenderDataType(filter)}
+            <Box ref={queriedElement}>{RenderDataType(filter)}</Box>
           </Box>
         </>
       )}
