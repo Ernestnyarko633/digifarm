@@ -49,21 +49,22 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
             mr={{ md: 4 }}
             pos='relative'
           >
-            <Flex
-              pos='absolute'
-              top={-1}
-              right={-1}
-              align='center'
-              justify='center'
-              fontSize='sm'
-              w={4}
-              h={4}
-              rounded='100%'
-              bg='red.500'
-              color='white'
-            >
-              {notifications.length}
-            </Flex>
+            {!!notifications.length && (
+              <Flex
+                pos='absolute'
+                top={-1}
+                align='center'
+                justify='center'
+                fontSize='xs'
+                rounded='100%'
+                bg='red.500'
+                color='white'
+                px={('' + notifications.length).length > 1 ? 1 : 0}
+                right={('' + notifications.length).length > 1 ? -2 : -1}
+              >
+                {notifications.length}
+              </Flex>
+            )}
             <Icon as={BsBell} boxSize={5} />
           </Menu.Button>
           <AnimatePresence>
