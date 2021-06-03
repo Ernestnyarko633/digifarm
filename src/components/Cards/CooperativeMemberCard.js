@@ -102,6 +102,7 @@ const CooperativeMemberCard = ({
             value={value.acreage}
             name={`${name}acreage`}
             onChange={e => {
+              if (e?.target?.value < 0) return e.preventDefault()
               return onChange(e)
             }}
             onBlur={onBlur}
