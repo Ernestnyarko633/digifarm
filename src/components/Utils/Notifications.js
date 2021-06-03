@@ -59,9 +59,10 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
                 rounded='100%'
                 bg='red.500'
                 color='white'
-                px={('' + notifications.length).length > 1 ? 1 : 0}
-                right={('' + notifications.length).length > 1 ? -2 : -1}
-                {notifications.length}
+                px={('' + notifications.length)?.length > 1 ? 1 : 0}
+                right={('' + notifications.length)?.length > 1 ? -2 : -1}
+              >
+                {notifications?.length}
               </Flex>
             )}
             <Icon as={BsBell} boxSize={5} />
