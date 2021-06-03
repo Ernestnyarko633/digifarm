@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect } from 'react'
 import { Box, Flex, Text } from '@chakra-ui/layout'
