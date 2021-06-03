@@ -24,6 +24,15 @@ export const validateEmailAndAcrege = (email, acreage) => {
   )
 }
 
+export const checkProperties = obj => {
+  for (var key in obj) {
+    if (obj[key] === null || obj[key] === undefined) {
+      return false
+    }
+  }
+  return true
+}
+
 export const getFormattedMoney = val => {
   let number = val
   if (Number.isNaN(val)) {
