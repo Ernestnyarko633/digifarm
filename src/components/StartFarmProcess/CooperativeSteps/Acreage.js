@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import { motion } from 'framer-motion'
 import { Grid, GridItem, Heading, Image, Icon } from '@chakra-ui/react'
