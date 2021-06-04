@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
@@ -47,8 +46,6 @@ const Acreage = ({ name, farm, order, selectedType }) => {
 
     return () => (mounted = false)
   }, [cooperativeName, setCooperativeName, user?.lastName])
-
-  console.log('selectedType', selectedType)
 
   return (
     <Formik initialValues={initialValues}>
