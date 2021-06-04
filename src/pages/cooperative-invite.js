@@ -27,7 +27,7 @@ const CooperativeInvite = () => {
           setIsLoading(true)
           const res = await acceptInvite({ email, _id })
           history.push({
-            pathname: `/cooperative/${_id}`,
+            pathname: `/cooperative/${res.data.name}`,
             state: { data: res.data }
           })
         } catch (error) {

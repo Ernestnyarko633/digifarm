@@ -25,11 +25,20 @@ import { BiCreditCard } from 'react-icons/bi'
 import { getFormattedMoney } from 'helpers/misc'
 import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
+import useAuth from 'context/auth'
+import useComponent from 'context/component'
+// import FarmCard from 'components/Cards/FarmCard'
+import Payment from 'components/Cards/CooperativeDashboard/Payment'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Cooperative Dashboard'
   const [reload, setReload] = useState(0)
+
   const [tableData, setTableData] = useState([])
+
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  const { modal, handleModalClick, onOpen } = useComponent()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -40,6 +49,12 @@ const CooperativeMain = ({ location: { state } }) => {
     reload,
     state._id
   )
+
+  const getModal = val => {
+    if (val === 'farmCard') {
+      return <Payment data={data} onOpen={onOpen} />
+    } else return null
+  }
 
   const _columns = [
     {
@@ -148,13 +163,25 @@ const CooperativeMain = ({ location: { state } }) => {
       Header: '',
       accessor: 'payment',
       Cell: ({ row }) => (
-        <Button
-          btntitle='Pay'
-          colorScheme='linear'
-          width='120px'
-          py='10px'
-          leftIcon={<BiCreditCard size={20} />}
-        />
+        <>
+          {row.values.status === 'PENDING' && (
+            <>
+              {row.original.email === user?.email && (
+                <Button
+                  btntitle='Pay'
+                  colorScheme='linear'
+                  width='120px'
+                  py='10px'
+                  disabled
+                  leftIcon={<BiCreditCard size={20} />}
+                  onClick={() => {
+                    handleModalClick('farmCard')
+                  }}
+                />
+              )}
+            </>
+          )}
+        </>
       )
     }
   ]
@@ -167,6 +194,7 @@ const CooperativeMain = ({ location: { state } }) => {
 
   return (
     <>
+      {getModal(modal)}
       <Header />
       <Box mt={30}>
         <Grid
@@ -261,7 +289,7 @@ const CooperativeMain = ({ location: { state } }) => {
 }
 
 CooperativeMain.propTypes = {
-  history: PropTypes.any.isRequired
+  location: PropTypes.any.isRequired
 }
 
 export default CooperativeMain

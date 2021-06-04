@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import {
@@ -7,7 +8,9 @@ import {
   Flex,
   Avatar,
   Spacer,
-  Container
+  Container,
+  Link,
+  Grid
 } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import Prismic from 'prismic-javascript'
@@ -20,18 +23,18 @@ import useApi from 'context/api'
 import Header from 'container/Header'
 import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfile'
 import { Button } from 'components'
-import { NavLink } from 'react-router-dom'
-
+import { Link as ReachRouter } from 'react-router-dom'
+import useStartFarm from 'context/start-farm'
 const Cooperative = ({ location: { state } }) => {
   document.title = `Welcome to ${state?.data.name} Cooperative`
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [reload, setReload] = useState(0)
+  const { setSelectedFarm, setStep, setOtherStep } = useStartFarm()
 
   const { getCooperativeById } = useApi()
   const { data, isLoading, error } = useFetch(
     `welcome_to_coop_${state?.data?._id}`,
-    // null,
     getCooperativeById,
     reload,
     state?.data?._id
@@ -58,6 +61,20 @@ const Cooperative = ({ location: { state } }) => {
     }
     return () => (mounted = false)
   }, [Client, doc, data?.product._id])
+
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted && data?.product?._id) {
+      console.log(data?.product, 'homing')
+      setSelectedFarm(data?.product)
+      sessionStorage.setItem('selected_farm', JSON.stringify(data?.product))
+      setStep(x => x + 1)
+      setOtherStep(x => x + 3)
+    }
+
+    return () => (mounted = false)
+  }, [data?.product, setOtherStep, setSelectedFarm, setStep])
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -152,11 +169,10 @@ const Cooperative = ({ location: { state } }) => {
             </Flex>
           </Box>
           <Box pb={{ md: 10 }}>
-            <Flex py={{ lg: '25px' }} justify='center'>
+            <Grid py={{ lg: '25px' }} templateColumns={{ md: 'repeat(2,1fr)' }}>
               <Box
-                w='50%'
                 height='full'
-                pb={{ lg: 5 }}
+                pb={{ lg: 2 }}
                 borderWidth={1}
                 mr={{ md: 5, lg: 8 }}
                 borderRadius='md'
@@ -167,40 +183,59 @@ const Cooperative = ({ location: { state } }) => {
                     Cooperative members
                   </Text>
                 </Flex>
-                {data?.users?.map(item => (
-                  <Flex py='5px' px={{ md: '15px', lg: '20px' }} key={item?.id}>
-                    <Text fontSize='16px' fontWeight='bold'>
-                      {item?.info?.firstName || item?.info?.lastName
-                        ? item?.info?.firstName + ' ' + item?.info?.lastName
-                        : 'Annonymous'}
-                    </Text>
-                    <Spacer />
-                    <Text fontSize='16px'>
-                      {item?.info?.firstName || item?.info?.lastName
-                        ? 'Accepted'
-                        : 'Invited'}
-                    </Text>
-                  </Flex>
-                ))}
+
+                <Box overflowY='scroll'>
+                  {data?.users?.map(item => (
+                    <Flex
+                      py='5px'
+                      px={{ md: '15px', lg: '20px' }}
+                      key={item?.id}
+                    >
+                      <Text fontSize='16px' fontWeight='bold'>
+                        {item?.info?.firstName || item?.info?.lastName
+                          ? item?.info?.firstName + ' ' + item?.info?.lastName
+                          : 'Annonymous'}
+                      </Text>
+                      <Spacer />
+                      <Text fontSize='16px'>
+                        {item?.info?.firstName || item?.info?.lastName
+                          ? 'Accepted'
+                          : 'Invited'}
+                      </Text>
+                    </Flex>
+                  ))}
+                </Box>
               </Box>
               <ManagerProfile
                 item={doc}
-                width='50%'
                 height='full'
                 size='2xl'
                 py='15px'
                 px={4}
               />
-            </Flex>
+            </Grid>
             <Flex justify='flex-end'>
-              <NavLink to='/dashboard'>
+              <Link
+                to={{
+                  pathname: '/start-farm/cooperative-farms',
+                  state: {
+                    cooperative: data._id,
+                    acreage: data.users?.filter(u => u.id === user?._id)[0]
+                      ?.acreage,
+                    user: user._id,
+                    product: data.product._id
+                  }
+                }}
+                _hover={{ textDecor: 'none' }}
+                as={ReachRouter}
+              >
                 <Button
                   btntitle='Get Started'
                   w='310px'
                   fontSize='16px'
                   h='48px'
                 />
-              </NavLink>
+              </Link>
             </Flex>
           </Box>
         </Container>

@@ -18,7 +18,7 @@ import PropTypes from 'prop-types'
 
 const MotionFlex = motion(Flex)
 
-const CooperativeSteps = ({ data, history }) => {
+const CooperativeSteps = ({ asMember, data, history }) => {
   const { user } = useAuth()
   const {
     text,
@@ -37,6 +37,7 @@ const CooperativeSteps = ({ data, history }) => {
     handlePayment,
     handleNextStep,
     cooperativeName,
+    handleCreateOrder,
     handleCreateCooperative,
     selectedCooperativeType
   } = useStartFarm()
@@ -104,7 +105,14 @@ const CooperativeSteps = ({ data, history }) => {
   const handleAcceptAgreement = async () => {
     try {
       if (user?.signature?.string) {
-        await handleCreateCooperative(selectedType?._id)
+        if (!asMember) {
+          await handleCreateCooperative(selectedType?._id)
+        } else {
+          await handleCreateOrder(
+            { _id: asMember?.cooperative },
+            asMember?.acreage
+          )
+        }
       } else {
         toast({
           title: 'Action needed',
@@ -306,7 +314,8 @@ const CooperativeSteps = ({ data, history }) => {
 
 CooperativeSteps.propTypes = {
   data: PropTypes.any,
-  history: PropTypes.any
+  history: PropTypes.any,
+  asMember: PropTypes.object
 }
 
 export default CooperativeSteps

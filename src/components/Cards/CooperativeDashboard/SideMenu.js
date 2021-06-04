@@ -15,9 +15,16 @@ import PropTypes from 'prop-types'
 import Details from './Details'
 import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
+import useAuth from 'context/auth'
 
 const SideMenu = ({ data, border, bg, ml }) => {
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
   const { coopImg, setCoopImg } = useStartFarm()
+
+  let totalAcreage = 0
+  data?.users.map(item => (totalAcreage = totalAcreage + item?.acreage))
+
   return (
     <Box
       w='292px'
@@ -48,35 +55,37 @@ const SideMenu = ({ data, border, bg, ml }) => {
               src={coopImg ? URL.createObjectURL(coopImg) : data?.imageUrl}
               size='xl'
             />
-            <FormControl>
-              <FormLabel>
-                <Flex
-                  align='center'
-                  justify='center'
-                  color='white'
-                  h={8}
-                  w={8}
-                  rounded='100%'
-                  bg='cf.800'
-                  pos='absolute'
-                  right={0}
-                  bottom={0}
-                  cursor='pointer'
-                >
-                  <Icon as={HiPencil} />
-                </Flex>
-                <Input
-                  type='file'
-                  h='100%'
-                  w='100%'
-                  opacity={0}
-                  pos='absolute'
-                  onChange={async e => {
-                    setCoopImg(e.currentTarget.files[0])
-                  }}
-                />
-              </FormLabel>
-            </FormControl>
+            {user.email === data.users[0].email && (
+              <FormControl>
+                <FormLabel>
+                  <Flex
+                    align='center'
+                    justify='center'
+                    color='white'
+                    h={8}
+                    w={8}
+                    rounded='100%'
+                    bg='cf.800'
+                    pos='absolute'
+                    right={0}
+                    bottom={0}
+                    cursor='pointer'
+                  >
+                    <Icon as={HiPencil} />
+                  </Flex>
+                  <Input
+                    type='file'
+                    h='100%'
+                    w='100%'
+                    opacity={0}
+                    pos='absolute'
+                    onChange={async e => {
+                      setCoopImg(e.currentTarget.files[0])
+                    }}
+                  />
+                </FormLabel>
+              </FormControl>
+            )}
           </Box>
         </Flex>
         <Text fontWeight='bold' fontSize='24px' textAlign='center'>
@@ -103,7 +112,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
           subtitle={data?.type?.name?.toUpperCase()}
         />
         <Details title='Members' subtitle={data?.users?.length} />
-        <Details title='Acreage' subtitle={data?.product?.acreage} />
+        <Details title='Acreage' subtitle={totalAcreage} />
         <Details
           title='Farm Manager'
           subtitle={
