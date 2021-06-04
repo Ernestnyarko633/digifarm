@@ -11,7 +11,7 @@ import CropSelectionCard from 'components/Cards/CropSelectionCard'
 import FetchCard from 'components/FetchCard'
 import AboutFarm from './AboutFarm'
 
-const FarmDetails = ({ query, catName, handleNext, dashboard }) => {
+const FarmDetails = ({ query, catName, dashboard }) => {
   const { selectedFarm, setSelectedFarm, setStep } = useStartFarm()
   const { getFarms } = useApi()
 
@@ -137,7 +137,6 @@ const FarmDetails = ({ query, catName, handleNext, dashboard }) => {
 FarmDetails.propTypes = {
   query: PropTypes.any,
   catName: PropTypes.string.isRequired,
-  handleNext: PropTypes.func.isRequired,
   dashboard: PropTypes.bool
 }
 
