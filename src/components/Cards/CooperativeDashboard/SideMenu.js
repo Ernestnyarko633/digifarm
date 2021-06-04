@@ -21,9 +21,19 @@ const SideMenu = ({ data, border, bg, ml }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { coopImg, setCoopImg } = useStartFarm()
+  const [total, setTotal] = React.useState(0)
 
-  let totalAcreage = 0
-  data?.users.map(item => (totalAcreage = totalAcreage + item?.acreage))
+  React.useEffect(() => {
+    let mounted = true
+    let t = 0
+    if (mounted && data) {
+      const { users } = data
+      const process = () => users.map(item => (t = t + item?.acreage))
+      process()
+      setTotal(t)
+    }
+    return () => (mounted = false)
+  }, [data])
 
   return (
     <Box
@@ -112,7 +122,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
           subtitle={data?.type?.name?.toUpperCase()}
         />
         <Details title='Members' subtitle={data?.users?.length} />
-        <Details title='Acreage' subtitle={totalAcreage} />
+        <Details title='Acreage' subtitle={total} />
         <Details
           title='Farm Manager'
           subtitle={

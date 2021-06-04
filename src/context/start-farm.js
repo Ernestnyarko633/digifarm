@@ -185,7 +185,6 @@ export const StartFarmContextProvider = ({ children }) => {
       formData.append('admin', user?._id)
       formData.append('users', JSON.stringify(invites))
       formData.append('cooperativeImg', coopImg)
-
       const res = await createCooperative(formData)
       setCooperative(res.data)
       handleCreateOrder(res.data, invites[0]?.acreage)
