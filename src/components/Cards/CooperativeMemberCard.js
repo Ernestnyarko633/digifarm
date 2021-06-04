@@ -10,6 +10,7 @@ import useStartFarm from 'context/start-farm'
 
 const CooperativeMemberCard = ({
   values,
+  farm,
   value,
   name,
   onChange,
@@ -58,7 +59,7 @@ const CooperativeMemberCard = ({
           rounded='sm'
           color='gray.500'
         >
-          1 acres = $1500
+          {value * farm?.pricePerAcre}
         </Box>
       </Flex>
 
@@ -122,6 +123,7 @@ CooperativeMemberCard.propTypes = {
   remove: PropTypes.func,
   member: PropTypes.number,
   isDisabled: PropTypes.bool,
-  setInvites: PropTypes.func
+  setInvites: PropTypes.func,
+  farm: PropTypes.object
 }
 export default CooperativeMemberCard
