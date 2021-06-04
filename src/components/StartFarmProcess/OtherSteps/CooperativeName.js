@@ -1,16 +1,8 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex } from '@chakra-ui/layout'
 import { Avatar } from '@chakra-ui/avatar'
-import {
-  FormControl,
-  Text,
-  Heading,
-  FormLabel,
-  Icon,
-  Input
-} from '@chakra-ui/react'
+import { Icon, Input, Heading, FormLabel, FormControl } from '@chakra-ui/react'
 import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 
@@ -23,7 +15,6 @@ const CooperativeName = () => {
 
   return (
     <Flex align='center' justify='center' direction='column'>
-      {false && handleChange}
       <Box pos='relative'>
         <Avatar
           src={
@@ -73,18 +64,15 @@ const CooperativeName = () => {
           >
             Give your cooperative a cool name
           </Heading>
-          <Text fontSiz='xs' color='gray.300'>
-            (Min: 10 character, Max: 15 character)
-          </Text>
         </Flex>
 
         <FormControl mt={4}>
           <Input
-            min={10}
+            min={9}
             max={15}
             rounded={0}
             value={cooperativeName}
-            placeholder='Eg. CompleteNation'
+            placeholder='Min: 9 character, Max: 15 character'
             _focus={{ borderColor: 'cf.800' }}
             onChange={handleChange}
           />

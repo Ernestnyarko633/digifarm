@@ -1,13 +1,13 @@
 import React from 'react'
 import {
   Box,
-  Heading,
+  Text,
   Icon,
   Image,
   List,
+  Heading,
   ListIcon,
-  ListItem,
-  Text
+  ListItem
 } from '@chakra-ui/react'
 import { FaCheckCircle } from 'react-icons/fa'
 import PropTypes from 'prop-types'
@@ -23,8 +23,8 @@ const CooperativeCard = ({ item, onClick, selected }) => {
       rounded={10}
       bg='white'
       w={{ base: '100%', md: 80 }}
-      overflow='hidden'
       onClick={onClick}
+      cursor='pointer'
     >
       <Box mb={3} pos='relative'>
         <Image

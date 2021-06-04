@@ -34,6 +34,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [cycle, setCycle] = useState(1)
   const [text, setText] = useState(null)
   const [step, setStep] = useImmer(0)
+  const [selectedType, setSelectedType] = React.useState('')
   const [cooperativeName, setCooperativeName] = React.useState(null)
   const [coopType, setCoopType] = React.useState(null)
   const [adminAcres, setAdminAcres] = React.useState(1)
@@ -340,6 +341,7 @@ export const StartFarmContextProvider = ({ children }) => {
         handleBack,
         setCoopType,
         setCurrency,
+        selectedType,
         setIsSellOn,
         setContract,
         cooperative,
@@ -355,6 +357,7 @@ export const StartFarmContextProvider = ({ children }) => {
         setSubmitting,
         setCooperative,
         handleNextStep,
+        setSelectedType,
         cooperativeName,
         setSelectedFarm,
         setExchangeRate,

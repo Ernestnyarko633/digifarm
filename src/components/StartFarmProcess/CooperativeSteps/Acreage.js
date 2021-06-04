@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect } from 'react'
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import { motion } from 'framer-motion'
@@ -47,11 +46,12 @@ const Acreage = ({ name, farm, order, selectedType }) => {
   return (
     <Formik initialValues={initialValues}>
       {({ values, errors, handleChange, handleBlur, touched }) => (
-        <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
+        <MotionGrid
+          templateColumns={{ xl: '45% 55%', '2xl': 'repeat(2, 1fr)' }}
+        >
           <GridItem
             borderRightColor='gray.400'
             borderRightWidth={{ md: 1 }}
-            h={{ md: 123 }}
             px={{ base: 6, md: 20, lg: 10 }}
             borderBottomWidth={{ base: 1, md: 0 }}
             py={{ base: 10, md: 6 }}
@@ -64,7 +64,6 @@ const Acreage = ({ name, farm, order, selectedType }) => {
               <Support />
             </Box>
           </GridItem>
-
           <GridItem
             overflowY='scroll'
             css={{
@@ -203,8 +202,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                             acres={acres}
                             isDisabled={i === 0 ? true : false}
                             member={i + 1}
-                            errors={errors?.thirdPartyRef?.[i]}
-                            touched={touched?.thirdPartyRef?.[i]}
+                            errors={errors?.users?.[i]}
+                            touched={touched?.users?.[i]}
                             name={`users.${i}.`}
                             values={values?.users}
                             value={value}
@@ -224,8 +223,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                             borderWidth={1}
                             borderColor='cf.800'
                             bg='transparent'
-                            fontSize={{ md: 'md' }}
-                            width={{ md: 48 }}
+                            fontSize={{ base: 'sm', '2xl': 'md' }}
+                            width={{ md: 32, '2xl': 48 }}
                             _hover={{ bg: 'transparent' }}
                             isDisabled={
                               values.users?.length ===

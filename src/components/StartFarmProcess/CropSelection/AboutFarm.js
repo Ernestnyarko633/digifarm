@@ -40,12 +40,12 @@ const AboutFarm = ({ farm }) => {
         </Box>
         <Box mt={{ base: 2, md: 0 }}>
           <Heading as='h5' size='md'>
-            ${farm.pricePerAcre}/acre
+            ${farm?.pricePerAcre}/acre
           </Heading>
           <Text fontWeight='600' color='cf.800'>
-            {farm.projectedMarketReturnsRangePerAcre.min}
+            {farm?.projectedMarketReturnsRangePerAcre?.min}
             {'% - '}
-            {farm.projectedMarketReturnsRangePerAcre.max}% ROI
+            {farm?.projectedMarketReturnsRangePerAcre?.max}% ROI
           </Text>
         </Box>
       </Flex>
@@ -59,8 +59,8 @@ const AboutFarm = ({ farm }) => {
           height='300px'
           rounded='lg'
           objectFit='cover'
-          src={farm.cropVariety?.imageUrl || farm.cropVariety?.crop?.imageUrl}
-          alt={farm.cropVariety?.crop?.name}
+          src={farm?.cropVariety?.imageUrl || farm?.cropVariety?.crop?.imageUrl}
+          alt={farm?.cropVariety?.crop?.name}
         />
       </Box>
 
@@ -80,13 +80,15 @@ const AboutFarm = ({ farm }) => {
           mt={4}
         >
           <Flex align='center' justify='space-between' fontSize='sm'>
-            <Text>Farm starts: {getformattedDate(farm.startDate)} </Text>
-            <Text>Farm duration: {farm.duration} months </Text>
+            <Text>Farm starts: {getformattedDate(farm?.startDate)} </Text>
+            <Text>Farm duration: {farm?.duration} months </Text>
           </Flex>
           <Divider orientation='horizontal' my={4} />
           <Progress
             colorScheme='cfButton'
-            value={(farm.acreageSold / (farm.acreage + farm.acreageSold)) * 100}
+            value={
+              (farm?.acreageSold / (farm?.acreage + farm?.acreageSold)) * 100
+            }
             rounded='30px'
             borderWidth={1}
             borderColor='gray.300'
@@ -95,28 +97,28 @@ const AboutFarm = ({ farm }) => {
             my={{ md: 8 }}
           />
           <Flex align='center' justify='center' fontSize='sm'>
-            <Text>{farm.acreage + farm.acreageSold} Acres</Text>
+            <Text>{farm?.acreage + farm?.acreageSold} Acres</Text>
             <Divider
               orientation='vertical'
               height={4}
               mx={4}
               borderColor='gray.400'
             />
-            <Text>{farm.acreage} Acres available</Text>
+            <Text>{farm?.acreage} Acres available</Text>
             <Divider
               orientation='vertical'
               height={4}
               mx={4}
               borderColor='gray.400'
             />
-            <Text>{farm.acreageSold} Acres bought</Text>
+            <Text>{farm?.acreageSold} Acres bought</Text>
           </Flex>
         </Box>
       </Box>
 
       <Box textAlign='left' mt={{ base: 3, md: 0 }}>
-        <Text>{farm.cropVariety?.description}</Text>
-        <Text>{farm.cropVariety?.crop?.description}</Text>
+        <Text>{farm?.cropVariety?.description}</Text>
+        <Text>{farm?.cropVariety?.crop?.description}</Text>
       </Box>
     </Box>
   )

@@ -110,16 +110,6 @@ const AboutFarmManager = ({ farm }) => {
             </Box>
           </Box>
         </GridItem>
-
-        {/*<Flex*/}
-        {/*  direction='column'*/}
-        {/*  mt={{ md: 20 }}*/}
-        {/*  display={{ base: 'flex', md: 'none' }}*/}
-        {/*  px={{ base: 6 }}*/}
-        {/*  mb={4}*/}
-        {/*>*/}
-        {/*  <Support />*/}
-        {/*</Flex>*/}
       </MotionGrid>
     </Box>
   )
