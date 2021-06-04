@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 
 const MotionBox = motion(Box)
 
-const Notifications = ({ notifications, loading, updateNotification }) => {
+const Notifications = ({ notifications, loading, mutation }) => {
   const renderNotificationIcons = value => {
     switch (value) {
       case 'news':
@@ -49,20 +49,22 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
             mr={{ md: 4 }}
             pos='relative'
           >
-            {!!notifications.length && (
+            {!!notifications?.length && (
               <Flex
                 pos='absolute'
-                top={-1}
+                top={-2}
                 align='center'
                 justify='center'
                 fontSize='xs'
                 rounded='100%'
                 bg='red.500'
                 color='white'
-                px={('' + notifications.length)?.length > 1 ? 1 : 0}
-                right={('' + notifications.length)?.length > 1 ? -2 : -1}
+                w={5}
+                h={5}
+                px={('' + notifications?.length)?.length > 1 ? 1 : 0}
+                right={-2}
               >
-                {notifications?.length}
+                {notifications?.length > 9 ? '9+' : notifications?.length}
               </Flex>
             )}
             <Icon as={BsBell} boxSize={5} />
@@ -120,7 +122,7 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
                         />
                       </Flex>
                     ) : (
-                      notifications.map((item, i) => (
+                      notifications?.map(item => (
                         <Menu.Item key={item?._id} as={MotionBox}>
                           {({ active }) => {
                             return (
@@ -137,7 +139,7 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
                                   color={active && 'gray.600'}
                                   d='flex'
                                   justifyContent='space-between'
-                                  onClick={() => updateNotification(item._id)}
+                                  onClick={() => mutation.mutateAsync(item._id)}
                                   to={toFarmBoard(item?.message?.type, item)}
                                   borderBottomWidth={1}
                                   borderBottomColor='gray.100'
@@ -204,7 +206,7 @@ const Notifications = ({ notifications, loading, updateNotification }) => {
 Notifications.propTypes = {
   notifications: PropTypes.any,
   loading: PropTypes.bool,
-  updateNotification: PropTypes.func
+  mutation: PropTypes.func
 }
 
 export default Notifications
