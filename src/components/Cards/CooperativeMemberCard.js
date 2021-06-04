@@ -70,9 +70,12 @@ const CooperativeMemberCard = ({
           as='button'
           role='button'
           aria-label='close button'
-          onClick={() => remove(values?.length - 1)}
+          onClick={e => {
+            if (member - 1 === 0) return e.preventDefault()
+            return remove(values?.length - 1)
+          }}
         >
-          <Icon as={MdClose} />
+          {member - 1 !== 0 && <Icon as={MdClose} />}
         </Box>
       )}
 
@@ -93,12 +96,13 @@ const CooperativeMemberCard = ({
         <GridItem colSpan={2}>
           <FormInput
             type='number'
-            placeholder='10 Acres'
+            placeholder='eg. 10'
             bg='gray.100'
             borderBottomColor='none'
             value={value.acreage}
             name={`${name}acreage`}
             onChange={e => {
+              if (e?.target?.value < 0) return e.preventDefault()
               return onChange(e)
             }}
             onBlur={onBlur}

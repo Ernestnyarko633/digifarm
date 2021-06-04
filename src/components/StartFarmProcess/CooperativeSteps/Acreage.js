@@ -34,8 +34,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
   const mapKeys = i => i
   const initialValues = {
     users: [
-      { email: user.email, acreage: '' },
-      { email: '', acreage: '' }
+      { email: user.email, acreage: 0.1 },
+      { email: '', acreage: 0.1 }
     ]
   }
 
@@ -101,8 +101,12 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                     size='lg'
                   />
                   <Box ml={2}>
-                    <Text fontWeight={700} fontSize={{ md: 'xl' }}>
-                      {selectedType?.type}
+                    <Text
+                      fontWeight={700}
+                      textTransform='uppercase'
+                      fontSize={{ md: 'xl' }}
+                    >
+                      {selectedType?.name}
                     </Text>
                     <Text mt={-2}>
                       Cooperative name: <Text as='span'>{name}</Text>
@@ -131,8 +135,13 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                 <Flex align='center' color='gray.500' mt={{ base: 2, md: 0 }}>
                   <Text fontSize='xs'>
                     Cooperative type:{' '}
-                    <Text as='span' fontWeight={900} color='black'>
-                      Village (3% discount)
+                    <Text
+                      as='span'
+                      textTransform='uppercase'
+                      fontWeight={900}
+                      color='black'
+                    >
+                      {selectedType?.name} ({selectedType?.discount}% discount)
                     </Text>
                   </Text>
                 </Flex>
@@ -231,7 +240,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                               values.users?.length ===
                               selectedCooperativeType?.maxMember
                             }
-                            onClick={() => push({ email: '', acreage: '' })}
+                            onClick={() => push({ email: '', acreage: 0.1 })}
                           />
                         </Box>
                       </>
