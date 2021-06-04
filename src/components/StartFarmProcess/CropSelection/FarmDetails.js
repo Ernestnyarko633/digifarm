@@ -115,7 +115,10 @@ const FarmDetails = ({ query, catName, dashboard }) => {
               to={{
                 pathname: '/start-farm/individual'
               }}
-              onClick={() => setStep(x => x + 1)}
+              onClick={() => {
+                sessionStorage.setItem('type', 'individual')
+                setStep(x => x + 1)
+              }}
               btntitle='Start this farm'
               w={80}
               h={14}

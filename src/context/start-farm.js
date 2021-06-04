@@ -20,6 +20,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [selectedFarm, setSelectedFarm] = useState(
     JSON.parse(sessionStorage.getItem('selected_farm'))
   )
+  const [path, setPath] = React.useState(null)
   const [barrier, setBarrier] = useState(null)
   const [isSubmitting, setSubmitting] = useState(false)
   const [exchangeRate, setExchangeRate] = useState(1)
@@ -314,12 +315,14 @@ export const StartFarmContextProvider = ({ children }) => {
       value={{
         step,
         text,
+        path,
         cycle,
         acres,
         order,
         invites,
         barrier,
         setStep,
+        setPath,
         coopImg,
         acreage,
         setAcres,
