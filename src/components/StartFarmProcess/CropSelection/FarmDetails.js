@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Grid, GridItem, Heading } from '@chakra-ui/react'
-
+import Button from 'components/Button'
 import useApi from 'context/api'
 import useStartFarm from 'context/start-farm'
-
+import { Link as ReachRouter } from 'react-router-dom'
 import useFetch from 'hooks/useFetch'
 
 import CropSelectionCard from 'components/Cards/CropSelectionCard'
 import FetchCard from 'components/FetchCard'
 import AboutFarm from './AboutFarm'
 
-const FarmDetails = ({ query, catName, handleNext }) => {
-  const { selectedFarm, setSelectedFarm } = useStartFarm()
+const FarmDetails = ({ query, catName, dashboard }) => {
+  const { selectedFarm, setSelectedFarm, setStep } = useStartFarm()
   const { getFarms } = useApi()
 
   const [reload, setReload] = useState(0)
@@ -108,6 +108,21 @@ const FarmDetails = ({ query, catName, handleNext }) => {
             <AboutFarm farm={selectedFarm} />
           </>
         )}
+        {dashboard && (
+          <Box my={10}>
+            <Button
+              as={ReachRouter}
+              to={{
+                pathname: '/start-farm/individual'
+              }}
+              onClick={() => setStep(x => x + 1)}
+              btntitle='Start this farm'
+              w={80}
+              h={14}
+              fontSize='md'
+            />
+          </Box>
+        )}
       </GridItem>
     </Grid>
   ) : (
@@ -122,7 +137,7 @@ const FarmDetails = ({ query, catName, handleNext }) => {
 FarmDetails.propTypes = {
   query: PropTypes.any,
   catName: PropTypes.string.isRequired,
-  handleNext: PropTypes.func.isRequired
+  dashboard: PropTypes.bool
 }
 
 export default FarmDetails
