@@ -44,7 +44,6 @@ const CooperativeMemberCard = ({
     }
     return () => (mounted = false)
   }, [values, setInvites, value?.acreage, setAcres])
-  console.log(farm)
 
   return (
     <Box bg='gray.50' rounded='md' p={4} my={5} pos='relative'>
