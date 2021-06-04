@@ -39,8 +39,8 @@ const CooperativeSteps = ({ asMember, data, history }) => {
     handleNextStep,
     cooperativeName,
     handleCreateOrder,
-    handleCreateCooperative
-    //selectedCooperativeType
+    handleCreateCooperative,
+    selectedCooperativeType
   } = useStartFarm()
 
   const catFarms = JSON.parse(sessionStorage.getItem('farms'))
@@ -150,6 +150,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           action: handleNextStep,
           disabled:
             acres <= barrier &&
+            acres >= selectedCooperativeType.minAcre &&
             invites?.every(member =>
               validateEmailAndAcrege(member?.email, member?.acreage)
             )

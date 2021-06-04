@@ -197,7 +197,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                             : 'black'
                         }
                       >
-                        {acres} {`(${selectedCooperativeType?.minAcre})`}
+                        {acres?.toFixed(1)}{' '}
+                        {`(${selectedCooperativeType?.minAcre})`}
                       </Text>
                     </Text>
                   </Box>
@@ -209,6 +210,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                       <>
                         {values?.users?.map((value, i) => (
                           <CooperativeMemberCard
+                            farm={farm}
                             acres={acres}
                             isDisabled={i === 0 ? true : false}
                             member={i + 1}
