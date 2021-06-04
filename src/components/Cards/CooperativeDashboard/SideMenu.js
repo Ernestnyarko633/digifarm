@@ -22,7 +22,9 @@ const SideMenu = ({ data, border, bg, ml }) => {
   const { user } = isAuthenticated()
   const { coopImg, setCoopImg } = useStartFarm()
 
-  // eslint-disable-next-line no-console
+  let totalAcreage = 0
+  data?.users.map(item => (totalAcreage = totalAcreage + item?.acreage))
+
   return (
     <Box
       w='292px'
@@ -110,7 +112,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
           subtitle={data?.type?.name?.toUpperCase()}
         />
         <Details title='Members' subtitle={data?.users?.length} />
-        <Details title='Acreage' subtitle={data?.type?.acreage} />
+        <Details title='Acreage' subtitle={totalAcreage} />
         <Details
           title='Farm Manager'
           subtitle={

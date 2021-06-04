@@ -1,18 +1,21 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect } from 'react'
-import { Box, Flex, Text } from '@chakra-ui/layout'
+import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
+import { FieldArray, Formik } from 'formik'
+import { Box, Flex, Text } from '@chakra-ui/layout'
 import { Grid, GridItem, Heading, Image, Icon } from '@chakra-ui/react'
-import Support from '../../Support'
 import { Avatar } from '@chakra-ui/avatar'
 import { HiLocationMarker } from 'react-icons/hi'
-import PropTypes from 'prop-types'
+import { BsPlus } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
+
 import CooperativeMemberCard from '../../Cards/CooperativeMemberCard'
+import Support from '../../Support'
+
 import useAuth from 'context/auth'
 import { Button } from '../../index'
-import { BsPlus } from 'react-icons/all'
-import { FieldArray, Formik } from 'formik'
+
+import InviteImg from 'assets/images/invite.svg'
 
 const MotionGrid = motion(Grid)
 
@@ -47,24 +50,21 @@ const Acreage = ({ name, farm, order, selectedType }) => {
   return (
     <Formik initialValues={initialValues}>
       {({ values, errors, handleChange, handleBlur, touched }) => (
-        <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
+        <MotionGrid
+          templateColumns={{ xl: '45% 55%', '2xl': 'repeat(2, 1fr)' }}
+        >
           <GridItem
             borderRightColor='gray.400'
             borderRightWidth={{ md: 1 }}
-            h={{ md: 123 }}
             px={{ base: 6, md: 20, lg: 10 }}
             borderBottomWidth={{ base: 1, md: 0 }}
             py={{ base: 10, md: 6 }}
           >
-            <Image
-              w='100%'
-              src={require('../../../assets/images/invite.png').default}
-            />
+            <Image w='100%' src={InviteImg} />
             <Box mt={10}>
               <Support />
             </Box>
           </GridItem>
-
           <GridItem
             overflowY='scroll'
             css={{
@@ -212,8 +212,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                             acres={acres}
                             isDisabled={i === 0 ? true : false}
                             member={i + 1}
-                            errors={errors?.thirdPartyRef?.[i]}
-                            touched={touched?.thirdPartyRef?.[i]}
+                            errors={errors?.users?.[i]}
+                            touched={touched?.users?.[i]}
                             name={`users.${i}.`}
                             values={values?.users}
                             value={value}
@@ -233,8 +233,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                             borderWidth={1}
                             borderColor='cf.800'
                             bg='transparent'
-                            fontSize={{ md: 'md' }}
-                            width={{ md: 48 }}
+                            fontSize={{ base: 'sm', '2xl': 'md' }}
+                            width={{ md: 32, '2xl': 48 }}
                             _hover={{ bg: 'transparent' }}
                             isDisabled={
                               values.users?.length ===

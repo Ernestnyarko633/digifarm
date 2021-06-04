@@ -9,7 +9,8 @@ import {
   Avatar,
   Spacer,
   Container,
-  Link
+  Link,
+  Grid
 } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import Prismic from 'prismic-javascript'
@@ -167,13 +168,8 @@ const Cooperative = ({ location: { state } }) => {
             </Flex>
           </Box>
           <Box pb={{ md: 10 }}>
-            <Flex
-              py={{ lg: '25px' }}
-              justify='center'
-              wrap={{ base: 'wrap', md: 'inherit' }}
-            >
+            <Grid py={{ lg: '25px' }} templateColumns={{ md: 'repeat(2,1fr)' }}>
               <Box
-                w='50%'
                 height='full'
                 pb={{ lg: 2 }}
                 borderWidth={1}
@@ -211,13 +207,12 @@ const Cooperative = ({ location: { state } }) => {
               </Box>
               <ManagerProfile
                 item={doc}
-                width='50%'
                 height='full'
                 size='2xl'
                 py='15px'
                 px={4}
               />
-            </Flex>
+            </Grid>
             <Flex justify='flex-end'>
               <Link
                 to={{

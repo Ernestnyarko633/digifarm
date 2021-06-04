@@ -23,13 +23,16 @@ const CooperativeSteps = ({ asMember, data, history }) => {
   const {
     text,
     order,
+    acres,
+    setStep,
+    invites,
+    barrier,
     otherStep,
     handlePrev,
     handleBack,
-    invites,
-    barrier,
-    acres,
     //selectedCooperativeType,
+    selectedType,
+    setOtherStep,
     selectedFarm,
     isSubmitting,
     handlePayment,
@@ -37,13 +40,10 @@ const CooperativeSteps = ({ asMember, data, history }) => {
     cooperativeName,
     handleCreateOrder,
     handleCreateCooperative
+    //selectedCooperativeType
   } = useStartFarm()
 
   const catFarms = JSON.parse(sessionStorage.getItem('farms'))
-
-  const {
-    location: { selectedType }
-  } = history
 
   const toast = useToast()
 
@@ -58,12 +58,23 @@ const CooperativeSteps = ({ asMember, data, history }) => {
     threshold: 1
   })
 
+  React.useEffect(() => {
+    if (!selectedType) {
+      setStep(x => x * 0)
+      setOtherStep(x => x * 0)
+    }
+  }, [setStep, setOtherStep, selectedType])
+
+  React.useEffect(() => {
+    if (!catFarms && otherStep !== 4) {
+      history.push('/dashboard')
+    }
+  }, [catFarms, otherStep, history])
+
   const getSteps = value => {
     switch (value) {
       case 0:
         return <AboutFarmManager farm={selectedFarm} />
-      // case 1:
-      //   return <ChooseAcreage farm={selectedFarm} selectedType={selectedType} />;
       case 1:
         return <CooperativeName />
       case 2:
@@ -170,27 +181,23 @@ const CooperativeSteps = ({ asMember, data, history }) => {
 
   const { title, action, width, disabled } = getForwardButtonProps(otherStep)
 
-  if (!catFarms && otherStep !== 4) {
-    history.push('/dashboard')
-  }
-
   return (
     <Flex
-      align='center'
+      mx='auto'
       justify='center'
-      h={{ md: 'calc(100vh - 6rem)' }}
       direction='column'
+      w={{ base: '90%', xl: 140, '2xl': otherStep === 2 ? '82rem' : 143 }}
     >
       {isSubmitting && <Overlay text={text} />}
 
       {otherStep !== 1 && (
         <Flex
+          mb={4}
+          mx='auto'
+          w='full'
           align='center'
           justify='space-between'
-          w={{ base: 82, md: otherStep === 2 ? '82rem' : 143 }}
-          mx='auto'
           mt={{ base: 5, md: 12 }}
-          mb={4}
           px={{ base: 2, md: 0 }}
         >
           <Text
@@ -226,10 +233,10 @@ const CooperativeSteps = ({ asMember, data, history }) => {
               align='center'
               rounded='30px'
               w={{ md: '11rem' }}
-              px={{ base: 2, md: 4 }}
               borderWidth={1}
               borderColor='cf.800'
               bg='cf.200'
+              justify='center'
               color='cf.800'
             >
               <Image
@@ -249,21 +256,18 @@ const CooperativeSteps = ({ asMember, data, history }) => {
 
       <AnimateSharedLayout>
         <MotionFlex
-          w={{
-            md: otherStep === 2 ? '82rem' : otherStep !== 1 ? 143 : ''
-          }}
+          mx='auto'
+          rounded='md'
+          overflow='hidden'
+          borderColor='gray.200'
+          borderWidth={otherStep !== 1 && 1}
+          align={otherStep === 1 && 'center'}
+          justify={otherStep === 1 && 'center'}
+          bgColor={otherStep !== 1 && 'white'}
           h={{
             base: otherStep === 1 && '80vh',
             md: otherStep !== 1 ? 120 : '80vh'
           }}
-          mx='auto'
-          borderWidth={otherStep !== 1 && 1}
-          borderColor='gray.200'
-          align={otherStep === 1 && 'center'}
-          justify={otherStep === 1 && 'center'}
-          rounded='md'
-          bgColor={otherStep !== 1 && 'white'}
-          overflow='hidden'
         >
           {getSteps(otherStep)}
         </MotionFlex>
