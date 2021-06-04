@@ -197,7 +197,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                             : 'black'
                         }
                       >
-                        {acres} {`(${selectedCooperativeType?.minAcre})`}
+                        {acres?.toFixed(1)}{' '}
+                        {`(${selectedCooperativeType?.minAcre})`}
                       </Text>
                     </Text>
                   </Box>
