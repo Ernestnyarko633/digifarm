@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect } from 'react'
 import { Box, Flex, Text } from '@chakra-ui/layout'
@@ -43,6 +44,7 @@ const CooperativeMemberCard = ({
     }
     return () => (mounted = false)
   }, [values, setInvites, value?.acreage, setAcres])
+  console.log(farm)
 
   return (
     <Box bg='gray.50' rounded='md' p={4} my={5} pos='relative'>
@@ -50,7 +52,7 @@ const CooperativeMemberCard = ({
         <Text color='black' fontWeight={700}>
           {member === 1 ? 'You (Member)' : 'Member'} {member}
         </Text>
-        <Box
+        {/* <Box
           bg='gray.100'
           py={1}
           px={5}
@@ -59,8 +61,8 @@ const CooperativeMemberCard = ({
           rounded='sm'
           color='gray.500'
         >
-          {value * farm?.pricePerAcre}
-        </Box>
+          {parseFloat(value) * farm?.pricePerAcre}
+        </Box> */}
       </Flex>
 
       {values?.length > 2 && (
