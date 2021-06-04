@@ -56,7 +56,7 @@ const Header = () => {
       justify="space-between"
       borderBottomWidth={1}
       borderBottomColor="gray.300"
-      px={{ base: 4, md: 36 }}
+      px={{ base: 4, xl: 20 }}
       overflowX={{ base: "hidden", md: "visible" }}
     >
       <Link as={ReachRouter} to="/dashboard" _hover={{ textDecor: "none" }}>
