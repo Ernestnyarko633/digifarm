@@ -8,6 +8,7 @@ import Icon from '@chakra-ui/icon'
 import { MdClose } from 'react-icons/all'
 import PropTypes from 'prop-types'
 import useStartFarm from 'context/start-farm'
+import { getFormattedMoney } from 'helpers/misc'
 
 const CooperativeMemberCard = ({
   values,
@@ -22,7 +23,6 @@ const CooperativeMemberCard = ({
   setInvites
 }) => {
   const { setAcres } = useStartFarm()
-
   useEffect(() => {
     let mounted = true
     if (mounted && values) {
@@ -45,13 +45,15 @@ const CooperativeMemberCard = ({
     return () => (mounted = false)
   }, [values, setInvites, value?.acreage, setAcres])
 
+  console.log(value, farm.pricePerAcre, 'room')
+
   return (
     <Box bg='gray.50' rounded='md' p={4} my={5} pos='relative'>
       <Flex align='center' fontSize='sm'>
         <Text color='black' fontWeight={700}>
           {member === 1 ? 'You (Member)' : 'Member'} {member}
         </Text>
-        {/* <Box
+        <Box
           bg='gray.100'
           py={1}
           px={5}
@@ -60,8 +62,8 @@ const CooperativeMemberCard = ({
           rounded='sm'
           color='gray.500'
         >
-          {parseFloat(value) * farm?.pricePerAcre}
-        </Box> */}
+          $ {getFormattedMoney(value?.acreage * farm?.pricePerAcre)}
+        </Box>
       </Flex>
 
       {values?.length > 2 && (
