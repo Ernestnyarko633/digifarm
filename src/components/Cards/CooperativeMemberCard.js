@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect } from 'react'
 import { Box, Flex, Text } from '@chakra-ui/layout'
@@ -10,6 +11,7 @@ import useStartFarm from 'context/start-farm'
 
 const CooperativeMemberCard = ({
   values,
+  farm,
   value,
   name,
   onChange,
@@ -49,7 +51,7 @@ const CooperativeMemberCard = ({
         <Text color='black' fontWeight={700}>
           {member === 1 ? 'You (Member)' : 'Member'} {member}
         </Text>
-        <Box
+        {/* <Box
           bg='gray.100'
           py={1}
           px={5}
@@ -58,8 +60,8 @@ const CooperativeMemberCard = ({
           rounded='sm'
           color='gray.500'
         >
-          1 acres = $1500
-        </Box>
+          {parseFloat(value) * farm?.pricePerAcre}
+        </Box> */}
       </Flex>
 
       {values?.length > 2 && (
@@ -70,9 +72,12 @@ const CooperativeMemberCard = ({
           as='button'
           role='button'
           aria-label='close button'
-          onClick={() => remove(values?.length - 1)}
+          onClick={e => {
+            if (member - 1 === 0) return e.preventDefault()
+            return remove(values?.length - 1)
+          }}
         >
-          <Icon as={MdClose} />
+          {member - 1 !== 0 && <Icon as={MdClose} />}
         </Box>
       )}
 
@@ -93,12 +98,13 @@ const CooperativeMemberCard = ({
         <GridItem colSpan={2}>
           <FormInput
             type='number'
-            placeholder='10 Acres'
+            placeholder='eg. 10'
             bg='gray.100'
             borderBottomColor='none'
             value={value.acreage}
             name={`${name}acreage`}
             onChange={e => {
+              if (e?.target?.value < 0) return e.preventDefault()
               return onChange(e)
             }}
             onBlur={onBlur}
@@ -118,6 +124,7 @@ CooperativeMemberCard.propTypes = {
   remove: PropTypes.func,
   member: PropTypes.number,
   isDisabled: PropTypes.bool,
-  setInvites: PropTypes.func
+  setInvites: PropTypes.func,
+  farm: PropTypes.object
 }
 export default CooperativeMemberCard
