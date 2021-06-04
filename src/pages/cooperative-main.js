@@ -10,7 +10,8 @@ import {
   Grid,
   Heading,
   Spacer,
-  Link
+  Link,
+  useDisclosure
 } from '@chakra-ui/react'
 
 import CustomTable from 'components/Form/CustomTable'
@@ -27,8 +28,8 @@ import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
 import useAuth from 'context/auth'
 import useComponent from 'context/component'
-// import FarmCard from 'components/Cards/FarmCard'
 import Payment from 'components/Cards/CooperativeDashboard/Payment'
+import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Cooperative Dashboard'
@@ -38,7 +39,8 @@ const CooperativeMain = ({ location: { state } }) => {
 
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  const { modal, handleModalClick, onOpen } = useComponent()
+  const { modal, handleModalClick } = useComponent()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -50,11 +52,24 @@ const CooperativeMain = ({ location: { state } }) => {
     state._id
   )
 
+  const { getMyOrders } = useApi()
+  const { data: orders } = useFetch(null, getMyOrders, null, {
+    user: user?._id
+  })
+
+  let filteredOrder = orders?.pending?.filter(item => {
+    return item?.cooperative?._id === data?._id
+  })
+
   const getModal = val => {
-    if (val === 'farmCard') {
-      return <Payment data={data} onOpen={onOpen} />
+    if (val === 'payment') {
+      return <Payment onOpen={onOpen} data={filteredOrder} />
     } else return null
   }
+
+  let processing = orders?.processing?.filter(item => {
+    return item?.cooperative?._id === data?._id
+  })
 
   const _columns = [
     {
@@ -86,17 +101,17 @@ const CooperativeMain = ({ location: { state } }) => {
                   : 'Annonymous'}
               </Text>
               {row.index === 0 && (
-                <Box bg='#D6F2D5' rounded='4px' ml='7px'>
-                  <Text
-                    fontSize='10px'
-                    textAlign='center'
-                    color='#004C46'
-                    py='4px'
-                    px='5.5px'
-                  >
-                    Admin
-                  </Text>
-                </Box>
+                // <Box bg='#D6F2D5' rounded='4px' ml='7px'>
+                <Text
+                  fontSize='10px'
+                  textAlign='center'
+                  // color='#004C46'
+                  px='5.5px'
+                  color='#31BC2E'
+                >
+                  Admin
+                </Text>
+                // </Box>
               )}
             </Flex>
             <Text fontSize='12px' color='gray.600'>
@@ -164,7 +179,7 @@ const CooperativeMain = ({ location: { state } }) => {
       accessor: 'payment',
       Cell: ({ row }) => (
         <>
-          {row.values.status === 'PENDING' && (
+          {row.values.status === 'PAID' || processing?.length > 0 ? null : (
             <>
               {row.original.email === user?.email && (
                 <Button
@@ -172,10 +187,9 @@ const CooperativeMain = ({ location: { state } }) => {
                   colorScheme='linear'
                   width='120px'
                   py='10px'
-                  disabled
                   leftIcon={<BiCreditCard size={20} />}
                   onClick={() => {
-                    handleModalClick('farmCard')
+                    handleModalClick('payment')
                   }}
                 />
               )}
@@ -194,9 +208,10 @@ const CooperativeMain = ({ location: { state } }) => {
 
   return (
     <>
-      {getModal(modal)}
       <Header />
-      <Box mt={30}>
+      <CompleteOrderModal isOpen={isOpen} onClose={onClose} />
+      {getModal(modal)}
+      <Box py={30} w={{ xl: '100vw' }}>
         <Grid
           templateRows='repeat(2, 1fr)'
           templateColumns='repeat(5, 1fr)'
@@ -225,13 +240,7 @@ const CooperativeMain = ({ location: { state } }) => {
               <SideMenu data={data} border={1} bg='#F6F6F6' ml='49px' />
             )}
           </GridItem>
-          <GridItem
-            colSpan={{ base: 5, lg: 4 }}
-            px='30px'
-            bg='white'
-            pt='70px'
-            h='100%'
-          >
+          <GridItem colSpan={{ base: 5, lg: 4 }} px='30px' bg='white' pt='70px'>
             {isLoading || error ? (
               <FetchCard
                 h='60vh'
