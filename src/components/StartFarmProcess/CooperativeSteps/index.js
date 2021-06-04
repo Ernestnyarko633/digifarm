@@ -249,18 +249,18 @@ const CooperativeSteps = ({ data, history }) => {
 
       <AnimateSharedLayout>
         <MotionFlex
+          mx='auto'
+          rounded='md'
+          overflow='hidden'
+          borderColor='gray.200'
+          borderWidth={otherStep !== 1 && 1}
+          align={otherStep === 1 && 'center'}
+          justify={otherStep === 1 && 'center'}
+          bgColor={otherStep !== 1 && 'white'}
           h={{
             base: otherStep === 1 && '80vh',
             md: otherStep !== 1 ? 120 : '80vh'
           }}
-          mx='auto'
-          borderWidth={otherStep !== 1 && 1}
-          borderColor='gray.200'
-          align={otherStep === 1 && 'center'}
-          justify={otherStep === 1 && 'center'}
-          rounded='md'
-          bgColor={otherStep !== 1 && 'white'}
-          overflow='hidden'
         >
           {getSteps(otherStep)}
         </MotionFlex>
