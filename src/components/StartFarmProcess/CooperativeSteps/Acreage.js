@@ -1,17 +1,22 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
-import { Box, Flex, Text } from '@chakra-ui/layout'
+import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
+import { FieldArray, Formik } from 'formik'
+import { Box, Flex, Text } from '@chakra-ui/layout'
 import { Grid, GridItem, Heading, Image, Icon } from '@chakra-ui/react'
-import Support from '../../Support'
 import { Avatar } from '@chakra-ui/avatar'
 import { HiLocationMarker } from 'react-icons/hi'
-import PropTypes from 'prop-types'
+import { BsPlus } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
+
 import CooperativeMemberCard from '../../Cards/CooperativeMemberCard'
+import Support from '../../Support'
+
 import useAuth from 'context/auth'
 import { Button } from '../../index'
-import { BsPlus } from 'react-icons/all'
-import { FieldArray, Formik } from 'formik'
+
+import InviteImg from 'assets/images/invite.svg'
 
 const MotionGrid = motion(Grid)
 
@@ -43,6 +48,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
     return () => (mounted = false)
   }, [cooperativeName, setCooperativeName, user?.lastName])
 
+  console.log('selectedType', selectedType)
+
   return (
     <Formik initialValues={initialValues}>
       {({ values, errors, handleChange, handleBlur, touched }) => (
@@ -56,10 +63,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
             borderBottomWidth={{ base: 1, md: 0 }}
             py={{ base: 10, md: 6 }}
           >
-            <Image
-              w='100%'
-              src={require('../../../assets/images/invite.png').default}
-            />
+            <Image w='100%' src={InviteImg} />
             <Box mt={10}>
               <Support />
             </Box>
