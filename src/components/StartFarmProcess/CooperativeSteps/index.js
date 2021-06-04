@@ -29,7 +29,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
     invites,
     barrier,
     acres,
-    selectedCooperativeType,
+    //selectedCooperativeType,
     selectedFarm,
     isSubmitting,
     handlePayment,
@@ -139,7 +139,6 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           action: handleNextStep,
           disabled:
             acres <= barrier &&
-            invites?.length === selectedCooperativeType?.maxMember &&
             invites?.every(member =>
               validateEmailAndAcrege(member?.email, member?.acreage)
             )

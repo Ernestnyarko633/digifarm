@@ -96,7 +96,7 @@ const CooperativeMemberCard = ({
         <GridItem colSpan={2}>
           <FormInput
             type='number'
-            placeholder='10 Acres'
+            placeholder='eg. 10'
             bg='gray.100'
             borderBottomColor='none'
             value={value.acreage}

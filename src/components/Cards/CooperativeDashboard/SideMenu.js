@@ -23,7 +23,6 @@ const SideMenu = ({ data, border, bg, ml }) => {
   const { coopImg, setCoopImg } = useStartFarm()
 
   // eslint-disable-next-line no-console
-  console.log('acrea', data?.type)
   return (
     <Box
       w='292px'
