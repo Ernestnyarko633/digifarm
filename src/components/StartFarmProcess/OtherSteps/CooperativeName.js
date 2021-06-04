@@ -72,7 +72,7 @@ const CooperativeName = () => {
             max={15}
             rounded={0}
             value={cooperativeName}
-            placeholder='Min: 3 character, Max: 15 character'
+            placeholder='Min: 3 characters, Max: 15 characters'
             _focus={{ borderColor: 'cf.800' }}
             onChange={handleChange}
           />
