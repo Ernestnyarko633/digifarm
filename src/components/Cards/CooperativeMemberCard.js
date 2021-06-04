@@ -45,8 +45,6 @@ const CooperativeMemberCard = ({
     return () => (mounted = false)
   }, [values, setInvites, value?.acreage, setAcres])
 
-  console.log(value, farm.pricePerAcre, 'room')
-
   return (
     <Box bg='gray.50' rounded='md' p={4} my={5} pos='relative'>
       <Flex align='center' fontSize='sm'>
