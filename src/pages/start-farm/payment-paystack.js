@@ -6,6 +6,7 @@ import FetchCard from 'components/FetchCard'
 import qs from 'query-string'
 
 import useApi from 'context/api'
+//import useStartFarm from 'context/start-farm'
 
 const PaymentVerificaiton = ({ history, location: { search } }) => {
   const [isLoading, setLoading] = React.useState(false)
@@ -13,17 +14,20 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
   const [checker, setChecker] = React.useState(false)
   const { verifyPaystackPayment } = useApi()
 
+  // const {path} =
   React.useEffect(() => {
+    const type = sessionStorage.getItem('type')
+
     const { trxref, reference } = qs.parse(search)
     const verifyAndCreate = async ref => {
       try {
         setLoading(true)
         const res = await verifyPaystackPayment(ref)
         history.push({
-          pathname: 'start-farm/individual',
+          pathname: `start-farm/${type}`,
           state: {
             data: res.data,
-            step: 4
+            step: type === 'individual' ? 4 : 5
           }
         })
       } catch (err) {
