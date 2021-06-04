@@ -172,6 +172,7 @@ const CooperativeMain = ({ location: { state } }) => {
                   colorScheme='linear'
                   width='120px'
                   py='10px'
+                  disabled
                   leftIcon={<BiCreditCard size={20} />}
                   onClick={() => {
                     handleModalClick('farmCard')
