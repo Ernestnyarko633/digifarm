@@ -38,7 +38,7 @@ const Payment = ({ data, onOpen }) => {
               reload={triggerReload}
               loading={isLoading}
               error={error}
-              text='loading order '
+              text='loading order'
             />
           ) : (
             <OrderCard order={orders} onOpen={onOpen} />

@@ -96,7 +96,11 @@ const Cooperative = ({ location: { state } }) => {
           text='loading cooperative...'
         />
       ) : (
-        <Container maxW={{ xl: '5xl' }} py={{ base: 20, md: 24 }}>
+        <Container
+          maxW={{ xl: '5xl' }}
+          pt={{ base: 20, lg: 24 }}
+          pb={{ base: 3, lg: 10 }}
+        >
           <Heading
             fontSize={{ base: 16, md: 20 }}
             mb={{ md: 10 }}
@@ -113,8 +117,7 @@ const Cooperative = ({ location: { state } }) => {
           >
             <Flex bg='#F8F8F8' p={4}>
               <Text fontWeight='bold' fontSize={{ base: 12, md: 16 }}>
-                Your
-                <Text fontSize={{ base: 16, md: 16 }}> Cooperative</Text>
+                Your Cooperative
               </Text>
               <Spacer />
               <Text
@@ -122,17 +125,15 @@ const Cooperative = ({ location: { state } }) => {
                 fontWeight='bold'
                 fontSize={{ base: 12, md: 16 }}
               >
-                Farm starts:
-                <Text fontSize={{ base: 16, md: 16 }}> {date()}</Text>
+                Farm starts: {date()}
               </Text>
             </Flex>
             <Flex
               p={{ lg: 8 }}
-              templateColumns={{ md: 'repeat(2,1fr)' }}
               justify='space-between'
               wrap={{ base: 'wrap-reverse' }}
             >
-              <Box py={{ base: 4, md: 4 }} px={{ base: 6 }}>
+              <Box pt={{ base: 4, lg: 6 }} px={{ base: 6 }}>
                 <Flex>
                   <Avatar
                     name={data?.product?.cropVariety?.crop?.imageUrl}
@@ -180,7 +181,7 @@ const Cooperative = ({ location: { state } }) => {
                 borderColor='gray.300'
               />
               <Flex justify='center' px={{ base: 20 }} py={{ base: 4 }}>
-                <Box py={{ md: 8, lg: 8 }}>
+                <Box>
                   <Avatar size='2xl' name={data?.name} mx={6} />
                   <Text fontWeight='bold' pl={12} py={3}>
                     {data?.name}
@@ -191,15 +192,15 @@ const Cooperative = ({ location: { state } }) => {
           </Box>
           <Box>
             <Grid
-              py={{ md: 8, lg: 8 }}
-              templateColumns={{ md: 'repeat(2,1fr)' }}
-              gap={{ base: 6 }}
+              py={{ md: 8, lg: 4 }}
+              templateColumns={{ lg: 'repeat(2,1fr)' }}
+              gap={{ base: 6, lg: 4 }}
             >
               <Box
-                height='full'
+                height={{ base: '90%', md: '90%', lg: '85%' }}
                 pb={{ lg: 2 }}
                 borderWidth={1}
-                mr={{ md: 5, lg: 8 }}
+                mr={{ lg: 5 }}
                 borderRadius='md'
                 borderColor='gray.300'
                 overflowY='scroll'
@@ -228,7 +229,7 @@ const Cooperative = ({ location: { state } }) => {
               </Box>
               <ManagerProfile
                 item={doc}
-                height='full'
+                height={{ base: '100%', lg: '85%' }}
                 size='2xl'
                 py='15px'
                 px={4}

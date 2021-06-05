@@ -57,17 +57,17 @@ const CooperativeMain = ({ location: { state } }) => {
     user: user?._id
   })
 
-  let filteredOrder = orders?.pending?.filter(item => {
+  let filteredPendingOrder = orders?.pending?.filter(item => {
     return item?.cooperative?._id === data?._id
   })
 
   const getModal = val => {
     if (val === 'payment') {
-      return <Payment onOpen={onOpen} data={filteredOrder} />
+      return <Payment onOpen={onOpen} data={filteredPendingOrder} />
     } else return null
   }
 
-  let processing = orders?.processing?.filter(item => {
+  let filteredProcessingOrder = orders?.processing?.filter(item => {
     return item?.cooperative?._id === data?._id
   })
 
@@ -179,7 +179,8 @@ const CooperativeMain = ({ location: { state } }) => {
       accessor: 'payment',
       Cell: ({ row }) => (
         <>
-          {row.values.status === 'PAID' || processing?.length > 0 ? null : (
+          {row.values.status === 'PAID' ||
+          filteredProcessingOrder?.length > 0 ? null : (
             <>
               {row.original.email === user?.email && (
                 <Button
