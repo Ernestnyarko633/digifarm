@@ -84,7 +84,7 @@ Upload.propTypes = {
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
   accept: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   multiple: PropTypes.bool
 }
 
