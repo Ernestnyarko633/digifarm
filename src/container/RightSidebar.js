@@ -1,15 +1,13 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Avatar, Box, Grid, Heading, Flex, Text, Link } from '@chakra-ui/react'
+import { Box, Grid, Heading } from '@chakra-ui/react'
 import EventCard from 'components/Cards/EventCard'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
-import { Button } from 'components'
 import useApi from 'context/api'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
-import { Link as ReachRouter } from 'react-router-dom'
+import CooperativesCard from 'components/Cards/CooperativesCard'
 
 const RightSidebar = ({ onOpen, setSelectedData }) => {
   const [doc, setDocData] = React.useState(null)
@@ -110,7 +108,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         />
       ) : (
         !!data?.length && (
-          <Box mt={{ xl: 14 }}>
+          <Box my={{ base: 10, xl: 14 }}>
             <Heading
               as='h4'
               fontSize={{ base: 'lg', md: '2xl' }}
@@ -122,55 +120,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
               My cooperatives
             </Heading>
             {data.map(coop => (
-              <Box
-                borderWidth={1}
-                borderColor='gray.300'
-                borderRadius='10px'
-                key={coop._id}
-                my={{ lg: 4 }}
-              >
-                <Flex p={{ xl: 4 }}>
-                  <Avatar name={coop?.name} src={coop?.imageUrl} size='lg' />
-                  <Box ml={3}>
-                    <Heading
-                      as='h5'
-                      fontSize={{ md: 'sm', xl: 'md', '5xl': 'lg' }}
-                    >
-                      {coop?.name}
-                    </Heading>
-                    <Text fontSize='sm' pt={2} lineHeight='shorter'>
-                      {coop?.product?.cropVariety?.crop?.name} (
-                      {coop?.product?.cropVariety?.crop?.sciName}) #
-                      {coop?.product?.name}
-                    </Text>
-                    <Text fontSize='sm' pt={{ base: 1, lg: 2 }}>
-                      {coop?.users?.length} members
-                    </Text>
-                  </Box>
-                </Flex>
-                <Flex justify='center' pb={{ xl: 4 }}>
-                  <Link
-                    as={ReachRouter}
-                    to={{
-                      pathname: `/cooperative-main/${coop?.name}`,
-                      state: { _id: coop?._id }
-                    }}
-                    _hover={{ textDecor: 'none' }}
-                    width='80%'
-                  >
-                    <Button
-                      btntitle='View details'
-                      color='#31BC2E'
-                      colorScheme='none'
-                      borderWidth={1}
-                      width='100%'
-                      borderColor='gray.300'
-                      borderRadius='md'
-                      fontSize='14px'
-                    />
-                  </Link>
-                </Flex>
-              </Box>
+              <CooperativesCard key={coop._id} coop={coop} />
             ))}
           </Box>
         )

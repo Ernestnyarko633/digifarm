@@ -30,6 +30,7 @@ import useAuth from 'context/auth'
 import useComponent from 'context/component'
 import Payment from 'components/Cards/CooperativeDashboard/Payment'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
+import CooperativeCard from 'components/Cards/CooperativeDashboard/CooperativeCard'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Cooperative Dashboard'
@@ -71,6 +72,12 @@ const CooperativeMain = ({ location: { state } }) => {
     return item?.cooperative?._id === data?._id
   })
 
+  const price = data?.product?.pricePerAcre * data?.type?.discount
+
+  const cost = data?.users.map(i => (i = i?.acreage * price))
+
+  // eslint-disable-next-line no-console
+  console.log('c', cost)
   const _columns = [
     {
       Header: () => (
@@ -241,7 +248,12 @@ const CooperativeMain = ({ location: { state } }) => {
               <SideMenu data={data} border={1} bg='#F6F6F6' ml='49px' />
             )}
           </GridItem>
-          <GridItem colSpan={{ base: 5, lg: 4 }} px='30px' bg='white' pt='70px'>
+          <GridItem
+            colSpan={{ base: 5, lg: 4 }}
+            px={{ xl: 12 }}
+            bg='white'
+            pt='70px'
+          >
             {isLoading || error ? (
               <FetchCard
                 h='60vh'
@@ -260,10 +272,11 @@ const CooperativeMain = ({ location: { state } }) => {
                   borderColor='gray.200'
                   py='16px'
                   w='100%'
+                  px={{ base: 3 }}
                 >
                   <SideBar data={data} />
 
-                  <Heading fontSize='24px' ml={5}>
+                  <Heading fontSize={{ base: 16, xl: 16 }} ml={5}>
                     Cooperative Overview
                   </Heading>
                   <Spacer />
@@ -283,12 +296,26 @@ const CooperativeMain = ({ location: { state } }) => {
                     </Link>
                   </Flex>
                 </Flex>
-
-                <CustomTable
-                  variant='simple'
-                  _columns={_columns}
-                  _data={tableData}
-                />
+                <Box d={{ base: 'none', xl: 'block' }}>
+                  <CustomTable
+                    variant='simple'
+                    _columns={_columns}
+                    _data={tableData}
+                  />
+                </Box>
+                <Box d={{ base: 'block', xl: 'none' }} px={3}>
+                  {cost?.map(item =>
+                    tableData?.map(item => (
+                      <Box key={item?._id}>
+                        <CooperativeCard
+                          item={item}
+                          orderType={filteredProcessingOrder}
+                          data={data}
+                        />
+                      </Box>
+                    ))
+                  )}
+                </Box>
               </>
             )}
           </GridItem>

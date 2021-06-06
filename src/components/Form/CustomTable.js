@@ -12,17 +12,21 @@ const CustomTable = ({ _columns = [], _data = [], variant = '' }) => {
     tableInstance
   const getkey = i => i + 1
   return (
-    <Table variant={variant} {...getTableProps()}>
+    <Table
+      variant={variant}
+      {...getTableProps()}
+      // size={{ base: 'sm', md: 'md', lg: 'lg' }}
+    >
       <Thead>
         {headerGroups.map((headerGroup, index) => (
           <Tr key={getkey(index)} {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column, index) => (
+            {headerGroup.headers.map((column, index_) => (
               <Th
                 py={5}
-                fontSize='xs'
+                fontSize={{ base: '12px', lg: '16px' }}
                 fontFamily='body'
-                fontWeight={300}
-                key={getkey(index)}
+                fontWeight={200}
+                key={getkey(index_)}
                 textTransform='capitalize'
                 {...column.getHeaderProps()}
               >
@@ -41,17 +45,13 @@ const CustomTable = ({ _columns = [], _data = [], variant = '' }) => {
             </Td>
           </Tr>
         ) : (
-          rows.map((row, index) => {
+          rows.map((row, index__) => {
             prepareRow(row)
             return (
-              <Tr key={getkey(index)} {...row.getRowProps()}>
-                {row.cells.map((cell, index) => {
+              <Tr key={getkey(index__)} {...row.getRowProps()}>
+                {row.cells.map((cell, i) => {
                   return (
-                    <Td
-                      fontSize='sm'
-                      key={getkey(index)}
-                      {...cell.getCellProps()}
-                    >
+                    <Td fontSize='sm' key={getkey(i)} {...cell.getCellProps()}>
                       {cell.render('Cell')}
                     </Td>
                   )

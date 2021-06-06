@@ -9,7 +9,7 @@ const CooperativeInvite = () => {
   document.title = 'Cooperative invite'
   const [isLoading, setIsLoading] = useState(false)
   const [reload, setReload] = useState(0)
-  const [error, setError] = useState(false)
+  const [error_, setError] = useState(false)
   const { pathname } = useLocation()
   const history = useHistory()
   const { acceptInvite } = useApi()
@@ -55,7 +55,7 @@ const CooperativeInvite = () => {
   }, [acceptInvite, reload, pathname, history])
 
   return (
-    (isLoading || error) && (
+    (isLoading || error_) && (
       <FetchCard
         h='100vh'
         w='100vw'
@@ -64,7 +64,7 @@ const CooperativeInvite = () => {
         justify='center'
         reload={triggerReload}
         loading={isLoading}
-        error={error}
+        error={error_}
       />
     )
   )
