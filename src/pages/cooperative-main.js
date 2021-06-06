@@ -304,17 +304,21 @@ const CooperativeMain = ({ location: { state } }) => {
                   />
                 </Box>
                 <Box d={{ base: 'block', xl: 'none' }} px={3}>
-                  {cost?.map(item =>
-                    tableData?.map(item => (
-                      <Box key={item?._id}>
-                        <CooperativeCard
-                          item={item}
-                          orderType={filteredProcessingOrder}
-                          data={data}
-                        />
-                      </Box>
-                    ))
-                  )}
+                  {
+                    // cost?.map( item => (
+                    tableData?.map(
+                      item => (
+                        <Box key={item?._id}>
+                          <CooperativeCard
+                            item={item}
+                            orderType={filteredProcessingOrder}
+                            data={data}
+                          />
+                        </Box>
+                      )
+                      // )
+                    )
+                  }
                 </Box>
               </>
             )}
