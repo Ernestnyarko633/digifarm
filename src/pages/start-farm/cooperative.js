@@ -40,7 +40,13 @@ const CooperativeFarm = ({ location, history }) => {
       case 1:
         return <CropSelection />
       case 2:
-        return <CooperativeSteps data={selected} history={history} />
+        return (
+          <CooperativeSteps
+            asMember={state}
+            data={selected}
+            history={history}
+          />
+        )
       default:
         return null
     }

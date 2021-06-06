@@ -59,17 +59,17 @@ const CooperativeSteps = ({ asMember, data, history }) => {
   })
 
   React.useEffect(() => {
-    if (!selectedType) {
+    if (!selectedType && !asMember) {
       setStep(x => x * 0)
       setOtherStep(x => x * 0)
     }
-  }, [setStep, setOtherStep, selectedType])
+  }, [setStep, setOtherStep, selectedType, asMember])
 
   React.useEffect(() => {
-    if (!catFarms && otherStep !== 4) {
+    if (!asMember && !catFarms && otherStep !== 4) {
       history.push('/dashboard')
     }
-  }, [catFarms, otherStep, history])
+  }, [otherStep, history, asMember, catFarms])
 
   const getSteps = value => {
     switch (value) {
