@@ -40,7 +40,6 @@ const Acreage = ({ name, farm, order, selectedType }) => {
     ]
   }
 
-  console.log(barrier, 'test')
   useEffect(() => {
     let mounted = true
     if (!cooperativeName && mounted)
