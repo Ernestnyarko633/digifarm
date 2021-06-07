@@ -55,44 +55,47 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
       px={{ md: 5, xl: 10 }}
       h={{ lg: '100vh' }}
       w={{ md: '22%', xl: '25%' }}
-      overflowY='scroll'
+      // overflowY='scroll'
     >
-      <Heading
-        as='h4'
-        textTransform='uppercase'
-        fontSize={{ base: 'lg', md: '2xl' }}
-        fontWeight={700}
-        borderBottomWidth={1}
-        borderBottomColor='gray.300'
-        pb={2}
-      >
-        Events
-      </Heading>
-      {loading ? (
-        <FetchCard
-          direction='column'
-          align='center'
-          justify='center'
-          mx='auto'
-          w={{ xl: 24 }}
-          h={{ xl: 80 }}
-          reload={null}
-          loading={loading}
-          error={null}
-          text='Loading events'
-        />
-      ) : (
-        <Grid gap={4} mt={4}>
-          {doc?.map((event, i) => (
-            <EventCard
-              key={mapKey(i)}
-              onOpen={onOpen}
-              setSelectedData={setSelectedData}
-              event={event}
-            />
-          ))}
-        </Grid>
-      )}
+      <Box h='40%' overflowY='scroll'>
+        <Heading
+          as='h4'
+          textTransform='uppercase'
+          fontSize={{ base: 'lg', md: '2xl' }}
+          fontWeight={700}
+          borderBottomWidth={1}
+          borderBottomColor='gray.300'
+          pb={2}
+        >
+          Events
+        </Heading>
+        {loading ? (
+          <FetchCard
+            direction='column'
+            align='center'
+            justify='center'
+            mx='auto'
+            w={{ xl: 24 }}
+            h={{ xl: 80 }}
+            reload={null}
+            loading={loading}
+            error={null}
+            text='Loading events'
+          />
+        ) : (
+          <Grid gap={4} mt={4}>
+            {doc?.map((event, i) => (
+              <EventCard
+                key={mapKey(i)}
+                onOpen={onOpen}
+                setSelectedData={setSelectedData}
+                event={event}
+              />
+            ))}
+          </Grid>
+        )}
+      </Box>
+
       {isLoading || error ? (
         <FetchCard
           m='auto'
@@ -108,7 +111,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         />
       ) : (
         !!data?.length && (
-          <Box my={{ base: 10, xl: 14 }}>
+          <Box my={{ base: 10, xl: 14 }} h='40%' overflowY='scroll'>
             <Heading
               as='h4'
               fontSize={{ base: 'lg', md: '2xl' }}
@@ -119,9 +122,11 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             >
               My cooperatives
             </Heading>
-            {data.map(coop => (
-              <CooperativesCard key={coop._id} coop={coop} />
-            ))}
+            <Box>
+              {data.map(coop => (
+                <CooperativesCard coop={coop} key={coop._id} />
+              ))}
+            </Box>
           </Box>
         )
       )}
