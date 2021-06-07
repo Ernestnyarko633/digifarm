@@ -144,6 +144,30 @@ section[style] {
   background-color: transparent !important;
 }
 
+.farm-board:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.farm-board:visited {
+  color: pink;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.farm-board:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.farm-board:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
 @media screen and (min-width: 62em) {
   .intl-tel-input input {
     font-size: var(--chakra-fontSizes-sm);
