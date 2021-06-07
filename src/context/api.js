@@ -131,6 +131,13 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const updateCooperative = async (id, payload) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}`,
+      body: payload
+    })
+  }
+
   //#endregion
   const deleteBankTransfer = async id => {
     return await http.patch({
@@ -320,6 +327,9 @@ export const ApiContextProvider = ({ children }) => {
         acceptInvite,
         getCooperatives,
         getCooperativeById,
+        updateCooperative,
+
+        //notification
         getNotifications,
         updateNotification
       }}

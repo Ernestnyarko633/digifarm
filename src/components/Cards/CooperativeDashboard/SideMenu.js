@@ -7,7 +7,8 @@ import {
   Icon,
   Input,
   FormControl,
-  FormLabel
+  FormLabel,
+  useToast
 } from '@chakra-ui/react'
 
 import { getformattedDate } from 'helpers/misc'
@@ -16,13 +17,40 @@ import Details from './Details'
 import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 import useAuth from 'context/auth'
+import useApi from 'context/api'
 
 const SideMenu = ({ data, border, bg, ml }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
+  const { updateCooperative } = useApi()
   const { coopImg, setCoopImg } = useStartFarm()
   const [total, setTotal] = React.useState(0)
 
+  const toast = useToast()
+
+  const cooperativeUpdate = async value => {
+    try {
+      let formData = new FormData()
+      formData.append('cooperativeImg', value)
+      const res = await updateCooperative(data?._id, formData)
+      toast({
+        title: 'Cooperative Image Updated',
+        description: res.message,
+        status: 'success',
+        duration: 5000,
+        position: 'top-right'
+      })
+    } catch (error) {
+      toast({
+        title: 'Error occured',
+        description:
+          error?.message || error?.data?.message || 'Unexpected error.',
+        status: 'error',
+        duration: 5000,
+        position: 'top-right'
+      })
+    }
+  }
   React.useEffect(() => {
     let mounted = true
     let t = 0
@@ -91,6 +119,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
                     pos='absolute'
                     onChange={async e => {
                       setCoopImg(e.currentTarget.files[0])
+                      await cooperativeUpdate(e.currentTarget.files[0])
                     }}
                   />
                 </FormLabel>
@@ -98,7 +127,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
             )}
           </Box>
         </Flex>
-        <Text fontWeight='bold' fontSize='24px' textAlign='center'>
+        <Text fontWeight='bold' fontSize='20px' textAlign='center'>
           {data?.name}
         </Text>
       </Box>
