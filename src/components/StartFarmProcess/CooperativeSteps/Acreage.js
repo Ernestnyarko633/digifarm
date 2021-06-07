@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
@@ -39,6 +40,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
     ]
   }
 
+  console.log(barrier, 'test')
   useEffect(() => {
     let mounted = true
     if (!cooperativeName && mounted)
