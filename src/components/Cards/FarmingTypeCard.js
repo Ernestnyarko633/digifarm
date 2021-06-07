@@ -39,7 +39,7 @@ const FarmingTypeCard = ({
       textAlign="left"
       mr={mr}
       mb={{ base: 6, md: 0 }}
-      onClick={!disabled && onClick}
+      onClick={onClick}
       pos="relative"
       filter={disabled && "grayScale(100%)"}
     >
@@ -56,11 +56,11 @@ const FarmingTypeCard = ({
           />
         )}
       </Box>
-      {id === "cooperative" && (
-        <Heading fontSize="2xl" color="cf.800">
-          Coming Soon
-        </Heading>
-      )}
+      {/*{id === "cooperative" && (*/}
+      {/*  <Heading fontSize="2xl" color="cf.800">*/}
+      {/*    Coming Soon*/}
+      {/*  </Heading>*/}
+      {/*)}*/}
       <Box mb={3}>
         <Image src={image} />
       </Box>

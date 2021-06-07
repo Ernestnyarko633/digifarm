@@ -261,7 +261,7 @@ export const ApiContextProvider = ({ children }) => {
   const createCooperative = async payload => {
     return await http.post({
       url: `${DIGITAL_FARMER_API}/cooperatives`,
-      body: JSON.stringify(payload)
+      body: payload
     })
   }
 

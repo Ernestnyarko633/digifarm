@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import useMap from '../../hooks/useMap'
 import { Box } from '@chakra-ui/react'

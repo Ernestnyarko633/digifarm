@@ -1,22 +1,20 @@
-/* eslint-disable no-console */
-/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react'
-import { Box, Flex, Heading } from '@chakra-ui/layout'
 import PropTypes from 'prop-types'
+import { Box, Flex } from '@chakra-ui/layout'
 import { Avatar } from '@chakra-ui/avatar'
-import { FormControl, FormLabel, Icon, Input } from '@chakra-ui/react'
+import { Icon, Input, Heading, FormLabel, FormControl } from '@chakra-ui/react'
 import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 
-const CooperativeName = ({ farm }) => {
+const CooperativeName = () => {
   const { setCooperativeName, cooperativeName, coopImg, setCoopImg } =
     useStartFarm()
   const handleChange = e => {
     setCooperativeName(e.target.value)
   }
+
   return (
     <Flex align='center' justify='center' direction='column'>
-      {false && handleChange}
       <Box pos='relative'>
         <Avatar
           src={
@@ -52,23 +50,29 @@ const CooperativeName = ({ farm }) => {
               onChange={async e => {
                 setCoopImg(e.currentTarget.files[0])
               }}
-              //id={field.name}
-              //name={field.name}
-              // accept={accept}
             />
           </FormLabel>
         </FormControl>
       </Box>
       <Box mt={6}>
-        <Heading as='h4' fontSize={{ base: 'lg', md: 'xl' }} fontWeight={700}>
-          Give your cooperative a cool name
-        </Heading>
+        <Flex>
+          <Heading
+            as='h4'
+            ml={1}
+            fontWeight={700}
+            fontSize={{ base: 'lg', md: 'xl' }}
+          >
+            Give your cooperative a cool name
+          </Heading>
+        </Flex>
 
         <FormControl mt={4}>
           <Input
-            value={cooperativeName}
-            placeholder='Eg. CompleteNation'
+            min={9}
+            max={15}
             rounded={0}
+            value={cooperativeName}
+            placeholder='Min: 3 characters, Max: 15 characters'
             _focus={{ borderColor: 'cf.800' }}
             onChange={handleChange}
           />

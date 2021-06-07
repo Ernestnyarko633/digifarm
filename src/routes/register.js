@@ -24,21 +24,20 @@ const Router = () => {
         <PrivateRoute
           exact
           path='/start-farm/individual'
-          component={Pages.Individual}
+          component={Pages.StartFarmIndividual}
         />
         <PrivateRoute
           exact
           path='/start-farm/cooperative'
-          component={Pages.Cooperative}
-        />
-        <PrivateRoute
-          exact
-          path='/start-farm/cooperative-farms'
-          component={Pages.CooperativeFarm}
+          component={Pages.StartFarmCooperative}
         />
         <PrivateRoute
           path='/cooperative-invite'
           component={Pages.CooperativeInvite}
+        />
+        <PrivateRoute
+          path='/cooperative-main'
+          component={Pages.CooperativeMain}
         />
         <PrivateRoute
           exact

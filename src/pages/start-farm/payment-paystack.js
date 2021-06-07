@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -15,16 +14,18 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
   const { verifyPaystackPayment } = useApi()
 
   React.useEffect(() => {
+    const type = sessionStorage.getItem('type')
+
     const { trxref, reference } = qs.parse(search)
     const verifyAndCreate = async ref => {
       try {
         setLoading(true)
         const res = await verifyPaystackPayment(ref)
         history.push({
-          pathname: 'start-farm/individual',
+          pathname: `start-farm/${type}`,
           state: {
             data: res.data,
-            step: 4
+            step: type === 'individual' ? 4 : 5
           }
         })
       } catch (err) {
