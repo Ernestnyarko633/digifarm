@@ -116,7 +116,11 @@ const FarmCard = ({ farm }) => {
       </Flex>
       <>
         <Divider orientation='horizontal' borderColor='gray.300' my={6} />
-        <Flex justify='space-between'>
+        <Flex
+          flexDir={{ base: 'column', '2xl': 'row' }}
+          justify={{ '2xl': 'space-between' }}
+          fontSize={{ base: 'xs', '2xl': 'md' }}
+        >
           <Text color='gray.400'>
             Number of acres:{' '}
             <Text as='span' color='gray.700' fontWeight='bold'>
@@ -127,6 +131,8 @@ const FarmCard = ({ farm }) => {
             Location:{' '}
             <Text as='span' color='gray.700' fontWeight='bold'>
               {farm?.order?.product?.location?.name}
+              {', '}
+              {farm?.order?.product?.location?.state}
             </Text>
           </Text>
         </Flex>
