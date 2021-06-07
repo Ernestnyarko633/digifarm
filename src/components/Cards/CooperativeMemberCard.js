@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect } from 'react'
 import { Box, Flex, Text } from '@chakra-ui/layout'
@@ -7,9 +8,11 @@ import Icon from '@chakra-ui/icon'
 import { MdClose } from 'react-icons/all'
 import PropTypes from 'prop-types'
 import useStartFarm from 'context/start-farm'
+import { getFormattedMoney } from 'helpers/misc'
 
 const CooperativeMemberCard = ({
   values,
+  farm,
   value,
   name,
   onChange,
@@ -20,7 +23,6 @@ const CooperativeMemberCard = ({
   setInvites
 }) => {
   const { setAcres } = useStartFarm()
-
   useEffect(() => {
     let mounted = true
     if (mounted && values) {
@@ -58,7 +60,7 @@ const CooperativeMemberCard = ({
           rounded='sm'
           color='gray.500'
         >
-          1 acres = $1500
+          $ {getFormattedMoney(value?.acreage * farm?.pricePerAcre)}
         </Box>
       </Flex>
 
@@ -70,9 +72,12 @@ const CooperativeMemberCard = ({
           as='button'
           role='button'
           aria-label='close button'
-          onClick={() => remove(values?.length - 1)}
+          onClick={e => {
+            if (member - 1 === 0) return e.preventDefault()
+            return remove(values?.length - 1)
+          }}
         >
-          <Icon as={MdClose} />
+          {member - 1 !== 0 && <Icon as={MdClose} />}
         </Box>
       )}
 
@@ -93,12 +98,13 @@ const CooperativeMemberCard = ({
         <GridItem colSpan={2}>
           <FormInput
             type='number'
-            placeholder='10 Acres'
+            placeholder='eg. 10'
             bg='gray.100'
             borderBottomColor='none'
             value={value.acreage}
             name={`${name}acreage`}
             onChange={e => {
+              if (e?.target?.value < 0) return e.preventDefault()
               return onChange(e)
             }}
             onBlur={onBlur}
@@ -118,6 +124,7 @@ CooperativeMemberCard.propTypes = {
   remove: PropTypes.func,
   member: PropTypes.number,
   isDisabled: PropTypes.bool,
-  setInvites: PropTypes.func
+  setInvites: PropTypes.func,
+  farm: PropTypes.object
 }
 export default CooperativeMemberCard

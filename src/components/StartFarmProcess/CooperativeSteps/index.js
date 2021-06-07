@@ -30,6 +30,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
     otherStep,
     handlePrev,
     handleBack,
+    //selectedCooperativeType,
     selectedType,
     setOtherStep,
     selectedFarm,
@@ -140,7 +141,10 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           title: 'Next',
           width: 56,
           action: handleNextStep,
-          disabled: cooperativeName?.length > 8 ? false : true
+          disabled:
+            cooperativeName?.length > 3 && cooperativeName?.length <= 15
+              ? false
+              : true
         }
       case 2:
         return {
@@ -149,7 +153,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           action: handleNextStep,
           disabled:
             acres <= barrier &&
-            invites?.length === selectedCooperativeType?.maxMember &&
+            acres >= selectedCooperativeType.minAcre &&
             invites?.every(member =>
               validateEmailAndAcrege(member?.email, member?.acreage)
             )

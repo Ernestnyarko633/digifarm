@@ -20,6 +20,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [selectedFarm, setSelectedFarm] = useState(
     JSON.parse(sessionStorage.getItem('selected_farm'))
   )
+  const [path, setPath] = React.useState(null)
   const [barrier, setBarrier] = useState(null)
   const [isSubmitting, setSubmitting] = useState(false)
   const [exchangeRate, setExchangeRate] = useState(1)
@@ -185,7 +186,6 @@ export const StartFarmContextProvider = ({ children }) => {
       formData.append('admin', user?._id)
       formData.append('users', JSON.stringify(invites))
       formData.append('cooperativeImg', coopImg)
-
       const res = await createCooperative(formData)
       setCooperative(res.data)
       handleCreateOrder(res.data, invites[0]?.acreage)
@@ -315,12 +315,14 @@ export const StartFarmContextProvider = ({ children }) => {
       value={{
         step,
         text,
+        path,
         cycle,
         acres,
         order,
         invites,
         barrier,
         setStep,
+        setPath,
         coopImg,
         acreage,
         setAcres,

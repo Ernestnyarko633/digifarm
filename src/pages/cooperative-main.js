@@ -13,10 +13,8 @@ import {
   Link,
   useDisclosure
 } from '@chakra-ui/react'
-
 import CustomTable from 'components/Form/CustomTable'
 import FetchCard from 'components/FetchCard'
-
 import useApi from 'context/api'
 import useFetch from 'hooks/useFetch'
 import Header from 'container/Header'
@@ -26,6 +24,7 @@ import { BiCreditCard } from 'react-icons/bi'
 import { getFormattedMoney } from 'helpers/misc'
 import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
+//import useAuth from 'context/auth'
 import useAuth from 'context/auth'
 import useComponent from 'context/component'
 import Payment from 'components/Cards/CooperativeDashboard/Payment'
