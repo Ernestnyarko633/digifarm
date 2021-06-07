@@ -2,41 +2,51 @@ import React from 'react'
 import { Avatar, Box, Divider, Flex, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
-import { BiCreditCard } from 'react-icons/bi'
 import useAuth from 'context/auth'
 
 import { getFormattedMoney } from 'helpers/misc'
 
-const CooperativeCard = ({ item, orderType, data }) => {
+const CooperativeCard = ({ item, orderType, data, handleClick }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  // eslint-disable-next-line no-console
-  //   console.log('item', item)
-  // eslint-disable-next-line no-console
-  //   console.log('data', data)
+  const { acreage } = item
+  const {
+    type: { discount },
+    product: { pricePerAcre }
+  } = data
+
+  const calculateCost = (acreage, pricePerAcre, discount) => {
+    let cost = 0
+    let price = 0
+
+    price = pricePerAcre - pricePerAcre * discount
+    cost = price * acreage
+
+    return cost
+  }
   return (
     <Box borderWidth={1} borderColor='gray.300' rounded='8px' my={4}>
       <Flex p={3}>
         <Avatar
           name={item?.info?.firstName || item?.info?.avatar || 'Annonymous'}
           src={item?.info?.avatar}
-          size='md'
+          size='sm'
+          mt={2}
         />
         <Box pl='12px' pt={1}>
           <Flex>
-            <Text fontSize='16px' fontWeight='semibold'>
+            <Text fontSize='14px' fontWeight='bold' lineHeight='18px'>
               {item?.info?.firstName
                 ? `${item?.info?.firstName + ' ' + item?.info?.lastName}`
                 : 'Annonymous'}
             </Text>
             {data?.users[0]?.email === item?.email && (
-              <Box ml={6}>
+              <Box bg='#D6F2D5' rounded='4px' ml='7px' h='20px'>
                 <Text
-                  fontSize={10}
+                  fontSize='10px'
                   textAlign='center'
-                  // color='#004C46'
-                  color='green.300'
-                  mt={1}
+                  color='#004C46'
+                  px='5px'
                 >
                   Admin
                 </Text>
@@ -53,14 +63,14 @@ const CooperativeCard = ({ item, orderType, data }) => {
               <Button
                 btntitle='Pay'
                 colorScheme='linear'
-                width='70px'
+                width='60px'
+                h='35px'
+                fontSize='14px'
                 py='10px'
-                leftIcon={<BiCreditCard size={20} />}
-                //   onClick={() => {
-                //     handleModalClick('payment')
-                //   }}
-                ml={12}
-                my={2}
+                // leftIcon={<BiCreditCard size={20} />}
+                onClick={handleClick}
+                ml={6}
+                my={1}
               />
             )}
           </>
@@ -77,9 +87,7 @@ const CooperativeCard = ({ item, orderType, data }) => {
         <Text>
           Cost{' '}
           <Text color='black' as='span'>
-            {getFormattedMoney(
-              item?.acreage * item?.product?.pricePerAcre * item?.type?.discount
-            )}
+            ${getFormattedMoney(calculateCost(acreage, pricePerAcre, discount))}
           </Text>
         </Text>
       </Flex>
@@ -106,6 +114,7 @@ const CooperativeCard = ({ item, orderType, data }) => {
 CooperativeCard.propTypes = {
   item: PropTypes.any,
   orderType: PropTypes.any,
-  data: PropTypes.any
+  data: PropTypes.any,
+  handleClick: PropTypes.any
 }
 export default CooperativeCard

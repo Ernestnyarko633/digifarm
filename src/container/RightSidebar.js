@@ -52,12 +52,11 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
       as='aside'
       bottom={{ md: 0 }}
       pos={{ md: 'fixed' }}
-      px={{ md: 5, xl: 10 }}
+      px={{ md: 5, xl: 5 }}
       h={{ lg: '100vh' }}
       w={{ md: '22%', xl: '25%' }}
-      // overflowY='scroll'
     >
-      <Box h='40%' overflowY='scroll'>
+      <Box>
         <Heading
           as='h4'
           textTransform='uppercase'
@@ -69,6 +68,9 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         >
           Events
         </Heading>
+      </Box>
+
+      <Box h='45%' overflowY='scroll' px={2} my={2}>
         {loading ? (
           <FetchCard
             direction='column'
@@ -111,7 +113,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         />
       ) : (
         !!data?.length && (
-          <Box my={{ base: 10, xl: 14 }} h='40%' overflowY='scroll'>
+          <>
             <Heading
               as='h4'
               fontSize={{ base: 'lg', md: '2xl' }}
@@ -122,12 +124,19 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             >
               My cooperatives
             </Heading>
-            <Box>
-              {data.map(coop => (
-                <CooperativesCard coop={coop} key={coop._id} />
-              ))}
+            <Box
+              my={{ base: 10, xl: 2 }}
+              h={{ base: '10%', xl: '40%' }}
+              overflowY='scroll'
+              px={2}
+            >
+              <Box>
+                {data.map(coop => (
+                  <CooperativesCard coop={coop} key={coop._id} />
+                ))}
+              </Box>
             </Box>
-          </Box>
+          </>
         )
       )}
     </Box>

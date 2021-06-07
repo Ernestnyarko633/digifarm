@@ -34,7 +34,6 @@ const Payment = ({ data, onOpen }) => {
             <FetchCard
               direction='column'
               align='center'
-              w={{ xl: 24 }}
               h={{ xl: 80 }}
               justify='center'
               reload={triggerReload}
