@@ -117,9 +117,9 @@ const FarmCard = ({ farm }) => {
       <>
         <Divider orientation='horizontal' borderColor='gray.300' my={6} />
         <Flex
-          flexDir={{ base: 'column', '2xl': 'row' }}
-          justify={{ '2xl': 'space-between' }}
-          fontSize={{ base: 'xs', '2xl': 'md' }}
+          flexDir={{ base: 'column', xl: 'row' }}
+          justify={{ xl: 'space-between' }}
+          fontSize={{ base: 'xs', xl: 'md' }}
         >
           <Text color='gray.400'>
             Number of acres:{' '}
