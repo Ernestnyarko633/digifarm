@@ -72,12 +72,14 @@ const CooperativeMain = ({ location: { state } }) => {
     return item?.cooperative?._id === data?._id
   })
 
-  const price = data?.product?.pricePerAcre * data?.type?.discount
+  // const price = data?.product?.pricePerAcre * data?.type?.discount
 
-  const cost = data?.users.map(i => (i = i?.acreage * price))
+  // const cost = data?.users.map(i => (i = i?.acreage * price))
 
-  // eslint-disable-next-line no-console
-  console.log('c', cost)
+  // // eslint-disable-next-line no-console
+  // console.log('c', cost)
+  // // eslint-disable-next-line no-console
+  // console.log('filtered', tableData)
   const _columns = [
     {
       Header: () => (
@@ -219,11 +221,12 @@ const CooperativeMain = ({ location: { state } }) => {
       <Header />
       <CompleteOrderModal isOpen={isOpen} onClose={onClose} />
       {getModal(modal)}
-      <Box py={30} w={{ xl: '100vw' }}>
+      <Box pt={30} w={{ xl: '100vw' }} h={{ md: '50%', xl: '50%' }}>
         <Grid
           templateRows='repeat(2, 1fr)'
           templateColumns='repeat(5, 1fr)'
           bg='white'
+          // pos='fixed'
         >
           <GridItem
             rowSpan={2}
@@ -272,7 +275,7 @@ const CooperativeMain = ({ location: { state } }) => {
                   borderColor='gray.200'
                   py='16px'
                   w='100%'
-                  px={{ base: 3 }}
+                  px={{ base: 4 }}
                 >
                   <SideBar data={data} />
 
@@ -296,14 +299,14 @@ const CooperativeMain = ({ location: { state } }) => {
                     </Link>
                   </Flex>
                 </Flex>
-                <Box d={{ base: 'none', xl: 'block' }}>
+                <Box d={{ base: 'none', md: 'block', xl: 'block' }}>
                   <CustomTable
                     variant='simple'
                     _columns={_columns}
                     _data={tableData}
                   />
                 </Box>
-                <Box d={{ base: 'block', xl: 'none' }} px={3}>
+                <Box d={{ base: 'block', md: 'none' }} px={4}>
                   {
                     // cost?.map( item => (
                     tableData?.map(

@@ -11,9 +11,9 @@ const CooperativeCard = ({ item, orderType, data }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   // eslint-disable-next-line no-console
-  console.log('item', item)
+  //   console.log('item', item)
   // eslint-disable-next-line no-console
-  console.log('data', data)
+  //   console.log('data', data)
   return (
     <Box borderWidth={1} borderColor='gray.300' rounded='8px' my={4}>
       <Flex p={3}>

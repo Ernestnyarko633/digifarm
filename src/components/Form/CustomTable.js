@@ -36,7 +36,7 @@ const CustomTable = ({ _columns = [], _data = [], variant = '' }) => {
           </Tr>
         ))}
       </Thead>
-      <Tbody {...getTableBodyProps()}>
+      <Tbody {...getTableBodyProps()} overflowY='scroll' h='80%'>
         {!_data?.length ? (
           <Tr>
             <Td py={10} color='gray.400' colSpan={7} textAlign='center'>
