@@ -30,6 +30,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
     otherStep,
     handlePrev,
     handleBack,
+    cooperative,
     //selectedCooperativeType,
     selectedType,
     setOtherStep,
@@ -174,9 +175,16 @@ const CooperativeSteps = ({ asMember, data, history }) => {
         }
       case 5:
         return {
-          title: 'Continue to my Dashboard',
+          title: 'Proceed to Cooperative Dashboard',
           width: 80,
-          action: () => history.push('/dashboard')
+          action: () =>
+            history.push(
+              `/cooperative-main/${
+                cooperative?._id ||
+                order?.cooperative?._id ||
+                order?.cooperative
+              }`
+            )
         }
       default:
         return { title: 'Next', width: 56, action: handleNextStep }
