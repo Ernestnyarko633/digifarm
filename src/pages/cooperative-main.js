@@ -207,7 +207,11 @@ const CooperativeMain = ({ location: { state } }) => {
       <Header />
       <CompleteOrderModal isOpen={isOpen} onClose={onClose} />
       {getModal(modal)}
-      <Box pt={30} bg='white' minH={{ base: '60vh', md: 'calc(100vh - 4rem)' }}>
+      <Box
+        pt={30}
+        bg='white'
+        minH={{ base: '100vh', md: 'calc(100vh - 4rem)' }}
+      >
         <Grid templateColumns='repeat(5, 1fr)' bg='white'>
           <GridItem
             rowSpan={2}
@@ -236,7 +240,6 @@ const CooperativeMain = ({ location: { state } }) => {
           <GridItem
             colSpan={{ base: 5, lg: 4 }}
             px={{ xl: 12 }}
-            bg='white'
             pt={{ base: 12, xl: 20 }}
             h={{ md: '100vh' }}
           >
@@ -276,7 +279,7 @@ const CooperativeMain = ({ location: { state } }) => {
                         btntitle='Goto dashboard'
                         colorScheme='transparent'
                         color='gray.600'
-                        width='150px'
+                        width='140px'
                         py='10px'
                         ml={3}
                         borderWidth={1}
