@@ -81,7 +81,12 @@ const Confirmation = ({ farm, order }) => {
           />
         </Flex>
       </Box>
-      <Box w={{ md: '50%' }} p={{ base: 2, md: 14 }} pos='relative'>
+      <Box
+        w={{ md: '50%' }}
+        p={{ base: 2, md: 6 }}
+        px={{ base: 2, md: 14 }}
+        pos='relative'
+      >
         <Flex direction='column' align='center' justify='center'>
           <Box textAlign='center' m='auto' mt={6}>
             <Text mb={1} fontSize={{ base: 18, md: 22 }} fontWeight='bold'>
