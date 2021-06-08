@@ -20,6 +20,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [selectedFarm, setSelectedFarm] = useState(
     JSON.parse(sessionStorage.getItem('selected_farm'))
   )
+  const [path, setPath] = React.useState(null)
   const [barrier, setBarrier] = useState(null)
   const [isSubmitting, setSubmitting] = useState(false)
   const [exchangeRate, setExchangeRate] = useState(1)
@@ -61,6 +62,7 @@ export const StartFarmContextProvider = ({ children }) => {
 
       const newNum = num + 1
       if (newNum < 3) setBarrier(cooperativeTypes[newNum]?.minAcre)
+      if (newNum > 3) setBarrier(10000000000000)
     }
 
     if (mounted && selectedCooperativeType) Barrier(selectedCooperativeType)
@@ -99,6 +101,13 @@ export const StartFarmContextProvider = ({ children }) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
+      const calculateCost = (acreage, pricePerAcre, discount) => {
+        let cost = 0
+        let price = 0
+        price = pricePerAcre - pricePerAcre * discount
+        cost = price * acreage
+        return cost
+      }
       let data = {
         cycle,
         acreage: cooperativeUserAcreage || acreage,
@@ -120,7 +129,15 @@ export const StartFarmContextProvider = ({ children }) => {
             100
         }
       }
-      if (cooperative?._id) data.cooperative = cooperative._id
+      if (cooperative?._id) {
+        data.cooperative = cooperative._id
+
+        data.cost = calculateCost(
+          cooperativeUserAcreage || acreage,
+          selectedFarm?.pricePerAcre,
+          selectedCooperativeType?.discount
+        )
+      }
 
       // if discount exist then apply discount to cost
       if (selectedFarm.discounts) {
@@ -314,12 +331,14 @@ export const StartFarmContextProvider = ({ children }) => {
       value={{
         step,
         text,
+        path,
         cycle,
         acres,
         order,
         invites,
         barrier,
         setStep,
+        setPath,
         coopImg,
         acreage,
         setAcres,

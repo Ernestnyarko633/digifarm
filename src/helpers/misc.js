@@ -188,7 +188,7 @@ export const urlify = text => {
     /(\b(((https?|ftp|file|):\/\/)|www[.])[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
   var temp = text?.replace(
     exp,
-    '<a href="$1" style={{color: "cf.400"}} target="_blank">$1</a>'
+    '<a href="$1" className="farm-board" class="farm-board" style={{color: "cf.400"}} target="_blank">$1</a>'
   )
   var result = ''
 

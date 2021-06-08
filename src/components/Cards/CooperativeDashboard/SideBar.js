@@ -25,7 +25,7 @@ const SideBar = ({ data }) => {
         onClick={onOpen}
       />
 
-      <Drawer placement='left' onClose={onClose} isOpen={isOpen}>
+      <Drawer placement='left' onClose={onClose} isOpen={isOpen} size='xs'>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton _focus={false} />

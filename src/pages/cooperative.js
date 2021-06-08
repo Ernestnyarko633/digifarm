@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import {
   Box,
@@ -10,7 +8,8 @@ import {
   Spacer,
   Container,
   Link,
-  Grid
+  Grid,
+  Divider
 } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import Prismic from 'prismic-javascript'
@@ -68,7 +67,7 @@ const Cooperative = ({ location: { state } }) => {
     if (mounted && data?.product?._id) {
       setSelectedFarm(data?.product)
       sessionStorage.setItem('selected_farm', JSON.stringify(data?.product))
-      setStep(x => x + 1)
+      setStep(x => x + 2)
       setOtherStep(x => x + 3)
     }
 
@@ -97,8 +96,16 @@ const Cooperative = ({ location: { state } }) => {
           text='loading cooperative...'
         />
       ) : (
-        <Container maxW={{ xl: '5xl' }} py={{ md: 24 }}>
-          <Heading fontSize='24px' mb={{ md: 10 }} textAlign='center'>
+        <Container
+          maxW={{ xl: '5xl' }}
+          pt={{ base: 20, lg: 24 }}
+          pb={{ base: 3, lg: 10 }}
+        >
+          <Heading
+            fontSize={{ base: 16, md: 20 }}
+            mb={{ md: 10 }}
+            textAlign='center'
+          >
             Welcome {user.firstName}
           </Heading>
           <Box
@@ -106,28 +113,37 @@ const Cooperative = ({ location: { state } }) => {
             borderWidth={1}
             borderRadius='md'
             borderColor='gray.300'
+            my={{ base: 5 }}
           >
-            <Flex bg='#F8F8F8' p='17px'>
-              <Text fontWeight='bold' fontSize='20px'>
+            <Flex bg='#F8F8F8' p={4}>
+              <Text fontWeight='bold' fontSize={{ base: 12, md: 16 }}>
                 Your Cooperative
               </Text>
               <Spacer />
-              <Text color='#D0021B' fontWeight='bold'>
+              <Text
+                color='#D0021B'
+                fontWeight='bold'
+                fontSize={{ base: 12, md: 16 }}
+              >
                 Farm starts: {date()}
               </Text>
             </Flex>
-            <Flex p={{ lg: 8 }} justify='space-between'>
-              <Box>
+            <Flex
+              p={{ lg: 8 }}
+              justify='space-between'
+              wrap={{ base: 'wrap-reverse' }}
+            >
+              <Box pt={{ base: 4, lg: 6 }} px={{ base: 6 }}>
                 <Flex>
                   <Avatar
                     name={data?.product?.cropVariety?.crop?.imageUrl}
                     size='lg'
                   />
-                  <Box px='13px'>
-                    <Text fontWeight='bold' fontSize='24px'>
+                  <Box px={3} pt={{ base: 3, md: 0 }}>
+                    <Text fontWeight='bold' fontSize={{ base: 16, md: 24 }}>
                       {data?.product?.cropVariety?.crop?.name}
                     </Text>
-                    <Text fontSize='14px'>
+                    <Text fontSize={{ base: 12, md: 16 }}>
                       {data?.product?.cropVariety?.crop?.sciName +
                         '  #' +
                         data?.product?.name}
@@ -135,7 +151,7 @@ const Cooperative = ({ location: { state } }) => {
                   </Box>
                 </Flex>
                 <Box py='26px'>
-                  <Text fontSize='20px'>
+                  <Text fontSize={16}>
                     Location:{' '}
                     <Text as='span' fontWeight='bold'>
                       {data?.product?.location?.name +
@@ -143,13 +159,13 @@ const Cooperative = ({ location: { state } }) => {
                         data?.product?.location?.state}
                     </Text>
                   </Text>
-                  <Text fontSize='20px'>
+                  <Text fontSize={16}>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {data?.type?.name.toUpperCase()}
                     </Text>
                   </Text>
-                  <Text fontSize='20px'>
+                  <Text fontSize={16}>
                     Cooperative Admin:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {data?.users[0]?.info?.firstName +
@@ -159,64 +175,70 @@ const Cooperative = ({ location: { state } }) => {
                   </Text>
                 </Box>
               </Box>
-              <Box pr='66px' py={{ lg: 8 }}>
-                <Avatar size='2xl' name={data?.name} />
-                <Text fontWeight='bold' textAlign='center' py='5px'>
-                  {data?.name}
-                </Text>
-              </Box>
+              <Divider
+                d={{ base: 'block', md: 'none' }}
+                mt={-4}
+                borderColor='gray.300'
+              />
+              <Flex justify='center' px={{ base: 20 }} py={{ base: 4 }}>
+                <Box>
+                  <Avatar size='2xl' name={data?.name} mx={6} />
+                  <Text fontWeight='bold' pl={12} py={3}>
+                    {data?.name}
+                  </Text>
+                </Box>
+              </Flex>
             </Flex>
           </Box>
-          <Box pb={{ md: 10 }}>
-            <Grid py={{ lg: '25px' }} templateColumns={{ md: 'repeat(2,1fr)' }}>
+          <Box>
+            <Grid
+              py={{ md: 8, lg: 4 }}
+              templateColumns={{ lg: 'repeat(2,1fr)' }}
+              gap={{ base: 6, lg: 4 }}
+            >
               <Box
-                height='full'
+                height={{ base: '90%', md: '90%', lg: '85%' }}
                 pb={{ lg: 2 }}
                 borderWidth={1}
-                mr={{ md: 5, lg: 8 }}
+                mr={{ lg: 5 }}
                 borderRadius='md'
                 borderColor='gray.300'
+                overflowY='scroll'
+                mb={{ base: 3 }}
               >
                 <Flex bg='#F8F8F8' p='17px'>
-                  <Text fontWeight='bold' fontSize='20px'>
+                  <Text fontWeight='bold' fontSize={{ base: 16, md: 16 }}>
                     Cooperative members
                   </Text>
                 </Flex>
-
-                <Box overflowY='scroll'>
-                  {data?.users?.map(item => (
-                    <Flex
-                      py='5px'
-                      px={{ md: '15px', lg: '20px' }}
-                      key={item?.id}
-                    >
-                      <Text fontSize='16px' fontWeight='bold'>
-                        {item?.info?.firstName || item?.info?.lastName
-                          ? item?.info?.firstName + ' ' + item?.info?.lastName
-                          : 'Annonymous'}
-                      </Text>
-                      <Spacer />
-                      <Text fontSize='16px'>
-                        {item?.info?.firstName || item?.info?.lastName
-                          ? 'Accepted'
-                          : 'Invited'}
-                      </Text>
-                    </Flex>
-                  ))}
-                </Box>
+                {data?.users?.map(item => (
+                  <Flex py='5px' px={{ base: 4, md: 4, lg: 4 }} key={item?.id}>
+                    <Text fontSize={{ base: 16, md: 16 }} fontWeight='bold'>
+                      {item?.info?.firstName || item?.info?.lastName
+                        ? item?.info?.firstName + ' ' + item?.info?.lastName
+                        : 'Annonymous'}
+                    </Text>
+                    <Spacer />
+                    <Text fontSize={{ base: 16, md: 16 }}>
+                      {item?.info?.firstName || item?.info?.lastName
+                        ? 'Accepted'
+                        : 'Invited'}
+                    </Text>
+                  </Flex>
+                ))}
               </Box>
               <ManagerProfile
                 item={doc}
-                height='full'
+                height={{ base: '100%', lg: '85%' }}
                 size='2xl'
                 py='15px'
                 px={4}
               />
             </Grid>
-            <Flex justify='flex-end'>
+            <Flex justify={{ base: 'center', md: 'flex-end' }} my={{ base: 4 }}>
               <Link
                 to={{
-                  pathname: '/start-farm/cooperative-farms',
+                  pathname: '/start-farm/cooperative',
                   state: {
                     cooperative: data._id,
                     acreage: data.users?.filter(u => u.id === user?._id)[0]

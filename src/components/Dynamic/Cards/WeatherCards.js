@@ -36,7 +36,7 @@ const WeatherCard = ({
               rounded='lg'
               filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               p={6}
-              minH={{ base: 150 }}
+              minH={{ base: 40 }}
               bg='white'
             >
               <Text textAlign='center' fontWeight={300}>
@@ -77,7 +77,7 @@ const WeatherCard = ({
               rounded='lg'
               filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               p={6}
-              minH={{ base: 150 }}
+              minH={{ base: 40 }}
               bg='white'
             >
               <Text fontWeight={300} textAlign='center'>

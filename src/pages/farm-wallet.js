@@ -60,7 +60,8 @@ const FarmWallet = () => {
               templateColumns={{
                 lg: "repeat(2, 1fr)",
                 xl: "repeat(2, 1fr)",
-                "2xl": "repeat(3, 1fr)",
+                "2xl": "repeat(2, 1fr)",
+                "4xl": "repeat(3, 1fr)"
               }}
               gap={4}
               mb={{ base: 10, md: 0 }}

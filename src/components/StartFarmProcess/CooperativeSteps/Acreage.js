@@ -146,7 +146,6 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                   </Text>
                 </Flex>
               </Flex>
-
               <Box my={{ md: 10 }}>
                 <Heading as='h4' fontSize={{ md: 'xl' }}>
                   Add Members and their acreage
@@ -155,7 +154,6 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                   Please invite cooperative members by adding their emails and
                   their respective acreages
                 </Text>
-
                 <Flex
                   align='center'
                   bg='gray.100'
@@ -165,11 +163,11 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                 >
                   <Box borderRightWidth={1} pr={8} borderRightColor='gray.300'>
                     <Text color='gray.500'>
-                      Member left:{' '}
+                      Members :
                       <Text as='span' fontWeight={900} color='black'>
-                        {selectedCooperativeType?.maxMember -
-                          values.users.length}{' '}
-                        {`(${selectedCooperativeType?.maxMember})`}
+                        {' '}
+                        {values?.users?.length}/
+                        {`${selectedCooperativeType?.maxMember}`}
                       </Text>
                     </Text>
                   </Box>
@@ -184,7 +182,8 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                           : 'gray.500'
                       }
                     >
-                      Meet the maximum acreage:{' '}
+                      Meet the minimum acreage of{' '}
+                      {selectedCooperativeType?.minAcre} :{' '}
                       <Text
                         as='span'
                         fontWeight={900}
@@ -198,7 +197,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                         }
                       >
                         {acres?.toFixed(1)}{' '}
-                        {`(${selectedCooperativeType?.minAcre})`}
+                        {/* {`(${selectedCooperativeType?.minAcre})`} */}
                       </Text>
                     </Text>
                   </Box>
