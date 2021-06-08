@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -8,11 +10,12 @@ import {
   Text,
   Image,
   Collapse,
-  Icon
+  Icon,
+  Link
 } from '@chakra-ui/react'
 import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import { urlify } from 'helpers/misc'
+import { urlify, embed_url } from 'helpers/misc'
 
 const NewsCard = ({ content, status }) => {
   const [show, setShow] = React.useState(false)
@@ -82,6 +85,67 @@ const NewsCard = ({ content, status }) => {
       </Flex>
     </Flex>
   )
+
+  const spanRenderer = item => {
+    const { spans, text, type } = item
+
+    if (type === 'paragraph') {
+      if (spans?.length) {
+        const array = spans?.map(span => {
+          const { start, end, type: span_type } = span
+          if (span_type === 'hyperlink') {
+            const { data } = span
+            const { url } = data
+            return (
+              <>
+                <Text
+                  color='gray.500'
+                  mt={3}
+                  dangerouslySetInnerHTML={{
+                    __html: embed_url(text?.substr(start, end), url)
+                  }}
+                  fontSize={{ base: 'sm', md: 'md' }}
+                />
+              </>
+            )
+          }
+          if (span_type === 'strong') {
+            return (
+              <>
+                <Text
+                  as='strong'
+                  color='gray.600'
+                  mt={3}
+                  dangerouslySetInnerHTML={{
+                    __html: urlify(text?.substr(start, end))
+                  }}
+                  fontSize={{ base: 'sm', md: 'md' }}
+                />
+              </>
+            )
+          }
+          return null
+        })
+
+        return array
+      } else {
+        return (
+          <>
+            <Text
+              color='gray.500'
+              mt={3}
+              dangerouslySetInnerHTML={{
+                __html: urlify(text)
+              }}
+              fontSize={{ base: 'sm', md: 'md' }}
+            />
+          </>
+        )
+      }
+    }
+
+    return null
+  }
 
   return (
     <FarmBoardCardWrapper status={status} content={content}>
@@ -202,19 +266,7 @@ const NewsCard = ({ content, status }) => {
                   {details?.slice_type === 'details' &&
                     details?.primary?.description?.map(item => {
                       if (item?.type === 'paragraph') {
-                        return (
-                          <>
-                            <Text
-                              color='gray.500'
-                              mt={3}
-                              key={item.text}
-                              dangerouslySetInnerHTML={{
-                                __html: urlify(item.text)
-                              }}
-                              fontSize={{ base: 'sm', md: 'md' }}
-                            />
-                          </>
-                        )
+                        return spanRenderer(item)
                       }
 
                       if (item?.type === 'image') {

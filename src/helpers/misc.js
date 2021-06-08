@@ -209,6 +209,10 @@ export const urlify = text => {
   return result
 }
 
+export const embed_url = (text, url) => {
+  return `<a href=${url} className="farm-board" class="farm-board" style={{color: "cf.400"}} target="_blank">${text}</a>`
+}
+
 export const Status = {
   COMPLETED: 'COMPLETED',
   PENDING: 'PENDING',
