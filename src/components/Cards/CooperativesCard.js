@@ -32,7 +32,7 @@ const CooperativesCard = ({ coop }) => {
         <Link
           as={ReachRouter}
           to={{
-            pathname: `/cooperative-main/${coop?.name}`,
+            pathname: `/cooperative-main/${coop?._id}`,
             state: { _id: coop?._id }
           }}
           _hover={{ textDecor: 'none' }}

@@ -145,13 +145,13 @@ section[style] {
 }
 
 .farm-board:link {
-  color: green;
+  color: #3c9130;
   background-color: transparent;
   text-decoration: none;
 }
 
 .farm-board:visited {
-  color: pink;
+  color: #3c9130;
   background-color: transparent;
   text-decoration: none;
 }
