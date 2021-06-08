@@ -9,12 +9,12 @@ import useStartFarm from '../../../context/start-farm'
 import { useIntersection } from 'react-use'
 import AboutFarmManager from '../OtherSteps/AboutFarmManager'
 import Contract from '../OtherSteps/Contract'
-import PaymentOption from '../OtherSteps/PaymentOption'
 import Confirmation from '../OtherSteps/Confirmation'
 import ReloadPage from '../../Reload'
 import CooperativeName from '../OtherSteps/CooperativeName'
 import Acreage from './Acreage'
 import PropTypes from 'prop-types'
+import CooperativePayment from './CooperativePayment'
 
 const MotionFlex = motion(Flex)
 
@@ -95,7 +95,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           />
         )
       case 4:
-        return <PaymentOption farm={selectedFarm} />
+        return <CooperativePayment farm={selectedFarm} />
       case 5:
         return <Confirmation farm={selectedFarm} order={data || order} />
       default:
