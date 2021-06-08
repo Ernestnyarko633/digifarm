@@ -9,7 +9,7 @@ import { FaCircle } from 'react-icons/fa'
 import useComponent from 'context/component'
 import useWallet from 'context/wallet'
 
-const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
+const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
   const { handleModalClick } = useComponent()
   const { totalAmount } = useWallet()
 
@@ -61,7 +61,6 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
               <Box
                 w={{ base: '100%', xl: '200%' }}
                 as={Graph}
-                farm={farm}
                 activities={activities}
                 tasks={tasks}
                 scheduledTasks={scheduledTasks}
@@ -199,7 +198,6 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
 FarmFinances.propTypes = {
   activities: PropTypes.array.isRequired,
   tasks: PropTypes.array.isRequired,
-  scheduledTasks: PropTypes.array.isRequired,
-  farm: PropTypes.object.isRequired
+  scheduledTasks: PropTypes.array.isRequired
 }
 export default FarmFinances
