@@ -9,7 +9,9 @@ const Details = ({ title, subtitle, image, name, variety, cropCode }) => {
         <Flex p={2}>
           <Avatar name={name} src={image} size='sm' mt={2} />
           <Box px={3}>
-            <Text fontWeight='bold'>{name}</Text>
+            <Text fontWeight='bold' fontSize={{ base: 16, xl: 16 }}>
+              {name}
+            </Text>
             <Text fontSize='12px'>
               ( {variety} ) <Text as='span'> #{cropCode}</Text>
             </Text>
@@ -18,8 +20,8 @@ const Details = ({ title, subtitle, image, name, variety, cropCode }) => {
       ) : (
         <Box borderTopWidth={1} borderColor='gray.300'>
           <Flex p={2}>
-            <Text fontSize='16px'>{title}: </Text>
-            <Text fontSize='16px' fontWeight='bold' ml={2}>
+            <Text fontSize={{ base: 12, xl: 16 }}>{title}: </Text>
+            <Text fontSize={{ base: 12, xl: 16 }} fontWeight='bold' ml={2}>
               {subtitle}
             </Text>
           </Flex>

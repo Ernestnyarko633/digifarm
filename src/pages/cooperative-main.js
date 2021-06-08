@@ -24,11 +24,11 @@ import { BiCreditCard } from 'react-icons/bi'
 import { getFormattedMoney } from 'helpers/misc'
 import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
-//import useAuth from 'context/auth'
 import useAuth from 'context/auth'
 import useComponent from 'context/component'
 import Payment from 'components/Cards/CooperativeDashboard/Payment'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
+import CooperativeCard from 'components/Cards/CooperativeDashboard/CooperativeCard'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Cooperative Dashboard'
@@ -100,17 +100,14 @@ const CooperativeMain = ({ location: { state } }) => {
                   : 'Annonymous'}
               </Text>
               {row.index === 0 && (
-                // <Box bg='#D6F2D5' rounded='4px' ml='7px'>
                 <Text
-                  fontSize='10px'
+                  fontSize='12px'
                   textAlign='center'
-                  // color='#004C46'
-                  px='5.5px'
+                  px='5px'
                   color='#31BC2E'
                 >
                   Admin
                 </Text>
-                // </Box>
               )}
             </Flex>
             <Text fontSize='12px' color='gray.600'>
@@ -132,9 +129,8 @@ const CooperativeMain = ({ location: { state } }) => {
         <Text fontWeight='semibold'>
           $
           {getFormattedMoney(
-            row.values.acreage *
-              data?.product?.pricePerAcre *
-              data?.type?.discount
+            row.values.acreage * data?.product?.pricePerAcre -
+              data?.product?.pricePerAcre * data?.type?.discount
           )}
         </Text>
       )
@@ -185,7 +181,7 @@ const CooperativeMain = ({ location: { state } }) => {
                 <Button
                   btntitle='Pay'
                   colorScheme='linear'
-                  width='120px'
+                  width='100px'
                   py='10px'
                   leftIcon={<BiCreditCard size={20} />}
                   onClick={() => {
@@ -211,17 +207,14 @@ const CooperativeMain = ({ location: { state } }) => {
       <Header />
       <CompleteOrderModal isOpen={isOpen} onClose={onClose} />
       {getModal(modal)}
-      <Box py={30} w={{ xl: '100vw' }}>
-        <Grid
-          templateRows='repeat(2, 1fr)'
-          templateColumns='repeat(5, 1fr)'
-          bg='white'
-        >
+      <Box pt={30} bg='white' minH={{ base: '60vh', md: 'calc(100vh - 4rem)' }}>
+        <Grid templateColumns='repeat(5, 1fr)' bg='white'>
           <GridItem
             rowSpan={2}
             colSpan={1}
             bg='#FAFBFB'
             pt='70px'
+            h='100vh'
             display={{ base: 'none', lg: 'block' }}
           >
             {isLoading || error ? (
@@ -240,10 +233,16 @@ const CooperativeMain = ({ location: { state } }) => {
               <SideMenu data={data} border={1} bg='#F6F6F6' ml='49px' />
             )}
           </GridItem>
-          <GridItem colSpan={{ base: 5, lg: 4 }} px='30px' bg='white' pt='70px'>
+          <GridItem
+            colSpan={{ base: 5, lg: 4 }}
+            px={{ xl: 12 }}
+            bg='white'
+            pt={{ base: 12, xl: 20 }}
+            h={{ md: '100vh' }}
+          >
             {isLoading || error ? (
               <FetchCard
-                h='60vh'
+                h='100vh'
                 align='center'
                 justify='center'
                 direction='column'
@@ -259,10 +258,15 @@ const CooperativeMain = ({ location: { state } }) => {
                   borderColor='gray.200'
                   py='16px'
                   w='100%'
+                  px={{ base: 4 }}
                 >
                   <SideBar data={data} />
 
-                  <Heading fontSize='24px' ml={5}>
+                  <Heading
+                    fontSize={{ base: 16, xl: 16 }}
+                    ml={5}
+                    pt={{ md: 2 }}
+                  >
                     Cooperative Overview
                   </Heading>
                   <Spacer />
@@ -272,7 +276,7 @@ const CooperativeMain = ({ location: { state } }) => {
                         btntitle='Goto dashboard'
                         colorScheme='transparent'
                         color='gray.600'
-                        width='160px'
+                        width='150px'
                         py='10px'
                         ml={3}
                         borderWidth={1}
@@ -282,12 +286,25 @@ const CooperativeMain = ({ location: { state } }) => {
                     </Link>
                   </Flex>
                 </Flex>
-
-                <CustomTable
-                  variant='simple'
-                  _columns={_columns}
-                  _data={tableData}
-                />
+                <Box d={{ base: 'none', md: 'block', xl: 'block' }}>
+                  <CustomTable
+                    variant='simple'
+                    _columns={_columns}
+                    _data={tableData}
+                  />
+                </Box>
+                <Box d={{ base: 'block', md: 'none' }} px={4} pb='50px'>
+                  {tableData?.map(item => (
+                    <Box key={item?._id}>
+                      <CooperativeCard
+                        item={item}
+                        orderType={filteredProcessingOrder}
+                        data={data}
+                        handleClick={() => handleModalClick('payment')}
+                      />
+                    </Box>
+                  ))}
+                </Box>
               </>
             )}
           </GridItem>
