@@ -54,7 +54,6 @@ const Wallet = () => {
           <Box
             display={{ base: 'none', md: 'block' }}
             as={FarmFinances}
-            farm={farm}
             activities={activities}
             tasks={tasks}
             scheduledTasks={ScheduledTasks}

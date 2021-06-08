@@ -36,22 +36,22 @@ export default function Graph({
 
   const mapKey = i => i
 
-  const Tick = ({
-    payload: { value },
-    verticalAnchor,
-    visibleTicksCount,
-    ...rest
-  }) => (
-    <text {...rest} className='bar-chart-tick' dy={12}>
-      {value}
-    </text>
-  )
+  // const Tick = ({
+  //   payload: { value },
+  //   verticalAnchor,
+  //   visibleTicksCount,
+  //   ...rest
+  // }) => (
+  //   <text {...rest} className='bar-chart-tick' dy={12}>
+  //     {value}
+  //   </text>
+  // )
 
-  Tick.propTypes = {
-    payload: PropTypes.any,
-    verticalAnchor: PropTypes.any,
-    visibleTicksCount: PropTypes.any
-  }
+  // Tick.propTypes = {
+  //   payload: PropTypes.any,
+  //   verticalAnchor: PropTypes.any,
+  //   visibleTicksCount: PropTypes.any
+  // }
   return (
     <ResponsiveContainer width='100%' height={300}>
       <ComposedChart
