@@ -121,6 +121,10 @@ const Notifications = ({ notifications, loading, mutation }) => {
                           width={50}
                         />
                       </Flex>
+                    ) : notifications.length === 0 ? (
+                      <Text fontSize='lg' textAlign='center' p={6}>
+                        No notifications
+                      </Text>
                     ) : (
                       notifications?.map(item => (
                         <Menu.Item key={item?._id} as={MotionBox}>

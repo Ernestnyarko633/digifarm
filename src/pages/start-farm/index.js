@@ -62,12 +62,11 @@ const StartFarm = () => {
                 require(`../../assets/images/startfarm/${item.img}`).default
               }
               selected={selected.name === item.name}
-              onClick={e => {
-                if (item.id === 'cooperative') return e.preventDefault()
+              onClick={() => {
                 sessionStorage.setItem('type', item.id)
-                return setSelected(item)
+                setSelected(item)
               }}
-              disabled={item.name === 'Cooperative'}
+              // disabled={item.name === 'Cooperative'}
             />
           ))}
         </Flex>
@@ -83,7 +82,7 @@ const StartFarm = () => {
               px={{ base: 10, md: 20 }}
               h={{ base: 10, md: 12 }}
               fontSize={{ base: 'sm', md: 'md' }}
-              disabled={!selected || selected.id === 'cooperative'}
+              disabled={!selected}
             />
           </Link>
         </Box>
