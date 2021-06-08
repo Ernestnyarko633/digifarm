@@ -20,9 +20,6 @@ const TRACKING_ID = process.env.REACT_APP_GA
 const ThemeApp = () => {
   React.useEffect(() => {
     ReactGA.initialize(TRACKING_ID)
-  }, [])
-
-  React.useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search)
   }, [])
 

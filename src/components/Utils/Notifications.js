@@ -49,7 +49,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
             mr={{ md: 4 }}
             pos='relative'
           >
-            {!!notifications?.length && (
+            {notifications?.length >= 1 && (
               <Flex
                 pos='absolute'
                 top={-2}
