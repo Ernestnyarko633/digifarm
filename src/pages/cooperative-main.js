@@ -29,6 +29,7 @@ import useComponent from 'context/component'
 import Payment from 'components/Cards/CooperativeDashboard/Payment'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
 import CooperativeCard from 'components/Cards/CooperativeDashboard/CooperativeCard'
+import useStartFarm from 'context/start-farm'
 
 const CooperativeMain = ({ location: { state } }) => {
   document.title = 'Cooperative Dashboard'
@@ -40,7 +41,7 @@ const CooperativeMain = ({ location: { state } }) => {
   const { user } = isAuthenticated()
   const { modal, handleModalClick } = useComponent()
   const { isOpen, onOpen, onClose } = useDisclosure()
-
+  const { order, cooperative } = useStartFarm()
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const { getCooperativeById } = useApi()
@@ -48,7 +49,9 @@ const CooperativeMain = ({ location: { state } }) => {
     null,
     getCooperativeById,
     reload,
-    state._id
+    state?._id
+      ? state?._id
+      : cooperative?._id || order?.cooperative?._id || order?.cooperative
   )
 
   const { getMyOrders } = useApi()

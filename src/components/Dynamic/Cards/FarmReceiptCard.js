@@ -29,7 +29,7 @@ export default function FarmReceiptCard({ farm, title, type }) {
         duration: 5000,
         position: 'top-right',
       });
-      saveAs(blob, `${query.reference}-agreement.pdf`);
+      saveAs(blob, `${query.reference}-${query?.type}.pdf`);
     } catch (error) {
       toast({
         title: 'Download failed',
