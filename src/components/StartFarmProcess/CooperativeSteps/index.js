@@ -45,7 +45,6 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
     selectedCooperativeType
   } = useStartFarm()
 
-  console.log(payment, otherStep, 'romom')
   const catFarms = JSON.parse(sessionStorage.getItem('farms'))
 
   const toast = useToast()
