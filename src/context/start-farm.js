@@ -55,16 +55,18 @@ export const StartFarmContextProvider = ({ children }) => {
 
   useEffect(() => {
     let mounted = true
+    // set types manually
     const types = ['tribe', 'village', 'city', 'nation']
 
+    // function barrier get the next cooperative minAcre
     const Barrier = type => {
       const num = types.findIndex(value => value === type?.name)
-
       const newNum = num + 1
-      if (newNum < 3) setBarrier(cooperativeTypes[newNum]?.minAcre)
-      if (newNum > 3) setBarrier(10000000000000)
+      if (newNum <= 3) setBarrier(cooperativeTypes[newNum]?.minAcre)
+      if (newNum > 3) setBarrier(Infinity)
     }
 
+    //set Limit or barrier
     if (mounted && selectedCooperativeType) Barrier(selectedCooperativeType)
     return () => (mounted = false)
   }, [cooperativeTypes, selectedCooperativeType])

@@ -162,17 +162,33 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                   mt={{ md: 5 }}
                 >
                   <Box borderRightWidth={1} pr={8} borderRightColor='gray.300'>
-                    <Text color='gray.500'>
-                      Members :
-                      <Text as='span' fontWeight={900} color='black'>
-                        {' '}
-                        {values?.users?.length}/
-                        {`${selectedCooperativeType?.maxMember}`}
+                    <Text color='gray.500' fontSize='sm'>
+                      Max Members :{' '}
+                      {
+                        <Text
+                          as='span'
+                          fontSize='sm'
+                          fontWeight={900}
+                          color='black'
+                        >
+                          {`${selectedCooperativeType?.maxMember}`}
+                        </Text>
+                      }{' '}
+                      <br />
+                      Min Members :{' '}
+                      <Text
+                        as='span'
+                        fontSize='sm'
+                        fontWeight={900}
+                        color='black'
+                      >
+                        2
                       </Text>
                     </Text>
                   </Box>
                   <Box ml={{ md: 16 }}>
                     <Text
+                      fontSize='sm'
                       color={
                         acres >= selectedCooperativeType?.minAcre &&
                         acres <= barrier
@@ -182,9 +198,69 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                           : 'gray.500'
                       }
                     >
-                      Meet the minimum acreage of{' '}
-                      {selectedCooperativeType?.minAcre} :{' '}
+                      Minimum acreage :{' '}
                       <Text
+                        fontSize='sm'
+                        as='span'
+                        fontWeight={900}
+                        color={
+                          acres >= selectedCooperativeType?.minAcre &&
+                          acres <= barrier
+                            ? 'cf.400'
+                            : acres > barrier
+                            ? 'red.500'
+                            : 'black'
+                        }
+                      >
+                        {selectedCooperativeType?.minAcre}
+                        {/* {`(${selectedCooperativeType?.minAcre})`} */}
+                      </Text>
+                    </Text>
+                    <Text
+                      fontSize='sm'
+                      color={
+                        acres >= selectedCooperativeType?.minAcre &&
+                        acres <= barrier
+                          ? 'cf.400'
+                          : acres > barrier
+                          ? 'red.500'
+                          : 'gray.500'
+                      }
+                    >
+                      Maximum acreage :{' '}
+                      <Text
+                        fontSize='sm'
+                        as='span'
+                        fontWeight={900}
+                        color={
+                          acres >= selectedCooperativeType?.minAcre &&
+                          acres <= barrier
+                            ? 'cf.400'
+                            : acres > barrier
+                            ? 'red.500'
+                            : 'black'
+                        }
+                      >
+                        {selectedCooperativeType?.name === 'nation'
+                          ? '---'
+                          : barrier}
+                        {/* {`(${selectedCooperativeType?.minAcre})`} */}
+                      </Text>
+                    </Text>
+                    <Text
+                      fontSize='sm'
+                      color={
+                        acres >= selectedCooperativeType?.minAcre &&
+                        acres <= barrier
+                          ? 'cf.400'
+                          : acres > barrier
+                          ? 'red.500'
+                          : 'gray.500'
+                      }
+                    >
+                      Cooperative total acreage :{' '}
+                      <Text
+                        fontSize='sm'
                         as='span'
                         fontWeight={900}
                         color={

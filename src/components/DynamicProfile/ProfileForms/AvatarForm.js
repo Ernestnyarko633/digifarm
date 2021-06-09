@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Flex, Text, Input, Avatar, Spinner, useToast } from '@chakra-ui/react'
 import useAuth from 'context/auth'

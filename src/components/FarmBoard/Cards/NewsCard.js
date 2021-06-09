@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -10,8 +8,7 @@ import {
   Text,
   Image,
   Collapse,
-  Icon,
-  Link
+  Icon
 } from '@chakra-ui/react'
 import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
