@@ -74,11 +74,11 @@ const CooperativePayment = ({ farm, asMember }) => {
 
             <Box>
               <Text color='gray.400' fontSize='sm'>
-                {cooperative?.name || asMember?.cooperativeFromMember?.name}
+                Cooperative Type
               </Text>
-              <Text fontWeight={700}>
-                {cooperative?.type?.name ||
-                  asMember?.cooperativeFromMember?.type?.name}
+              <Text fontWeight={700} textAlign='right'>
+                {cooperative?.type?.name?.toUpperCase() ||
+                  asMember?.cooperativeFromMember?.type?.name?.toUpperCase()}
               </Text>
             </Box>
           </Flex>
