@@ -39,6 +39,7 @@ const CooperativeFarm = ({ location, history }) => {
         return (
           <CooperativeSteps
             asMember={state}
+            payment={state}
             data={selected}
             history={history}
           />

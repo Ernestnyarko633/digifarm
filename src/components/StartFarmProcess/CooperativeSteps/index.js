@@ -18,7 +18,7 @@ import CooperativePayment from './CooperativePayment'
 
 const MotionFlex = motion(Flex)
 
-const CooperativeSteps = ({ asMember, data, history }) => {
+const CooperativeSteps = ({ asMember, data, history, payment }) => {
   const { user } = useAuth()
   const {
     text,
@@ -60,11 +60,20 @@ const CooperativeSteps = ({ asMember, data, history }) => {
   })
 
   React.useEffect(() => {
-    if (!selectedType && !asMember) {
+    if (payment?.payment) {
+      setStep(x => {
+        x = 1
+        return x
+      })
+      setOtherStep(x => {
+        x = 5
+        return x
+      })
+    } else if (!selectedType && !asMember) {
       setStep(x => x * 0)
       setOtherStep(x => x * 0)
     }
-  }, [setStep, setOtherStep, selectedType, asMember])
+  }, [setStep, setOtherStep, selectedType, asMember, payment?.payment])
 
   React.useEffect(() => {
     if (!asMember && !catFarms && otherStep !== 4) {
@@ -327,7 +336,8 @@ const CooperativeSteps = ({ asMember, data, history }) => {
 CooperativeSteps.propTypes = {
   data: PropTypes.any,
   history: PropTypes.any,
-  asMember: PropTypes.object
+  asMember: PropTypes.object,
+  payment: PropTypes.object
 }
 
 export default CooperativeSteps
