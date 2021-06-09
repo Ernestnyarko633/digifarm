@@ -159,7 +159,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                 >
                   <Box borderRightWidth={1} pr={8} borderRightColor='gray.300'>
                     <Text color='gray.500' fontSize='sm'>
-                      Max Members :{' '}
+                      Maximum Members :{' '}
                       {
                         <Text
                           as='span'
@@ -171,7 +171,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                         </Text>
                       }{' '}
                       <br />
-                      Min Members :{' '}
+                      Minimum Members :{' '}
                       <Text
                         as='span'
                         fontSize='sm'
