@@ -143,7 +143,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           width: 56,
           action: handleNextStep,
           disabled:
-            cooperativeName?.length > 3 && cooperativeName?.length <= 15
+            cooperativeName?.length >= 3 && cooperativeName?.length <= 15
               ? false
               : true
         }
