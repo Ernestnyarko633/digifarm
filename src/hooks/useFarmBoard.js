@@ -12,20 +12,20 @@ const Client = Prismic.client(PRISMIC_API, {
 })
 
 export const useNews = () => {
-  const [news, setNewsData] = React.useState([])
+  const [news, setNewsData] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted && !news.length) {
+    if (mounted && !news) {
       const fetchData = async () => {
         try {
           setLoading(true)
           const [res1] = await Promise.all([
             Client.query(Prismic.Predicates.at('document.type', 'news'))
           ])
-          if (res1) setNewsData(res1.results)
+          if (res1) setNewsData(res1?.results || [])
         } catch (err) {
           setError('Could not fetch data')
         } finally {
@@ -51,13 +51,13 @@ export const useNews = () => {
 }
 
 export const useVideos = () => {
-  const [videos, setVideosData] = React.useState([])
+  const [videos, setVideosData] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted && !videos.length) {
+    if (mounted && !videos) {
       const fetchData = async () => {
         try {
           setLoading(true)
@@ -66,7 +66,7 @@ export const useVideos = () => {
               Prismic.Predicates.at('document.type', 'weekly_videos')
             )
           ])
-          if (res1) setVideosData(res1.results)
+          if (res1) setVideosData(res1?.results || [])
         } catch (err) {
           setError('Could not fetch data')
         } finally {
@@ -92,7 +92,7 @@ export const useVideos = () => {
 }
 
 export const useFeeds = () => {
-  const [feeds, setFeeds] = React.useState([])
+  const [feeds, setFeeds] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
   const [reload, setReload] = React.useState(0)
@@ -108,7 +108,7 @@ export const useFeeds = () => {
   React.useEffect(() => {
     let mounted = true
 
-    if (mounted && !feeds.length) {
+    if (mounted && !feeds) {
       setLoading(true)
 
       const fetchData = async () => {
@@ -127,7 +127,9 @@ export const useFeeds = () => {
 
           //combining all data now from prismic and farm feeds
           if (allFeeds) {
-            allFeeds.map(f => setFeeds(s => [...s, ...f]))
+            allFeeds.map(f =>
+              setFeeds(s => (!s ? [...[], ...f] : [...s, ...f]))
+            )
           }
         } catch (error) {
           setError(error)
@@ -136,7 +138,7 @@ export const useFeeds = () => {
         }
       }
 
-      if (farms) {
+      if (farms && !feeds) {
         fetchData()
       }
     } else {
