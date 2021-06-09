@@ -172,6 +172,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                       borderRightColor='gray.300'
                       w='100%'
                       py={2}
+                      pl={2}
                     >
                       <Text color='gray.500' fontSize='sm'>
                         There should be a <strong color>minimum of 2</strong>{' '}
