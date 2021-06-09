@@ -110,6 +110,7 @@ export const StartFarmContextProvider = ({ children }) => {
         cost = price * acreage
         return cost
       }
+
       let data = {
         cycle,
         acreage: cooperativeUserAcreage || acreage,

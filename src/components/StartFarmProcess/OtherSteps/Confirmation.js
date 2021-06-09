@@ -102,7 +102,7 @@ const Confirmation = ({ farm, order }) => {
               dangerouslySetInnerHTML={{
                 __html:
                   order?.status !== 'PAID'
-                    ? 'Weldone! your order is pending, <br /> awaiting payment approval, download invoice for payment details.'
+                    ? 'Welldone! your order is pending, <br /> awaiting payment approval, download invoice for payment details.'
                     : 'Hurray!  you have successfully <br />made payment to your new farm'
               }}
             />

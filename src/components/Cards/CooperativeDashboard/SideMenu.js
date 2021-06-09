@@ -51,6 +51,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
       })
     }
   }
+
   React.useEffect(() => {
     let mounted = true
     let t = 0
@@ -160,7 +161,11 @@ const SideMenu = ({ data, border, bg, ml }) => {
             data?.product?.managers[0]?.lastName
           }
         />
-        <Details title='Farm Contract' />
+        <Details
+          title='Farm Agreement'
+          color='cf.400'
+          subtitle={<a href='#hh'>View Agreement</a>}
+        />
       </Box>
     </Box>
   )

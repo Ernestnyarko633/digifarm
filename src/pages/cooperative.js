@@ -25,19 +25,21 @@ import { Button } from 'components'
 import { Link as ReachRouter } from 'react-router-dom'
 import useStartFarm from 'context/start-farm'
 const Cooperative = ({ location: { state } }) => {
-  document.title = `Welcome to ${state?.data.name} Cooperative`
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [reload, setReload] = useState(0)
-  const { setSelectedFarm, setStep, setOtherStep } = useStartFarm()
+  const { setSelectedFarm, setStep, setOtherStep, setSelectedCooperativeType } =
+    useStartFarm()
 
   const { getCooperativeById } = useApi()
   const { data, isLoading, error } = useFetch(
-    `welcome_to_coop_${state?.data?._id}`,
+    null,
     getCooperativeById,
     reload,
-    state?.data?._id
+    state?._id
   )
+
+  document.title = `Welcome to ${data?.name} Cooperative`
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
@@ -66,13 +68,21 @@ const Cooperative = ({ location: { state } }) => {
 
     if (mounted && data?.product?._id) {
       setSelectedFarm(data?.product)
+      setSelectedCooperativeType(data?.type)
       sessionStorage.setItem('selected_farm', JSON.stringify(data?.product))
       setStep(x => x + 2)
       setOtherStep(x => x + 3)
     }
 
     return () => (mounted = false)
-  }, [data?.product, setOtherStep, setSelectedFarm, setStep])
+  }, [
+    data?.product,
+    data?.type,
+    setOtherStep,
+    setSelectedFarm,
+    setStep,
+    setSelectedCooperativeType
+  ])
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -219,11 +229,7 @@ const Cooperative = ({ location: { state } }) => {
                         : 'Annonymous'}
                     </Text>
                     <Spacer />
-                    <Text fontSize={{ base: 16, md: 16 }}>
-                      {item?.info?.firstName || item?.info?.lastName
-                        ? 'Accepted'
-                        : 'Invited'}
-                    </Text>
+                    <Text fontSize={{ base: 16, md: 16 }}>Invited</Text>
                   </Flex>
                 ))}
               </Box>
@@ -251,7 +257,7 @@ const Cooperative = ({ location: { state } }) => {
                 as={ReachRouter}
               >
                 <Button
-                  btntitle='Get Started'
+                  btntitle='continue'
                   w='310px'
                   fontSize='16px'
                   h='48px'
