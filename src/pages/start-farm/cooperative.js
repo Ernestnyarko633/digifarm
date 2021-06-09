@@ -17,7 +17,7 @@ const CooperativeFarm = ({ location, history }) => {
     let mounted = true
     if (mounted && state?.step) {
       setStep(x => x + 1)
-      setOtherStep(x => x + 4)
+      setOtherStep(x => x + 5)
     }
 
     return () => (mounted = false)
