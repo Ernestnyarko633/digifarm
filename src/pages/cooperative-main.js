@@ -63,18 +63,6 @@ const CooperativeMain = ({ location: { state } }) => {
     return item?.cooperative?._id === data?._id
   })
 
-  const { data: orrder } = useFetch(
-    null,
-    getMyOrder,
-    null,
-    filteredPendingOrder?.[0] ? filteredPendingOrder?.[0]?._id : null
-  )
-
-  // eslint-disable-next-line no-console
-  console.log('orderry', orrder)
-  // eslint-disable-next-line no-console
-  console.log('id', filteredPendingOrder?.[0]?._id)
-
   const getModal = val => {
     if (val === 'payment') {
       return <Payment onOpen={onOpen} data={filteredPendingOrder} />
