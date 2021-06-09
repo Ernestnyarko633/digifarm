@@ -22,7 +22,7 @@ import useApi from 'context/api'
 const SideMenu = ({ data, border, bg, ml }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  const { updateCooperative } = useApi()
+  const { updateCooperative, downloadFile } = useApi()
   const { coopImg, setCoopImg } = useStartFarm()
   const [total, setTotal] = React.useState(0)
 
@@ -51,6 +51,43 @@ const SideMenu = ({ data, border, bg, ml }) => {
       })
     }
   }
+
+  // eslint-disable-next-line no-console
+  console.log('data', data)
+
+  const downloadOrder = async query => {
+    try {
+      const res = await downloadFile('orders', query)
+      // eslint-disable-next-line no-console
+      console.log('error', res)
+
+      // let blob = new Blob([res.data], {
+      //   type: 'application/pdf;charset=utf-8',
+      // });
+      // toast({
+      //   title: 'Download starting',
+      //   status: 'success',
+      //   duration: 5000,
+      //   position: 'top-right',
+      // });
+      // saveAs(blob, `${query.reference}-${query?.type}.pdf`);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('error', error)
+      //   toast({
+      //     title: 'Download failed',
+      //     description:
+      //       error?.message || error?.data?.message || 'Unexpected error.',
+      //     status: 'error',
+      //     duration: 5000,
+      //     position: 'top-right',
+      //   });
+      // } finally {
+      //   setLoading(false);
+      // }
+    }
+  }
+
   React.useEffect(() => {
     let mounted = true
     let t = 0
@@ -160,7 +197,23 @@ const SideMenu = ({ data, border, bg, ml }) => {
             data?.product?.managers[0]?.lastName
           }
         />
-        <Details title='Farm Contract' />
+        <Details
+          title='Farm Agreement'
+          color='cf.400'
+          subtitle={
+            <a
+              href='#hh'
+              onClick={() => {
+                return downloadOrder({
+                  reference: data?.order?.reference,
+                  type: 'agreement'
+                })
+              }}
+            >
+              View Agreement
+            </a>
+          }
+        />
       </Box>
     </Box>
   )
