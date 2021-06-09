@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
@@ -14,22 +15,18 @@ const CooperativeFarm = ({ location, history }) => {
   React.useEffect(() => {
     let mounted = true
     if (mounted && state?.step) {
-      setStep(x => x + 1)
-      setOtherStep(x => x + 4)
-    }
-
-    return () => (mounted = false)
-  }, [state, setStep, setOtherStep])
-
-  React.useEffect(() => {
-    return () => {
+      setStep(x => x + 2)
+      setOtherStep(x => x + 5)
+    } else {
       // clear cache data in session storage
       setStep(x => x * 0)
       setOtherStep(x => x * 0)
       sessionStorage.removeItem('categories')
       sessionStorage.removeItem('farms')
     }
-  }, [setStep, setOtherStep])
+
+    return () => (mounted = false)
+  }, [state, setStep, setOtherStep])
 
   const getContent = value => {
     switch (value) {

@@ -19,7 +19,7 @@ import InviteImg from 'assets/images/invite.svg'
 
 const MotionGrid = motion(Grid)
 
-const Acreage = ({ name, farm, order, selectedType }) => {
+const Acreage = ({ name, farm, selectedType }) => {
   const {
     barrier,
     cooperativeName,
@@ -79,14 +79,10 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                   <Avatar src={farm?.cropVariety?.imageUrl} />
                   <Box ml={2}>
                     <Heading as='h3' fontSize='xl' textTransform='uppercase'>
-                      {order?.product?.cropVariety?.crop?.name ||
-                        farm?.cropVariety?.crop?.name}
+                      {farm?.cropVariety?.crop?.name}
                     </Heading>
                     <Text fontSize='xs' textColor='gray.500' mt={-1}>
-                      (
-                      {order?.product?.cropVariety?.name ||
-                        farm?.cropVariety?.name}
-                      ) #{order?.product?.name || farm?.name}
+                      ({farm?.cropVariety?.name}) #{farm?.name}
                     </Text>
                   </Box>
                 </Flex>
@@ -163,7 +159,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                 >
                   <Box borderRightWidth={1} pr={8} borderRightColor='gray.300'>
                     <Text color='gray.500' fontSize='sm'>
-                      Max Members :{' '}
+                      Maximum Members :{' '}
                       {
                         <Text
                           as='span'
@@ -175,7 +171,7 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                         </Text>
                       }{' '}
                       <br />
-                      Min Members :{' '}
+                      Minimum Members :{' '}
                       <Text
                         as='span'
                         fontSize='sm'
@@ -337,7 +333,6 @@ const Acreage = ({ name, farm, order, selectedType }) => {
 Acreage.propTypes = {
   farm: PropTypes.object,
   name: PropTypes.string,
-  order: PropTypes.object,
   selectedType: PropTypes.object
 }
 

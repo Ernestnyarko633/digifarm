@@ -76,7 +76,7 @@ const FarmInfo = ({ farm, order, width = 108, margin = 4 }) => {
               <Text mr={2} color='gray.600'>
                 Acreage
               </Text>
-              <Text>{order.acreage}</Text>
+              <Text>{order?.acreage}</Text>
             </Flex>
           </Box>
           <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
