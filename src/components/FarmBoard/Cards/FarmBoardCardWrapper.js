@@ -1,44 +1,40 @@
-/* eslint-disable*/
-import React from "react";
-import { Box, Flex, Icon, IconButton, Text } from "@chakra-ui/react";
-import PropTypes from "prop-types";
-import { AiOutlineShareAlt } from "react-icons/ai";
-import useComponent from "context/component";
-import { BsHeart } from "react-icons/bs";
-import { texTrancator } from "helpers/misc";
-import { FaTwitter, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
-import { RiCloseFill } from "react-icons/ri";
-import { AnimatePresence, motion } from "framer-motion";
+import React from 'react'
+import { Box, Flex, Icon, Text } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
+import { AiOutlineShareAlt } from 'react-icons/ai'
+import { BsHeart } from 'react-icons/bs'
+import { texTrancator } from 'helpers/misc'
+import { FaTwitter, FaLinkedinIn, FaFacebookF } from 'react-icons/fa'
+import { RiCloseFill } from 'react-icons/ri'
+import { AnimatePresence, motion } from 'framer-motion'
 import {
   FacebookShareButton,
   LinkedinShareButton,
-  TwitterShareButton,
-} from "react-share";
+  TwitterShareButton
+} from 'react-share'
 
-const MotionFlex = motion(Flex);
+const MotionFlex = motion(Flex)
 
 const FarmBoardCardWrapper = ({ children, status, content }) => {
-  const { handleModalClick } = useComponent();
+  const arrayToString = (array = ['']) => {
+    let aneow = []
+    array.forEach(text => aneow.push(text.text))
 
-  const arrayToString = (array = [""]) => {
-    let aneow = [];
-    array.forEach((text) => aneow.push(text.text));
+    const string = aneow.join()
+    return string.replace(/,/g, '')
+  }
 
-    const string = aneow.join();
-    return string.replace(/,/g, "");
-  };
-
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = React.useState(false)
   const [data, setData] = React.useState({
-    url: "",
-    title: "",
-    quote: "",
-  });
+    url: '',
+    title: '',
+    quote: ''
+  })
 
   React.useEffect(() => {
-    let mounted = true;
+    let mounted = true
     const shareData = () => {
-      status === "news"
+      status === 'news'
         ? setData({
             url: window.location.href,
             title: content?.data?.headline[0]?.text,
@@ -46,91 +42,97 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
               texTrancator(
                 100,
                 arrayToString(content?.data?.body[0]?.primary?.description)
-              ) + "... https://digitalfarmer.completefarmer.com" ||
-              content?.data?.body[0]?.primary?.description[0]?.text,
+              ) + '... https://digitalfarmer.completefarmer.com' ||
+              content?.data?.body[0]?.primary?.description[0]?.text
           })
-        : status === "weekly_videos"
+        : status === 'weekly_videos'
         ? setData({
             url: window.location.href,
             title: content?.data?.body[0].items[0].weekly_video.author_name,
-            quote: `Check out Complete Farmer's Youtube Channel ${content?.data?.body[0].items[0].weekly_video.author_url}`,
+            quote: `Check out Complete Farmer's Youtube Channel ${content?.data?.body[0].items[0].weekly_video.author_url}`
           })
         : setData({
             url: window.location.href,
             title: content?.title,
-            quote: content?.description,
-          });
-    };
-    shareData();
-    return () => (mounted = false);
-  }, []);
+            quote: content?.description
+          })
+    }
+    if (mounted) shareData()
+    return () => (mounted = false)
+  }, [
+    content?.data?.body,
+    content?.data?.headline,
+    content?.description,
+    content?.title,
+    status
+  ])
 
   return (
     <Box
-      rounded="xl"
-      w={{ base: 82, md: "550px", xl: 125 }}
-      mx="auto"
+      rounded='xl'
+      w={{ base: 82, md: '550px', xl: 125 }}
+      mx='auto'
       ml={{ md: 0, lg: 16, xl: 0 }}
-      bg="white"
+      bg='white'
       mb={10}
-      filter="drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))"
+      filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
     >
       {children}
       <Flex
-        align="center"
+        align='center'
         py={{
           base: 4,
-          md: status !== "news" && status !== "weekly_videos" && 6,
+          md: status !== 'news' && status !== 'weekly_videos' && 6
         }}
         pb={{
           base: 4,
-          md: 3,
+          md: 3
         }}
         px={{ base: 4, md: 3 }}
       >
-        {status !== "news" && status !== "weekly_videos" && false && (
+        {status !== 'news' && status !== 'weekly_videos' && false && (
           <Flex>
-            <Text color="cf.800">123</Text>
+            <Text color='cf.800'>123</Text>
           </Flex>
         )}
 
         <Flex
-          justify="flex-end"
-          textAlign="right"
-          w="100%"
+          justify='flex-end'
+          textAlign='right'
+          w='100%'
           ml={{ md: 6 }}
-          cursor="pointer"
+          cursor='pointer'
         >
-          {status !== "news" && status !== "weekly_videos" && false && (
+          {status !== 'news' && status !== 'weekly_videos' && false && (
             <Box>
               <Icon
                 //onClick={() => handleLike()}
-                color="cf.800"
+                color='cf.800'
                 as={BsHeart}
                 mr={2}
                 boxSize={5}
               />
             </Box>
           )}
-          <Flex pos="relative" align="center">
+          <Flex pos='relative' align='center'>
             <AnimatePresence>
               {show && (
                 <MotionFlex
                   initial={{ opacity: 0, width: 0 }}
                   animate={{
                     opacity: 1,
-                    width: "11rem",
-                    transition: { duration: 0.4 },
+                    width: '11rem',
+                    transition: { duration: 0.4 }
                   }}
                   exit={{ opacity: 0, width: 0, transition: { duration: 0.4 } }}
-                  align="center"
-                  justify="center"
-                  bg="cf.800"
-                  color="white"
-                  rounded="3xl"
+                  align='center'
+                  justify='center'
+                  bg='cf.800'
+                  color='white'
+                  rounded='3xl'
                   w={40}
                   h={10}
-                  pos="absolute"
+                  pos='absolute'
                   right={0}
                   pr={8}
                 >
@@ -160,10 +162,10 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
                   </LinkedinShareButton>
 
                   <TwitterShareButton
-                    title={data.title || "This is a feed from complete farmer"}
+                    title={data.title || 'This is a feed from complete farmer'}
                     url={data.url}
                     via={`completefarmer ${data.quote}`}
-                    related={["@completefarmer"]}
+                    related={['@completefarmer']}
                   >
                     <Icon
                       as={FaTwitter}
@@ -175,16 +177,16 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
               )}
             </AnimatePresence>
             <Flex
-              align="center"
-              justify="center"
+              align='center'
+              justify='center'
               w={10}
               h={10}
-              rounded="100%"
-              bg="cf.800"
-              color="white"
-              filter="drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))"
+              rounded='100%'
+              bg='cf.800'
+              color='white'
+              filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               borderWidth={1}
-              borderColor="cf.800"
+              borderColor='cf.800'
               onClick={() => setShow(!show)}
             >
               <Icon as={show ? RiCloseFill : AiOutlineShareAlt} boxSize={6} />
@@ -231,13 +233,13 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
         </Flex>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
 FarmBoardCardWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   status: PropTypes.any,
-  content: PropTypes.any,
-};
+  content: PropTypes.any
+}
 
-export default FarmBoardCardWrapper;
+export default FarmBoardCardWrapper
