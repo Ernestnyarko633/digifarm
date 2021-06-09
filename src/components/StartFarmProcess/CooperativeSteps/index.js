@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import Overlay from '../../Loading/Overlay'
 import { Flex, Image, Link, Text, useToast } from '@chakra-ui/react'
@@ -44,6 +45,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
     selectedCooperativeType
   } = useStartFarm()
 
+  console.log(payment, otherStep, 'romom')
   const catFarms = JSON.parse(sessionStorage.getItem('farms'))
 
   const toast = useToast()
@@ -63,7 +65,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
     if (payment?.payment) {
       // set step to  case 1
       setStep(x => {
-        x = 1
+        x = 2
         return x
       })
 
@@ -202,7 +204,9 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
     }
   }
 
-  const { title, action, width, disabled } = getForwardButtonProps(otherStep)
+  const { title, action, width, disabled } = getForwardButtonProps(
+    payment?.payment ? 5 : otherStep
+  )
 
   return (
     <Flex
@@ -292,7 +296,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
             md: otherStep !== 1 ? 120 : '80vh'
           }}
         >
-          {getSteps(otherStep)}
+          {getSteps(payment?.payment ? 5 : otherStep)}
         </MotionFlex>
       </AnimateSharedLayout>
 
