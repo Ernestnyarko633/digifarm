@@ -6,6 +6,7 @@ import { Box, Flex, Text } from '@chakra-ui/layout'
 import { Grid, GridItem, Heading, Image, Icon } from '@chakra-ui/react'
 import { Avatar } from '@chakra-ui/avatar'
 import { HiLocationMarker } from 'react-icons/hi'
+import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { BsPlus } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 
@@ -156,123 +157,37 @@ const Acreage = ({ name, farm, selectedType }) => {
                   p={3}
                   rounded='md'
                   mt={{ md: 5 }}
+                  direction='row'
                 >
-                  <Box borderRightWidth={1} pr={8} borderRightColor='gray.300'>
-                    <Text color='gray.500' fontSize='sm'>
-                      Maximum Members :{' '}
-                      {
-                        <Text
-                          as='span'
-                          fontSize='sm'
-                          fontWeight={900}
-                          color='black'
-                        >
-                          {`${selectedCooperativeType?.maxMember}`}
-                        </Text>
-                      }{' '}
-                      <br />
-                      Minimum Members :{' '}
-                      <Text
-                        as='span'
-                        fontSize='sm'
-                        fontWeight={900}
-                        color='black'
-                      >
-                        2
-                      </Text>
-                    </Text>
+                  <Box mb={14} align='flex-start' justify='flex-start' w='5%'>
+                    <Icon
+                      color='cf.400'
+                      boxSize={5}
+                      as={BsFillInfoCircleFill}
+                    />
                   </Box>
-                  <Box ml={{ md: 16 }}>
-                    <Text
-                      fontSize='sm'
-                      color={
-                        acres >= selectedCooperativeType?.minAcre &&
-                        acres <= barrier
-                          ? 'cf.400'
-                          : acres > barrier
-                          ? 'red.500'
-                          : 'gray.500'
-                      }
+                  <Flex direction='column' w='95%'>
+                    <Box
+                      borderBottomWidth={1}
+                      borderRightColor='gray.300'
+                      w='100%'
+                      py={2}
                     >
-                      Minimum acreage :{' '}
-                      <Text
-                        fontSize='sm'
-                        as='span'
-                        fontWeight={900}
-                        color={
-                          acres >= selectedCooperativeType?.minAcre &&
-                          acres <= barrier
-                            ? 'cf.400'
-                            : acres > barrier
-                            ? 'red.500'
-                            : 'black'
-                        }
-                      >
-                        {selectedCooperativeType?.minAcre}
-                        {/* {`(${selectedCooperativeType?.minAcre})`} */}
+                      <Text color='gray.500' fontSize='sm'>
+                        There should be a <strong color>minimum of 2</strong>{' '}
+                        and and <strong>maximum of 5</strong> members
                       </Text>
-                    </Text>
-                    <Text
-                      fontSize='sm'
-                      color={
-                        acres >= selectedCooperativeType?.minAcre &&
-                        acres <= barrier
-                          ? 'cf.400'
-                          : acres > barrier
-                          ? 'red.500'
-                          : 'gray.500'
-                      }
-                    >
-                      Maximum acreage :{' '}
-                      <Text
-                        fontSize='sm'
-                        as='span'
-                        fontWeight={900}
-                        color={
-                          acres >= selectedCooperativeType?.minAcre &&
-                          acres <= barrier
-                            ? 'cf.400'
-                            : acres > barrier
-                            ? 'red.500'
-                            : 'black'
-                        }
-                      >
-                        {selectedCooperativeType?.name === 'nation'
-                          ? '---'
-                          : barrier}
-                        {/* {`(${selectedCooperativeType?.minAcre})`} */}
+                    </Box>
+                    <Box borderRightColor='gray.300' p={2}>
+                      <Text color='gray.500' fontSize='sm'>
+                        This cooperative will have to meet the minimum number of
+                        acreages for{' '}
+                        <strong>{selectedCooperativeType?.name}</strong> which
+                        is <strong>{selectedCooperativeType?.minAcre}</strong>{' '}
+                        and must not exceed <strong>{barrier}</strong>
                       </Text>
-                    </Text>
-                    <Text
-                      fontSize='sm'
-                      color={
-                        acres >= selectedCooperativeType?.minAcre &&
-                        acres <= barrier
-                          ? 'cf.400'
-                          : acres > barrier
-                          ? 'red.500'
-                          : 'gray.500'
-                      }
-                    >
-                      Cooperative total acreage :{' '}
-                      <Text
-                        fontSize='sm'
-                        as='span'
-                        fontWeight={900}
-                        color={
-                          acres >= selectedCooperativeType?.minAcre &&
-                          acres <= barrier
-                            ? 'cf.400'
-                            : acres > barrier
-                            ? 'red.500'
-                            : 'black'
-                        }
-                      >
-                        {acres?.toFixed(1)}{' '}
-                        {/* {`(${selectedCooperativeType?.minAcre})`} */}
-                      </Text>
-                    </Text>
-                  </Box>
+                    </Box>
+                  </Flex>
                 </Flex>
                 <form>
                   <FieldArray
