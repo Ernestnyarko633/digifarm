@@ -52,10 +52,39 @@ const SideMenu = ({ data, border, bg, ml }) => {
     }
   }
 
+  // eslint-disable-next-line no-console
+  console.log('data', data)
   const downloadOrder = async query => {
     try {
-      await downloadFile('orders', query)
-    } catch (error) {}
+      const res = await downloadFile('orders', query)
+      // eslint-disable-next-line no-console
+      console.log('error', res)
+
+      // let blob = new Blob([res.data], {
+      //   type: 'application/pdf;charset=utf-8',
+      // });
+      // toast({
+      //   title: 'Download starting',
+      //   status: 'success',
+      //   duration: 5000,
+      //   position: 'top-right',
+      // });
+      // saveAs(blob, `${query.reference}-${query?.type}.pdf`);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('error', error)
+      //   toast({
+      //     title: 'Download failed',
+      //     description:
+      //       error?.message || error?.data?.message || 'Unexpected error.',
+      //     status: 'error',
+      //     duration: 5000,
+      //     position: 'top-right',
+      //   });
+      // } finally {
+      //   setLoading(false);
+      // }
+    }
   }
 
   React.useEffect(() => {

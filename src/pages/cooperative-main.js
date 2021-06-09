@@ -54,7 +54,7 @@ const CooperativeMain = ({ location: { state } }) => {
       : cooperative?._id || order?.cooperative?._id || order?.cooperative
   )
 
-  const { getMyOrders } = useApi()
+  const { getMyOrders, getMyOrder } = useApi()
   const { data: orders } = useFetch(null, getMyOrders, null, {
     user: user?._id
   })
@@ -62,6 +62,18 @@ const CooperativeMain = ({ location: { state } }) => {
   let filteredPendingOrder = orders?.pending?.filter(item => {
     return item?.cooperative?._id === data?._id
   })
+
+  const { data: orrder } = useFetch(
+    null,
+    getMyOrder,
+    null,
+    filteredPendingOrder?.[0] ? filteredPendingOrder?.[0]?._id : null
+  )
+
+  // eslint-disable-next-line no-console
+  console.log('orderry', orrder)
+  // eslint-disable-next-line no-console
+  console.log('id', filteredPendingOrder?.[0]?._id)
 
   const getModal = val => {
     if (val === 'payment') {

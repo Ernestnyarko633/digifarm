@@ -25,7 +25,6 @@ import { Button } from 'components'
 import { Link as ReachRouter } from 'react-router-dom'
 import useStartFarm from 'context/start-farm'
 const Cooperative = ({ location: { state } }) => {
-  document.title = `Welcome to ${state?.data.name} Cooperative`
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [reload, setReload] = useState(0)
@@ -34,11 +33,13 @@ const Cooperative = ({ location: { state } }) => {
 
   const { getCooperativeById } = useApi()
   const { data, isLoading, error } = useFetch(
-    `welcome_to_coop_${state?.data?._id}`,
+    null,
     getCooperativeById,
     reload,
-    state?.data?._id
+    state?._id
   )
+
+  document.title = `Welcome to ${data?.name} Cooperative`
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
