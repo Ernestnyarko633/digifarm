@@ -92,7 +92,6 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           <Acreage
             name={cooperativeName}
             farm={selectedFarm}
-            order={data || order}
             selectedType={selectedType}
           />
         )
@@ -107,7 +106,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
       case 4:
         return <CooperativePayment farm={selectedFarm} asMember={asMember} />
       case 5:
-        return <Confirmation farm={selectedFarm} order={order || data} />
+        return <Confirmation farm={selectedFarm} order={order} />
       default:
         return <ReloadPage />
     }
