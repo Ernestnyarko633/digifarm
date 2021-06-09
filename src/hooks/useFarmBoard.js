@@ -142,7 +142,7 @@ export const useFeeds = () => {
         fetchData()
       }
     } else {
-      error && !feeds.length && triggerReload()
+      error && !feeds?.length && triggerReload()
     }
 
     return () => (mounted = false)
