@@ -54,7 +54,7 @@ const CooperativeMain = ({ location: { state } }) => {
       : cooperative?._id || order?.cooperative?._id || order?.cooperative
   )
 
-  const { getMyOrders, getMyOrder } = useApi()
+  const { getMyOrders } = useApi()
   const { data: orders } = useFetch(null, getMyOrders, null, {
     user: user?._id
   })
