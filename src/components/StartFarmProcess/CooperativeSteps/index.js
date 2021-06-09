@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import Overlay from '../../Loading/Overlay'
 import { Flex, Image, Link, Text, useToast } from '@chakra-ui/react'
@@ -9,16 +10,16 @@ import useStartFarm from '../../../context/start-farm'
 import { useIntersection } from 'react-use'
 import AboutFarmManager from '../OtherSteps/AboutFarmManager'
 import Contract from '../OtherSteps/Contract'
-import PaymentOption from '../OtherSteps/PaymentOption'
 import Confirmation from '../OtherSteps/Confirmation'
 import ReloadPage from '../../Reload'
 import CooperativeName from '../OtherSteps/CooperativeName'
 import Acreage from './Acreage'
 import PropTypes from 'prop-types'
+import CooperativePayment from './CooperativePayment'
 
 const MotionFlex = motion(Flex)
 
-const CooperativeSteps = ({ asMember, data, history }) => {
+const CooperativeSteps = ({ asMember, data, history, payment }) => {
   const { user } = useAuth()
   const {
     text,
@@ -60,14 +61,26 @@ const CooperativeSteps = ({ asMember, data, history }) => {
   })
 
   React.useEffect(() => {
-    if (!selectedType && !asMember) {
+    if (payment?.payment) {
+      // set step to  case 1
+      setStep(x => {
+        x = 2
+        return x
+      })
+
+      // set otherSteps to case 5
+      setOtherStep(x => {
+        x = 5
+        return x
+      })
+    } else if (!selectedType && !asMember) {
       setStep(x => x * 0)
       setOtherStep(x => x * 0)
     }
-  }, [setStep, setOtherStep, selectedType, asMember])
+  }, [setStep, setOtherStep, selectedType, asMember, payment?.payment])
 
   React.useEffect(() => {
-    if (!asMember && !catFarms && otherStep !== 4) {
+    if (!asMember && !catFarms && otherStep !== 5) {
       history.push('/dashboard')
     }
   }, [otherStep, history, asMember, catFarms])
@@ -83,7 +96,6 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           <Acreage
             name={cooperativeName}
             farm={selectedFarm}
-            order={data || order}
             selectedType={selectedType}
           />
         )
@@ -96,9 +108,9 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           />
         )
       case 4:
-        return <PaymentOption farm={selectedFarm} />
+        return <CooperativePayment farm={selectedFarm} asMember={asMember} />
       case 5:
-        return <Confirmation farm={selectedFarm} order={data || order} />
+        return <Confirmation farm={selectedFarm} order={order} />
       default:
         return <ReloadPage />
     }
@@ -111,7 +123,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           await handleCreateCooperative(selectedType?._id)
         } else {
           await handleCreateOrder(
-            { _id: asMember?.cooperative },
+            { _id: asMember?.cooperative?._id },
             asMember?.acreage
           )
         }
@@ -143,7 +155,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           width: 56,
           action: handleNextStep,
           disabled:
-            cooperativeName?.length > 3 && cooperativeName?.length <= 15
+            cooperativeName?.length >= 3 && cooperativeName?.length <= 15
               ? false
               : true
         }
@@ -191,7 +203,9 @@ const CooperativeSteps = ({ asMember, data, history }) => {
     }
   }
 
-  const { title, action, width, disabled } = getForwardButtonProps(otherStep)
+  const { title, action, width, disabled } = getForwardButtonProps(
+    payment?.payment ? 5 : otherStep
+  )
 
   return (
     <Flex
@@ -281,7 +295,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
             md: otherStep !== 1 ? 120 : '80vh'
           }}
         >
-          {getSteps(otherStep)}
+          {getSteps(payment?.payment ? 5 : otherStep)}
         </MotionFlex>
       </AnimateSharedLayout>
 
@@ -327,7 +341,8 @@ const CooperativeSteps = ({ asMember, data, history }) => {
 CooperativeSteps.propTypes = {
   data: PropTypes.any,
   history: PropTypes.any,
-  asMember: PropTypes.object
+  asMember: PropTypes.object,
+  payment: PropTypes.object
 }
 
 export default CooperativeSteps

@@ -25,6 +25,7 @@ const PaymentVerificaiton = ({ history, location: { search } }) => {
           pathname: `start-farm/${type}`,
           state: {
             data: res.data,
+            payment: true,
             step: type === 'individual' ? 4 : 5
           }
         })

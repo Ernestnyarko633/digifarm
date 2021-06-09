@@ -19,7 +19,7 @@ import InviteImg from 'assets/images/invite.svg'
 
 const MotionGrid = motion(Grid)
 
-const Acreage = ({ name, farm, order, selectedType }) => {
+const Acreage = ({ name, farm, selectedType }) => {
   const {
     barrier,
     cooperativeName,
@@ -79,14 +79,10 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                   <Avatar src={farm?.cropVariety?.imageUrl} />
                   <Box ml={2}>
                     <Heading as='h3' fontSize='xl' textTransform='uppercase'>
-                      {order?.product?.cropVariety?.crop?.name ||
-                        farm?.cropVariety?.crop?.name}
+                      {farm?.cropVariety?.crop?.name}
                     </Heading>
                     <Text fontSize='xs' textColor='gray.500' mt={-1}>
-                      (
-                      {order?.product?.cropVariety?.name ||
-                        farm?.cropVariety?.name}
-                      ) #{order?.product?.name || farm?.name}
+                      ({farm?.cropVariety?.name}) #{farm?.name}
                     </Text>
                   </Box>
                 </Flex>
@@ -162,17 +158,33 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                   mt={{ md: 5 }}
                 >
                   <Box borderRightWidth={1} pr={8} borderRightColor='gray.300'>
-                    <Text color='gray.500'>
-                      Members :
-                      <Text as='span' fontWeight={900} color='black'>
-                        {' '}
-                        {values?.users?.length}/
-                        {`${selectedCooperativeType?.maxMember}`}
+                    <Text color='gray.500' fontSize='sm'>
+                      Maximum Members :{' '}
+                      {
+                        <Text
+                          as='span'
+                          fontSize='sm'
+                          fontWeight={900}
+                          color='black'
+                        >
+                          {`${selectedCooperativeType?.maxMember}`}
+                        </Text>
+                      }{' '}
+                      <br />
+                      Minimum Members :{' '}
+                      <Text
+                        as='span'
+                        fontSize='sm'
+                        fontWeight={900}
+                        color='black'
+                      >
+                        2
                       </Text>
                     </Text>
                   </Box>
                   <Box ml={{ md: 16 }}>
                     <Text
+                      fontSize='sm'
                       color={
                         acres >= selectedCooperativeType?.minAcre &&
                         acres <= barrier
@@ -182,9 +194,69 @@ const Acreage = ({ name, farm, order, selectedType }) => {
                           : 'gray.500'
                       }
                     >
-                      Meet the minimum acreage of{' '}
-                      {selectedCooperativeType?.minAcre} :{' '}
+                      Minimum acreage :{' '}
                       <Text
+                        fontSize='sm'
+                        as='span'
+                        fontWeight={900}
+                        color={
+                          acres >= selectedCooperativeType?.minAcre &&
+                          acres <= barrier
+                            ? 'cf.400'
+                            : acres > barrier
+                            ? 'red.500'
+                            : 'black'
+                        }
+                      >
+                        {selectedCooperativeType?.minAcre}
+                        {/* {`(${selectedCooperativeType?.minAcre})`} */}
+                      </Text>
+                    </Text>
+                    <Text
+                      fontSize='sm'
+                      color={
+                        acres >= selectedCooperativeType?.minAcre &&
+                        acres <= barrier
+                          ? 'cf.400'
+                          : acres > barrier
+                          ? 'red.500'
+                          : 'gray.500'
+                      }
+                    >
+                      Maximum acreage :{' '}
+                      <Text
+                        fontSize='sm'
+                        as='span'
+                        fontWeight={900}
+                        color={
+                          acres >= selectedCooperativeType?.minAcre &&
+                          acres <= barrier
+                            ? 'cf.400'
+                            : acres > barrier
+                            ? 'red.500'
+                            : 'black'
+                        }
+                      >
+                        {selectedCooperativeType?.name === 'nation'
+                          ? '---'
+                          : barrier}
+                        {/* {`(${selectedCooperativeType?.minAcre})`} */}
+                      </Text>
+                    </Text>
+                    <Text
+                      fontSize='sm'
+                      color={
+                        acres >= selectedCooperativeType?.minAcre &&
+                        acres <= barrier
+                          ? 'cf.400'
+                          : acres > barrier
+                          ? 'red.500'
+                          : 'gray.500'
+                      }
+                    >
+                      Cooperative total acreage :{' '}
+                      <Text
+                        fontSize='sm'
                         as='span'
                         fontWeight={900}
                         color={
@@ -261,7 +333,6 @@ const Acreage = ({ name, farm, order, selectedType }) => {
 Acreage.propTypes = {
   farm: PropTypes.object,
   name: PropTypes.string,
-  order: PropTypes.object,
   selectedType: PropTypes.object
 }
 

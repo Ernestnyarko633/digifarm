@@ -246,7 +246,7 @@ const Cooperative = ({ location: { state } }) => {
                 to={{
                   pathname: '/start-farm/cooperative',
                   state: {
-                    cooperative: data._id,
+                    cooperative: data,
                     acreage: data.users?.filter(u => u.id === user?._id)[0]
                       ?.acreage,
                     user: user._id,

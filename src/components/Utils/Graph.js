@@ -16,19 +16,18 @@ export default function Graph({
   activities,
   tasks,
   scheduledTasks,
-  farm,
   totalAmount
 }) {
   const [data, setData] = React.useState([])
+  const [animation, setAnimation] = React.useState(true)
   React.useEffect(() => {
     let array = []
     if (activities && tasks) {
       activities.forEach(activity => {
+        const { state, total } = totalAmount(activity, tasks, scheduledTasks)
         array.push({
           name: activity?.title,
-          amount: totalAmount(activity, tasks, scheduledTasks).state
-            ? totalAmount(activity, tasks, scheduledTasks).total
-            : 0
+          amount: state ? total : 0
         })
       })
     }
@@ -37,14 +36,36 @@ export default function Graph({
 
   const mapKey = i => i
 
+  // const Tick = ({
+  //   payload: { value },
+  //   verticalAnchor,
+  //   visibleTicksCount,
+  //   ...rest
+  // }) => (
+  //   <text {...rest} className='bar-chart-tick' dy={12}>
+  //     {value}
+  //   </text>
+  // )
+
+  // Tick.propTypes = {
+  //   payload: PropTypes.any,
+  //   verticalAnchor: PropTypes.any,
+  //   visibleTicksCount: PropTypes.any
+  // }
   return (
-    <ResponsiveContainer width='300%' height={300}>
+    <ResponsiveContainer width='100%' height={300}>
       <ComposedChart
         style={{ backgroundColor: 'white' }}
         margin={{ right: 60 }}
         data={data}
       >
-        <XAxis dataKey='name' scale='auto' fontSize={12} />
+        <XAxis
+          dataKey='name'
+          isAnimationActive={animation}
+          onAnimationEnd={() => setAnimation(false)}
+          scale='auto'
+          fontSize={8}
+        />
         <YAxis dataKey='amount' fontSize={12} />
         <Tooltip />
         <Bar
@@ -71,6 +92,5 @@ Graph.propTypes = {
   activities: PropTypes.array,
   tasks: PropTypes.array,
   scheduledTasks: PropTypes.array,
-  farm: PropTypes.object.isRequired,
   totalAmount: PropTypes.func.isRequired
 }
