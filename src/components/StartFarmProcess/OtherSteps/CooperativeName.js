@@ -75,8 +75,8 @@ const CooperativeName = () => {
             placeholder='Min: 3 characters, Max: 15 characters'
             _focus={{ borderColor: 'cf.800' }}
             onChange={e => {
-              if (e?.target?.value?.length > 15) e?.preventDefault()
-              handleChange(e)
+              if (e?.target?.value?.length > 15) return e?.preventDefault()
+              return handleChange(e)
             }}
           />
         </FormControl>
