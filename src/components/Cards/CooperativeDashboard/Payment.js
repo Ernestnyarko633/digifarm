@@ -24,8 +24,6 @@ const Payment = ({ data, onOpen }) => {
     error
   } = useFetch(null, getMyOrder, reload, data ? data[0]?._id : null)
 
-  // eslint-disable-next-line no-console
-  console.log('orderr', orders)
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size='xl'>
       <ModalOverlay />
