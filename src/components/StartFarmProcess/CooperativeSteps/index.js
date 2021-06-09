@@ -105,7 +105,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           />
         )
       case 4:
-        return <CooperativePayment farm={selectedFarm} />
+        return <CooperativePayment farm={selectedFarm} asMember={asMember} />
       case 5:
         return <Confirmation farm={selectedFarm} order={data || order} />
       default:
@@ -120,7 +120,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           await handleCreateCooperative(selectedType?._id)
         } else {
           await handleCreateOrder(
-            { _id: asMember?.cooperative },
+            { _id: asMember?.cooperative?._id },
             asMember?.acreage
           )
         }
