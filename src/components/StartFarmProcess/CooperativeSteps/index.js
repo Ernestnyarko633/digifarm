@@ -61,10 +61,13 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
 
   React.useEffect(() => {
     if (payment?.payment) {
+      // set step to  case 1
       setStep(x => {
         x = 1
         return x
       })
+
+      // set otherSteps to case 5
       setOtherStep(x => {
         x = 5
         return x
