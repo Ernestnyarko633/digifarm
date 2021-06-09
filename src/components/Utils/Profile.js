@@ -4,7 +4,7 @@ import { Menu } from '@headlessui/react'
 import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
 import { AnimatePresence, motion } from 'framer-motion'
 import { HiOutlineLogout } from 'react-icons/hi'
-import { PropTypes } from 'carbon-components-react'
+import PropTypes from 'prop-types'
 
 const MotionBox = motion(Box)
 
