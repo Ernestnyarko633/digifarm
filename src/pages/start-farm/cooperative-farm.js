@@ -14,7 +14,6 @@ const CooperativeFarm = ({ location, history }) => {
 
   React.useEffect(() => {
     let mounted = true
-    console.log(state, 'stating')
     if (mounted && state?.step) {
       setStep(x => x + 2)
       setOtherStep(x => x + 5)
@@ -29,7 +28,6 @@ const CooperativeFarm = ({ location, history }) => {
     return () => (mounted = false)
   }, [state, setStep, setOtherStep])
 
-  console.log(state, 'statr')
   const getContent = value => {
     switch (value) {
       case 0:
