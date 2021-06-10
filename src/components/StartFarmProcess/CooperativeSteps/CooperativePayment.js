@@ -25,6 +25,7 @@ const CooperativePayment = ({ farm, asMember }) => {
   const { getCooperativeById } = useApi()
   const { order, paymentOption, coopImg, setPaymentOption, cooperative } =
     useStartFarm()
+
   const { data, isLoading, error } = useFetch(
     asMember?.cooperative?._id || cooperative?._id
       ? `welcome_to_coop_${asMember?.cooperative?._id || cooperative?._id}`
@@ -54,7 +55,7 @@ const CooperativePayment = ({ farm, asMember }) => {
               />
               <Box ml={2}>
                 <Text fontWeight={700} fontSize={{ md: 'xl' }}>
-                  {cooperative?.name || asMember?.cooperativeFromMember?.name}
+                  {cooperative?.name || asMember?.cooperative?.name}
                 </Text>
                 {isLoading || error ? (
                   <FetchCard
@@ -78,7 +79,7 @@ const CooperativePayment = ({ farm, asMember }) => {
               </Text>
               <Text fontWeight={700} textAlign='right'>
                 {cooperative?.type?.name?.toUpperCase() ||
-                  asMember?.cooperativeFromMember?.type?.name?.toUpperCase()}
+                  asMember?.cooperative?.type?.name?.toUpperCase()}
               </Text>
             </Box>
           </Flex>
