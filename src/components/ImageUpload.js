@@ -67,7 +67,7 @@ const ImageUpload = ({
         <Icon as={BsX} />
       </Flex>
       <Flex minW={0} overflow='hidden' justify='center'>
-        <Image d='block' w='25%' src={file.preview} />
+        <Image d='block' w='50%' h='50%' src={file.preview} />
       </Flex>
     </Box>
   ))
@@ -84,7 +84,7 @@ const ImageUpload = ({
   )
 
   return (
-    <Box>
+    <Box w='full'>
       {files?.length === 1 ? null : (
         <Flex
           direction='column'

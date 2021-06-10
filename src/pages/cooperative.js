@@ -109,7 +109,8 @@ const Cooperative = ({ location: { state } }) => {
         <Container
           maxW={{ xl: '5xl' }}
           pt={{ base: 20, lg: 24 }}
-          pb={{ base: 3, lg: 10 }}
+          pb={{ base: 3, lg: 10, xl: 28 }}
+          bg='white'
         >
           <Heading
             fontSize={{ base: 16, md: 20 }}
