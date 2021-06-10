@@ -17,7 +17,6 @@ import { FiCreditCard, FiUpload } from 'react-icons/fi'
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
 import Button from 'components/Button'
-// import Upload from 'components/Form/upload'
 import { Status } from 'helpers/misc'
 import ImageUpload from 'components/ImageUpload'
 
@@ -132,13 +131,6 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
               align='center'
               justify='center'
             >
-              {/* <Upload
-                w='100%'
-                form={formik}
-                field={{ name: 'file' }}
-                accept=''
-                mb={5}
-              /> */}
               <Box mb={5}>
                 <ImageUpload
                   files={file}
