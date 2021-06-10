@@ -15,15 +15,17 @@ const CooperativeFarm = ({ location, history }) => {
 
   React.useEffect(() => {
     let mounted = true
-    if ((mounted && state?.step) || state?.payment) {
+    if (mounted && (state?.step || state?.payment)) {
       setStep(x => x + 2)
       setOtherStep(x => x + 5)
     } else {
-      // clear cache data in session storage
-      setStep(x => x * 0)
-      setOtherStep(x => x * 0)
-      sessionStorage.removeItem('categories')
-      sessionStorage.removeItem('farms')
+      if (!state?.user || !state) {
+        setStep(x => x * 0)
+        setOtherStep(x => x * 0)
+        // clear cache data in session storage
+        sessionStorage.removeItem('categories')
+        sessionStorage.removeItem('farms')
+      }
     }
 
     return () => (mounted = false)

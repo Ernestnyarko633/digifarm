@@ -103,10 +103,13 @@ const Acreage = ({ name, farm, selectedType }) => {
                       textTransform='uppercase'
                       fontSize={{ md: 'xl' }}
                     >
-                      {selectedType?.name}
+                      {name}
                     </Text>
-                    <Text mt={-2}>
-                      Cooperative name: <Text as='span'>{name}</Text>
+                    <Text mt={-2} fontSize='14px'>
+                      Created by:{' '}
+                      <Text as='span'>
+                        {user?.firstName + ' ' + user?.lastName}
+                      </Text>
                     </Text>
                   </Box>
                 </Flex>
