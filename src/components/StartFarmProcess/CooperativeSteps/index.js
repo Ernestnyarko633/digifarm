@@ -196,7 +196,9 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
               `/cooperative-main/${
                 cooperative?._id ||
                 order?.cooperative?._id ||
-                order?.cooperative
+                order?.cooperative ||
+                payment?.data?.cooperative?._id ||
+                payment?.data?.cooperative
               }`
             )
         }
