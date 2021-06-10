@@ -10,8 +10,8 @@ import PropTypes from 'prop-types'
 import useComponent from 'context/component'
 import OrderCard from '../OrderCard'
 
-const Payment = ({ data, onOpen }) => {
-  const { isOpen, onClose } = useComponent()
+const Payment = ({ onOpen }) => {
+  const { isOpen, onClose, data } = useComponent()
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size='xl'>
@@ -19,14 +19,16 @@ const Payment = ({ data, onOpen }) => {
       <ModalContent>
         <ModalCloseButton />
         <ModalBody h='600px'>
-          <OrderCard order={data} onOpen={onOpen} />
+          <OrderCard
+            order={{ ...data.order, product: data.product }}
+            onOpen={onOpen}
+          />
         </ModalBody>
       </ModalContent>
     </Modal>
   )
 }
 Payment.propTypes = {
-  data: PropTypes.any,
   onOpen: PropTypes.func
 }
 

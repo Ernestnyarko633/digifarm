@@ -89,9 +89,7 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
 
   const getModal = val => {
     if (val === 'payment') {
-      return (
-        <Payment onOpen={onOpen} data={userData?.[0]?.order} order={data} />
-      )
+      return <Payment onOpen={onOpen} />
     } else return null
   }
 
@@ -211,7 +209,10 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
                       py='10px'
                       leftIcon={<BiCreditCard size={20} />}
                       onClick={() => {
-                        handleModalClick('payment')
+                        handleModalClick('payment', {
+                          product: data?.product,
+                          order: row?.original?.order
+                        })
                       }}
                     />
                   )}
