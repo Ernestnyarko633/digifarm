@@ -69,6 +69,7 @@ const Cooperative = ({ location: { state } }) => {
     if (mounted && data?.product?._id) {
       setSelectedFarm(data?.product)
       setSelectedCooperativeType(data?.type)
+      sessionStorage.setItem('type', 'cooperative')
       sessionStorage.setItem('selected_farm', JSON.stringify(data?.product))
       setStep(x => x + 2)
       setOtherStep(x => x + 3)
