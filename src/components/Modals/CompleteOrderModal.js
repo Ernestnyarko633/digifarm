@@ -51,6 +51,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
         sessionStorage.removeItem('my_farms')
         sessionStorage.removeItem('my_orders')
         call()
+        onClose()
       } catch (error) {
         toast({
           title: 'Error occured',
@@ -82,7 +83,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
         <ModalCloseButton />
         <ModalBody my={8} px={{ base: 6, md: 10 }}>
           {!success && (
-            <Heading as='h4' fontSize={{ md: '2xl' }}>
+            <Heading as='h4' fontSize={{ md: '2xl' }} textAlign='center'>
               {showUploadForm
                 ? 'Upload your payment receipt to complete your order'
                 : 'Select an option'}

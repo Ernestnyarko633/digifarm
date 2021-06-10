@@ -157,7 +157,7 @@ const CooperativePayment = ({ farm, asMember }) => {
         overflowY='scroll'
         p={{ base: 4, md: 10 }}
         css={{
-          direction: 'rtl',
+          direction: 'ltl',
           scrollbarColor: 'rebeccapurple',
           scrollBehavior: 'smooth'
         }}
