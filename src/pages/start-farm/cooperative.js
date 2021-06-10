@@ -40,7 +40,8 @@ const CooperativeFarm = ({ location, history }) => {
       case 2:
         return (
           <CooperativeSteps
-            asMember={state}
+            asMember={state?.cooperative ? state : null}
+            payment={state?.payment ? state : null}
             data={selected}
             history={history}
           />
