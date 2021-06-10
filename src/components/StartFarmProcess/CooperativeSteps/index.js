@@ -205,9 +205,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
     }
   }
 
-  const { title, action, width, disabled } = getForwardButtonProps(
-    payment?.payment ? 5 : otherStep
-  )
+  const { title, action, width, disabled } = getForwardButtonProps(otherStep)
 
   return (
     <Flex
@@ -297,7 +295,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
             md: otherStep !== 1 ? 120 : '80vh'
           }}
         >
-          {getSteps(payment?.payment ? 5 : otherStep)}
+          {getSteps(otherStep)}
         </MotionFlex>
       </AnimateSharedLayout>
 
