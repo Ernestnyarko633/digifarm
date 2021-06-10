@@ -67,7 +67,7 @@ export const StartFarmContextProvider = ({ children }) => {
     }
 
     //set Limit or barrier
-    if (mounted && selectedCooperativeType && otherStep <= 2)
+    if (mounted && selectedCooperativeType && otherStep === 2)
       Barrier(selectedCooperativeType)
     return () => (mounted = false)
   }, [cooperativeTypes, otherStep, selectedCooperativeType])
