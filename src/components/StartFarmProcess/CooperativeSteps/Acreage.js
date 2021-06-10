@@ -141,7 +141,8 @@ const Acreage = ({ name, farm, selectedType }) => {
                       fontWeight={900}
                       color='black'
                     >
-                      {selectedType?.name} ({selectedType?.discount}% discount)
+                      {selectedType?.name} ({selectedType?.discount * 100}%
+                      discount)
                     </Text>
                   </Text>
                 </Flex>
@@ -162,7 +163,13 @@ const Acreage = ({ name, farm, selectedType }) => {
                   mt={{ md: 5 }}
                   direction='row'
                 >
-                  <Box mb={14} align='flex-start' justify='flex-start' w='5%'>
+                  <Box
+                    mb={{ base: 40, md: 14 }}
+                    pt={{ base: 20, md: 0 }}
+                    align='flex-start'
+                    justify='flex-start'
+                    w='5%'
+                  >
                     <Icon
                       color='cf.400'
                       boxSize={5}

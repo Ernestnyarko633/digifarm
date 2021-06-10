@@ -61,7 +61,7 @@ const CooperativeCard = ({ item, onClick, selected }) => {
             </ListItem>
             <ListItem d='flex' alignItems='center' py={1}>
               <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
-              Up to {discount}% cooperative discount
+              Up to {discount * 100}% cooperative discount
             </ListItem>
             <ListItem d='flex' alignItems='center'>
               <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
