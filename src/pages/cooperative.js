@@ -247,10 +247,10 @@ const Cooperative = ({ location: { state } }) => {
                   pathname: '/start-farm/cooperative',
                   state: {
                     cooperative: data,
-                    acreage: data.users?.filter(u => u.id === user?._id)[0]
+                    acreage: data?.users?.filter(u => u.id === user?._id)[0]
                       ?.acreage,
-                    user: user._id,
-                    product: data.product._id
+                    user: user?._id,
+                    product: data?.product?._id
                   }
                 }}
                 _hover={{ textDecor: 'none' }}

@@ -67,9 +67,10 @@ export const StartFarmContextProvider = ({ children }) => {
     }
 
     //set Limit or barrier
-    if (mounted && selectedCooperativeType) Barrier(selectedCooperativeType)
+    if (mounted && selectedCooperativeType && otherStep <= 2)
+      Barrier(selectedCooperativeType)
     return () => (mounted = false)
-  }, [cooperativeTypes, selectedCooperativeType])
+  }, [cooperativeTypes, selectedCooperativeType, otherStep])
 
   const { getExchangeRate } = useExternal()
   const { setSession, isAuthenticated } = useAuth()

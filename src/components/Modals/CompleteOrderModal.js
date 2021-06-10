@@ -17,14 +17,15 @@ import { FiCreditCard, FiUpload } from 'react-icons/fi'
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
 import Button from 'components/Button'
-import Upload from 'components/Form/upload'
 import { Status } from 'helpers/misc'
+import ImageUpload from 'components/ImageUpload'
 
 const CompleteOrderModal = ({ call, isOpen, onClose }) => {
   const [showUploadForm, setShowUploadForm] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
   const { uploadPaymentDetails, patchOrder } = useApi()
   const { handlePayment, isSubmitting, order } = useStartFarm()
+  const [file, setFile] = React.useState([])
 
   const toast = useToast()
 
@@ -35,9 +36,9 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
       try {
         setSubmitting(true)
         let formData = new FormData()
-        formData.append('bank_transfer_receipt', values.file)
-        const res = await uploadPaymentDetails(values.payment_id, formData)
-        await patchOrder(order._id, { status: Status.PROCESSING })
+        formData.append('bank_transfer_receipt', values.file[0])
+        await uploadPaymentDetails(values.payment_id, formData)
+        const res = await patchOrder(order._id, { status: Status.PROCESSING })
         resetForm({})
         toast({
           title: 'User successfully updated.',
@@ -130,13 +131,16 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
               align='center'
               justify='center'
             >
-              <Upload
-                w='100%'
-                form={formik}
-                field={{ name: 'file' }}
-                accept=''
-                mb={5}
-              />
+              <Box mb={5}>
+                <ImageUpload
+                  files={file}
+                  setFiles={setFile}
+                  value={{ name: 'file' }}
+                  setFieldValue={formik.setFieldValue}
+                  upload='Select a file to upload'
+                  instruct='Files supported: JPG, PNG, PDF'
+                />
+              </Box>
               <Button
                 width='50%'
                 type='submit'
