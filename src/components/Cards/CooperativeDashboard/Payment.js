@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -9,20 +9,9 @@ import {
 import PropTypes from 'prop-types'
 import useComponent from 'context/component'
 import OrderCard from '../OrderCard'
-import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
-import FetchCard from 'components/FetchCard'
 
 const Payment = ({ data, onOpen }) => {
   const { isOpen, onClose } = useComponent()
-  const [reload, setReload] = useState(0)
-  const triggerReload = () => setReload(prevState => prevState + 1)
-  const { getMyOrder } = useApi()
-  const {
-    data: orders,
-    isLoading,
-    error
-  } = useFetch(null, getMyOrder, reload, data ? data[0]?._id : null)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size='xl'>
@@ -30,20 +19,7 @@ const Payment = ({ data, onOpen }) => {
       <ModalContent>
         <ModalCloseButton />
         <ModalBody h='600px'>
-          {isLoading || error ? (
-            <FetchCard
-              direction='column'
-              align='center'
-              h={{ xl: 80 }}
-              justify='center'
-              reload={triggerReload}
-              loading={isLoading}
-              error={error}
-              text='loading order'
-            />
-          ) : (
-            <OrderCard order={orders} onOpen={onOpen} />
-          )}
+          <OrderCard order={data} onOpen={onOpen} />
         </ModalBody>
       </ModalContent>
     </Modal>

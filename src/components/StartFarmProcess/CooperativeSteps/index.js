@@ -191,14 +191,16 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
         return {
           title: 'Proceed to Cooperative Dashboard',
           width: 80,
-          action: () =>
-            history.push(
+          action: () => {
+            window.onbeforeunload = null
+            return history.replace(
               `/cooperative-main/${
                 cooperative?._id ||
                 order?.cooperative?._id ||
                 order?.cooperative
               }`
             )
+          }
         }
       default:
         return { title: 'Next', width: 56, action: handleNextStep }
