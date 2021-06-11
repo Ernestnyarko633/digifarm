@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Flex,
@@ -22,9 +23,9 @@ const FarmingTypeCard = ({
   title,
   selected,
   onClick,
-  mr
-  // id,
-  // disabled,
+  mr,
+  id,
+  disabled
 }) => {
   const { handleModalClick } = useComponent()
 
@@ -40,7 +41,7 @@ const FarmingTypeCard = ({
       mb={{ base: 6, md: 0 }}
       onClick={onClick}
       pos='relative'
-      // filter={disabled && "grayScale(100%)"}
+      filter={disabled && 'grayScale(100%)'}
     >
       <Box pos='absolute' top={2} right={2}>
         {selected ? (
