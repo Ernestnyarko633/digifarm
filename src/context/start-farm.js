@@ -62,15 +62,25 @@ export const StartFarmContextProvider = ({ children }) => {
     const Barrier = type => {
       const num = types.findIndex(value => value === type?.name)
       const newNum = num + 1
-      if (newNum <= 3) setBarrier(cooperativeTypes[newNum]?.minAcre)
-      if (newNum > 3) setBarrier(Infinity)
+      if (newNum <= 3)
+        setBarrier(
+          cooperativeTypes[newNum]?.minAcre < selectedFarm?.acreage
+            ? cooperativeTypes[newNum]?.minAcre
+            : selectedFarm?.acreage
+        )
+      if (newNum > 3) setBarrier(selectedFarm?.acreage || Infinity)
     }
 
     //set Limit or barrier
     if (mounted && selectedCooperativeType && otherStep <= 2)
       Barrier(selectedCooperativeType)
     return () => (mounted = false)
-  }, [cooperativeTypes, selectedCooperativeType, otherStep])
+  }, [
+    cooperativeTypes,
+    selectedCooperativeType,
+    otherStep,
+    selectedFarm?.acreage
+  ])
 
   const { getExchangeRate } = useExternal()
   const { setSession, isAuthenticated } = useAuth()
@@ -326,8 +336,8 @@ export const StartFarmContextProvider = ({ children }) => {
         step,
         text,
         path,
-        cycle,
         acres,
+        cycle,
         order,
         invites,
         barrier,
@@ -336,14 +346,15 @@ export const StartFarmContextProvider = ({ children }) => {
         coopImg,
         acreage,
         setAcres,
-        coopType,
         setOrder,
+        coopType,
         isSellOn,
         contract,
         setCycle,
         currency,
         wantCycle,
         otherStep,
+        setBarrier,
         adminAcres,
         setCoopImg,
         setAcreage,
@@ -353,10 +364,10 @@ export const StartFarmContextProvider = ({ children }) => {
         handleBack,
         setCoopType,
         setCurrency,
-        selectedType,
         setIsSellOn,
         setContract,
         cooperative,
+        selectedType,
         setWantCycle,
         exchangeRate,
         selectedFarm,

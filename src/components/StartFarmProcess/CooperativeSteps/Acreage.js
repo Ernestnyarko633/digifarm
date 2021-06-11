@@ -35,8 +35,8 @@ const Acreage = ({ name, farm, selectedType }) => {
   const mapKeys = i => i
   const initialValues = {
     users: [
-      { email: user.email, acreage: 0.1 },
-      { email: '', acreage: 0.1 }
+      { email: user.email, acreage: 0.5 },
+      { email: '', acreage: 0.5 }
     ]
   }
 
@@ -186,7 +186,11 @@ const Acreage = ({ name, farm, selectedType }) => {
                     >
                       <Text color='gray.500' fontSize='sm'>
                         There should be a <strong color>minimum of 2</strong>{' '}
-                        and and <strong>maximum of 5</strong> members
+                        and and{' '}
+                        <strong>
+                          maximum of {selectedCooperativeType?.maxMember}
+                        </strong>{' '}
+                        members
                       </Text>
                     </Box>
                     <Box borderRightColor='gray.300' p={2}>

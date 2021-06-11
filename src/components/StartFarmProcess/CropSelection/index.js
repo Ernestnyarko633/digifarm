@@ -12,7 +12,8 @@ import FarmDetails from './FarmDetails'
 import { Button } from '../../index'
 
 const CropSelection = () => {
-  const { handleBack, handleNext } = useStartFarm()
+  const { handleBack, handleNext, selectedCooperativeType, selectedFarm } =
+    useStartFarm()
 
   const [reload, setReload] = useState(0)
 
@@ -87,6 +88,12 @@ const CropSelection = () => {
             <Box mx={2} />
             <Button
               btntitle='Continue'
+              disabled={
+                selectedCooperativeType?.minAcre > selectedFarm?.acreage ||
+                !selectedFarm ||
+                isLoading ||
+                error
+              }
               w={{ base: 70, md: 40 }}
               h={12}
               fontSize='md'
