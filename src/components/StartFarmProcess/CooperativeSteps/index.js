@@ -189,7 +189,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
         }
       case 5:
         return {
-          title: 'Proceed to Cooperative Dashboard',
+          title: 'Proceed to Dashboard',
           width: 80,
           action: () => {
             window.onbeforeunload = null
@@ -317,6 +317,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           btntitle='Prev'
           color='gray.700'
           colorScheme='white'
+          disabled={otherStep > 3}
           onClick={otherStep <= 0 ? handleBack : handlePrev}
           borderWidth={1}
         />
