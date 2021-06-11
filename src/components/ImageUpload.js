@@ -75,13 +75,19 @@ const ImageUpload = ({
         >
           <Icon as={BsX} />
         </Flex>
-        <Flex minW={0} overflow='hidden' align='center' justify='center'>
+        <Flex
+          minW={0}
+          overflow='hidden'
+          align='center'
+          justify='center'
+          color='red.500'
+        >
           {file.type === 'image/jpeg' ||
           file.type === 'image/jpg' ||
           file.type === 'image/png' ? (
             <Icon as={BsFillImageFill} boxSize={24} />
           ) : file.type === 'application/pdf' ? (
-            <Icon as={FaFilePdf} boxSize={24} color='red.500' />
+            <Icon as={FaFilePdf} boxSize={24} />
           ) : null}
         </Flex>
       </Box>
