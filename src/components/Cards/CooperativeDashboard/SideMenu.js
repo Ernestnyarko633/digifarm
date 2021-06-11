@@ -8,7 +8,8 @@ import {
   Input,
   FormControl,
   FormLabel,
-  useToast
+  useToast,
+  Divider
 } from '@chakra-ui/react'
 
 import { getformattedDate } from 'helpers/misc'
@@ -18,8 +19,9 @@ import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
+import Button from 'components/Button'
 
-const SideMenu = ({ data, border, bg, ml }) => {
+const SideMenu = ({ data, border, bg, ml, click, loading }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { updateCooperative } = useApi()
@@ -161,11 +163,20 @@ const SideMenu = ({ data, border, bg, ml }) => {
             data?.product?.managers[0]?.lastName
           }
         />
-        <Details
-          title='Farm Agreement'
-          color='cf.400'
-          subtitle={<a href='#hh'>View Agreement</a>}
-        />
+        <Divider borderColor='gray.300' />
+        <Box my={3} w='90%' mx='auto'>
+          <Button
+            btntitle='Download agreement'
+            variant='outline'
+            color='cf.800'
+            width='100%'
+            isLoading={loading}
+            isDisabled={loading}
+            py='10px'
+            fontSize={{ md: 'md' }}
+            onClick={click}
+          />
+        </Box>
       </Box>
     </Box>
   )
@@ -175,7 +186,9 @@ SideMenu.propTypes = {
   data: PropTypes.any,
   border: PropTypes.any,
   bg: PropTypes.any,
-  ml: PropTypes.any
+  ml: PropTypes.any,
+  click: PropTypes.any,
+  loading: PropTypes.any
 }
 
 export default SideMenu

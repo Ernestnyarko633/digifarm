@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -11,6 +12,7 @@ import {
   Heading,
   Spacer,
   Link,
+  useToast,
   useDisclosure
 } from '@chakra-ui/react'
 import CustomTable from 'components/Form/CustomTable'
@@ -28,50 +30,68 @@ import useAuth from 'context/auth'
 import useComponent from 'context/component'
 import Payment from 'components/Cards/CooperativeDashboard/Payment'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
+import { saveAs } from 'file-saver'
 import CooperativeCard from 'components/Cards/CooperativeDashboard/CooperativeCard'
-import useStartFarm from 'context/start-farm'
 
-const CooperativeMain = ({ location: { state } }) => {
+const CooperativeMain = ({ location: { state }, match: { params } }) => {
   document.title = 'Cooperative Dashboard'
+  //states
   const [reload, setReload] = useState(0)
-
   const [tableData, setTableData] = useState([])
-
+  const [loading, setLoading] = useState(false)
+  //hooks
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { modal, handleModalClick } = useComponent()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { order, cooperative } = useStartFarm()
+  const toast = useToast()
+
   const triggerReload = () => setReload(prevState => prevState + 1)
 
-  const { getCooperativeById } = useApi()
+  const { getCooperativeById, downloadFile } = useApi()
   const { data, isLoading, error } = useFetch(
     null,
     getCooperativeById,
     reload,
-    state?._id
-      ? state?._id
-      : cooperative?._id || order?.cooperative?._id || order?.cooperative
+    params.id
   )
 
-  const { getMyOrders } = useApi()
-  const { data: orders } = useFetch(null, getMyOrders, null, {
-    user: user?._id
-  })
-
-  let filteredPendingOrder = orders?.pending?.filter(item => {
-    return item?.cooperative?._id === data?._id
+  const downloadAgreement = async query => {
+    try {
+      setLoading(true)
+      const res = await downloadFile('orders', query)
+      toast({
+        title: 'Download starting',
+        status: 'success',
+        duration: 2000,
+        position: 'top-right'
+      })
+      let blob = new Blob([res.data], {
+        type: 'application/pdf;charset=utf-8'
+      })
+      saveAs(blob, `${query.reference}-agreement.pdf`)
+    } catch (error) {
+      toast({
+        title: 'Download failed',
+        description:
+          error?.message || error?.data?.message || 'Unexpected error.',
+        status: 'error',
+        duration: 5000,
+        position: 'top-right'
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+  const userData = data?.users?.filter(item => {
+    return item?.id === user._id
   })
 
   const getModal = val => {
     if (val === 'payment') {
-      return <Payment onOpen={onOpen} data={filteredPendingOrder} />
+      return <Payment onOpen={onOpen} />
     } else return null
   }
-
-  let filteredProcessingOrder = orders?.processing?.filter(item => {
-    return item?.cooperative?._id === data?._id
-  })
 
   const _columns = [
     {
@@ -177,21 +197,27 @@ const CooperativeMain = ({ location: { state } }) => {
       accessor: 'payment',
       Cell: ({ row }) => (
         <>
-          {row.values.status === 'PAID' ||
-          filteredProcessingOrder?.length > 0 ? null : (
+          {row.values.status === 'PAID' || (
             <>
-              {row.original.email === user?.email && (
-                <Button
-                  btntitle='Pay'
-                  colorScheme='linear'
-                  width='100px'
-                  py='10px'
-                  leftIcon={<BiCreditCard size={20} />}
-                  onClick={() => {
-                    handleModalClick('payment')
-                  }}
-                />
-              )}
+              {row?.original?.order?.status === 'PENDING' ? (
+                <>
+                  {row.original.email === user?.email && (
+                    <Button
+                      btntitle='Pay'
+                      colorScheme='linear'
+                      width='100px'
+                      py='10px'
+                      leftIcon={<BiCreditCard size={20} />}
+                      onClick={() => {
+                        handleModalClick('payment', {
+                          product: data?.product,
+                          order: row?.original?.order
+                        })
+                      }}
+                    />
+                  )}
+                </>
+              ) : null}
             </>
           )}
         </>
@@ -208,7 +234,11 @@ const CooperativeMain = ({ location: { state } }) => {
   return (
     <>
       <Header />
-      <CompleteOrderModal isOpen={isOpen} onClose={onClose} />
+      <CompleteOrderModal
+        call={triggerReload}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       {getModal(modal)}
       <Box
         pt={30}
@@ -237,7 +267,19 @@ const CooperativeMain = ({ location: { state } }) => {
                 />
               </Box>
             ) : (
-              <SideMenu data={data} border={1} bg='#F6F6F6' ml='49px' />
+              <SideMenu
+                data={data}
+                border={1}
+                bg='#F6F6F6'
+                ml='49px'
+                loading={loading}
+                click={() => {
+                  return downloadAgreement({
+                    reference: userData?.[0]?.order?.reference,
+                    type: 'agreement'
+                  })
+                }}
+              />
             )}
           </GridItem>
           <GridItem
@@ -304,7 +346,7 @@ const CooperativeMain = ({ location: { state } }) => {
                     <Box key={item?._id}>
                       <CooperativeCard
                         item={item}
-                        orderType={filteredProcessingOrder}
+                        // orderType={filteredProcessingOrder}
                         data={data}
                         handleClick={() => handleModalClick('payment')}
                       />

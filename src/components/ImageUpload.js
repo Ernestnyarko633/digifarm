@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Flex, Icon, Image, Input, Text } from '@chakra-ui/react'
+import { Box, Flex, Icon, Input, Text } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
-
-import { BsX } from 'react-icons/bs'
+import { BsFillImageFill, BsX } from 'react-icons/bs'
 import { VscAdd } from 'react-icons/vsc'
+import { FaFilePdf } from 'react-icons/all'
 
 const ImageUpload = ({
   files,
@@ -35,42 +35,58 @@ const ImageUpload = ({
     setFiles(newImages)
   }
 
-  const thumbs = files?.map(file => (
-    <Box
-      d='inline-block'
-      mr={4}
-      w='100%'
-      textAlign='center'
-      boxSizing='border-box'
-      key={file.name}
-      pos='relative'
-    >
-      <Text fontSize='16px'>{file.name}</Text>
-      <Flex
-        align='center'
-        justify='center'
-        as='button'
-        role='button'
-        aria-label='close button'
-        w={6}
-        h={6}
-        rounded='100%'
-        bg='white'
-        color='gray.700'
-        pos='absolute'
-        top={2}
-        right={2}
-        onClick={() => removeImage(file.name)}
-        _focus={{ textDecoration: 'none' }}
-        cursor='pointer'
+  const thumbs = files?.map(file => {
+    return (
+      <Box
+        d='inline-block'
+        mr={4}
+        w='100%'
+        textAlign='center'
+        boxSizing='border-box'
+        key={file.name}
+        pos='relative'
       >
-        <Icon as={BsX} />
-      </Flex>
-      <Flex minW={0} overflow='hidden' justify='center'>
-        <Image d='block' w='25%' src={file.preview} />
-      </Flex>
-    </Box>
-  ))
+        <Text fontSize='sm' mb={2}>
+          {file.type === 'application/pdf'
+            ? `${file.name
+                .replaceAll(/[.*+\-?^${}()|_[\]\\]/g, ' ')
+                .substr(0, 30)}.pdf`
+            : `${file.name
+                .replaceAll(/[.*+\-?^${}()|_[\]\\]/g, ' ')
+                .substr(0, 30)}.jpg`}
+        </Text>
+        <Flex
+          align='center'
+          justify='center'
+          as='button'
+          role='button'
+          aria-label='close button'
+          w={6}
+          h={6}
+          rounded='100%'
+          bg='white'
+          color='gray.700'
+          pos='absolute'
+          top={-2}
+          right={-6}
+          onClick={() => removeImage(file.name)}
+          _focus={{ textDecoration: 'none' }}
+          cursor='pointer'
+        >
+          <Icon as={BsX} />
+        </Flex>
+        <Flex minW={0} overflow='hidden' align='center' justify='center'>
+          {file.type === 'image/jpeg' ||
+          file.type === 'image/jpg' ||
+          file.type === 'image/png' ? (
+            <Icon as={BsFillImageFill} boxSize={24} />
+          ) : file.type === 'application/pdf' ? (
+            <Icon as={FaFilePdf} boxSize={24} color='red.500' />
+          ) : null}
+        </Flex>
+      </Box>
+    )
+  })
 
   useEffect(
     () => () => {
@@ -84,7 +100,7 @@ const ImageUpload = ({
   )
 
   return (
-    <Box>
+    <Box w='full'>
       {files?.length === 1 ? null : (
         <Flex
           direction='column'

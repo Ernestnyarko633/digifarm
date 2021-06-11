@@ -265,16 +265,6 @@ export const StartFarmContextProvider = ({ children }) => {
       if (paymentOption === Constants.paymentOptions[0]) {
         const q = 'USD_GHS'
         const res = await getExchangeRate({ q })
-        // data.amount =
-        //   Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
-        // if (data.amount) {
-        //   const res = await initiatePayment(data)
-        //   window.onbeforeunload = null
-        //   window.location.href = res.message.url
-        // } else {
-        //   throw new Error('Unknown error occurred, try again')
-        // }
-
         if (!res.data) {
           throw new Error('Unknown error occurred, try again')
         }
