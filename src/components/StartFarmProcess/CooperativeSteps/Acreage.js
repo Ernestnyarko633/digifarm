@@ -35,8 +35,8 @@ const Acreage = ({ name, farm, selectedType }) => {
   const mapKeys = i => i
   const initialValues = {
     users: [
-      { email: user.email, acreage: 0.5 },
-      { email: '', acreage: 0.5 }
+      { email: user.email, acreage: '' },
+      { email: '', acreage: '' }
     ]
   }
 
