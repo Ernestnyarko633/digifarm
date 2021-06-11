@@ -105,11 +105,25 @@ const CooperativePayment = ({ farm, asMember }) => {
               <Flex as='td' align='center' justify='space-between' py={2}>
                 <Flex align='center'>
                   <Text mr={2} color='gray.500'>
-                    Sub Amount
+                    Unit Amount
                   </Text>
                 </Flex>
                 <Text fontWeight={900}>
                   $ {farm?.pricePerAcre || order?.product?.pricePerAcre}
+                </Text>
+              </Flex>
+            </Box>
+            <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
+              <Flex as='td' align='center' justify='space-between' py={2}>
+                <Flex align='center'>
+                  <Text mr={2} color='gray.500'>
+                    Discount
+                  </Text>
+                </Flex>
+                <Text fontWeight={900}>
+                  {cooperative?.type?.discount * 100 ||
+                    asMember?.cooperative?.type?.discount * 100}
+                  %
                 </Text>
               </Flex>
             </Box>
@@ -157,7 +171,7 @@ const CooperativePayment = ({ farm, asMember }) => {
         overflowY='scroll'
         p={{ base: 4, md: 10 }}
         css={{
-          direction: 'rtl',
+          direction: 'ltr',
           scrollbarColor: 'rebeccapurple',
           scrollBehavior: 'smooth'
         }}
