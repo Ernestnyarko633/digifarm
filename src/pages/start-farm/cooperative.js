@@ -15,23 +15,21 @@ const CooperativeFarm = ({ location, history }) => {
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted && state?.step) {
-      setStep(x => x + 1)
-      setOtherStep(x => x + 4)
+    if (mounted && (state?.step || state?.payment)) {
+      setStep(x => x + 2)
+      setOtherStep(x => x + 5)
+    } else {
+      if (!state?.user || !state) {
+        setStep(x => x * 0)
+        setOtherStep(x => x * 0)
+        // clear cache data in session storage
+        sessionStorage.removeItem('categories')
+        sessionStorage.removeItem('farms')
+      }
     }
 
     return () => (mounted = false)
   }, [state, setStep, setOtherStep])
-
-  React.useEffect(() => {
-    return () => {
-      // clear cache data in session storage
-      setStep(x => x * 0)
-      setOtherStep(x => x * 0)
-      sessionStorage.removeItem('categories')
-      sessionStorage.removeItem('farms')
-    }
-  }, [setStep, setOtherStep])
 
   const getContent = value => {
     switch (value) {
@@ -42,7 +40,8 @@ const CooperativeFarm = ({ location, history }) => {
       case 2:
         return (
           <CooperativeSteps
-            asMember={state}
+            asMember={state?.cooperative ? state : null}
+            payment={state?.payment ? state : null}
             data={selected}
             history={history}
           />

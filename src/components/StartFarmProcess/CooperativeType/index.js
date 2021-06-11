@@ -84,7 +84,7 @@ const CooperativeType = () => {
           <Flex mt={{ base: 14, md: 20 }} mb={{ base: 10, md: 0 }}>
             <Link as={NavLink} to='/start-farm' _hover={{ textDecor: 'none' }}>
               <Button
-                btntitle='Back'
+                btntitle='previous'
                 px={{ base: 10, md: 20 }}
                 h={{ base: 10, md: 12 }}
                 fontSize={{ base: 'sm', md: 'md' }}

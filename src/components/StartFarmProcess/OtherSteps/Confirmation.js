@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Image, Text, useToast } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
@@ -7,6 +8,7 @@ import { saveAs } from 'file-saver'
 import { Button } from 'components'
 import FarmInfo from 'components/Cards/FarmInfo'
 import useApi from 'context/api'
+import useStartFarm from 'context/start-farm'
 
 const MotionFlex = motion(Flex)
 
@@ -70,6 +72,17 @@ ButtonDownload.propTypes = {
 }
 
 const Confirmation = ({ farm, order }) => {
+  const { setOrder } = useStartFarm()
+  React.useEffect(() => {
+    let mounted = true
+
+    if (mounted && order) {
+      setOrder(order)
+    }
+
+    return () => (mounted = false)
+  }, [order, setOrder])
+
   return (
     <MotionFlex w='100%'>
       <Box w={{ md: '50%' }}>
@@ -101,7 +114,7 @@ const Confirmation = ({ farm, order }) => {
               dangerouslySetInnerHTML={{
                 __html:
                   order?.status !== 'PAID'
-                    ? 'Weldone! your order is pending, <br /> awaiting payment approval, download invoice for payment details.'
+                    ? 'Welldone! your order is pending, <br /> awaiting payment approval, download invoice for payment details.'
                     : 'Hurray!  you have successfully <br />made payment to your new farm'
               }}
             />

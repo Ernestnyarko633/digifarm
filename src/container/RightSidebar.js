@@ -46,7 +46,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
 
   return (
     <Box
-      pt={{ base: 12, md: 28 }}
+      pt={{ base: 12, md: 20 }}
       right={{ md: 0 }}
       bg={{ md: 'white' }}
       as='aside'
@@ -125,8 +125,8 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
               My cooperatives
             </Heading>
             <Box
-              my={{ base: 10, xl: 2 }}
-              h={{ base: '10%', xl: '40%' }}
+              my={{ base: 8, xl: 2 }}
+              h={{ base: '20%', xl: '40%' }}
               overflowY='scroll'
               px={2}
             >

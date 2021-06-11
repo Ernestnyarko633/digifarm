@@ -55,19 +55,22 @@ export const StartFarmContextProvider = ({ children }) => {
 
   useEffect(() => {
     let mounted = true
+    // set types manually
     const types = ['tribe', 'village', 'city', 'nation']
 
+    // function barrier get the next cooperative minAcre
     const Barrier = type => {
       const num = types.findIndex(value => value === type?.name)
-
       const newNum = num + 1
-      if (newNum < 3) setBarrier(cooperativeTypes[newNum]?.minAcre)
-      if (newNum > 3) setBarrier(10000000000000)
+      if (newNum <= 3) setBarrier(cooperativeTypes[newNum]?.minAcre)
+      if (newNum > 3) setBarrier(Infinity)
     }
 
-    if (mounted && selectedCooperativeType) Barrier(selectedCooperativeType)
+    //set Limit or barrier
+    if (mounted && selectedCooperativeType && otherStep <= 2)
+      Barrier(selectedCooperativeType)
     return () => (mounted = false)
-  }, [cooperativeTypes, selectedCooperativeType])
+  }, [cooperativeTypes, selectedCooperativeType, otherStep])
 
   const { getExchangeRate } = useExternal()
   const { setSession, isAuthenticated } = useAuth()
@@ -108,6 +111,7 @@ export const StartFarmContextProvider = ({ children }) => {
         cost = price * acreage
         return cost
       }
+
       let data = {
         cycle,
         acreage: cooperativeUserAcreage || acreage,
@@ -251,16 +255,6 @@ export const StartFarmContextProvider = ({ children }) => {
       if (paymentOption === Constants.paymentOptions[0]) {
         const q = 'USD_GHS'
         const res = await getExchangeRate({ q })
-        // data.amount =
-        //   Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
-        // if (data.amount) {
-        //   const res = await initiatePayment(data)
-        //   window.onbeforeunload = null
-        //   window.location.href = res.message.url
-        // } else {
-        //   throw new Error('Unknown error occurred, try again')
-        // }
-
         if (!res.data) {
           throw new Error('Unknown error occurred, try again')
         }

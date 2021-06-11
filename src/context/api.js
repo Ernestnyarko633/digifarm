@@ -254,7 +254,8 @@ export const ApiContextProvider = ({ children }) => {
 
   const getCooperativeTypes = async query => {
     return await http.get({
-      url: `${DIGITAL_FARMER_API}/cooperative-types`
+      url: `${DIGITAL_FARMER_API}/cooperative-types`,
+      query
     })
   }
 
