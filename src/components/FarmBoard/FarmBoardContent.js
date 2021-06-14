@@ -6,7 +6,7 @@ import FetchCard from 'components/FetchCard/index'
 import RenderCards from 'components/FarmBoard/Cards/RenderCards'
 import PropTypes from 'prop-types'
 import { renderEmpty } from './Cards/RenderCards'
-import { useNews, useVideos, useFeeds } from 'hooks/useFarmBoard'
+import { usePrismic, useFeeds } from 'hooks/useFarmBoard'
 import { useLocation } from 'react-router-dom'
 import { checkProperties } from 'helpers/misc'
 
@@ -16,8 +16,13 @@ const FarmBoardContent = ({ farms = [] }) => {
 
   //initial states
   const [activeFarmIndex, setActiveFarmIndex] = React.useState(0)
-  const { loading: newsLoading, news, error: newsError } = useNews()
-  const { loading: videosLoading, videos, error: videosError } = useVideos()
+  const {
+    loading: prismic_loading,
+    news,
+    videos,
+    blogs,
+    error: prismic_error
+  } = usePrismic()
   const { loading: feedsLoading, feeds, error: feedsError } = useFeeds()
   const [filter, setFilter] = React.useState(farms.length ? 'feeds' : 'videos')
   const queriedElement = React.useRef(null)
@@ -28,8 +33,8 @@ const FarmBoardContent = ({ farms = [] }) => {
   const executeScroll = () => queriedElement?.current?.scrollIntoView()
 
   //changing state variables
-  let loading = newsLoading || videosLoading || feedsLoading
-  let error = newsError || videosError || feedsError
+  let loading = prismic_loading || feedsLoading
+  let error = prismic_error || feedsError
 
   // initialising useQuery hook
   let q = useQuery()
@@ -51,18 +56,29 @@ const FarmBoardContent = ({ farms = [] }) => {
     //if all values of query are present
     if (checkProperties(query[0])) {
       //set filter to type 'news' or 'videos'
-      setFilter(query[0].type)
+      if (query[0]?.type === 'news') {
+        const isBlog = blogs?.find(item => item?.id === query[0]?.id)
+        const isNews = news?.find(item => item?.id === query[0]?.id)
+        if (isBlog) {
+          setFilter('blogs')
+        }
+        if (isNews) {
+          setFilter('news')
+        }
+      } else {
+        setFilter(query[0].type)
+      }
 
       // make sure index of farm is null
       setActiveFarmIndex(null)
     }
-  }, [query])
+  }, [blogs, news, query])
 
   //handles all rending of the board's content
   const RenderDataType = filter => {
     const mapKey = i => i
     // data is an object with fields newsm feeds and videos represents each board data type
-    const data = { news, feeds, videos }
+    const data = { news, feeds, videos, blogs }
 
     //if we dont have any data return empty state
     if (!feeds?.length && !news?.length && !videos?.length) {

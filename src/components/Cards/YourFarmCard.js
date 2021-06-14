@@ -45,7 +45,8 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 const items = [
   { id: 0, title: 'All Feeds', filter: 'feeds' },
   { id: 1, title: 'Weekly Videos', filter: 'videos' },
-  { id: 2, title: 'News', filter: 'news' }
+  { id: 2, title: 'News', filter: 'news' },
+  { id: 3, title: 'Blog Posts', filter: 'blogs' }
 ]
 
 const YourFarmCard = ({
