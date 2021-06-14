@@ -48,7 +48,10 @@ export const latestDateForFarmFeed = feed => {
   const { data } = feed
 
   let array = []
-  data?.forEach(realFeed => array?.push(realFeed?.feed?.updatedAt))
+  const process = () =>
+    data?.forEach(realFeed => array?.push(realFeed?.feed?.updatedAt))
+
+  process()
 
   if (array?.length)
     return new Date(Math.max(...array?.map(date => new Date(date))))
