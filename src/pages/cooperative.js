@@ -36,7 +36,7 @@ const Cooperative = ({ location: { state } }) => {
     null,
     getCooperativeById,
     reload,
-    state?._id
+    state?.data?.coop?._id
   )
 
   document.title = `Welcome to ${data?.name} Cooperative`
