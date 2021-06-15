@@ -14,7 +14,7 @@ const Events = () => {
         <Box mb={4}>
           <Text text fontSize='xs' color='#9b9b9b'>
             Growing conditions are currently perfect. <br />
-            {' Some irrigation work is being performed.'}
+            Some irrigation work is being performed.
           </Text>
         </Box>
         <Box>

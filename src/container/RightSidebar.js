@@ -46,29 +46,27 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
 
   return (
     <Box
-      pt={{ base: 12, md: 20 }}
+      as='aside'
       right={{ md: 0 }}
       bg={{ md: 'white' }}
-      as='aside'
       bottom={{ md: 0 }}
+      h={{ lg: '100vh' }}
       pos={{ md: 'fixed' }}
       px={{ md: 5, xl: 5 }}
-      h={{ lg: '100vh' }}
+      pt={{ base: 12, md: 24 }}
       w={{ md: '22%', xl: '25%' }}
     >
-      <Box>
-        <Heading
-          as='h4'
-          textTransform='uppercase'
-          fontSize={{ base: 'lg', md: '2xl' }}
-          fontWeight={700}
-          borderBottomWidth={1}
-          borderBottomColor='gray.300'
-          pb={2}
-        >
-          Events
-        </Heading>
-      </Box>
+      <Heading
+        as='h4'
+        textTransform='uppercase'
+        fontSize={{ base: 'lg', md: '2xl' }}
+        fontWeight={700}
+        borderBottomWidth={1}
+        borderBottomColor='gray.300'
+        pb={2}
+      >
+        Events
+      </Heading>
 
       <Box h='45%' overflowY='scroll' px={2} my={2}>
         {loading ? (
