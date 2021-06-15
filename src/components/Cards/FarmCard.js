@@ -190,7 +190,7 @@ const FarmCard = ({ farm }) => {
                 text='fetching progress'
               />
             ) : (
-              <Box h='300px' overflowY='scroll'>
+              <Box h={{ base: 56, md: 80 }} overflowY='scroll'>
                 {data.length > 0 ? (
                   data.map((activity, index) => (
                     <Step
