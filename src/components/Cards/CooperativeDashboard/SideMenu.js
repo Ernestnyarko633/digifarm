@@ -68,7 +68,7 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
 
   return (
     <Box
-      w='292px'
+      w='290px'
       ml={ml}
       mr='25px'
       borderWidth={border}
