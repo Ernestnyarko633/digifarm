@@ -24,6 +24,7 @@ import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfil
 import { Button } from 'components'
 import { Link as ReachRouter } from 'react-router-dom'
 import useStartFarm from 'context/start-farm'
+import { FirstLettersToUpperCase } from 'helpers/misc'
 const Cooperative = ({ location: { state } }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
@@ -36,7 +37,7 @@ const Cooperative = ({ location: { state } }) => {
     null,
     getCooperativeById,
     reload,
-    state?._id
+    state?.data?.coop?._id
   )
 
   document.title = `Welcome to ${data?.name} Cooperative`
@@ -166,15 +167,15 @@ const Cooperative = ({ location: { state } }) => {
                   <Text fontSize={16}>
                     Location:{' '}
                     <Text as='span' fontWeight='bold'>
-                      {data?.product?.location?.name +
+                      {FirstLettersToUpperCase(data?.product?.location?.name) +
                         ' , ' +
-                        data?.product?.location?.state}
+                        FirstLettersToUpperCase(data?.product?.location?.state)}
                     </Text>
                   </Text>
                   <Text fontSize={16}>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
-                      {data?.type?.name.toUpperCase()}
+                      {FirstLettersToUpperCase(data?.type?.name)}
                     </Text>
                   </Text>
                   <Text fontSize={16}>

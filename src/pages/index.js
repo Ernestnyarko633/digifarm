@@ -17,6 +17,7 @@ const Cooperative_ = lazy(() => import('./cooperative'))
 const Payment = lazy(() => import('./start-farm/payment'))
 const StartFarm = lazy(() => import('./start-farm/index'))
 const CooperativeMain = lazy(() => import('./cooperative-main'))
+const CooperativeIntro = lazy(() => import('./cooperativeIntro'))
 const CooperativeInvite = lazy(() => import('./cooperative-invite'))
 const PaymentPaystack = lazy(() => import('./start-farm/payment-paystack'))
 const StartFarmIndividual = lazy(() => import('./start-farm/individual'))
@@ -38,9 +39,10 @@ const Pages = {
   FarmWallet,
   Marketplace,
   Warehouse,
+  Cooperative_,
   PaymentPaystack,
   CooperativeInvite,
-  Cooperative_,
+  CooperativeIntro,
   CooperativeMain,
   StartFarmIndividual,
   StartFarmCooperative

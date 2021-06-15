@@ -62,6 +62,33 @@ export const PersonalInfoSchema = Yup.object().shape({
   })
 })
 
+export const SignupSchema = Yup.object().shape({
+  firstName: Yup.string().required('This field is required*'),
+  lastName: Yup.string().required('This field is required*'),
+  email: Yup.string()
+    .email('Invalid email!')
+    .required('This field is required*'),
+  country: Yup.string().required('This field is required*'),
+  phoneNumber: Yup.string()
+    .test(
+      'valid',
+      'Invalid phone number, exclude country code!',
+      value =>
+        value && validator.isMobilePhone(value, 'any', { strictMode: true })
+    )
+    .required('This field is required*'),
+  role: Yup.string().required('This field is required*'),
+  password: Yup.string()
+    .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
+      message:
+        'Minimum 8 characters, at least an uppercase, lowercase, number and special character*'
+    })
+    .required('This field is required*'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords do not match*')
+    .required('This field is required*')
+})
+
 export const BankDetailsSchema = Yup.object()
   .shape({
     bankName: Yup.string().required('This field is required*'),

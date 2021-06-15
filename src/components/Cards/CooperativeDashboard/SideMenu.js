@@ -12,7 +12,7 @@ import {
   Divider
 } from '@chakra-ui/react'
 
-import { getformattedDate } from 'helpers/misc'
+import { FirstLettersToUpperCase, getformattedDate } from 'helpers/misc'
 import PropTypes from 'prop-types'
 import Details from './Details'
 import { HiPencil } from 'react-icons/all'
@@ -144,14 +144,14 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
         <Details
           title='Location'
           subtitle={
-            data?.product?.location?.name +
+            FirstLettersToUpperCase(data?.product?.location?.name) +
             ' , ' +
-            data?.product?.location?.state
+            FirstLettersToUpperCase(data?.product?.location?.state)
           }
         />
         <Details
           title='Cooperative type'
-          subtitle={data?.type?.name?.toUpperCase()}
+          subtitle={FirstLettersToUpperCase(data?.type?.name)}
         />
         <Details title='Members' subtitle={data?.users?.length} />
         <Details title='Acreage' subtitle={total?.toFixed(1)} />
