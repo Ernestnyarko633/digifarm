@@ -45,7 +45,8 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 const items = [
   { id: 0, title: 'All Feeds', filter: 'feeds' },
   { id: 1, title: 'Weekly Videos', filter: 'videos' },
-  { id: 2, title: 'News', filter: 'news' }
+  { id: 2, title: 'News', filter: 'news' },
+  { id: 3, title: 'Blog Posts', filter: 'blogs' }
 ]
 
 const YourFarmCard = ({
@@ -193,26 +194,17 @@ const YourFarmCard = ({
           </MotionFlex>
 
           <Flex
+            align='center'
+            justify='flex-start'
             direction='row'
-            w={{ md: '100%' }}
+            w={{ xs: '100%' }}
             mt={3}
             overflowX={items.length > 6 ? 'scroll' : 'visible'}
           >
             {items.map(item => {
               if (farms.length && item.filter === 'feeds') {
                 return (
-                  <ItemTag
-                    key={item.id}
-                    setFilter={setFilter}
-                    setActiveFarmIndex={setActiveFarmIndex}
-                    title={item.title}
-                    text={item.filter}
-                    filter={filter}
-                  />
-                )
-              } else {
-                if (item.filter !== 'feeds') {
-                  return (
+                  <Box>
                     <ItemTag
                       key={item.id}
                       setFilter={setFilter}
@@ -221,6 +213,21 @@ const YourFarmCard = ({
                       text={item.filter}
                       filter={filter}
                     />
+                  </Box>
+                )
+              } else {
+                if (item.filter !== 'feeds') {
+                  return (
+                    <Box>
+                      <ItemTag
+                        key={item.id}
+                        setFilter={setFilter}
+                        setActiveFarmIndex={setActiveFarmIndex}
+                        title={item.title}
+                        text={item.filter}
+                        filter={filter}
+                      />
+                    </Box>
                   )
                 }
               }

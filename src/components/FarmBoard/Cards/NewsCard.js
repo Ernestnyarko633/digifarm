@@ -65,7 +65,9 @@ const NewsCard = ({ content, status }) => {
       <Flex align='center'>
         <Box ml={4}>
           <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
-            Weekly News
+            {content?.data?.category === 'Blog Post'
+              ? 'Blog Post'
+              : 'Weekly News'}
           </Heading>
         </Box>
       </Flex>

@@ -52,7 +52,7 @@ const ButtonDownload = ({ type, order, ...rest }) => {
       {...rest}
       w={64}
       h={12}
-      fontSize='md'
+      fontSize='sm'
       rounded='30px'
       isDisabled={loading}
       isLoading={loading}
