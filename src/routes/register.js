@@ -31,10 +31,11 @@ const Router = () => {
           path='/start-farm/cooperative'
           component={Pages.StartFarmCooperative}
         />
-        <PrivateRoute
-          path='/cooperative-invite'
+        <Route
+          path='/cooperative/invite/:token'
           component={Pages.CooperativeInvite}
         />
+        <Route path='/cooperative/intro' component={Pages.CooperativeIntro} />
         <PrivateRoute
           path='/cooperative-main/:id'
           component={Pages.CooperativeMain}

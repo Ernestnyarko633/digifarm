@@ -51,7 +51,6 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
         sessionStorage.removeItem('my_farms')
         sessionStorage.removeItem('my_orders')
         call()
-        onClose()
       } catch (error) {
         toast({
           title: 'Error occured',

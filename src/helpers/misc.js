@@ -216,6 +216,29 @@ export const embed_url = (text, url) => {
   return `<a href=${url} className="farm-board" class="farm-board" style={{color: "cf.400"}} target="_blank">${text}</a>`
 }
 
+export function shuffle(arr, count, key) {
+  let random = []
+  let i = 0
+
+  if (arr?.length < count) return arr
+
+  while (i < count) {
+    let index = Math.floor(Math.random() * arr?.length)
+    const newItem = arr?.[index]
+    let check = null
+    if (key) {
+      check = random.find(item => newItem?.[key] === item?.[key])
+    } else {
+      check = random.find(item => newItem === item)
+    }
+    if (!check) {
+      random.push(newItem)
+      i++
+    }
+  }
+  return random
+}
+
 export const Status = {
   COMPLETED: 'COMPLETED',
   PENDING: 'PENDING',
