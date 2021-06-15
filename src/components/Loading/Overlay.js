@@ -7,7 +7,13 @@ const Overlay = ({ text }) => {
     <Slide direction='top' in={true} style={{ zIndex: 100 }}>
       <Box pos='fixed' width='100vw' bg='cf-dark.500'>
         <Flex direction='column' align='center' justify='center' h='100vh'>
-          <Spinner size='lg' color='cf.800' />
+          <Spinner
+            size='lg'
+            speed='0.65s'
+            color='cf.800'
+            thickness='4px'
+            emptyColor='gray.200'
+          />
           {text && (
             <Text textAlign='center' className='loading-text loading-text-b'>
               {text}
