@@ -115,7 +115,7 @@ const Confirmation = ({ farm, order }) => {
                 __html:
                   order?.status !== 'PAID'
                     ? 'Welldone! your order is pending, <br /> awaiting payment approval, download invoice for payment details.'
-                    : 'Hurray!  you have successfully <br />made payment for your new cooperative farm'
+                    : 'Congratulations! You’ve completed the payment for your farm.'
               }}
             />
           </Box>

@@ -33,6 +33,18 @@ const CropSelection = () => {
     categories = [{ _id: 'defualt', title: 'Top-selling farms' }, ...data]
   }
 
+  const type = sessionStorage.getItem('type')
+
+  const cooperativebool =
+    type === 'cooperative'
+      ? selectedCooperativeType?.minAcre > selectedFarm?.acreage
+      : false
+
+  const acreage =
+    type === 'cooperative'
+      ? selectedFarm?.acreage === 0
+      : Math.floor(selectedFarm?.acreage) === 0
+
   return (
     <Box w='90%' mx='auto' mt={{ base: 20, md: 0 }}>
       <Box textAlign='center' py={10}>
@@ -89,7 +101,8 @@ const CropSelection = () => {
             <Button
               btntitle='Continue'
               disabled={
-                selectedCooperativeType?.minAcre > selectedFarm?.acreage ||
+                cooperativebool ||
+                acreage ||
                 !selectedFarm ||
                 isLoading ||
                 error
