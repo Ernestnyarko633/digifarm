@@ -1,11 +1,9 @@
 import React from 'react'
-import { Box, Flex, Image, Link } from '@chakra-ui/react'
+import { Flex, Image, Link } from '@chakra-ui/react'
 import { Link as ReachRouter } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
-import Logo1 from 'assets/images/logo@1x.svg'
-import Logo2 from 'assets/images/logo@2x.svg'
-import Logo3 from 'assets/images/logo@3x.svg'
+import Logo from 'assets/images/logo.svg'
 
 import useAuth from 'context/auth'
 import useApi from 'context/api'
@@ -39,7 +37,7 @@ const Header = () => {
       zIndex={100}
       align='center'
       bgColor='white'
-      h={{ base: 14, md: 16 }}
+      h={{ base: 14, md: 16, xl: 20 }}
       gridArea='header'
       justify='space-between'
       borderBottomWidth={1}
@@ -48,13 +46,7 @@ const Header = () => {
       overflowX={{ base: 'hidden', md: 'visible' }}
     >
       <Link as={ReachRouter} to='/dashboard' _hover={{ textDecor: 'none' }}>
-        <Box as='picture'>
-          <Image
-            h={{ base: 8, md: 10 }}
-            src={Logo1}
-            srcSet={`${Logo1} 300w, ${Logo2} 768w, ${Logo3} 1280w`}
-          />
-        </Box>
+        <Image h={{ base: 8, md: 10 }} src={Logo} />
       </Link>
 
       <Flex align='center'>
