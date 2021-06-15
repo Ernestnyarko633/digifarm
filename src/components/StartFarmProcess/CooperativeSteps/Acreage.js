@@ -157,7 +157,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                 </Text>
                 <Flex
                   align='center'
-                  bg='gray.100'
+                  bg='#E5EDEC'
                   p={3}
                   rounded='md'
                   mt={{ md: 5 }}
@@ -184,7 +184,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                       py={2}
                       pl={2}
                     >
-                      <Text color='gray.500' fontSize='sm'>
+                      <Text color='cf.darkGreen' fontSize='sm'>
                         There should be a <strong color>minimum of 2</strong>{' '}
                         and and{' '}
                         <strong>
@@ -194,7 +194,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                       </Text>
                     </Box>
                     <Box borderRightColor='gray.300' p={2}>
-                      <Text color='gray.500' fontSize='sm'>
+                      <Text color='cf.darkGreen' fontSize='sm'>
                         This cooperative will have to meet the minimum number of
                         acreages for{' '}
                         <strong>{selectedCooperativeType?.name}</strong> which
