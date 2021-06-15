@@ -125,7 +125,7 @@ const Confirmation = ({ farm, order }) => {
           direction={{ base: 'column', md: 'row' }}
           align='center'
           pos={{ md: 'absolute' }}
-          bottom={5}
+          bottom={1}
           left={0}
           right={0}
         >

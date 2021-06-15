@@ -243,7 +243,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                               values.users?.length ===
                               selectedCooperativeType?.maxMember
                             }
-                            onClick={() => push({ email: '', acreage: 0.1 })}
+                            onClick={() => push({ email: '', acreage: '' })}
                           />
                         </Box>
                       </>
