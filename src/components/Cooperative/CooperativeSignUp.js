@@ -133,14 +133,14 @@ const CooperativeSignUp = () => {
     >
       <Box color='white' textAlign='center'>
         <Heading
-          fontSize={{ base: 12, '3xl': 32 }}
+          fontSize={{ base: 12, md: 24, lg: 24, '3xl': 32 }}
           w={{ md: '45%', xl: '45%' }}
           mx='auto'
         >
           Split cost. Share assets. Share rewards.
         </Heading>
         <Text
-          fontSize={{ base: 10, '3xl': 16 }}
+          fontSize={{ base: 10, md: 16, lg: 16, '3xl': 16 }}
           pt={{ base: 1, lg: 3 }}
           pb={{ base: 4, lg: 8 }}
         >
