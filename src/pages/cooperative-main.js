@@ -152,8 +152,10 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
         <Text fontWeight='semibold'>
           $
           {getFormattedMoney(
-            row.values.acreage * data?.product?.pricePerAcre -
-              data?.product?.pricePerAcre * data?.type?.discount
+            data?.product?.pricePerAcre * row.values.acreage -
+              data?.product?.pricePerAcre *
+                row.values.acreage *
+                data?.type?.discount
           )}
         </Text>
       )

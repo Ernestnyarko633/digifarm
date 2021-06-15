@@ -98,11 +98,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                     size='lg'
                   />
                   <Box ml={2}>
-                    <Text
-                      fontWeight={700}
-                      textTransform='uppercase'
-                      fontSize={{ md: 'xl' }}
-                    >
+                    <Text fontWeight={700} fontSize={{ md: 'xl' }}>
                       {name}
                     </Text>
                     <Text mt={-2} fontSize='14px'>

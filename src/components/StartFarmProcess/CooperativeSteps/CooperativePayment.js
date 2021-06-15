@@ -13,7 +13,7 @@ import { Avatar } from '@chakra-ui/avatar'
 import { Text } from '@chakra-ui/layout'
 import CropItemInfo from './CropItemInfo'
 import { QuestionIcon } from '@chakra-ui/icons'
-import { getFormattedMoney } from 'helpers/misc'
+import { FirstLettersToUpperCase, getFormattedMoney } from 'helpers/misc'
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
@@ -78,8 +78,8 @@ const CooperativePayment = ({ farm, asMember }) => {
                 Cooperative Type
               </Text>
               <Text fontWeight={700} textAlign='right'>
-                {cooperative?.type?.name?.toUpperCase() ||
-                  asMember?.cooperative?.type?.name?.toUpperCase()}
+                {FirstLettersToUpperCase(cooperative?.type?.name) ||
+                  FirstLettersToUpperCase(asMember?.cooperative?.type?.name)}
               </Text>
             </Box>
           </Flex>
