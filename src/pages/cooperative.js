@@ -24,6 +24,7 @@ import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfil
 import { Button } from 'components'
 import { Link as ReachRouter } from 'react-router-dom'
 import useStartFarm from 'context/start-farm'
+import { FirstLettersToUpperCase } from 'helpers/misc'
 const Cooperative = ({ location: { state } }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
@@ -36,7 +37,7 @@ const Cooperative = ({ location: { state } }) => {
     null,
     getCooperativeById,
     reload,
-    state?._id
+    state?.data?.coop?._id
   )
 
   document.title = `Welcome to ${data?.name} Cooperative`
@@ -69,6 +70,7 @@ const Cooperative = ({ location: { state } }) => {
     if (mounted && data?.product?._id) {
       setSelectedFarm(data?.product)
       setSelectedCooperativeType(data?.type)
+      sessionStorage.setItem('type', 'cooperative')
       sessionStorage.setItem('selected_farm', JSON.stringify(data?.product))
       setStep(x => x + 2)
       setOtherStep(x => x + 3)
@@ -109,7 +111,8 @@ const Cooperative = ({ location: { state } }) => {
         <Container
           maxW={{ xl: '5xl' }}
           pt={{ base: 20, lg: 24 }}
-          pb={{ base: 3, lg: 10 }}
+          pb={{ base: 3, lg: 10, xl: 28 }}
+          bg='white'
         >
           <Heading
             fontSize={{ base: 16, md: 20 }}
@@ -164,15 +167,15 @@ const Cooperative = ({ location: { state } }) => {
                   <Text fontSize={16}>
                     Location:{' '}
                     <Text as='span' fontWeight='bold'>
-                      {data?.product?.location?.name +
+                      {FirstLettersToUpperCase(data?.product?.location?.name) +
                         ' , ' +
-                        data?.product?.location?.state}
+                        FirstLettersToUpperCase(data?.product?.location?.state)}
                     </Text>
                   </Text>
                   <Text fontSize={16}>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
-                      {data?.type?.name.toUpperCase()}
+                      {FirstLettersToUpperCase(data?.type?.name)}
                     </Text>
                   </Text>
                   <Text fontSize={16}>
@@ -247,10 +250,10 @@ const Cooperative = ({ location: { state } }) => {
                   pathname: '/start-farm/cooperative',
                   state: {
                     cooperative: data,
-                    acreage: data.users?.filter(u => u.id === user?._id)[0]
+                    acreage: data?.users?.filter(u => u.id === user?._id)[0]
                       ?.acreage,
-                    user: user._id,
-                    product: data.product._id
+                    user: user?._id,
+                    product: data?.product?._id
                   }
                 }}
                 _hover={{ textDecor: 'none' }}

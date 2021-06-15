@@ -11,23 +11,57 @@ const CooperativeFarm = ({ location, history }) => {
   document.title = 'Cooperative | Start Farm'
 
   const { state, selected } = location || {}
-  const { step, setStep, setOtherStep } = useStartFarm()
+  const {
+    step,
+    setStep,
+    setOtherStep,
+    setSelectedType,
+    setBarrier,
+    setInvites,
+    setCooperative,
+    setCooperativeName,
+    setCoopImg,
+    setSelectedCooperativeType,
+    setAcres
+  } = useStartFarm()
 
   React.useEffect(() => {
     let mounted = true
-    if ((mounted && state?.step) || state?.payment) {
+    if (mounted && (state?.step || state?.payment)) {
       setStep(x => x + 2)
       setOtherStep(x => x + 5)
     } else {
-      // clear cache data in session storage
-      setStep(x => x * 0)
-      setOtherStep(x => x * 0)
-      sessionStorage.removeItem('categories')
-      sessionStorage.removeItem('farms')
+      if (!state?.user || !state) {
+        setStep(x => x * 0)
+        setOtherStep(x => x * 0)
+        setCooperativeName(null)
+        setSelectedType('')
+        setBarrier(null)
+        setCooperative(null)
+        setInvites([])
+        setCoopImg(false)
+        setSelectedCooperativeType(null)
+        setAcres(0)
+        // clear cache data in session storage
+        sessionStorage.removeItem('categories')
+        sessionStorage.removeItem('farms')
+      }
     }
 
     return () => (mounted = false)
-  }, [state, setStep, setOtherStep])
+  }, [
+    state,
+    setStep,
+    setOtherStep,
+    setCooperativeName,
+    setSelectedType,
+    setBarrier,
+    setCooperative,
+    setInvites,
+    setCoopImg,
+    setSelectedCooperativeType,
+    setAcres
+  ])
 
   const getContent = value => {
     switch (value) {
@@ -38,7 +72,8 @@ const CooperativeFarm = ({ location, history }) => {
       case 2:
         return (
           <CooperativeSteps
-            asMember={state}
+            asMember={state?.cooperative ? state : null}
+            payment={state?.payment ? state : null}
             data={selected}
             history={history}
           />

@@ -36,6 +36,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.post({ url: `${AUTH_API}/logout` })
   }
 
+  const signUp = async payload => {
+    return await http.post({
+      url: `${AUTH_API}/signup`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   const getCropCategories = async () => {
     return await http.get({ url: `${FMS_API}/crop-categories` })
   }
@@ -254,7 +261,8 @@ export const ApiContextProvider = ({ children }) => {
 
   const getCooperativeTypes = async query => {
     return await http.get({
-      url: `${DIGITAL_FARMER_API}/cooperative-types`
+      url: `${DIGITAL_FARMER_API}/cooperative-types`,
+      query
     })
   }
 
@@ -282,6 +290,7 @@ export const ApiContextProvider = ({ children }) => {
   return (
     <ApiContext.Provider
       value={{
+        signUp,
         logout,
         eosTask,
         getUser,

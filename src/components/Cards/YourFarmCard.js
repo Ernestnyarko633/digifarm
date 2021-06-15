@@ -28,12 +28,16 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
       }}
       color={filter === text ? 'cf.800' : 'gray.500'}
       textAlign='center'
+      d='flex'
+      alignItems='center'
+      justifyContent='center'
       bg={filter === text ? 'cf.200' : 'gray.100'}
       rounded={20}
       px={5}
       py={3}
       mr={2}
       cursor='pointer'
+      minW={32}
     >
       <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight={600}>
         {title}
@@ -45,7 +49,8 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 const items = [
   { id: 0, title: 'All Feeds', filter: 'feeds' },
   { id: 1, title: 'Weekly Videos', filter: 'videos' },
-  { id: 2, title: 'News', filter: 'news' }
+  { id: 2, title: 'News', filter: 'news' },
+  { id: 3, title: 'Blog Posts', filter: 'blogs' }
 ]
 
 const YourFarmCard = ({
@@ -107,7 +112,7 @@ const YourFarmCard = ({
 
         <Box
           pos={{ md: 'absolute' }}
-          left={{ md: -12 }}
+          left={{ md: -8 }}
           d={farms.length > 8 ? 'block' : 'none'}
           mt={{ base: 6, md: 0 }}
         >
@@ -118,8 +123,8 @@ const YourFarmCard = ({
           direction='column'
           align='center'
           justify='flex-start'
-          maxW={{ md: 130 }}
-          w={{ md: 130 }}
+          maxW={{ md: 127 }}
+          w={{ md: 127 }}
           overflow='hidden'
           my={10}
         >
@@ -193,10 +198,15 @@ const YourFarmCard = ({
           </MotionFlex>
 
           <Flex
-            direction='row'
-            w={{ md: '100%' }}
+            align='center'
+            // justify='flex-start'
+            // direction='row'
+            w={{ base: 82, sm: '100%' }}
             mt={3}
-            overflowX={items.length > 6 ? 'scroll' : 'visible'}
+            overflowX={{
+              base: items.length > 3 && 'scroll',
+              md: items.length > 6 && 'scroll'
+            }}
           >
             {items.map(item => {
               if (farms.length && item.filter === 'feeds') {
@@ -213,14 +223,16 @@ const YourFarmCard = ({
               } else {
                 if (item.filter !== 'feeds') {
                   return (
-                    <ItemTag
-                      key={item.id}
-                      setFilter={setFilter}
-                      setActiveFarmIndex={setActiveFarmIndex}
-                      title={item.title}
-                      text={item.filter}
-                      filter={filter}
-                    />
+                    <Box>
+                      <ItemTag
+                        key={item.id}
+                        setFilter={setFilter}
+                        setActiveFarmIndex={setActiveFarmIndex}
+                        title={item.title}
+                        text={item.filter}
+                        filter={filter}
+                      />
+                    </Box>
                   )
                 }
               }

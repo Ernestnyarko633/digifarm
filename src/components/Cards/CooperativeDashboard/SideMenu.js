@@ -8,18 +8,20 @@ import {
   Input,
   FormControl,
   FormLabel,
-  useToast
+  useToast,
+  Divider
 } from '@chakra-ui/react'
 
-import { getformattedDate } from 'helpers/misc'
+import { FirstLettersToUpperCase, getformattedDate } from 'helpers/misc'
 import PropTypes from 'prop-types'
 import Details from './Details'
 import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
+import Button from 'components/Button'
 
-const SideMenu = ({ data, border, bg, ml }) => {
+const SideMenu = ({ data, border, bg, ml, click, loading }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { updateCooperative } = useApi()
@@ -66,7 +68,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
 
   return (
     <Box
-      w='292px'
+      w='290px'
       ml={ml}
       mr='25px'
       borderWidth={border}
@@ -142,14 +144,14 @@ const SideMenu = ({ data, border, bg, ml }) => {
         <Details
           title='Location'
           subtitle={
-            data?.product?.location?.name +
+            FirstLettersToUpperCase(data?.product?.location?.name) +
             ' , ' +
-            data?.product?.location?.state
+            FirstLettersToUpperCase(data?.product?.location?.state)
           }
         />
         <Details
           title='Cooperative type'
-          subtitle={data?.type?.name?.toUpperCase()}
+          subtitle={FirstLettersToUpperCase(data?.type?.name)}
         />
         <Details title='Members' subtitle={data?.users?.length} />
         <Details title='Acreage' subtitle={total?.toFixed(1)} />
@@ -161,11 +163,20 @@ const SideMenu = ({ data, border, bg, ml }) => {
             data?.product?.managers[0]?.lastName
           }
         />
-        <Details
-          title='Farm Agreement'
-          color='cf.400'
-          subtitle={<a href='#hh'>View Agreement</a>}
-        />
+        <Divider borderColor='gray.300' />
+        <Box my={3} w='90%' mx='auto'>
+          <Button
+            btntitle='Download agreement'
+            variant='outline'
+            color='cf.800'
+            width='100%'
+            isLoading={loading}
+            isDisabled={loading}
+            py='10px'
+            fontSize={{ md: 'md' }}
+            onClick={click}
+          />
+        </Box>
       </Box>
     </Box>
   )
@@ -175,7 +186,9 @@ SideMenu.propTypes = {
   data: PropTypes.any,
   border: PropTypes.any,
   bg: PropTypes.any,
-  ml: PropTypes.any
+  ml: PropTypes.any,
+  click: PropTypes.any,
+  loading: PropTypes.any
 }
 
 export default SideMenu

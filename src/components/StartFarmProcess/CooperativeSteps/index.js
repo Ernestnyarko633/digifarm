@@ -110,7 +110,9 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
       case 4:
         return <CooperativePayment farm={selectedFarm} asMember={asMember} />
       case 5:
-        return <Confirmation farm={selectedFarm} order={order} />
+        return (
+          <Confirmation farm={selectedFarm} order={payment?.data || order} />
+        )
       default:
         return <ReloadPage />
     }
@@ -187,25 +189,27 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
         }
       case 5:
         return {
-          title: 'Proceed to Cooperative Dashboard',
+          title: 'Proceed to Dashboard',
           width: 80,
-          action: () =>
-            history.push(
+          action: () => {
+            window.onbeforeunload = null
+            return history.replace(
               `/cooperative-main/${
                 cooperative?._id ||
                 order?.cooperative?._id ||
-                order?.cooperative
+                order?.cooperative ||
+                payment?.data?.cooperative?._id ||
+                payment?.data?.cooperative
               }`
             )
+          }
         }
       default:
         return { title: 'Next', width: 56, action: handleNextStep }
     }
   }
 
-  const { title, action, width, disabled } = getForwardButtonProps(
-    payment?.payment ? 5 : otherStep
-  )
+  const { title, action, width, disabled } = getForwardButtonProps(otherStep)
 
   return (
     <Flex
@@ -295,7 +299,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
             md: otherStep !== 1 ? 120 : '80vh'
           }}
         >
-          {getSteps(payment?.payment ? 5 : otherStep)}
+          {getSteps(otherStep)}
         </MotionFlex>
       </AnimateSharedLayout>
 
@@ -313,6 +317,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           btntitle='Prev'
           color='gray.700'
           colorScheme='white'
+          disabled={otherStep > 3}
           onClick={otherStep <= 0 ? handleBack : handlePrev}
           borderWidth={1}
         />

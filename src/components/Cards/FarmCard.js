@@ -1,6 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Avatar, Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Text,
+  Tag
+} from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 import { Status } from 'helpers/misc'
 import Step from 'components/Form/Step'
@@ -84,9 +92,35 @@ const FarmCard = ({ farm }) => {
           </Box>
 
           <Box>
-            <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
-              {farm?.order?.product?.cropVariety?.crop?.name}
-            </Heading>
+            {!farm?.order?.cooperative ? (
+              <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
+                {farm?.order?.product?.cropVariety?.crop?.name}
+              </Heading>
+            ) : (
+              <Flex direction='row' justify='center' align='center'>
+                <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
+                  {farm?.order?.product?.cropVariety?.crop?.name}
+                </Heading>
+
+                <Box mx={5}>
+                  <Tag
+                    color='cf.800'
+                    justifyContent='center'
+                    bg='#EFF6ED'
+                    bgGradient='linear(to-l, #EFF6ED)'
+                    rounded={20}
+                    minW='12'
+                    maxH='5'
+                    px={5}
+                    py={3}
+                    mr={2}
+                  >
+                    <Text fontWeight={600}>Cooperative</Text>
+                  </Tag>
+                </Box>
+              </Flex>
+            )}
+
             <Text
               as='span'
               fontSize={{ base: 'tiny', md: 'sm' }}

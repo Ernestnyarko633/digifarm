@@ -13,7 +13,7 @@ import { Avatar } from '@chakra-ui/avatar'
 import { Text } from '@chakra-ui/layout'
 import CropItemInfo from './CropItemInfo'
 import { QuestionIcon } from '@chakra-ui/icons'
-import { getFormattedMoney } from 'helpers/misc'
+import { FirstLettersToUpperCase, getFormattedMoney } from 'helpers/misc'
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
@@ -25,6 +25,7 @@ const CooperativePayment = ({ farm, asMember }) => {
   const { getCooperativeById } = useApi()
   const { order, paymentOption, coopImg, setPaymentOption, cooperative } =
     useStartFarm()
+
   const { data, isLoading, error } = useFetch(
     asMember?.cooperative?._id || cooperative?._id
       ? `welcome_to_coop_${asMember?.cooperative?._id || cooperative?._id}`
@@ -54,7 +55,7 @@ const CooperativePayment = ({ farm, asMember }) => {
               />
               <Box ml={2}>
                 <Text fontWeight={700} fontSize={{ md: 'xl' }}>
-                  {cooperative?.name || asMember?.cooperativeFromMember?.name}
+                  {cooperative?.name || asMember?.cooperative?.name}
                 </Text>
                 {isLoading || error ? (
                   <FetchCard
@@ -74,11 +75,11 @@ const CooperativePayment = ({ farm, asMember }) => {
 
             <Box>
               <Text color='gray.400' fontSize='sm'>
-                {cooperative?.name || asMember?.cooperativeFromMember?.name}
+                Cooperative Type
               </Text>
-              <Text fontWeight={700}>
-                {cooperative?.type?.name ||
-                  asMember?.cooperativeFromMember?.type?.name}
+              <Text fontWeight={700} textAlign='right'>
+                {FirstLettersToUpperCase(cooperative?.type?.name) ||
+                  FirstLettersToUpperCase(asMember?.cooperative?.type?.name)}
               </Text>
             </Box>
           </Flex>
@@ -104,11 +105,25 @@ const CooperativePayment = ({ farm, asMember }) => {
               <Flex as='td' align='center' justify='space-between' py={2}>
                 <Flex align='center'>
                   <Text mr={2} color='gray.500'>
-                    Sub Amount
+                    Unit Amount
                   </Text>
                 </Flex>
                 <Text fontWeight={900}>
                   $ {farm?.pricePerAcre || order?.product?.pricePerAcre}
+                </Text>
+              </Flex>
+            </Box>
+            <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
+              <Flex as='td' align='center' justify='space-between' py={2}>
+                <Flex align='center'>
+                  <Text mr={2} color='gray.500'>
+                    Discount
+                  </Text>
+                </Flex>
+                <Text fontWeight={900}>
+                  {cooperative?.type?.discount * 100 ||
+                    asMember?.cooperative?.type?.discount * 100}
+                  %
                 </Text>
               </Flex>
             </Box>
@@ -156,7 +171,7 @@ const CooperativePayment = ({ farm, asMember }) => {
         overflowY='scroll'
         p={{ base: 4, md: 10 }}
         css={{
-          direction: 'rtl',
+          direction: 'ltr',
           scrollbarColor: 'rebeccapurple',
           scrollBehavior: 'smooth'
         }}

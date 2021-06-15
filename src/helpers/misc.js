@@ -48,10 +48,13 @@ export const latestDateForFarmFeed = feed => {
   const { data } = feed
 
   let array = []
-  data.forEach(realFeed => array.push(realFeed?.feed?.updatedAt))
+  const process = () =>
+    data?.forEach(realFeed => array?.push(realFeed?.feed?.updatedAt))
 
-  if (array.length)
-    return new Date(Math.max(...array.map(date => new Date(date))))
+  process()
+
+  if (array?.length)
+    return new Date(Math.max(...array?.map(date => new Date(date))))
 }
 
 export const getformattedDate = (
@@ -211,6 +214,29 @@ export const urlify = text => {
 
 export const embed_url = (text, url) => {
   return `<a href=${url} className="farm-board" class="farm-board" style={{color: "cf.400"}} target="_blank">${text}</a>`
+}
+
+export function shuffle(arr, count, key) {
+  let random = []
+  let i = 0
+
+  if (arr?.length < count) return arr
+
+  while (i < count) {
+    let index = Math.floor(Math.random() * arr?.length)
+    const newItem = arr?.[index]
+    let check = null
+    if (key) {
+      check = random.find(item => newItem?.[key] === item?.[key])
+    } else {
+      check = random.find(item => newItem === item)
+    }
+    if (!check) {
+      random.push(newItem)
+      i++
+    }
+  }
+  return random
 }
 
 export const Status = {

@@ -12,7 +12,8 @@ import FarmDetails from './FarmDetails'
 import { Button } from '../../index'
 
 const CropSelection = () => {
-  const { handleBack, handleNext } = useStartFarm()
+  const { handleBack, handleNext, selectedCooperativeType, selectedFarm } =
+    useStartFarm()
 
   const [reload, setReload] = useState(0)
 
@@ -31,6 +32,18 @@ const CropSelection = () => {
   if (data) {
     categories = [{ _id: 'defualt', title: 'Top-selling farms' }, ...data]
   }
+
+  const type = sessionStorage.getItem('type')
+
+  const cooperativebool =
+    type === 'cooperative'
+      ? selectedCooperativeType?.minAcre > selectedFarm?.acreage
+      : false
+
+  const acreage =
+    type === 'cooperative'
+      ? selectedFarm?.acreage === 0
+      : Math.floor(selectedFarm?.acreage) === 0
 
   return (
     <Box w='90%' mx='auto' mt={{ base: 20, md: 0 }}>
@@ -87,6 +100,13 @@ const CropSelection = () => {
             <Box mx={2} />
             <Button
               btntitle='Continue'
+              disabled={
+                cooperativebool ||
+                acreage ||
+                !selectedFarm ||
+                isLoading ||
+                error
+              }
               w={{ base: 70, md: 40 }}
               h={12}
               fontSize='md'

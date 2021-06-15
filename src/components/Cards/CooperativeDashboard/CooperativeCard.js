@@ -6,7 +6,7 @@ import useAuth from 'context/auth'
 
 import { getFormattedMoney } from 'helpers/misc'
 
-const CooperativeCard = ({ item, orderType, data, handleClick }) => {
+const CooperativeCard = ({ item, order, data, handleClick }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { acreage } = item
@@ -47,6 +47,7 @@ const CooperativeCard = ({ item, orderType, data, handleClick }) => {
                   textAlign='center'
                   color='#004C46'
                   px='5px'
+                  pt='2px'
                 >
                   Admin
                 </Text>
@@ -57,7 +58,7 @@ const CooperativeCard = ({ item, orderType, data, handleClick }) => {
             {item?.info?.email || item?.email}
           </Text>
         </Box>
-        {item?.status === 'PAID' || orderType?.length > 0 ? null : (
+        {item?.status === 'PAID' || order?.status === 'PROCESSING' ? null : (
           <>
             {item?.email === user?.email && (
               <Button
@@ -67,7 +68,6 @@ const CooperativeCard = ({ item, orderType, data, handleClick }) => {
                 h='35px'
                 fontSize='14px'
                 py='10px'
-                // leftIcon={<BiCreditCard size={20} />}
                 onClick={handleClick}
                 ml={6}
                 my={1}
@@ -113,7 +113,7 @@ const CooperativeCard = ({ item, orderType, data, handleClick }) => {
 
 CooperativeCard.propTypes = {
   item: PropTypes.any,
-  orderType: PropTypes.any,
+  order: PropTypes.any,
   data: PropTypes.any,
   handleClick: PropTypes.any
 }

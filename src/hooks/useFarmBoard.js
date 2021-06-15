@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import getConfig from 'utils/configs'
 import Prismic from 'prismic-javascript'
@@ -11,62 +12,26 @@ const Client = Prismic.client(PRISMIC_API, {
   accessToken: PRISMIC_ACCESS_TOKEN
 })
 
-export const useNews = () => {
+export const usePrismic = () => {
   const [news, setNewsData] = React.useState(null)
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState(null)
-
-  React.useEffect(() => {
-    let mounted = true
-    if (mounted && !news) {
-      const fetchData = async () => {
-        try {
-          setLoading(true)
-          const [res1] = await Promise.all([
-            Client.query(Prismic.Predicates.at('document.type', 'news'))
-          ])
-          if (res1) setNewsData(res1?.results || [])
-        } catch (err) {
-          setError('Could not fetch data')
-        } finally {
-          setLoading(false)
-        }
-      }
-      fetchData()
-    }
-    return () => (mounted = false)
-  }, [news])
-
-  return {
-    loading,
-    news: news
-      ?.slice()
-      ?.sort(
-        (a, b) =>
-          new Date(b.first_publication_date) -
-          new Date(a.first_publication_date)
-      ),
-    error
-  }
-}
-
-export const useVideos = () => {
   const [videos, setVideosData] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted && !videos) {
+    if ((mounted && !news) || !videos) {
       const fetchData = async () => {
         try {
           setLoading(true)
-          const [res1] = await Promise.all([
+          const [res1, res2] = await Promise.all([
+            Client.query(Prismic.Predicates.at('document.type', 'news')),
             Client.query(
               Prismic.Predicates.at('document.type', 'weekly_videos')
             )
           ])
-          if (res1) setVideosData(res1?.results || [])
+          if (res1) setNewsData(res1?.results || [])
+          if (res2) setVideosData(res2?.results || [])
         } catch (err) {
           setError('Could not fetch data')
         } finally {
@@ -76,17 +41,39 @@ export const useVideos = () => {
       fetchData()
     }
     return () => (mounted = false)
-  }, [videos])
+  }, [news, videos])
 
   return {
     loading,
-    videos: videos
-      ?.slice()
-      ?.sort(
-        (a, b) =>
-          new Date(b.first_publication_date) -
-          new Date(a.first_publication_date)
-      ),
+    news:
+      news
+        ?.filter(
+          news =>
+            news?.data?.category === 'News' || news?.data?.category === null
+        )
+        ?.slice()
+        ?.sort(
+          (a, b) =>
+            new Date(b.first_publication_date) -
+            new Date(a.first_publication_date)
+        ) || [],
+    blogs:
+      news
+        ?.filter(blog => blog?.data?.category === 'Blog Post')
+        ?.slice()
+        ?.sort(
+          (a, b) =>
+            new Date(b.first_publication_date) -
+            new Date(a.first_publication_date)
+        ) || [],
+    videos:
+      videos
+        ?.slice()
+        ?.sort(
+          (a, b) =>
+            new Date(b.first_publication_date) -
+            new Date(a.first_publication_date)
+        ) || [],
     error
   }
 }
