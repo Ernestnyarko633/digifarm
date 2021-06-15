@@ -12,10 +12,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
   React.useEffect(() => {
     if (!session) {
-      // return history.push({
-      //   pathname: '/logout',
-      //   state: { mgs: 'Session expired' }
-      // })
+      return history.push({
+        pathname: '/logout',
+        state: { mgs: 'Session expired' }
+      })
     }
   }, [session, history])
 

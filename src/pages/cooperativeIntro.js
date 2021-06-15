@@ -87,7 +87,7 @@ const cooperativeIntro = ({ location: { state } }) => {
         zIndex={100}
         align='center'
         bgColor='white'
-        h={{ base: 14, md: 16 }}
+        h={{ base: 10, md: 16 }}
         gridArea='header'
         justify='space-between'
         borderBottomWidth={1}
@@ -95,35 +95,29 @@ const cooperativeIntro = ({ location: { state } }) => {
         px={{ base: 4, xl: 20 }}
         overflowX={{ base: 'hidden', md: 'visible' }}
       >
-        <Flex justify='space-between'>
-          <Box as='picture'>
-            <Image
-              h={{ base: 6, md: 10 }}
-              src={df_logo}
-              //   srcSet={`${Logo1} 300w, ${Logo2} 768w, ${Logo3} 1280w`}
-            />
-          </Box>
-          <Link
-            color='#31BC2E'
-            fontSize='14px'
-            _hover={{ textDecor: 'none' }}
-            my={2}
-          >
-            Contact Sales
-          </Link>
-        </Flex>
+        <Box as='picture'>
+          <Image h={{ base: 5, md: 8 }} src={df_logo} />
+        </Box>
+        <Link
+          color='#31BC2E'
+          fontSize={{ base: 10, md: 16 }}
+          _hover={{ textDecor: 'none' }}
+          my={{ base: '0.2rem', md: 2 }}
+          href='https://www.completefarmer.com/support/contact/'
+        >
+          Contact Support
+        </Link>
       </Flex>
-      <Box pos='relative' pt={{ base: 12 }}>
+      <Box pos='relative' pt={{ base: 10 }}>
         <Image w='full' src={coopIntroImage} />
         <CooperativeSignUp state={state} />
       </Box>
       <Flex
         justify='space-between'
         wrap='wrap'
-        mt={{ md: 80 }}
-        // w={{ md: '80%' }}
-        my={{ base: 28, md: 32 }}
-        mx={{ base: 6, md: 2, lg: 48 }}
+        mt={{ base: '44rem', md: '40rem', lg: '28rem', '5xl': '20rem' }}
+        w={{ md: '80%' }}
+        mx={{ base: 6, md: 10, lg: 48 }}
       >
         {_data.map(item => (
           <Box w={{ md: 64 }} key={item.benefit} mb={{ base: 10 }}>

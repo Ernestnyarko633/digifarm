@@ -32,9 +32,6 @@ const CooperativeSignUp = () => {
   const toast = useToast()
   const { store } = useAuth()
 
-  // eslint-disable-next-line no-console
-  console.log(acceptConditionWithTerm)
-
   const decodedToken = sessionStorage.getItem('acceptToken')
   const _decode = JSON.parse(decodedToken)
 
@@ -129,22 +126,24 @@ const CooperativeSignUp = () => {
   return (
     <Box
       pos='absolute'
-      mx={{ lg: '400px' }}
-      top={{ base: 20, md: 40 }}
+      mx={{ base: 'auto', '3xl': '12rem' }}
+      top={{ base: 20, md: 40, '5xl': '20rem' }}
       right={0}
       mb={4}
-      shadow='md'
-      // display={{ base: 'none', lg: 'block' }}
     >
       <Box color='white' textAlign='center'>
         <Heading
-          fontSize={{ base: 12, lg: 32 }}
+          fontSize={{ base: 12, '3xl': 32 }}
           w={{ md: '45%', xl: '45%' }}
           mx='auto'
         >
           Split cost. Share assets. Share rewards.
         </Heading>
-        <Text fontSize={{ base: 12, lg: 16 }} pt={3} pb={8}>
+        <Text
+          fontSize={{ base: 10, '3xl': 16 }}
+          pt={{ base: 1, lg: 3 }}
+          pb={{ base: 4, lg: 8 }}
+        >
           Farm together with friends and family
         </Text>
       </Box>
@@ -153,21 +152,25 @@ const CooperativeSignUp = () => {
         bg='white'
         borderRadius='12px'
         templateColumns='repeat(2,1fr)'
-        mx={{ base: '30px' }}
-        w={{ base: 72, lg: 'full' }}
+        mx={{ base: '30px', md: '9rem', '3xl': '4rem', '5xl': '10rem' }}
+        shadow='md'
       >
-        <Box mx={16} my={60} d={{ base: 'none', lg: 'block' }}>
-          <Image src={invite} mx='auto' />
+        <Box
+          ml='5rem'
+          my={60}
+          d={{ base: 'none', md: 'none', xl: 'block', '3xl': 'block' }}
+        >
+          <Image src={invite} />
         </Box>
         <Box
-          my={{ base: 5, lg: 16 }}
-          mx={{ base: 5, lg: 16 }}
-          w={{ lg: '40%' }}
+          my={{ base: 5, md: '3rem', '3xl': 16 }}
+          mx={{ base: 5, md: '4rem', '3xl': '5rem' }}
+          w={{ md: '22rem', lg: '30rem' }}
         >
-          <Heading fontSize={{ base: 16, lg: 28 }}>
+          <Heading fontSize={{ base: 16, '3xl': 28 }}>
             Start by creating your account
           </Heading>
-          <Text my={3} fontSize={{ base: 12 }}>
+          <Text pt={1} mb={6} fontSize={{ base: 12 }}>
             You were invited by {_decode?.admin} to join {_decode?.coopName}{' '}
             cooperative.
           </Text>
@@ -316,13 +319,12 @@ const CooperativeSignUp = () => {
                 btntitle='Sign up'
                 type='submit'
                 aria-label='SignUp'
-                my={5}
+                my={6}
                 w='full'
                 isLoading={isSubmitting}
-                // onClick={() => events('user signup')}
               />
             </form>
-            <Text fontSize='xs'>
+            <Text color='gray.500' fontSize='xs'>
               For more information and understanding of how Complete Farmer
               works, you should check out
               <Link
