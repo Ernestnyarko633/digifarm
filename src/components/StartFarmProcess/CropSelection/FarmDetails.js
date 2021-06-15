@@ -22,6 +22,7 @@ const FarmDetails = ({ query, catName, dashboard }) => {
   const { data, isLoading, error } = useFetch(null, getFarms, reload, query)
 
   sessionStorage.setItem('farms', JSON.stringify(data))
+  const type = sessionStorage.getItem('type')
 
   useEffect(() => {
     let mounted = true
@@ -80,7 +81,13 @@ const FarmDetails = ({ query, catName, dashboard }) => {
             <CropSelectionCard
               key={farm._id}
               farmName={farm.name}
-              acres={farm.acreage}
+              acres={
+                type === 'individual'
+                  ? Math.floor(farm.acreage)
+                  : farm?.acreage % 1 !== 0
+                  ? farm?.acreage.toFixed(1)
+                  : farm?.acreage
+              }
               varietyName={farm.cropVariety?.name}
               cropName={farm.cropVariety?.crop?.name}
               selected={farm._id === selectedFarm?._id}
