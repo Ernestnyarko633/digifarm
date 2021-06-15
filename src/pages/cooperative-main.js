@@ -245,7 +245,9 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
       <Box
         pt={30}
         bg='white'
+        w='full'
         minH={{ base: '100vh', md: 'calc(100vh - 4rem)' }}
+        pos={{ '4xl': 'fixed', '5xl': 'fixed' }}
       >
         <Grid templateColumns='repeat(5, 1fr)' bg='white'>
           <GridItem
@@ -288,7 +290,8 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
             colSpan={{ base: 5, lg: 4 }}
             px={{ xl: 12 }}
             pt={{ base: 12, xl: 20 }}
-            h={{ md: '100vh' }}
+            h='100vh'
+            // h={{ md: '100vh' }}
           >
             {isLoading || error ? (
               <FetchCard

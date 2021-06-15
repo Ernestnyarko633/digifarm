@@ -47,6 +47,7 @@ const CooperativeCard = ({ item, order, data, handleClick }) => {
                   textAlign='center'
                   color='#004C46'
                   px='5px'
+                  pt='2px'
                 >
                   Admin
                 </Text>
