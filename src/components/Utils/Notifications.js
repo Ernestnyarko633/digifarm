@@ -1,13 +1,13 @@
 import React from 'react'
-import { Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
+import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import { Menu } from '@headlessui/react'
 import { BsBell } from 'react-icons/bs'
 import { AnimatePresence, motion } from 'framer-motion'
 import Loader from 'react-loader-spinner'
-import { Link as ReachRouter } from 'react-router-dom'
-import moment from 'moment'
 import { ANNOUNCEMENT, NEWS, WEEKLYVIDEOS } from 'theme/Icons'
 import PropTypes from 'prop-types'
+import NotificationItem from '../Notifications/NotificationItem'
+import { FaReceipt } from 'react-icons/all'
 
 const MotionBox = motion(Box)
 
@@ -20,6 +20,8 @@ const Notifications = ({ notifications, loading, mutation }) => {
         return <Icon as={ANNOUNCEMENT} boxSize={4} />
       case 'weekly_videos':
         return <Icon as={WEEKLYVIDEOS} boxSize={4} />
+      case 'DIGITAL_FARMER':
+        return <Icon as={FaReceipt} boxSize={4} color='cf.800' />
       default:
         return null
     }
@@ -35,6 +37,33 @@ const Notifications = ({ notifications, loading, mutation }) => {
         return ''
       default:
         return `/farms?type=${value}&title=${item?.message?.title}&id=${item?.messageId}`
+    }
+  }
+
+  const getNotified = (value, item, active) => {
+    switch (value) {
+      case 'GENERIC':
+        return (
+          <NotificationItem
+            item={item}
+            mutation={mutation}
+            renderNotificationIcons={renderNotificationIcons}
+            toFarmBoard={toFarmBoard}
+            active={active}
+          />
+        )
+      case 'ORDER':
+        return (
+          <NotificationItem
+            item={item}
+            mutation={mutation}
+            renderNotificationIcons={renderNotificationIcons}
+            toFarmBoard={toFarmBoard}
+            active={active}
+          />
+        )
+      default:
+        return null
     }
   }
 
@@ -131,66 +160,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
                           {({ active }) => {
                             return (
                               item?.status === 'NEW' &&
-                              item?.message?.entity === 'GENERIC' && (
-                                <Link
-                                  py={2}
-                                  px={6}
-                                  as={ReachRouter}
-                                  _hover={{
-                                    textDecor: 'none'
-                                  }}
-                                  bg={active && 'cf.200'}
-                                  color={active && 'gray.600'}
-                                  d='flex'
-                                  justifyContent='space-between'
-                                  onClick={() => mutation.mutateAsync(item._id)}
-                                  to={toFarmBoard(item?.message?.type, item)}
-                                  borderBottomWidth={1}
-                                  borderBottomColor='gray.100'
-                                >
-                                  <Box w='2%' mr={8}>
-                                    {item?.message?.entity === 'GENERIC' && (
-                                      <Flex
-                                        align='center'
-                                        justify='center'
-                                        w={8}
-                                        h={8}
-                                        rounded='100%'
-                                        as='span'
-                                        bg='cf.200'
-                                      >
-                                        {renderNotificationIcons(
-                                          item?.message?.type
-                                        )}
-                                      </Flex>
-                                    )}
-                                  </Box>
-                                  <Box w='95%'>
-                                    <Text>
-                                      {item?.message?.entity === 'GENERIC' &&
-                                        item?.message?.title}
-                                    </Text>
-                                    <Text
-                                      fontSize='xs'
-                                      color='gray.400'
-                                      mt={1}
-                                      d='flex'
-                                      alignItems='center'
-                                      textTransform='capitalize'
-                                    >
-                                      {item.message.type === 'weekly_videos'
-                                        ? item.message.type.split('_').join(' ')
-                                        : item.message.type}
-                                      <Text as='span' fontSize='lg' mx={1}>
-                                        &middot;
-                                      </Text>
-                                      <Text as='span'>
-                                        {moment(item.created).fromNow()}
-                                      </Text>
-                                    </Text>
-                                  </Box>
-                                </Link>
-                              )
+                              getNotified(item?.message?.entity, item, active)
                             )
                           }}
                         </Menu.Item>

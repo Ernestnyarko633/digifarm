@@ -53,7 +53,8 @@ export const theme = extendTheme({
       800: '#5AA250',
       900: 'linear-gradient(#93CF88, #5AA250)',
       light: 'rgba(49, 188, 46, 0.2)',
-      gray: '#F0F0F0'
+      gray: '#F0F0F0',
+      darkGreen: '#004C46'
     },
     red: {
       dark: '#9A4848'
