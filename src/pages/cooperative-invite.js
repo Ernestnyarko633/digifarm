@@ -49,8 +49,8 @@ const CooperativeInvite = () => {
               pathname: '/cooperative/intro'
             })
           }
-        } catch (error) {
-          setError('Unexpected network error')
+        } catch (error_) {
+          setError('Unexpected network error', error_)
         } finally {
           setIsLoading(false)
         }
