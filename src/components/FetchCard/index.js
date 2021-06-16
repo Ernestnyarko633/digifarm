@@ -13,7 +13,15 @@ const FetchCard = ({ loading, error, text, reload, ...rest }) => {
         direction='column'
       >
         <>
-          {loading && <Spinner size='lg' color='cf.800' />}
+          {loading && (
+            <Spinner
+              size='lg'
+              speed='0.65s'
+              color='cf.800'
+              thickness='4px'
+              emptyColor='gray.200'
+            />
+          )}
           {text && !error && (
             <Text className='loading-text loading-text-b'>{text}</Text>
           )}

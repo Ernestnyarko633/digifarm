@@ -15,12 +15,12 @@ const CooperativeCard = ({ item, order, data, handleClick }) => {
     product: { pricePerAcre }
   } = data
 
-  const calculateCost = (acreage, pricePerAcre, discount) => {
+  const calculateCost = (acreage_, pricePerAcre_, discount_) => {
     let cost = 0
     let price = 0
 
-    price = pricePerAcre - pricePerAcre * discount
-    cost = price * acreage
+    price = pricePerAcre_ - pricePerAcre_ * discount_
+    cost = price * acreage_
 
     return cost
   }
