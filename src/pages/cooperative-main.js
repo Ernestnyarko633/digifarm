@@ -22,7 +22,6 @@ import useFetch from 'hooks/useFetch'
 import Header from 'container/Header'
 import { Button } from 'components'
 import { MdDashboard } from 'react-icons/md'
-import { BiCreditCard } from 'react-icons/bi'
 import { getFormattedMoney } from 'helpers/misc'
 import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
@@ -32,8 +31,9 @@ import Payment from 'components/Cards/CooperativeDashboard/Payment'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
 import { saveAs } from 'file-saver'
 import CooperativeCard from 'components/Cards/CooperativeDashboard/CooperativeCard'
+import TableMenu from 'components/Cards/CooperativeDashboard/TableMenu'
 
-const CooperativeMain = ({ location: { state }, match: { params } }) => {
+const CooperativeMain = ({ match: { params } }) => {
   document.title = 'Cooperative Dashboard'
   //states
   const [reload, setReload] = useState(0)
@@ -206,24 +206,32 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
               {row?.original?.order?.status === 'PENDING' ? (
                 <>
                   {row.original.email === user?.email && (
-                    <Button
-                      btntitle='Pay'
-                      colorScheme='linear'
-                      width='100px'
-                      py='10px'
-                      leftIcon={<BiCreditCard size={20} />}
-                      onClick={() => {
-                        handleModalClick('payment', {
-                          product: data?.product,
-                          order: row?.original?.order
-                        })
-                      }}
-                    />
+                    <Flex justify='center'>
+                      <Button
+                        btntitle='Pay'
+                        colorScheme='linear'
+                        width='100px'
+                        py='10px'
+                        onClick={() => {
+                          handleModalClick('payment', {
+                            product: data?.product,
+                            order: row?.original?.order
+                          })
+                        }}
+                      />
+                    </Flex>
                   )}
                 </>
               ) : null}
             </>
           )}
+          {/* admin gets to see the option to resend invite to other users but not to himself  */}
+          {user?.email === data?.users[0].email &&
+            row.original.email !== user?.email && (
+              <Flex justify='center'>
+                <TableMenu />
+              </Flex>
+            )}
         </>
       )
     }
@@ -381,7 +389,7 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
 }
 
 CooperativeMain.propTypes = {
-  location: PropTypes.any.isRequired
+  match: PropTypes.any.isRequired
 }
 
 export default CooperativeMain
