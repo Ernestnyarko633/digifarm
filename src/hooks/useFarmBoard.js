@@ -24,17 +24,22 @@ export const usePrismic = () => {
       const fetchData = async () => {
         try {
           setLoading(true)
-          const [res1, res2] = await Promise.all([
+          // await news and video prismic documents
+          const [news_response, video_response] = await Promise.all([
             Client.query(Prismic.Predicates.at('document.type', 'news')),
             Client.query(
               Prismic.Predicates.at('document.type', 'weekly_videos')
             )
           ])
-          if (res1) setNewsData(res1?.results || [])
-          if (res2) setVideosData(res2?.results || [])
+
+          // if response exists set the corresponding data
+          if (news_response) setNewsData(news_response?.results || [])
+          if (video_response) setVideosData(video_response?.results || [])
         } catch (err) {
-          setError('Could not fetch data')
+          // catch errors if any and st them
+          setError(err?.message || err || 'Could not fetch data')
         } finally {
+          //finally set loading too false
           setLoading(false)
         }
       }
@@ -43,6 +48,7 @@ export const usePrismic = () => {
     return () => (mounted = false)
   }, [news, videos])
 
+  // returns and obj {loading, news, blogs, videos, errors} includes sorting according to dates
   return {
     loading,
     news:
@@ -96,10 +102,10 @@ export const useFeeds = () => {
     let mounted = true
 
     if (mounted && !feeds) {
-      setLoading(true)
-
       const fetchData = async () => {
         try {
+          setLoading(true)
+
           const feedPromises = farms.map(async farm => {
             const response = await getMyFarmFeeds({
               farm: farm?.order?.product?._id
@@ -119,6 +125,7 @@ export const useFeeds = () => {
             )
           }
         } catch (error) {
+          setFeeds([])
           setError(error)
         } finally {
           setLoading(false)
@@ -129,13 +136,10 @@ export const useFeeds = () => {
         fetchData()
       }
     } else {
-      error && !feeds?.length && triggerReload()
+      !error && !feeds?.length && triggerReload()
     }
-
     return () => (mounted = false)
   }, [farms, getMyFarmFeeds, feeds, error])
-
-  //FIXME: larger feeds would slow down process
 
   return {
     loading: farmsIsLoading || loading,
