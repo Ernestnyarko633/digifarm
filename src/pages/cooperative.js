@@ -8,7 +8,6 @@ import {
   Spacer,
   Container,
   Link,
-  Grid,
   Divider
 } from '@chakra-ui/react'
 import useAuth from 'context/auth'
@@ -93,7 +92,7 @@ const Cooperative = ({ location: { state } }) => {
   }
 
   return (
-    <Box bg='white'>
+    <Box maxW='full' bg='white'>
       <Header />
       {isLoading || error ? (
         <FetchCard
@@ -109,20 +108,21 @@ const Cooperative = ({ location: { state } }) => {
         />
       ) : (
         <Container
-          maxW={{ xl: '5xl' }}
-          pt={{ base: 20, lg: 24 }}
-          pb={{ base: 3, lg: 10, xl: 28 }}
+          maxW={{ md: 'full', xl: '5xl' }}
+          pt={{ base: 20, lg: 24, '5xl': '10rem' }}
+          pb={{ base: 3, lg: 8, xl: 8 }}
           bg='white'
+          mx='auto'
+          h='full'
         >
           <Heading
             fontSize={{ base: 16, md: 20 }}
-            mb={{ md: 10 }}
+            mb={{ md: 10, '5xl': '5rem' }}
             textAlign='center'
           >
             Welcome {user.firstName}
           </Heading>
           <Box
-            bg='white'
             borderWidth={1}
             borderRadius='md'
             borderColor='gray.300'
@@ -204,22 +204,26 @@ const Cooperative = ({ location: { state } }) => {
             </Flex>
           </Box>
           <Box>
-            <Grid
-              py={{ md: 8, lg: 4 }}
-              templateColumns={{ lg: 'repeat(2,1fr)' }}
-              gap={{ base: 6, lg: 4 }}
-            >
+            <Flex py={{ md: 8, lg: 4 }} wrap={{ base: 'wrap', md: 'nowrap' }}>
               <Box
-                height={{ base: '90%', md: '90%', lg: '85%' }}
+                height={{ base: '15rem', md: '15rem', lg: '85%', xl: '20rem' }}
                 pb={{ lg: 2 }}
                 borderWidth={1}
-                mr={{ lg: 5 }}
+                mr={{ md: 4, lg: 5, xl: 8 }}
                 borderRadius='md'
                 borderColor='gray.300'
                 overflowY='scroll'
                 mb={{ base: 3 }}
+                w={{ base: 'full', md: '22rem', xl: '30rem' }}
               >
-                <Flex bg='#F8F8F8' p='17px'>
+                <Flex
+                  bg='#F8F8F8'
+                  p='17px'
+                  top={0}
+                  zIndex={2}
+                  pos='sticky'
+                  w='full'
+                >
                   <Text fontWeight='bold' fontSize={{ base: 16, md: 16 }}>
                     Cooperative members
                   </Text>
@@ -238,13 +242,18 @@ const Cooperative = ({ location: { state } }) => {
               </Box>
               <ManagerProfile
                 item={doc}
-                height={{ base: '100%', lg: '85%' }}
+                height={{ base: '100%', lg: '85%', xl: '20rem' }}
                 size='2xl'
+                width={{
+                  base: 'full',
+                  md: '25rem',
+                  xl: '30rem'
+                }}
                 py='15px'
                 px={4}
               />
-            </Grid>
-            <Flex justify={{ base: 'center', md: 'flex-end' }} my={{ base: 4 }}>
+            </Flex>
+            <Flex justify={{ base: 'center', md: 'flex-end' }} my={{ base: 6 }}>
               <Link
                 to={{
                   pathname: '/start-farm/cooperative',
