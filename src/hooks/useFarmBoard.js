@@ -96,10 +96,10 @@ export const useFeeds = () => {
     let mounted = true
 
     if (mounted && !feeds) {
-      setLoading(true)
-
       const fetchData = async () => {
         try {
+          setLoading(true)
+
           const feedPromises = farms.map(async farm => {
             const response = await getMyFarmFeeds({
               farm: farm?.order?.product?._id
@@ -119,6 +119,7 @@ export const useFeeds = () => {
             )
           }
         } catch (error) {
+          setFeeds([])
           setError(error)
         } finally {
           setLoading(false)
@@ -129,9 +130,8 @@ export const useFeeds = () => {
         fetchData()
       }
     } else {
-      error && !feeds?.length && triggerReload()
+      !error && !feeds?.length && triggerReload()
     }
-
     return () => (mounted = false)
   }, [farms, getMyFarmFeeds, feeds, error])
 

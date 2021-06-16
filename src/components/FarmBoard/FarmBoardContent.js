@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
@@ -29,6 +30,8 @@ const FarmBoardContent = ({ farms = [] }) => {
   const [farmName, setFarmName] = React.useState(
     farms?.length ? farms[0]?.name : null
   )
+
+  console.log(feeds, feedsError, news, videos, feedsLoading)
 
   const executeScroll = () => queriedElement?.current?.scrollIntoView()
 
@@ -151,7 +154,7 @@ const FarmBoardContent = ({ farms = [] }) => {
 
   return (
     <Flex w='100%' align='center' direction='column'>
-      {loading || error ? (
+      {loading ? (
         <>
           <FetchCard
             p={15}

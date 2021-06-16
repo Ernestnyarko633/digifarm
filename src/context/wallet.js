@@ -2,55 +2,53 @@ import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Status } from 'helpers/misc'
 const WalletContext = createContext()
-
 export const WalletContextProvider = ({ children }) => {
-  const totalAmount = (__activity = {}, tasks = [], scheduledTasks = []) => {
+  const totalAmount = (activity = {}, tasks = [], scheduledTasks = []) => {
     let totalAmount = 0
-    let tempTasks = tasks?.filter(_task => _task.activity === __activity._id)
-    if (tempTasks) {
-      tempTasks.forEach(_task => {
-        totalAmount = totalAmount + _task?.budget
-      })
+    let activity_tasks = tasks?.filter(task => task.activity === activity?._id)
+    if (activity_tasks.length) {
+      const { budget } = activity_tasks.reduce((a, b) => ({
+        budget: a.budget + b.budget
+      }))
+      totalAmount = budget
     }
-    if (scheduledTasks) {
+    if (scheduledTasks?.length) {
       let currentExpense = 0
-      let _tasks = scheduledTasks.filter(
+      let completed_tasks = scheduledTasks.filter(
         completedTask =>
-          __activity._id === completedTask?.task?.activity &&
+          activity?._id === completedTask?.task?.activity &&
           completedTask.status === Status.COMPLETED
       )
-
-      if (_tasks) {
-        _tasks.forEach(_task => {
-          currentExpense = currentExpense + _task?.task?.budget
-        })
+      if (completed_tasks?.length) {
+        const { total } = completed_tasks.reduce((a, b) => ({
+          total: a?.task?.budget + b?.task?.budget
+        }))
+        currentExpense = total
       }
-
       return {
         total: currentExpense ? currentExpense : totalAmount,
         state: currentExpense ? true : false
       }
     }
+    return {
+      total: totalAmount,
+      state: false
+    }
   }
-
-  const farmExpense = (activities, tasks, scheduledTasks) => {
+  const farmExpense = (activities = [], tasks = [], scheduledTasks = []) => {
     let totalExpense = 0
-    const process = value =>
-      value?.forEach(val => {
-        const bool = totalAmount(val, tasks, scheduledTasks)?.state
-
-        if (bool) {
-          totalExpense =
-            totalExpense + totalAmount(val, tasks, scheduledTasks)?.total
+    const process = array_of_activities =>
+      array_of_activities?.forEach(activity => {
+        const { state, total } = totalAmount(activity, tasks, scheduledTasks)
+        if (state) {
+          totalExpense = totalExpense + total
         }
       })
-    if (activities) {
+    if (activities?.length) {
       process(activities)
     }
-
     return totalExpense
   }
-
   return (
     <WalletContext.Provider
       value={{
@@ -62,11 +60,8 @@ export const WalletContextProvider = ({ children }) => {
     </WalletContext.Provider>
   )
 }
-
 WalletContextProvider.propTypes = {
   children: PropTypes.node.isRequired
 }
-
 const useWallet = () => useContext(WalletContext)
-
 export default useWallet
