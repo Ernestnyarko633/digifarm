@@ -96,7 +96,7 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
               src={coopImg ? URL.createObjectURL(coopImg) : data?.imageUrl}
               size='xl'
             />
-            {user.email === data.users[0].email && (
+            {user?.email === data?.users[0].email && (
               <FormControl>
                 <FormLabel>
                   <Flex
