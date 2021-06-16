@@ -14,6 +14,7 @@ const RenderCards = ({
   activeFarmIndex,
   comparant
 }) => {
+  // switch for data type using status
   const renderCard = (status, content) => {
     switch (status) {
       case 'news':
