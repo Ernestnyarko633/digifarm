@@ -72,11 +72,11 @@ const CooperativeMemberCard = ({
           role='button'
           aria-label='close button'
           onClick={e => {
-            if (member - 1 === 0) return e.preventDefault()
+            if (member - 1 <= 1) return e.preventDefault()
             return remove(values?.length - 1)
           }}
         >
-          {member - 1 !== 0 && <Icon as={MdClose} />}
+          {member - 1 > 1 && <Icon as={MdClose} />}
         </Box>
       )}
 

@@ -42,6 +42,8 @@ import getConfig from 'utils/configs'
 const MotionGrid = motion(Grid)
 
 const ChooseAcreage = ({ farm, selectedType }) => {
+  const ENV = process.env.REACT_APP_ENVIRONMENT
+
   const { eosSearch } = useApi()
   const [isLoading, setLoading] = React.useState(false)
   const [location, setLocation] = React.useState([])
@@ -71,7 +73,7 @@ const ChooseAcreage = ({ farm, selectedType }) => {
     accessToken: PRISMIC_ACCESS_TOKEN
   })
 
-  React.useState(() => {
+  React.useEffect(() => {
     let mounted = true
 
     if (mounted && !data) {
@@ -86,7 +88,7 @@ const ChooseAcreage = ({ farm, selectedType }) => {
     }
 
     return () => (mounted = false)
-  }, [Client, data])
+  }, [Client, data, farm._id])
 
   React.useEffect(() => {
     if (farm) {
@@ -177,7 +179,6 @@ const ChooseAcreage = ({ farm, selectedType }) => {
 
   const loading = EOSViewIDIsLoading
   const error = EOSViewIDHasError
-  const ENV = process.env.REACT_APP_ENVIRONMENT
 
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
@@ -334,7 +335,8 @@ const ChooseAcreage = ({ farm, selectedType }) => {
               borderColor='gray.200'
             >
               <Heading as='h5' size='sm'>
-                Choose number of acres to farm ({farm.acreage - acreage})
+                Choose number of acres to farm (
+                {Math.floor(farm.acreage) - acreage})
               </Heading>
               <Divider orientation='horizontal' my={5} />
               <Flex
@@ -342,7 +344,7 @@ const ChooseAcreage = ({ farm, selectedType }) => {
                 justify={{ base: 'space-between', md: 'initial' }}
               >
                 <AcreageInput
-                  totalAcres={farm.acreage}
+                  totalAcres={Math.floor(farm?.acreage)}
                   value={acreage}
                   setValue={setAcreage}
                   cooperativeOps={selectedType}
@@ -358,7 +360,7 @@ const ChooseAcreage = ({ farm, selectedType }) => {
                     <Text fontSize='sm' color='red.500'>
                       {currency.currencySymbol}
                       {getFormattedMoney(
-                        farm.pricePerAcre * exchangeRate * acreage
+                        farm.pricePerAcre * exchangeRate * Math.floor(acreage)
                       )}
                     </Text>
                   </Skeleton>

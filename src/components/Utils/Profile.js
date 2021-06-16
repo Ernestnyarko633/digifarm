@@ -22,9 +22,16 @@ const Profile = ({ user }) => {
       {({ open }) => (
         <>
           <Menu.Button as={Box} _focus={{ outline: 'none' }} cursor='pointer'>
-            <Flex align='center'>
-              <Avatar size='sm' src={user?.avatar} name={user?.firstName} />
-              <Text ml={2}>Hi {user?.firstName}</Text>
+            <Flex align='center' justify='center'>
+              <Avatar
+                size='sm'
+                src={user?.avatar}
+                name={user?.firstName}
+                ml={{ base: 4, md: 0 }}
+              />
+              <Text d={{ base: 'none', md: 'block' }} ml={2}>
+                Hi {user?.firstName}
+              </Text>
               <Box>
                 <Icon
                   ml={2}
