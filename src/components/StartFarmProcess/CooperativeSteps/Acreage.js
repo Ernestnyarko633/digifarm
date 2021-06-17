@@ -200,7 +200,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                           <strong>{selectedCooperativeType?.name}</strong> which
                           is <strong>{selectedCooperativeType?.minAcre}</strong>{' '}
                           and must not exceed{' '}
-                          <strong>{barrier.toFixed(2)}</strong>
+                          <strong>{barrier.toFixed(1)}</strong>
                         </Text>
                       </Box>
                     </Flex>
