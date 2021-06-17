@@ -123,7 +123,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
           </Flex>
         </Box>
 
-        <MotionFlex pos='relative' w={120} mt={4} overflowX='scroll'>
+        <MotionFlex pos='relative' w={120} mt={4} overflowX='hidden'>
           {images.map((item, index) => (
             <Box
               key={mapKey(index)}

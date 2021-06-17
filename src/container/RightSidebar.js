@@ -84,8 +84,8 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             text='Loading events'
           />
         ) : (
-          <Grid gap={4} mt={4}>
-            <Scrollbar>
+          <Scrollbar>
+            <Grid gap={4} mt={4} mb={4}>
               {doc?.map((event, i) => (
                 <EventCard
                   key={mapKey(i)}
@@ -94,8 +94,8 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                   event={event}
                 />
               ))}
-            </Scrollbar>
-          </Grid>
+            </Grid>
+          </Scrollbar>
         )}
       </Box>
 
