@@ -101,7 +101,7 @@ export default function Tasks({
   }
 
   return (
-    <Box mb={8}>
+    <Box mx={8} mb={8}>
       {ScheduledTasksIsLoading || ScheduledTasksHasError ? (
         <Box pt={{ md: 10 }}>
           <FetchCard

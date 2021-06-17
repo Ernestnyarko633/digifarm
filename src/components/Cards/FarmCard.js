@@ -15,6 +15,7 @@ import Step from 'components/Form/Step'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
 import ImageLoader from 'components/ImageLoader'
+import Scrollbar from 'react-perfect-scrollbar'
 
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
@@ -190,18 +191,20 @@ const FarmCard = ({ farm }) => {
                 text='fetching progress'
               />
             ) : (
-              <Box h={{ base: 56, md: 80 }} overflowY='scroll'>
-                {data.length > 0 ? (
-                  data.map((activity, index) => (
-                    <Step
-                      activity={activity}
-                      key={activity.title}
-                      cutThread={data.length - 1 === index}
-                    />
-                  ))
-                ) : (
-                  <Box textAlign='center'>Data Unavailable</Box>
-                )}
+              <Box h={{ base: 56, md: 80 }} overflowY='hidden'>
+                <Scrollbar>
+                  {data.length > 0 ? (
+                    data.map((activity, index) => (
+                      <Step
+                        activity={activity}
+                        key={activity.title}
+                        cutThread={data.length - 1 === index}
+                      />
+                    ))
+                  ) : (
+                    <Box textAlign='center'>Data Unavailable</Box>
+                  )}
+                </Scrollbar>
               </Box>
             )}
           </Box>
