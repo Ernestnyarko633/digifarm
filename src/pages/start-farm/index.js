@@ -29,9 +29,11 @@ const StartFarm = () => {
         direction='column'
         bgColor='white'
         w={{ md: '100vw' }}
-        h={{ md: '100vh' }}
+        // h={{ md: '100vh' }}
         overflow='hidden'
-        mt={{ base: 14, md: 20, xl: 16 }}
+        mt={{ base: 14, md: 20, xl: 20 }}
+        pt={{ base: 8 }}
+        pb={{ base: 8 }}
       >
         <Box textAlign='center' mb={{ md: 12 }}>
           <Text fontFamily='light' fontSize={{ md: '3xl' }}>

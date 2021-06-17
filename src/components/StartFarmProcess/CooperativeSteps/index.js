@@ -217,6 +217,8 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
       justify='center'
       direction='column'
       w={{ base: '90%', xl: 140, '2xl': otherStep === 2 ? '82rem' : 143 }}
+      pt={{ base: 8 }}
+      pb={{ base: 8 }}
     >
       {isSubmitting && <Overlay text={text} />}
 

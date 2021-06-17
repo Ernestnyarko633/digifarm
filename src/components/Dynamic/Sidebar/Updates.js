@@ -48,7 +48,7 @@ export default function Updates({
         </Box>
       ) : (
         <>
-          <Grid gap={8} mb={8}>
+          <Grid gap={8} mx={8} my={8}>
             {sortedFeeds?.length > 0 &&
               sortedFeeds?.map(feed => (
                 <FarmUpdateCard

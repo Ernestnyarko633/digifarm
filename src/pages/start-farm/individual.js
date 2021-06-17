@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Confetti from 'react-confetti'
 import { Box } from '@chakra-ui/react'
 import useWindowSize from 'react-use/lib/useWindowSize'
+import Scrollbar from 'react-perfect-scrollbar'
 
 import Header from 'container/Header'
 
@@ -67,14 +68,16 @@ const Individual = ({ location: { state }, history }) => {
   }, [otherStep])
 
   return (
-    <Box w='100%' h='100vh' bgColor='white'>
-      <Header />
-      {otherStep === 4 && showConfetti && (
-        <Confetti width={width} height={height} />
-      )}
-      <Box as='main' mt={{ base: 14, md: 20, xl: 16 }}>
-        {getFlow(step)}
-      </Box>
+    <Box w='100%' h='100vh' bgColor='white' overflow='hidden'>
+      <Scrollbar>
+        <Header />
+        {otherStep === 4 && showConfetti && (
+          <Confetti width={width} height={height} />
+        )}
+        <Box as='main' mt={{ base: 12, md: 12, xl: 12 }} pb={{ base: 12 }}>
+          {getFlow(step)}
+        </Box>
+      </Scrollbar>
     </Box>
   )
 }

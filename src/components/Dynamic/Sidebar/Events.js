@@ -40,7 +40,7 @@ export default function Events({
         </Box>
       ) : (
         <>
-          <Grid gap={8} mb={8}>
+          <Grid gap={8} mx={8} my={8}>
             {sortedScheduledTasks?.length > 0 &&
               sortedScheduledTasks?.map(task => (
                 <FarmUpdateCard
