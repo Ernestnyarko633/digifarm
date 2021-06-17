@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Flex, Heading } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
@@ -93,6 +93,15 @@ const CropSelection = () => {
             </Tabs>
           </Box>
           <Flex w='full' justify='flex-end' my={6}>
+            {!isLoading && cooperativebool ? (
+              <Flex align='center' justify='center' px={5}>
+                <Text fontSize='md' color='red'>
+                  Acres left for {selectedFarm?.cropVariety?.crop?.name} is less
+                  than minimum required acres for{' '}
+                  {selectedCooperativeType?.name}
+                </Text>
+              </Flex>
+            ) : null}
             <Button
               h={12}
               width={40}
