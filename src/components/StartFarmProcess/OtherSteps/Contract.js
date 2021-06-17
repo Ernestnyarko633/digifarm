@@ -70,21 +70,21 @@ const Contract = ({ intersectionRef }) => {
             </Heading>
             <Text {...textStyleProps}>
               The Company shall use the Farm Management Service Fee to take all
-              necessary steps to plant and harvest your choses produce on your
+              necessary steps to plant and harvest your chosen produce on your
               chosen acreage, as described on the Company’s website. Complete
-              Farmer the cultivation protocols shall remain the intellectual
-              property of the Company and the Company shall have no obligation
-              to share it with you or any other third party. The Company
-              reserves the right to choose, assign, evaluate, and manage all
-              third parties who work with us as business partners or otherwise
-              to provide the Farm Management Service to you. DigiFarmers will be
-              provided with weekly updates of crop, weather and soil conditions
-              on the farm, and are welcome to schedule farm visits using the
-              Complete Farmer application. Audit or The Company will submit
-              audit reports by their independent quality assurance auditor upon
-              request of the DigiFarmer which shall assess the farm processes,
-              seed and yield of harvest, should any conflict arise concerning
-              the above between the DigiFarmer and the Company.
+              Farmer owns the cultivation protocols shall remain the
+              intellectual property of the Company and the Company shall have no
+              obligation to share it with you or any other third party. The
+              Company reserves the right to choose, assign, evaluate, and manage
+              all third parties who work with us as business partners or
+              otherwise to provide the Farm Management Service to you.
+              DigiFarmers will be provided with weekly updates of crop, weather
+              and soil conditions on the farm, and are welcome to schedule farm
+              visits using the Complete Farmer application. Audit or The Company
+              will submit audit reports by their independent quality assurance
+              auditor upon request of the DigiFarmer which shall assess the farm
+              processes, seed and yield of harvest, should any conflict arise
+              concerning the above between the DigiFarmer and the Company.
             </Text>
             <Heading {...headerStyleProps}>Insurance</Heading>
             <Text {...textStyleProps}>
