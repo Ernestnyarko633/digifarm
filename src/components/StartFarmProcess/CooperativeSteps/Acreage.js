@@ -199,7 +199,8 @@ const Acreage = ({ name, farm, selectedType }) => {
                           of acreages for{' '}
                           <strong>{selectedCooperativeType?.name}</strong> which
                           is <strong>{selectedCooperativeType?.minAcre}</strong>{' '}
-                          and must not exceed <strong>{barrier}</strong>
+                          and must not exceed{' '}
+                          <strong>{barrier.toFixed(2)}</strong>
                         </Text>
                       </Box>
                     </Flex>
