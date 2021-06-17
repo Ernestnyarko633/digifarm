@@ -105,7 +105,7 @@ const FarmDetails = ({ query, catName, dashboard }) => {
         overflowY='hidden'
         borderLeftWidth={1}
         borderLeftColor='gray.200'
-        p={{ base: 4, md: 10 }}
+        // p={{ base: 4, md: 10 }}
         pos='relative'
         css={{
           direction: 'ltr',
@@ -115,9 +115,9 @@ const FarmDetails = ({ query, catName, dashboard }) => {
       >
         <Scrollbar>
           {selectedFarm && (
-            <>
+            <Box p={8}>
               <AboutFarm farm={selectedFarm} />
-            </>
+            </Box>
           )}
           {dashboard && (
             <Box my={10}>
