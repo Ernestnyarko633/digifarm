@@ -71,11 +71,11 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
         type: 'application/pdf;charset=utf-8'
       })
       saveAs(blob, `${query.reference}-agreement.pdf`)
-    } catch (error) {
+    } catch (error_) {
       toast({
         title: 'Download failed',
         description:
-          error?.message || error?.data?.message || 'Unexpected error.',
+          error_?.message || error_?.data?.message || 'Unexpected error.',
         status: 'error',
         duration: 5000,
         position: 'top-right'
@@ -124,14 +124,16 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
                   : 'Annonymous'}
               </Text>
               {row.index === 0 && (
-                <Text
-                  fontSize='12px'
-                  textAlign='center'
-                  px='5px'
-                  color='#31BC2E'
-                >
-                  Admin
-                </Text>
+                <Box bg='#D6F2D5' rounded='4px' ml='7px' h='20px'>
+                  <Text
+                    fontSize='10px'
+                    textAlign='center'
+                    color='#004C46'
+                    px='5px'
+                  >
+                    Admin
+                  </Text>
+                </Box>
               )}
             </Flex>
             <Text fontSize='12px' color='gray.600'>
@@ -348,7 +350,13 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
                       _data={tableData}
                     />
                   </Box>
-                  <Box d={{ base: 'block', md: 'none' }} px={4} pb='50px'>
+                  <Box
+                    d={{ base: 'block', md: 'none' }}
+                    px={4}
+                    pb='50px'
+                    h='100vh'
+                    bg='white'
+                  >
                     {tableData?.map(item => (
                       <Box key={item?._id}>
                         <CooperativeCard
