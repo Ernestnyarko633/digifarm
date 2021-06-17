@@ -104,7 +104,7 @@ const AboutFarm = ({ farm }) => {
               mx={4}
               borderColor='gray.400'
             />
-            <Text>{farm?.acreage} Acres available</Text>
+            <Text>{farm?.acreage.toFixed(2)} Acres available</Text>
             <Divider
               orientation='vertical'
               height={4}
