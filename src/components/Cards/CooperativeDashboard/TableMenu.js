@@ -1,76 +1,99 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box } from '@chakra-ui/layout'
-import { Menu } from '@headlessui/react'
-import { motion } from 'framer-motion'
-import { elipses } from 'theme/Icons'
+import {
+  Box,
+  useToast,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList
+} from '@chakra-ui/react'
+// import { motion } from 'framer-motion'
+import { FaEllipsisH } from 'react-icons/fa'
 import Icon from '@chakra-ui/icon'
+import useApi from 'context/api'
 
-const MotionBox = motion(Box)
+// const MotionBox = motion(Box)
 
-const TableMenu = ({ data, state }) => {
+const TableMenu = ({ id, email }) => {
+  const toast = useToast()
+
+  const [loading, setLoading] = useState(false)
+  const { inviteMember } = useApi()
+
+  const handleInvite = async () => {
+    try {
+      setLoading(true)
+      await inviteMember(id, { email: email })
+      toast({
+        title: 'Invite sent successfully',
+        status: 'success',
+        duration: 2000,
+        position: 'top-right'
+      })
+    } catch (error) {
+      toast({
+        title: 'Error occured. Contact support',
+        description:
+          error?.message || error?.data?.message || 'Unexpected error.',
+        status: 'error',
+        duration: 2000,
+        position: 'top-right'
+      })
+    }
+  }
+
   return (
     <Box>
       <Menu>
-        {({ open }) => (
-          <Box>
-            <Menu.Button as={Box} _focus={{ outline: 'none' }} cursor='pointer'>
-              <Box>
-                <Icon as={elipses} color='cf.400' boxSize={6} />
-              </Box>
-            </Menu.Button>
-            {open && (
-              <Menu.Items
-                static
-                as={MotionBox}
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { duration: 0.2 }
-                }}
-                boxShadow='md'
-                exit={{ opacity: 0 }}
-                pos='absolute'
-                bg='white'
-                w={40}
-                h={10}
-                right={10}
-                rounded='sm'
-                zIndex={30}
-                mt={2}
-                color='gray.600'
+        <Box>
+          <MenuButton as={Box} cursor='pointer'>
+            <Box
+              _hover={{
+                bg: '#F2F2F2',
+                padding: '2px',
+                rounded: '100%'
+              }}
+            >
+              <Icon as={FaEllipsisH} color='#828282' boxSize={5} />
+            </Box>
+          </MenuButton>
+          <MenuList
+            // w={12}
+            shadow='md'
+            h={12}
+            p={0}
+            color='gray.800'
+            _hover={{ textDecor: 'none' }}
+            _focus={{ textDecor: 'none' }}
+          >
+            <MenuItem
+              _hover={{ backgroundColor: '#F9F9F9' }}
+              isLoading={loading}
+              onClick={handleInvite}
+              // alignItems='left'
+            >
+              <Box
+                as='button'
+                role='button'
+                w='full'
+                d='block'
+                p={2}
                 alignItems='left'
               >
-                <Menu.Item>
-                  {({ active }) => (
-                    <Box
-                      as='button'
-                      role='button'
-                      py={2}
-                      w='100%'
-                      _hover={{ textDecor: 'none' }}
-                      bg={active && 'cf.800'}
-                      color={active && 'white'}
-                      d='block'
-                      // eslint-disable-next-line no-console
-                      onClick={() => console.log('hiii')}
-                    >
-                      Resend invite
-                    </Box>
-                  )}
-                </Menu.Item>
-              </Menu.Items>
-            )}
-          </Box>
-        )}
+                Resend invite
+              </Box>
+            </MenuItem>
+          </MenuList>
+        </Box>
       </Menu>
     </Box>
   )
 }
 
 TableMenu.propTypes = {
-  data: PropTypes.any,
-  state: PropTypes.string
+  id: PropTypes.any,
+  email: PropTypes.string
 }
 
 export default TableMenu

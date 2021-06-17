@@ -4,6 +4,7 @@ import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
 import { useLocation, useHistory } from 'react-router-dom'
 import useAuth from 'context/auth'
+import jwt_decode from 'jwt-decode'
 
 const CooperativeInvite = () => {
   document.title = 'Cooperative invite...'
@@ -24,19 +25,22 @@ const CooperativeInvite = () => {
     let mounted = true
     const token = pathname.replace('/cooperative/invite/', '')
     //decoding token
-    const decode = JSON.parse(atob(token))
-    sessionStorage.setItem('acceptToken', JSON.stringify(decode))
+    var decodedToken = jwt_decode(token)
+    // eslint-disable-next-line no-console
+    console.log('token', token)
 
-    const { email, _id } = decode
-    if (decode) {
+    const data = JSON.parse(decodedToken._id)
+    sessionStorage.setItem('acceptToken', JSON.stringify(token))
+
+    const { _id } = data
+    if (data) {
       const runAcceptInvite = async () => {
         try {
           setIsLoading(true)
-          const res = await acceptInvite({ email, _id })
+          const res = await acceptInvite(_id, { token: token })
           setStop(true)
           if (res?.data) {
             const { authToken, user } = res?.data
-
             store({ token: authToken, user })
             setTimeout(() => {
               return history.push({
@@ -55,7 +59,7 @@ const CooperativeInvite = () => {
           setIsLoading(false)
         }
       }
-      if (mounted && email && _id) {
+      if (mounted && _id) {
         if (!stop) {
           runAcceptInvite()
         }

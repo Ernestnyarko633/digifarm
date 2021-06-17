@@ -120,9 +120,10 @@ export const ApiContextProvider = ({ children }) => {
   //Cooperative
   //#region
 
-  const acceptInvite = async ({ email, _id }) => {
+  const acceptInvite = async (_id, token) => {
     return await http.patch({
-      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept?email=${email}`
+      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept`,
+      body: token
     })
   }
 
@@ -138,9 +139,16 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const updateCooperative = async (id, payload) => {
+  const updateCooperative = async (id, email) => {
     return await http.patch({
       url: `${DIGITAL_FARMER_API}/cooperatives/${id}`,
+      body: email
+    })
+  }
+
+  const inviteMember = async (id, payload) => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}/invite`,
       body: payload
     })
   }
@@ -337,6 +345,7 @@ export const ApiContextProvider = ({ children }) => {
         getCooperatives,
         getCooperativeById,
         updateCooperative,
+        inviteMember,
 
         //notification
         getNotifications,

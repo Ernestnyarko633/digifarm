@@ -201,35 +201,33 @@ const CooperativeMain = ({ match: { params } }) => {
       accessor: 'payment',
       Cell: ({ row }) => (
         <>
-          {row.values.status === 'PAID' || (
-            <>
-              {row?.original?.order?.status === 'PENDING' ? (
-                <>
-                  {row.original.email === user?.email && (
-                    <Flex justify='center'>
-                      <Button
-                        btntitle='Pay'
-                        colorScheme='linear'
-                        width='100px'
-                        py='10px'
-                        onClick={() => {
-                          handleModalClick('payment', {
-                            product: data?.product,
-                            order: row?.original?.order
-                          })
-                        }}
-                      />
-                    </Flex>
-                  )}
-                </>
-              ) : null}
-            </>
-          )}
+          {/* checking if user's order status is pending then show button to pay */}
+          {row?.original?.order?.status === 'PENDING' &&
+            row.original.email === user?.email && (
+              <>
+                <Flex justify='center'>
+                  <Button
+                    btntitle='Pay'
+                    colorScheme='linear'
+                    width='100px'
+                    py='10px'
+                    onClick={() => {
+                      handleModalClick('payment', {
+                        product: data?.product,
+                        order: row?.original?.order
+                      })
+                    }}
+                  />
+                </Flex>
+              </>
+            )}
           {/* admin gets to see the option to resend invite to other users but not to himself  */}
+          {/* if there's no id in the user object, meaning the invite hasn't been accepted */}
           {user?.email === data?.users[0].email &&
-            row.original.email !== user?.email && (
+            row.original.email !== user?.email &&
+            !row.original.id && (
               <Flex justify='center'>
-                <TableMenu />
+                <TableMenu id={data._id} email={row.original.email} />
               </Flex>
             )}
         </>

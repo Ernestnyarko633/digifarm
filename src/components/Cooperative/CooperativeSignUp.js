@@ -19,6 +19,7 @@ import { SignupSchema } from 'helpers/validation'
 import invite from 'assets/images/invite.png'
 import { useHistory } from 'react-router-dom'
 import useAuth from 'context/auth'
+import jwt_decode from 'jwt-decode'
 
 import useApi from 'context/api'
 import PropTypes from 'prop-types'
@@ -33,9 +34,13 @@ const CooperativeSignUp = () => {
   const { store } = useAuth()
 
   const decodedToken = sessionStorage.getItem('acceptToken')
+  //decoding token
+  var t = jwt_decode(decodedToken)
+  // eslint-disable-next-line no-console
+  console.log('token', t)
   const _decode = JSON.parse(decodedToken)
 
-  const { email, _id } = _decode
+  const { _id } = _decode
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -58,7 +63,7 @@ const CooperativeSignUp = () => {
           delete data.confirmPassword
           setSubmitting(true)
           await signUp(data)
-          const res = await acceptInvite({ email, _id })
+          const res = await acceptInvite({ _id })
           setSubmitting(false)
           const { authToken, user } = res?.data
           store({ token: authToken, user })
