@@ -42,130 +42,134 @@ const CooperativePayment = ({ farm, asMember }) => {
 
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
-      <GridItem p={{ base: 4, md: 6 }} overflowY='hidden'>
+      <GridItem overflowY='hidden'>
         <Scrollbar>
-          <Box borderWidth={1} rounded='lg' p={4}>
-            <Flex align='center' justify='space-between'>
-              <Flex align='center'>
-                <Avatar
-                  src={
-                    coopImg
-                      ? URL.createObjectURL(coopImg)
-                      : require('../../../assets/images/user-avatar.png')
-                          .default
-                  }
-                  size='lg'
-                />
-                <Box ml={2}>
-                  <Text fontWeight={700} fontSize={{ md: 'xl' }}>
-                    {cooperative?.name || asMember?.cooperative?.name}
-                  </Text>
-                  {isLoading || error ? (
-                    <FetchCard
-                      loading={isLoading}
-                      error={error}
-                      reload={() => triggerReload()}
-                    />
-                  ) : (
-                    <Text mt={-1} fontSize='sm' color='gray.500'>
-                      created by{' '}
-                      {data?.users[0]?.info?.firstName +
-                        data?.users[0]?.info?.lastName}
+          <Box p={{ base: 8, md: 6 }}>
+            <Box borderWidth={1} rounded='lg' p={4}>
+              <Flex align='center' justify='space-between'>
+                <Flex align='center'>
+                  <Avatar
+                    src={
+                      coopImg
+                        ? URL.createObjectURL(coopImg)
+                        : require('../../../assets/images/user-avatar.png')
+                            .default
+                    }
+                    size='lg'
+                  />
+                  <Box ml={2}>
+                    <Text fontWeight={700} fontSize={{ md: 'xl' }}>
+                      {cooperative?.name || asMember?.cooperative?.name}
                     </Text>
-                  )}
+                    {isLoading || error ? (
+                      <FetchCard
+                        loading={isLoading}
+                        error={error}
+                        reload={() => triggerReload()}
+                      />
+                    ) : (
+                      <Text mt={-1} fontSize='sm' color='gray.500'>
+                        created by{' '}
+                        {data?.users[0]?.info?.firstName +
+                          data?.users[0]?.info?.lastName}
+                      </Text>
+                    )}
+                  </Box>
+                </Flex>
+
+                <Box>
+                  <Text color='gray.400' fontSize='sm'>
+                    Cooperative Type
+                  </Text>
+                  <Text fontWeight={700} textAlign='right'>
+                    {FirstLettersToUpperCase(cooperative?.type?.name) ||
+                      FirstLettersToUpperCase(
+                        asMember?.cooperative?.type?.name
+                      )}
+                  </Text>
                 </Box>
               </Flex>
+              <Divider orientation='horizontal' my={4} />
+              <CropItemInfo farm={farm} order={order} />
+            </Box>
 
-              <Box>
-                <Text color='gray.400' fontSize='sm'>
-                  Cooperative Type
-                </Text>
-                <Text fontWeight={700} textAlign='right'>
-                  {FirstLettersToUpperCase(cooperative?.type?.name) ||
-                    FirstLettersToUpperCase(asMember?.cooperative?.type?.name)}
-                </Text>
-              </Box>
-            </Flex>
-            <Divider orientation='horizontal' my={4} />
-            <CropItemInfo farm={farm} order={order} />
-          </Box>
+            <Divider orientation='horizontal' mt={8} mb={3} />
 
-          <Divider orientation='horizontal' mt={8} mb={3} />
-
-          <Box as='table' mb={6} w={{ base: 80, md: '100%' }}>
-            <Box as='tbody'>
-              <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
-                <Flex as='td' align='center' justify='space-between' pb={2}>
-                  <Flex direction='column'>
-                    <Text fontSize='md' color='gray.500'>
-                      Acreage assigned
-                    </Text>
+            <Box as='table' mb={6} w={{ base: 80, md: '100%' }}>
+              <Box as='tbody'>
+                <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
+                  <Flex as='td' align='center' justify='space-between' pb={2}>
+                    <Flex direction='column'>
+                      <Text fontSize='md' color='gray.500'>
+                        Acreage assigned
+                      </Text>
+                    </Flex>
+                    <Text fontWeight={900}>{order?.acreage}</Text>
                   </Flex>
-                  <Text fontWeight={900}>{order?.acreage}</Text>
-                </Flex>
-              </Box>
-              <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
-                <Flex as='td' align='center' justify='space-between' py={2}>
-                  <Flex align='center'>
-                    <Text mr={2} color='gray.500'>
-                      Unit Amount
-                    </Text>
-                  </Flex>
-                  <Text fontWeight={900}>
-                    $ {farm?.pricePerAcre || order?.product?.pricePerAcre}
-                  </Text>
-                </Flex>
-              </Box>
-              <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
-                <Flex as='td' align='center' justify='space-between' py={2}>
-                  <Flex align='center'>
-                    <Text mr={2} color='gray.500'>
-                      Discount
-                    </Text>
-                  </Flex>
-                  <Text fontWeight={900}>
-                    {cooperative?.type?.discount * 100 ||
-                      asMember?.cooperative?.type?.discount * 100}
-                    %
-                  </Text>
-                </Flex>
-              </Box>
-              <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
-                <Flex as='td' align='center' justify='space-between' py={2}>
-                  <Flex align='center' mr={2}>
-                    <Text mr={2} color='gray.500'>
-                      Management Fee
-                    </Text>
-                    <QuestionIcon color='cf.800' />
-                  </Flex>
-                  <Text fontWeight={900}>Inclusive</Text>
-                </Flex>
-              </Box>
-              <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
-                <Flex as='td' align='center' justify='space-between' py={2}>
-                  <Text mr={2} color='gray.500'>
-                    VAT
-                  </Text>
-                  <Text fontWeight={900}>Inclusive</Text>
-                </Flex>
-              </Box>
-              <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
-                <Flex as='td' align='center' justify='space-between' py={2}>
-                  <Text fontWeight={500} mr={2}>
-                    Total
-                  </Text>
-                  <Flex direction='column' textAlign='right'>
+                </Box>
+                <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
+                  <Flex as='td' align='center' justify='space-between' py={2}>
+                    <Flex align='center'>
+                      <Text mr={2} color='gray.500'>
+                        Unit Amount
+                      </Text>
+                    </Flex>
                     <Text fontWeight={900}>
-                      $ {getFormattedMoney(order?.cost)}
+                      $ {farm?.pricePerAcre || order?.product?.pricePerAcre}
                     </Text>
                   </Flex>
-                </Flex>
+                </Box>
+                <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
+                  <Flex as='td' align='center' justify='space-between' py={2}>
+                    <Flex align='center'>
+                      <Text mr={2} color='gray.500'>
+                        Discount
+                      </Text>
+                    </Flex>
+                    <Text fontWeight={900}>
+                      {cooperative?.type?.discount * 100 ||
+                        asMember?.cooperative?.type?.discount * 100}
+                      %
+                    </Text>
+                  </Flex>
+                </Box>
+                <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
+                  <Flex as='td' align='center' justify='space-between' py={2}>
+                    <Flex align='center' mr={2}>
+                      <Text mr={2} color='gray.500'>
+                        Management Fee
+                      </Text>
+                      <QuestionIcon color='cf.800' />
+                    </Flex>
+                    <Text fontWeight={900}>Inclusive</Text>
+                  </Flex>
+                </Box>
+                <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
+                  <Flex as='td' align='center' justify='space-between' py={2}>
+                    <Text mr={2} color='gray.500'>
+                      VAT
+                    </Text>
+                    <Text fontWeight={900}>Inclusive</Text>
+                  </Flex>
+                </Box>
+                <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
+                  <Flex as='td' align='center' justify='space-between' py={2}>
+                    <Text fontWeight={500} mr={2}>
+                      Total
+                    </Text>
+                    <Flex direction='column' textAlign='right'>
+                      <Text fontWeight={900}>
+                        $ {getFormattedMoney(order?.cost)}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                </Box>
               </Box>
             </Box>
-          </Box>
 
-          <Box>
-            <Support />
+            <Box>
+              <Support />
+            </Box>
           </Box>
         </Scrollbar>
       </GridItem>
@@ -181,7 +185,7 @@ const CooperativePayment = ({ farm, asMember }) => {
         }}
       >
         <Scrollbar>
-          <Box css={{ direction: 'ltr' }}>
+          <Box css={{ direction: 'ltr' }} p={8}>
             <Flex direction='column' align={{ base: 'center', md: 'initial' }}>
               <Heading as='h6' fontSize='xl' ml={{ md: 5 }}>
                 Choose your payment Option
