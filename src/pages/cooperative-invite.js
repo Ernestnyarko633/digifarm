@@ -26,13 +26,12 @@ const CooperativeInvite = () => {
     const token = pathname.replace('/cooperative/invite/', '')
     //decoding token
     var decodedToken = jwt_decode(token)
-    // eslint-disable-next-line no-console
-    console.log('token', token)
 
-    const data = JSON.parse(decodedToken._id)
-    sessionStorage.setItem('acceptToken', JSON.stringify(token))
-
+    const data = JSON.parse(decodedToken.payload)
     const { _id } = data
+    //storing token in session
+    sessionStorage.setItem('acceptToken', token)
+
     if (data) {
       const runAcceptInvite = async () => {
         try {

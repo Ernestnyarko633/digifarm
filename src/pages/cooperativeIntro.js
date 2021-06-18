@@ -115,7 +115,13 @@ const cooperativeIntro = ({ location: { state } }) => {
       <Flex
         justify='space-between'
         wrap='wrap'
-        mt={{ base: '44rem', md: '40rem', lg: '28rem', '5xl': '20rem' }}
+        mt={{
+          base: '44rem',
+          md: '44rem',
+          lg: '30rem',
+          '3xl': '20rem',
+          '5xl': '20rem'
+        }}
         w={{ md: '80%' }}
         mx={{ base: 6, md: 10, lg: 48 }}
       >

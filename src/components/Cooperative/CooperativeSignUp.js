@@ -16,7 +16,7 @@ import { Button } from 'components'
 import CustomInput from 'components/Form/CustomInput'
 import { useFormik } from 'formik'
 import { SignupSchema } from 'helpers/validation'
-import invite from 'assets/images/invite.png'
+import invite from 'assets/images/invite2.png'
 import { useHistory } from 'react-router-dom'
 import useAuth from 'context/auth'
 import jwt_decode from 'jwt-decode'
@@ -33,21 +33,19 @@ const CooperativeSignUp = () => {
   const toast = useToast()
   const { store } = useAuth()
 
-  const decodedToken = sessionStorage.getItem('acceptToken')
-  //decoding token
-  var t = jwt_decode(decodedToken)
-  // eslint-disable-next-line no-console
-  console.log('token', t)
-  const _decode = JSON.parse(decodedToken)
+  const token = sessionStorage.getItem('acceptToken')
+  //decoding token token
+  var decodedToken = jwt_decode(token)
+  const _data = JSON.parse(decodedToken.payload)
 
-  const { _id } = _decode
+  const { _id, email, admin, coopName } = _data
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       isCoop: true,
       role: 'DIGITAL_FARMER',
-      email: _decode.email,
+      email: email,
       country: '',
       password: '',
       lastName: '',
@@ -63,7 +61,7 @@ const CooperativeSignUp = () => {
           delete data.confirmPassword
           setSubmitting(true)
           await signUp(data)
-          const res = await acceptInvite({ _id })
+          const res = await acceptInvite(_id, { token: token })
           setSubmitting(false)
           const { authToken, user } = res?.data
           store({ token: authToken, user })
@@ -138,16 +136,15 @@ const CooperativeSignUp = () => {
     >
       <Box color='white' textAlign='center'>
         <Heading
-          fontSize={{ base: 12, md: 24, lg: 24, '3xl': 32 }}
-          w={{ md: '45%', xl: '45%' }}
+          fontSize={{ base: 14, md: 28, lg: 28, '3xl': '56px' }}
+          w={{ md: '35%', xl: '35%' }}
           mx='auto'
         >
           Split cost. Share assets. Share rewards.
         </Heading>
         <Text
           fontSize={{ base: 10, md: 16, lg: 16, '3xl': 16 }}
-          pt={{ base: 1, lg: 3 }}
-          pb={{ base: 4, lg: 8 }}
+          py={{ base: 4, lg: 8 }}
         >
           Farm together with friends and family
         </Text>
@@ -176,8 +173,7 @@ const CooperativeSignUp = () => {
             Start by creating your account
           </Heading>
           <Text pt={1} mb={6} fontSize={{ base: 12 }}>
-            You were invited by {_decode?.admin} to join {_decode?.coopName}{' '}
-            cooperative.
+            You were invited by {admin} to join {coopName} cooperative.
           </Text>
           <Box>
             <form onSubmit={handleSubmit}>

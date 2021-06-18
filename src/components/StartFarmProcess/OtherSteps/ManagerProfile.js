@@ -11,12 +11,12 @@ import {
   UnorderedList
 } from '@chakra-ui/react'
 
-function ManagerProfile({ item, width, height, size, py, px }) {
+function ManagerProfile({ item, width, height, size, py, px, border }) {
   return (
     <Box
       borderColor='gray.300'
-      p={{ md: 5 }}
-      borderWidth={1}
+      p={5}
+      borderWidth={border || 1}
       rounded='md'
       w={width}
       h={height}
@@ -66,6 +66,7 @@ ManagerProfile.propTypes = {
   height: PropTypes.any,
   size: PropTypes.any,
   py: PropTypes.any,
-  px: PropTypes.any
+  px: PropTypes.any,
+  border: PropTypes.any
 }
 export default ManagerProfile

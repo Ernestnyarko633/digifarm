@@ -335,14 +335,14 @@ const CooperativeMain = ({ match: { params } }) => {
                     <Link href='/dashboard' _hover={{ textDecor: 'none' }}>
                       <Button
                         btntitle='Goto dashboard'
-                        colorScheme='transparent'
-                        color='gray.600'
+                        colorScheme='linear'
+                        color='white'
                         width='140px'
                         py='10px'
                         ml={3}
                         borderWidth={1}
                         borderColor='gray.300'
-                        leftIcon={<MdDashboard size={20} />}
+                        leftIcon={<MdDashboard size={20} color='white' />}
                       />
                     </Link>
                   </Flex>

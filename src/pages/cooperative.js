@@ -5,7 +5,6 @@ import {
   Heading,
   Flex,
   Avatar,
-  Spacer,
   Container,
   Link,
   Divider
@@ -104,7 +103,7 @@ const Cooperative = ({ location: { state } }) => {
           reload={triggerReload}
           loading={isLoading}
           error={error}
-          text='loading cooperative...'
+          text='loading cooperative'
         />
       ) : (
         <Container
@@ -128,11 +127,10 @@ const Cooperative = ({ location: { state } }) => {
             borderColor='gray.300'
             my={{ base: 5 }}
           >
-            <Flex bg='#F8F8F8' p={4}>
+            <Flex bg='#F8F8F8' py={4} px={6} justify='space-between'>
               <Text fontWeight='bold' fontSize={{ base: 12, md: 16 }}>
                 Your Cooperative
               </Text>
-              <Spacer />
               <Text
                 color='#D0021B'
                 fontWeight='bold'
@@ -141,16 +139,13 @@ const Cooperative = ({ location: { state } }) => {
                 Farm starts: {date()}
               </Text>
             </Flex>
-            <Flex
-              p={{ lg: 8 }}
-              justify='space-between'
-              wrap={{ base: 'wrap-reverse' }}
-            >
+            <Flex justify='space-between' wrap={{ base: 'wrap-reverse' }}>
               <Box pt={{ base: 4, lg: 6 }} px={{ base: 6 }}>
                 <Flex>
                   <Avatar
                     name={data?.product?.cropVariety?.crop?.imageUrl}
-                    size='lg'
+                    size='md'
+                    mt={2}
                   />
                   <Box px={3} pt={{ base: 3, md: 0 }}>
                     <Text fontWeight='bold' fontSize={{ base: 16, md: 24 }}>
@@ -163,8 +158,8 @@ const Cooperative = ({ location: { state } }) => {
                     </Text>
                   </Box>
                 </Flex>
-                <Box py='26px'>
-                  <Text fontSize={16}>
+                <Box pb={8} pt={3}>
+                  <Text fontSize={20}>
                     Location:{' '}
                     <Text as='span' fontWeight='bold'>
                       {FirstLettersToUpperCase(data?.product?.location?.name) +
@@ -172,13 +167,13 @@ const Cooperative = ({ location: { state } }) => {
                         FirstLettersToUpperCase(data?.product?.location?.state)}
                     </Text>
                   </Text>
-                  <Text fontSize={16}>
+                  <Text fontSize={20}>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {FirstLettersToUpperCase(data?.type?.name)}
                     </Text>
                   </Text>
-                  <Text fontSize={16}>
+                  <Text fontSize={20}>
                     Cooperative Admin:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {data?.users[0]?.info?.firstName +
@@ -193,10 +188,10 @@ const Cooperative = ({ location: { state } }) => {
                 mt={-4}
                 borderColor='gray.300'
               />
-              <Flex justify='center' px={{ base: 20 }} py={{ base: 4 }}>
+              <Flex justify='center' px={{ base: 20 }} py={8}>
                 <Box>
-                  <Avatar size='2xl' name={data?.name} mx={6} />
-                  <Text fontWeight='bold' pl={12} py={3}>
+                  <Avatar size='2xl' name={data?.name} mx='auto' />
+                  <Text fontWeight='bold' textAlign='center' py={3}>
                     {data?.name}
                   </Text>
                 </Box>
@@ -229,29 +224,52 @@ const Cooperative = ({ location: { state } }) => {
                   </Text>
                 </Flex>
                 {data?.users?.map(item => (
-                  <Flex py='5px' px={{ base: 4, md: 4, lg: 4 }} key={item?.id}>
+                  <Flex
+                    py='5px'
+                    px={{ base: 4, md: 4, lg: 4 }}
+                    key={item?.id}
+                    justify='space-between'
+                  >
                     <Text fontSize={{ base: 16, md: 16 }} fontWeight='bold'>
                       {item?.info?.firstName || item?.info?.lastName
                         ? item?.info?.firstName + ' ' + item?.info?.lastName
                         : 'Annonymous'}
                     </Text>
-                    <Spacer />
                     <Text fontSize={{ base: 16, md: 16 }}>Invited</Text>
                   </Flex>
                 ))}
               </Box>
-              <ManagerProfile
-                item={doc}
-                height={{ base: '100%', lg: '85%', xl: '20rem' }}
-                size='2xl'
+              <Box
+                height={{ md: '15rem', lg: '85%', xl: '20rem' }}
                 width={{
                   base: 'full',
                   md: '25rem',
                   xl: '30rem'
                 }}
-                py='15px'
-                px={4}
-              />
+                rounded='md'
+                borderWidth={1}
+                borderColor='gray.300'
+              >
+                <Flex
+                  bg='#F8F8F8'
+                  p='17px'
+                  top={0}
+                  zIndex={2}
+                  pos='sticky'
+                  w='full'
+                >
+                  <Text fontWeight='bold' fontSize={{ base: 16, md: 16 }}>
+                    Farm Manager
+                  </Text>
+                </Flex>
+                <ManagerProfile
+                  item={doc}
+                  size='2xl'
+                  rounded={0}
+                  height='80%'
+                  border='0px'
+                />
+              </Box>
             </Flex>
             <Flex justify={{ base: 'center', md: 'flex-end' }} my={{ base: 6 }}>
               <Link
