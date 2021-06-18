@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Flex, Heading } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
@@ -46,7 +46,13 @@ const CropSelection = () => {
       : Math.floor(selectedFarm?.acreage) === 0
 
   return (
-    <Box w='90%' mx='auto' mt={{ base: 20, md: 0 }}>
+    <Box
+      w='90%'
+      mx='auto'
+      mt={{ base: 20, md: 0 }}
+      pt={{ base: 12 }}
+      pb={{ base: 0 }}
+    >
       <Box textAlign='center' py={10}>
         <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
           Which Farm is right for you?
@@ -87,6 +93,15 @@ const CropSelection = () => {
             </Tabs>
           </Box>
           <Flex w='full' justify='flex-end' my={6}>
+            {!isLoading && cooperativebool ? (
+              <Flex align='center' justify='center' px={5}>
+                <Text fontSize='md' color='red'>
+                  Acres left for {selectedFarm?.cropVariety?.crop?.name} is less
+                  than minimum required acres for{' '}
+                  {selectedCooperativeType?.name}
+                </Text>
+              </Flex>
+            ) : null}
             <Button
               h={12}
               width={40}

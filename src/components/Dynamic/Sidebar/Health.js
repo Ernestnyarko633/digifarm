@@ -13,7 +13,7 @@ export default function Health({
   reloads
 }) {
   return (
-    <Box>
+    <Box mx={8} my={8}>
       {EOSStatisticsIsLoading ||
       EOSStatisticsHasError ||
       eosTaskHasError ||

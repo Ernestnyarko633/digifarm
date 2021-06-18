@@ -8,6 +8,7 @@ import useApi from 'context/api'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 import CooperativesCard from 'components/Cards/CooperativesCard'
+import Scrollbar from 'react-perfect-scrollbar'
 
 const RightSidebar = ({ onOpen, setSelectedData }) => {
   const [doc, setDocData] = React.useState(null)
@@ -68,7 +69,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         Events
       </Heading>
 
-      <Box h='45%' overflowY='scroll' px={2} my={2}>
+      <Box h='45%' overflowY='hidden' px={2} my={2}>
         {loading ? (
           <FetchCard
             direction='column'
@@ -83,16 +84,18 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             text='Loading events'
           />
         ) : (
-          <Grid gap={4} mt={4}>
-            {doc?.map((event, i) => (
-              <EventCard
-                key={mapKey(i)}
-                onOpen={onOpen}
-                setSelectedData={setSelectedData}
-                event={event}
-              />
-            ))}
-          </Grid>
+          <Scrollbar>
+            <Grid gap={4} mt={4} mb={4}>
+              {doc?.map((event, i) => (
+                <EventCard
+                  key={mapKey(i)}
+                  onOpen={onOpen}
+                  setSelectedData={setSelectedData}
+                  event={event}
+                />
+              ))}
+            </Grid>
+          </Scrollbar>
         )}
       </Box>
 
@@ -125,14 +128,16 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             <Box
               my={{ base: 3, xl: 2 }}
               h={{ base: '20%', xl: '40%' }}
-              overflowY='scroll'
+              overflowY='hidden'
               px={2}
             >
-              <Box>
-                {data.map(coop => (
-                  <CooperativesCard coop={coop} key={coop._id} />
-                ))}
-              </Box>
+              <Scrollbar>
+                <Box>
+                  {data.map(coop => (
+                    <CooperativesCard coop={coop} key={coop._id} />
+                  ))}
+                </Box>
+              </Scrollbar>
             </Box>
           </>
         )

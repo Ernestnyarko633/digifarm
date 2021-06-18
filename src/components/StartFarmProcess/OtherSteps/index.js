@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -29,6 +28,7 @@ import Contract from './Contract'
 import { getformattedDate } from 'helpers/misc'
 import ReloadPage from 'components/Reload'
 import { Safety } from '../../../theme/Icons'
+import Scrollbar from 'react-perfect-scrollbar'
 
 const MotionFlex = motion(Flex)
 
@@ -135,67 +135,74 @@ const OtherSteps = ({ data, history: { push } }) => {
     <>
       {isSubmitting && <Overlay text={text} />}
       {catFarms ? (
-        <Flex
-          mx='auto'
-          w='100%'
-          bg='cf-dark.400'
-          justify='space-between'
-          pt={{ base: 2, md: 8 }}
-          px={{ md: 20 }}
-          overflowX='scroll'
-          direction={{ base: 'column', md: 'row' }}
-          align={{ base: 'center', md: 'initial' }}
-        >
-          <Flex align='center'>
-            <Heading as='h5' size='md' mr={{ md: 40 }} mb={{ base: 4, md: 0 }}>
-              {catName}
-            </Heading>
-          </Flex>
-          <Flex justify='space-between'>
-            {catFarms?.slice(0, 4)?.map(farm => (
-              <Flex
-                key={farm._id}
-                align='center'
-                justify='center'
-                direction='column'
-                borderBottomWidth={
-                  (farm._id === selectedFarm?._id ||
-                    farm._id === data?.product?._id) &&
-                  2
-                }
-                borderBottomColor={
-                  (farm._id === selectedFarm?._id ||
-                    farm._id === data?.product?._id) &&
-                  'cf.800'
-                }
-                mr={{ base: 0, md: 5 }}
+        <Scrollbar>
+          <Flex
+            mx='auto'
+            w='100%'
+            bg='cf-dark.400'
+            justify='space-between'
+            pt={{ base: 2, md: 8 }}
+            px={{ md: 20 }}
+            overflowX='hidden'
+            direction={{ base: 'column', md: 'row' }}
+            align={{ base: 'center', md: 'initial' }}
+          >
+            <Flex align='center'>
+              <Heading
+                as='h5'
+                size='md'
+                mr={{ md: 40 }}
+                mb={{ base: 4, md: 0 }}
               >
-                <Text
-                  px={6}
-                  textTransform='uppercase'
-                  fontSize={{ base: 'xs', md: 'md' }}
-                >
-                  {farm.cropVariety?.crop.name}
-                </Text>
+                {catName}
+              </Heading>
+            </Flex>
+            <Flex justify='space-between'>
+              {catFarms?.slice(0, 4)?.map(farm => (
                 <Flex
+                  key={farm._id}
                   align='center'
-                  direction={{ base: 'column', md: 'row' }}
-                  fontSize={{ base: 'x-small', md: 'tiny' }}
+                  justify='center'
+                  direction='column'
+                  borderBottomWidth={
+                    (farm._id === selectedFarm?._id ||
+                      farm._id === data?.product?._id) &&
+                    2
+                  }
+                  borderBottomColor={
+                    (farm._id === selectedFarm?._id ||
+                      farm._id === data?.product?._id) &&
+                    'cf.800'
+                  }
+                  mr={{ base: 0, md: 5 }}
                 >
                   <Text
-                    pr={{ base: 1, md: 2 }}
-                    textAlign={{ base: 'center', md: 'initial' }}
+                    px={6}
+                    textTransform='uppercase'
+                    fontSize={{ base: 'xs', md: 'md' }}
                   >
-                    ({farm.cropVariety?.name}){' '}
+                    {farm.cropVariety?.crop.name}
                   </Text>
-                  <Text as='span' d={{ base: 'none', md: 'block' }}>
-                    #{farm?.name}
-                  </Text>
+                  <Flex
+                    align='center'
+                    direction={{ base: 'column', md: 'row' }}
+                    fontSize={{ base: 'x-small', md: 'tiny' }}
+                  >
+                    <Text
+                      pr={{ base: 1, md: 2 }}
+                      textAlign={{ base: 'center', md: 'initial' }}
+                    >
+                      ({farm.cropVariety?.name}){' '}
+                    </Text>
+                    <Text as='span' d={{ base: 'none', md: 'block' }}>
+                      #{farm?.name}
+                    </Text>
+                  </Flex>
                 </Flex>
-              </Flex>
-            ))}
+              ))}
+            </Flex>
           </Flex>
-        </Flex>
+        </Scrollbar>
       ) : (
         <Box pt={{ base: 1, md: 2 }} />
       )}

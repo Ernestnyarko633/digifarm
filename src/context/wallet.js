@@ -4,25 +4,25 @@ import { Status } from 'helpers/misc'
 const WalletContext = createContext()
 
 export const WalletContextProvider = ({ children }) => {
-  const totalAmount = (__activity = {}, tasks = [], scheduledTasks = []) => {
+  const totalAmount = (activity = {}, tasks = [], scheduledTasks = []) => {
     let totalAmount = 0
-    let tempTasks = tasks?.filter(_task => _task.activity === __activity._id)
-    if (tempTasks) {
-      tempTasks.forEach(_task => {
-        totalAmount = totalAmount + _task?.budget
+    let activity_tasks = tasks?.filter(task => task.activity === activity._id)
+    if (activity_tasks) {
+      activity_tasks.forEach(task => {
+        totalAmount = totalAmount + task?.budget
       })
     }
     if (scheduledTasks) {
       let currentExpense = 0
-      let _tasks = scheduledTasks.filter(
-        completedTask =>
-          __activity._id === completedTask?.task?.activity &&
-          completedTask.status === Status.COMPLETED
+      let completed_scheduled_tasks = scheduledTasks.filter(
+        scheduled_task =>
+          activity._id === scheduled_task?.task?.activity &&
+          scheduled_task.status === Status.COMPLETED
       )
 
-      if (_tasks) {
-        _tasks.forEach(_task => {
-          currentExpense = currentExpense + _task?.task?.budget
+      if (completed_scheduled_tasks) {
+        completed_scheduled_tasks.forEach(completed_task => {
+          currentExpense = currentExpense + completed_task?.task?.budget
         })
       }
 

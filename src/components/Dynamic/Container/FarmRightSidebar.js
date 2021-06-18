@@ -2,6 +2,7 @@ import { Box } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicCard from '../Sidebar'
+import Scrollbar from 'react-perfect-scrollbar'
 export default function FarmRightSidebar({
   state,
   digitalFarmerFarm,
@@ -32,34 +33,36 @@ export default function FarmRightSidebar({
       as='rightsidebar'
       bottom={0}
       pos={{ md: 'fixed' }}
-      px={{ base: 4, md: 8 }}
+      // px={{ base: 4, md: 8 }}
       h={{ lg: '84vh' }}
       w={{ md: '30%' }}
       my={{ base: 20, md: 0 }}
       shadow={{ md: 'md' }}
-      overflowY={{ md: 'scroll' }}
+      overflowY='hidden'
     >
-      <DynamicCard
-        card={state}
-        scheduledTasks={ScheduledTasks}
-        weatherForeCasts={WeatherForeCasts}
-        farmfeeds={farmfeeds}
-        farm={digitalFarmerFarm}
-        eosStats={eosStats}
-        farmFeedsIsLoading={farmFeedsIsLoading}
-        WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
-        ScheduledTasksIsLoading={ScheduledTasksIsLoading}
-        EOSStatisticsIsLoading={EOSStatisticsIsLoading}
-        eosTaskIsLoading={eosTaskIsLoading}
-        //errors
-        WeatherForeCastsHasError={WeatherForeCastsHasError}
-        farmFeedsHasError={farmFeedsHasError}
-        ScheduledTasksHasError={ScheduledTasksHasError}
-        EOSStatisticsHasError={EOSStatisticsHasError}
-        eosTaskHasError={eosTaskHasError}
-        //helpers
-        reloads={reloads}
-      />
+      <Scrollbar>
+        <DynamicCard
+          card={state}
+          scheduledTasks={ScheduledTasks}
+          weatherForeCasts={WeatherForeCasts}
+          farmfeeds={farmfeeds}
+          farm={digitalFarmerFarm}
+          eosStats={eosStats}
+          farmFeedsIsLoading={farmFeedsIsLoading}
+          WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
+          ScheduledTasksIsLoading={ScheduledTasksIsLoading}
+          EOSStatisticsIsLoading={EOSStatisticsIsLoading}
+          eosTaskIsLoading={eosTaskIsLoading}
+          //errors
+          WeatherForeCastsHasError={WeatherForeCastsHasError}
+          farmFeedsHasError={farmFeedsHasError}
+          ScheduledTasksHasError={ScheduledTasksHasError}
+          EOSStatisticsHasError={EOSStatisticsHasError}
+          eosTaskHasError={eosTaskHasError}
+          //helpers
+          reloads={reloads}
+        />
+      </Scrollbar>
     </Box>
   )
 }

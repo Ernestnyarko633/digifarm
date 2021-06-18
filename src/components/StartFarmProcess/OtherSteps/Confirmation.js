@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Image, Text, useToast } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
@@ -96,8 +95,9 @@ const Confirmation = ({ farm, order }) => {
       </Box>
       <Box
         w={{ md: '50%' }}
-        p={{ base: 2, md: 6 }}
+        p={{ base: 2, md: 8 }}
         px={{ base: 2, md: 14 }}
+        mx={3}
         pos='relative'
       >
         <Flex direction='column' align='center' justify='center'>
@@ -128,6 +128,7 @@ const Confirmation = ({ farm, order }) => {
           bottom={1}
           left={0}
           right={0}
+          m={3}
         >
           <ButtonDownload
             mx={6}
