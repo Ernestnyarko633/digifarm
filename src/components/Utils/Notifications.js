@@ -62,6 +62,16 @@ const Notifications = ({ notifications, loading, mutation }) => {
             active={active}
           />
         )
+      case 'PAYMENT':
+        return (
+          <NotificationItem
+            item={item}
+            mutation={mutation}
+            renderNotificationIcons={renderNotificationIcons}
+            toFarmBoard={toFarmBoard}
+            active={active}
+          />
+        )
       default:
         return null
     }
