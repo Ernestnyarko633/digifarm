@@ -50,17 +50,19 @@ const CooperativeMemberCard = ({
         <Text color='black' fontWeight={700}>
           {member === 1 ? 'You (Member)' : 'Member'} {member}
         </Text>
-        <Box
-          bg='gray.100'
-          py={1}
-          px={5}
-          ml={3}
-          fontSize='xs'
-          rounded='sm'
-          color='gray.500'
-        >
-          $ {getFormattedMoney(value?.acreage * farm?.pricePerAcre)}
-        </Box>
+        {value?.acreage && (
+          <Box
+            bg='gray.100'
+            py={1}
+            px={5}
+            ml={3}
+            fontSize='xs'
+            rounded='sm'
+            color='gray.500'
+          >
+            $ {getFormattedMoney(value?.acreage * farm?.pricePerAcre)}
+          </Box>
+        )}
       </Flex>
 
       {values?.length > 2 && (
@@ -103,7 +105,6 @@ const CooperativeMemberCard = ({
             value={value.acreage}
             name={`${name}acreage`}
             onChange={e => {
-              if (e?.target?.value <= 0) return e.preventDefault()
               return onChange(e)
             }}
             onBlur={onBlur}
