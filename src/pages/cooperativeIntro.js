@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Flex, Image, Link, Heading, Text, Icon } from '@chakra-ui/react'
 import df_logo from 'assets/images/df_logo.png'
-import coopIntroImage from 'assets/images/coopIntroImage.png'
+import cfmotive from 'assets/images/cfmotive.svg'
 import PropTypes from 'prop-types'
 
 import { IoDocumentTextOutline } from 'react-icons/io5'
@@ -108,25 +108,28 @@ const cooperativeIntro = ({ location: { state } }) => {
           Contact Support
         </Link>
       </Flex>
-      <Box pos='relative' pt={{ base: 10 }}>
-        <Image w='full' src={coopIntroImage} />
+      <Box pos='relative' pt={{ base: 10 }} bg='#022D2B'>
+        <Image w='full' src={cfmotive} />
         <CooperativeSignUp state={state} />
       </Box>
       <Flex
         justify='space-between'
         wrap='wrap'
         mt={{
-          base: '44rem',
-          md: '44rem',
-          lg: '30rem',
-          '3xl': '20rem',
-          '5xl': '20rem'
+          base: '18rem',
+          md: '40rem',
+          '2xl': '28rem'
         }}
         w={{ md: '80%' }}
-        mx={{ base: 6, md: 10, lg: 48 }}
+        mx={{ base: 7, md: '20%' }}
       >
         {_data.map(item => (
-          <Box w={{ md: 64 }} key={item.benefit} mb={{ base: 10 }}>
+          <Box
+            w={{ md: 64 }}
+            key={item.benefit}
+            mb={{ base: 10 }}
+            mr={{ '5xl': '13rem' }}
+          >
             <Flex
               justify='center'
               align='center'

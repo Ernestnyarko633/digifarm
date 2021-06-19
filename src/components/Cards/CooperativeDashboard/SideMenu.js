@@ -92,6 +92,8 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
         <Flex justify='center'>
           <Box pos='relative'>
             <Avatar
+              // border={3}
+              // borderColor='gray.300'
               name={data?.name}
               src={coopImg ? URL.createObjectURL(coopImg) : data?.imageUrl}
               size='xl'

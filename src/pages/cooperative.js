@@ -7,7 +7,8 @@ import {
   Avatar,
   Container,
   Link,
-  Divider
+  Divider,
+  Image
 } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import Prismic from 'prismic-javascript'
@@ -15,6 +16,7 @@ import getConfig from 'utils/configs'
 import PropTypes from 'prop-types'
 
 import FetchCard from 'components/FetchCard'
+import cooperative_avatar from 'assets/images/cooperative_avatar.png'
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import Header from 'container/Header'
@@ -107,7 +109,7 @@ const Cooperative = ({ location: { state } }) => {
         />
       ) : (
         <Container
-          maxW={{ md: 'full', xl: '5xl' }}
+          maxW={{ md: '60rem', xl: '5xl', '3xl': '80rem' }}
           pt={{ base: 20, lg: 24, '5xl': '10rem' }}
           pb={{ base: 3, lg: 8, xl: 8 }}
           bg='white'
@@ -127,7 +129,7 @@ const Cooperative = ({ location: { state } }) => {
             borderColor='gray.300'
             my={{ base: 5 }}
           >
-            <Flex bg='#F8F8F8' py={4} px={6} justify='space-between'>
+            <Flex bg='#F8F8F8' py={4} px={10} justify='space-between'>
               <Text fontWeight='bold' fontSize={{ base: 12, md: 16 }}>
                 Your Cooperative
               </Text>
@@ -140,10 +142,13 @@ const Cooperative = ({ location: { state } }) => {
               </Text>
             </Flex>
             <Flex justify='space-between' wrap={{ base: 'wrap-reverse' }}>
-              <Box pt={{ base: 4, lg: 6 }} px={{ base: 6 }}>
+              <Box pt={{ base: 4, lg: 6 }} px={{ base: 6, md: 10 }}>
                 <Flex>
                   <Avatar
-                    name={data?.product?.cropVariety?.crop?.imageUrl}
+                    name={
+                      data?.product?.cropVariety?.crop?.imageUrl ||
+                      data?.product?.cropVariety?.crop?.name
+                    }
                     size='md'
                     mt={2}
                   />
@@ -158,8 +163,8 @@ const Cooperative = ({ location: { state } }) => {
                     </Text>
                   </Box>
                 </Flex>
-                <Box pb={8} pt={3}>
-                  <Text fontSize={20}>
+                <Box pb={8} pt={4}>
+                  <Text fontSize={20} py={1}>
                     Location:{' '}
                     <Text as='span' fontWeight='bold'>
                       {FirstLettersToUpperCase(data?.product?.location?.name) +
@@ -167,13 +172,13 @@ const Cooperative = ({ location: { state } }) => {
                         FirstLettersToUpperCase(data?.product?.location?.state)}
                     </Text>
                   </Text>
-                  <Text fontSize={20}>
+                  <Text fontSize={20} py={1}>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {FirstLettersToUpperCase(data?.type?.name)}
                     </Text>
                   </Text>
-                  <Text fontSize={20}>
+                  <Text fontSize={20} py={1}>
                     Cooperative Admin:
                     <Text as='span' fontWeight='bold' ml={2}>
                       {data?.users[0]?.info?.firstName +
@@ -190,8 +195,18 @@ const Cooperative = ({ location: { state } }) => {
               />
               <Flex justify='center' px={{ base: 20 }} py={8}>
                 <Box>
-                  <Avatar size='2xl' name={data?.name} mx='auto' />
-                  <Text fontWeight='bold' textAlign='center' py={3}>
+                  <Image
+                    src={data?.imageUrl || cooperative_avatar}
+                    w='10rem'
+                    h='10rem'
+                    rounded='100%'
+                  />
+                  <Text
+                    fontWeight='bold'
+                    textAlign='center'
+                    py={3}
+                    fontSize={{ base: 16, md: 24 }}
+                  >
                     {data?.name}
                   </Text>
                 </Box>
@@ -209,7 +224,7 @@ const Cooperative = ({ location: { state } }) => {
                 borderColor='gray.300'
                 overflowY='scroll'
                 mb={{ base: 3 }}
-                w={{ base: 'full', md: '22rem', xl: '30rem' }}
+                w={{ base: 'full', md: '30rem', xl: '30rem', '3xl': '40rem' }}
               >
                 <Flex
                   bg='#F8F8F8'
@@ -219,32 +234,39 @@ const Cooperative = ({ location: { state } }) => {
                   pos='sticky'
                   w='full'
                 >
-                  <Text fontWeight='bold' fontSize={{ base: 16, md: 16 }}>
+                  <Text
+                    fontWeight='bold'
+                    fontSize={{ base: 16, md: 16 }}
+                    pl={3}
+                  >
                     Cooperative members
                   </Text>
                 </Flex>
-                {data?.users?.map(item => (
-                  <Flex
-                    py='5px'
-                    px={{ base: 4, md: 4, lg: 4 }}
-                    key={item?.id}
-                    justify='space-between'
-                  >
-                    <Text fontSize={{ base: 16, md: 16 }} fontWeight='bold'>
-                      {item?.info?.firstName || item?.info?.lastName
-                        ? item?.info?.firstName + ' ' + item?.info?.lastName
-                        : 'Annonymous'}
-                    </Text>
-                    <Text fontSize={{ base: 16, md: 16 }}>Invited</Text>
-                  </Flex>
-                ))}
+                <Box px={4} pt={2}>
+                  {data?.users?.map(item => (
+                    <Flex
+                      py='5px'
+                      px={{ base: 4, md: 4, lg: 4 }}
+                      key={item?.id}
+                      justify='space-between'
+                    >
+                      <Text fontSize={{ base: 16, md: 16 }} fontWeight='bold'>
+                        {item?.info?.firstName || item?.info?.lastName
+                          ? item?.info?.firstName + ' ' + item?.info?.lastName
+                          : 'Annonymous'}
+                      </Text>
+                      <Text fontSize={{ base: 16, md: 16 }}>Invited</Text>
+                    </Flex>
+                  ))}
+                </Box>
               </Box>
               <Box
-                height={{ md: '15rem', lg: '85%', xl: '20rem' }}
+                height={{ md: '80%', lg: '85%', xl: '20rem' }}
                 width={{
                   base: 'full',
-                  md: '25rem',
-                  xl: '30rem'
+                  md: '30rem',
+                  xl: '30rem',
+                  '3xl': '40rem'
                 }}
                 rounded='md'
                 borderWidth={1}
@@ -258,13 +280,18 @@ const Cooperative = ({ location: { state } }) => {
                   pos='sticky'
                   w='full'
                 >
-                  <Text fontWeight='bold' fontSize={{ base: 16, md: 16 }}>
+                  <Text
+                    fontWeight='bold'
+                    fontSize={{ base: 16, md: 16 }}
+                    pl={5}
+                  >
                     Farm Manager
                   </Text>
                 </Flex>
                 <ManagerProfile
                   item={doc}
                   size='2xl'
+                  px={5}
                   rounded={0}
                   height='80%'
                   border='0px'
@@ -286,12 +313,7 @@ const Cooperative = ({ location: { state } }) => {
                 _hover={{ textDecor: 'none' }}
                 as={ReachRouter}
               >
-                <Button
-                  btntitle='continue'
-                  w='310px'
-                  fontSize='16px'
-                  h='48px'
-                />
+                <Button btntitle='continue' w='310px' fontSize={20} h='48px' />
               </Link>
             </Flex>
           </Box>

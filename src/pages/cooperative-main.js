@@ -32,7 +32,7 @@ import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
 import { saveAs } from 'file-saver'
 import CooperativeCard from 'components/Cards/CooperativeDashboard/CooperativeCard'
 import TableMenu from 'components/Cards/CooperativeDashboard/TableMenu'
-import Scrollbar from 'react-perfect-scrollbar'
+// import Scrollbar from 'react-perfect-scrollbar'
 
 const CooperativeMain = ({ match: { params } }) => {
   document.title = 'Cooperative Dashboard'
@@ -348,38 +348,38 @@ const CooperativeMain = ({ match: { params } }) => {
                     </Link>
                   </Flex>
                 </Flex>
-                <Scrollbar>
-                  <Box d={{ base: 'none', md: 'block', xl: 'block' }}>
-                    <CustomTable
-                      variant='simple'
-                      _columns={_columns}
-                      _data={tableData}
-                    />
-                  </Box>
-                  <Box
-                    d={{ base: 'block', md: 'none' }}
-                    px={4}
-                    pb='50px'
-                    h='100vh'
-                    bg='white'
-                  >
-                    {tableData?.map(item => (
-                      <Box key={item?._id}>
-                        <CooperativeCard
-                          item={item}
-                          data={data}
-                          order={userData?.[0].order}
-                          handleClick={() => {
-                            handleModalClick('payment', {
-                              product: data?.product,
-                              order: userData?.[0].order
-                            })
-                          }}
-                        />
-                      </Box>
-                    ))}
-                  </Box>
-                </Scrollbar>
+                {/* <Scrollbar> */}
+                <Box d={{ base: 'none', md: 'block', xl: 'block' }}>
+                  <CustomTable
+                    variant='simple'
+                    _columns={_columns}
+                    _data={tableData}
+                  />
+                </Box>
+                <Box
+                  d={{ base: 'block', md: 'none' }}
+                  px={4}
+                  pb='50px'
+                  h='100vh'
+                  bg='white'
+                >
+                  {tableData?.map(item => (
+                    <Box key={item?._id}>
+                      <CooperativeCard
+                        item={item}
+                        data={data}
+                        order={userData?.[0].order}
+                        handleClick={() => {
+                          handleModalClick('payment', {
+                            product: data?.product,
+                            order: userData?.[0].order
+                          })
+                        }}
+                      />
+                    </Box>
+                  ))}
+                </Box>
+                {/* </Scrollbar> */}
               </>
             )}
           </GridItem>

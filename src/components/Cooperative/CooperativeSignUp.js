@@ -130,21 +130,21 @@ const CooperativeSignUp = () => {
     <Box
       pos='absolute'
       mx={{ base: 'auto', '3xl': '12rem' }}
-      top={{ base: 20, md: 40, '5xl': '20rem' }}
+      top={{ base: 20, md: 40, '5xl': '15rem' }}
       right={0}
       mb={4}
     >
       <Box color='white' textAlign='center'>
         <Heading
-          fontSize={{ base: 14, md: 28, lg: 28, '3xl': '56px' }}
-          w={{ md: '35%', xl: '35%' }}
+          fontSize={{ base: 14, md: 28, lg: 28, '2xl': 52 }}
+          // w={{ md: '35%', xl: '35%' }}
           mx='auto'
         >
           Split cost. Share assets. Share rewards.
         </Heading>
         <Text
-          fontSize={{ base: 10, md: 16, lg: 16, '3xl': 16 }}
-          py={{ base: 4, lg: 8 }}
+          fontSize={{ base: 10, md: 16, lg: 16, '2xl': 28 }}
+          py={{ base: 4, lg: 8, '2xl': 10 }}
         >
           Farm together with friends and family
         </Text>
@@ -154,12 +154,12 @@ const CooperativeSignUp = () => {
         bg='white'
         borderRadius='12px'
         templateColumns='repeat(2,1fr)'
-        mx={{ base: '30px', md: '9rem', '3xl': '4rem', '5xl': '10rem' }}
+        mx={{ base: '30px', md: '9rem', '3xl': '4rem', '5xl': '12.9rem' }}
         shadow='md'
       >
         <Box
           ml='5rem'
-          my={60}
+          my={16}
           d={{ base: 'none', md: 'none', xl: 'block', '3xl': 'block' }}
         >
           <Image src={invite} />
