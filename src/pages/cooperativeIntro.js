@@ -108,7 +108,12 @@ const cooperativeIntro = ({ location: { state } }) => {
           Contact Support
         </Link>
       </Flex>
-      <Box pos='relative' pt={{ base: 10 }} bg='#022D2B'>
+      <Box
+        pos='relative'
+        pt={{ base: 10 }}
+        bg='#022D2B'
+        h={{ base: '40rem', xl: '45rem', '3xl': '50rem', '5xl': '64rem' }}
+      >
         <Image w='full' src={cfmotive} />
         <CooperativeSignUp state={state} />
       </Box>
@@ -117,11 +122,11 @@ const cooperativeIntro = ({ location: { state } }) => {
         wrap='wrap'
         mt={{
           base: '18rem',
-          md: '40rem',
+          md: '30rem',
           '2xl': '28rem'
         }}
         w={{ md: '80%' }}
-        mx={{ base: 7, md: '20%' }}
+        mx={{ base: 7, md: 'auto' }}
       >
         {_data.map(item => (
           <Box

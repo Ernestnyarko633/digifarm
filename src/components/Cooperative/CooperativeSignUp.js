@@ -135,11 +135,7 @@ const CooperativeSignUp = () => {
       mb={4}
     >
       <Box color='white' textAlign='center'>
-        <Heading
-          fontSize={{ base: 14, md: 28, lg: 28, '2xl': 52 }}
-          // w={{ md: '35%', xl: '35%' }}
-          mx='auto'
-        >
+        <Heading fontSize={{ base: 14, md: 28, lg: 28, '2xl': 52 }} mx='auto'>
           Split cost. Share assets. Share rewards.
         </Heading>
         <Text
@@ -154,20 +150,33 @@ const CooperativeSignUp = () => {
         bg='white'
         borderRadius='12px'
         templateColumns='repeat(2,1fr)'
-        mx={{ base: '30px', md: '9rem', '3xl': '4rem', '5xl': '12.9rem' }}
-        shadow='md'
+        mx={{
+          base: '30px',
+          md: '4rem',
+          lg: '5rem',
+          '2xl': '9.5rem',
+          '3xl': '0rem',
+          '4xl': 2,
+          '5xl': '0rem'
+        }}
+        shadow='lg'
+        px={{ '5xl': 10 }}
       >
         <Box
           ml='5rem'
           my={16}
-          d={{ base: 'none', md: 'none', xl: 'block', '3xl': 'block' }}
+          d={{
+            base: 'none',
+            md: 'none',
+            lg: 'block'
+          }}
         >
           <Image src={invite} />
         </Box>
         <Box
           my={{ base: 5, md: '3rem', '3xl': 16 }}
-          mx={{ base: 5, md: '4rem', '3xl': '5rem' }}
-          w={{ md: '22rem', lg: '30rem' }}
+          mx={{ base: 5, md: '5rem', '2xl': '3rem', '3xl': '4rem' }}
+          w={{ md: '30rem', lg: '30rem' }}
         >
           <Heading fontSize={{ base: 16, '3xl': 28 }}>
             Start by creating your account
@@ -302,20 +311,6 @@ const CooperativeSignUp = () => {
                 </Text>
               </Flex>
 
-              <Flex mb={{ base: 2, md: 4 }} fontSize='xs'>
-                <Checkbox
-                  colorScheme='cfButton'
-                  onChange={e => {
-                    // TODO: create an endpoint for this action and integrate it
-                  }}
-                  fontSize='xs'
-                  size='sm'
-                  borderColor='cfButton.500'
-                />
-                <Text ml={3} color='gray.500' fontSize='xs'>
-                  I agree to receive Complete Farmer news and updates.
-                </Text>
-              </Flex>
               <Button
                 btntitle='Sign up'
                 type='submit'
