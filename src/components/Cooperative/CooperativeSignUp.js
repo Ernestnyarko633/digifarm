@@ -155,12 +155,11 @@ const CooperativeSignUp = () => {
           md: '4rem',
           lg: '5rem',
           '2xl': '9.5rem',
-          '3xl': '0rem',
-          '4xl': 2,
-          '5xl': '0rem'
+          '3xl': 0,
+          '5xl': 0
         }}
         shadow='lg'
-        px={{ '5xl': 10 }}
+        px={{ '4xl': 8, '5xl': 10 }}
       >
         <Box
           ml='5rem'
