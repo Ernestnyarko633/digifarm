@@ -109,7 +109,7 @@ const Cooperative = ({ location: { state } }) => {
         />
       ) : (
         <Container
-          maxW={{ md: '60rem', xl: '5xl', '3xl': '80rem' }}
+          maxW={{ md: '50rem', xl: '5xl', '3xl': '80rem', '5xl': '90rem' }}
           pt={{ base: 20, lg: 24, '5xl': '10rem' }}
           pb={{ base: 3, lg: 8, xl: 8 }}
           bg='white'
@@ -129,7 +129,12 @@ const Cooperative = ({ location: { state } }) => {
             borderColor='gray.300'
             my={{ base: 5 }}
           >
-            <Flex bg='#F8F8F8' py={4} px={10} justify='space-between'>
+            <Flex
+              bg='#F8F8F8'
+              py={4}
+              px={{ md: 10, '3xl': 16, '5xl': 20 }}
+              justify='space-between'
+            >
               <Text fontWeight='bold' fontSize={{ base: 12, md: 16 }}>
                 Your Cooperative
               </Text>
@@ -142,7 +147,10 @@ const Cooperative = ({ location: { state } }) => {
               </Text>
             </Flex>
             <Flex justify='space-between' wrap={{ base: 'wrap-reverse' }}>
-              <Box pt={{ base: 4, lg: 6 }} px={{ base: 6, md: 10 }}>
+              <Box
+                pt={{ base: 4, lg: 6 }}
+                px={{ base: 6, md: 6, '3xl': 16, '5xl': 20 }}
+              >
                 <Flex>
                   <Avatar
                     name={
@@ -193,7 +201,12 @@ const Cooperative = ({ location: { state } }) => {
                 mt={-4}
                 borderColor='gray.300'
               />
-              <Flex justify='center' px={{ base: 20 }} py={8}>
+              <Flex
+                justify='center'
+                px={{ base: 20 }}
+                pr={{ '5xl': 40 }}
+                py={8}
+              >
                 <Box>
                   <Image
                     src={data?.imageUrl || cooperative_avatar}
@@ -216,15 +229,21 @@ const Cooperative = ({ location: { state } }) => {
           <Box>
             <Flex py={{ md: 8, lg: 4 }} wrap={{ base: 'wrap', md: 'nowrap' }}>
               <Box
-                height={{ base: '15rem', md: '15rem', lg: '85%', xl: '20rem' }}
+                height={{ base: '15rem', md: '18rem', xl: '20rem' }}
                 pb={{ lg: 2 }}
                 borderWidth={1}
                 mr={{ md: 4, lg: 5, xl: 8 }}
                 borderRadius='md'
                 borderColor='gray.300'
                 overflowY='scroll'
-                mb={{ base: 3 }}
-                w={{ base: 'full', md: '30rem', xl: '30rem', '3xl': '40rem' }}
+                mb={{ base: 6, md: 0 }}
+                w={{
+                  base: 'full',
+                  md: '22rem',
+                  xl: '30rem',
+                  '3xl': '40rem',
+                  '5xl': '45rem'
+                }}
               >
                 <Flex
                   bg='#F8F8F8'
@@ -237,12 +256,12 @@ const Cooperative = ({ location: { state } }) => {
                   <Text
                     fontWeight='bold'
                     fontSize={{ base: 16, md: 16 }}
-                    pl={3}
+                    pl={{ md: 1, lg: 5, '5xl': 10 }}
                   >
                     Cooperative members
                   </Text>
                 </Flex>
-                <Box px={4} pt={2}>
+                <Box px={{ md: 1, lg: 4, '5xl': 10 }} pt={2}>
                   {data?.users?.map(item => (
                     <Flex
                       py='5px'
@@ -264,9 +283,10 @@ const Cooperative = ({ location: { state } }) => {
                 height={{ md: '80%', lg: '85%', xl: '20rem' }}
                 width={{
                   base: 'full',
-                  md: '30rem',
+                  md: '25rem',
                   xl: '30rem',
-                  '3xl': '40rem'
+                  '3xl': '40rem',
+                  '5xl': '45rem'
                 }}
                 rounded='md'
                 borderWidth={1}
@@ -283,7 +303,7 @@ const Cooperative = ({ location: { state } }) => {
                   <Text
                     fontWeight='bold'
                     fontSize={{ base: 16, md: 16 }}
-                    pl={5}
+                    pl={{ md: 1, lg: 5, '5xl': 8 }}
                   >
                     Farm Manager
                   </Text>
@@ -291,7 +311,7 @@ const Cooperative = ({ location: { state } }) => {
                 <ManagerProfile
                   item={doc}
                   size='2xl'
-                  px={5}
+                  px={{ xl: 5 }}
                   rounded={0}
                   height='80%'
                   border='0px'
