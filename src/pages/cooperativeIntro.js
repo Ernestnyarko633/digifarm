@@ -123,10 +123,11 @@ const cooperativeIntro = ({ location: { state } }) => {
         mt={{
           base: '18rem',
           md: '30rem',
-          '2xl': '28rem'
+          '2xl': '28rem',
+          '5xl': '18rem'
         }}
         w={{ md: '80%' }}
-        mx={{ base: 7, md: 'auto' }}
+        mx={{ base: 7, md: 'auto', '5xl': '20rem' }}
       >
         {_data.map(item => (
           <Box

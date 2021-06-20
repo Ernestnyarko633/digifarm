@@ -129,10 +129,11 @@ const CooperativeSignUp = () => {
   return (
     <Box
       pos='absolute'
-      mx={{ base: 'auto', '3xl': '12rem' }}
+      mx={{ base: 'auto', '3xl': '11rem', '5xl': '24rem' }}
       top={{ base: 20, md: 40, '5xl': '15rem' }}
       right={0}
       mb={4}
+      w={{ '5xl': '75rem' }}
     >
       <Box color='white' textAlign='center'>
         <Heading fontSize={{ base: 14, md: 28, lg: 28, '2xl': 52 }} mx='auto'>
@@ -153,16 +154,16 @@ const CooperativeSignUp = () => {
         mx={{
           base: '30px',
           md: '4rem',
-          lg: '5rem',
+          lg: '4.8rem',
           '2xl': '9.5rem',
-          '3xl': 0,
-          '5xl': 0
+          '3xl': -5,
+          '4xl': 0
         }}
         shadow='lg'
-        px={{ '4xl': 8, '5xl': 10 }}
+        px={{ '4xl': 8, '5xl': 20 }}
       >
         <Box
-          ml='5rem'
+          ml={{ md: '5rem', '5xl': 0 }}
           my={16}
           d={{
             base: 'none',
@@ -173,8 +174,13 @@ const CooperativeSignUp = () => {
           <Image src={invite} />
         </Box>
         <Box
-          my={{ base: 5, md: '3rem', '3xl': 16 }}
-          mx={{ base: 5, md: '5rem', '2xl': '3rem', '3xl': '4rem' }}
+          my={{ base: 5, md: '3rem', '3xl': 16, '5xl': 20 }}
+          mx={{
+            base: 5,
+            md: '5rem',
+            '2xl': '3rem',
+            '3xl': '5rem'
+          }}
           w={{ md: '30rem', lg: '30rem' }}
         >
           <Heading fontSize={{ base: 16, '3xl': 28 }}>
