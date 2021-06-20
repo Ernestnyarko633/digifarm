@@ -13,8 +13,11 @@ import {
   Spacer,
   Link,
   useToast,
-  useDisclosure
+  useDisclosure,
+  Tooltip,
+  Icon
 } from '@chakra-ui/react'
+import { InfoIcon } from '@chakra-ui/icons'
 import CustomTable from 'components/Form/CustomTable'
 import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
@@ -32,6 +35,7 @@ import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
 import { saveAs } from 'file-saver'
 import CooperativeCard from 'components/Cards/CooperativeDashboard/CooperativeCard'
 import TableMenu from 'components/Cards/CooperativeDashboard/TableMenu'
+
 // import Scrollbar from 'react-perfect-scrollbar'
 
 const CooperativeMain = ({ match: { params } }) => {
@@ -106,8 +110,8 @@ const CooperativeMain = ({ match: { params } }) => {
         <Flex>
           <Avatar
             name={
-              row.values.info?.firstName ||
-              row.values.info.avatar ||
+              row.values?.info?.firstName ||
+              row.values?.info?.avatar ||
               'Annonymous'
             }
             size='md'
@@ -115,7 +119,7 @@ const CooperativeMain = ({ match: { params } }) => {
           <Box pl='12px' pt={1}>
             <Flex>
               <Text fontSize='16px' fontWeight='semibold'>
-                {row.values.info?.firstName
+                {row?.values.info?.firstName
                   ? `${
                       row.values.info?.firstName +
                       ' ' +
@@ -123,6 +127,26 @@ const CooperativeMain = ({ match: { params } }) => {
                     }`
                   : 'Annonymous'}
               </Text>
+              {!row.values.info?.firstName && (
+                <Tooltip
+                  hasArrow
+                  label='Member has not accepted invitation'
+                  fontSize='sm'
+                  bg='#022D2B'
+                  placement='top'
+                >
+                  <InfoIcon color='#31BC2E' mt='5px' ml={1} />
+                </Tooltip>
+                // <Tooltip
+                //   // hasArrow
+                //   label='Search places'
+                //   bg='red.400'
+                //   color='black'
+                // >
+                //   <Icon as={AiFillInfoCircle} color='#31BC2E' mt={1} ml={1} />
+                // </Tooltip>
+              )}
+
               {row.index === 0 && (
                 <Box bg='#D6F2D5' rounded='4px' ml='7px' h='20px'>
                   <Text
@@ -300,7 +324,7 @@ const CooperativeMain = ({ match: { params } }) => {
             px={{ xl: 12 }}
             pt={{ base: 12, xl: 20 }}
             h='100vh'
-            // h={{ md: '100vh' }}
+            bg='white'
           >
             {isLoading || error ? (
               <FetchCard
@@ -348,7 +372,6 @@ const CooperativeMain = ({ match: { params } }) => {
                     </Link>
                   </Flex>
                 </Flex>
-                {/* <Scrollbar> */}
                 <Box d={{ base: 'none', md: 'block', xl: 'block' }}>
                   <CustomTable
                     variant='simple'
@@ -379,7 +402,6 @@ const CooperativeMain = ({ match: { params } }) => {
                     </Box>
                   ))}
                 </Box>
-                {/* </Scrollbar> */}
               </>
             )}
           </GridItem>

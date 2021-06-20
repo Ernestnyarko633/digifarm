@@ -6,11 +6,12 @@ import {
   Menu,
   MenuButton,
   MenuItem,
-  MenuList
+  MenuList,
+  Icon,
+  Button
 } from '@chakra-ui/react'
 // import { motion } from 'framer-motion'
 import { FaEllipsisH } from 'react-icons/fa'
-import Icon from '@chakra-ui/icon'
 import useApi from 'context/api'
 
 // const MotionBox = motion(Box)
@@ -46,46 +47,36 @@ const TableMenu = ({ id, email }) => {
   return (
     <Box>
       <Menu>
-        <Box>
-          <MenuButton as={Box} cursor='pointer'>
-            <Box
-              _hover={{
-                bg: '#F2F2F2',
-                padding: '2px',
-                rounded: '100%'
-              }}
-            >
-              <Icon as={FaEllipsisH} color='#828282' boxSize={5} />
-            </Box>
-          </MenuButton>
-          <MenuList
-            // w={12}
-            shadow='md'
-            h={12}
-            p={0}
-            color='gray.800'
-            _hover={{ textDecor: 'none' }}
-            _focus={{ textDecor: 'none' }}
+        <MenuButton
+          as={Button}
+          bg='transparent'
+          _active={{ textDecor: 'none' }}
+          _focus={{ textDecor: 'none' }}
+          cursor='pointer'
+          _hover={{
+            bg: '#F2F2F2',
+            padding: '2px',
+            rounded: '100%'
+          }}
+        >
+          <Icon as={FaEllipsisH} color='#828282' boxSize={5} />
+        </MenuButton>
+        <MenuList
+          _hover={{ textDecor: 'none' }}
+          _focus={{ textDecor: 'none' }}
+          shadow='md'
+          minWidth='30px'
+        >
+          <MenuItem
+            autoSelect={false}
+            _active={{ textDecor: 'none' }}
+            isLoading={loading}
+            onClick={handleInvite}
+            _hover={{ backgroundColor: '#F9F9F9' }}
           >
-            <MenuItem
-              _hover={{ backgroundColor: '#F9F9F9' }}
-              isLoading={loading}
-              onClick={handleInvite}
-              // alignItems='left'
-            >
-              <Box
-                as='button'
-                role='button'
-                w='full'
-                d='block'
-                p={2}
-                alignItems='left'
-              >
-                Resend invite
-              </Box>
-            </MenuItem>
-          </MenuList>
-        </Box>
+            Resend invite
+          </MenuItem>
+        </MenuList>
       </Menu>
     </Box>
   )
