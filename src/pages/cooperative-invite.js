@@ -60,10 +60,21 @@ const CooperativeInvite = () => {
               store({ token: authToken, user })
 
               setTimeout(() => {
-                return history.push({
-                  pathname: `/cooperative/${_id}`,
-                  state: { data: res.data }
-                })
+                //redirect user to cooperative page if user is a digital farmer
+                if (user?.roles[0] === 'DIGITAL_FARMER') {
+                  return history.push({
+                    pathname: `/cooperative/${_id}`,
+                    state: { data: res.data }
+                  })
+                } else {
+                  toast({
+                    title: 'User not a Digital farmer',
+                    description: 'Contact support',
+                    status: 'error',
+                    duration: 5000,
+                    position: 'top-right'
+                  })
+                }
               }, 500)
             } else {
               history.push({

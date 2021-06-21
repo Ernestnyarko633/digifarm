@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Box, Flex, Heading, useToast } from '@chakra-ui/react'
 
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
@@ -12,12 +12,14 @@ import FarmDetails from './FarmDetails'
 import { Button } from '../../index'
 
 const CropSelection = () => {
+  const gridRef = React.useRef(false)
   const { handleBack, handleNext, selectedCooperativeType, selectedFarm } =
     useStartFarm()
 
   const [reload, setReload] = useState(0)
 
   const { getCropCategories } = useApi()
+  const toast = useToast()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -44,6 +46,28 @@ const CropSelection = () => {
     type === 'cooperative'
       ? selectedFarm?.acreage === 0
       : Math.floor(selectedFarm?.acreage) === 0
+
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted && !isLoading && cooperativebool && gridRef) {
+      toast({
+        title: 'Insufficient farm acres',
+        description: `The number of acres available on the platform for the entire  ${selectedFarm?.cropVariety?.crop?.name} Farm is insufficient to meet the  ${selectedCooperativeType?.name}'s basic requirements`,
+        status: 'error',
+        duration: 10000,
+        position: 'top-right'
+      })
+    }
+
+    return () => (mounted = false)
+  }, [
+    isLoading,
+    selectedCooperativeType?.name,
+    selectedFarm?.cropVariety?.crop?.name,
+    toast,
+    cooperativebool
+  ])
 
   return (
     <Box
@@ -83,6 +107,7 @@ const CropSelection = () => {
               {categories?.map(cat => (
                 <Box key={cat._id} label={cat.title}>
                   <FarmDetails
+                    gridRef={gridRef}
                     catName={cat.title}
                     query={
                       cat._id !== 'defualt' && { category: cat._id, status: 1 }
@@ -93,15 +118,6 @@ const CropSelection = () => {
             </Tabs>
           </Box>
           <Flex w='full' justify='flex-end' my={6}>
-            {!isLoading && cooperativebool ? (
-              <Flex align='center' justify='center' px={5}>
-                <Text fontSize='md' color='red'>
-                  Acres left for {selectedFarm?.cropVariety?.crop?.name} is less
-                  than minimum required acres for{' '}
-                  {selectedCooperativeType?.name}
-                </Text>
-              </Flex>
-            ) : null}
             <Button
               h={12}
               width={40}
