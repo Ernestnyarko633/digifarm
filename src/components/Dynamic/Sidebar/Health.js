@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Text, Flex, Box } from '@chakra-ui/react'
-import FetchCard from 'components/FetchCard'
-import CropHealthCard from '../Cards/CropHealthCard'
+import React from "react";
+import PropTypes from "prop-types";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import FetchCard from "components/FetchCard";
+import CropHealthCard from "../Cards/CropHealthCard";
 
 export default function Health({
   eosStats,
@@ -10,7 +10,7 @@ export default function Health({
   EOSStatisticsHasError,
   eosTaskHasError,
   eosTaskIsLoading,
-  reloads
+  reloads,
 }) {
   return (
     <Box mx={8} my={8}>
@@ -20,14 +20,14 @@ export default function Health({
       eosTaskIsLoading ? (
         <Box pt={{ md: 10 }}>
           <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            w='100%'
-            mx='auto'
+            direction="column"
+            align="center"
+            justify="center"
+            w="100%"
+            mx="auto"
             reload={() => {
-              eosTaskHasError && reloads[4]()
-              EOSStatisticsHasError && reloads[7]()
+              eosTaskHasError && reloads[4]();
+              EOSStatisticsHasError && reloads[7]();
             }}
             loading={EOSStatisticsIsLoading || eosTaskIsLoading}
             error={EOSStatisticsHasError || eosTaskHasError}
@@ -37,7 +37,7 @@ export default function Health({
       ) : (
         <>
           {eosStats?.length > 0 &&
-            eosStats?.map(stat => (
+            eosStats?.map((stat) => (
               <CropHealthCard
                 key={stat?.date}
                 date={stat?.date}
@@ -46,8 +46,8 @@ export default function Health({
             ))}
 
           {!EOSStatisticsHasError && !eosStats?.length && (
-            <Flex>
-              <Text>
+            <Flex w="100%" justify="center" align="center">
+              <Text w="100%" color="cf.800" fontSize="xl" textAlign="center">
                 Crop health is currently unvailable, it would be updated as soon
                 as possible.
               </Text>
@@ -56,7 +56,7 @@ export default function Health({
         </>
       )}
     </Box>
-  )
+  );
 }
 
 Health.propTypes = {
@@ -65,5 +65,5 @@ Health.propTypes = {
   EOSStatisticsHasError: PropTypes.any,
   eosTaskIsLoading: PropTypes.bool,
   eosTaskHasError: PropTypes.any,
-  reloads: PropTypes.array
-}
+  reloads: PropTypes.array,
+};
