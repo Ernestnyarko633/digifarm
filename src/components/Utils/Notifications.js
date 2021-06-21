@@ -201,7 +201,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
       )}
     </Menu>
   );
-};
+}
 
 Notifications.propTypes = {
   notifications: PropTypes.any,
