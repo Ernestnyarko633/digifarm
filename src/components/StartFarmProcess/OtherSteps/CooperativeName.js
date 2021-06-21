@@ -9,7 +9,8 @@ import {
   Heading,
   FormLabel,
   FormControl,
-  useToast
+  useToast,
+  FormHelperText
 } from '@chakra-ui/react'
 import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
@@ -89,7 +90,7 @@ const CooperativeName = () => {
         </Text>
       </Box>
       <Box mt={6}>
-        <Flex>
+        <Flex align='center' justify='center'>
           <Heading
             as='h4'
             ml={1}
@@ -106,13 +107,16 @@ const CooperativeName = () => {
             max={15}
             rounded={0}
             value={cooperativeName}
-            placeholder='Min: 3 characters, Max: 15 characters'
+            placeholder='Eg. CompleteNation'
             _focus={{ borderColor: 'cf.800' }}
             onChange={e => {
               if (e?.target?.value?.length > 15) return e?.preventDefault()
               return handleChange(e)
             }}
           />
+          <FormHelperText>
+            Name should have a minimum of 3 letters and a maximum of 15 letters
+          </FormHelperText>
         </FormControl>
       </Box>
     </Flex>

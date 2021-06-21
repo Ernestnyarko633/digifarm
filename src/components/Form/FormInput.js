@@ -23,6 +23,8 @@ const FormInput = ({
   value,
   type,
   borderBottomColor,
+  background = '#f4f4f4',
+  marginTop = '8px',
   ...rest
 }) => (
   <FormControl
@@ -33,7 +35,7 @@ const FormInput = ({
     isInvalid={error && touched}
   >
     <Box
-      bg={bg}
+      bg={background}
       borderWidth={1}
       borderColor='gray.100'
       borderBottomColor={
@@ -46,7 +48,7 @@ const FormInput = ({
         fontSize='xs'
         pos='absolute'
         left={{ base: 2, md: 4 }}
-        top={2}
+        top={label || titleAddon ? 2 : 0}
         color='gray.600'
       >
         {label} {titleAddon}
@@ -70,9 +72,9 @@ const FormInput = ({
               backgroundColor: 'transparent',
               borderWidth: '0px',
               height: '50px',
-              marginTop: '8px',
+              marginTop: marginTop,
               ':disabled': {
-                background: '#f4f4f4'
+                background: background
               }
             }
           },
@@ -127,7 +129,9 @@ FormInput.propTypes = {
   isRequired: PropTypes.bool,
   value: PropTypes.any,
   borderBottomColor: PropTypes.any,
-  h: PropTypes.any
+  h: PropTypes.any,
+  background: PropTypes.string,
+  marginTop: PropTypes.string
 }
 
 export default FormInput
