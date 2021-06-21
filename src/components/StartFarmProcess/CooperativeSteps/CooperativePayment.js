@@ -45,7 +45,7 @@ const CooperativePayment = ({ farm, asMember }) => {
       <GridItem overflowY='hidden'>
         <Scrollbar>
           <Box p={{ base: 8, md: 6 }}>
-            <Box borderWidth={1} rounded='lg' p={4}>
+            <Box rounded='lg' p={4} bg='#F2F6F6'>
               <Flex align='center' justify='space-between'>
                 <Flex align='center'>
                   <Avatar

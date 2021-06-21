@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Text, Flex, Box } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import FetchCard from 'components/FetchCard'
 import CropHealthCard from '../Cards/CropHealthCard'
 
@@ -46,8 +46,8 @@ export default function Health({
             ))}
 
           {!EOSStatisticsHasError && !eosStats?.length && (
-            <Flex>
-              <Text>
+            <Flex w='100%' justify='center' align='center'>
+              <Text w='100%' color='cf.800' fontSize='xl' textAlign='center'>
                 Crop health is currently unvailable, it would be updated as soon
                 as possible.
               </Text>

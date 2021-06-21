@@ -46,16 +46,19 @@ const CropSelection = () => {
       : Math.floor(selectedFarm?.acreage) === 0
 
   return (
-    <Box
+    <Flex
+      direction='column'
+      align='center'
+      justify='center'
       w='90%'
       mx='auto'
-      mt={{ base: 20, md: 0 }}
-      pt={{ base: 12 }}
+      h={{ base: '100%', sm: 'calc(100vh - 5rem)' }}
+      // pt={{ base: 12 }}
       pb={{ base: 0 }}
     >
       <Box textAlign='center' py={10}>
         <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
-          Which Farm is right for you?
+          Choose the crop you want to farm
         </Heading>
       </Box>
       {isLoading || error ? (
@@ -130,7 +133,7 @@ const CropSelection = () => {
           </Flex>
         </>
       )}
-    </Box>
+    </Flex>
   )
 }
 

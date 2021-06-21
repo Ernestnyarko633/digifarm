@@ -214,10 +214,11 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
   return (
     <Flex
       mx='auto'
+      align='center'
       justify='center'
       direction='column'
       w={{ base: '90%', xl: 140, '2xl': otherStep === 2 ? '82rem' : 143 }}
-      pt={{ base: 8 }}
+      h={{ base: '100%', sm: 'calc(100vh - 5rem)' }}
       pb={{ base: 8 }}
     >
       {isSubmitting && <Overlay text={text} />}

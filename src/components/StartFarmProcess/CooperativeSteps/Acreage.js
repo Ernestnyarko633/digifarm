@@ -17,7 +17,7 @@ import Support from '../../Support'
 import useAuth from 'context/auth'
 import { Button } from '../../index'
 
-import InviteImg from 'assets/images/invite.svg'
+import InviteImg from 'assets/images/cooperative/admin.png'
 
 const MotionGrid = motion(Grid)
 
@@ -63,7 +63,14 @@ const Acreage = ({ name, farm, selectedType }) => {
             py={{ base: 10, md: 6 }}
           >
             <Scrollbar>
-              <Image w='100%' src={InviteImg} />
+              <Image
+                w={{ sm: 95 }}
+                h={{ sm: 95 }}
+                d={{ base: 'none', lg: 'block' }}
+                mx='auto'
+                objectFit='scale-down'
+                src={InviteImg}
+              />
               <Box mt={10}>
                 <Support />
               </Box>
@@ -72,7 +79,7 @@ const Acreage = ({ name, farm, selectedType }) => {
           <GridItem
             overflowY='hidden'
             css={{
-              direction: 'rtl',
+              direction: 'ltr',
               scrollbarColor: 'rebeccapurple',
               scrollBehavior: 'smooth'
             }}

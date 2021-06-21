@@ -27,13 +27,17 @@ const CooperativeCard = ({ item, onClick, selected }) => {
       cursor='pointer'
     >
       <Box mb={3} pos='relative'>
-        <Image
-          w='100%'
-          h={64}
-          object-fit='scale-down'
-          src={require(`../../assets/images/${name}.png`).default}
-          alt={name + '-image'}
-        />
+        <Box h={56} w='100%' bg='#EDEDED' pos='relative'>
+          <Image
+            w='100%'
+            h={48}
+            pos='absolute'
+            bottom={0}
+            object-fit='contain'
+            src={require(`../../assets/images/cooperative/${name}.png`).default}
+            alt={name + '-image'}
+          />
+        </Box>
         <Box pos='absolute' right={4} top={4}>
           {selected ? (
             <Icon as={FaCheckCircle} boxSize={8} color='cf.800' />
@@ -56,15 +60,15 @@ const CooperativeCard = ({ item, onClick, selected }) => {
         <Box>
           <List fontSize='sm'>
             <ListItem d='flex' alignItems='center'>
-              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={4} />
               {minAcre === 0 ? 1 : minAcre} mininum number of acre
             </ListItem>
             <ListItem d='flex' alignItems='center' py={1}>
-              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={4} />
               Up to {discount * 100}% cooperative discount
             </ListItem>
             <ListItem d='flex' alignItems='center'>
-              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={4} />
               Plus all what is included in cooperative farms
             </ListItem>
           </List>

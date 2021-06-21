@@ -36,7 +36,7 @@ const CooperativeType = () => {
       align='center'
       justify='center'
       direction='column'
-      mt={{ base: 4, md: 8, xl: 8 }}
+      h={{ base: '100%', sm: 'calc(100vh - 5rem)' }}
       pt={{ base: 0 }}
       pb={{ base: 12 }}
     >
@@ -57,7 +57,7 @@ const CooperativeType = () => {
           <Box textAlign='center' my={12}>
             <Text>Welcome {user?.firstName}</Text>
             <Heading as='h4' fontSize={{ base: 'xl', md: '2xl' }}>
-              Select your cooperative type
+              Select the type of cooperative you want to form.
             </Heading>
           </Box>
 
