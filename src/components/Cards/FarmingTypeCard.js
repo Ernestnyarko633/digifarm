@@ -32,7 +32,6 @@ const FarmingTypeCard = ({
   return (
     <Box
       w={{ md: 85 }}
-      p={8}
       borderWidth={selected ? 2 : 1}
       borderColor={selected ? 'cf.800' : 'gray.300'}
       rounded='lg'
@@ -62,45 +61,47 @@ const FarmingTypeCard = ({
       {/*  </Heading>*/}
       {/*)}*/}
       <Box mb={3}>
-        <Image src={image} />
+        <Image w='100%' h={{ base: '100%', sm: 64 }} src={image} />
       </Box>
-      <Flex
-        align='center'
-        justify='space-between'
-        borderBottomWidth={1}
-        borderBottomColor='gray.200'
-        pb={2}
-      >
-        <Box>
-          <Heading as='h5' fontSize={{ md: 'xl' }}>
-            {title}
-          </Heading>
-          <Text fontSize='sm' mt={-1} color='gray.500'>
-            {subtitle}
-          </Text>
-        </Box>
-      </Flex>
-      <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
-        {options.map(item => (
-          <ListItem key={item} py={1}>
-            <ListIcon as={FaCheckCircle} color='cf.800' />
-            {item}
-          </ListItem>
-        ))}
-      </List>
-      <Box>
-        <Box
-          d='block'
-          fontSize='xs'
-          color='cf.800'
-          mt={1}
-          fontFamily='body'
-          as='button'
-          role='button'
-          aria-label='learn more button'
-          onClick={() => handleModalClick('learnmore')}
+      <Box px={8} py={5}>
+        <Flex
+          align='center'
+          justify='space-between'
+          borderBottomWidth={1}
+          borderBottomColor='gray.200'
+          pb={2}
         >
-          Learn more <Icon as={MdKeyboardArrowRight} />
+          <Box>
+            <Heading as='h5' fontSize={{ md: 'xl' }}>
+              {title}
+            </Heading>
+            <Text fontSize='sm' mt={-1} color='gray.500'>
+              {subtitle}
+            </Text>
+          </Box>
+        </Flex>
+        <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
+          {options.map(item => (
+            <ListItem key={item} py={1} fontWeight={700}>
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={5} />
+              {item}
+            </ListItem>
+          ))}
+        </List>
+        <Box>
+          <Box
+            d='block'
+            fontSize='xs'
+            color='cf.800'
+            mt={1}
+            fontFamily='body'
+            as='button'
+            role='button'
+            aria-label='learn more button'
+            onClick={() => handleModalClick('learnmore')}
+          >
+            Learn more <Icon as={MdKeyboardArrowRight} />
+          </Box>
         </Box>
       </Box>
     </Box>

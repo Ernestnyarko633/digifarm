@@ -100,6 +100,8 @@ const CooperativeMemberCard = ({
             name={`${name}email`}
             onChange={onChange}
             onBlur={onBlur}
+            background='#ffffff'
+            marginTop='0px'
           />
         </GridItem>
         <GridItem colSpan={2}>
@@ -114,6 +116,8 @@ const CooperativeMemberCard = ({
               return onChange(e)
             }}
             onBlur={onBlur}
+            background='#ffffff'
+            marginTop='0px'
           />
         </GridItem>
       </Grid>

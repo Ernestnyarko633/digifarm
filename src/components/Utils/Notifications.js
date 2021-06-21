@@ -36,6 +36,8 @@ const Notifications = ({ notifications, loading, mutation }) => {
         return `/farms?type=videos&id=${item?.messageId}&title=${item?.message?.title}`
       case 'announcements':
         return ''
+      case 'DIGITAL_FARMER':
+        return `/farms/${item?.message?.id}`
       default:
         return `/farms?type=${value}&title=${item?.message?.title}&id=${item?.messageId}`
     }
@@ -64,6 +66,16 @@ const Notifications = ({ notifications, loading, mutation }) => {
           />
         )
       case 'PAYMENT':
+        return (
+          <NotificationItem
+            item={item}
+            mutation={mutation}
+            renderNotificationIcons={renderNotificationIcons}
+            toFarmBoard={toFarmBoard}
+            active={active}
+          />
+        )
+      case 'farm':
         return (
           <NotificationItem
             item={item}
