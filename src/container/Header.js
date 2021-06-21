@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React from "react";
-import {Flex, Image, Link} from "@chakra-ui/react";
-import {Link as ReachRouter} from "react-router-dom";
-import {useMutation, useQuery, useQueryClient} from "react-query";
+import { Flex, Image, Link } from "@chakra-ui/react";
+import { Link as ReachRouter } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import Logo from "assets/images/logo.svg";
 
