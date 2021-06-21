@@ -105,7 +105,7 @@ const CooperativeInvite = () => {
       }
     }
     return () => (mounted = false)
-  }, [acceptInvite, reload, pathname, history, store, stop])
+  }, [acceptInvite, reload, pathname, history, store, stop, toast])
 
   return (
     (isLoading || error) && (
