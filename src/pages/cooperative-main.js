@@ -367,7 +367,6 @@ const CooperativeMain = ({ match: { params } }) => {
                         ml={3}
                         borderWidth={1}
                         borderColor='gray.300'
-                        leftIcon={<MdDashboard size={20} color='white' />}
                       />
                     </Link>
                   </Flex>
