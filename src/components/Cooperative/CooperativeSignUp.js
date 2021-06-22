@@ -127,221 +127,222 @@ const CooperativeSignUp = () => {
   } = formik
 
   return (
-    <Box
-      pos='absolute'
-      mx={{ base: 'auto', '3xl': '11rem', '5xl': '24rem' }}
-      top={{ base: 20, md: 40, '5xl': '15rem' }}
+    <Flex
+      justify='center'
+      align='center'
       right={0}
       mb={4}
-      w={{ '5xl': '75rem' }}
+      // w={{ '5xl': '75rem' }}
     >
-      <Box color='white' textAlign='center'>
-        <Heading fontSize={{ base: 14, md: 28, lg: 28, '2xl': 52 }} mx='auto'>
-          Split cost. Share assets. Share rewards.
-        </Heading>
-        <Text
-          fontSize={{ base: 10, md: 16, lg: 16, '2xl': 28 }}
-          py={{ base: 4, lg: 8, '2xl': 10 }}
-        >
-          Farm together with friends and family
-        </Text>
-      </Box>
-
-      <Flex
-        bg='white'
-        borderRadius='12px'
-        templateColumns='repeat(2,1fr)'
-        mx={{
-          base: '30px',
-          md: '4rem',
-          lg: '4.8rem',
-          '2xl': '9.5rem',
-          '3xl': -5,
-          '4xl': 0
-        }}
-        shadow='lg'
-        px={{ '4xl': 8, '5xl': 20 }}
-      >
-        <Box
-          ml={{ md: '5rem', '5xl': 0 }}
-          my={16}
-          d={{
-            base: 'none',
-            md: 'none',
-            lg: 'block'
-          }}
-        >
-          <Image src={invite} />
-        </Box>
-        <Box
-          my={{ base: 5, md: '3rem', '3xl': 16, '5xl': 20 }}
-          mx={{
-            base: 5,
-            md: '5rem',
-            '2xl': '3rem',
-            '3xl': '5rem'
-          }}
-          w={{ md: '30rem', lg: '30rem' }}
-        >
-          <Heading fontSize={{ base: 16, '3xl': 28 }}>
-            Start by creating your account
+      <Box>
+        <Box color='white' textAlign='center'>
+          <Heading fontSize={{ base: 14, md: 28, lg: 28, '2xl': 52 }} mx='auto'>
+            Split cost. Share assets. Share rewards.
           </Heading>
-          <Text pt={1} mb={6} fontSize={{ base: 12 }}>
-            You were invited by {admin} to join {coopName} cooperative.
+          <Text
+            fontSize={{ base: 10, md: 16, lg: 16, '2xl': 28 }}
+            py={{ base: 4, lg: 8, '2xl': 10 }}
+          >
+            Farm together with friends and family
           </Text>
-          <Box>
-            <form onSubmit={handleSubmit}>
-              <Grid templateColumns='repeat(2, 1fr)' gap={3}>
-                <CustomInput
-                  {...{
-                    type: 'text',
-                    isRequired: true,
-                    name: 'firstName',
-                    label: 'First Name',
-                    onBlur: handleBlur,
-                    placeholder: 'John',
-                    value: values.firstName,
-                    error: errors.firstName,
-                    touched: touched.firstName,
-                    onChange: handleChange
-                  }}
+        </Box>
+
+        <Flex
+          bg='white'
+          borderRadius='12px'
+          templateColumns='repeat(2,1fr)'
+          mx={{
+            base: '30px',
+            md: '4rem',
+            lg: '4.8rem',
+            '2xl': '9.5rem',
+            '3xl': -5,
+            '4xl': 0
+          }}
+          shadow='lg'
+          px={{ '4xl': 8, '5xl': 20 }}
+        >
+          <Box
+            ml={{ md: '5rem', '5xl': 0 }}
+            my={16}
+            d={{
+              base: 'none',
+              md: 'none',
+              lg: 'block'
+            }}
+          >
+            <Image src={invite} />
+          </Box>
+          <Box
+            my={{ base: 5, md: '3rem', '3xl': 16, '5xl': 20 }}
+            mx={{
+              base: 5,
+              md: '5rem',
+              '2xl': '3rem',
+              '3xl': '5rem'
+            }}
+            w={{ md: '30rem', lg: '30rem' }}
+          >
+            <Heading fontSize={{ base: 16, '3xl': 28 }}>
+              Start by creating your account
+            </Heading>
+            <Text pt={1} mb={6} fontSize={{ base: 12 }}>
+              You were invited by {admin} to join {coopName} cooperative.
+            </Text>
+            <Box>
+              <form onSubmit={handleSubmit}>
+                <Grid templateColumns='repeat(2, 1fr)' gap={3}>
+                  <CustomInput
+                    {...{
+                      type: 'text',
+                      isRequired: true,
+                      name: 'firstName',
+                      label: 'First Name',
+                      onBlur: handleBlur,
+                      placeholder: 'John',
+                      value: values.firstName,
+                      error: errors.firstName,
+                      touched: touched.firstName,
+                      onChange: handleChange
+                    }}
+                  />
+                  <CustomInput
+                    {...{
+                      type: 'text',
+                      isRequired: true,
+                      name: 'lastName',
+                      label: 'Last Name',
+                      onBlur: handleBlur,
+                      placeholder: 'Doe',
+                      value: values.lastName,
+                      error: errors.lastName,
+                      touched: touched.lastName,
+                      onChange: handleChange
+                    }}
+                  />
+                </Grid>
+                <Box my={5}>
+                  <CustomInput
+                    {...{
+                      type: 'email',
+                      isRequired: true,
+                      name: 'email',
+                      label: 'Email',
+                      onBlur: handleBlur,
+                      value: values.email,
+                      error: errors.email,
+                      touched: touched.email,
+                      onChange: handleChange
+                    }}
+                    isReadOnly
+                  />
+                </Box>
+                <CustomPhoneInput
+                  isRequired
+                  error={errors.phoneNumber}
+                  value={values.phoneNumber}
+                  touched={touched.phoneNumber}
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
-                <CustomInput
-                  {...{
-                    type: 'text',
-                    isRequired: true,
-                    name: 'lastName',
-                    label: 'Last Name',
-                    onBlur: handleBlur,
-                    placeholder: 'Doe',
-                    value: values.lastName,
-                    error: errors.lastName,
-                    touched: touched.lastName,
-                    onChange: handleChange
-                  }}
-                />
-              </Grid>
-              <Box my={5}>
-                <CustomInput
-                  {...{
-                    type: 'email',
-                    isRequired: true,
-                    name: 'email',
-                    label: 'Email',
-                    onBlur: handleBlur,
-                    value: values.email,
-                    error: errors.email,
-                    touched: touched.email,
-                    onChange: handleChange
-                  }}
-                  isReadOnly
-                />
-              </Box>
-              <CustomPhoneInput
-                isRequired
-                error={errors.phoneNumber}
-                value={values.phoneNumber}
-                touched={touched.phoneNumber}
-                setFieldValue={setFieldValue}
-                setFieldTouched={setFieldTouched}
-              />
-              <Box my={5}>
+                <Box my={5}>
+                  <PasswordInput
+                    {...{
+                      isRequired: true,
+                      name: 'password',
+                      label: 'Password',
+                      onBlur: handleBlur,
+                      value: values.password,
+                      error: errors.password,
+                      touched: touched.password,
+                      onChange: handleChange,
+                      placeholder: '********'
+                    }}
+                  />
+                </Box>
+
                 <PasswordInput
                   {...{
                     isRequired: true,
-                    name: 'password',
-                    label: 'Password',
                     onBlur: handleBlur,
-                    value: values.password,
-                    error: errors.password,
-                    touched: touched.password,
                     onChange: handleChange,
-                    placeholder: '********'
+                    placeholder: '********',
+                    name: 'confirmPassword',
+                    label: 'Confirm Password',
+                    value: values.confirmPassword,
+                    error: errors.confirmPassword,
+                    touched: touched.confirmPassword
                   }}
                 />
-              </Box>
-
-              <PasswordInput
-                {...{
-                  isRequired: true,
-                  onBlur: handleBlur,
-                  onChange: handleChange,
-                  placeholder: '********',
-                  name: 'confirmPassword',
-                  label: 'Confirm Password',
-                  value: values.confirmPassword,
-                  error: errors.confirmPassword,
-                  touched: touched.confirmPassword
-                }}
-              />
-              <Flex my={{ base: 2, md: 4 }} fontSize='xs'>
-                <Checkbox
-                  colorScheme='cfButton'
-                  onChange={e => {
-                    setAcceptConditionWithTerm(e.target.checked)
-                    setErrorClass(!e.target.checked)
-                  }}
-                  fontSize='xs'
-                  size='sm'
-                  borderColor={errorClass ? 'red.600' : 'cf.400'}
-                />
-                <Text ml={3} color='gray.500' fontSize='xs'>
-                  I agree to Complete Farmer’s{' '}
-                  <Text as='span' fontWeight='bold'>
-                    <Link
-                      color={errorClass ? 'red.600' : 'cfButton.500'}
-                      as='a'
-                      _hover={{ textDecor: 'none' }}
-                      _focus={{ textDecor: 'none' }}
-                      isExternal
-                      href='https://www.completefarmer.com/terms-and-conditions'
-                    >
-                      Terms
-                    </Link>{' '}
-                    <Text as='span' fontWeight='normal' color='gray.500'>
-                      and
-                    </Text>{' '}
-                    <Link
-                      color={errorClass ? 'red.600' : 'cf.400'}
-                      as='a'
-                      _hover={{ textDecor: 'none' }}
-                      _focus={{ textDecor: 'none' }}
-                      isExternal
-                      href='https://www.completefarmer.com/privacy-policy'
-                    >
-                      Privacy Policy
-                    </Link>
+                <Flex my={{ base: 2, md: 4 }} fontSize='xs'>
+                  <Checkbox
+                    colorScheme='cfButton'
+                    onChange={e => {
+                      setAcceptConditionWithTerm(e.target.checked)
+                      setErrorClass(!e.target.checked)
+                    }}
+                    fontSize='xs'
+                    size='sm'
+                    borderColor={errorClass ? 'red.600' : 'cf.400'}
+                  />
+                  <Text ml={3} color='gray.500' fontSize='xs'>
+                    I agree to Complete Farmer’s{' '}
+                    <Text as='span' fontWeight='bold'>
+                      <Link
+                        color={errorClass ? 'red.600' : 'cfButton.500'}
+                        as='a'
+                        _hover={{ textDecor: 'none' }}
+                        _focus={{ textDecor: 'none' }}
+                        isExternal
+                        href='https://www.completefarmer.com/terms-and-conditions'
+                      >
+                        Terms
+                      </Link>{' '}
+                      <Text as='span' fontWeight='normal' color='gray.500'>
+                        and
+                      </Text>{' '}
+                      <Link
+                        color={errorClass ? 'red.600' : 'cf.400'}
+                        as='a'
+                        _hover={{ textDecor: 'none' }}
+                        _focus={{ textDecor: 'none' }}
+                        isExternal
+                        href='https://www.completefarmer.com/privacy-policy'
+                      >
+                        Privacy Policy
+                      </Link>
+                    </Text>
+                    .
                   </Text>
-                  .
-                </Text>
-              </Flex>
+                </Flex>
 
-              <Button
-                btntitle='Sign up'
-                type='submit'
-                aria-label='SignUp'
-                my={6}
-                w='full'
-                isLoading={isSubmitting}
-              />
-            </form>
-            <Text color='gray.500' fontSize='xs'>
-              For more information and understanding of how Complete Farmer
-              works, you should check out
-              <Link
-                href='http://www.completefarmer.com'
-                color='#31BC2E'
-                _hover={{ textDecor: 'none' }}
-                isExternal
-              >
-                {' '}
-                Our website
-              </Link>
-            </Text>
+                <Button
+                  btntitle='Sign up'
+                  type='submit'
+                  aria-label='SignUp'
+                  my={6}
+                  w='full'
+                  isLoading={isSubmitting}
+                />
+              </form>
+              <Text color='gray.500' fontSize='xs'>
+                For more information and understanding of how Complete Farmer
+                works, you should check out
+                <Link
+                  href='http://www.completefarmer.com'
+                  color='#31BC2E'
+                  _hover={{ textDecor: 'none' }}
+                  isExternal
+                >
+                  {' '}
+                  Our website
+                </Link>
+              </Text>
+            </Box>
           </Box>
-        </Box>
-      </Flex>
-    </Box>
+        </Flex>
+      </Box>
+    </Flex>
   )
 }
 

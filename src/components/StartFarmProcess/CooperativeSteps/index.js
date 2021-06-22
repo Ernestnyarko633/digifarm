@@ -232,7 +232,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           w='full'
           align='center'
           justify='space-between'
-          mt={{ base: 5, md: 12 }}
+          mt={{ base: 5, md: 20 }}
           px={{ base: 2, md: 0 }}
         >
           <Text

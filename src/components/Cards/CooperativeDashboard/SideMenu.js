@@ -152,11 +152,7 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
         />
         <Details
           title='Location'
-          subtitle={
-            FirstLettersToUpperCase(data?.product?.location?.name) +
-            ' , ' +
-            FirstLettersToUpperCase(data?.product?.location?.state)
-          }
+          subtitle={FirstLettersToUpperCase(data?.product?.location?.name)}
         />
         <Details
           title='Cooperative type'
