@@ -42,6 +42,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [invites, setInvites] = React.useState([])
   const [cooperative, setCooperative] = React.useState(null)
   const [coopImg, setCoopImg] = React.useState(false)
+  const [coopConfigErrors, setCoopConfigErrors] = React.useState(null)
   let cooperativeTypes = JSON.parse(sessionStorage.getItem('cooperative-types'))
   const [selectedCooperativeType, setSelectedCooperativeType] =
     React.useState(null)
@@ -387,8 +388,10 @@ export const StartFarmContextProvider = ({ children }) => {
         triggerMapReload,
         cooperativeTypes,
         setPaymentOption,
+        coopConfigErrors,
         handleCreateOrder,
         setCooperativeName,
+        setCoopConfigErrors,
         handleCreateCooperative,
         selectedCooperativeType,
         setSelectedCooperativeType

@@ -217,7 +217,7 @@ export const embed_url = (text, url) => {
   return `<a href=${url} className="farm-board" class="farm-board" style={{color: "cf.400"}} target="_blank">${text}</a>`
 }
 
-export function shuffle(arr, count, key) {
+export const shuffle = (arr, count, key) => {
   let random = []
   let i = 0
 

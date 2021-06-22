@@ -103,21 +103,32 @@ export const BankDetailsSchema = Yup.object()
   })
   .atLeastOneOf(['iban', 'accountNumber'])
 
-Yup.addMethod(Yup.array, 'unique', function (message, mapper = a => a) {
+Yup.addMethod(Yup.array, 'unique', function (message, path) {
   return this.test('unique', message, function (list) {
-    return list.length === new Set(list.map(mapper)).size
+    const mapper = x => x.email
+    const set = [...new Set(list.map(mapper))]
+    const isUnique = list.length === set.length
+    if (isUnique) {
+      return true
+    }
+    const idx = list.findIndex((l, i) => mapper(l) !== set[i])
+    return this.createError({
+      path: `users[${idx}].email`,
+      message: message
+    })
   })
 })
-
-export const CooperativeMemberSchema = Yup.array()
-  .of(
-    Yup.object().shape({
-      email: Yup.string(),
-      acreage: Yup.string().required('Acreage is required')
-    })
-  )
-  .unique('Email must be unique', a => a.email)
-  .required('Email and acreage is  required*')
+export const CooperativeSchema = Yup.object().shape({
+  users: Yup.array()
+    .of(
+      Yup.object().shape({
+        email: Yup.string(),
+        acreage: Yup.string().required('Acreage is required')
+      })
+    )
+    .unique('Email must be unique', a => a.email)
+    .required('Email and acreage is  required*')
+})
 
 BankDetailsSchema.isValidSync({ iban: 9 }) // false
 BankDetailsSchema.isValidSync({ accountNumber: 7, iban: 9 })
