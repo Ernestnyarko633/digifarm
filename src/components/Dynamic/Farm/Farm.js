@@ -211,7 +211,7 @@ export default function Farm({
                 </Box>
               </Box>
             )}
-            {EOSViewID && ENV === 'PROD' && (
+            {EOSViewID && ENV === 'LOCAL' && (
               <Flex
                 align='center'
                 justify='space-between'
