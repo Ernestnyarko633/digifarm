@@ -3,7 +3,7 @@ import React from 'react'
 import Overlay from '../../Loading/Overlay'
 import { Flex, Image, Link, Text, useToast } from '@chakra-ui/react'
 import { getformattedDate, validateEmailAndAcrege } from '../../../helpers/misc'
-import { AnimateSharedLayout, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Button from '../../Button'
 import useAuth from '../../../context/auth'
 import useStartFarm from '../../../context/start-farm'
@@ -217,7 +217,8 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
       align='center'
       justify='center'
       direction='column'
-      w={{ base: '90%', xl: 140, '2xl': otherStep === 2 ? '82rem' : 143 }}
+      overflow={{ base: 'hidden', md: 'visible' }}
+      w={{ base: '100%', xl: 140, '2xl': otherStep === 2 ? '82rem' : 143 }}
       h={{ base: '100%', sm: 'calc(100vh - 5rem)' }}
       pb={{ base: 8 }}
     >
@@ -263,6 +264,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           >
             <Flex
               py={1}
+              px={2}
               align='center'
               rounded='30px'
               w={{ md: '11rem' }}
@@ -279,7 +281,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
                     .default
                 }
               />
-              <Text fontSize='sm' ml={2} color='cf.800'>
+              <Text fontSize={{ base: 'xs', md: 'sm' }} ml={2} color='cf.800'>
                 Farm is insured
               </Text>
             </Flex>
@@ -287,7 +289,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
         </Flex>
       )}
 
-      <AnimateSharedLayout>
+      <AnimatePresence>
         <MotionFlex
           mx='auto'
           rounded='md'
@@ -304,7 +306,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
         >
           {getSteps(otherStep)}
         </MotionFlex>
-      </AnimateSharedLayout>
+      </AnimatePresence>
 
       <Flex
         align='center'

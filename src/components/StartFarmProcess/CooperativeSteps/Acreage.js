@@ -90,7 +90,11 @@ const Acreage = ({ name, farm, selectedType }) => {
           >
             <Scrollbar>
               <Box css={{ direction: 'ltr' }} p={{ base: 4, md: 6, lg: 10 }}>
-                <Flex align='center' justify='space-between'>
+                <Flex
+                  d={{ base: 'block', md: 'flex' }}
+                  align='center'
+                  justify='space-between'
+                >
                   <Flex align='center'>
                     <Avatar src={farm?.cropVariety?.imageUrl} />
                     <Box ml={2}>
@@ -102,7 +106,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                       </Text>
                     </Box>
                   </Flex>
-                  <Flex align='center'>
+                  <Flex align='center' mt={{ base: 6, md: 0 }}>
                     <Avatar
                       src={
                         coopImg
@@ -158,7 +162,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                     </Text>
                   </Flex>
                 </Flex>
-                <Box my={{ md: 10 }}>
+                <Box my={{ base: 6, md: 10 }}>
                   <Heading as='h4' fontSize={{ md: 'xl' }}>
                     Add Members and their acreage
                   </Heading>
@@ -171,7 +175,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                     bg='#E5EDEC'
                     p={3}
                     rounded='md'
-                    mt={{ md: 5 }}
+                    mt={{ base: 4, md: 5 }}
                     direction='row'
                   >
                     <Box

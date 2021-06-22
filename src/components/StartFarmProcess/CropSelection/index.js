@@ -74,11 +74,11 @@ const CropSelection = () => {
       direction='column'
       align='center'
       justify='center'
-      w='90%'
+      w={{ md: '90%' }}
       mx='auto'
       h={{ base: '100%', sm: 'calc(100vh - 5rem)' }}
-      // pt={{ base: 12 }}
       pb={{ base: 0 }}
+      px={{ base: 4, md: 0 }}
     >
       <Box textAlign='center' py={10}>
         <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
@@ -105,7 +105,7 @@ const CropSelection = () => {
               boxWidth='100%'
               direction={{ base: 'column', md: 'row' }}
               display={{ base: 'flex', md: 'block' }}
-              width={{ base: '100%', md: 'initial' }}
+              width={{ base: 85, md: 'initial' }}
             >
               {categories?.map(cat => (
                 <Box key={cat._id} label={cat.title}>
