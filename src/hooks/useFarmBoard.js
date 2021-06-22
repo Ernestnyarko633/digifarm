@@ -101,7 +101,7 @@ export const useFeeds = () => {
   React.useEffect(() => {
     let mounted = true
 
-    if (mounted && !feeds) {
+    if (mounted && farms && feeds === null) {
       const fetchData = async () => {
         try {
           setLoading(true)
@@ -119,10 +119,12 @@ export const useFeeds = () => {
           const allFeeds = await Promise.all(feedPromises)
 
           //combining all data now from prismic and farm feeds
-          if (allFeeds) {
+          if (allFeeds?.length) {
             allFeeds.map(f =>
               setFeeds(s => (!s ? [...[], ...f] : [...s, ...f]))
             )
+          } else {
+            setFeeds([])
           }
         } catch (error) {
           setFeeds([])
@@ -131,12 +133,10 @@ export const useFeeds = () => {
           setLoading(false)
         }
       }
-
-      if (farms && !feeds) {
-        fetchData()
-      }
+      fetchData()
     } else {
-      !error && !feeds?.length && triggerReload()
+      let row = false
+      row && !error && !feeds?.length && triggerReload()
     }
     return () => (mounted = false)
   }, [farms, getMyFarmFeeds, feeds, error])

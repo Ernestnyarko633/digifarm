@@ -39,7 +39,12 @@ const CooperativeName = () => {
   }, [isLarge, toast])
 
   return (
-    <Flex align='center' justify='center' direction='column'>
+    <Flex
+      align='center'
+      justify='center'
+      direction='column'
+      px={{ base: 4, md: 0 }}
+    >
       <Box pos='relative'>
         <Avatar
           src={
@@ -58,7 +63,7 @@ const CooperativeName = () => {
               h={8}
               w={8}
               rounded='100%'
-              bg='cf.800'
+              bg='cf.green'
               pos='absolute'
               right={0}
               bottom={0}
@@ -108,7 +113,7 @@ const CooperativeName = () => {
             rounded={0}
             value={cooperativeName}
             placeholder='Eg. CompleteNation'
-            _focus={{ borderColor: 'cf.800' }}
+            _focus={{ borderColor: 'cf.green' }}
             onChange={e => {
               if (e?.target?.value?.length > 15) return e?.preventDefault()
               return handleChange(e)

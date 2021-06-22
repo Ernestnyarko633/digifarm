@@ -31,7 +31,7 @@ const Contract = ({ intersectionRef }) => {
   const headerStyleProps = {
     as: 'h3',
     fontSize: { base: 'lg', md: 'xl' },
-    color: 'cf.800',
+    color: 'cf.green',
     mt: 5
   }
 

@@ -10,7 +10,7 @@ const Support = () => {
       </Heading>
       <Flex justify='space-between' align='center' fontSize='sm'>
         <Flex align='center' direction={{ base: 'column', md: 'row' }}>
-          <Icon as={Update} color='cf.800' boxSize={5} />
+          <Icon as={Update} color='cf.green' boxSize={5} />
           <Text ml={1}>Farm Updates</Text>
         </Flex>
         <Flex
@@ -18,11 +18,11 @@ const Support = () => {
           mx={{ base: 3, md: 6 }}
           direction={{ base: 'column', md: 'row' }}
         >
-          <Icon as={SupportIcon} color='cf.800' boxSize={5} />
+          <Icon as={SupportIcon} color='cf.green' boxSize={5} />
           <Text ml={1}>Support</Text>
         </Flex>
         <Flex align='center' direction={{ base: 'column', md: 'row' }}>
-          <Icon as={Schedule} color='cf.800' boxSize={5} />
+          <Icon as={Schedule} color='cf.green' boxSize={5} />
           <Text ml={1}>Scheduled Farm Visits</Text>
         </Flex>
       </Flex>

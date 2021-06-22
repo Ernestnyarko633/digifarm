@@ -77,8 +77,8 @@ export default function FarmReceiptCard({ farm, title, type }) {
             }}
             bg='white'
             borderWidth={1}
-            borderColor='cf.800'
-            color='cf.800'
+            borderColor='cf.green'
+            color='cf.green'
             rounded='30px'
             h={10}
             width={32}
@@ -122,8 +122,8 @@ export default function FarmReceiptCard({ farm, title, type }) {
           }}
           bg='white'
           borderWidth={1}
-          borderColor='cf.800'
-          color='cf.800'
+          borderColor='cf.green'
+          color='cf.green'
           rounded='30px'
           h={10}
           width='100%'

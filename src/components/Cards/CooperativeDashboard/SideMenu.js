@@ -115,7 +115,7 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
                     h={9}
                     w={9}
                     rounded='100%'
-                    bg='cf.800'
+                    bg='cf.green'
                     pos='absolute'
                     right={0}
                     bottom={0}
@@ -173,7 +173,7 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
           <Button
             btntitle='Download agreement'
             variant='outline'
-            color='cf.800'
+            color='cf.green'
             width='100%'
             isLoading={loading}
             isDisabled={loading}

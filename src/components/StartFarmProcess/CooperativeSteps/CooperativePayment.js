@@ -139,7 +139,7 @@ const CooperativePayment = ({ farm, asMember }) => {
                       <Text mr={2} color='gray.500'>
                         Management Fee
                       </Text>
-                      <QuestionIcon color='cf.800' />
+                      <QuestionIcon color='cf.green' />
                     </Flex>
                     <Text fontWeight={900}>Inclusive</Text>
                   </Flex>

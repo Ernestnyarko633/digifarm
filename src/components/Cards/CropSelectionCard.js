@@ -22,7 +22,7 @@ const CropSelectionCard = ({
     borderTopWidth={1}
     borderTopColor='gray.300'
     borderWidth={selected && 2}
-    borderColor={selected && 'cf.800'}
+    borderColor={selected && 'cf.green'}
     aria-label='crop card button'
   >
     <Text color='red.600' fontSize='xs'>

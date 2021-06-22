@@ -119,6 +119,7 @@ const cooperativeIntro = ({ location: { state } }) => {
       >
         <Image
           // w='100vw'
+          bgPos='cover'
           src={cfmotive}
           h={{ base: '40rem', xl: '45rem', '3xl': '50rem', '5xl': '64rem' }}
         />

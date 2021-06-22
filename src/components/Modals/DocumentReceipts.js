@@ -27,7 +27,7 @@ const DocumentsReceipts = () => {
           align='center'
           justify='center'
         >
-          <Text fontSize='xl' color='cf.800'>
+          <Text fontSize='xl' color='cf.green'>
             NO RECEIPTS CURRENTLY AVAILABLE FOR THIS ACTIVITY
           </Text>
         </Flex>

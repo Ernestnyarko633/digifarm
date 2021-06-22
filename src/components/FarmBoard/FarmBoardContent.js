@@ -178,7 +178,7 @@ const FarmBoardContent = ({ farms = [] }) => {
             farmName={farmName}
             setFarmName={setFarmName}
           />
-          <Box p={{ base: 4, md: 16 }}>
+          <Box p={{ base: 4, md: 16 }} ref={queriedElement}>
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
               {feeds?.length && farms?.length
                 ? "See what's happening in your farm(s)"
@@ -186,7 +186,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                 ? "See what's happening"
                 : ''}
             </Heading>
-            <Box ref={queriedElement}>{RenderDataType(filter)}</Box>
+            <Box>{RenderDataType(filter)}</Box>
           </Box>
         </>
       )}

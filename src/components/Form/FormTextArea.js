@@ -20,7 +20,7 @@ const FormTextArea = ({
       bg={bg}
       borderWidth={1}
       borderColor='gray.100'
-      borderBottomColor={error && touched ? 'red.500' : 'cf.800'}
+      borderBottomColor={error && touched ? 'red.500' : 'cf.green'}
     >
       <FormLabel
         fontSize='xs'

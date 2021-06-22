@@ -29,7 +29,7 @@ const BasePhone = ({
         bg={bg}
         borderWidth={1}
         borderColor='gray.100'
-        borderBottomColor={error && touched ? 'red.500' : 'cf.800'}
+        borderBottomColor={error && touched ? 'red.500' : 'cf.green'}
         w={width}
       >
         <FormLabel

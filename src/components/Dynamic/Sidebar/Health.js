@@ -47,7 +47,7 @@ export default function Health({
 
           {!EOSStatisticsHasError && !eosStats?.length && (
             <Flex w='100%' justify='center' align='center'>
-              <Text w='100%' color='cf.800' fontSize='xl' textAlign='center'>
+              <Text w='100%' color='cf.green' fontSize='xl' textAlign='center'>
                 Crop health is currently unvailable, it would be updated as soon
                 as possible.
               </Text>

@@ -42,13 +42,13 @@ const PayOption = ({
       onClick={onClick}
       direction='column'
       borderWidth={selected ? 2 : 1}
-      borderColor={selected ? 'cf.800' : 'gray.400'}
-      _focus={{ outline: 'none', borderColor: 'cf.800' }}
+      borderColor={selected ? 'cf.green' : 'gray.400'}
+      _focus={{ outline: 'none', borderColor: 'cf.green' }}
       pos='relative'
     >
       <Box pos='absolute' top={2} right={2}>
         {selected ? (
-          <Icon as={FaCheckCircle} color='cf.800' boxSize={4} />
+          <Icon as={FaCheckCircle} color='cf.green' boxSize={4} />
         ) : (
           <Box
             borderWidth={1}
@@ -94,7 +94,7 @@ const PayOption = ({
           <Text>{description}</Text>
           <Text mt={4}>
             {notice}{' '}
-            <Text as='span' color='cf.800'>
+            <Text as='span' color='cf.green'>
               {extraCharge}
             </Text>
           </Text>
@@ -111,12 +111,12 @@ const PayOption = ({
             pt={2}
             mt={2}
           >
-            <Heading as='h6' fontSize='sm' color='cf.800' mr={1}>
+            <Heading as='h6' fontSize='sm' color='cf.green' mr={1}>
               View bank details
             </Heading>
             <Icon
               as={isOpen ? ChevronUpIcon : ChevronDownIcon}
-              color='cf.800'
+              color='cf.green'
               boxSize={6}
             />
           </Flex>
