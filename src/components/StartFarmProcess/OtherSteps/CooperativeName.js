@@ -39,7 +39,12 @@ const CooperativeName = () => {
   }, [isLarge, toast])
 
   return (
-    <Flex align='center' justify='center' direction='column'>
+    <Flex
+      align='center'
+      justify='center'
+      direction='column'
+      px={{ base: 4, md: 0 }}
+    >
       <Box pos='relative'>
         <Avatar
           src={
