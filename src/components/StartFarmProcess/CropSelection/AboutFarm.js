@@ -32,17 +32,17 @@ const AboutFarm = ({ farm }) => {
             </Text>
           </Flex>
           <Text fontSize='xs'>
-            <Icon as={IoLocation} color='cf.800' />
+            <Icon as={IoLocation} color='cf.green' />
             {farm.location?.name}, {farm.location?.state},{' '}
             {farm.location?.country}
-            <Icon as={BsInfoCircleFill} color='cf.800' mx={2} />
+            <Icon as={BsInfoCircleFill} color='cf.green' mx={2} />
           </Text>
         </Box>
         <Box mt={{ base: 2, md: 0 }}>
           <Heading as='h5' size='md'>
             ${farm?.pricePerAcre}/acre
           </Heading>
-          <Text fontWeight='600' color='cf.800'>
+          <Text fontWeight='600' color='cf.green'>
             {farm?.projectedMarketReturnsRangePerAcre?.min}
             {'% - '}
             {farm?.projectedMarketReturnsRangePerAcre?.max}% ROI

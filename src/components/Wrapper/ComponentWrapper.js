@@ -36,39 +36,39 @@ const ComponentWrapper = ({
             borderBottomColor='gray.200'
           >
             <Box
-              color={state === firstStateValue ? 'cf.800' : 'gray.700'}
+              color={state === firstStateValue ? 'cf.green' : 'gray.700'}
               onClick={() => setState(firstStateValue)}
               fontWeight={state === firstStateValue ? 'bold' : 'normal'}
               fontSize={{ base: 'xs', md: 'md' }}
               cursor='pointer'
               borderBottomWidth={state === firstStateValue && 2}
-              borderBottomColor='cf.800'
+              borderBottomColor='cf.green'
               pb={{ base: 1, md: 2 }}
             >
               {firstBoxTitle}
             </Box>
             <Box mx={{ base: 4, md: 6, '2xl': 10 }} />
             <Box
-              color={state === secondStateValue ? 'cf.800' : 'gray.700'}
+              color={state === secondStateValue ? 'cf.green' : 'gray.700'}
               onClick={() => setState(secondStateValue)}
               fontWeight={state === secondStateValue ? 'bold' : 'normal'}
               cursor='pointer'
               fontSize={{ base: 'xs', md: 'md' }}
               borderBottomWidth={state === secondStateValue && 2}
-              borderBottomColor='cf.800'
+              borderBottomColor='cf.green'
               pb={{ base: 1, md: 2 }}
             >
               {secondBoxTitle}
             </Box>
             <Box mx={{ base: 4, md: 6, '2xl': 10 }} />
             <Box
-              color={state === thirdStateValue ? 'cf.800' : 'gray.700'}
+              color={state === thirdStateValue ? 'cf.green' : 'gray.700'}
               onClick={() => setState(thirdStateValue)}
               fontWeight={state === thirdStateValue ? 'bold' : 'normal'}
               cursor='pointer'
               fontSize={{ base: 'xs', md: 'md' }}
               borderBottomWidth={state === thirdStateValue && 2}
-              borderBottomColor='cf.800'
+              borderBottomColor='cf.green'
               pb={{ base: 1, md: 2 }}
             >
               {thirdBoxTitle}

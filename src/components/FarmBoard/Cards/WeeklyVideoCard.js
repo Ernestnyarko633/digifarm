@@ -52,7 +52,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
 
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
-          <Text color='cf.800' fontWeight={700}>
+          <Text color='cf.green' fontWeight={700}>
             {status ? 'VIDEOS' : null}
           </Text>
         </Box>
@@ -98,7 +98,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
                 h={10}
                 rounded='100%'
                 _hover={{
-                  background: 'cf.800',
+                  background: 'cf.green',
                   color: 'white'
                 }}
                 color='white'
@@ -127,7 +127,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
                 w={10}
                 h={10}
                 _hover={{
-                  background: 'cf.800',
+                  background: 'cf.green',
                   color: 'white'
                 }}
                 rounded='100%'

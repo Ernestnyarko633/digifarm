@@ -65,7 +65,7 @@ export default function Updates({
           </Grid>
           {sortedFeeds?.length === 0 && (
             <Flex w='100%' justify='center' align='center'>
-              <Text w='100%' fontSize='xl' color='cf.800' textAlign='center'>
+              <Text w='100%' fontSize='xl' color='cf.green' textAlign='center'>
                 No updates currently available.
               </Text>
             </Flex>

@@ -74,7 +74,7 @@ const NewsCard = ({ content, status }) => {
 
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
-          <Text color='cf.800' fontWeight={700}>
+          <Text color='cf.green' fontWeight={700}>
             {status === 'news' ? status.toUpperCase() : null}
           </Text>
         </Box>
@@ -188,7 +188,7 @@ const NewsCard = ({ content, status }) => {
                 h={10}
                 rounded='100%'
                 _hover={{
-                  background: 'cf.800',
+                  background: 'cf.green',
                   color: 'white'
                 }}
                 color='white'
@@ -216,7 +216,7 @@ const NewsCard = ({ content, status }) => {
                 w={10}
                 h={10}
                 _hover={{
-                  background: 'cf.800',
+                  background: 'cf.green',
                   color: 'white'
                 }}
                 rounded='100%'
@@ -298,7 +298,7 @@ const NewsCard = ({ content, status }) => {
               ))} */}
             </Collapse>
             <Box as='button' onClick={handleToggle}>
-              <Text color='cf.800' py={{ base: 1 }}>
+              <Text color='cf.green' py={{ base: 1 }}>
                 {!show ? 'Read More' : 'Collapse'}
               </Text>
             </Box>

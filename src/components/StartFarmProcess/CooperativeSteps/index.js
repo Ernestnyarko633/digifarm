@@ -269,10 +269,10 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
               rounded='30px'
               w={{ md: '11rem' }}
               borderWidth={1}
-              borderColor='cf.800'
+              borderColor='cf.green'
               bg='cf.200'
               justify='center'
-              color='cf.800'
+              color='cf.green'
             >
               <Image
                 h={4}
@@ -281,7 +281,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
                     .default
                 }
               />
-              <Text fontSize={{ base: 'xs', md: 'sm' }} ml={2} color='cf.800'>
+              <Text fontSize={{ base: 'xs', md: 'sm' }} ml={2} color='cf.green'>
                 Farm is insured
               </Text>
             </Flex>

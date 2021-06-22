@@ -36,7 +36,7 @@ const GetStartedNowCard = () => (
       <Link
         _hover={{ textDecor: 'none' }}
         fontSize={{ base: 'sm', md: 'md' }}
-        color='cf.800'
+        color='cf.green'
         d='block'
         mb={4}
       >

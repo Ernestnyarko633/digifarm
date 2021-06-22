@@ -54,7 +54,7 @@ const CustomInput = ({
         }}
         bgColor='white'
         borderWidth={1}
-        borderBottomColor={isInvalid ? '' : 'cf.800'}
+        borderBottomColor={isInvalid ? '' : 'cf.green'}
         {...rest}
       />
       <FormErrorMessage mt='0.5' pos='absolute' fontSize='tiny'>
