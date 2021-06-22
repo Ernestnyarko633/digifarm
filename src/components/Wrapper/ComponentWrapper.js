@@ -16,14 +16,14 @@ const ComponentWrapper = ({
   thirdBoxTitle
 }) => {
   return (
-    <Box p={{ base: 4, md: 10, lg: 20 }} w={{ base: '100vw', xl: 'unset' }}>
+    <Box p={{ base: 4, md: 10, lg: 20 }} w={{ base: '100vw', xl: 'inherit' }}>
       <Box mb={10}>
         <Heading as='h4' fontSize={{ md: '2xl' }} mb={6}>
           Here’s how your farm(s) are doing
         </Heading>
         <Grid
-          d={{ base: 'flex', md: 'grid' }}
-          templateColumns={{ base: '100%', xl: '70% 20%' }}
+          d={{ base: 'block', md: 'grid' }}
+          templateColumns={{ xl: '70% 20%' }}
           gap={{ md: '10%' }}
           justifyContent={{ base: 'space-between', md: 'inherit' }}
           alignItems='center'
@@ -75,7 +75,7 @@ const ComponentWrapper = ({
             </Box>
           </Flex>
 
-          <Box mt='-35px' display={{ base: 'none', xl: 'block' }}>
+          <Box mt={{ md: '-35px' }} d={{ base: 'none', md: 'block' }}>
             <ArrowButton handleClick={handleClick} />
           </Box>
         </Grid>

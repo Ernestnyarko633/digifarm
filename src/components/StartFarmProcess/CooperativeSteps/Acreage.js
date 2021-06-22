@@ -60,7 +60,7 @@ const Acreage = ({ name, farm, selectedType }) => {
           templateColumns={{ xl: '45% 55%', '2xl': 'repeat(2, 1fr)' }}
         >
           <GridItem
-            borderRightColor='gray.400'
+            borderRightColor='gray.200'
             borderRightWidth={{ md: 1 }}
             px={{ base: 6, md: 20, lg: 10 }}
             borderBottomWidth={{ base: 1, md: 0 }}
@@ -201,7 +201,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                       >
                         <Text color='cf.darkGreen' fontSize='sm'>
                           There should be a <strong color>minimum of 2</strong>{' '}
-                          and and{' '}
+                          and{' '}
                           <strong>
                             maximum of {selectedCooperativeType?.maxMember}
                           </strong>{' '}
