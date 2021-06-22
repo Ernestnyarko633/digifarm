@@ -13,8 +13,11 @@ import {
   Spacer,
   Link,
   useToast,
-  useDisclosure
+  useDisclosure,
+  Tooltip,
+  Icon
 } from '@chakra-ui/react'
+import { InfoIcon } from '@chakra-ui/icons'
 import CustomTable from 'components/Form/CustomTable'
 import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
@@ -22,7 +25,6 @@ import useFetch from 'hooks/useFetch'
 import Header from 'container/Header'
 import { Button } from 'components'
 import { MdDashboard } from 'react-icons/md'
-import { BiCreditCard } from 'react-icons/bi'
 import { getFormattedMoney } from 'helpers/misc'
 import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
@@ -32,9 +34,11 @@ import Payment from 'components/Cards/CooperativeDashboard/Payment'
 import CompleteOrderModal from 'components/Modals/CompleteOrderModal'
 import { saveAs } from 'file-saver'
 import CooperativeCard from 'components/Cards/CooperativeDashboard/CooperativeCard'
-import Scrollbar from 'react-perfect-scrollbar'
+import TableMenu from 'components/Cards/CooperativeDashboard/TableMenu'
 
-const CooperativeMain = ({ location: { state }, match: { params } }) => {
+// import Scrollbar from 'react-perfect-scrollbar'
+
+const CooperativeMain = ({ match: { params } }) => {
   document.title = 'Cooperative Dashboard'
   //states
   const [reload, setReload] = useState(0)
@@ -106,8 +110,8 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
         <Flex>
           <Avatar
             name={
-              row.values.info?.firstName ||
-              row.values.info.avatar ||
+              row.values?.info?.firstName ||
+              row.values?.info?.avatar ||
               'Annonymous'
             }
             size='md'
@@ -115,7 +119,7 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
           <Box pl='12px' pt={1}>
             <Flex>
               <Text fontSize='16px' fontWeight='semibold'>
-                {row.values.info?.firstName
+                {row?.values.info?.firstName
                   ? `${
                       row.values.info?.firstName +
                       ' ' +
@@ -123,6 +127,26 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
                     }`
                   : 'Annonymous'}
               </Text>
+              {!row.values.info?.firstName && (
+                <Tooltip
+                  hasArrow
+                  label='Member has not accepted invitation'
+                  fontSize='sm'
+                  bg='#022D2B'
+                  placement='top'
+                >
+                  <InfoIcon color='#31BC2E' mt='5px' ml={1} />
+                </Tooltip>
+                // <Tooltip
+                //   // hasArrow
+                //   label='Search places'
+                //   bg='red.400'
+                //   color='black'
+                // >
+                //   <Icon as={AiFillInfoCircle} color='#31BC2E' mt={1} ml={1} />
+                // </Tooltip>
+              )}
+
               {row.index === 0 && (
                 <Box bg='#D6F2D5' rounded='4px' ml='7px' h='20px'>
                   <Text
@@ -202,29 +226,35 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
       accessor: 'payment',
       Cell: ({ row }) => (
         <>
-          {row.values.status === 'PAID' || (
-            <>
-              {row?.original?.order?.status === 'PENDING' ? (
-                <>
-                  {row.original.email === user?.email && (
-                    <Button
-                      btntitle='Pay'
-                      colorScheme='linear'
-                      width='100px'
-                      py='10px'
-                      leftIcon={<BiCreditCard size={20} />}
-                      onClick={() => {
-                        handleModalClick('payment', {
-                          product: data?.product,
-                          order: row?.original?.order
-                        })
-                      }}
-                    />
-                  )}
-                </>
-              ) : null}
-            </>
-          )}
+          {/* checking if user's order status is pending then show button to pay */}
+          {row?.original?.order?.status === 'PENDING' &&
+            row.original.email === user?.email && (
+              <>
+                <Flex justify='center'>
+                  <Button
+                    btntitle='Pay'
+                    colorScheme='linear'
+                    width='100px'
+                    py='10px'
+                    onClick={() => {
+                      handleModalClick('payment', {
+                        product: data?.product,
+                        order: row?.original?.order
+                      })
+                    }}
+                  />
+                </Flex>
+              </>
+            )}
+          {/* admin gets to see the option to resend invite to other users but not to himself  */}
+          {/* if there's no id in the user object, meaning the invite hasn't been accepted */}
+          {user?.email === data?.users[0].email &&
+            row.original.email !== user?.email &&
+            !row.original.id && (
+              <Flex justify='center'>
+                <TableMenu id={data._id} email={row.original.email} />
+              </Flex>
+            )}
         </>
       )
     }
@@ -294,7 +324,7 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
             px={{ xl: 12 }}
             pt={{ base: 12, xl: 20 }}
             h='100vh'
-            // h={{ md: '100vh' }}
+            bg='white'
           >
             {isLoading || error ? (
               <FetchCard
@@ -330,50 +360,47 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
                     <Link href='/dashboard' _hover={{ textDecor: 'none' }}>
                       <Button
                         btntitle='Goto dashboard'
-                        colorScheme='transparent'
-                        color='gray.600'
+                        colorScheme='linear'
+                        color='white'
                         width='140px'
                         py='10px'
                         ml={3}
                         borderWidth={1}
                         borderColor='gray.300'
-                        leftIcon={<MdDashboard size={20} />}
                       />
                     </Link>
                   </Flex>
                 </Flex>
-                <Scrollbar>
-                  <Box d={{ base: 'none', md: 'block', xl: 'block' }}>
-                    <CustomTable
-                      variant='simple'
-                      _columns={_columns}
-                      _data={tableData}
-                    />
-                  </Box>
-                  <Box
-                    d={{ base: 'block', md: 'none' }}
-                    px={4}
-                    pb='50px'
-                    h='100vh'
-                    bg='white'
-                  >
-                    {tableData?.map(item => (
-                      <Box key={item?._id}>
-                        <CooperativeCard
-                          item={item}
-                          data={data}
-                          order={userData?.[0].order}
-                          handleClick={() => {
-                            handleModalClick('payment', {
-                              product: data?.product,
-                              order: userData?.[0].order
-                            })
-                          }}
-                        />
-                      </Box>
-                    ))}
-                  </Box>
-                </Scrollbar>
+                <Box d={{ base: 'none', md: 'block', xl: 'block' }}>
+                  <CustomTable
+                    variant='simple'
+                    _columns={_columns}
+                    _data={tableData}
+                  />
+                </Box>
+                <Box
+                  d={{ base: 'block', md: 'none' }}
+                  px={4}
+                  pb='50px'
+                  h='100vh'
+                  bg='white'
+                >
+                  {tableData?.map(item => (
+                    <Box key={item?._id}>
+                      <CooperativeCard
+                        item={item}
+                        data={data}
+                        order={userData?.[0].order}
+                        handleClick={() => {
+                          handleModalClick('payment', {
+                            product: data?.product,
+                            order: userData?.[0].order
+                          })
+                        }}
+                      />
+                    </Box>
+                  ))}
+                </Box>
               </>
             )}
           </GridItem>
@@ -384,7 +411,7 @@ const CooperativeMain = ({ location: { state }, match: { params } }) => {
 }
 
 CooperativeMain.propTypes = {
-  location: PropTypes.any.isRequired
+  match: PropTypes.any.isRequired
 }
 
 export default CooperativeMain

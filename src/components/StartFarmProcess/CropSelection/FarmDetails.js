@@ -12,7 +12,7 @@ import CropSelectionCard from 'components/Cards/CropSelectionCard'
 import FetchCard from 'components/FetchCard'
 import AboutFarm from './AboutFarm'
 
-const FarmDetails = ({ query, catName, dashboard }) => {
+const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
   const { selectedFarm, setSelectedFarm, setStep } = useStartFarm()
   const { getFarms } = useApi()
 
@@ -24,6 +24,12 @@ const FarmDetails = ({ query, catName, dashboard }) => {
 
   sessionStorage.setItem('farms', JSON.stringify(data))
   const type = sessionStorage.getItem('type')
+
+  useEffect(() => {
+    gridRef.current = true
+
+    return () => (gridRef.current = false)
+  }, [gridRef])
 
   useEffect(() => {
     let mounted = true
@@ -55,6 +61,7 @@ const FarmDetails = ({ query, catName, dashboard }) => {
     />
   ) : data?.filter(f => f.status === 1)?.length > 0 ? (
     <Grid
+      ref={gridRef}
       templateColumns={{ base: '100%', md: '40% 55%' }}
       h={121}
       w='100%'
@@ -152,7 +159,8 @@ const FarmDetails = ({ query, catName, dashboard }) => {
 FarmDetails.propTypes = {
   query: PropTypes.any,
   catName: PropTypes.string.isRequired,
-  dashboard: PropTypes.bool
+  dashboard: PropTypes.bool,
+  gridRef: PropTypes.any
 }
 
 export default FarmDetails

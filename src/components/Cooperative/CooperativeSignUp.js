@@ -16,9 +16,10 @@ import { Button } from 'components'
 import CustomInput from 'components/Form/CustomInput'
 import { useFormik } from 'formik'
 import { SignupSchema } from 'helpers/validation'
-import invite from 'assets/images/invite.png'
+import invite from 'assets/images/invite2.png'
 import { useHistory } from 'react-router-dom'
 import useAuth from 'context/auth'
+import jwt_decode from 'jwt-decode'
 
 import useApi from 'context/api'
 import PropTypes from 'prop-types'
@@ -32,17 +33,19 @@ const CooperativeSignUp = () => {
   const toast = useToast()
   const { store } = useAuth()
 
-  const decodedToken = sessionStorage.getItem('acceptToken')
-  const _decode = JSON.parse(decodedToken)
+  const token = sessionStorage.getItem('acceptToken')
+  //decoding token token
+  var decodedToken = jwt_decode(token)
+  const _data = JSON.parse(decodedToken.payload)
 
-  const { email, _id } = _decode
+  const { _id, email, admin, coopName } = _data
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       isCoop: true,
       role: 'DIGITAL_FARMER',
-      email: _decode.email,
+      email: email,
       country: '',
       password: '',
       lastName: '',
@@ -58,7 +61,7 @@ const CooperativeSignUp = () => {
           delete data.confirmPassword
           setSubmitting(true)
           await signUp(data)
-          const res = await acceptInvite({ email, _id })
+          const res = await acceptInvite(_id, { token: token })
           setSubmitting(false)
           const { authToken, user } = res?.data
           store({ token: authToken, user })
@@ -126,23 +129,19 @@ const CooperativeSignUp = () => {
   return (
     <Box
       pos='absolute'
-      mx={{ base: 'auto', '3xl': '12rem' }}
-      top={{ base: 20, md: 40, '5xl': '20rem' }}
+      mx={{ base: 'auto', '3xl': '11rem', '5xl': '24rem' }}
+      top={{ base: 20, md: 40, '5xl': '15rem' }}
       right={0}
       mb={4}
+      w={{ '5xl': '75rem' }}
     >
       <Box color='white' textAlign='center'>
-        <Heading
-          fontSize={{ base: 12, md: 24, lg: 24, '3xl': 32 }}
-          w={{ md: '45%', xl: '45%' }}
-          mx='auto'
-        >
+        <Heading fontSize={{ base: 14, md: 28, lg: 28, '2xl': 52 }} mx='auto'>
           Split cost. Share assets. Share rewards.
         </Heading>
         <Text
-          fontSize={{ base: 10, md: 16, lg: 16, '3xl': 16 }}
-          pt={{ base: 1, lg: 3 }}
-          pb={{ base: 4, lg: 8 }}
+          fontSize={{ base: 10, md: 16, lg: 16, '2xl': 28 }}
+          py={{ base: 4, lg: 8, '2xl': 10 }}
         >
           Farm together with friends and family
         </Text>
@@ -152,27 +151,43 @@ const CooperativeSignUp = () => {
         bg='white'
         borderRadius='12px'
         templateColumns='repeat(2,1fr)'
-        mx={{ base: '30px', md: '9rem', '3xl': '4rem', '5xl': '10rem' }}
-        shadow='md'
+        mx={{
+          base: '30px',
+          md: '4rem',
+          lg: '4.8rem',
+          '2xl': '9.5rem',
+          '3xl': -5,
+          '4xl': 0
+        }}
+        shadow='lg'
+        px={{ '4xl': 8, '5xl': 20 }}
       >
         <Box
-          ml='5rem'
-          my={60}
-          d={{ base: 'none', md: 'none', xl: 'block', '3xl': 'block' }}
+          ml={{ md: '5rem', '5xl': 0 }}
+          my={16}
+          d={{
+            base: 'none',
+            md: 'none',
+            lg: 'block'
+          }}
         >
           <Image src={invite} />
         </Box>
         <Box
-          my={{ base: 5, md: '3rem', '3xl': 16 }}
-          mx={{ base: 5, md: '4rem', '3xl': '5rem' }}
-          w={{ md: '22rem', lg: '30rem' }}
+          my={{ base: 5, md: '3rem', '3xl': 16, '5xl': 20 }}
+          mx={{
+            base: 5,
+            md: '5rem',
+            '2xl': '3rem',
+            '3xl': '5rem'
+          }}
+          w={{ md: '30rem', lg: '30rem' }}
         >
           <Heading fontSize={{ base: 16, '3xl': 28 }}>
             Start by creating your account
           </Heading>
           <Text pt={1} mb={6} fontSize={{ base: 12 }}>
-            You were invited by {_decode?.admin} to join {_decode?.coopName}{' '}
-            cooperative.
+            You were invited by {admin} to join {coopName} cooperative.
           </Text>
           <Box>
             <form onSubmit={handleSubmit}>
@@ -301,20 +316,6 @@ const CooperativeSignUp = () => {
                 </Text>
               </Flex>
 
-              <Flex mb={{ base: 2, md: 4 }} fontSize='xs'>
-                <Checkbox
-                  colorScheme='cfButton'
-                  onChange={e => {
-                    // TODO: create an endpoint for this action and integrate it
-                  }}
-                  fontSize='xs'
-                  size='sm'
-                  borderColor='cfButton.500'
-                />
-                <Text ml={3} color='gray.500' fontSize='xs'>
-                  I agree to receive Complete Farmer news and updates.
-                </Text>
-              </Flex>
               <Button
                 btntitle='Sign up'
                 type='submit'

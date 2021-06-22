@@ -18,9 +18,13 @@ const CooperativeMemberCard = ({
   onBlur,
   remove,
   member,
+  errors,
+  touched,
   isDisabled,
   setInvites
 }) => {
+  // eslint-disable-next-line no-console
+  console.log('error', errors)
   const { setAcres } = useStartFarm()
   useEffect(() => {
     let mounted = true
@@ -91,6 +95,8 @@ const CooperativeMemberCard = ({
             bg='gray.100'
             borderBottomColor='none'
             value={value.email}
+            // error={errors.email}
+            // touched={touched.email}
             name={`${name}email`}
             onChange={onChange}
             onBlur={onBlur}
@@ -128,6 +134,8 @@ CooperativeMemberCard.propTypes = {
   remove: PropTypes.func,
   member: PropTypes.number,
   isDisabled: PropTypes.bool,
+  touched: PropTypes.any,
+  errors: PropTypes.any,
   setInvites: PropTypes.func,
   farm: PropTypes.object
 }

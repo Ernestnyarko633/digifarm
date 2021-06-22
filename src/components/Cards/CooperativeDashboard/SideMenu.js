@@ -3,13 +3,13 @@ import {
   Box,
   Flex,
   Text,
-  Avatar,
   Icon,
   Input,
   FormControl,
   FormLabel,
   useToast,
-  Divider
+  Divider,
+  Image
 } from '@chakra-ui/react'
 
 import { FirstLettersToUpperCase, getformattedDate } from 'helpers/misc'
@@ -20,6 +20,7 @@ import useStartFarm from 'context/start-farm'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import Button from 'components/Button'
+import cooperative_avatar from 'assets/images/cooperative_avatar.png'
 
 const SideMenu = ({ data, border, bg, ml, click, loading }) => {
   const { isAuthenticated } = useAuth()
@@ -91,11 +92,19 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
       >
         <Flex justify='center'>
           <Box pos='relative'>
-            <Avatar
-              name={data?.name}
-              src={coopImg ? URL.createObjectURL(coopImg) : data?.imageUrl}
-              size='xl'
+            <Image
+              src={
+                coopImg
+                  ? URL.createObjectURL(coopImg)
+                  : data?.imageUrl
+                  ? data?.imageUrl
+                  : cooperative_avatar
+              }
+              w='8rem'
+              h='8rem'
+              rounded='100%'
             />
+
             {user?.email === data?.users[0].email && (
               <FormControl>
                 <FormLabel>
@@ -103,8 +112,8 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
                     align='center'
                     justify='center'
                     color='white'
-                    h={8}
-                    w={8}
+                    h={9}
+                    w={9}
                     rounded='100%'
                     bg='cf.800'
                     pos='absolute'
@@ -154,9 +163,9 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
           subtitle={FirstLettersToUpperCase(data?.type?.name)}
         />
         <Details title='Members' subtitle={data?.users?.length} />
-        <Details title='Acreage' subtitle={total?.toFixed(1)} />
+        <Details title='Total acreage' subtitle={total?.toFixed(1)} />
         <Details
-          title='Farm Manager'
+          title='Farm manager'
           subtitle={
             data?.product?.managers[0]?.firstName +
             ' ' +
