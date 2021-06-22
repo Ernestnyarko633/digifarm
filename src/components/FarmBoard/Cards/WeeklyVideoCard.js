@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -6,7 +7,7 @@ import FarmBoardCardWrapper from './FarmBoardCardWrapper'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 
 //import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import ReactPlayer from 'react-player/lazy'
+import ReactPlayer from 'react-player/youtube'
 
 const WeeklyVideoCard = ({ status, timestamp, content }) => {
   const [activeVideoIndex, setVideoActiveIndex] = React.useState(0)
@@ -34,6 +35,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
       volume={0.3}
       url={url}
       playing={false}
+      SameSite
     />
   )
   YoutubeSlide.propTypes = {

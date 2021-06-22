@@ -24,7 +24,6 @@ const CooperativeMemberCard = ({
   setInvites
 }) => {
   // eslint-disable-next-line no-console
-  console.log('error', errors)
   const { setAcres } = useStartFarm()
   useEffect(() => {
     let mounted = true

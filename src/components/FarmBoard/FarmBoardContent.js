@@ -89,7 +89,7 @@ const FarmBoardContent = ({ farms = [] }) => {
     return Object.keys(data).map(key => {
       let array = []
       // if filter is equal to current key and has data
-      if (key === filter && data[key].length) {
+      if (key === filter && data[key]?.length) {
         // if key is feeds filter the feed by farm and render else render empty for that farm
         if (key === 'feeds')
           return data[key]?.filter(

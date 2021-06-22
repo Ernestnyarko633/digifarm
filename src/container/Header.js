@@ -25,7 +25,6 @@ const Header = () => {
     })
   );
 
-  console.log("data", data);
 
   const mutation = useMutation((id) => updateNotification(id, user._id), {
     onSuccess: () => queryClient.invalidateQueries("notifications"),
