@@ -32,13 +32,13 @@ const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
           type='number'
           roundedBottom='0px'
           value={value}
-          borderBottomColor='cf.800'
+          borderBottomColor='cf.green'
           borderBottomWidth={2}
           _hover={{
-            borderBottomColor: 'cf.800'
+            borderBottomColor: 'cf.green'
           }}
           _focus={{
-            borderBottomColor: 'cf.800'
+            borderBottomColor: 'cf.green'
           }}
           placeholder='How many acres?'
           onChange={e => {
@@ -87,7 +87,7 @@ const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
             aria-label='Reduce acreage'
             fontSize='25px'
             bg='transparent'
-            color='cf.800'
+            color='cf.green'
             _hover={{
               bg: 'transparent'
             }}

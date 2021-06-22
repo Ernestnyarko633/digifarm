@@ -58,7 +58,7 @@ const FarmInfo = ({ farm, order, width = 108, margin = 4 }) => {
                 <Text mr={2} color='gray.600'>
                   Management Fee
                 </Text>
-                <QuestionIcon color='cf.800' />
+                <QuestionIcon color='cf.green' />
               </Flex>
               <Text>Inclusive</Text>
             </Flex>
@@ -90,7 +90,7 @@ const FarmInfo = ({ farm, order, width = 108, margin = 4 }) => {
                     mb={-1}
                     as='span'
                     fontSize='tiny'
-                    textColor='cf.800'
+                    textColor='cf.green'
                     textDecor='line-through'
                   >
                     {discount}

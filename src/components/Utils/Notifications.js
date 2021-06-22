@@ -22,7 +22,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
       case 'weekly_videos':
         return <Icon as={WEEKLYVIDEOS} boxSize={4} />
       case 'DIGITAL_FARMER':
-        return <Icon as={FaReceipt} boxSize={4} color='cf.800' />
+        return <Icon as={FaReceipt} boxSize={4} color='cf.green' />
       default:
         return null
     }

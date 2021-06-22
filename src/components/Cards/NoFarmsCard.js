@@ -26,7 +26,7 @@ const NoFarmsCard = () => (
     </Box>
 
     <Box my={{ md: 10 }} textAlign='center'>
-      <Link _hover={{ textDecor: 'none' }} color='cf.800' d='block' mb={4}>
+      <Link _hover={{ textDecor: 'none' }} color='cf.green' d='block' mb={4}>
         Learn more <Icon as={MdKeyboardArrowRight} />
       </Link>
 

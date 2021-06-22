@@ -78,8 +78,8 @@ const WarehouseCard = ({
               colorScheme='none'
               rounded='30px'
               borderWidth={1}
-              color='cf.800'
-              borderColor='cf.800'
+              color='cf.green'
+              borderColor='cf.green'
               px={8}
             >
               View Farm
@@ -171,7 +171,7 @@ const WarehouseCard = ({
         <Center>
           <Button
             pt={4}
-            color='cf.800'
+            color='cf.green'
             size='16px'
             pb={-8}
             isDisabled='true'

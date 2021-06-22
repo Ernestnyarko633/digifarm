@@ -92,7 +92,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
       >
         {status !== 'news' && status !== 'weekly_videos' && false && (
           <Flex>
-            <Text color='cf.800'>123</Text>
+            <Text color='cf.green'>123</Text>
           </Flex>
         )}
 
@@ -107,7 +107,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
             <Box>
               <Icon
                 //onClick={() => handleLike()}
-                color='cf.800'
+                color='cf.green'
                 as={BsHeart}
                 mr={2}
                 boxSize={5}
@@ -127,7 +127,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
                   exit={{ opacity: 0, width: 0, transition: { duration: 0.4 } }}
                   align='center'
                   justify='center'
-                  bg='cf.800'
+                  bg='cf.green'
                   color='white'
                   rounded='3xl'
                   w={40}
@@ -182,11 +182,11 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
               w={10}
               h={10}
               rounded='100%'
-              bg='cf.800'
+              bg='cf.green'
               color='white'
               filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               borderWidth={1}
-              borderColor='cf.800'
+              borderColor='cf.green'
               onClick={() => setShow(!show)}
             >
               <Icon as={show ? RiCloseFill : AiOutlineShareAlt} boxSize={6} />
@@ -194,7 +194,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
           </Flex>
           {/*<Icon*/}
           {/*  boxSize={6}*/}
-          {/*  color="cf.800"*/}
+          {/*  color="cf.green"*/}
           {/*  as={AiOutlineShareAlt}*/}
           {/*  onClick={*/}
           {/*    () =>*/}

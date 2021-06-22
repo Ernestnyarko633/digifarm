@@ -248,9 +248,9 @@ const Acreage = ({ name, farm, selectedType }) => {
                             <Button
                               btntitle='Add another'
                               leftIcon={<BsPlus />}
-                              color='cf.800'
+                              color='cf.green'
                               borderWidth={1}
-                              borderColor='cf.800'
+                              borderColor='cf.green'
                               bg='transparent'
                               fontSize={{ base: 'sm', '2xl': 'md' }}
                               width={{ md: 32, '2xl': 48 }}
