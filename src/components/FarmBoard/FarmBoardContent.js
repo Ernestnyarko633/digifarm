@@ -89,7 +89,7 @@ const FarmBoardContent = ({ farms = [] }) => {
     return Object.keys(data).map(key => {
       let array = []
       // if filter is equal to current key and has data
-      if (key === filter && data[key]?.length) {
+      if (key === filter && data[key].length) {
         // if key is feeds filter the feed by farm and render else render empty for that farm
         if (key === 'feeds')
           return data[key]?.filter(
@@ -178,7 +178,7 @@ const FarmBoardContent = ({ farms = [] }) => {
             farmName={farmName}
             setFarmName={setFarmName}
           />
-          <Box p={{ base: 4, md: 16 }}>
+          <Box p={{ base: 4, md: 16 }} ref={queriedElement}>
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
               {feeds?.length && farms?.length
                 ? "See what's happening in your farm(s)"
@@ -186,7 +186,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                 ? "See what's happening"
                 : ''}
             </Heading>
-            <Box ref={queriedElement}>{RenderDataType(filter)}</Box>
+            <Box>{RenderDataType(filter)}</Box>
           </Box>
         </>
       )}
