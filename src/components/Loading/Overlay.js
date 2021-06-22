@@ -10,7 +10,7 @@ const Overlay = ({ text }) => {
           <Spinner
             size='lg'
             speed='0.65s'
-            color='cf.800'
+            color='cf.green'
             thickness='4px'
             emptyColor='gray.200'
           />

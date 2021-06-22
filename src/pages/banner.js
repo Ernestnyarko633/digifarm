@@ -10,7 +10,7 @@ import { FaFacebookSquare, FaInstagramSquare, FaLinkedin } from 'react-icons/fa'
 const Banner = () => {
   document.title = 'Complete Farmer Digital Farmer | Coming Soon'
   return (
-    <Flex w='100vw' h='100vh' bg='cf.800'>
+    <Flex w='100vw' h='100vh' bg='cf.green'>
       <Box>
         <Header />
       </Box>

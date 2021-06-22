@@ -74,7 +74,7 @@ const UploadDocument = () => {
                   Complete your order
                 </Heading>
               </Box>
-              <ModalCloseButton color='cf.800' />
+              <ModalCloseButton color='cf.green' />
             </Flex>
             <Divider orientation='horizontal' borderColor='gray.400' />
             <ModalBody>
@@ -102,7 +102,7 @@ const UploadDocument = () => {
                           <CloseButton
                             _hover={{ textDecoration: 'none' }}
                             bg='none'
-                            color='cf.800'
+                            color='cf.green'
                           />
                         </Flex>
                       )}
@@ -132,7 +132,7 @@ const UploadDocument = () => {
                 </Heading>
               </Box>
               <Spacer />
-              <ModalCloseButton color='cf.800' />
+              <ModalCloseButton color='cf.green' />
             </Flex>
             <Divider orientation='horizontal' borderColor='gray.400' />
             <ModalBody>

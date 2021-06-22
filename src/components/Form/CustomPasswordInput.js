@@ -59,7 +59,7 @@ const PasswordInput = ({
           borderWidth={1}
           _focus={{ outline: 'none' }}
           _hover={{ outline: 'none' }}
-          borderBottomColor={isInvalid ? '' : 'cf.800'}
+          borderBottomColor={isInvalid ? '' : 'cf.green'}
           type={show ? 'text' : 'password'}
           {...rest}
         />

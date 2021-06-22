@@ -105,7 +105,7 @@ const FarmCard = ({ farm }) => {
 
                 <Box mx={5}>
                   <Tag
-                    color='cf.800'
+                    color='cf.green'
                     justifyContent='center'
                     bg='#EFF6ED'
                     bgGradient='linear(to-l, #EFF6ED)'

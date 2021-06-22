@@ -172,7 +172,7 @@ const OtherSteps = ({ data, history: { push } }) => {
                   borderBottomColor={
                     (farm._id === selectedFarm?._id ||
                       farm._id === data?.product?._id) &&
-                    'cf.800'
+                    'cf.green'
                   }
                   mr={{ base: 0, md: 5 }}
                 >
@@ -241,9 +241,9 @@ const OtherSteps = ({ data, history: { push } }) => {
             w={{ md: '11rem' }}
             px={{ base: 2, md: 4 }}
             borderWidth={1}
-            borderColor='cf.800'
+            borderColor='cf.green'
             bg='cf.200'
-            color='cf.800'
+            color='cf.green'
           >
             <Icon as={Safety} />
             <Text fontSize='sm' ml={2}>

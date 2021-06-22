@@ -26,7 +26,7 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
         setFilter(text)
         setActiveFarmIndex(text === 'feeds' ? 0 : null)
       }}
-      color={filter === text ? 'cf.800' : 'gray.500'}
+      color={filter === text ? 'cf.green' : 'gray.500'}
       textAlign='center'
       d='flex'
       alignItems='center'
@@ -154,7 +154,9 @@ const YourFarmCard = ({
                   >
                     <Text
                       fontSize='sm'
-                      color={index === activeFarmIndex ? 'cf.800' : 'gray.200'}
+                      color={
+                        index === activeFarmIndex ? 'cf.green' : 'gray.200'
+                      }
                       mb={3}
                     >
                       {farm.name}
@@ -166,7 +168,7 @@ const YourFarmCard = ({
                       borderWidth='1px'
                       pos='relative'
                       borderColor={
-                        index === activeFarmIndex ? 'cf.800' : 'gray.200'
+                        index === activeFarmIndex ? 'cf.green' : 'gray.200'
                       }
                     >
                       <Image
@@ -181,7 +183,7 @@ const YourFarmCard = ({
                         left={2}
                         bg={
                           index === activeFarmIndex
-                            ? 'cf.800'
+                            ? 'cf.green'
                             : randomColors[index]?.color || '#ff0000'
                         }
                         rounded='25px'

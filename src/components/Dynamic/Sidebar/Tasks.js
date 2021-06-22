@@ -283,7 +283,7 @@ export default function Tasks({
                             eosStats[eosStats?.length - 1]?.indexes?.EVI
                               ?.average
                           )
-                            ? 'cf.800'
+                            ? 'cf.green'
                             : '#ff0000'
                         }
                       >
@@ -305,7 +305,7 @@ export default function Tasks({
                             ?.average * 100
                         )?.toFixed(0)}
                         size='100px'
-                        color='cf.800'
+                        color='cf.green'
                         mt={2}
                       >
                         <CircularProgressLabel rounded='lg'>
@@ -326,7 +326,7 @@ export default function Tasks({
                             ?.average * 100
                         )?.toFixed(0)}
                         size='100px'
-                        color='cf.800'
+                        color='cf.green'
                         mt={2}
                       >
                         <CircularProgressLabel rounded='lg'>

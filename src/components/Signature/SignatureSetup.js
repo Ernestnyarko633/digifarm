@@ -151,7 +151,7 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
                   as='button'
                   borderWidth={2}
                   alignItems='center'
-                  borderColor='cf.800'
+                  borderColor='cf.green'
                   title='Upload Signature'
                 >
                   <CustomUploader
@@ -163,7 +163,7 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
                   <Text
                     px={10}
                     as='span'
-                    color='cf.800'
+                    color='cf.green'
                     pos='absolute'
                     cursor='pointer'
                     fontWeight='600'
@@ -221,7 +221,7 @@ const SignatureSetup = ({ isEditing, setIsEditing }) => {
               mt={10}
               border='2px'
               textAlign='center'
-              borderColor='cf.800'
+              borderColor='cf.green'
               justifyContent='center'
               w={{ base: '100%', lg: '47%' }}
             >

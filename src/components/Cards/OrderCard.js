@@ -112,7 +112,7 @@ const OrderCard = ({ order, onOpen }) => {
         <Box textAlign='center'>
           <Tag
             bg='cf.300'
-            color='cf.800'
+            color='cf.green'
             px={{ base: 2, md: 6 }}
             py={{ md: 2 }}
             fontSize={{ base: 'xs', md: 'sm' }}
@@ -149,7 +149,7 @@ const OrderCard = ({ order, onOpen }) => {
             btntitle='Download invoice'
             rounded='30px'
             colorScheme='none'
-            color='cf.800'
+            color='cf.green'
             w='100%'
             isLoading={loading}
             isDisabled={loading}

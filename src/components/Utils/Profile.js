@@ -97,7 +97,7 @@ const Profile = ({ user }) => {
                           _hover={{
                             textDecor: 'none'
                           }}
-                          bg={active && 'cf.800'}
+                          bg={active && 'cf.green'}
                           color={active && 'white'}
                           d='block'
                           href={item.link}

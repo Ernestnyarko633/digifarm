@@ -10,11 +10,11 @@ import {
   ListItem,
   Text
 } from '@chakra-ui/react'
-import { MdKeyboardArrowRight } from 'react-icons/md'
+// import { MdKeyboardArrowRight } from 'react-icons/md'
 import { FaCheckCircle } from 'react-icons/fa'
 import React from 'react'
 import PropTypes from 'prop-types'
-import useComponent from 'context/component'
+// import useComponent from 'context/component'
 
 const FarmingTypeCard = ({
   subtitle,
@@ -27,13 +27,13 @@ const FarmingTypeCard = ({
   id,
   disabled
 }) => {
-  const { handleModalClick } = useComponent()
+  // const { handleModalClick } = useComponent();
 
   return (
     <Box
       w={{ md: 85 }}
       borderWidth={selected ? 2 : 1}
-      borderColor={selected ? 'cf.800' : 'gray.300'}
+      borderColor={selected ? 'cf.green' : 'gray.300'}
       rounded='lg'
       textAlign='left'
       mr={mr}
@@ -44,7 +44,7 @@ const FarmingTypeCard = ({
     >
       <Box pos='absolute' top={2} right={2}>
         {selected ? (
-          <Icon as={FaCheckCircle} color='cf.800' boxSize={6} />
+          <Icon as={FaCheckCircle} color='cf.green' boxSize={6} />
         ) : (
           <Box
             borderWidth={1}
@@ -56,7 +56,7 @@ const FarmingTypeCard = ({
         )}
       </Box>
       {/*{id === "cooperative" && (*/}
-      {/*  <Heading fontSize="2xl" color="cf.800">*/}
+      {/*  <Heading fontSize="2xl" color="cf.green">*/}
       {/*    Coming Soon*/}
       {/*  </Heading>*/}
       {/*)}*/}
@@ -83,26 +83,26 @@ const FarmingTypeCard = ({
         <List fontSize='sm' textAlign='left' my={3} fontFamily='body'>
           {options.map(item => (
             <ListItem key={item} py={1} fontWeight={700}>
-              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={5} />
+              <ListIcon as={FaCheckCircle} color='cf.green' boxSize={5} />
               {item}
             </ListItem>
           ))}
         </List>
-        <Box>
-          <Box
-            d='block'
-            fontSize='xs'
-            color='cf.800'
-            mt={1}
-            fontFamily='body'
-            as='button'
-            role='button'
-            aria-label='learn more button'
-            onClick={() => handleModalClick('learnmore')}
-          >
-            Learn more <Icon as={MdKeyboardArrowRight} />
-          </Box>
-        </Box>
+        {/*<Box>*/}
+        {/*  <Box*/}
+        {/*    d='block'*/}
+        {/*    fontSize='xs'*/}
+        {/*    color='cf.green'*/}
+        {/*    mt={1}*/}
+        {/*    fontFamily='body'*/}
+        {/*    as='button'*/}
+        {/*    role='button'*/}
+        {/*    aria-label='learn more button'*/}
+        {/*    onClick={() => handleModalClick('learnmore')}*/}
+        {/*  >*/}
+        {/*    Learn more <Icon as={MdKeyboardArrowRight} />*/}
+        {/*  </Box>*/}
+        {/*</Box>*/}
       </Box>
     </Box>
   )

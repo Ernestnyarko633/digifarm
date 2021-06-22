@@ -55,7 +55,7 @@ export default function Events({
           </Grid>
           {sortedScheduledTasks?.length === 0 && (
             <Flex w='100%' justify='center' align='center'>
-              <Text w='100%' color='cf.800' fontSize='xl' textAlign='center'>
+              <Text w='100%' color='cf.green' fontSize='xl' textAlign='center'>
                 No scheduled events currently available.
               </Text>
             </Flex>
