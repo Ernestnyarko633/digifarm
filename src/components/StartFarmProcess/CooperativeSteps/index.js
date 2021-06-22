@@ -32,6 +32,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
     handlePrev,
     handleBack,
     cooperative,
+    coopConfigErrors,
     //selectedCooperativeType,
     selectedType,
     setOtherStep,
@@ -168,6 +169,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           action: handleNextStep,
           disabled:
             acres <= barrier &&
+            !coopConfigErrors &&
             acres >= selectedCooperativeType.minAcre &&
             invites?.every(member =>
               validateEmailAndAcrege(member?.email, member?.acreage)
@@ -231,7 +233,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           w='full'
           align='center'
           justify='space-between'
-          mt={{ base: 5, md: 12 }}
+          mt={{ base: 5, md: 20 }}
           px={{ base: 2, md: 0 }}
         >
           <Text

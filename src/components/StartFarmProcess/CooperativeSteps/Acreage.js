@@ -10,7 +10,7 @@ import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { BsPlus } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 import Scrollbar from 'react-perfect-scrollbar'
-import { CooperativeMemberSchema } from 'helpers/validation'
+import { CooperativeSchema } from 'helpers/validation'
 
 import CooperativeMemberCard from '../../Cards/CooperativeMemberCard'
 import Support from '../../Support'
@@ -51,10 +51,7 @@ const Acreage = ({ name, farm, selectedType }) => {
   }, [cooperativeName, setCooperativeName, user?.lastName])
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={CooperativeMemberSchema}
-    >
+    <Formik initialValues={initialValues} validationSchema={CooperativeSchema}>
       {({ values, errors, handleChange, handleBlur, touched }) => (
         <MotionGrid
           templateColumns={{ xl: '45% 55%', '2xl': 'repeat(2, 1fr)' }}

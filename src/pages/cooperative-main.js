@@ -137,14 +137,6 @@ const CooperativeMain = ({ match: { params } }) => {
                 >
                   <InfoIcon color='#31BC2E' mt='5px' ml={1} />
                 </Tooltip>
-                // <Tooltip
-                //   // hasArrow
-                //   label='Search places'
-                //   bg='red.400'
-                //   color='black'
-                // >
-                //   <Icon as={AiFillInfoCircle} color='#31BC2E' mt={1} ml={1} />
-                // </Tooltip>
               )}
 
               {row.index === 0 && (

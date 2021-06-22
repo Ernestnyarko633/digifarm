@@ -23,12 +23,15 @@ const CooperativeMemberCard = ({
   isDisabled,
   setInvites
 }) => {
-  // eslint-disable-next-line no-console
-  const { setAcres } = useStartFarm()
+  const { setAcres, setCoopConfigErrors } = useStartFarm()
   useEffect(() => {
     let mounted = true
     if (mounted && values) {
       setInvites(values)
+    }
+
+    if (mounted) {
+      setCoopConfigErrors(errors)
     }
 
     let total = 0
@@ -45,7 +48,14 @@ const CooperativeMemberCard = ({
       setAcres(total)
     }
     return () => (mounted = false)
-  }, [values, setInvites, value?.acreage, setAcres])
+  }, [
+    values,
+    setInvites,
+    value?.acreage,
+    setAcres,
+    errors,
+    setCoopConfigErrors
+  ])
 
   return (
     <Box bg='gray.50' rounded='md' p={4} my={5} pos='relative'>
@@ -94,8 +104,8 @@ const CooperativeMemberCard = ({
             bg='gray.100'
             borderBottomColor='none'
             value={value.email}
-            // error={errors.email}
-            // touched={touched.email}
+            error={errors?.email}
+            touched={touched?.email}
             name={`${name}email`}
             onChange={onChange}
             onBlur={onBlur}

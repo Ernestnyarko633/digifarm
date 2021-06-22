@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Flex, Image, Link, Heading, Text, Icon } from '@chakra-ui/react'
 import df_logo from 'assets/images/df_logo.png'
-import cfmotive from 'assets/images/cfmotive.svg'
+import cfmotive from 'assets/images/cfmotive.png'
+
 import PropTypes from 'prop-types'
 
 import { IoDocumentTextOutline } from 'react-icons/io5'
@@ -95,7 +96,7 @@ const cooperativeIntro = ({ location: { state } }) => {
         px={{ base: 4, xl: 20 }}
         overflowX={{ base: 'hidden', md: 'visible' }}
       >
-        <Box as='picture'>
+        <Box>
           <Image h={{ base: 5, md: 8 }} src={df_logo} />
         </Box>
         <Link
@@ -108,15 +109,24 @@ const cooperativeIntro = ({ location: { state } }) => {
           Contact Support
         </Link>
       </Flex>
-      <Box
+      <Flex
+        justify='center'
+        align='center'
         pos='relative'
-        pt={{ base: 10 }}
+        pt={{ base: 10, md: 0 }}
         bg='#022D2B'
         h={{ base: '40rem', xl: '45rem', '3xl': '50rem', '5xl': '64rem' }}
       >
-        <Image w='full' src={cfmotive} />
-        <CooperativeSignUp state={state} />
-      </Box>
+        <Image
+          // w='100vw'
+          bgPos='cover'
+          src={cfmotive}
+          h={{ base: '40rem', xl: '45rem', '3xl': '50rem', '5xl': '64rem' }}
+        />
+        <Box pos='absolute' top={{ base: 20, md: 40, '5xl': '15rem' }}>
+          <CooperativeSignUp state={state} />
+        </Box>
+      </Flex>
       <Flex
         justify='space-between'
         wrap='wrap'
@@ -126,8 +136,8 @@ const cooperativeIntro = ({ location: { state } }) => {
           '2xl': '28rem',
           '5xl': '18rem'
         }}
-        w={{ md: '80%' }}
-        mx={{ base: 7, md: 'auto', '5xl': '20rem' }}
+        w={{ md: '80%', '4xl': '60%' }}
+        mx={{ base: 7, md: 'auto', lg: '15rem', '4xl': '32rem' }}
       >
         {_data.map(item => (
           <Box
@@ -162,6 +172,7 @@ const cooperativeIntro = ({ location: { state } }) => {
       <CustomerStories stories={stories} />
 
       <CooperativeFAQ cooperativeFaqs={faqs} />
+
       <Box
         bg='#E5E5E5'
         h={{ base: 8, md: 12 }}
