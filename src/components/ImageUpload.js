@@ -18,7 +18,7 @@ const ImageUpload = ({
     accept: 'image/*, application/pdf',
     onDrop: acceptedFiles => {
       acceptedFiles.forEach(async file => {
-        setFieldValue('file', acceptedFiles)
+        setFieldValue('file', file)
       })
       setFiles(
         acceptedFiles.map(file =>
