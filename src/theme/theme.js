@@ -51,7 +51,7 @@ export const theme = extendTheme({
       600: '#d6e1c9',
       700: '#307926',
       800: '#5AA250',
-      900: 'linear-gradient(#31BC2E, #2eb32b)',
+      900: 'linear-gradient(#93CF88, #5AA250)',
       green: '#31BC2E',
       light: 'rgba(49, 188, 46, 0.2)',
       gray: '#F0F0F0',
@@ -82,8 +82,8 @@ export const theme = extendTheme({
       600: '#2eb32b'
     },
     linear: {
-      500: 'linear-gradient(#31BC2E, #31BC2E)',
-      600: 'linear-gradient(#2eb32b, #2eb32b)'
+      500: 'linear-gradient(#93CF88, #5AA250)',
+      600: 'linear-gradient(#93CF88, #5AA250)'
     },
     progressGreen: {
       500: '#d6e1c9',
