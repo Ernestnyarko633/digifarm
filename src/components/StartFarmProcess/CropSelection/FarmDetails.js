@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Grid, GridItem, Heading } from '@chakra-ui/react'
@@ -21,14 +22,16 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const { data, isLoading, error } = useFetch(null, getFarms, reload, query)
-
   sessionStorage.setItem('farms', JSON.stringify(data))
+
   const type = sessionStorage.getItem('type')
 
   useEffect(() => {
-    gridRef.current = true
+    if (gridRef) {
+      gridRef.current = true
+    }
 
-    return () => (gridRef.current = false)
+    return () => (gridRef ? (gridRef.current = false) : null)
   }, [gridRef])
 
   useEffect(() => {
