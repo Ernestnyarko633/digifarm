@@ -6,14 +6,7 @@ import { BsFillImageFill, BsX } from 'react-icons/bs'
 import { VscAdd } from 'react-icons/vsc'
 import { FaFilePdf } from 'react-icons/all'
 
-const ImageUpload = ({
-  files,
-  setFiles,
-  setFieldValue,
-  upload,
-  instruct,
-  values
-}) => {
+const ImageUpload = ({ files, setFiles, setFieldValue, upload, instruct }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*, application/pdf',
     onDrop: acceptedFiles => {
@@ -160,7 +153,6 @@ ImageUpload.propTypes = {
   files: PropTypes.any,
   setFiles: PropTypes.any,
   setFieldValue: PropTypes.any,
-  values: PropTypes.any,
   upload: PropTypes.any,
   instruct: PropTypes.any
 }
