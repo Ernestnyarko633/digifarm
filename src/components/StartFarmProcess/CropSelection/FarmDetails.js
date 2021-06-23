@@ -22,8 +22,8 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const { data, isLoading, error } = useFetch(null, getFarms, reload, query)
-
   sessionStorage.setItem('farms', JSON.stringify(data))
+
   const type = sessionStorage.getItem('type')
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
       gridRef.current = true
     }
 
-    return () => (gridRef.current = false)
+    return () => (gridRef ? (gridRef.current = false) : null)
   }, [gridRef])
 
   useEffect(() => {
