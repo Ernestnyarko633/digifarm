@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Flex, Text, Input, Avatar, Spinner, useToast } from '@chakra-ui/react'
 import useAuth from 'context/auth'
@@ -61,7 +60,7 @@ const AvatarForm = () => {
               speed='0.65s'
               emptyColor='gray.200'
               size='md'
-              color='cf.800'
+              color='cf.green'
             />
           )}
         </Flex>
@@ -72,12 +71,12 @@ const AvatarForm = () => {
           cursor='pointer'
           rounded='30px'
           fontSize='sm'
-          color='cf.800'
+          color='cf.green'
           align='center'
           borderWidth={1}
           pos='relative'
           py={{ base: 1 }}
-          borderColor='cf.800'
+          borderColor='cf.green'
           justifyContent='center'
           px={{ base: 3, md: 5 }}
         >

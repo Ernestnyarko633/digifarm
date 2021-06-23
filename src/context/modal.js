@@ -10,6 +10,7 @@ import PayoutModal from 'components/Modals/PayoutModal'
 import SuccessModal from 'components/Modals/SuccessModal'
 import ReceiptModal from 'components/Modals/ReceiptModal'
 import ShareModal from 'components/Modals/ShareModal'
+import Payment from 'components/Cards/CooperativeDashboard/Payment'
 
 const ModalContext = React.createContext({})
 
@@ -34,6 +35,8 @@ export const ModalContextProvider = ({ children }) => {
         return null
       case 'share':
         return <ShareModal />
+      case 'payment':
+        return <Payment />
       default:
         return null
     }

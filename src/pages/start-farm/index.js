@@ -29,9 +29,11 @@ const StartFarm = () => {
         direction='column'
         bgColor='white'
         w={{ md: '100vw' }}
-        h={{ md: '100vh' }}
+        h={{ md: 'calc(100vh - 5rem)' }}
         overflow='hidden'
-        mt={{ base: 14, md: 20, xl: 16 }}
+        mt={{ base: 14, md: 20, xl: 20 }}
+        pt={{ base: 8 }}
+        pb={{ base: 8 }}
       >
         <Box textAlign='center' mb={{ md: 12 }}>
           <Text fontFamily='light' fontSize={{ md: '3xl' }}>
@@ -63,11 +65,11 @@ const StartFarm = () => {
               }
               selected={selected.name === item.name}
               onClick={e => {
-                if (item.id === 'cooperative') return e.preventDefault()
+                if (item?.id === 'cooperative') return e?.preventDefault()
                 sessionStorage.setItem('type', item.id)
-                return setSelected(item)
+                setSelected(item)
               }}
-              disabled={item.name === 'Cooperative'}
+              disabled={item.disabled}
             />
           ))}
         </Flex>
@@ -83,7 +85,7 @@ const StartFarm = () => {
               px={{ base: 10, md: 20 }}
               h={{ base: 10, md: 12 }}
               fontSize={{ base: 'sm', md: 'md' }}
-              disabled={!selected || selected.id === 'cooperative'}
+              disabled={!selected}
             />
           </Link>
         </Box>

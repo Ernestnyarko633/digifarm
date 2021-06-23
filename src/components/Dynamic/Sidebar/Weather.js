@@ -12,7 +12,7 @@ export default function Weather({
   reloads
 }) {
   return (
-    <Grid gap={8} mb={8}>
+    <Grid gap={8} mx={8} mb={8}>
       {WeatherForeCastsHasError || WeatherForeCastsIsLoading ? (
         <Box pt={{ md: 10 }}>
           <FetchCard

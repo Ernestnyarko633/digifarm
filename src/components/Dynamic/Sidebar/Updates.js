@@ -1,4 +1,4 @@
-import { Grid, Text, Flex, Box } from '@chakra-ui/react'
+import { Box, Flex, Grid, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Updates as FarmUpdates } from 'theme/Icons'
@@ -48,7 +48,7 @@ export default function Updates({
         </Box>
       ) : (
         <>
-          <Grid gap={8} mb={8}>
+          <Grid gap={8} mx={8} my={8}>
             {sortedFeeds?.length > 0 &&
               sortedFeeds?.map(feed => (
                 <FarmUpdateCard
@@ -65,12 +65,7 @@ export default function Updates({
           </Grid>
           {sortedFeeds?.length === 0 && (
             <Flex w='100%' justify='center' align='center'>
-              <Text
-                w='100%'
-                fontSize='xl'
-                color='cf.800'
-                textAlign={{ base: 'center', md: 'initial' }}
-              >
+              <Text w='100%' fontSize='xl' color='cf.green' textAlign='center'>
                 No updates currently available.
               </Text>
             </Flex>

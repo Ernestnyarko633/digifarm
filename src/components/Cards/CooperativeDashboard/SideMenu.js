@@ -3,25 +3,57 @@ import {
   Box,
   Flex,
   Text,
-  Avatar,
   Icon,
   Input,
   FormControl,
-  FormLabel
+  FormLabel,
+  useToast,
+  Divider,
+  Image
 } from '@chakra-ui/react'
 
-import { getformattedDate } from 'helpers/misc'
+import { FirstLettersToUpperCase, getformattedDate } from 'helpers/misc'
 import PropTypes from 'prop-types'
 import Details from './Details'
 import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 import useAuth from 'context/auth'
+import useApi from 'context/api'
+import Button from 'components/Button'
+import cooperative_avatar from 'assets/images/cooperative_avatar.png'
 
-const SideMenu = ({ data, border, bg, ml }) => {
+const SideMenu = ({ data, border, bg, ml, click, loading }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
+  const { updateCooperative } = useApi()
   const { coopImg, setCoopImg } = useStartFarm()
   const [total, setTotal] = React.useState(0)
+
+  const toast = useToast()
+
+  const cooperativeUpdate = async value => {
+    try {
+      let formData = new FormData()
+      formData.append('cooperativeImg', value)
+      const res = await updateCooperative(data?._id, formData)
+      toast({
+        title: 'Cooperative Image Updated',
+        description: res.message,
+        status: 'success',
+        duration: 5000,
+        position: 'top-right'
+      })
+    } catch (error) {
+      toast({
+        title: 'Error occured',
+        description:
+          error?.message || error?.data?.message || 'Unexpected error.',
+        status: 'error',
+        duration: 5000,
+        position: 'top-right'
+      })
+    }
+  }
 
   React.useEffect(() => {
     let mounted = true
@@ -37,7 +69,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
 
   return (
     <Box
-      w='292px'
+      w='290px'
       ml={ml}
       mr='25px'
       borderWidth={border}
@@ -60,22 +92,30 @@ const SideMenu = ({ data, border, bg, ml }) => {
       >
         <Flex justify='center'>
           <Box pos='relative'>
-            <Avatar
-              name={data?.name}
-              src={coopImg ? URL.createObjectURL(coopImg) : data?.imageUrl}
-              size='xl'
+            <Image
+              src={
+                coopImg
+                  ? URL.createObjectURL(coopImg)
+                  : data?.imageUrl
+                  ? data?.imageUrl
+                  : cooperative_avatar
+              }
+              w='8rem'
+              h='8rem'
+              rounded='100%'
             />
-            {user.email === data.users[0].email && (
+
+            {user?.email === data?.users[0].email && (
               <FormControl>
                 <FormLabel>
                   <Flex
                     align='center'
                     justify='center'
                     color='white'
-                    h={8}
-                    w={8}
+                    h={9}
+                    w={9}
                     rounded='100%'
-                    bg='cf.800'
+                    bg='cf.green'
                     pos='absolute'
                     right={0}
                     bottom={0}
@@ -91,6 +131,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
                     pos='absolute'
                     onChange={async e => {
                       setCoopImg(e.currentTarget.files[0])
+                      await cooperativeUpdate(e.currentTarget.files[0])
                     }}
                   />
                 </FormLabel>
@@ -98,7 +139,7 @@ const SideMenu = ({ data, border, bg, ml }) => {
             )}
           </Box>
         </Flex>
-        <Text fontWeight='bold' fontSize='24px' textAlign='center'>
+        <Text fontWeight='bold' fontSize='20px' textAlign='center'>
           {data?.name}
         </Text>
       </Box>
@@ -111,27 +152,36 @@ const SideMenu = ({ data, border, bg, ml }) => {
         />
         <Details
           title='Location'
-          subtitle={
-            data?.product?.location?.name +
-            ' , ' +
-            data?.product?.location?.state
-          }
+          subtitle={FirstLettersToUpperCase(data?.product?.location?.name)}
         />
         <Details
           title='Cooperative type'
-          subtitle={data?.type?.name?.toUpperCase()}
+          subtitle={FirstLettersToUpperCase(data?.type?.name)}
         />
         <Details title='Members' subtitle={data?.users?.length} />
-        <Details title='Acreage' subtitle={total} />
+        <Details title='Total acreage' subtitle={total?.toFixed(1)} />
         <Details
-          title='Farm Manager'
+          title='Farm manager'
           subtitle={
             data?.product?.managers[0]?.firstName +
             ' ' +
             data?.product?.managers[0]?.lastName
           }
         />
-        <Details title='Farm Contract' />
+        <Divider borderColor='gray.300' />
+        <Box my={3} w='90%' mx='auto'>
+          <Button
+            btntitle='Download agreement'
+            variant='outline'
+            color='cf.green'
+            width='100%'
+            isLoading={loading}
+            isDisabled={loading}
+            py='10px'
+            fontSize={{ md: 'md' }}
+            onClick={click}
+          />
+        </Box>
       </Box>
     </Box>
   )
@@ -141,7 +191,9 @@ SideMenu.propTypes = {
   data: PropTypes.any,
   border: PropTypes.any,
   bg: PropTypes.any,
-  ml: PropTypes.any
+  ml: PropTypes.any,
+  click: PropTypes.any,
+  loading: PropTypes.any
 }
 
 export default SideMenu

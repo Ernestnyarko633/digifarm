@@ -23,12 +23,12 @@ const Step = ({ activity, cutThread }) => {
           h={8}
           borderWidth={isPending && 1}
           borderColor={isPending && 'gray.300'}
-          bg={isComplete ? 'cf.800' : 'transparent'}
+          bg={isComplete ? 'cf.green' : 'transparent'}
           color='white'
         >
           {isComplete && <Icon as={FiCheck} />}
           {isInProgess && (
-            <Icon as={ImRadioChecked} boxSize={8} color='cf.800' />
+            <Icon as={ImRadioChecked} boxSize={8} color='cf.green' />
           )}
           {isPending && <Icon as={GoPrimitiveDot} color='gray.300' />}
         </Flex>
@@ -56,7 +56,7 @@ const Step = ({ activity, cutThread }) => {
         <Box textAlign='right'>
           <Tag
             bg='cf.200'
-            color='cf.800'
+            color='cf.green'
             rounded='3xl'
             px={4}
             textAlign='center'
@@ -73,7 +73,7 @@ const Step = ({ activity, cutThread }) => {
         <Box textAlign='right'>
           <Tag
             bg='cf.200'
-            color='cf.800'
+            color='cf.green'
             rounded='3xl'
             px={4}
             textAlign='center'

@@ -36,7 +36,9 @@ const CooperativeType = () => {
       align='center'
       justify='center'
       direction='column'
-      mt={{ base: 14, md: 20, xl: 16 }}
+      h={{ base: '100%', sm: 'calc(100vh - 5rem)' }}
+      pt={{ base: 0 }}
+      pb={{ base: 12 }}
     >
       {loading || error ? (
         <FetchCard
@@ -52,10 +54,10 @@ const CooperativeType = () => {
         />
       ) : (
         <>
-          <Box textAlign='center' my={20}>
+          <Box textAlign='center' my={12}>
             <Text>Welcome {user?.firstName}</Text>
             <Heading as='h4' fontSize={{ base: 'xl', md: '2xl' }}>
-              Select your cooperative type
+              Select the type of cooperative you want to form.
             </Heading>
           </Box>
 
@@ -81,10 +83,10 @@ const CooperativeType = () => {
             ))}
           </Grid>
 
-          <Flex mt={{ base: 14, md: 20 }} mb={{ base: 10, md: 0 }}>
+          <Flex mt={{ base: 14, md: 12 }}>
             <Link as={NavLink} to='/start-farm' _hover={{ textDecor: 'none' }}>
               <Button
-                btntitle='Back'
+                btntitle='previous'
                 px={{ base: 10, md: 20 }}
                 h={{ base: 10, md: 12 }}
                 fontSize={{ base: 'sm', md: 'md' }}

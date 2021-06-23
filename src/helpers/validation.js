@@ -62,6 +62,33 @@ export const PersonalInfoSchema = Yup.object().shape({
   })
 })
 
+export const SignupSchema = Yup.object().shape({
+  firstName: Yup.string().required('This field is required*'),
+  lastName: Yup.string().required('This field is required*'),
+  email: Yup.string()
+    .email('Invalid email!')
+    .required('This field is required*'),
+  country: Yup.string().required('This field is required*'),
+  phoneNumber: Yup.string()
+    .test(
+      'valid',
+      'Invalid phone number, exclude country code!',
+      value =>
+        value && validator.isMobilePhone(value, 'any', { strictMode: true })
+    )
+    .required('This field is required*'),
+  role: Yup.string().required('This field is required*'),
+  password: Yup.string()
+    .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
+      message:
+        'Minimum 8 characters, at least an uppercase, lowercase, number and special character*'
+    })
+    .required('This field is required*'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords do not match*')
+    .required('This field is required*')
+})
+
 export const BankDetailsSchema = Yup.object()
   .shape({
     bankName: Yup.string().required('This field is required*'),
@@ -75,6 +102,33 @@ export const BankDetailsSchema = Yup.object()
     iban: Yup.string()
   })
   .atLeastOneOf(['iban', 'accountNumber'])
+
+Yup.addMethod(Yup.array, 'unique', function (message, path) {
+  return this.test('unique', message, function (list) {
+    const mapper = x => x.email
+    const set = [...new Set(list.map(mapper))]
+    const isUnique = list.length === set.length
+    if (isUnique) {
+      return true
+    }
+    const idx = list.findIndex((l, i) => mapper(l) !== set[i])
+    return this.createError({
+      path: `users[${idx}].email`,
+      message: message
+    })
+  })
+})
+export const CooperativeSchema = Yup.object().shape({
+  users: Yup.array()
+    .of(
+      Yup.object().shape({
+        email: Yup.string(),
+        acreage: Yup.string().required('Acreage is required')
+      })
+    )
+    .unique('Email must be unique', a => a.email)
+    .required('Email and acreage is  required*')
+})
 
 BankDetailsSchema.isValidSync({ iban: 9 }) // false
 BankDetailsSchema.isValidSync({ accountNumber: 7, iban: 9 })

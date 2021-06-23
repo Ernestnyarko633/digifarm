@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -6,7 +7,7 @@ import FarmBoardCardWrapper from './FarmBoardCardWrapper'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 
 //import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import ReactPlayer from 'react-player/lazy'
+import ReactPlayer from 'react-player/youtube'
 
 const WeeklyVideoCard = ({ status, timestamp, content }) => {
   const [activeVideoIndex, setVideoActiveIndex] = React.useState(0)
@@ -17,7 +18,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
   const handleClick = (value, array, index, indexFunc, selectedItemFunc) => {
     const comparant =
       index + value === 0 ||
-      index + value > array.length - 1 ||
+      index + value > array?.length - 1 ||
       index + value < 0
         ? 0
         : index + value
@@ -34,6 +35,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
       volume={0.3}
       url={url}
       playing={false}
+      SameSite
     />
   )
   YoutubeSlide.propTypes = {
@@ -52,7 +54,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
 
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
-          <Text color='cf.800' fontWeight={700}>
+          <Text color='cf.green' fontWeight={700}>
             {status ? 'VIDEOS' : null}
           </Text>
         </Box>
@@ -79,75 +81,77 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
             muted
             playing={false}
           />
-          <Flex
-            w='100%'
-            align='center'
-            justify='space-between'
-            pos='absolute'
-            bottom={{ base: '50%' }}
-            left={{ base: '0%' }}
-          >
+          {content?.data?.body[0].items?.length > 1 ? (
             <Flex
-              as='button'
-              role='button'
-              aria-label='prev button'
+              w='100%'
               align='center'
-              justify='center'
-              w={10}
-              h={10}
-              rounded='100%'
-              _hover={{
-                background: 'cf.800',
-                color: 'white'
-              }}
-              color='white'
-              mr={2}
-              outlineColor='none'
-              outline='none'
-              disabled={activeVideoIndex === 0}
-              onClick={() => {
-                return handleClick(
-                  -1,
-                  content?.data?.body[0].items,
-                  activeVideoIndex,
-                  setVideoActiveIndex,
-                  setSelectedVideo
-                )
-              }}
+              justify='space-between'
+              pos='absolute'
+              bottom={{ base: '50%' }}
+              left={{ base: '0%' }}
             >
-              <Icon as={BsChevronLeft} />
+              <Flex
+                as='button'
+                role='button'
+                aria-label='prev button'
+                align='center'
+                justify='center'
+                w={10}
+                h={10}
+                rounded='100%'
+                _hover={{
+                  background: 'cf.green',
+                  color: 'white'
+                }}
+                color='white'
+                mr={2}
+                outlineColor='none'
+                outline='none'
+                disabled={activeVideoIndex === 0}
+                onClick={() => {
+                  return handleClick(
+                    -1,
+                    content?.data?.body[0].items,
+                    activeVideoIndex,
+                    setVideoActiveIndex,
+                    setSelectedVideo
+                  )
+                }}
+              >
+                <Icon as={BsChevronLeft} />
+              </Flex>
+              <Flex
+                as='button'
+                role='button'
+                aria-label='next button'
+                align='center'
+                justify='center'
+                w={10}
+                h={10}
+                _hover={{
+                  background: 'cf.green',
+                  color: 'white'
+                }}
+                rounded='100%'
+                color='white'
+                outlineColor='none'
+                outline='none'
+                disabled={activeVideoIndex === content?.data?.body[0].items - 1}
+                ml={2}
+                onClick={() => {
+                  return handleClick(
+                    +1,
+                    content?.data?.body[0].items,
+                    activeVideoIndex,
+                    setVideoActiveIndex,
+                    setSelectedVideo
+                  )
+                }}
+              >
+                <Icon as={BsChevronRight} />
+              </Flex>
             </Flex>
-            <Flex
-              as='button'
-              role='button'
-              aria-label='next button'
-              align='center'
-              justify='center'
-              w={10}
-              h={10}
-              _hover={{
-                background: 'cf.800',
-                color: 'white'
-              }}
-              rounded='100%'
-              color='white'
-              outlineColor='none'
-              outline='none'
-              disabled={activeVideoIndex === content?.data?.body[0].items - 1}
-              ml={2}
-              onClick={() => {
-                return handleClick(
-                  +1,
-                  content?.data?.body[0].items,
-                  activeVideoIndex,
-                  setVideoActiveIndex,
-                  setSelectedVideo
-                )
-              }}
-            >
-              <Icon as={BsChevronRight} />
-            </Flex>
-          </Flex>
+          ) : null}
         </Box>
       </Box>
     </FarmBoardCardWrapper>

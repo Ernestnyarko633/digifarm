@@ -108,7 +108,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
 
         <Flex direction='column' justify='center' align='center'>
           <Box mx={{ base: 4 }}>
-            <Text color='cf.800' fontWeight={700}>
+            <Text color='cf.green' fontWeight={700}>
               {status !== 'news' || status !== 'weekly_videos'
                 ? 'FARM FEED'
                 : null}
@@ -162,7 +162,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 h={10}
                 rounded='100%'
                 // _hover={{
-                //   background: 'cf.800',
+                //   background: 'cf.green',
                 //   color: 'white'
                 // }}
                 color='white'
@@ -192,11 +192,11 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 w={10}
                 h={10}
                 // _hover={{
-                //   background: 'cf.800',
+                //   background: 'cf.green',
                 //   color: 'white'
                 // }}
                 rounded='100%'
-                color='cf.800'
+                color='cf.green'
                 outlineColor='black'
                 outline='black'
                 ml={2}
@@ -218,7 +218,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
             <Box mt={6}>
               <Flex direction='row' align='center'>
                 <Tag
-                  color='cf.800'
+                  color='cf.green'
                   justifyContent='center'
                   bgGradient='linear(to-l, #DEECDC,#EFF6ED)'
                   rounded={20}
@@ -266,7 +266,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 }
               </Collapse>
               <Box as='button' onClick={handleToggle}>
-                <Text color='cf.800' py={{ base: 1 }}>
+                <Text color='cf.green' py={{ base: 1 }}>
                   {!show ? 'Read More' : 'Collapse'}
                 </Text>
               </Box>

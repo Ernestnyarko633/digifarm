@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import { urlify } from 'helpers/misc'
+import { urlify, embed_url } from 'helpers/misc'
 
 const NewsCard = ({ content, status }) => {
   const [show, setShow] = React.useState(false)
@@ -65,14 +65,16 @@ const NewsCard = ({ content, status }) => {
       <Flex align='center'>
         <Box ml={4}>
           <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
-            Weekly News
+            {content?.data?.category === 'Blog Post'
+              ? 'Blog Post'
+              : 'Weekly News'}
           </Heading>
         </Box>
       </Flex>
 
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
-          <Text color='cf.800' fontWeight={700}>
+          <Text color='cf.green' fontWeight={700}>
             {status === 'news' ? status.toUpperCase() : null}
           </Text>
         </Box>
@@ -82,6 +84,67 @@ const NewsCard = ({ content, status }) => {
       </Flex>
     </Flex>
   )
+
+  const spanRenderer = item => {
+    const { spans, text, type } = item
+
+    if (type === 'paragraph') {
+      if (spans?.length) {
+        const array = spans?.map(span => {
+          const { start, end, type: span_type } = span
+          if (span_type === 'hyperlink') {
+            const { data } = span
+            const { url } = data
+            return (
+              <>
+                <Text
+                  color='gray.500'
+                  mt={3}
+                  dangerouslySetInnerHTML={{
+                    __html: embed_url(text?.substr(start, end), url)
+                  }}
+                  fontSize={{ base: 'sm', md: 'md' }}
+                />
+              </>
+            )
+          }
+          if (span_type === 'strong') {
+            return (
+              <>
+                <Text
+                  as='strong'
+                  color='gray.600'
+                  mt={3}
+                  dangerouslySetInnerHTML={{
+                    __html: urlify(text?.substr(start, end))
+                  }}
+                  fontSize={{ base: 'sm', md: 'md' }}
+                />
+              </>
+            )
+          }
+          return null
+        })
+
+        return array
+      } else {
+        return (
+          <>
+            <Text
+              color='gray.500'
+              mt={3}
+              dangerouslySetInnerHTML={{
+                __html: urlify(text)
+              }}
+              fontSize={{ base: 'sm', md: 'md' }}
+            />
+          </>
+        )
+      }
+    }
+
+    return null
+  }
 
   return (
     <FarmBoardCardWrapper status={status} content={content}>
@@ -125,7 +188,7 @@ const NewsCard = ({ content, status }) => {
                 h={10}
                 rounded='100%'
                 _hover={{
-                  background: 'cf.800',
+                  background: 'cf.green',
                   color: 'white'
                 }}
                 color='white'
@@ -153,7 +216,7 @@ const NewsCard = ({ content, status }) => {
                 w={10}
                 h={10}
                 _hover={{
-                  background: 'cf.800',
+                  background: 'cf.green',
                   color: 'white'
                 }}
                 rounded='100%'
@@ -202,19 +265,7 @@ const NewsCard = ({ content, status }) => {
                   {details?.slice_type === 'details' &&
                     details?.primary?.description?.map(item => {
                       if (item?.type === 'paragraph') {
-                        return (
-                          <>
-                            <Text
-                              color='gray.500'
-                              mt={3}
-                              key={item.text}
-                              dangerouslySetInnerHTML={{
-                                __html: urlify(item.text)
-                              }}
-                              fontSize={{ base: 'sm', md: 'md' }}
-                            />
-                          </>
-                        )
+                        return spanRenderer(item)
                       }
 
                       if (item?.type === 'image') {
@@ -247,7 +298,7 @@ const NewsCard = ({ content, status }) => {
               ))} */}
             </Collapse>
             <Box as='button' onClick={handleToggle}>
-              <Text color='cf.800' py={{ base: 1 }}>
+              <Text color='cf.green' py={{ base: 1 }}>
                 {!show ? 'Read More' : 'Collapse'}
               </Text>
             </Box>

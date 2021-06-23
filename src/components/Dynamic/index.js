@@ -145,6 +145,7 @@ const DynamicFarm = ({
     <React.Fragment>
       {
         <SelectedFarm
+          //reloads funcs
           reloads={[
             ...reloads,
             triggerEosTaskReload,

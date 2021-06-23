@@ -1,35 +1,34 @@
-/* eslint-disable */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { saveAs } from 'file-saver';
-import { Avatar, Box, Flex, Image, Text, useToast } from '@chakra-ui/react';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { saveAs } from 'file-saver'
+import { Avatar, Box, Flex, Image, Text, useToast } from '@chakra-ui/react'
 
-import Button from 'components/Button';
-import useAuth from 'context/auth';
-import useApi from 'context/api';
+import Button from 'components/Button'
+import useAuth from 'context/auth'
+import useApi from 'context/api'
 export default function FarmReceiptCard({ farm, title, type }) {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false)
 
-  const { isAuthenticated } = useAuth();
-  const { user } = isAuthenticated();
-  const { downloadFile } = useApi();
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  const { downloadFile } = useApi()
 
-  const toast = useToast();
+  const toast = useToast()
 
-  const _downloadOrder = async (query) => {
+  const _downloadOrder = async query => {
     try {
-      setLoading(true);
-      const res = await downloadFile('orders', query);
+      setLoading(true)
+      const res = await downloadFile('orders', query)
       let blob = new Blob([res.data], {
-        type: 'application/pdf;charset=utf-8',
-      });
+        type: 'application/pdf;charset=utf-8'
+      })
       toast({
         title: 'Download starting',
         status: 'success',
         duration: 5000,
-        position: 'top-right',
-      });
-      saveAs(blob, `${query.reference}-agreement.pdf`);
+        position: 'top-right'
+      })
+      saveAs(blob, `${query.reference}-${query?.type}.pdf`)
     } catch (error) {
       toast({
         title: 'Download failed',
@@ -37,12 +36,12 @@ export default function FarmReceiptCard({ farm, title, type }) {
           error?.message || error?.data?.message || 'Unexpected error.',
         status: 'error',
         duration: 5000,
-        position: 'top-right',
-      });
+        position: 'top-right'
+      })
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <Box
@@ -69,17 +68,17 @@ export default function FarmReceiptCard({ farm, title, type }) {
             btntitle={`View ${title.toLowerCase()}`}
             onClick={() => {
               if (farm?.order?.agreement) {
-                return (window.location = farm?.order?.agreement);
+                return (window.location = farm?.order?.agreement)
               }
               return _downloadOrder({
                 reference: farm?.order?.reference,
-                type: type,
-              });
+                type: type
+              })
             }}
             bg='white'
             borderWidth={1}
-            borderColor='cf.800'
-            color='cf.800'
+            borderColor='cf.green'
+            color='cf.green'
             rounded='30px'
             h={10}
             width={32}
@@ -114,17 +113,17 @@ export default function FarmReceiptCard({ farm, title, type }) {
           btntitle={`View ${title.toLowerCase()}`}
           onClick={() => {
             if (farm?.order?.agreement) {
-              return (window.location = farm?.order?.agreement);
+              return (window.location = farm?.order?.agreement)
             }
             return _downloadOrder({
               reference: farm?.order?.reference,
-              type: type,
-            });
+              type: type
+            })
           }}
           bg='white'
           borderWidth={1}
-          borderColor='cf.800'
-          color='cf.800'
+          borderColor='cf.green'
+          color='cf.green'
           rounded='30px'
           h={10}
           width='100%'
@@ -135,11 +134,11 @@ export default function FarmReceiptCard({ farm, title, type }) {
         />
       </Box>
     </Box>
-  );
+  )
 }
 
 FarmReceiptCard.propTypes = {
   farm: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
+  title: PropTypes.string.isRequired
+}

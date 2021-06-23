@@ -95,9 +95,9 @@ const ConfirmSale = ({
                     onClick={onClosex}
                     rounded='30px'
                     fontWeight='thin'
-                    color='cf.800'
+                    color='cf.green'
                     variant='outline'
-                    borderColor='cf.800'
+                    borderColor='cf.green'
                     w={{ md: '120px' }}
                     bg='white'
                     _hover={{ bg: 'white' }}
@@ -132,7 +132,7 @@ const ConfirmSale = ({
               <Divider orientation='horizontal' borderColor='gray.400' />
               <ModalBody p={10}>
                 <Center>
-                  <CheckIcon w={10} h={10} color='cf.800' />
+                  <CheckIcon w={10} h={10} color='cf.green' />
                 </Center>
                 <Center>
                   <Text pt={4} w='380px' textAlign='center'>
@@ -148,10 +148,10 @@ const ConfirmSale = ({
                     mt={6}
                     onClick={onClosex}
                     borderWidth={1}
-                    borderColor='cf.800'
+                    borderColor='cf.green'
                     w={{ md: '300px' }}
                     h={{ md: '40px' }}
-                    color='cf.800'
+                    color='cf.green'
                     mr={2}
                   >
                     Dismiss

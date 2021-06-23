@@ -136,7 +136,7 @@
 //             // <Box ml={{ base: 5, md: 12 }} d={{ base: 'none', md: 'block' }}>
 //             //   <Tag
 //             //     bg='cf.200'
-//             //     color='cf.800'
+//             //     color='cf.green'
 //             //     rounded='xl'
 //             //     px={{ base: 4, md: 6 }}
 //             //     fontWeight='bold'
@@ -207,7 +207,7 @@
 //                 rounded='100%'
 //                 borderWidth={1}
 //                 borderColor='white'
-//                 color='cf.800'
+//                 color='cf.green'
 //                 bg='white'
 //                 ml={2}
 //                 onClick={() => handleClick(+1)}
@@ -280,7 +280,7 @@
 //                 rounded='100%'
 //                 borderWidth={1}
 //                 borderColor='white'
-//                 color='cf.800'
+//                 color='cf.green'
 //                 bg='white'
 //                 ml={2}
 //                 onClick={() => _handleClick(+1)}

@@ -159,7 +159,11 @@ const PayoutModal = () => {
                 >
                   <Flex w='100%'>
                     <Box>
-                      <Icon boxSize={5} as={AiFillInfoCircle} color='cf.800' />
+                      <Icon
+                        boxSize={5}
+                        as={AiFillInfoCircle}
+                        color='cf.green'
+                      />
                     </Box>
                     <Text ml={{ md: 4 }}>
                       {' '}
@@ -299,7 +303,7 @@ const PayoutModal = () => {
                   </Flex>
                   <Button
                     btntitle='Confirm'
-                    borderColor='cf.800'
+                    borderColor='cf.green'
                     color='white'
                     rounded='30px'
                     my={5}

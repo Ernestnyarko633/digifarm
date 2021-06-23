@@ -110,7 +110,7 @@ export default function ShareScreen({ isOpen, onClose, image }) {
                         <Textarea
                           borderWidth={0}
                           borderBottomWidth={2}
-                          borderBottomColor='cf.800'
+                          borderBottomColor='cf.green'
                           w='100%'
                           _focus={{ outline: 'none' }}
                           _hover={{ outline: 'none' }}

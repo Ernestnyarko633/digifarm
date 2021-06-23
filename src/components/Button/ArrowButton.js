@@ -4,32 +4,32 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
 import PropTypes from 'prop-types'
 
 const ArrowButton = ({ handleClick }) => (
-  <Flex justify='flex-end' mx={{ md: 4 }}>
+  <Flex justify={{ md: 'flex-end' }} mx={{ md: 4 }} mb={{ base: 6, md: 0 }}>
     <IconButton
       rounded='100%'
-      color='cf.800'
+      color='cf.green'
       variant='outline'
       borderWidth='2px'
-      borderColor='cf.800'
+      borderColor='cf.green'
       aria-label='Left Arrow'
       onClick={() => handleClick(-1)}
       icon={<MdKeyboardArrowLeft size={20} />}
-      _hover={{ bg: 'cf.800', borderColor: 'cf.800', color: 'white' }}
-      _active={{ bg: 'cf.800', borderColor: 'cf.800', color: 'white' }}
+      _hover={{ bg: 'cf.green', borderColor: 'cf.green', color: 'white' }}
+      _active={{ bg: 'cf.green', borderColor: 'cf.green', color: 'white' }}
     />
     <IconButton
       ml={2}
       rounded='100%'
-      color='cf.800'
+      color='cf.green'
       bg='transparent'
       variant='outline'
       borderWidth='2px'
-      borderColor='cf.800'
+      borderColor='cf.green'
       aria-label='Right Arrow'
       onClick={() => handleClick(+1)}
       icon={<MdKeyboardArrowRight size={20} />}
-      _hover={{ bg: 'cf.800', borderColor: 'cf.800', color: 'white' }}
-      _active={{ bg: 'cf.800', borderColor: 'cf.800', color: 'white' }}
+      _hover={{ bg: 'cf.green', borderColor: 'cf.green', color: 'white' }}
+      _active={{ bg: 'cf.green', borderColor: 'cf.green', color: 'white' }}
     />
   </Flex>
 )

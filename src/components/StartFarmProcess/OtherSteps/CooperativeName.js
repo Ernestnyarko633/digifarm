@@ -1,20 +1,50 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Flex } from '@chakra-ui/layout'
+import { Box, Flex, Text } from '@chakra-ui/layout'
 import { Avatar } from '@chakra-ui/avatar'
-import { Icon, Input, Heading, FormLabel, FormControl } from '@chakra-ui/react'
+import {
+  Icon,
+  Input,
+  Heading,
+  FormLabel,
+  FormControl,
+  useToast,
+  FormHelperText
+} from '@chakra-ui/react'
 import { HiPencil } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
 
 const CooperativeName = () => {
   const { setCooperativeName, cooperativeName, coopImg, setCoopImg } =
     useStartFarm()
+  const [isLarge, setIsLarge] = React.useState(false)
   const handleChange = e => {
     setCooperativeName(e.target.value)
   }
+  const toast = useToast()
+  React.useEffect(() => {
+    let mounted = true
+
+    if (mounted && isLarge) {
+      toast({
+        title: 'File is too large',
+        status: 'error',
+        duration: 5000,
+        position: 'top-right'
+      })
+    }
+
+    return () => (mounted = false)
+  }, [isLarge, toast])
 
   return (
-    <Flex align='center' justify='center' direction='column'>
+    <Flex
+      align='center'
+      justify='center'
+      direction='column'
+      px={{ base: 4, md: 0 }}
+    >
       <Box pos='relative'>
         <Avatar
           src={
@@ -33,7 +63,7 @@ const CooperativeName = () => {
               h={8}
               w={8}
               rounded='100%'
-              bg='cf.800'
+              bg='cf.green'
               pos='absolute'
               right={0}
               bottom={0}
@@ -48,14 +78,24 @@ const CooperativeName = () => {
               opacity={0}
               pos='absolute'
               onChange={async e => {
-                setCoopImg(e.currentTarget.files[0])
+                setIsLarge(false)
+                let file_size = e.currentTarget.files[0].size
+                if (file_size < 1e6) {
+                  return setCoopImg(e.currentTarget.files[0])
+                } else {
+                  setIsLarge(true)
+                  return e.preventDefault()
+                }
               }}
             />
           </FormLabel>
         </FormControl>
+        <Text fontSize='sm' color='gray.500'>
+          file limit: 1mb
+        </Text>
       </Box>
       <Box mt={6}>
-        <Flex>
+        <Flex align='center' justify='center'>
           <Heading
             as='h4'
             ml={1}
@@ -72,10 +112,16 @@ const CooperativeName = () => {
             max={15}
             rounded={0}
             value={cooperativeName}
-            placeholder='Min: 3 characters, Max: 15 characters'
-            _focus={{ borderColor: 'cf.800' }}
-            onChange={handleChange}
+            placeholder='Eg. CompleteNation'
+            _focus={{ borderColor: 'cf.green' }}
+            onChange={e => {
+              if (e?.target?.value?.length > 15) return e?.preventDefault()
+              return handleChange(e)
+            }}
           />
+          <FormHelperText>
+            Name should have a minimum of 3 letters and a maximum of 15 letters
+          </FormHelperText>
         </FormControl>
       </Box>
     </Flex>

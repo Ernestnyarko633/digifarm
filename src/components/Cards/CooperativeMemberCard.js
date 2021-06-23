@@ -18,14 +18,20 @@ const CooperativeMemberCard = ({
   onBlur,
   remove,
   member,
+  errors,
+  touched,
   isDisabled,
   setInvites
 }) => {
-  const { setAcres } = useStartFarm()
+  const { setAcres, setCoopConfigErrors } = useStartFarm()
   useEffect(() => {
     let mounted = true
     if (mounted && values) {
       setInvites(values)
+    }
+
+    if (mounted) {
+      setCoopConfigErrors(errors)
     }
 
     let total = 0
@@ -42,7 +48,14 @@ const CooperativeMemberCard = ({
       setAcres(total)
     }
     return () => (mounted = false)
-  }, [values, setInvites, value?.acreage, setAcres])
+  }, [
+    values,
+    setInvites,
+    value?.acreage,
+    setAcres,
+    errors,
+    setCoopConfigErrors
+  ])
 
   return (
     <Box bg='gray.50' rounded='md' p={4} my={5} pos='relative'>
@@ -50,17 +63,19 @@ const CooperativeMemberCard = ({
         <Text color='black' fontWeight={700}>
           {member === 1 ? 'You (Member)' : 'Member'} {member}
         </Text>
-        <Box
-          bg='gray.100'
-          py={1}
-          px={5}
-          ml={3}
-          fontSize='xs'
-          rounded='sm'
-          color='gray.500'
-        >
-          $ {getFormattedMoney(value?.acreage * farm?.pricePerAcre)}
-        </Box>
+        {value?.acreage && (
+          <Box
+            bg='gray.100'
+            py={1}
+            px={5}
+            ml={3}
+            fontSize='xs'
+            rounded='sm'
+            color='gray.500'
+          >
+            $ {getFormattedMoney(value?.acreage * farm?.pricePerAcre)}
+          </Box>
+        )}
       </Flex>
 
       {values?.length > 2 && (
@@ -72,11 +87,11 @@ const CooperativeMemberCard = ({
           role='button'
           aria-label='close button'
           onClick={e => {
-            if (member - 1 === 0) return e.preventDefault()
+            if (member - 1 <= 1) return e.preventDefault()
             return remove(values?.length - 1)
           }}
         >
-          {member - 1 !== 0 && <Icon as={MdClose} />}
+          {member - 1 > 1 && <Icon as={MdClose} />}
         </Box>
       )}
 
@@ -89,9 +104,13 @@ const CooperativeMemberCard = ({
             bg='gray.100'
             borderBottomColor='none'
             value={value.email}
+            error={errors?.email}
+            touched={touched?.email}
             name={`${name}email`}
             onChange={onChange}
             onBlur={onBlur}
+            background='#ffffff'
+            marginTop='0px'
           />
         </GridItem>
         <GridItem colSpan={2}>
@@ -103,10 +122,11 @@ const CooperativeMemberCard = ({
             value={value.acreage}
             name={`${name}acreage`}
             onChange={e => {
-              if (e?.target?.value < 0) return e.preventDefault()
               return onChange(e)
             }}
             onBlur={onBlur}
+            background='#ffffff'
+            marginTop='0px'
           />
         </GridItem>
       </Grid>
@@ -123,6 +143,8 @@ CooperativeMemberCard.propTypes = {
   remove: PropTypes.func,
   member: PropTypes.number,
   isDisabled: PropTypes.bool,
+  touched: PropTypes.any,
+  errors: PropTypes.any,
   setInvites: PropTypes.func,
   farm: PropTypes.object
 }

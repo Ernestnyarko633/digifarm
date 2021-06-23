@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import getConfig from 'utils/configs'
 import Prismic from 'prismic-javascript'
@@ -11,88 +12,80 @@ const Client = Prismic.client(PRISMIC_API, {
   accessToken: PRISMIC_ACCESS_TOKEN
 })
 
-export const useNews = () => {
-  const [news, setNewsData] = React.useState([])
+export const usePrismic = () => {
+  const [news, setNewsData] = React.useState(null)
+  const [videos, setVideosData] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted && !news.length) {
+    if ((mounted && !news) || !videos) {
       const fetchData = async () => {
         try {
           setLoading(true)
-          const [res1] = await Promise.all([
-            Client.query(Prismic.Predicates.at('document.type', 'news'))
-          ])
-          if (res1) setNewsData(res1.results)
-        } catch (err) {
-          setError('Could not fetch data')
-        } finally {
-          setLoading(false)
-        }
-      }
-      fetchData()
-    }
-    return () => (mounted = false)
-  }, [news])
-
-  return {
-    loading,
-    news: news
-      ?.slice()
-      ?.sort(
-        (a, b) =>
-          new Date(b.first_publication_date) -
-          new Date(a.first_publication_date)
-      ),
-    error
-  }
-}
-
-export const useVideos = () => {
-  const [videos, setVideosData] = React.useState([])
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState(null)
-
-  React.useEffect(() => {
-    let mounted = true
-    if (mounted && !videos.length) {
-      const fetchData = async () => {
-        try {
-          setLoading(true)
-          const [res1] = await Promise.all([
+          // await news and video prismic documents
+          const [news_response, video_response] = await Promise.all([
+            Client.query(Prismic.Predicates.at('document.type', 'news')),
             Client.query(
               Prismic.Predicates.at('document.type', 'weekly_videos')
             )
           ])
-          if (res1) setVideosData(res1.results)
+
+          // if response exists set the corresponding data
+          if (news_response) setNewsData(news_response?.results || [])
+          if (video_response) setVideosData(video_response?.results || [])
         } catch (err) {
-          setError('Could not fetch data')
+          // catch errors if any and st them
+          setError(err?.message || err || 'Could not fetch data')
         } finally {
+          //finally set loading too false
           setLoading(false)
         }
       }
       fetchData()
     }
     return () => (mounted = false)
-  }, [videos])
+  }, [news, videos])
 
+  // returns and obj {loading, news, blogs, videos, errors} includes sorting according to dates
   return {
     loading,
-    videos: videos
-      ?.slice()
-      ?.sort(
-        (a, b) =>
-          new Date(b.first_publication_date) -
-          new Date(a.first_publication_date)
-      ),
+    news:
+      news
+        ?.filter(
+          news =>
+            news?.data?.category === 'News' || news?.data?.category === null
+        )
+        ?.slice()
+        ?.sort(
+          (a, b) =>
+            new Date(b.first_publication_date) -
+            new Date(a.first_publication_date)
+        ) || [],
+    blogs:
+      news
+        ?.filter(blog => blog?.data?.category === 'Blog Post')
+        ?.slice()
+        ?.sort(
+          (a, b) =>
+            new Date(b.first_publication_date) -
+            new Date(a.first_publication_date)
+        ) || [],
+    videos:
+      videos
+        ?.slice()
+        ?.sort(
+          (a, b) =>
+            new Date(b.first_publication_date) -
+            new Date(a.first_publication_date)
+        ) || [],
     error
   }
 }
 
 export const useFeeds = () => {
-  const [feeds, setFeeds] = React.useState([])
+  const [feeds, setFeeds] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
   const [reload, setReload] = React.useState(0)
@@ -108,11 +101,11 @@ export const useFeeds = () => {
   React.useEffect(() => {
     let mounted = true
 
-    if (mounted && !feeds.length) {
-      setLoading(true)
-
+    if (mounted && farms && feeds === null) {
       const fetchData = async () => {
         try {
+          setLoading(true)
+
           const feedPromises = farms.map(async farm => {
             const response = await getMyFarmFeeds({
               farm: farm?.order?.product?._id
@@ -126,27 +119,27 @@ export const useFeeds = () => {
           const allFeeds = await Promise.all(feedPromises)
 
           //combining all data now from prismic and farm feeds
-          if (allFeeds) {
-            allFeeds.map(f => setFeeds(s => [...s, ...f]))
+          if (allFeeds?.length) {
+            allFeeds.map(f =>
+              setFeeds(s => (!s ? [...[], ...f] : [...s, ...f]))
+            )
+          } else {
+            setFeeds([])
           }
         } catch (error) {
+          setFeeds([])
           setError(error)
         } finally {
           setLoading(false)
         }
       }
-
-      if (farms) {
-        fetchData()
-      }
+      fetchData()
     } else {
-      error && !feeds.length && triggerReload()
+      let row = false
+      row && !error && !feeds?.length && triggerReload()
     }
-
     return () => (mounted = false)
   }, [farms, getMyFarmFeeds, feeds, error])
-
-  //FIXME: larger feeds would slow down process
 
   return {
     loading: farmsIsLoading || loading,

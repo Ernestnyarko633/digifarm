@@ -1,11 +1,11 @@
-import { Grid, Text, Flex } from '@chakra-ui/react'
+import { Box, Flex, Grid, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { BiTime } from 'react-icons/bi'
 import FetchCard from 'components/FetchCard'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
-import { Box } from '@chakra-ui/react'
 import { Status } from 'helpers/misc'
+
 export default function Events({
   scheduledTasks,
   ScheduledTasksHasError,
@@ -40,7 +40,7 @@ export default function Events({
         </Box>
       ) : (
         <>
-          <Grid gap={8} mb={8}>
+          <Grid gap={8} mx={8} my={8}>
             {sortedScheduledTasks?.length > 0 &&
               sortedScheduledTasks?.map(task => (
                 <FarmUpdateCard
@@ -55,12 +55,7 @@ export default function Events({
           </Grid>
           {sortedScheduledTasks?.length === 0 && (
             <Flex w='100%' justify='center' align='center'>
-              <Text
-                w='100%'
-                color='cf.800'
-                fontSize='xl'
-                textAlign={{ base: 'center', md: 'initial' }}
-              >
+              <Text w='100%' color='cf.green' fontSize='xl' textAlign='center'>
                 No scheduled events currently available.
               </Text>
             </Flex>

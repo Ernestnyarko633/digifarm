@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import { Heading, Flex, Box } from '@chakra-ui/react'
 import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
@@ -6,7 +7,7 @@ import FetchCard from 'components/FetchCard/index'
 import RenderCards from 'components/FarmBoard/Cards/RenderCards'
 import PropTypes from 'prop-types'
 import { renderEmpty } from './Cards/RenderCards'
-import { useNews, useVideos, useFeeds } from 'hooks/useFarmBoard'
+import { usePrismic, useFeeds } from 'hooks/useFarmBoard'
 import { useLocation } from 'react-router-dom'
 import { checkProperties } from 'helpers/misc'
 
@@ -16,8 +17,13 @@ const FarmBoardContent = ({ farms = [] }) => {
 
   //initial states
   const [activeFarmIndex, setActiveFarmIndex] = React.useState(0)
-  const { loading: newsLoading, news, error: newsError } = useNews()
-  const { loading: videosLoading, videos, error: videosError } = useVideos()
+  const {
+    loading: prismic_loading,
+    news,
+    videos,
+    blogs,
+    error: prismic_error
+  } = usePrismic()
   const { loading: feedsLoading, feeds, error: feedsError } = useFeeds()
   const [filter, setFilter] = React.useState(farms.length ? 'feeds' : 'videos')
   const queriedElement = React.useRef(null)
@@ -28,41 +34,51 @@ const FarmBoardContent = ({ farms = [] }) => {
   const executeScroll = () => queriedElement?.current?.scrollIntoView()
 
   //changing state variables
-  let loading = newsLoading || videosLoading || feedsLoading
-  let error = newsError || videosError || feedsError
+  let loading = prismic_loading || feedsLoading
+  let error = prismic_error || feedsError
 
   // initialising useQuery hook
   let q = useQuery()
 
   // returns a memorised value. antime q changes
   const query = React.useMemo(
-    () => [
-      {
-        type: q.get('type'),
-        id: q.get('id'),
-        title: q.get('title')
-      }
-    ],
+    () => ({
+      type: q.get('type'),
+      id: q.get('id'),
+      title: q.get('title')
+    }),
     [q]
   )
 
   //this hook runs if theres query
   useEffect(() => {
     //if all values of query are present
-    if (checkProperties(query[0])) {
+    if (checkProperties(query)) {
       //set filter to type 'news' or 'videos'
-      setFilter(query[0].type)
+      if (query?.type === 'news') {
+        const isBlog = blogs?.find(item => item?.id === query?.id)
+        const isNews = news?.find(item => item?.id === query?.id)
+        if (isBlog) {
+          setFilter('blogs')
+        }
+        if (isNews) {
+          setFilter('news')
+        }
+      } else {
+        // prolly the others videos feeds : blah blah
+        setFilter(query?.type)
+      }
 
       // make sure index of farm is null
       setActiveFarmIndex(null)
     }
-  }, [query])
+  }, [blogs, news, query])
 
   //handles all rending of the board's content
   const RenderDataType = filter => {
     const mapKey = i => i
     // data is an object with fields newsm feeds and videos represents each board data type
-    const data = { news, feeds, videos }
+    const data = { news, feeds, videos, blogs }
 
     //if we dont have any data return empty state
     if (!feeds?.length && !news?.length && !videos?.length) {
@@ -99,10 +115,10 @@ const FarmBoardContent = ({ farms = [] }) => {
                 )))
             : renderEmpty(key)
 
-        //if key was not equal to feed filter if there is query[0] in params else return all data if there's none. key should be equal to filter as usual
+        //if key was not equal to feed filter if there is query in params else return all data if there's none. key should be equal to filter as usual
         array = data[key]
           ?.filter(content =>
-            checkProperties(query[0]) ? content.id === query[0]?.id : {}
+            checkProperties(query) ? content.id === query?.id : {}
           )
           .map((content, index) => (
             <RenderCards
@@ -127,6 +143,8 @@ const FarmBoardContent = ({ farms = [] }) => {
     })
   }
 
+  // lifecycle component that executes when query filter or activeFarmindex has changes
+  // positions content to screen or scrolls to content
   useEffect(() => {
     let mounted = true
     if (mounted) executeScroll()
@@ -135,7 +153,7 @@ const FarmBoardContent = ({ farms = [] }) => {
 
   return (
     <Flex w='100%' align='center' direction='column'>
-      {loading || error ? (
+      {loading ? (
         <>
           <FetchCard
             p={15}
@@ -160,7 +178,7 @@ const FarmBoardContent = ({ farms = [] }) => {
             farmName={farmName}
             setFarmName={setFarmName}
           />
-          <Box p={{ base: 4, md: 16 }}>
+          <Box p={{ base: 4, md: 16 }} ref={queriedElement}>
             <Heading as='h3' fontSize={{ md: 'xl' }} textAlign='center' mb={10}>
               {feeds?.length && farms?.length
                 ? "See what's happening in your farm(s)"
@@ -168,7 +186,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                 ? "See what's happening"
                 : ''}
             </Heading>
-            <Box ref={queriedElement}>{RenderDataType(filter)}</Box>
+            <Box>{RenderDataType(filter)}</Box>
           </Box>
         </>
       )}

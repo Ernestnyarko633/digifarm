@@ -42,6 +42,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [invites, setInvites] = React.useState([])
   const [cooperative, setCooperative] = React.useState(null)
   const [coopImg, setCoopImg] = React.useState(false)
+  const [coopConfigErrors, setCoopConfigErrors] = React.useState(null)
   let cooperativeTypes = JSON.parse(sessionStorage.getItem('cooperative-types'))
   const [selectedCooperativeType, setSelectedCooperativeType] =
     React.useState(null)
@@ -55,19 +56,32 @@ export const StartFarmContextProvider = ({ children }) => {
 
   useEffect(() => {
     let mounted = true
+    // set types manually
     const types = ['tribe', 'village', 'city', 'nation']
 
+    // function barrier get the next cooperative minAcre
     const Barrier = type => {
       const num = types.findIndex(value => value === type?.name)
-
       const newNum = num + 1
-      if (newNum < 3) setBarrier(cooperativeTypes[newNum]?.minAcre)
-      if (newNum > 3) setBarrier(10000000000000)
+      if (newNum <= 3)
+        setBarrier(
+          cooperativeTypes[newNum]?.minAcre < selectedFarm?.acreage
+            ? cooperativeTypes[newNum]?.minAcre
+            : selectedFarm?.acreage
+        )
+      if (newNum > 3) setBarrier(selectedFarm?.acreage || Infinity)
     }
 
-    if (mounted && selectedCooperativeType) Barrier(selectedCooperativeType)
+    //set Limit or barrier
+    if (mounted && selectedCooperativeType && otherStep <= 2)
+      Barrier(selectedCooperativeType)
     return () => (mounted = false)
-  }, [cooperativeTypes, selectedCooperativeType])
+  }, [
+    cooperativeTypes,
+    selectedCooperativeType,
+    otherStep,
+    selectedFarm?.acreage
+  ])
 
   const { getExchangeRate } = useExternal()
   const { setSession, isAuthenticated } = useAuth()
@@ -108,6 +122,7 @@ export const StartFarmContextProvider = ({ children }) => {
         cost = price * acreage
         return cost
       }
+
       let data = {
         cycle,
         acreage: cooperativeUserAcreage || acreage,
@@ -251,16 +266,6 @@ export const StartFarmContextProvider = ({ children }) => {
       if (paymentOption === Constants.paymentOptions[0]) {
         const q = 'USD_GHS'
         const res = await getExchangeRate({ q })
-        // data.amount =
-        //   Math.round(data.amount * res.data[q] * 100 + Number.EPSILON) / 100
-        // if (data.amount) {
-        //   const res = await initiatePayment(data)
-        //   window.onbeforeunload = null
-        //   window.location.href = res.message.url
-        // } else {
-        //   throw new Error('Unknown error occurred, try again')
-        // }
-
         if (!res.data) {
           throw new Error('Unknown error occurred, try again')
         }
@@ -332,8 +337,8 @@ export const StartFarmContextProvider = ({ children }) => {
         step,
         text,
         path,
-        cycle,
         acres,
+        cycle,
         order,
         invites,
         barrier,
@@ -342,14 +347,15 @@ export const StartFarmContextProvider = ({ children }) => {
         coopImg,
         acreage,
         setAcres,
-        coopType,
         setOrder,
+        coopType,
         isSellOn,
         contract,
         setCycle,
         currency,
         wantCycle,
         otherStep,
+        setBarrier,
         adminAcres,
         setCoopImg,
         setAcreage,
@@ -359,10 +365,10 @@ export const StartFarmContextProvider = ({ children }) => {
         handleBack,
         setCoopType,
         setCurrency,
-        selectedType,
         setIsSellOn,
         setContract,
         cooperative,
+        selectedType,
         setWantCycle,
         exchangeRate,
         selectedFarm,
@@ -382,8 +388,10 @@ export const StartFarmContextProvider = ({ children }) => {
         triggerMapReload,
         cooperativeTypes,
         setPaymentOption,
+        coopConfigErrors,
         handleCreateOrder,
         setCooperativeName,
+        setCoopConfigErrors,
         handleCreateCooperative,
         selectedCooperativeType,
         setSelectedCooperativeType

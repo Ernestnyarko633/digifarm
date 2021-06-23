@@ -27,7 +27,7 @@ const UploadDocument = () => {
   // const [ doc, setDoc ] = useState(true)
 
   const initialValues = {
-    payment_id: '5fd79e7c6d80ce789ab140be',
+    payment_id: '',
     file: undefined
   }
 
@@ -74,7 +74,7 @@ const UploadDocument = () => {
                   Complete your order
                 </Heading>
               </Box>
-              <ModalCloseButton color='cf.800' />
+              <ModalCloseButton color='cf.green' />
             </Flex>
             <Divider orientation='horizontal' borderColor='gray.400' />
             <ModalBody>
@@ -86,7 +86,7 @@ const UploadDocument = () => {
                         <Field
                           component={Upload}
                           label='Upload an image of your bank payslip here'
-                          accept='image/jpeg, image/jpg'
+                          accept='image/jpeg, image/jpg, image/png'
                           name='file'
                         />
                       ) : (
@@ -98,11 +98,11 @@ const UploadDocument = () => {
                           p={2}
                           rounded='30px'
                         >
-                          <Text pt={1}>{values.file.name}</Text>
+                          <Text pt={1}>{values?.file?.name}</Text>
                           <CloseButton
                             _hover={{ textDecoration: 'none' }}
                             bg='none'
-                            color='cf.800'
+                            color='cf.green'
                           />
                         </Flex>
                       )}
@@ -132,7 +132,7 @@ const UploadDocument = () => {
                 </Heading>
               </Box>
               <Spacer />
-              <ModalCloseButton color='cf.800' />
+              <ModalCloseButton color='cf.green' />
             </Flex>
             <Divider orientation='horizontal' borderColor='gray.400' />
             <ModalBody>

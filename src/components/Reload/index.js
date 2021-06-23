@@ -18,7 +18,7 @@ const ReloadPage = () => {
         justify='center'
         direction='column'
       >
-        <Text fontSize='md' ml={2} color='cf.800'>
+        <Text fontSize='md' ml={2} color='cf.green'>
           Something went wrong
         </Text>
 
@@ -31,7 +31,7 @@ const ReloadPage = () => {
           fontSize={20}
           onClick={() => window.location.reload()}
           leftIcon={<IoIosRefresh />}
-          _hover={{ bg: 'cf.800' }}
+          _hover={{ bg: 'cf.green' }}
         >
           <Text fontSize='md'>Refresh</Text>
         </Button>

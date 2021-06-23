@@ -14,6 +14,7 @@ const RenderCards = ({
   activeFarmIndex,
   comparant
 }) => {
+  // switch for data type using status
   const renderCard = (status, content) => {
     switch (status) {
       case 'news':
@@ -57,7 +58,7 @@ const RenderCards = ({
 export const renderEmpty = type => {
   return (
     <Flex w='100%' align='center' justify='center'>
-      <Text color='cf.800' fontSize={{ base: 'md' }}>
+      <Text color='cf.green' fontSize={{ base: 'md' }}>
         Oops, {type} unavailable currently
       </Text>
     </Flex>

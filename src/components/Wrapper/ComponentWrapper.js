@@ -16,14 +16,14 @@ const ComponentWrapper = ({
   thirdBoxTitle
 }) => {
   return (
-    <Box p={{ base: 4, md: 10, lg: 20 }} w={{ base: '100vw', xl: 'unset' }}>
+    <Box p={{ base: 4, md: 10, lg: 20 }} w={{ base: '100vw', xl: 'inherit' }}>
       <Box mb={10}>
         <Heading as='h4' fontSize={{ md: '2xl' }} mb={6}>
           Here’s how your farm(s) are doing
         </Heading>
         <Grid
-          d={{ base: 'flex', md: 'grid' }}
-          templateColumns={{ base: '100%', xl: '70% 20%' }}
+          d={{ base: 'block', md: 'grid' }}
+          templateColumns={{ xl: '70% 20%' }}
           gap={{ md: '10%' }}
           justifyContent={{ base: 'space-between', md: 'inherit' }}
           alignItems='center'
@@ -36,46 +36,46 @@ const ComponentWrapper = ({
             borderBottomColor='gray.200'
           >
             <Box
-              color={state === firstStateValue ? 'cf.800' : 'gray.700'}
+              color={state === firstStateValue ? 'cf.green' : 'gray.700'}
               onClick={() => setState(firstStateValue)}
               fontWeight={state === firstStateValue ? 'bold' : 'normal'}
               fontSize={{ base: 'xs', md: 'md' }}
               cursor='pointer'
               borderBottomWidth={state === firstStateValue && 2}
-              borderBottomColor='cf.800'
+              borderBottomColor='cf.green'
               pb={{ base: 1, md: 2 }}
             >
               {firstBoxTitle}
             </Box>
             <Box mx={{ base: 4, md: 6, '2xl': 10 }} />
             <Box
-              color={state === secondStateValue ? 'cf.800' : 'gray.700'}
+              color={state === secondStateValue ? 'cf.green' : 'gray.700'}
               onClick={() => setState(secondStateValue)}
               fontWeight={state === secondStateValue ? 'bold' : 'normal'}
               cursor='pointer'
               fontSize={{ base: 'xs', md: 'md' }}
               borderBottomWidth={state === secondStateValue && 2}
-              borderBottomColor='cf.800'
+              borderBottomColor='cf.green'
               pb={{ base: 1, md: 2 }}
             >
               {secondBoxTitle}
             </Box>
             <Box mx={{ base: 4, md: 6, '2xl': 10 }} />
             <Box
-              color={state === thirdStateValue ? 'cf.800' : 'gray.700'}
+              color={state === thirdStateValue ? 'cf.green' : 'gray.700'}
               onClick={() => setState(thirdStateValue)}
               fontWeight={state === thirdStateValue ? 'bold' : 'normal'}
               cursor='pointer'
               fontSize={{ base: 'xs', md: 'md' }}
               borderBottomWidth={state === thirdStateValue && 2}
-              borderBottomColor='cf.800'
+              borderBottomColor='cf.green'
               pb={{ base: 1, md: 2 }}
             >
               {thirdBoxTitle}
             </Box>
           </Flex>
 
-          <Box mt='-35px' display={{ base: 'none', xl: 'block' }}>
+          <Box mt={{ md: '-35px' }} d={{ base: 'none', md: 'block' }}>
             <ArrowButton handleClick={handleClick} />
           </Box>
         </Grid>

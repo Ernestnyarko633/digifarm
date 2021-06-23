@@ -26,7 +26,7 @@ const FormDropdown = ({
       pos='relative'
       pt={4}
       borderBottomWidth={1}
-      borderBottomColor='cf.800'
+      borderBottomColor='cf.green'
       mt={{ md: marginTop }}
     >
       <FormLabel

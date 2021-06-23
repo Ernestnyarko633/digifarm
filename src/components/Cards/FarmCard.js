@@ -1,12 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Avatar, Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Text,
+  Tag
+} from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 import { Status } from 'helpers/misc'
 import Step from 'components/Form/Step'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
 import ImageLoader from 'components/ImageLoader'
+import Scrollbar from 'react-perfect-scrollbar'
 
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
@@ -84,9 +93,35 @@ const FarmCard = ({ farm }) => {
           </Box>
 
           <Box>
-            <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
-              {farm?.order?.product?.cropVariety?.crop?.name}
-            </Heading>
+            {!farm?.order?.cooperative ? (
+              <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
+                {farm?.order?.product?.cropVariety?.crop?.name}
+              </Heading>
+            ) : (
+              <Flex direction='row' justify='center' align='center'>
+                <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
+                  {farm?.order?.product?.cropVariety?.crop?.name}
+                </Heading>
+
+                <Box mx={5}>
+                  <Tag
+                    color='cf.green'
+                    justifyContent='center'
+                    bg='#EFF6ED'
+                    bgGradient='linear(to-l, #EFF6ED)'
+                    rounded={20}
+                    minW='12'
+                    maxH='5'
+                    px={5}
+                    py={3}
+                    mr={2}
+                  >
+                    <Text fontWeight={600}>Cooperative</Text>
+                  </Tag>
+                </Box>
+              </Flex>
+            )}
+
             <Text
               as='span'
               fontSize={{ base: 'tiny', md: 'sm' }}
@@ -156,18 +191,20 @@ const FarmCard = ({ farm }) => {
                 text='fetching progress'
               />
             ) : (
-              <Box h='300px' overflowY='scroll'>
-                {data.length > 0 ? (
-                  data.map((activity, index) => (
-                    <Step
-                      activity={activity}
-                      key={activity.title}
-                      cutThread={data.length - 1 === index}
-                    />
-                  ))
-                ) : (
-                  <Box textAlign='center'>Data Unavailable</Box>
-                )}
+              <Box h={{ base: 56, md: 80 }} overflowY='hidden'>
+                <Scrollbar>
+                  {data.length > 0 ? (
+                    data.map((activity, index) => (
+                      <Step
+                        activity={activity}
+                        key={activity.title}
+                        cutThread={data.length - 1 === index}
+                      />
+                    ))
+                  ) : (
+                    <Box textAlign='center'>Data Unavailable</Box>
+                  )}
+                </Scrollbar>
               </Box>
             )}
           </Box>

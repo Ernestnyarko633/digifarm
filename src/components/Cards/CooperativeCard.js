@@ -19,24 +19,30 @@ const CooperativeCard = ({ item, onClick, selected }) => {
     <Box
       css={{ mixBlendMode: 'normal' }}
       filter='drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.1))'
-      borderWidth={1}
       rounded={10}
       bg='white'
       w={{ base: '100%', md: 80 }}
       onClick={onClick}
       cursor='pointer'
+      borderWidth={selected ? 2 : 1}
+      borderColor={selected ? 'cf.green' : 'gray.300'}
+      overflow='hidden'
     >
       <Box mb={3} pos='relative'>
-        <Image
-          w='100%'
-          h={64}
-          object-fit='scale-down'
-          src={require(`../../assets/images/${name}.png`).default}
-          alt={name + '-image'}
-        />
+        <Box h={56} w='100%' bg='#EDEDED' pos='relative'>
+          <Image
+            w='100%'
+            h={48}
+            pos='absolute'
+            bottom={0}
+            object-fit='contain'
+            src={require(`../../assets/images/cooperative/${name}.png`).default}
+            alt={name + '-image'}
+          />
+        </Box>
         <Box pos='absolute' right={4} top={4}>
           {selected ? (
-            <Icon as={FaCheckCircle} boxSize={8} color='cf.800' />
+            <Icon as={FaCheckCircle} boxSize={8} color='cf.green' />
           ) : (
             <Box h={8} w={8} bg='white' rounded='100%' />
           )}
@@ -56,16 +62,16 @@ const CooperativeCard = ({ item, onClick, selected }) => {
         <Box>
           <List fontSize='sm'>
             <ListItem d='flex' alignItems='center'>
-              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
-              {minAcre === 0 ? 1 : minAcre} mininum number of acre
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={4} />A
+              minimum of {minAcre} {minAcre === 1 ? 'acre' : 'acres'}
             </ListItem>
             <ListItem d='flex' alignItems='center' py={1}>
-              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
-              Up to {discount}% cooperative discount
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={4} />
+              {discount * 100}% cooperative discount
             </ListItem>
             <ListItem d='flex' alignItems='center'>
-              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={3} />
-              Plus all what is included in cooperative farms
+              <ListIcon as={FaCheckCircle} color='cf.800' boxSize={4} />
+              Plus all included in cooperative farms
             </ListItem>
           </List>
         </Box>

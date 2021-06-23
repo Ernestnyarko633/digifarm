@@ -1,24 +1,25 @@
+/* eslint-disable no-console */
 import React from 'react'
 import Overlay from '../../Loading/Overlay'
 import { Flex, Image, Link, Text, useToast } from '@chakra-ui/react'
 import { getformattedDate, validateEmailAndAcrege } from '../../../helpers/misc'
-import { AnimateSharedLayout, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Button from '../../Button'
 import useAuth from '../../../context/auth'
 import useStartFarm from '../../../context/start-farm'
 import { useIntersection } from 'react-use'
 import AboutFarmManager from '../OtherSteps/AboutFarmManager'
 import Contract from '../OtherSteps/Contract'
-import PaymentOption from '../OtherSteps/PaymentOption'
 import Confirmation from '../OtherSteps/Confirmation'
 import ReloadPage from '../../Reload'
 import CooperativeName from '../OtherSteps/CooperativeName'
 import Acreage from './Acreage'
 import PropTypes from 'prop-types'
+import CooperativePayment from './CooperativePayment'
 
 const MotionFlex = motion(Flex)
 
-const CooperativeSteps = ({ asMember, data, history }) => {
+const CooperativeSteps = ({ asMember, data, history, payment }) => {
   const { user } = useAuth()
   const {
     text,
@@ -30,6 +31,8 @@ const CooperativeSteps = ({ asMember, data, history }) => {
     otherStep,
     handlePrev,
     handleBack,
+    cooperative,
+    coopConfigErrors,
     //selectedCooperativeType,
     selectedType,
     setOtherStep,
@@ -59,14 +62,26 @@ const CooperativeSteps = ({ asMember, data, history }) => {
   })
 
   React.useEffect(() => {
-    if (!selectedType && !asMember) {
+    if (payment?.payment) {
+      // set step to  case 1
+      setStep(x => {
+        x = 2
+        return x
+      })
+
+      // set otherSteps to case 5
+      setOtherStep(x => {
+        x = 5
+        return x
+      })
+    } else if (!selectedType && !asMember) {
       setStep(x => x * 0)
       setOtherStep(x => x * 0)
     }
-  }, [setStep, setOtherStep, selectedType, asMember])
+  }, [setStep, setOtherStep, selectedType, asMember, payment?.payment])
 
   React.useEffect(() => {
-    if (!asMember && !catFarms && otherStep !== 4) {
+    if (!asMember && !catFarms && otherStep !== 5) {
       history.push('/dashboard')
     }
   }, [otherStep, history, asMember, catFarms])
@@ -82,7 +97,6 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           <Acreage
             name={cooperativeName}
             farm={selectedFarm}
-            order={data || order}
             selectedType={selectedType}
           />
         )
@@ -95,9 +109,11 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           />
         )
       case 4:
-        return <PaymentOption farm={selectedFarm} />
+        return <CooperativePayment farm={selectedFarm} asMember={asMember} />
       case 5:
-        return <Confirmation farm={selectedFarm} order={data || order} />
+        return (
+          <Confirmation farm={selectedFarm} order={payment?.data || order} />
+        )
       default:
         return <ReloadPage />
     }
@@ -110,7 +126,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           await handleCreateCooperative(selectedType?._id)
         } else {
           await handleCreateOrder(
-            { _id: asMember?.cooperative },
+            { _id: asMember?.cooperative?._id },
             asMember?.acreage
           )
         }
@@ -142,7 +158,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           width: 56,
           action: handleNextStep,
           disabled:
-            cooperativeName?.length > 3 && cooperativeName?.length <= 15
+            cooperativeName?.length >= 3 && cooperativeName?.length <= 15
               ? false
               : true
         }
@@ -153,6 +169,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           action: handleNextStep,
           disabled:
             acres <= barrier &&
+            !coopConfigErrors &&
             acres >= selectedCooperativeType.minAcre &&
             invites?.every(member =>
               validateEmailAndAcrege(member?.email, member?.acreage)
@@ -174,9 +191,20 @@ const CooperativeSteps = ({ asMember, data, history }) => {
         }
       case 5:
         return {
-          title: 'Continue to my Dashboard',
+          title: 'Proceed to Dashboard',
           width: 80,
-          action: () => history.push('/dashboard')
+          action: () => {
+            window.onbeforeunload = null
+            return history.replace(
+              `/cooperative-main/${
+                cooperative?._id ||
+                order?.cooperative?._id ||
+                order?.cooperative ||
+                payment?.data?.cooperative?._id ||
+                payment?.data?.cooperative
+              }`
+            )
+          }
         }
       default:
         return { title: 'Next', width: 56, action: handleNextStep }
@@ -188,9 +216,13 @@ const CooperativeSteps = ({ asMember, data, history }) => {
   return (
     <Flex
       mx='auto'
+      align='center'
       justify='center'
       direction='column'
-      w={{ base: '90%', xl: 140, '2xl': otherStep === 2 ? '82rem' : 143 }}
+      overflow={{ base: 'hidden', md: 'visible' }}
+      w={{ base: '100%', xl: 140, '2xl': otherStep === 2 ? '82rem' : 143 }}
+      h={{ base: '100%', sm: 'calc(100vh - 5rem)' }}
+      pb={{ base: 8 }}
     >
       {isSubmitting && <Overlay text={text} />}
 
@@ -201,7 +233,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           w='full'
           align='center'
           justify='space-between'
-          mt={{ base: 5, md: 12 }}
+          mt={{ base: 5, md: 20 }}
           px={{ base: 2, md: 0 }}
         >
           <Text
@@ -234,14 +266,15 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           >
             <Flex
               py={1}
+              px={2}
               align='center'
               rounded='30px'
               w={{ md: '11rem' }}
               borderWidth={1}
-              borderColor='cf.800'
+              borderColor='cf.green'
               bg='cf.200'
               justify='center'
-              color='cf.800'
+              color='cf.green'
             >
               <Image
                 h={4}
@@ -250,7 +283,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
                     .default
                 }
               />
-              <Text fontSize='sm' ml={2} color='cf.800'>
+              <Text fontSize={{ base: 'xs', md: 'sm' }} ml={2} color='cf.green'>
                 Farm is insured
               </Text>
             </Flex>
@@ -258,7 +291,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
         </Flex>
       )}
 
-      <AnimateSharedLayout>
+      <AnimatePresence>
         <MotionFlex
           mx='auto'
           rounded='md'
@@ -275,7 +308,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
         >
           {getSteps(otherStep)}
         </MotionFlex>
-      </AnimateSharedLayout>
+      </AnimatePresence>
 
       <Flex
         align='center'
@@ -291,6 +324,7 @@ const CooperativeSteps = ({ asMember, data, history }) => {
           btntitle='Prev'
           color='gray.700'
           colorScheme='white'
+          disabled={otherStep > 3}
           onClick={otherStep <= 0 ? handleBack : handlePrev}
           borderWidth={1}
         />
@@ -319,7 +353,8 @@ const CooperativeSteps = ({ asMember, data, history }) => {
 CooperativeSteps.propTypes = {
   data: PropTypes.any,
   history: PropTypes.any,
-  asMember: PropTypes.object
+  asMember: PropTypes.object,
+  payment: PropTypes.object
 }
 
 export default CooperativeSteps

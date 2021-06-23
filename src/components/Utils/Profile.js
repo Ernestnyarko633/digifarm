@@ -1,30 +1,37 @@
-/* eslint-disable */
-import React from "react";
-import { Avatar, Box, Flex, Icon, Link, Text } from "@chakra-ui/react";
-import { Menu } from "@headlessui/react";
-import { FiChevronDown, FiChevronUp, FiUser } from "react-icons/fi";
-import { AnimatePresence, motion } from "framer-motion";
-import { HiOutlineLogout } from "react-icons/hi";
+import React from 'react'
+import { Avatar, Box, Flex, Icon, Link, Text } from '@chakra-ui/react'
+import { Menu } from '@headlessui/react'
+import { FiChevronDown, FiChevronUp, FiUser } from 'react-icons/fi'
+import { AnimatePresence, motion } from 'framer-motion'
+import { HiOutlineLogout } from 'react-icons/hi'
+import PropTypes from 'prop-types'
 
-const MotionBox = motion(Box);
+const MotionBox = motion(Box)
 
 const menuLinks = [
-  { name: "Profile", icon: FiUser, link: "/profile" },
+  { name: 'Profile', icon: FiUser, link: '/profile' },
   // { name: 'History', icon: BiHistory, link: '/history' },
   // { name: 'Settings', icon: BiCog, link: '/settings' },
   // { name: 'Help Center', icon: BiSupport, link: '/help' }
-  { name: "Logout", icon: HiOutlineLogout, link: "/logout" },
-];
+  { name: 'Logout', icon: HiOutlineLogout, link: '/logout' }
+]
 
 const Profile = ({ user }) => {
   return (
-    <Menu as={Box} ml={2} userSelect="none">
+    <Menu as={Box} ml={2} userSelect='none'>
       {({ open }) => (
         <>
-          <Menu.Button as={Box} _focus={{ outline: "none" }} cursor="pointer">
-            <Flex align="center">
-              <Avatar size="sm" src={user?.avatar} name={user?.firstName} />
-              <Text ml={2}>Hi {user?.firstName}</Text>
+          <Menu.Button as={Box} _focus={{ outline: 'none' }} cursor='pointer'>
+            <Flex align='center' justify='center'>
+              <Avatar
+                size='sm'
+                src={user?.avatar}
+                name={user?.firstName}
+                ml={{ base: 4, md: 0 }}
+              />
+              <Text d={{ base: 'none', md: 'block' }} ml={2}>
+                Hi {user?.firstName}
+              </Text>
               <Box>
                 <Icon
                   ml={2}
@@ -43,19 +50,19 @@ const Profile = ({ user }) => {
                 animate={{
                   opacity: 1,
                   y: 0,
-                  transition: { duration: 0.3 },
+                  transition: { duration: 0.3 }
                 }}
                 exit={{ opacity: 0, y: 50 }}
-                pos={{ base: "fixed", md: "absolute" }}
+                pos={{ base: 'fixed', md: 'absolute' }}
                 w={56}
                 mt={3}
-                bg="white"
-                rounded="sm"
+                bg='white'
+                rounded='sm'
                 borderWidth={1}
-                color="gray.600"
+                color='gray.600'
                 right={{ base: 5, md: 20 }}
-                _focus={{ outline: "none" }}
-                borderColor="gray.100"
+                _focus={{ outline: 'none' }}
+                borderColor='gray.100'
               >
                 <AnimatePresence>
                   {menuLinks.map((item, i) => (
@@ -64,35 +71,35 @@ const Profile = ({ user }) => {
                       as={MotionBox}
                       custom={i}
                       variants={{
-                        hidden: (i) => ({
+                        hidden: i => ({
                           y: -50 * i,
-                          opacity: 0,
+                          opacity: 0
                         }),
-                        visible: (i) => ({
+                        visible: i => ({
                           y: 0,
                           opacity: 1,
                           transition: {
-                            delay: i * 0.025,
-                          },
+                            delay: i * 0.025
+                          }
                         }),
                         removed: {
-                          y: 30 * i,
-                        },
+                          y: 30 * i
+                        }
                       }}
-                      initial="hidden"
-                      animate="visible"
-                      exit="removed"
+                      initial='hidden'
+                      animate='visible'
+                      exit='removed'
                     >
                       {({ active }) => (
                         <Link
                           py={2}
                           px={6}
                           _hover={{
-                            textDecor: "none",
+                            textDecor: 'none'
                           }}
-                          bg={active && "cf.800"}
-                          color={active && "white"}
-                          d="block"
+                          bg={active && 'cf.green'}
+                          color={active && 'white'}
+                          d='block'
                           href={item.link}
                         >
                           <Icon as={item.icon} boxSize={4} mr={2} /> {item.name}
@@ -107,7 +114,10 @@ const Profile = ({ user }) => {
         </>
       )}
     </Menu>
-  );
-};
+  )
+}
 
-export default Profile;
+Profile.propTypes = {
+  user: PropTypes.any
+}
+export default Profile

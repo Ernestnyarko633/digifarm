@@ -95,10 +95,10 @@ const AboutFarmManager = ({ farm }) => {
                 </Text>
               </Flex>
               <Flex fontSize='sm' alignItems='center'>
-                <Icon as={IoLocation} color='cf.800' />
+                <Icon as={IoLocation} color='cf.green' />
                 {farm.location?.name}, {farm.location?.state},{' '}
                 {farm.location?.country}
-                <Icon as={BsInfoCircleFill} color='cf.800' mx={2} />
+                <Icon as={BsInfoCircleFill} color='cf.green' mx={2} />
               </Flex>
             </Box>
             <Divider />

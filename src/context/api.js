@@ -36,6 +36,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.post({ url: `${AUTH_API}/logout` })
   }
 
+  const signUp = async payload => {
+    return await http.post({
+      url: `${AUTH_API}/signup`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   const getCropCategories = async () => {
     return await http.get({ url: `${FMS_API}/crop-categories` })
   }
@@ -113,9 +120,10 @@ export const ApiContextProvider = ({ children }) => {
   //Cooperative
   //#region
 
-  const acceptInvite = async ({ email, _id }) => {
+  const acceptInvite = async (_id, token) => {
     return await http.patch({
-      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept?email=${email}`
+      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept`,
+      body: token
     })
   }
 
@@ -128,6 +136,20 @@ export const ApiContextProvider = ({ children }) => {
   const getCooperativeById = async id => {
     return await http.get({
       url: `${DIGITAL_FARMER_API}/cooperatives/${id}`
+    })
+  }
+
+  const updateCooperative = async (id, email) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}`,
+      body: email
+    })
+  }
+
+  const inviteMember = async (id, payload) => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}/invite`,
+      body: payload
     })
   }
 
@@ -247,7 +269,8 @@ export const ApiContextProvider = ({ children }) => {
 
   const getCooperativeTypes = async query => {
     return await http.get({
-      url: `${DIGITAL_FARMER_API}/cooperative-types`
+      url: `${DIGITAL_FARMER_API}/cooperative-types`,
+      query
     })
   }
 
@@ -275,6 +298,7 @@ export const ApiContextProvider = ({ children }) => {
   return (
     <ApiContext.Provider
       value={{
+        signUp,
         logout,
         eosTask,
         getUser,
@@ -320,6 +344,10 @@ export const ApiContextProvider = ({ children }) => {
         acceptInvite,
         getCooperatives,
         getCooperativeById,
+        updateCooperative,
+        inviteMember,
+
+        //notification
         getNotifications,
         updateNotification
       }}

@@ -7,31 +7,63 @@ import useStartFarm from 'context/start-farm'
 import CooperativeType from 'components/StartFarmProcess/CooperativeType'
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import CooperativeSteps from 'components/StartFarmProcess/CooperativeSteps'
+import Scrollbar from 'react-perfect-scrollbar'
+
 const CooperativeFarm = ({ location, history }) => {
   document.title = 'Cooperative | Start Farm'
 
   const { state, selected } = location || {}
-  const { step, setStep, setOtherStep } = useStartFarm()
+  const {
+    step,
+    setStep,
+    setOtherStep,
+    setSelectedType,
+    setBarrier,
+    setInvites,
+    setCooperative,
+    setCooperativeName,
+    setCoopImg,
+    setSelectedCooperativeType,
+    setAcres
+  } = useStartFarm()
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted && state?.step) {
-      setStep(x => x + 1)
-      setOtherStep(x => x + 4)
+    if (mounted && (state?.step || state?.payment)) {
+      setStep(x => x + 2)
+      setOtherStep(x => x + 5)
+    } else {
+      if (!state?.user || !state) {
+        setStep(x => x * 0)
+        setOtherStep(x => x * 0)
+        setCooperativeName(null)
+        setSelectedType('')
+        setBarrier(null)
+        setCooperative(null)
+        setInvites([])
+        setCoopImg(false)
+        setSelectedCooperativeType(null)
+        setAcres(0)
+        // clear cache data in session storage
+        sessionStorage.removeItem('categories')
+        sessionStorage.removeItem('farms')
+      }
     }
 
     return () => (mounted = false)
-  }, [state, setStep, setOtherStep])
-
-  React.useEffect(() => {
-    return () => {
-      // clear cache data in session storage
-      setStep(x => x * 0)
-      setOtherStep(x => x * 0)
-      sessionStorage.removeItem('categories')
-      sessionStorage.removeItem('farms')
-    }
-  }, [setStep, setOtherStep])
+  }, [
+    state,
+    setStep,
+    setOtherStep,
+    setCooperativeName,
+    setSelectedType,
+    setBarrier,
+    setCooperative,
+    setInvites,
+    setCoopImg,
+    setSelectedCooperativeType,
+    setAcres
+  ])
 
   const getContent = value => {
     switch (value) {
@@ -42,7 +74,8 @@ const CooperativeFarm = ({ location, history }) => {
       case 2:
         return (
           <CooperativeSteps
-            asMember={state}
+            asMember={state?.cooperative ? state : null}
+            payment={state?.payment ? state : null}
             data={selected}
             history={history}
           />
@@ -55,15 +88,18 @@ const CooperativeFarm = ({ location, history }) => {
   return (
     <>
       <Header />
-      <Box
-        as='main'
-        bgColor='white'
-        w={{ md: '100vw' }}
-        h={{ md: '100vh' }}
-        mt={{ base: 14, md: 20, xl: 16 }}
-      >
-        {getContent(step)}
-      </Box>
+      <Scrollbar>
+        <Box
+          as='main'
+          bgColor='white'
+          w={{ md: '100vw' }}
+          h={{ md: '100vh' }}
+          mt={{ base: 14, md: 20, xl: 8 }}
+          overflow='hidden'
+        >
+          <Scrollbar>{getContent(step)}</Scrollbar>
+        </Box>
+      </Scrollbar>
     </>
   )
 }
