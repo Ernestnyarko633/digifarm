@@ -36,7 +36,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
       try {
         setSubmitting(true)
         let formData = new FormData()
-        formData.append('bank_transfer_receipt', values.file[0])
+        formData.append('bank_transfer_receipt', values.file)
         await uploadPaymentDetails(values.payment_id, formData)
         const res = await patchOrder(order._id, { status: Status.PROCESSING })
         resetForm({})
