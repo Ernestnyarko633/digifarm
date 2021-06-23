@@ -1,6 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react'
-import { Box, Flex, Image, Link, Heading, Text, Icon } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Image,
+  Link,
+  Heading,
+  Text,
+  Icon,
+  Grid
+} from '@chakra-ui/react'
 import df_logo from 'assets/images/df_logo.png'
 import cfmotive from 'assets/images/cfmotive.png'
 
@@ -113,38 +122,34 @@ const cooperativeIntro = ({ location: { state } }) => {
         justify='center'
         align='center'
         pos='relative'
-        pt={{ base: 10, md: 0 }}
         bg='#022D2B'
-        h={{ base: '40rem', xl: '45rem', '3xl': '50rem', '5xl': '64rem' }}
+        pt={{ base: 10, md: 0 }}
       >
         <Image
-          // w='100vw'
           bgPos='cover'
           src={cfmotive}
-          h={{ base: '40rem', xl: '45rem', '3xl': '50rem', '5xl': '64rem' }}
+          w={{ '5xl': 'full' }}
+          h={{ base: '30rem', md: '45rem', xl: '45rem', '3xl': '50rem' }}
         />
-        <Box pos='absolute' top={{ base: 20, md: 40, '5xl': '15rem' }}>
+        <Box pos='absolute' top={{ base: 20, md: 40, '5xl': '12rem' }}>
           <CooperativeSignUp state={state} />
         </Box>
       </Flex>
-      <Flex
-        justify='space-between'
-        wrap='wrap'
+      <Grid
+        templateColumns={{ md: 'repeat(3, 1fr)' }}
         mt={{
-          base: '18rem',
-          md: '30rem',
-          '2xl': '28rem',
-          '5xl': '18rem'
+          base: '22rem',
+          md: '20rem',
+          '2xl': '28rem'
         }}
-        w={{ md: '80%', '4xl': '60%' }}
-        mx={{ base: 7, md: 'auto', lg: '15rem', '4xl': '32rem' }}
+        mx={{ base: 7, md: 12, xl: 'auto' }}
       >
         {_data.map(item => (
           <Box
-            w={{ md: 64 }}
+            w={{ md: 52, lg: 64 }}
             key={item.benefit}
             mb={{ base: 10 }}
-            mr={{ '5xl': '13rem' }}
+            mx='auto'
           >
             <Flex
               justify='center'
@@ -168,7 +173,7 @@ const cooperativeIntro = ({ location: { state } }) => {
             <Text fontSize='sm'>{item.description}</Text>
           </Box>
         ))}
-      </Flex>
+      </Grid>
       <CustomerStories stories={stories} />
 
       <CooperativeFAQ cooperativeFaqs={faqs} />

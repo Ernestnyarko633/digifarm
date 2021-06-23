@@ -15,8 +15,6 @@ import { useTable } from 'react-table'
 import { AiOutlineFileSearch } from 'react-icons/ai'
 
 const CustomTable = ({ _columns = [], _data = [], variant = '' }) => {
-  // eslint-disable-next-line no-console
-  console.log('data', _data)
   const data = React.useMemo(() => _data, [_data])
   const columns = React.useMemo(() => _columns, [_columns])
   const tableInstance = useTable({ columns, data })
@@ -26,9 +24,7 @@ const CustomTable = ({ _columns = [], _data = [], variant = '' }) => {
   return (
     <Box
       overflow='hidden'
-      overflowY='scroll'
-      // overflowY={_data?.length > 5 && 'scroll'}
-      // h={{ md: '30rem', xl: '28rem', '3xl': '28rem', '5xl': '40rem' }}
+      overflowY={_data?.length > 5 && 'scroll'}
       h={_data?.length > 5 && '30rem'}
     >
       <Table variant={variant} {...getTableProps()}>

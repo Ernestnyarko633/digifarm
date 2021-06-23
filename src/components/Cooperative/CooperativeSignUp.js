@@ -127,13 +127,7 @@ const CooperativeSignUp = () => {
   } = formik
 
   return (
-    <Flex
-      justify='center'
-      align='center'
-      right={0}
-      mb={4}
-      // w={{ '5xl': '75rem' }}
-    >
+    <Flex justify='center' align='center' right={0} mb={4}>
       <Box>
         <Box color='white' textAlign='center'>
           <Heading fontSize={{ base: 14, md: 28, lg: 28, '2xl': 52 }} mx='auto'>
