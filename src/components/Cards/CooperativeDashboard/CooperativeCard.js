@@ -61,7 +61,7 @@ const CooperativeCard = ({ item, order, data, handleClick }) => {
               <Tooltip
                 hasArrow
                 label='Member has not accepted invitation'
-                fontSize='sm'
+                fontSize='12px'
                 bg='#022D2B'
                 placement='top'
               >

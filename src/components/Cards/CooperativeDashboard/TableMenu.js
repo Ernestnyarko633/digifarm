@@ -59,6 +59,7 @@ const TableMenu = ({ id, email }) => {
         <Menu.Items shadow='md'>
           <Menu.Item>
             <Box
+              zIndex={5}
               py={2}
               px={{ base: 1, md: 6 }}
               bg='white'

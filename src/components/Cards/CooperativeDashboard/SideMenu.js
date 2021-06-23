@@ -159,7 +159,10 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
           subtitle={FirstLettersToUpperCase(data?.type?.name)}
         />
         <Details title='Members' subtitle={data?.users?.length} />
-        <Details title='Total acreage' subtitle={total?.toFixed(1)} />
+        <Details
+          title='Total acreage'
+          subtitle={`${total?.toFixed(1)} acres`}
+        />
         <Details
           title='Farm manager'
           subtitle={
