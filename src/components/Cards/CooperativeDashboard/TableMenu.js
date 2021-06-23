@@ -1,20 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Box,
-  useToast,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Icon,
-  Button
-} from '@chakra-ui/react'
-// import { motion } from 'framer-motion'
+import { Box, useToast, Icon } from '@chakra-ui/react'
+import { Menu } from '@headlessui/react'
 import { FaEllipsisH } from 'react-icons/fa'
 import useApi from 'context/api'
-
-// const MotionBox = motion(Box)
 
 const TableMenu = ({ id, email }) => {
   const toast = useToast()
@@ -25,11 +14,17 @@ const TableMenu = ({ id, email }) => {
   const handleInvite = async () => {
     try {
       setLoading(true)
+      toast({
+        title: 'Sending invite please wait',
+        status: 'success',
+        duration: 2000,
+        position: 'top-right'
+      })
       await inviteMember(id, { email: email })
       toast({
         title: 'Invite sent successfully',
         status: 'success',
-        duration: 2000,
+        duration: 3000,
         position: 'top-right'
       })
     } catch (error) {
@@ -45,38 +40,39 @@ const TableMenu = ({ id, email }) => {
   }
 
   return (
-    <Box>
+    <Box pos='absolute'>
       <Menu>
-        <MenuButton
-          as={Button}
-          bg='transparent'
-          _active={{ textDecor: 'none' }}
-          _focus={{ textDecor: 'none' }}
-          cursor='pointer'
-          _hover={{
-            bg: '#F2F2F2',
-            padding: '2px',
-            rounded: '100%'
-          }}
-        >
-          <Icon as={FaEllipsisH} color='#828282' boxSize={5} />
-        </MenuButton>
-        <MenuList
-          _hover={{ textDecor: 'none' }}
-          _focus={{ textDecor: 'none' }}
-          shadow='md'
-          minWidth='30px'
-        >
-          <MenuItem
-            autoSelect={false}
+        <Menu.Button>
+          <Box
             _active={{ textDecor: 'none' }}
-            isLoading={loading}
-            onClick={handleInvite}
-            _hover={{ backgroundColor: '#F9F9F9' }}
+            _focus={{ textDecor: 'none' }}
+            bg='transparent'
+            _hover={{
+              bg: { base: 'none', md: '#F2F2F2' },
+              padding: { base: 0, md: '4px' },
+              rounded: '100%'
+            }}
           >
-            Resend invite
-          </MenuItem>
-        </MenuList>
+            <Icon as={FaEllipsisH} color='#828282' boxSize={5} />
+          </Box>
+        </Menu.Button>
+        <Menu.Items shadow='md'>
+          <Menu.Item>
+            <Box
+              py={2}
+              px={{ base: 1, md: 6 }}
+              bg='white'
+              isLoading={loading}
+              onClick={handleInvite}
+              shadow='lg'
+              _hover={{ backgroundColor: '#F9F9F9', cursor: 'pointer' }}
+              d='block'
+              w={{ base: '7rem', md: '9rem' }}
+            >
+              Resend Invite
+            </Box>
+          </Menu.Item>
+        </Menu.Items>
       </Menu>
     </Box>
   )

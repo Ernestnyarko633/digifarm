@@ -72,7 +72,7 @@ const CooperativeCard = ({ item, order, data, handleClick }) => {
             {user?.email === data?.users[0].email &&
               item.email !== user?.email &&
               !item.id && (
-                <Box mt={-2} h={1} ml={32}>
+                <Box mt={-1} ml={16} pos='relative'>
                   <TableMenu id={data._id} email={item.email} />
                 </Box>
               )}

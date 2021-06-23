@@ -128,7 +128,7 @@ const cooperativeIntro = ({ location: { state } }) => {
         <Image
           bgPos='cover'
           src={cfmotive}
-          w={{ '5xl': 'full' }}
+          w='100%'
           h={{ base: '30rem', md: '45rem', xl: '45rem', '3xl': '50rem' }}
         />
         <Box pos='absolute' top={{ base: 20, md: 40, '5xl': '12rem' }}>

@@ -15,6 +15,10 @@ import {
   useToast,
   useDisclosure,
   Tooltip,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
   Icon
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
@@ -243,7 +247,7 @@ const CooperativeMain = ({ match: { params } }) => {
           {user?.email === data?.users[0].email &&
             row.original.email !== user?.email &&
             !row.original.id && (
-              <Flex justify='center'>
+              <Flex pos='sticky' justify='center'>
                 <TableMenu id={data._id} email={row.original.email} />
               </Flex>
             )}
@@ -347,6 +351,7 @@ const CooperativeMain = ({ match: { params } }) => {
                   >
                     Cooperative Overview
                   </Heading>
+
                   <Spacer />
                   <Flex justify='flex-end'>
                     <Link href='/dashboard' _hover={{ textDecor: 'none' }}>
