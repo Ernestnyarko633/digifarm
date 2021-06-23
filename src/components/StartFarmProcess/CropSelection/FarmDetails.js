@@ -26,9 +26,9 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
   const type = sessionStorage.getItem('type')
 
   useEffect(() => {
-    gridRef.current = true
+    gridRef?.current = true
 
-    return () => (gridRef.current = false)
+    return () => (gridRef?.current = false)
   }, [gridRef])
 
   useEffect(() => {
