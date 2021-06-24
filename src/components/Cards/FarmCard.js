@@ -21,7 +21,7 @@ import ImageLoader from 'components/ImageLoader'
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 
-const FarmCard = ({ farm }) => {
+const FarmCard = ({ farm, id }) => {
   const [reload, setReload] = React.useState(0)
   const { getActivities } = useApi()
   const [imageUrl, setImageUrl] = React.useState(null)
@@ -74,7 +74,11 @@ const FarmCard = ({ farm }) => {
 
   const [show, setShow] = React.useState(false)
 
-  const handleToggle = () => setShow(!show)
+  const handleToggle = () => {
+    if (id === farm?._id) {
+      setShow(!show)
+    }
+  }
 
   return (
     <Box
@@ -83,7 +87,7 @@ const FarmCard = ({ farm }) => {
       p={10}
       bg='white'
       minW={{ base: 82, md: 120, xl: 123, '2xl': 125 }}
-      minHeight={110}
+      h={show ? 'auto' : 115}
       mr={{ base: 5, md: 6 }}
     >
       <Flex align='center' justify='space-between'>
@@ -232,16 +236,32 @@ const FarmCard = ({ farm }) => {
                 </Box>
 
                 <Box d={{ base: 'none', md: 'block' }}>
-                  {data.length > 0 ? (
-                    data.map((activity, index) => (
-                      <Step
-                        activity={activity}
-                        key={activity.title}
-                        cutThread={data.length - 1 === index}
-                      />
-                    ))
-                  ) : (
-                    <Box textAlign='center'>Data Unavailable</Box>
+                  <Collapse startingHeight={190} in={show}>
+                    {data.length > 0 ? (
+                      data.map((activity, index) => (
+                        <Step
+                          activity={activity}
+                          key={activity.title}
+                          cutThread={data.length - 1 === index}
+                        />
+                      ))
+                    ) : (
+                      <Box textAlign='center'>Data Unavailable</Box>
+                    )}
+                  </Collapse>
+
+                  {data?.length > 3 && (
+                    <Box
+                      as='button'
+                      role='button'
+                      aria-label='toggle button'
+                      fontSize='sm'
+                      onClick={handleToggle}
+                      mt='1rem'
+                      color='cf.800'
+                    >
+                      Show {show ? 'Less' : 'More'}
+                    </Box>
                   )}
                 </Box>
               </>
@@ -273,6 +293,7 @@ const FarmCard = ({ farm }) => {
 }
 
 FarmCard.propTypes = {
+  id: PropTypes.string,
   farm: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,

@@ -23,7 +23,7 @@ const FarmsCard = ({ data, currentSlide }) => {
         pos='relative'
       >
         {data?.map(farm => (
-          <FarmCard key={farm._id} farm={farm} />
+          <FarmCard key={farm._id} id={farm?._id} farm={farm} />
         ))}
       </MotionFlex>
     </Box>
