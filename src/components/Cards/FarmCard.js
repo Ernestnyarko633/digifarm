@@ -7,7 +7,8 @@ import {
   Flex,
   Heading,
   Text,
-  Tag
+  Tag,
+  Collapse
 } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 import { Status } from 'helpers/misc'
@@ -71,6 +72,10 @@ const FarmCard = ({ farm }) => {
     return () => (mounted = false)
   }, [data, farm])
 
+  const [show, setShow] = React.useState(false)
+
+  const handleToggle = () => setShow(!show)
+
   return (
     <Box
       rounded='xl'
@@ -78,7 +83,7 @@ const FarmCard = ({ farm }) => {
       p={10}
       bg='white'
       minW={{ base: 82, md: 120, xl: 123, '2xl': 125 }}
-      h={data?.length > 2 ? '100%' : 110}
+      minHeight={110}
       mr={{ base: 5, md: 6 }}
     >
       <Flex align='center' justify='space-between'>
@@ -195,19 +200,51 @@ const FarmCard = ({ farm }) => {
                 text='fetching progress'
               />
             ) : (
-              <Box>
-                {data.length > 0 ? (
-                  data.map((activity, index) => (
-                    <Step
-                      activity={activity}
-                      key={activity.title}
-                      cutThread={data.length - 1 === index}
-                    />
-                  ))
-                ) : (
-                  <Box textAlign='center'>Data Unavailable</Box>
-                )}
-              </Box>
+              <>
+                <Box d={{ base: 'block', md: 'none' }}>
+                  <Collapse startingHeight={80} in={show}>
+                    {data.length > 0 ? (
+                      data.map((activity, index) => (
+                        <Step
+                          activity={activity}
+                          key={activity.title}
+                          cutThread={data.length - 1 === index}
+                        />
+                      ))
+                    ) : (
+                      <Box textAlign='center'>Data Unavailable</Box>
+                    )}
+                  </Collapse>
+
+                  {data?.length > 1 && (
+                    <Box
+                      as='button'
+                      role='button'
+                      aria-label='toggle button'
+                      fontSize='sm'
+                      onClick={handleToggle}
+                      mt='1rem'
+                      color='cf.800'
+                    >
+                      Show {show ? 'Less' : 'More'}
+                    </Box>
+                  )}
+                </Box>
+
+                <Box d={{ base: 'none', md: 'block' }}>
+                  {data.length > 0 ? (
+                    data.map((activity, index) => (
+                      <Step
+                        activity={activity}
+                        key={activity.title}
+                        cutThread={data.length - 1 === index}
+                      />
+                    ))
+                  ) : (
+                    <Box textAlign='center'>Data Unavailable</Box>
+                  )}
+                </Box>
+              </>
             )}
           </Box>
           <Box
