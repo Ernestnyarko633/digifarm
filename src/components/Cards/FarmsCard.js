@@ -10,14 +10,17 @@ const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 const FarmsCard = ({ data, currentSlide }) => {
   return (
-    <Box minW={{ md: 130 }} mx='auto'>
+    <Box
+      minW={{ md: 130 }}
+      mx='auto'
+      overflowX={{ base: 'scroll', xl: 'unset' }}
+    >
       <MotionFlex
         animate={{
           x: `-${46.5 * currentSlide}rem`,
           transition: { duration: 0.6, ...transition }
         }}
         pos='relative'
-        overflowX={{ base: 'scroll', xl: 'unset' }}
       >
         {data?.map(farm => (
           <FarmCard key={farm._id} farm={farm} />
