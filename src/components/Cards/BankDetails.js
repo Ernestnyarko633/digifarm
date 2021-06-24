@@ -23,7 +23,12 @@ const BankDetails = () => (
           <Text color='gray.600' w={{ md: 40 }}>
             Bank:
           </Text>
-          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
+          <Text
+            fontWeight={700}
+            textAlign='left'
+            w={{ md: 72 }}
+            color='cf.green'
+          >
             ABSA Bank Ghana
           </Text>
         </Flex>
@@ -39,7 +44,12 @@ const BankDetails = () => (
           <Text color='gray.600' w={{ md: 40 }}>
             Branch:
           </Text>
-          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
+          <Text
+            fontWeight={700}
+            textAlign='left'
+            w={{ md: 72 }}
+            color='cf.green'
+          >
             High Street
           </Text>
         </Flex>
@@ -55,7 +65,12 @@ const BankDetails = () => (
           <Text color='gray.600' w={{ md: 40 }}>
             Account no:
           </Text>
-          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
+          <Text
+            fontWeight={700}
+            textAlign='left'
+            w={{ md: 72 }}
+            color='cf.green'
+          >
             0641409553 - USD
           </Text>
         </Flex>
@@ -71,7 +86,12 @@ const BankDetails = () => (
           <Text color='gray.600' w={{ md: 40 }}>
             Swift code:
           </Text>
-          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
+          <Text
+            fontWeight={700}
+            textAlign='left'
+            w={{ md: 72 }}
+            color='cf.green'
+          >
             BARCGHAC
           </Text>
         </Flex>
@@ -87,7 +107,12 @@ const BankDetails = () => (
           <Text color='gray.600' w={{ md: 40 }}>
             Account name:
           </Text>
-          <Text fontWeight={700} textAlign='left' w={{ md: 72 }} color='cf.800'>
+          <Text
+            fontWeight={700}
+            textAlign='left'
+            w={{ md: 72 }}
+            color='cf.green'
+          >
             Complete Farmer Limited
           </Text>
         </Flex>

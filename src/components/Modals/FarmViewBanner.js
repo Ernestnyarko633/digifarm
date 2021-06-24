@@ -12,7 +12,7 @@ import Digifarmer from 'assets/images/digifarmer.svg'
 import { getformattedDate } from 'helpers/misc'
 import { motion } from 'framer-motion'
 
-const MotionAlert = motion.custom(Alert)
+const MotionAlert = motion(Alert)
 
 const FarmViewBanner = ({ date, closed }) => {
   return (

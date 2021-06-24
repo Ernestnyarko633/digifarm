@@ -1,69 +1,59 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react'
-import {
-  Box,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
-  Icon,
-  Text
-} from '@chakra-ui/react'
+import { Box, Icon, Text } from '@chakra-ui/react'
 import { FaInfoCircle } from 'react-icons/fa'
+import { Whisper } from 'rsuite'
 // import { AiTwotoneCheckSquare } from 'react-icons/ai'
 
 const FarmLegend = () => {
+  const Overlay = React.forwardRef(({ style, onClose, ...rest }, ref) => {
+    const styles = {
+      ...style,
+      background: '#fff',
+      width: 400,
+      padding: 10,
+      borderRadius: 4,
+      position: 'absolute',
+      border: '1px solid #ddd',
+      boxShadow: '0 3px 6px -2px rgba(0, 0, 0, 0.6)'
+    }
+
+    return (
+      <div {...rest} style={styles} ref={ref}>
+        This band combination is useful for monitoring agricultural crops. In
+        the image, bright green represents vigorous, healthy vegetation while
+        non-crops, such as mature trees, appear in a dull green. Coniferous
+        forests appear as a dark, rich green while deciduous forests appear as a
+        bright green. Sparsely vegetated and bare areas appear brown and mauve.
+      </div>
+    )
+  })
+
   return (
-    <Popover placement='top-start' outline='none'>
-      <PopoverTrigger>
+    <Box>
+      <Whisper
+        trigger='hover'
+        speaker={(props, ref) => {
+          const { className, left, top, onClose } = props
+          return (
+            <Overlay
+              style={{ left, top }}
+              onClose={onClose}
+              className={className}
+              ref={ref}
+            />
+          )
+        }}
+      >
         <Box>
-          <Icon as={FaInfoCircle} color='cf.800' />{' '}
-          <Text as='span'>Map legend</Text>
+          <Icon as={FaInfoCircle} color='cf.800' />
+          <Text px={2} as='span'>
+            Map legend
+          </Text>
         </Box>
-      </PopoverTrigger>
-      <PopoverContent w={{ md: 108 }}>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader fontWeight={800}>Map legend</PopoverHeader>
-        <PopoverBody>
-          {/* <List fontSize='sm'>
-            <ListItem>
-              <ListIcon as={AiTwotoneCheckSquare} color='cf.800' />
-              This should be describing what the color on the map to the users.
-              This should be describing what the color on the map to the
-              users.This should be describing what the color on the map to the
-              users.
-            </ListItem>
-            <ListItem>
-              <ListIcon as={AiTwotoneCheckSquare} color='red.dark' />
-              This should be describing what the color on the map to the users.
-              This should be describing what the color on the map to the users.
-              This should be describing what the color on the map to the users.
-            </ListItem>
-            <ListItem>
-              <ListIcon as={AiTwotoneCheckSquare} color='violet.dark' />
-              This should be describing what the color on the map to the users.
-              This should be describing what the color on the map to the users.
-              This should be describing what the color on the map to the users.
-            </ListItem>
-            <ListItem>
-              <ListIcon as={AiTwotoneCheckSquare} color='yellow.dark' />
-              This should be describing what the color on the map to the users.
-              This should be describing what the color on the map to the users.
-              This should be describing what the color on the map to the users.
-            </ListItem>
-          </List>*/}
-          This band combination is useful for monitoring agricultural crops. In
-          the image, bright green represents vigorous, healthy vegetation while
-          non-crops, such as mature trees, appear in a dull green. Coniferous
-          forests appear as a dark, rich green while deciduous forests appear as
-          a bright green. Sparsely vegetated and bare areas appear brown and
-          mauve.
-        </PopoverBody>
-      </PopoverContent>
-    </Popover>
+      </Whisper>
+    </Box>
   )
 }
 

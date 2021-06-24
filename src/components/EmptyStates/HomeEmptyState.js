@@ -43,7 +43,11 @@ const HomeEmptyState = () => {
             Choose a crop to start farming
           </Text>
         </Flex>
-        <FarmDetails catName='Top-selling farms' handleNext={handleGoToNext} />
+        <FarmDetails
+          dashboard={true}
+          catName='Top-selling farms'
+          handleNext={handleGoToNext}
+        />
       </Box>
     )
   )

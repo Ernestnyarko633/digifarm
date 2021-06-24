@@ -1,129 +1,112 @@
-/* eslint-disable */
-import React from "react";
-import Header from "container/Header";
-import { Box, Flex, Grid, Heading, Link, Text } from "@chakra-ui/layout";
-import { Link as ReachRouter } from "react-router-dom";
-import CooperativeCard from "components/Cards/CooperativeCard";
-import { Button } from "components";
-import useAuth from "context/auth";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Box } from '@chakra-ui/react'
 
-const types = [
-  {
-    type: "Tribe",
-    members: "five (5)",
-    minAcres: "No",
-    discount: "1.3%",
-    image: "tribe.png",
-    alt: "tribe-image",
-  },
-  {
-    type: "Village",
-    members: "five (5)",
-    minAcres: 10,
-    discount: "3%",
-    image: "village.png",
-    alt: "village-image",
-  },
-  {
-    type: "City",
-    members: "Ten (10)",
-    minAcres: 100,
-    discount: "7.5%",
-    image: "city.png",
-    alt: "city-image",
-  },
-  {
-    type: "Nation",
-    members: "Twenty-five (25)",
-    minAcres: 250,
-    discount: "10%",
-    image: "nation.png",
-    alt: "nation-image",
-  },
-];
+import Header from 'container/Header'
+import useStartFarm from 'context/start-farm'
+import CooperativeType from 'components/StartFarmProcess/CooperativeType'
+import CropSelection from 'components/StartFarmProcess/CropSelection'
+import CooperativeSteps from 'components/StartFarmProcess/CooperativeSteps'
+import Scrollbar from 'react-perfect-scrollbar'
 
-const Cooperative = ({ location: { selected }, history }) => {
-  const { isAuthenticated } = useAuth();
-  const { user } = isAuthenticated();
-  document.title = "Complete Farmer | Cooperative";
-  const [selectedType, setSelectedType] = React.useState("");
+const CooperativeFarm = ({ location, history }) => {
+  document.title = 'Cooperative | Start Farm'
+
+  const { state, selected } = location || {}
+  const {
+    step,
+    setStep,
+    setOtherStep,
+    setSelectedType,
+    setBarrier,
+    setInvites,
+    setCooperative,
+    setCooperativeName,
+    setCoopImg,
+    setSelectedCooperativeType,
+    setAcres
+  } = useStartFarm()
+
+  React.useEffect(() => {
+    let mounted = true
+    if (mounted && (state?.step || state?.payment)) {
+      setStep(x => x + 2)
+      setOtherStep(x => x + 5)
+    } else {
+      if (!state?.user || !state) {
+        setStep(x => x * 0)
+        setOtherStep(x => x * 0)
+        setCooperativeName(null)
+        setSelectedType('')
+        setBarrier(null)
+        setCooperative(null)
+        setInvites([])
+        setCoopImg(false)
+        setSelectedCooperativeType(null)
+        setAcres(0)
+        // clear cache data in session storage
+        sessionStorage.removeItem('categories')
+        sessionStorage.removeItem('farms')
+      }
+    }
+
+    return () => (mounted = false)
+  }, [
+    state,
+    setStep,
+    setOtherStep,
+    setCooperativeName,
+    setSelectedType,
+    setBarrier,
+    setCooperative,
+    setInvites,
+    setCoopImg,
+    setSelectedCooperativeType,
+    setAcres
+  ])
+
+  const getContent = value => {
+    switch (value) {
+      case 0:
+        return <CooperativeType />
+      case 1:
+        return <CropSelection />
+      case 2:
+        return (
+          <CooperativeSteps
+            asMember={state?.cooperative ? state : null}
+            payment={state?.payment ? state : null}
+            data={selected}
+            history={history}
+          />
+        )
+      default:
+        return null
+    }
+  }
 
   return (
-    <Box>
+    <>
       <Header />
-      <Flex
-        direction="column"
-        w="100vw"
-        h={{ md: "92vh" }}
-        align="center"
-        justify="center"
-        mt={{ base: 32, md: 0 }}
-      >
-        <Box textAlign="center" mb={20}>
-          <Text>Welcome {user?.firstName}</Text>
-          <Heading as="h4" fontSize={{ base: "xl", md: "2xl" }}>
-            Select your cooperative type
-          </Heading>
-        </Box>
-        <Grid
-          templateColumns={{ md: "repeat(4, 1fr)" }}
-          gap={6}
-          px={{ base: 4, md: 0 }}
+      <Scrollbar>
+        <Box
+          as='main'
+          bgColor='white'
+          w={{ md: '100vw' }}
+          h={{ md: '100vh' }}
+          mt={{ base: 14, md: 20, xl: 8 }}
+          overflow='hidden'
         >
-          {types.map((item) => (
-            <CooperativeCard
-              key={item.type}
-              item={item}
-              selected={selectedType.type === item.type}
-              onClick={() => setSelectedType(item)}
-            />
-          ))}
-        </Grid>
+          <Scrollbar>{getContent(step)}</Scrollbar>
+        </Box>
+      </Scrollbar>
+    </>
+  )
+}
 
-        <Flex mt={{ base: 14, md: 20 }} mb={{ base: 10, md: 0 }}>
-          <Link
-            as={ReachRouter}
-            to="/start-farm"
-            _hover={{ textDecor: "none" }}
-          >
-            <Button
-              btntitle="Back"
-              px={{ base: 10, md: 20 }}
-              h={{ base: 10, md: 12 }}
-              fontSize={{ base: "sm", md: "md" }}
-              bg="transparent"
-              borderWidth={1}
-              borderColor="gray.300"
-              color="gray.500"
-              mr={{ base: 6, md: 10 }}
-              _hover={{ bg: "transparent" }}
-              _active={{ bg: "transparent" }}
-            />
-          </Link>
-
-          <Link
-            as={ReachRouter}
-            to={{ pathname: "/start-farm/cooperative-farms", selectedType }}
-            _hover={{ textDecor: "none" }}
-          >
-            <Button
-              btntitle="Continue"
-              px={{ base: 10, md: 20 }}
-              h={{ base: 10, md: 12 }}
-              fontSize={{ base: "sm", md: "md" }}
-              disabled={!selectedType}
-            />
-          </Link>
-        </Flex>
-      </Flex>
-    </Box>
-  );
-};
-
-Cooperative.propTypes = {
+CooperativeFarm.propTypes = {
   location: PropTypes.object,
-  history: PropTypes.object,
-};
+  history: PropTypes.object
+}
 
-export default Cooperative;
+export default CooperativeFarm

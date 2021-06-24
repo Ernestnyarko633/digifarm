@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Box, Flex, Icon, Tag, Text } from '@chakra-ui/react'
 import { FiCheck } from 'react-icons/fi'
 import { GoPrimitiveDot } from 'react-icons/go'
+import { ImRadioChecked } from 'react-icons/im'
 import { Status } from 'helpers/misc'
 
 const Step = ({ activity, cutThread }) => {
@@ -12,7 +13,7 @@ const Step = ({ activity, cutThread }) => {
   const isPending = activity.status === PENDING
 
   return (
-    <Flex align='center' justify='space-between' pos='relative' mt={5}>
+    <Flex h={10} align='center' justify='space-between' pos='relative' mt={5}>
       <Flex align='center'>
         <Flex
           align='center'
@@ -20,19 +21,16 @@ const Step = ({ activity, cutThread }) => {
           rounded='100%'
           w={8}
           h={8}
-          borderWidth={1}
-          borderColor='gray.300'
-          bg={isComplete ? 'cf.800' : 'transparent'}
+          borderWidth={isPending && 1}
+          borderColor={isPending && 'gray.300'}
+          bg={isComplete ? 'cf.green' : 'transparent'}
           color='white'
         >
-          {isComplete ? (
-            <Icon as={FiCheck} />
-          ) : (
-            <Icon
-              as={GoPrimitiveDot}
-              color={isInProgess ? 'cf.800' : 'gray.300'}
-            />
+          {isComplete && <Icon as={FiCheck} />}
+          {isInProgess && (
+            <Icon as={ImRadioChecked} boxSize={8} color='cf.green' />
           )}
+          {isPending && <Icon as={GoPrimitiveDot} color='gray.300' />}
         </Flex>
         <Box ml={3}>
           <Text
@@ -42,13 +40,6 @@ const Step = ({ activity, cutThread }) => {
           >
             {activity.title}
           </Text>
-          {/* <Text
-            fontSize='xs'
-            textColor={isPending ? 'gray.300' : 'gray.500'}
-            mt={-2}
-          >
-            Finance preparation
-          </Text> */}
         </Box>
       </Flex>
       {!cutThread && (
@@ -65,7 +56,7 @@ const Step = ({ activity, cutThread }) => {
         <Box textAlign='right'>
           <Tag
             bg='cf.200'
-            color='cf.800'
+            color='cf.green'
             rounded='3xl'
             px={4}
             textAlign='center'
@@ -76,6 +67,20 @@ const Step = ({ activity, cutThread }) => {
           <Text fontSize={{ base: 'tiny', md: 'xs' }} color='gray.500' mr={2}>
             {new Date(activity?.updatedAt).toLocaleDateString()}
           </Text>
+        </Box>
+      )}
+      {isInProgess && (
+        <Box textAlign='right'>
+          <Tag
+            bg='cf.200'
+            color='cf.green'
+            rounded='3xl'
+            px={4}
+            textAlign='center'
+            fontSize={{ base: 'xs', md: 'sm' }}
+          >
+            In Progress
+          </Tag>
         </Box>
       )}
     </Flex>

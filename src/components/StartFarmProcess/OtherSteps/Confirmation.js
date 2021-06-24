@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver'
 import { Button } from 'components'
 import FarmInfo from 'components/Cards/FarmInfo'
 import useApi from 'context/api'
+import useStartFarm from 'context/start-farm'
 
 const MotionFlex = motion(Flex)
 
@@ -50,7 +51,7 @@ const ButtonDownload = ({ type, order, ...rest }) => {
       {...rest}
       w={64}
       h={12}
-      fontSize='md'
+      fontSize='sm'
       rounded='30px'
       isDisabled={loading}
       isLoading={loading}
@@ -70,6 +71,17 @@ ButtonDownload.propTypes = {
 }
 
 const Confirmation = ({ farm, order }) => {
+  const { setOrder } = useStartFarm()
+  React.useEffect(() => {
+    let mounted = true
+
+    if (mounted && order) {
+      setOrder(order)
+    }
+
+    return () => (mounted = false)
+  }, [order, setOrder])
+
   return (
     <MotionFlex w='100%'>
       <Box w={{ md: '50%' }}>
@@ -81,7 +93,13 @@ const Confirmation = ({ farm, order }) => {
           />
         </Flex>
       </Box>
-      <Box w={{ md: '50%' }} p={{ base: 2, md: 14 }} pos='relative'>
+      <Box
+        w={{ md: '50%' }}
+        p={{ base: 2, md: 8 }}
+        px={{ base: 2, md: 14 }}
+        mx={3}
+        pos='relative'
+      >
         <Flex direction='column' align='center' justify='center'>
           <Box textAlign='center' m='auto' mt={6}>
             <Text mb={1} fontSize={{ base: 18, md: 22 }} fontWeight='bold'>
@@ -96,8 +114,8 @@ const Confirmation = ({ farm, order }) => {
               dangerouslySetInnerHTML={{
                 __html:
                   order?.status !== 'PAID'
-                    ? 'Weldone! your order is pending, <br /> awaiting payment approval, download invoice for payment details.'
-                    : 'Hurray!  you have successfully <br />made payment to your new farm'
+                    ? 'Welldone! your order is pending, <br /> awaiting payment approval, download invoice for payment details.'
+                    : 'Congratulations! You’ve completed the payment for your farm.'
               }}
             />
           </Box>
@@ -107,9 +125,10 @@ const Confirmation = ({ farm, order }) => {
           direction={{ base: 'column', md: 'row' }}
           align='center'
           pos={{ md: 'absolute' }}
-          bottom={5}
+          bottom={1}
           left={0}
           right={0}
+          m={3}
         >
           <ButtonDownload
             mx={6}

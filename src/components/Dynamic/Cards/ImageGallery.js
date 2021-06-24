@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 import ReactPlayer from 'react-player/lazy'
 
-const MotionFlex = motion.custom(Flex)
+const MotionFlex = motion(Flex)
 
 export default function ImageGallery({ title, farmfeeds, activityName }) {
   const [images, setImages] = React.useState([])
@@ -113,7 +113,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
               rounded='100%'
               borderWidth={1}
               borderColor='white'
-              color='cf.800'
+              color='cf.green'
               bg='white'
               ml={2}
               onClick={() => handleClick(+1)}
@@ -123,7 +123,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
           </Flex>
         </Box>
 
-        <MotionFlex pos='relative' w={120} mt={4} overflowX='scroll'>
+        <MotionFlex pos='relative' w={120} mt={4} overflowX='hidden'>
           {images.map((item, index) => (
             <Box
               key={mapKey(index)}
@@ -137,7 +137,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
               mr={6}
               borderWidth={activeIndex === index ? 4 : 0}
               rounded='md'
-              borderColor='cf.800'
+              borderColor='cf.green'
             >
               <Image
                 h={20}

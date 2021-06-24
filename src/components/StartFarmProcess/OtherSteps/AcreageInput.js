@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
@@ -9,11 +9,20 @@ import {
 } from '@chakra-ui/react'
 
 import { IoAddCircleSharp, IoRemoveCircleOutline } from 'react-icons/io5'
-
 import useStartFarm from 'context/start-farm'
 
-const AcreageInput = ({ totalAcres }) => {
-  const { acreage, setAcreage } = useStartFarm()
+const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
+  const { barrier } = useStartFarm()
+  useEffect(() => {
+    let mounted = true
+    if (mounted && cooperativeOps) {
+      if (cooperativeOps?.minAcre) {
+        setValue(cooperativeOps?.minAcre)
+      }
+    }
+
+    return () => (mounted = false)
+  }, [cooperativeOps, setValue])
 
   return (
     <Box w={{ base: 48, md: 80 }}>
@@ -22,19 +31,28 @@ const AcreageInput = ({ totalAcres }) => {
           h={{ base: 10, md: 16 }}
           type='number'
           roundedBottom='0px'
-          value={acreage}
-          borderBottomColor='cf.800'
+          value={value}
+          borderBottomColor='cf.green'
           borderBottomWidth={2}
           _hover={{
-            borderBottomColor: 'cf.800'
+            borderBottomColor: 'cf.green'
           }}
           _focus={{
-            borderBottomColor: 'cf.800'
+            borderBottomColor: 'cf.green'
           }}
           placeholder='How many acres?'
           onChange={e => {
-            if (e.target?.value >= 1 && e.target?.value < totalAcres) {
-              setAcreage(e.target.value * 1)
+            if (cooperativeOps?.minAcre) {
+              if (
+                e.target?.value >= cooperativeOps?.minAcre &&
+                e.target?.value < totalAcres
+              ) {
+                setValue(e.target.value * 1)
+              }
+            } else {
+              if (e.target?.value >= 1 && e.target?.value < totalAcres) {
+                setValue(e.target?.value * 1)
+              }
             }
           }}
         />
@@ -54,8 +72,14 @@ const AcreageInput = ({ totalAcres }) => {
             }}
             icon={<IoRemoveCircleOutline />}
             onClick={() => {
-              if (acreage > 1) {
-                setAcreage(draft => draft - 1)
+              if (cooperativeOps) {
+                if (value > cooperativeOps?.minAcre) {
+                  setValue(draft => draft - 1)
+                }
+              } else {
+                if (value > 1) {
+                  setValue(draft => draft - 1)
+                }
               }
             }}
           />
@@ -63,7 +87,7 @@ const AcreageInput = ({ totalAcres }) => {
             aria-label='Reduce acreage'
             fontSize='25px'
             bg='transparent'
-            color='cf.800'
+            color='cf.green'
             _hover={{
               bg: 'transparent'
             }}
@@ -75,8 +99,14 @@ const AcreageInput = ({ totalAcres }) => {
             }}
             icon={<IoAddCircleSharp />}
             onClick={() => {
-              if (acreage < totalAcres) {
-                setAcreage(draft => draft + 1)
+              if (barrier) {
+                if (value < barrier) {
+                  setValue(draft => draft + 1)
+                }
+              } else {
+                if (value < totalAcres) {
+                  setValue(draft => draft + 1)
+                }
               }
             }}
           />
@@ -87,7 +117,10 @@ const AcreageInput = ({ totalAcres }) => {
 }
 
 AcreageInput.propTypes = {
-  totalAcres: PropTypes.number.isRequired
+  totalAcres: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+  setValue: PropTypes.func.isRequired,
+  cooperativeOps: PropTypes.object
 }
 
 export default AcreageInput

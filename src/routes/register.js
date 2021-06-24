@@ -24,17 +24,26 @@ const Router = () => {
         <PrivateRoute
           exact
           path='/start-farm/individual'
-          component={Pages.Individual}
+          component={Pages.StartFarmIndividual}
         />
         <PrivateRoute
           exact
           path='/start-farm/cooperative'
-          component={Pages.Cooperative}
+          component={Pages.StartFarmCooperative}
+        />
+        <Route
+          path='/cooperative/invite/:token'
+          component={Pages.CooperativeInvite}
+        />
+        <Route path='/cooperative/intro' component={Pages.CooperativeIntro} />
+        <PrivateRoute
+          path='/cooperative-main/:id'
+          component={Pages.CooperativeMain}
         />
         <PrivateRoute
           exact
-          path='/start-farm/cooperative-farms'
-          component={Pages.CooperativeFarm}
+          path='/cooperative/:id'
+          component={Pages.Cooperative_}
         />
         <PrivateRoute exact path='/payment' component={Pages.Payment} />
         <PrivateRoute
@@ -49,7 +58,7 @@ const Router = () => {
         <PrivateRoute path='/guide' component={Pages.Guide} />
         <Route path='/notfound' component={Pages.NotFound} />
         {/* <PrivateRoute path='/coming-soon' component={Pages.Banner} /> */}
-        <Redirect from='*' to='/notfound' />
+        {/* <Redirect from='*' to='/notfound' /> */}
       </Switch>
     </React.Suspense>
   )

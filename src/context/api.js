@@ -8,8 +8,14 @@ import axios from 'axios'
 const ApiContext = createContext()
 
 export const ApiContextProvider = ({ children }) => {
-  const { FMS_API, AUTH_API, PAYMENT_API, DIGITAL_FARMER_API, BUYER_API } =
-    getConfig()
+  const {
+    FMS_API,
+    AUTH_API,
+    PAYMENT_API,
+    DIGITAL_FARMER_API,
+    BUYER_API,
+    NOTIFICATION_API
+  } = getConfig()
 
   const getUser = async () => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
@@ -30,6 +36,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.post({ url: `${AUTH_API}/logout` })
   }
 
+  const signUp = async payload => {
+    return await http.post({
+      url: `${AUTH_API}/signup`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   const getCropCategories = async () => {
     return await http.get({ url: `${FMS_API}/crop-categories` })
   }
@@ -43,7 +56,10 @@ export const ApiContextProvider = ({ children }) => {
   }
 
   const patchOrder = async (id, body) => {
-    return await http.patch({ url: `${DIGITAL_FARMER_API}/orders/${id}`, body })
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/${id}`,
+      body
+    })
   }
 
   const getPaymentDetails = async id => {
@@ -101,6 +117,43 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  //Cooperative
+  //#region
+
+  const acceptInvite = async (_id, token) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${_id}/accept`,
+      body: token
+    })
+  }
+
+  const getCooperatives = async () => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/cooperatives`
+    })
+  }
+
+  const getCooperativeById = async id => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}`
+    })
+  }
+
+  const updateCooperative = async (id, email) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}`,
+      body: email
+    })
+  }
+
+  const inviteMember = async (id, payload) => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/cooperatives/${id}/invite`,
+      body: payload
+    })
+  }
+
+  //#endregion
   const deleteBankTransfer = async id => {
     return await http.patch({
       url: `${PAYMENT_API}/payment/receipt-delete?payment_id=${id}`
@@ -214,9 +267,38 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const getCooperativeTypes = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/cooperative-types`,
+      query
+    })
+  }
+
+  const getNotifications = async query => {
+    return await http.get({
+      url: `${NOTIFICATION_API}/notification`,
+      query
+    })
+  }
+
+  const createCooperative = async payload => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/cooperatives`,
+      body: payload
+    })
+  }
+
+  const updateNotification = async (id, userId, query) => {
+    return await http.patch({
+      url: `${NOTIFICATION_API}/notification/generic-update/${id}/${userId}`,
+      query
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
+        signUp,
         logout,
         eosTask,
         getUser,
@@ -236,6 +318,7 @@ export const ApiContextProvider = ({ children }) => {
         sellProduce,
         createOrder,
         downloadFile,
+
         getActivities,
         verifyPayment,
         getMyFarmFeeds,
@@ -247,13 +330,26 @@ export const ApiContextProvider = ({ children }) => {
         createBankDetails,
         updateBankDetails,
         getBankDetails,
+        createCooperative,
         deleteBankTransfer,
         downloadTaskReceipt,
         getMyScheduledTasks,
+        getCooperativeTypes,
         uploadPaymentDetails,
         getUserBankingDetails,
         initiatePaystackPayment,
-        verifyPaystackPayment
+        verifyPaystackPayment,
+
+        //cooperative
+        acceptInvite,
+        getCooperatives,
+        getCooperativeById,
+        updateCooperative,
+        inviteMember,
+
+        //notification
+        getNotifications,
+        updateNotification
       }}
     >
       {children}

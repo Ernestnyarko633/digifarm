@@ -13,7 +13,7 @@ const Profile = () => {
   const mapKey = i => i
   const menus = [
     {
-      name: 'Profile',
+      name: 'Personal Info',
       comp: 'compA',
       icon: FiUser
     },
@@ -42,7 +42,7 @@ const Profile = () => {
   return (
     <Box bgColor='white'>
       <Header />
-      <Container pt={{ md: 55 }} maxW={{ md: '7xl' }}>
+      <Container pt={{ md: 55 }} maxW={{ md: '7xl' }} overflow='auto'>
         <Grid templateColumns={{ md: '20% 80%' }} my={16}>
           <Flex
             d={{ base: 'none', md: 'flex' }}

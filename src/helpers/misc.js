@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+import _ from 'lodash'
 import configs from '../utils/configs'
 
 export const replaceURI = (APP, path) =>
@@ -12,6 +14,25 @@ export const fileToBase64 = async file => {
   })
 }
 
+export const validateEmailAndAcrege = (email, acreage) => {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return (
+    re.test(String(email).toLowerCase()) &&
+    (typeof acreage === 'number' ? true : false) &&
+    acreage > 0
+  )
+}
+
+export const checkProperties = obj => {
+  for (var key in obj) {
+    if (obj[key] === null || obj[key] === undefined) {
+      return false
+    }
+  }
+  return true
+}
+
 export const getFormattedMoney = val => {
   let number = val
   if (Number.isNaN(val)) {
@@ -23,6 +44,18 @@ export const getFormattedMoney = val => {
   })
     .format(number)
     .split('$')[1]
+}
+export const latestDateForFarmFeed = feed => {
+  const { data } = feed
+
+  let array = []
+  const process = () =>
+    data?.forEach(realFeed => array?.push(realFeed?.feed?.updatedAt))
+
+  process()
+
+  if (array?.length)
+    return new Date(Math.max(...array?.map(date => new Date(date))))
 }
 
 export const getformattedDate = (
@@ -138,6 +171,73 @@ export const isDateG8Today = date => {
   const start = new Date(date).setHours(0, 0, 0, 0)
 
   return today > start
+}
+
+export const objDiff = (object, base) => {
+  function changes(object, base) {
+    return _.transform(object, (result, value, key) => {
+      if (!_.isEqual(value, base[key])) {
+        result[key] =
+          _.isObject(value) && _.isObject(base[key])
+            ? changes(value, base[key])
+            : value
+      }
+    })
+  }
+  return changes(object, base)
+}
+
+export const urlify = text => {
+  var exp =
+    /(\b(((https?|ftp|file|):\/\/)|www[.])[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+  var temp = text?.replace(
+    exp,
+    '<a href="$1" className="farm-board" class="farm-board" style={{color: "cf.400"}} target="_blank">$1</a>'
+  )
+  var result = ''
+
+  while (temp?.length > 0) {
+    var pos = temp?.indexOf('href="')
+    if (pos === -1) {
+      result += temp
+      break
+    }
+    result += temp?.substring(0, pos + 6)
+
+    temp = temp?.substring(pos + 6, temp?.length)
+    if (temp?.indexOf('://') > 8 || temp?.indexOf('://') === -1) {
+      result += 'http://'
+    }
+  }
+
+  return result
+}
+
+export const embed_url = (text, url) => {
+  return `<a href=${url} className="farm-board" class="farm-board" style={{color: "cf.400"}} target="_blank">${text}</a>`
+}
+
+export const shuffle = (arr, count, key) => {
+  let random = []
+  let i = 0
+
+  if (arr?.length < count) return arr
+
+  while (i < count) {
+    let index = Math.floor(Math.random() * arr?.length)
+    const newItem = arr?.[index]
+    let check = null
+    if (key) {
+      check = random.find(item => newItem?.[key] === item?.[key])
+    } else {
+      check = random.find(item => newItem === item)
+    }
+    if (!check) {
+      random.push(newItem)
+      i++
+    }
+  }
+  return random
 }
 
 export const Status = {

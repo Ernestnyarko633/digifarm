@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import useComponent from 'context/component'
 import { Flex, Button, Icon } from '@chakra-ui/react'
@@ -18,7 +17,7 @@ const ShareModal = () => {
   const { quote, title, url } = data
 
   return (
-    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='xl'>
+    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose}>
       <Flex w='100%' align='center' justify='center'>
         <Flex w='100%' direction='row' justify='center' align='center'>
           <Button

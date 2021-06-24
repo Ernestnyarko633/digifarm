@@ -16,7 +16,7 @@ import PropTypes from 'prop-types'
 import { AnimatePresence, motion } from 'framer-motion'
 import Button from 'components/Button'
 
-const MotionBox = motion.custom(Box)
+const MotionBox = motion(Box)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
 export default function ShareScreen({ isOpen, onClose, image }) {
@@ -110,7 +110,7 @@ export default function ShareScreen({ isOpen, onClose, image }) {
                         <Textarea
                           borderWidth={0}
                           borderBottomWidth={2}
-                          borderBottomColor='cf.800'
+                          borderBottomColor='cf.green'
                           w='100%'
                           _focus={{ outline: 'none' }}
                           _hover={{ outline: 'none' }}

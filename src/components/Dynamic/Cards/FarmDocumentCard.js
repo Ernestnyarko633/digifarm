@@ -76,8 +76,8 @@ export default function FarmDocumentCard({
             btntitle={!viewDoc ? 'View all receipts' : 'View all Documents'}
             bg='white'
             borderWidth={1}
-            borderColor='cf.800'
-            color='cf.800'
+            borderColor='cf.green'
+            color='cf.green'
             rounded='30px'
             my={5}
             colorScheme='none'

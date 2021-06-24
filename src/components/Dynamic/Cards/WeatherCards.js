@@ -36,7 +36,7 @@ const WeatherCard = ({
               rounded='lg'
               filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               p={6}
-              minH={{ base: 150 }}
+              minH={{ base: 40 }}
               bg='white'
             >
               <Text textAlign='center' fontWeight={300}>
@@ -44,7 +44,10 @@ const WeatherCard = ({
               </Text>
               <Flex mt={2} justify='center' align='center'>
                 <Heading fontSize={{ md: '3xl' }} fontWeight={900} mt={1}>
-                  {farmfeeds[0]?.feed?.plantInfo?.population}
+                  {
+                    farmfeeds[farmfeeds?.length - 1]?.feed?.plantInfo
+                      ?.population
+                  }
                 </Heading>
               </Flex>
             </Box>
@@ -74,7 +77,7 @@ const WeatherCard = ({
               rounded='lg'
               filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
               p={6}
-              minH={{ base: 150 }}
+              minH={{ base: 40 }}
               bg='white'
             >
               <Text fontWeight={300} textAlign='center'>

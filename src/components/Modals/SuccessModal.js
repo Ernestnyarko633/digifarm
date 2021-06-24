@@ -38,7 +38,7 @@ const SuccessModal = () => {
           </Text>
           <Button
             btntitle='Rollover'
-            borderColor='cf.800'
+            borderColor='cf.green'
             color='white'
             rounded='30px'
             mt={5}

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Icon } from '@chakra-ui/react'
+import { Divider, Icon } from '@chakra-ui/react'
 import { Box, Flex, Grid, Heading, Link, Text } from '@chakra-ui/layout'
 import { Avatar } from '@chakra-ui/avatar'
 import ExpenditureCard from './ExpenditureCard'
@@ -84,14 +84,14 @@ const WalletCard = ({ acreage, price, farm }) => {
       rounded='xl'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       bg='white'
-      maxW={{ md: 82 }}
+      w={{ base: 82, md: 82 }}
       minH={{ md: 'auto' }}
     >
-      <Box p={{ base: 4, md: 8 }} w='100%'>
+      <Box p={{ base: 4, md: 6 }} w='100%'>
         <Flex align='center' mb={4}>
           <Box mr={4}>
             <Avatar
-              boxSize={20}
+              boxSize={16}
               bgColor='white'
               borderWidth='1px'
               borderColor='gray.300'
@@ -112,27 +112,27 @@ const WalletCard = ({ acreage, price, farm }) => {
               >
                 ({farm?.order?.product?.cropVariety?.name}) {farm?.name}
               </Text>
-              <Flex direction='row'>
-                <Icon
-                  mt={1}
-                  mr={1}
-                  as={HiLocationMarker}
-                  FlexSize={8}
-                  color='gray.400'
-                />
-                <Text
-                  color='gray.500'
-                  mt={0}
-                  fontSize={{ base: 'sm', md: 'md' }}
-                >
-                  {FirstLettersToUpperCase(
-                    `${farm?.order?.product?.location?.name}, ${farm?.order?.product?.location?.country}`.toLowerCase()
-                  )}
-                </Text>
-              </Flex>
             </Flex>
           </Flex>
         </Flex>
+
+        <Divider orientation='horizontal' />
+
+        <Flex direction='row' my={4}>
+          <Icon
+            mt={1}
+            mr={1}
+            as={HiLocationMarker}
+            boxSize={4}
+            color='gray.400'
+          />
+          <Text color='gray.500' mt={0} fontSize={{ base: 'xs', md: 'sm' }}>
+            {FirstLettersToUpperCase(
+              `${farm?.order?.product?.location?.name}, ${farm?.order?.product?.location?.country}`.toLowerCase()
+            )}
+          </Text>
+        </Flex>
+
         {error || loading ? (
           <Box>
             <FetchCard
@@ -165,11 +165,11 @@ const WalletCard = ({ acreage, price, farm }) => {
             <ExpenditureCard
               bg='cf.light'
               action='available'
-              amount={getFormattedMoney(price * acreage)}
+              amount={getFormattedMoney(farm?.order?.cost || price * acreage)}
             />
           </Grid>
         )}
-        <Box mt={4}>
+        <Box mt={6}>
           <Link
             as={ReachRouter}
             to={{
@@ -180,11 +180,15 @@ const WalletCard = ({ acreage, price, farm }) => {
                 tasks: tasks || [],
                 farmfeeds: farmFeeds || [],
                 ScheduledTasks: ScheduledTasks || [],
-                wallet: getFormattedMoney(price * acreage),
-                balance: getFormattedMoney(
-                  price * acreage -
-                    farmExpense(myFarmActivities, tasks, ScheduledTasks)
-                ),
+                wallet: getFormattedMoney(farm?.order?.cost || price * acreage),
+                balance:
+                  farm?.order?.cost >=
+                  farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                    ? getFormattedMoney(
+                        farm?.order?.cost -
+                          farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                      )
+                    : 0,
                 expense: getFormattedMoney(
                   farmExpense(myFarmActivities, tasks, ScheduledTasks)
                 )

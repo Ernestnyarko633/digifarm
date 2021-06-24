@@ -21,8 +21,8 @@ const Auth = ({
   const { store, isAuthenticated } = useAuth()
   const { getUser } = useApi()
 
-  const { to } = QueryString.parse(search, { parseBooleans: true })
-  const { token } = params
+  const { to } = QueryString.parse(search, { parseBooleans: true }) || {}
+  const { token } = params || {}
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -31,7 +31,7 @@ const Auth = ({
     if (mounted) {
       // Check if user is authenticated and redirect to db
       if (isAuthenticated()) {
-        return replace('/dashboard')
+        replace(JSON.parse(to || null) || '/dashboard')
       } else {
         // Check to see if a token exist then use token to fetch user data else return user to auth service app
         if (token) {
@@ -43,13 +43,8 @@ const Auth = ({
               setIsLoading(true)
               // fetch user data
               const { data: user } = await getUser()
-
               // store user data
               store({ user })
-
-              setTimeout(() => {
-                replace(JSON.parse(to || null) || '/dashboard')
-              }, 1000)
             } catch (error) {
               if (error) {
                 if ([401, 403].includes(error.status)) {
@@ -74,12 +69,12 @@ const Auth = ({
 
   return (
     <FetchCard
-      direction='column'
+      error={error}
       align='center'
       justify='center'
-      reload={triggerReload}
+      direction='column'
       loading={isLoading}
-      error={error}
+      reload={triggerReload}
     />
   )
 }

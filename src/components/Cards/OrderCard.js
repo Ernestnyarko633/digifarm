@@ -112,22 +112,22 @@ const OrderCard = ({ order, onOpen }) => {
         <Box textAlign='center'>
           <Tag
             bg='cf.300'
-            color='cf.800'
+            color='cf.green'
             px={{ base: 2, md: 6 }}
             py={{ md: 2 }}
             fontSize={{ base: 'xs', md: 'sm' }}
             rounded='30px'
           >
-            {order.status === PENDING ? 'Pending' : 'Processing'}
+            {order?.status === PENDING ? 'Pending ' : 'Processing '}
             Order
           </Tag>
           <Text fontSize={{ base: 'xs', md: 'sm' }}>
-            {order.status === PENDING ? '50' : '80'}% Complete
+            {order?.status === PENDING ? '50' : '80'}% Complete
           </Text>
         </Box>
       </Flex>
 
-      {order.status === PENDING && (
+      {order?.status === PENDING && (
         <Box mt={6} w='90%' mx='auto'>
           <Button
             btntitle='Complete order'
@@ -143,13 +143,13 @@ const OrderCard = ({ order, onOpen }) => {
         </Box>
       )}
 
-      {order.status === PENDING && (
+      {order?.status === PENDING && (
         <Box mt={6} w='90%' mx='auto'>
           <Button
             btntitle='Download invoice'
             rounded='30px'
             colorScheme='none'
-            color='cf.800'
+            color='cf.green'
             w='100%'
             isLoading={loading}
             isDisabled={loading}

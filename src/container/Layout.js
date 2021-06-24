@@ -1,17 +1,18 @@
-/* eslint-disable */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Flex, Grid, GridItem, Icon, Link, Text } from '@chakra-ui/react';
-import { Link as ReachRouter } from 'react-router-dom';
-import Zendesk from 'react-zendesk';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Flex, Grid, GridItem, Icon, Link, Text } from '@chakra-ui/react'
+import { Link as ReachRouter } from 'react-router-dom'
+import Zendesk from 'react-zendesk'
 
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from './Header'
+import Sidebar from './Sidebar'
 
-import RightSidebar from './RightSidebar';
-import { farm, home, wallet, market } from 'theme/Icons';
+import RightSidebar from './RightSidebar'
+import { farm, home, wallet, market } from 'theme/Icons'
 
-import configs from 'utils/configs';
+import configs from 'utils/configs'
+import EventModal from '../components/Modals/EventModal'
+import { useDisclosure } from '@chakra-ui/hooks'
 
 const menuLink = [
   { icon: home, path: '/dashboard', name: 'Home', size: 5 },
@@ -21,10 +22,10 @@ const menuLink = [
     path: '/wallet',
     name: 'Farm Wallet',
     size: 4,
-    disabled: false,
+    disabled: false
   },
-  { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 },
-];
+  { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
+]
 
 const Layout = ({
   children,
@@ -35,7 +36,7 @@ const Layout = ({
   rightSidebar = true,
   ...rest
 }) => {
-  const mapKey = (index) => index;
+  const mapKey = index => index
 
   React.useEffect(() => {
     window.zESettings = {
@@ -43,20 +44,28 @@ const Layout = ({
         color: {
           theme: '#3c9130',
           launcherText: '#FFF',
-          header: '#3c9130',
+          header: '#3c9130'
         },
         offset: {
           mobile: {
             horizontal: '-10px',
-            vertical: '55px',
-          },
-        },
-      },
-    };
-  }, []);
+            vertical: '55px'
+          }
+        }
+      }
+    }
+  }, [])
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [selectedData, setSelectedData] = React.useState({})
 
   return (
     <>
+      <EventModal
+        isOpen={isOpen}
+        onClose={onClose}
+        selectedData={selectedData}
+      />
       <Grid
         templateRows='repeat(1 1fr)'
         templateColumns={{ md: '20% 80%', lg: '13% 65% 22%' }}
@@ -111,7 +120,7 @@ const Layout = ({
             {menuLink.map((item, i) => (
               <ReachRouter
                 key={mapKey(i)}
-                onClick={(e) => item.disabled === true && e.preventDefault()}
+                onClick={e => item.disabled === true && e.preventDefault()}
                 to={item.path}
               >
                 <Link _hover={{ textDecor: 'none' }}>
@@ -130,16 +139,15 @@ const Layout = ({
             zIndex={40}
             px={{ base: 4, md: 0 }}
             mb={{ base: 32, md: 0 }}
-            // d={{ base: 'none', md: 'none', lg: 'block' }}
           >
-            <RightSidebar />
+            <RightSidebar onOpen={onOpen} setSelectedData={setSelectedData} />
           </GridItem>
         )}
       </Grid>
       <Zendesk defer zendeskKey={configs().ZENDESK_KEY} />
     </>
-  );
-};
+  )
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
@@ -148,7 +156,7 @@ Layout.propTypes = {
   px: PropTypes.any,
   leftSidebar: PropTypes.bool,
   rightSidebar: PropTypes.bool,
-  rest: PropTypes.any,
-};
+  rest: PropTypes.any
+}
 
-export default Layout;
+export default Layout

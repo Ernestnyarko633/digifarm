@@ -1,30 +1,34 @@
 import { lazy } from 'react'
 
-const Cooperative = lazy(() => import('./start-farm/cooperative'))
-const CooperativeFarm = lazy(() => import('./start-farm/cooperative-farm'))
-const Individual = lazy(() => import('./start-farm/individual'))
-const StartFarm = lazy(() => import('./start-farm/index'))
-const Marketplace = lazy(() => import('./market-place'))
-const Warehouse = lazy(() => import('./warehouse'))
-const FarmWallet = lazy(() => import('./farm-wallet'))
-const FarmBoard = lazy(() => import('./farm-board'))
-const Dashboard = lazy(() => import('./dashboard'))
-const NotFound = lazy(() => import('./not-found'))
-const Profile = lazy(() => import('./profile'))
-const Logout = lazy(() => import('./logout'))
-const Forum = lazy(() => import('./forum'))
 const Auth = lazy(() => import('./auth'))
 const Farm = lazy(() => import('./farm'))
+const Forum = lazy(() => import('./forum'))
 const Guide = lazy(() => import('./guide'))
+const Logout = lazy(() => import('./logout'))
 const Wallet = lazy(() => import('./wallet'))
+const Profile = lazy(() => import('./profile'))
+const NotFound = lazy(() => import('./not-found'))
+const Dashboard = lazy(() => import('./dashboard'))
+const Warehouse = lazy(() => import('./warehouse'))
+const FarmBoard = lazy(() => import('./farm-board'))
+const FarmWallet = lazy(() => import('./farm-wallet'))
+const Marketplace = lazy(() => import('./market-place'))
+const Cooperative_ = lazy(() => import('./cooperative'))
 const Payment = lazy(() => import('./start-farm/payment'))
+const StartFarm = lazy(() => import('./start-farm/index'))
+const CooperativeMain = lazy(() => import('./cooperative-main'))
+const CooperativeIntro = lazy(() => import('./cooperativeIntro'))
+const CooperativeInvite = lazy(() => import('./cooperative-invite'))
 const PaymentPaystack = lazy(() => import('./start-farm/payment-paystack'))
-const Banner = lazy(() => import('./banner'))
+const StartFarmIndividual = lazy(() => import('./start-farm/individual'))
+const StartFarmCooperative = lazy(() => import('./start-farm/cooperative'))
 
 const Pages = {
   Auth,
   Farm,
   Forum,
+  Guide,
+  Wallet,
   Logout,
   Payment,
   Profile,
@@ -33,16 +37,15 @@ const Pages = {
   FarmBoard,
   StartFarm,
   FarmWallet,
-  Individual,
   Marketplace,
-  Cooperative,
   Warehouse,
-  Guide,
-  Banner,
-  Wallet,
+  Cooperative_,
   PaymentPaystack,
-  CooperativeFarm
-  // Receipt
+  CooperativeInvite,
+  CooperativeIntro,
+  CooperativeMain,
+  StartFarmIndividual,
+  StartFarmCooperative
 }
 
 export default Pages

@@ -38,7 +38,7 @@ const Upload = props => {
             px={4}
             cursor='pointer'
             borderBottomWidth={1}
-            borderBottomColor='cf.800'
+            borderBottomColor='cf.green'
             mb={0}
           >
             <Flex
@@ -47,7 +47,7 @@ const Upload = props => {
               w={12}
               height={12}
               rounded='100%'
-              bg='cf.800'
+              bg='cf.green'
               mt={4}
             >
               <Icon as={VscAdd} color='white' size={6} />
@@ -84,7 +84,7 @@ Upload.propTypes = {
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
   accept: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   multiple: PropTypes.bool
 }
 

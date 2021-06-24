@@ -2,25 +2,27 @@
   {
     "id": "individual",
     "name": "Individual",
-    "subtitle": "Own an individual farm",
+    "subtitle": "Start a farm alone",
     "img": "individual.png",
     "benefits": [
       "Manage farm",
       "Earn rewards",
       "Schedule farm visits",
       "Receive continuous farm updates"
-    ]
+    ],
+    "disabled": false
   },
   {
     "id": "cooperative",
     "name": "Cooperative",
-    "subtitle": "Own a farm with a group",
+    "subtitle": "Start a farm together with friends and family",
     "img": "cooperative.png",
     "benefits": [
       "Co-fund farm(s)",
       "Co-share your rewards",
       "Schedule farm visits",
       "Receive continuous farm updates"
-    ]
+    ],
+    "disabled": true
   }
 ]

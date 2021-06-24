@@ -1,37 +1,36 @@
-/* eslint-disable */
-import React from 'react';
-import Layout from 'container/Layout';
-import { Heading, Box, Icon, Text, Center, Flex } from '@chakra-ui/react';
-import { IoWarningOutline } from 'react-icons/io5';
-import WarehouseCard from 'components/Cards/WarehouseCard';
-import useApi from 'context/api';
-import useAuth from 'context/auth';
-import useFetch from 'hooks/useFetch';
-import FarmsEmptyState from 'components/EmptyStates/FarmsEmptyState';
-import Greetings from 'components/Utils/Greetings';
-import { getCurrentDayParting } from 'helpers/misc';
-import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState';
-import vector from '../assets/images/vector.png';
-import FetchCard from 'components/FetchCard';
+import React from 'react'
+import Layout from 'container/Layout'
+import { Heading, Box, Icon, Text, Center } from '@chakra-ui/react'
+import { IoWarningOutline } from 'react-icons/io5'
+import WarehouseCard from 'components/Cards/WarehouseCard'
+import useApi from 'context/api'
+import useAuth from 'context/auth'
+import useFetch from 'hooks/useFetch'
+import FarmsEmptyState from 'components/EmptyStates/FarmsEmptyState'
+import Greetings from 'components/Utils/Greetings'
+import { getCurrentDayParting } from 'helpers/misc'
+import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
+import vector from '../assets/images/vector.png'
+import FetchCard from 'components/FetchCard'
 
 const Warehouse = () => {
-  document.title = 'Complete Farmer | Warehouse';
-  const { getMyFarms } = useApi();
-  const { isAuthenticated } = useAuth();
-  const { user } = isAuthenticated();
-  const [reload, setReload] = React.useState(0);
-  const { message } = getCurrentDayParting();
+  document.title = 'Complete Farmer | Warehouse'
+  const { getMyFarms } = useApi()
+  const { isAuthenticated } = useAuth()
+  const { user } = isAuthenticated()
+  const [reload, setReload] = React.useState(0)
+  const { message } = getCurrentDayParting()
 
-  const triggerReload = () => setReload((prevState) => prevState + 1);
+  const triggerReload = () => setReload(prevState => prevState + 1)
   const {
     data: myfarms,
     isLoading: myFarmsIsLoading,
-    error: myFarmsHasError,
-  } = useFetch('my_farms', getMyFarms, reload, { user: user?._id });
+    error: myFarmsHasError
+  } = useFetch('my_farms', getMyFarms, reload, { user: user?._id })
 
-  const isLoading = myFarmsIsLoading;
-  const hasError = myFarmsHasError;
-  const filteredFarms = myfarms?.filter((farm) => farm.storage.quantity > 0);
+  const isLoading = myFarmsIsLoading
+  const hasError = myFarmsHasError
+  const filteredFarms = myfarms?.filter(farm => farm.storage.quantity > 0)
 
   return (
     <Layout height='100vh' bgColor='none'>
@@ -104,7 +103,7 @@ const Warehouse = () => {
                     </Text>
                   </Box>
                   <Box mt={20}>
-                    {filteredFarms?.map((myfarm) => (
+                    {filteredFarms?.map(myfarm => (
                       <WarehouseCard
                         sellButton={true}
                         _id={myfarm._id}
@@ -130,7 +129,7 @@ const Warehouse = () => {
         </>
       )}
     </Layout>
-  );
-};
+  )
+}
 
-export default Warehouse;
+export default Warehouse

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -77,6 +76,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
       setSelectedItem(array[0])
     }
   }, [content, status])
+
   const Detail = () => {
     return (
       <Flex
@@ -100,7 +100,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
             >
               {user?.firstName}’s Farm
             </Heading>
-            <Text color='gray.600' fontSize={{ base: 'sm', md: 'md' }}>
+            <Text color='gray.500' fontSize={{ base: 'xs', md: 'sm' }} mt={-1}>
               {`${activeFarm?.order?.product?.location?.name}, ${activeFarm?.order?.product?.location?.state}`}
             </Text>
           </Box>
@@ -108,13 +108,13 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
 
         <Flex direction='column' justify='center' align='center'>
           <Box mx={{ base: 4 }}>
-            <Text color='cf.800'>
+            <Text color='cf.green' fontWeight={700}>
               {status !== 'news' || status !== 'weekly_videos'
                 ? 'FARM FEED'
                 : null}
             </Text>
           </Box>
-          <Text fontSize={{ base: 'xs', md: 'sm' }} color='gray.500'>
+          <Text fontSize={{ base: 'xs', md: 'sm' }} color='gray.500' mt={-1}>
             {timestamp}
           </Text>
         </Flex>
@@ -133,8 +133,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
           <Box pos='relative'>
             {selectedItem?.type === 'image' && (
               <Image
-                rounded='lg'
-                h={{ md: 85 }}
+                h={{ md: 110 }}
                 w='100%'
                 objectFit='cover'
                 src={selectedItem?.url}
@@ -149,7 +148,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               justify='center'
               pos='absolute'
               bottom={6}
-              left={{ base: '45%', xl: '42%' }}
+              left={{ base: '20%', md: '45%' }}
             >
               <Flex
                 as='button'
@@ -157,17 +156,19 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 aria-label='prev button'
                 align='center'
                 justify='center'
+                borderColor='white'
+                borderWidth={1}
                 w={10}
                 h={10}
                 rounded='100%'
-                borderWidth={1}
-                borderColor='transparent'
-                _hover={{
-                  background: 'white',
-                  color: 'cf.800'
-                }}
+                // _hover={{
+                //   background: 'cf.green',
+                //   color: 'white'
+                // }}
                 color='white'
                 mr={2}
+                outlineColor='none'
+                outline='none'
                 onClick={() => {
                   return handleClick(
                     -1,
@@ -186,16 +187,18 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 aria-label='next button'
                 align='center'
                 justify='center'
+                borderColor='white'
+                bg='white'
                 w={10}
                 h={10}
-                _hover={{
-                  background: 'white',
-                  color: 'cf.800'
-                }}
+                // _hover={{
+                //   background: 'cf.green',
+                //   color: 'white'
+                // }}
                 rounded='100%'
-                borderWidth={1}
-                borderColor='transparent'
-                color='white'
+                color='cf.green'
+                outlineColor='black'
+                outline='black'
                 ml={2}
                 onClick={() => {
                   return handleClick(
@@ -215,7 +218,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
             <Box mt={6}>
               <Flex direction='row' align='center'>
                 <Tag
-                  color='cf.800'
+                  color='cf.green'
                   justifyContent='center'
                   bgGradient='linear(to-l, #DEECDC,#EFF6ED)'
                   rounded={20}
@@ -233,7 +236,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               </Flex>
 
               <Collapse
-                startingHeight={85}
+                startingHeight={108}
                 in={show}
                 onClick={handleToggle}
                 cursor='pointer'
@@ -263,7 +266,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 }
               </Collapse>
               <Box as='button' onClick={handleToggle}>
-                <Text color='cf.800' py={{ base: 1 }}>
+                <Text color='cf.green' py={{ base: 1 }}>
                   {!show ? 'Read More' : 'Collapse'}
                 </Text>
               </Box>

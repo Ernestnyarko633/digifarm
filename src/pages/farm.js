@@ -26,7 +26,7 @@ import useComponent from 'context/component'
 
 import { dateIntervals, isDateG8Today } from 'helpers/misc'
 
-const MotionBox = motion.custom(Box)
+const MotionBox = motion(Box)
 
 export default function Farm() {
   const { isAuthenticated } = useAuth()
@@ -74,11 +74,15 @@ export default function Farm() {
     error: farmHasError
   } = useFetch('selectedFarm', getMyFarm, farmReload, id)
 
+  // lifecycle event to handle parsing of fms to coords to suitable data type for eos
   useEffect(() => {
-    let location_ = []
-    let center_ = []
-    let _location = farm?.order?.product?.location
-    let _center = _location?.center
+    let new_location_coords = []
+    let new_location_center = []
+    let farm_location = farm?.order?.product?.location
+    let farm_location_center = farm_location?.center
+
+    // fms coords are in strings "1.2334,0.4543434"
+    // function splits strings to two strings and then converts or parses them to numbers
     const strToNumber = (value, array) =>
       value?.forEach(coordinate => {
         return array?.push(
@@ -87,10 +91,10 @@ export default function Farm() {
           })
         )
       })
-    strToNumber(_location?.coords, location_)
-    strToNumber(_center, center_)
-    setLocation(location_)
-    setCenter(center_)
+    strToNumber(farm_location?.coords, new_location_coords)
+    strToNumber(farm_location_center, new_location_center)
+    setLocation(new_location_coords)
+    setCenter(new_location_center)
   }, [farm])
 
   const {

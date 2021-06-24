@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicDocument from '../Document'
 import FarmReceiptCard from '../Cards/FarmReceiptCard'
+import Scrollbar from 'react-perfect-scrollbar'
 
 export default function Document({
   digitalFarmerFarm,
@@ -40,7 +41,7 @@ export default function Document({
           bg={{ md: 'gray.50' }}
           fontFamily='body'
           overflowX='hidden'
-          py={{ md: 56 }}
+          py={{ md: 36 }}
           px={{ md: 24 }}
           mt={{ base: 36, md: 0 }}
           minH={{ lg: '100vh' }}
@@ -81,27 +82,29 @@ export default function Document({
           h={{ lg: '84vh' }}
           w={{ md: '30%' }}
           shadow={{ md: 'md' }}
-          overflowY={{ md: 'scroll' }}
+          overflowY={{ md: 'hidden' }}
         >
-          <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
-            <React.Fragment>
-              <FarmReceiptCard
-                title='Agreement'
-                type='agreement'
-                farm={digitalFarmerFarm}
-              />
-              <FarmReceiptCard
-                title='Receipt'
-                type='receipt'
-                farm={digitalFarmerFarm}
-              />
-              <FarmReceiptCard
-                title='Invoice'
-                type='invoice'
-                farm={digitalFarmerFarm}
-              />
-            </React.Fragment>
-          </Grid>
+          <Scrollbar>
+            <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
+              <React.Fragment>
+                <FarmReceiptCard
+                  title='Agreement'
+                  type='agreement'
+                  farm={digitalFarmerFarm}
+                />
+                <FarmReceiptCard
+                  title='Receipt'
+                  type='receipt'
+                  farm={digitalFarmerFarm}
+                />
+                <FarmReceiptCard
+                  title='Invoice'
+                  type='invoice'
+                  farm={digitalFarmerFarm}
+                />
+              </React.Fragment>
+            </Grid>
+          </Scrollbar>
         </Box>
       </GridItem>
     </Grid>
