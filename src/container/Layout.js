@@ -94,7 +94,7 @@ const Layout = ({
             as='main'
             bg='cf-dark.400'
             minH='100vh'
-            h='100vh'
+            h={{ md: '100vh' }}
             mt={{ md: 16 }}
             color='gray.800'
             fontFamily='body'
@@ -102,6 +102,10 @@ const Layout = ({
             {...rest}
           >
             {children}
+          </Box>
+
+          <Box px={{ base: 4, md: 0 }} d={{ base: 'block', sm: 'none' }}>
+            <RightSidebar onOpen={onOpen} setSelectedData={setSelectedData} />
           </Box>
 
           <Flex

@@ -183,11 +183,7 @@ const FarmCard = ({ farm, id }) => {
 
         <Divider orientation='horizontal' borderColor='gray.300' my={6} />
 
-        <Flex
-          justifyContent='space-between'
-          alignItems={data?.length > 3 ? 'center' : 'flex-start'}
-          pos='relative'
-        >
+        <Flex justifyContent='space-between' pos='relative'>
           <Box w={{ base: '100%', md: '80%', xl: '50%' }}>
             <Heading as='h4' fontSize={{ md: '2xl' }}>
               Farm Progress
@@ -272,6 +268,7 @@ const FarmCard = ({ farm, id }) => {
             display={{ base: 'none', xl: 'flex' }}
             pos='absolute'
             right={{ md: 0 }}
+            mt={16}
           >
             <ImageLoader height='auto' rounded='3xl' src={imageUrl} />
           </Box>
