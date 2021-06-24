@@ -270,7 +270,7 @@ const FarmCard = ({ farm, id }) => {
             right={{ md: 0 }}
             mt={16}
           >
-            <ImageLoader height='auto' rounded='3xl' src={imageUrl} />
+            <ImageLoader rounded='3xl' src={imageUrl} />
           </Box>
         </Flex>
       </>

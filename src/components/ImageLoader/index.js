@@ -15,6 +15,9 @@ const ImageLoader = ({ rounded, height, ...rest }) => {
     >
       <Image
         display={{ md: 'flex' }}
+        h={48}
+        w='100%'
+        objectFit='cover'
         {...rest}
         loading='eager'
         rounded={rounded}

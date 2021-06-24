@@ -112,7 +112,7 @@ const YourFarmCard = ({
 
         <Box
           pos={{ md: 'absolute' }}
-          left={{ md: -8 }}
+          left={{ md: -2 }}
           d={farms.length > 8 ? 'block' : 'none'}
           mt={{ base: 6, md: 0 }}
         >
