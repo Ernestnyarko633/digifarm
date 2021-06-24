@@ -15,7 +15,7 @@ import Step from 'components/Form/Step'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
 import ImageLoader from 'components/ImageLoader'
-import Scrollbar from 'react-perfect-scrollbar'
+// import Scrollbar from 'react-perfect-scrollbar'
 
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
@@ -78,7 +78,7 @@ const FarmCard = ({ farm }) => {
       p={10}
       bg='white'
       minW={{ base: 82, md: 120, xl: 123, '2xl': 125 }}
-      minH={{ md: 'auto' }}
+      h={data?.length > 2 ? '100%' : 110}
       mr={{ base: 5, md: 6 }}
     >
       <Flex align='center' justify='space-between'>
@@ -174,7 +174,11 @@ const FarmCard = ({ farm }) => {
 
         <Divider orientation='horizontal' borderColor='gray.300' my={6} />
 
-        <Flex justifyContent='space-between' alignItems='center' pos='relative'>
+        <Flex
+          justifyContent='space-between'
+          alignItems={data?.length > 3 ? 'center' : 'flex-start'}
+          pos='relative'
+        >
           <Box w={{ base: '100%', md: '80%', xl: '50%' }}>
             <Heading as='h4' fontSize={{ md: '2xl' }}>
               Farm Progress
@@ -191,20 +195,18 @@ const FarmCard = ({ farm }) => {
                 text='fetching progress'
               />
             ) : (
-              <Box h={{ base: 56, md: 80 }} overflowY='hidden'>
-                <Scrollbar>
-                  {data.length > 0 ? (
-                    data.map((activity, index) => (
-                      <Step
-                        activity={activity}
-                        key={activity.title}
-                        cutThread={data.length - 1 === index}
-                      />
-                    ))
-                  ) : (
-                    <Box textAlign='center'>Data Unavailable</Box>
-                  )}
-                </Scrollbar>
+              <Box>
+                {data.length > 0 ? (
+                  data.map((activity, index) => (
+                    <Step
+                      activity={activity}
+                      key={activity.title}
+                      cutThread={data.length - 1 === index}
+                    />
+                  ))
+                ) : (
+                  <Box textAlign='center'>Data Unavailable</Box>
+                )}
               </Box>
             )}
           </Box>
