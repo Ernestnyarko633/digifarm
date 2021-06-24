@@ -38,7 +38,7 @@ const StartFarm = () => {
             Welcome {user?.firstName}
           </Text>
           <Heading as="h4" size="xl">
-            How would you like to farm with us
+            How would you like to farm with us?
           </Heading>
         </Box>
 
