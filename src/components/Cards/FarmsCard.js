@@ -13,7 +13,7 @@ const FarmsCard = ({ data, currentSlide }) => {
     <Box
       minW={{ md: 130 }}
       mx='auto'
-      overflowX={{ base: 'scroll', xl: 'unset' }}
+      overflowX={{ base: 'scroll', md: 'visible' }}
     >
       <MotionFlex
         animate={{
