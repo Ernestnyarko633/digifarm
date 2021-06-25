@@ -17,7 +17,7 @@ const Greetings = ({ title, text }) => {
       />
       <Box
         pos='absolute'
-        top={{ base: 20, md: 55 }}
+        top={{ base: 20, md: 24 }}
         left={{ base: 6, md: 16 }}
         right={{ base: 6, md: 16 }}
       >
