@@ -98,6 +98,7 @@ const Layout = ({
             color='gray.800'
             fontFamily='body'
             overflowX='hidden'
+            overflowY='scroll'
             {...rest}
           >
             {children}
