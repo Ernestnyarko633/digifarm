@@ -70,7 +70,7 @@ const Layout = ({
         templateRows='repeat(1 1fr)'
         templateColumns={{ md: '20% 80%', lg: '13% 65% 22%' }}
         pos='relative'
-        h='100vh'
+        // h='100vh'
         fontFamily='body'
         bgColor='white'
         fontSize={{ md: 'md' }}
@@ -98,6 +98,7 @@ const Layout = ({
             color='gray.800'
             fontFamily='body'
             overflowX='hidden'
+            overflowY='scroll'
             {...rest}
           >
             {children}
