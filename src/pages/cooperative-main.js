@@ -65,6 +65,14 @@ const CooperativeMain = ({ match: { params } }) => {
     params.id
   )
 
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }, [data])
+
   const downloadAgreement = async query => {
     try {
       setLoading(true)
@@ -275,7 +283,7 @@ const CooperativeMain = ({ match: { params } }) => {
         pt={30}
         bg='white'
         w='full'
-        minH={{ base: '100vh', md: 'calc(100vh - 4rem)' }}
+        minH={{ md: 'calc(100vh - 4rem)' }}
         pos={{ '4xl': 'fixed', '5xl': 'fixed' }}
       >
         <Grid templateColumns='repeat(5, 1fr)' bg='white'>
@@ -284,7 +292,7 @@ const CooperativeMain = ({ match: { params } }) => {
             colSpan={1}
             bg='#FAFBFB'
             pt='70px'
-            h='100vh'
+            h={{ md: '100vh' }}
             display={{ base: 'none', lg: 'block' }}
           >
             {isLoading || error ? (
@@ -319,12 +327,12 @@ const CooperativeMain = ({ match: { params } }) => {
             colSpan={{ base: 5, lg: 4 }}
             px={{ xl: 12 }}
             pt={{ base: 12, xl: 20 }}
-            h='100vh'
+            h={{ md: '100vh' }}
             bg='white'
           >
             {isLoading || error ? (
               <FetchCard
-                h='100vh'
+                h={{ md: '100vh' }}
                 align='center'
                 justify='center'
                 direction='column'
@@ -379,7 +387,7 @@ const CooperativeMain = ({ match: { params } }) => {
                   d={{ base: 'block', md: 'none' }}
                   px={4}
                   pb='50px'
-                  h='100vh'
+                  h={{ md: '100vh' }}
                   bg='white'
                 >
                   {tableData?.map(item => (

@@ -6,13 +6,13 @@ import { Provider as StyletronProvider } from 'styletron-react'
 import { LightTheme, BaseProvider } from 'baseui'
 import ReactGA from 'react-ga'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import Scrollbar from 'react-perfect-scrollbar'
+// import Scrollbar from "react-perfect-scrollbar";
 
 import App from 'container/App'
 import { theme } from 'theme/theme'
 
 import 'assets/styles/index.css'
-import 'react-perfect-scrollbar/dist/css/styles.css'
+// import "react-perfect-scrollbar/dist/css/styles.css";
 
 const engine = new Styletron()
 const queryClient = new QueryClient()
@@ -26,17 +26,15 @@ const ThemeApp = () => {
   }, [])
 
   return (
-    <Scrollbar>
-      <ChakraProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <StyletronProvider value={engine}>
-            <BaseProvider theme={LightTheme}>
-              <App class='test' />
-            </BaseProvider>
-          </StyletronProvider>
-        </QueryClientProvider>
-      </ChakraProvider>
-    </Scrollbar>
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <StyletronProvider value={engine}>
+          <BaseProvider theme={LightTheme}>
+            <App />
+          </BaseProvider>
+        </StyletronProvider>
+      </QueryClientProvider>
+    </ChakraProvider>
   )
 }
 
