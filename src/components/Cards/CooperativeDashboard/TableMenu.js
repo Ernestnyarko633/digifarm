@@ -63,9 +63,6 @@ const TableMenu = ({ id, email }) => {
         >
           <Box>
             <Icon as={FaEllipsisH} cursor='pointer' color='cf.800' />
-            {/* <Text px={2} as='span'>
-              Map legend
-            </Text> */}
           </Box>
         </Whisper>
       </Box>
