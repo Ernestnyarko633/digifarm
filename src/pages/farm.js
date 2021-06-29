@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect, useRef } from 'react'
 import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
@@ -32,7 +33,6 @@ export default function Farm() {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { id } = useParams()
-
   const ref = useRef(null)
   const [component, setComponent] = useState('compA')
   const [isOpen, setIsOpen] = useState(false)
@@ -58,7 +58,7 @@ export default function Farm() {
   const triggerScheduledTasksReload = () =>
     setScheduledTasksReload(prevState => prevState + 1)
 
-  const { compState, setCompState } = useComponent()
+  const { compState, setCompState, setInViewProduct } = useComponent()
 
   const {
     getMyFarmFeeds,
@@ -74,13 +74,17 @@ export default function Farm() {
     error: farmHasError
   } = useFetch('selectedFarm', getMyFarm, farmReload, id)
 
+  useEffect(() => {
+    if (farm?.order?.product) {
+      setInViewProduct(farm?.order?.product._id)
+    }
+  }, [farm?.order?.product, setInViewProduct])
   // lifecycle event to handle parsing of fms to coords to suitable data type for eos
   useEffect(() => {
     let new_location_coords = []
     let new_location_center = []
     let farm_location = farm?.order?.product?.location
     let farm_location_center = farm_location?.center
-
     // fms coords are in strings "1.2334,0.4543434"
     // function splits strings to two strings and then converts or parses them to numbers
     const strToNumber = (value, array) =>

@@ -5,6 +5,7 @@ import Prismic from 'prismic-javascript'
 import useApi from 'context/api'
 import useFetch from './useFetch'
 import { latestDateForFarmFeed } from 'helpers/misc'
+import useComponent from 'context/component'
 
 const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
@@ -17,10 +18,12 @@ export const usePrismic = () => {
   const [videos, setVideosData] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
+  const [comments, setComments] = React.useState(null)
+  const { inViewProduct: farm } = useComponent()
 
   React.useEffect(() => {
     let mounted = true
-    if ((mounted && !news) || !videos) {
+    if (mounted && (!news || !videos)) {
       const fetchData = async () => {
         try {
           setLoading(true)
@@ -48,9 +51,50 @@ export const usePrismic = () => {
     return () => (mounted = false)
   }, [news, videos])
 
+  React.useEffect(() => {
+    let mounted = true
+    if (mounted && !comments) {
+      const fetchData = async () => {
+        try {
+          setLoading(true)
+          const dataFromStorage = JSON.parse(
+            sessionStorage.getItem('farm_comments')
+          )
+          if (dataFromStorage) {
+            setComments(dataFromStorage)
+          } else {
+            const [res] = await Promise.all([
+              Client.query(
+                Prismic.Predicates.at('document.type', 'manager_update')
+              )
+            ])
+
+            if (res) setComments(res?.results)
+          }
+        } catch (error) {
+          // catch errors if any and st them
+          setError(error?.message || error || 'Could not fetch data')
+        } finally {
+          setLoading(false)
+        }
+      }
+      fetchData()
+    }
+
+    return () => (mounted = false)
+  }, [comments])
   // returns and obj {loading, news, blogs, videos, errors} includes sorting according to dates
   return {
     loading,
+    comments:
+      comments
+        ?.filter(c => (farm ? c?.data?.farm_id[0]?.text === farm : {}))
+        ?.slice()
+        .sort(
+          (a, b) =>
+            new Date(b.first_publication_date) -
+            new Date(a.first_publication_date)
+        ) || [],
     news:
       news
         ?.filter(
