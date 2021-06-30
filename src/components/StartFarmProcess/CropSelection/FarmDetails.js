@@ -112,7 +112,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
         </Scrollbar>
       </GridItem>
       <GridItem
-        overflowY='hidden'
+        overflowY='scroll'
         borderLeftWidth={1}
         borderLeftColor='gray.200'
         // p={{ base: 4, md: 10 }}

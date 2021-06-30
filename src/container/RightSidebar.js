@@ -129,7 +129,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             <Box
               my={{ base: 3, xl: 2 }}
               h={{ base: '20%', xl: '40%' }}
-              overflowY='hidden'
+              overflowY='scroll'
               px={2}
             >
               <Scrollbar>

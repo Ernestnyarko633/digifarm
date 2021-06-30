@@ -78,7 +78,7 @@ const Acreage = ({ name, farm, selectedType }) => {
             </Scrollbar>
           </GridItem>
           <GridItem
-            overflowY='hidden'
+            overflowY='scroll'
             css={{
               direction: 'ltr',
               scrollbarColor: 'rebeccapurple',
