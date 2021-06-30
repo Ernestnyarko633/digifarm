@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -14,12 +13,7 @@ import {
   Link,
   useToast,
   useDisclosure,
-  Tooltip,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Icon
+  Tooltip
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import CustomTable from 'components/Form/CustomTable'
@@ -28,7 +22,6 @@ import useApi from 'context/api'
 import useFetch from 'hooks/useFetch'
 import Header from 'container/Header'
 import { Button } from 'components'
-import { MdDashboard } from 'react-icons/md'
 import { getFormattedMoney } from 'helpers/misc'
 import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
