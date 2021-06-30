@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   Box,
   CircularProgress,
@@ -15,6 +16,7 @@ import WeatherCards from '../Cards/WeatherCards'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
 import { Status } from 'helpers/misc'
+import { usePrismic } from 'hooks/useFarmBoard'
 export default function Tasks({
   scheduledTasks,
   farmfeeds,
@@ -35,7 +37,9 @@ export default function Tasks({
   reloads
 }) {
   const [feeds, setFeeds] = React.useState([])
+  const { comments, loading, error } = usePrismic()
 
+  //let _comments = comments.filter((c) => c?.data?.farm_id[0]?.text === )
   React.useEffect(() => {
     const getFeeds = () =>
       farmfeeds?.forEach(feed => {
@@ -128,7 +132,7 @@ export default function Tasks({
                       title='TODAY’S TASK'
                       duration={new Date(today?.startDate).toLocaleDateString()}
                       subtitle={today?.task?.title}
-                      text={today?.task?.description?.replace(/<[^>]*>/g, '')}
+                      text={today?.description?.replace(/<[^>]*>/g, '')}
                       icon={BiTime}
                     />
                   </>
@@ -172,7 +176,7 @@ export default function Tasks({
                   sortedScheduledTasks[0]?.startDate
                 ).toLocaleDateString()}
                 subtitle={sortedScheduledTasks[0]?.task?.title}
-                text={sortedScheduledTasks[0]?.task?.description.replace(
+                text={sortedScheduledTasks[0]?.description?.replace(
                   /<[^>]*>/g,
                   ''
                 )}
@@ -182,7 +186,7 @@ export default function Tasks({
           </>
         )}
 
-        {farmFeedsIsLoading || farmFeedsHasError ? (
+        {farmFeedsIsLoading || loading || farmFeedsHasError || error ? (
           <Box pt={{ md: 10 }}>
             <FetchCard
               direction='column'
@@ -191,8 +195,8 @@ export default function Tasks({
               w='100%'
               mx='auto'
               reload={() => reloads[2]()}
-              loading={farmFeedsIsLoading}
-              error={farmFeedsHasError}
+              loading={farmFeedsIsLoading || loading}
+              error={farmFeedsHasError || error}
               text={"Standby as we load your farm's feed"}
             />
           </Box>
@@ -206,6 +210,18 @@ export default function Tasks({
                 ).toLocaleDateString()}
                 subtitle={feeds[0]?.task?.title}
                 text={feeds[0]?.feed?.summary?.replace(/<[^>]*>/g, '')}
+                icon={Updates}
+              />
+            )}
+            {comments.length > 0 && (
+              <FarmUpdateCard
+                title='FARM MANAGER UPDATE'
+                duration={null}
+                subtitle='GENERAL UPDATE'
+                text={comments[0]?.data?.comments[0]?.text?.replace(
+                  /<[^>]*>/g,
+                  ''
+                )}
                 icon={Updates}
               />
             )}

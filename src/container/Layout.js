@@ -70,7 +70,7 @@ const Layout = ({
         templateRows='repeat(1 1fr)'
         templateColumns={{ md: '20% 80%', lg: '13% 65% 22%' }}
         pos='relative'
-        h='100vh'
+        // h='100vh'
         fontFamily='body'
         bgColor='white'
         fontSize={{ md: 'md' }}
@@ -92,16 +92,20 @@ const Layout = ({
             px={px}
             w={{ lg: '100%' }}
             as='main'
-            bg='cf-dark.400'
+            bg='gray.50'
             minH='100vh'
-            h='100vh'
             mt={{ md: 16 }}
             color='gray.800'
             fontFamily='body'
             overflowX='hidden'
+            overflowY='scroll'
             {...rest}
           >
             {children}
+          </Box>
+
+          <Box px={{ base: 4, md: 0 }} d={{ base: 'block', sm: 'none' }}>
+            <RightSidebar onOpen={onOpen} setSelectedData={setSelectedData} />
           </Box>
 
           <Flex
@@ -139,6 +143,7 @@ const Layout = ({
             zIndex={40}
             px={{ base: 4, md: 0 }}
             mb={{ base: 32, md: 0 }}
+            d={{ base: 'none', md: 'block' }}
           >
             <RightSidebar onOpen={onOpen} setSelectedData={setSelectedData} />
           </GridItem>

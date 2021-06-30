@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Updates as FarmUpdates } from 'theme/Icons'
 import FetchCard from 'components/FetchCard'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
+import { usePrismic } from 'hooks/useFarmBoard'
 
 export default function Updates({
   farmfeeds,
@@ -12,6 +13,7 @@ export default function Updates({
   reloads
 }) {
   const [feeds, setFeeds] = React.useState([])
+  const { comments, loading } = usePrismic()
   React.useEffect(() => {
     const getFeeds = () =>
       farmfeeds?.forEach(feed => {
@@ -32,7 +34,7 @@ export default function Updates({
 
   return (
     <>
-      {farmFeedsIsLoading || farmFeedsHasError ? (
+      {farmFeedsIsLoading || loading || farmFeedsHasError ? (
         <Box pt={{ md: 10 }}>
           <FetchCard
             direction='column'
@@ -62,8 +64,22 @@ export default function Updates({
                   icon={FarmUpdates}
                 />
               ))}
+            {comments?.length > 0 &&
+              comments?.map(comment => (
+                <FarmUpdateCard
+                  key={comment.id}
+                  title='FARM MANAGER UPDATES'
+                  duration={null}
+                  subtitle='GENERAL UPDATE'
+                  text={comment?.data?.comments[0]?.text?.replace(
+                    /<[^>]*>/g,
+                    ''
+                  )}
+                  icon={FarmUpdates}
+                />
+              ))}
           </Grid>
-          {sortedFeeds?.length === 0 && (
+          {sortedFeeds?.length === 0 && comments?.length === 0 && (
             <Flex w='100%' justify='center' align='center'>
               <Text w='100%' fontSize='xl' color='cf.green' textAlign='center'>
                 No updates currently available.

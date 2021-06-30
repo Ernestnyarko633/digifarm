@@ -14,6 +14,7 @@ export const ComponentContextProvider = ({ children }) => {
   const [sliderType, setSliderType] = React.useState('farms')
   const [compState, setCompState] = React.useState('compA')
   const [currentFarmsSlide, setCurrentFarmsSlide] = React.useState(0)
+  const [inViewProduct, setInViewProduct] = React.useState({})
   const [currentProcessingOrdersSlide, setCurrentProcessingOrdersSlide] =
     React.useState(0)
   const [currentPendingOrdersSlide, setCurrentPendingOrdersSlide] =
@@ -50,8 +51,10 @@ export const ComponentContextProvider = ({ children }) => {
         compState,
         setCompState,
         sliderType,
+        inViewProduct,
         setSliderType,
         handleModalClick,
+        setInViewProduct,
         currentFarmsSlide,
         setCurrentFarmsSlide,
         currentPendingOrdersSlide,

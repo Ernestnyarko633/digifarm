@@ -7,7 +7,8 @@ import {
   Flex,
   Heading,
   Text,
-  Tag
+  Tag,
+  Collapse
 } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 import { Status } from 'helpers/misc'
@@ -15,12 +16,12 @@ import Step from 'components/Form/Step'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
 import ImageLoader from 'components/ImageLoader'
-import Scrollbar from 'react-perfect-scrollbar'
+// import Scrollbar from 'react-perfect-scrollbar'
 
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 
-const FarmCard = ({ farm }) => {
+const FarmCard = ({ farm, id }) => {
   const [reload, setReload] = React.useState(0)
   const { getActivities } = useApi()
   const [imageUrl, setImageUrl] = React.useState(null)
@@ -71,6 +72,14 @@ const FarmCard = ({ farm }) => {
     return () => (mounted = false)
   }, [data, farm])
 
+  const [show, setShow] = React.useState(false)
+
+  const handleToggle = () => {
+    if (id === farm?._id) {
+      setShow(!show)
+    }
+  }
+
   return (
     <Box
       rounded='xl'
@@ -78,7 +87,7 @@ const FarmCard = ({ farm }) => {
       p={10}
       bg='white'
       minW={{ base: 82, md: 120, xl: 123, '2xl': 125 }}
-      minH={{ md: 'auto' }}
+      h={show ? 'auto' : 115}
       mr={{ base: 5, md: 6 }}
     >
       <Flex align='center' justify='space-between'>
@@ -174,7 +183,7 @@ const FarmCard = ({ farm }) => {
 
         <Divider orientation='horizontal' borderColor='gray.300' my={6} />
 
-        <Flex justifyContent='space-between' alignItems='center' pos='relative'>
+        <Flex justifyContent='space-between' pos='relative'>
           <Box w={{ base: '100%', md: '80%', xl: '50%' }}>
             <Heading as='h4' fontSize={{ md: '2xl' }}>
               Farm Progress
@@ -191,21 +200,67 @@ const FarmCard = ({ farm }) => {
                 text='fetching progress'
               />
             ) : (
-              <Box h={{ base: 56, md: 80 }} overflowY='hidden'>
-                <Scrollbar>
-                  {data.length > 0 ? (
-                    data.map((activity, index) => (
-                      <Step
-                        activity={activity}
-                        key={activity.title}
-                        cutThread={data.length - 1 === index}
-                      />
-                    ))
-                  ) : (
-                    <Box textAlign='center'>Data Unavailable</Box>
+              <>
+                <Box d={{ base: 'block', md: 'none' }}>
+                  <Collapse startingHeight={80} in={show}>
+                    {data.length > 0 ? (
+                      data.map((activity, index) => (
+                        <Step
+                          activity={activity}
+                          key={activity.title}
+                          cutThread={data.length - 1 === index}
+                        />
+                      ))
+                    ) : (
+                      <Box textAlign='center'>Data Unavailable</Box>
+                    )}
+                  </Collapse>
+
+                  {data?.length > 1 && (
+                    <Box
+                      as='button'
+                      role='button'
+                      aria-label='toggle button'
+                      fontSize='sm'
+                      onClick={handleToggle}
+                      mt='1rem'
+                      color='cf.800'
+                    >
+                      Show {show ? 'Less' : 'More'}
+                    </Box>
                   )}
-                </Scrollbar>
-              </Box>
+                </Box>
+
+                <Box d={{ base: 'none', md: 'block' }}>
+                  <Collapse startingHeight={190} in={show}>
+                    {data.length > 0 ? (
+                      data.map((activity, index) => (
+                        <Step
+                          activity={activity}
+                          key={activity.title}
+                          cutThread={data.length - 1 === index}
+                        />
+                      ))
+                    ) : (
+                      <Box textAlign='center'>Data Unavailable</Box>
+                    )}
+                  </Collapse>
+
+                  {data?.length > 3 && (
+                    <Box
+                      as='button'
+                      role='button'
+                      aria-label='toggle button'
+                      fontSize='sm'
+                      onClick={handleToggle}
+                      mt='1rem'
+                      color='cf.800'
+                    >
+                      Show {show ? 'Less' : 'More'}
+                    </Box>
+                  )}
+                </Box>
+              </>
             )}
           </Box>
           <Box
@@ -213,8 +268,9 @@ const FarmCard = ({ farm }) => {
             display={{ base: 'none', xl: 'flex' }}
             pos='absolute'
             right={{ md: 0 }}
+            mt={16}
           >
-            <ImageLoader height='auto' rounded='3xl' src={imageUrl} />
+            <ImageLoader rounded='3xl' src={imageUrl} />
           </Box>
         </Flex>
       </>
@@ -234,6 +290,7 @@ const FarmCard = ({ farm }) => {
 }
 
 FarmCard.propTypes = {
+  id: PropTypes.string,
   farm: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
