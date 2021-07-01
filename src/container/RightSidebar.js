@@ -8,7 +8,7 @@ import useApi from 'context/api'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 import CooperativesCard from 'components/Cards/CooperativesCard'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const RightSidebar = ({ onOpen, setSelectedData }) => {
   const [doc, setDocData] = React.useState(null)
@@ -85,7 +85,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             text='Loading events'
           />
         ) : (
-          <Scrollbar>
+          <Scrollbars style={{ height: '100%' }}>
             <Grid gap={4} mt={4} mb={4}>
               {doc?.map((event, i) => (
                 <EventCard
@@ -96,7 +96,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                 />
               ))}
             </Grid>
-          </Scrollbar>
+          </Scrollbars>
         )}
       </Box>
 
@@ -126,19 +126,14 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             >
               My cooperatives
             </Heading>
-            <Box
-              my={{ base: 3, xl: 2 }}
-              h={{ base: '20%', xl: '40%' }}
-              overflowY='scroll'
-              px={2}
-            >
-              <Scrollbar>
+            <Box my={{ base: 3, xl: 2 }} h={{ base: '20%', xl: '40%' }} px={2}>
+              <Scrollbars style={{ height: '100%' }}>
                 <Box>
                   {data.map(coop => (
                     <CooperativesCard coop={coop} key={coop._id} />
                   ))}
                 </Box>
-              </Scrollbar>
+              </Scrollbars>
             </Box>
           </>
         )
