@@ -51,7 +51,7 @@ const Contract = ({ intersectionRef }) => {
       >
         <SignatureSetup isEditing={isEditing} setIsEditing={setIsEditing} />
       </ModalWrapper>
-      <GridItem overflowY='hidden' mb={10}>
+      <GridItem overflowY='scroll' mb={10}>
         <Scrollbar>
           <Box css={{ direction: 'ltr' }} p={{ base: 2, md: 10 }}>
             <Heading {...headerStyleProps} mt={{ base: 4, md: 0 }}>

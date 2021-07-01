@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Link as ReachRouter } from 'react-router-dom'
 import { Box, Flex, Link, Text } from '@chakra-ui/react'
@@ -24,7 +25,7 @@ const NotificationItem = ({
       d='flex'
       justifyContent='space-between'
       onClick={() => mutation.mutateAsync(item._id)}
-      to={toFarmBoard(item?.message?.type, item)}
+      to={toFarmBoard !== null && toFarmBoard(item?.message?.type, item)}
       borderBottomWidth={1}
       borderBottomColor='gray.100'
     >

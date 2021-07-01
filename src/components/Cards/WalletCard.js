@@ -84,7 +84,7 @@ const WalletCard = ({ acreage, price, farm }) => {
       rounded='xl'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       bg='white'
-      w={{ base: 82, md: 82 }}
+      w={{ base: 82, md: 80 }}
       minH={{ md: 'auto' }}
     >
       <Box p={{ base: 4, md: 6 }} w='100%'>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import { Menu } from '@headlessui/react'
@@ -38,6 +39,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
         return ''
       case 'DIGITAL_FARMER':
         return `/farms/${item?.message?.id}`
+      // return null
       default:
         return `/farms?type=${value}&title=${item?.message?.title}&id=${item?.messageId}`
     }
@@ -61,7 +63,8 @@ const Notifications = ({ notifications, loading, mutation }) => {
             item={item}
             mutation={mutation}
             renderNotificationIcons={renderNotificationIcons}
-            toFarmBoard={toFarmBoard}
+            //toFarmBoard={toFarmBoard}
+            toFarmBoard={null}
             active={active}
           />
         )
@@ -71,7 +74,8 @@ const Notifications = ({ notifications, loading, mutation }) => {
             item={item}
             mutation={mutation}
             renderNotificationIcons={renderNotificationIcons}
-            toFarmBoard={toFarmBoard}
+            //toFarmBoard={toFarmBoard}
+            toFarmBoard={null}
             active={active}
           />
         )
@@ -81,7 +85,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
             item={item}
             mutation={mutation}
             renderNotificationIcons={renderNotificationIcons}
-            toFarmBoard={toFarmBoard}
+            toFarmBoard={null}
             active={active}
           />
         )

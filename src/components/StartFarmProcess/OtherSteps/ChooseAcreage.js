@@ -276,7 +276,7 @@ const ChooseAcreage = ({ farm, selectedType }) => {
       <GridItem
         borderLeftWidth={1}
         borderLeftColor='gray.200'
-        overflowY='hidden'
+        overflowY='scroll'
         css={{
           direction: 'ltr',
           scrollbarColor: 'rebeccapurple',
