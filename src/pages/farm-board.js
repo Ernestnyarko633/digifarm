@@ -18,6 +18,10 @@ const FarmBoard = () => {
     error: myFarmsHasError
   } = useFetch('my_farms', getMyFarms, reload)
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <Layout>
       <Greetings
