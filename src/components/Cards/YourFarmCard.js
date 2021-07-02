@@ -127,6 +127,7 @@ const YourFarmCard = ({
           w={{ md: 127 }}
           overflow='hidden'
           my={10}
+          px={{ base: 6, md: 0 }}
         >
           <MotionFlex
             align='center'
@@ -162,8 +163,8 @@ const YourFarmCard = ({
                       {farm.name}
                     </Text>
                     <Box
-                      w={24}
-                      h={24}
+                      w={{ base: 20, md: 24 }}
+                      h={{ base: 20, md: 24 }}
                       rounded='100%'
                       borderWidth='1px'
                       pos='relative'

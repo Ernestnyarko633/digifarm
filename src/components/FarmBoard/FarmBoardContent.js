@@ -152,7 +152,7 @@ const FarmBoardContent = ({ farms = [] }) => {
   }, [filter, activeFarmIndex, query])
 
   return (
-    <Flex w='100%' align='center' direction='column'>
+    <Flex w='100%' align='center' direction='column' mt={{ base: 16, md: 0 }}>
       {loading ? (
         <>
           <FetchCard
