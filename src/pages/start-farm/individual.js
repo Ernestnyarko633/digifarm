@@ -68,7 +68,7 @@ const Individual = ({ location: { state }, history }) => {
   }, [otherStep])
 
   return (
-    <Box w='100%' h='100vh' bgColor='white' overflow='hidden'>
+    <Box w='100%' h='100vh' bgColor='white'>
       <Scrollbars style={{ height: '100vh' }}>
         <Header />
         {otherStep === 4 && showConfetti && (

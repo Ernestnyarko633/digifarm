@@ -9,7 +9,7 @@ import { HiLocationMarker } from 'react-icons/hi'
 import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { BsPlus } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
-import { Scrollbars } from 'react-custom-scrollbars-2'
+// import { Scrollbars } from 'react-custom-scrollbars-2'
 import { CooperativeSchema } from 'helpers/validation'
 
 import CooperativeMemberCard from '../../Cards/CooperativeMemberCard'
@@ -63,19 +63,17 @@ const Acreage = ({ name, farm, selectedType }) => {
             borderBottomWidth={{ base: 1, md: 0 }}
             py={{ base: 10, md: 6 }}
           >
-            <Scrollbars style={{ height: '100vh' }}>
-              <Image
-                w={{ sm: 95 }}
-                h={{ sm: 95 }}
-                d={{ base: 'none', lg: 'block' }}
-                mx='auto'
-                objectFit='scale-down'
-                src={InviteImg}
-              />
-              <Box mt={10}>
-                <Support />
-              </Box>
-            </Scrollbars>
+            <Image
+              w={{ sm: 95 }}
+              h={{ sm: 95 }}
+              d={{ base: 'none', lg: 'block' }}
+              mx='auto'
+              objectFit='scale-down'
+              src={InviteImg}
+            />
+            <Box mt={10}>
+              <Support />
+            </Box>
           </GridItem>
           <GridItem
             overflowY='scroll'
@@ -85,188 +83,186 @@ const Acreage = ({ name, farm, selectedType }) => {
               scrollBehavior: 'smooth'
             }}
           >
-            <Scrollbars style={{ height: '100vh' }}>
-              <Box css={{ direction: 'ltr' }} p={{ base: 4, md: 6, lg: 10 }}>
-                <Flex
-                  d={{ base: 'block', md: 'flex' }}
-                  align='center'
-                  justify='space-between'
-                >
-                  <Flex align='center'>
-                    <Avatar src={farm?.cropVariety?.imageUrl} />
-                    <Box ml={2}>
-                      <Heading as='h3' fontSize='xl' textTransform='uppercase'>
-                        {farm?.cropVariety?.crop?.name}
-                      </Heading>
-                      <Text fontSize='xs' textColor='gray.500' mt={-1}>
-                        ({farm?.cropVariety?.name}) #{farm?.name}
-                      </Text>
-                    </Box>
-                  </Flex>
-                  <Flex align='center' mt={{ base: 6, md: 0 }}>
-                    <Avatar
-                      src={
-                        coopImg
-                          ? URL.createObjectURL(coopImg)
-                          : require('../../../assets/images/user-avatar.png')
-                              .default
-                      }
-                      size='lg'
-                    />
-                    <Box ml={2}>
-                      <Text fontWeight={700} fontSize={{ md: 'xl' }}>
-                        {name}
-                      </Text>
-                      <Text mt={-2} fontSize='14px'>
-                        Created by:{' '}
-                        <Text as='span'>
-                          {user?.firstName + ' ' + user?.lastName}
-                        </Text>
-                      </Text>
-                    </Box>
-                  </Flex>
-                </Flex>
-
-                <Flex
-                  align={{ md: 'center' }}
-                  justify='space-between'
-                  borderTopWidth={1}
-                  borderBottomWidth={1}
-                  borderColor='gray.200'
-                  py={3}
-                  mt={{ base: 2, md: 4 }}
-                  direction={{ base: 'column', md: 'row' }}
-                >
-                  <Flex align='center' color='gray.500' mt={{ base: 2, md: 0 }}>
-                    <Icon as={HiLocationMarker} />
-                    <Text fontSize='xs'>
-                      {farm?.location?.name}, {farm?.location?.state}
+            <Box css={{ direction: 'ltr' }} p={{ base: 4, md: 6, lg: 10 }}>
+              <Flex
+                d={{ base: 'block', md: 'flex' }}
+                align='center'
+                justify='space-between'
+              >
+                <Flex align='center'>
+                  <Avatar src={farm?.cropVariety?.imageUrl} />
+                  <Box ml={2}>
+                    <Heading as='h3' fontSize='xl' textTransform='uppercase'>
+                      {farm?.cropVariety?.crop?.name}
+                    </Heading>
+                    <Text fontSize='xs' textColor='gray.500' mt={-1}>
+                      ({farm?.cropVariety?.name}) #{farm?.name}
                     </Text>
-                  </Flex>
-
-                  <Flex align='center' color='gray.500' mt={{ base: 2, md: 0 }}>
-                    <Text fontSize='xs'>
-                      Cooperative type:{' '}
-                      <Text
-                        as='span'
-                        textTransform='uppercase'
-                        fontWeight={900}
-                        color='black'
-                      >
-                        {selectedType?.name} ({selectedType?.discount * 100}%
-                        discount)
+                  </Box>
+                </Flex>
+                <Flex align='center' mt={{ base: 6, md: 0 }}>
+                  <Avatar
+                    src={
+                      coopImg
+                        ? URL.createObjectURL(coopImg)
+                        : require('../../../assets/images/user-avatar.png')
+                            .default
+                    }
+                    size='lg'
+                  />
+                  <Box ml={2}>
+                    <Text fontWeight={700} fontSize={{ md: 'xl' }}>
+                      {name}
+                    </Text>
+                    <Text mt={-2} fontSize='14px'>
+                      Created by:{' '}
+                      <Text as='span'>
+                        {user?.firstName + ' ' + user?.lastName}
                       </Text>
                     </Text>
-                  </Flex>
+                  </Box>
                 </Flex>
-                <Box my={{ base: 6, md: 10 }}>
-                  <Heading as='h4' fontSize={{ md: 'xl' }}>
-                    Add Members and their acreage
-                  </Heading>
-                  <Text color='gray.500' fontSize='sm'>
-                    Please invite cooperative members by adding their emails and
-                    their respective acreages
+              </Flex>
+
+              <Flex
+                align={{ md: 'center' }}
+                justify='space-between'
+                borderTopWidth={1}
+                borderBottomWidth={1}
+                borderColor='gray.200'
+                py={3}
+                mt={{ base: 2, md: 4 }}
+                direction={{ base: 'column', md: 'row' }}
+              >
+                <Flex align='center' color='gray.500' mt={{ base: 2, md: 0 }}>
+                  <Icon as={HiLocationMarker} />
+                  <Text fontSize='xs'>
+                    {farm?.location?.name}, {farm?.location?.state}
                   </Text>
-                  <Flex
-                    align='center'
-                    bg='#E5EDEC'
-                    p={3}
-                    rounded='md'
-                    mt={{ base: 4, md: 5 }}
-                    direction='row'
-                  >
-                    <Box
-                      mb={{ base: 40, md: 14 }}
-                      pt={{ base: 20, md: 0 }}
-                      align='flex-start'
-                      justify='flex-start'
-                      w='5%'
+                </Flex>
+
+                <Flex align='center' color='gray.500' mt={{ base: 2, md: 0 }}>
+                  <Text fontSize='xs'>
+                    Cooperative type:{' '}
+                    <Text
+                      as='span'
+                      textTransform='uppercase'
+                      fontWeight={900}
+                      color='black'
                     >
-                      <Icon
-                        color='cf.400'
-                        boxSize={5}
-                        as={BsFillInfoCircleFill}
-                      />
-                    </Box>
-                    <Flex direction='column' w='95%'>
-                      <Box
-                        borderBottomWidth={1}
-                        borderRightColor='gray.300'
-                        w='100%'
-                        py={2}
-                        pl={2}
-                      >
-                        <Text color='cf.darkGreen' fontSize='sm'>
-                          There should be a <strong color>minimum of 2</strong>{' '}
-                          and{' '}
-                          <strong>
-                            maximum of {selectedCooperativeType?.maxMember}
-                          </strong>{' '}
-                          members
-                        </Text>
-                      </Box>
-                      <Box borderRightColor='gray.300' p={2}>
-                        <Text color='cf.darkGreen' fontSize='sm'>
-                          This cooperative will have to meet the minimum number
-                          of acreages for{' '}
-                          <strong>{selectedCooperativeType?.name}</strong> which
-                          is <strong>{selectedCooperativeType?.minAcre}</strong>{' '}
-                          and must not exceed{' '}
-                          <strong>{barrier.toFixed(1)}</strong>
-                        </Text>
-                      </Box>
-                    </Flex>
-                  </Flex>
-                  <form>
-                    <FieldArray
-                      name='users'
-                      render={({ push, remove }) => (
-                        <>
-                          {values?.users?.map((value, i) => (
-                            <CooperativeMemberCard
-                              farm={farm}
-                              acres={acres}
-                              isDisabled={i === 0 ? true : false}
-                              member={i + 1}
-                              errors={errors?.users?.[i]}
-                              touched={touched?.users?.[i]}
-                              name={`users.${i}.`}
-                              values={values?.users}
-                              value={value}
-                              key={mapKeys(i)}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              remove={remove}
-                              barrier={barrier}
-                              setInvites={setInvites}
-                            />
-                          ))}
-                          <Box mb={10}>
-                            <Button
-                              btntitle='Add another'
-                              leftIcon={<BsPlus />}
-                              color='cf.green'
-                              borderWidth={1}
-                              borderColor='cf.green'
-                              bg='transparent'
-                              fontSize={{ base: 'sm', '2xl': 'md' }}
-                              width={{ md: 32, '2xl': 48 }}
-                              _hover={{ bg: 'transparent' }}
-                              isDisabled={
-                                values.users?.length ===
-                                selectedCooperativeType?.maxMember
-                              }
-                              onClick={() => push({ email: '', acreage: '' })}
-                            />
-                          </Box>
-                        </>
-                      )}
-                      validateOnChange={false}
+                      {selectedType?.name} ({selectedType?.discount * 100}%
+                      discount)
+                    </Text>
+                  </Text>
+                </Flex>
+              </Flex>
+              <Box my={{ base: 6, md: 10 }}>
+                <Heading as='h4' fontSize={{ md: 'xl' }}>
+                  Add Members and their acreage
+                </Heading>
+                <Text color='gray.500' fontSize='sm'>
+                  Please invite cooperative members by adding their emails and
+                  their respective acreages
+                </Text>
+                <Flex
+                  align='center'
+                  bg='#E5EDEC'
+                  p={3}
+                  rounded='md'
+                  mt={{ base: 4, md: 5 }}
+                  direction='row'
+                >
+                  <Box
+                    mb={{ base: 40, md: 14 }}
+                    pt={{ base: 20, md: 0 }}
+                    align='flex-start'
+                    justify='flex-start'
+                    w='5%'
+                  >
+                    <Icon
+                      color='cf.400'
+                      boxSize={5}
+                      as={BsFillInfoCircleFill}
                     />
-                  </form>
-                </Box>
+                  </Box>
+                  <Flex direction='column' w='95%'>
+                    <Box
+                      borderBottomWidth={1}
+                      borderRightColor='gray.300'
+                      w='100%'
+                      py={2}
+                      pl={2}
+                    >
+                      <Text color='cf.darkGreen' fontSize='sm'>
+                        There should be a <strong color>minimum of 2</strong>{' '}
+                        and{' '}
+                        <strong>
+                          maximum of {selectedCooperativeType?.maxMember}
+                        </strong>{' '}
+                        members
+                      </Text>
+                    </Box>
+                    <Box borderRightColor='gray.300' p={2}>
+                      <Text color='cf.darkGreen' fontSize='sm'>
+                        This cooperative will have to meet the minimum number of
+                        acreages for{' '}
+                        <strong>{selectedCooperativeType?.name}</strong> which
+                        is <strong>{selectedCooperativeType?.minAcre}</strong>{' '}
+                        and must not exceed{' '}
+                        <strong>{barrier.toFixed(1)}</strong>
+                      </Text>
+                    </Box>
+                  </Flex>
+                </Flex>
+                <form>
+                  <FieldArray
+                    name='users'
+                    render={({ push, remove }) => (
+                      <>
+                        {values?.users?.map((value, i) => (
+                          <CooperativeMemberCard
+                            farm={farm}
+                            acres={acres}
+                            isDisabled={i === 0 ? true : false}
+                            member={i + 1}
+                            errors={errors?.users?.[i]}
+                            touched={touched?.users?.[i]}
+                            name={`users.${i}.`}
+                            values={values?.users}
+                            value={value}
+                            key={mapKeys(i)}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            remove={remove}
+                            barrier={barrier}
+                            setInvites={setInvites}
+                          />
+                        ))}
+                        <Box mb={10}>
+                          <Button
+                            btntitle='Add another'
+                            leftIcon={<BsPlus />}
+                            color='cf.green'
+                            borderWidth={1}
+                            borderColor='cf.green'
+                            bg='transparent'
+                            fontSize={{ base: 'sm', '2xl': 'md' }}
+                            width={{ md: 32, '2xl': 48 }}
+                            _hover={{ bg: 'transparent' }}
+                            isDisabled={
+                              values.users?.length ===
+                              selectedCooperativeType?.maxMember
+                            }
+                            onClick={() => push({ email: '', acreage: '' })}
+                          />
+                        </Box>
+                      </>
+                    )}
+                    validateOnChange={false}
+                  />
+                </form>
               </Box>
-            </Scrollbars>
+            </Box>
           </GridItem>
         </MotionGrid>
       )}

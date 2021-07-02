@@ -74,7 +74,7 @@ const CropSelection = () => {
       direction='column'
       align='center'
       justify='center'
-      w={{ md: '90%' }}
+      w={{ md: '80%' }}
       mx='auto'
       h={{ base: '100%', sm: 'calc(100vh - 5rem)' }}
       pb={{ base: 0 }}
