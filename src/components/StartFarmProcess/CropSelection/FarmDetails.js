@@ -6,7 +6,7 @@ import Button from 'components/Button'
 import useApi from 'context/api'
 import useStartFarm from 'context/start-farm'
 import { Link as ReachRouter } from 'react-router-dom'
-import { Scrollbars } from 'react-custom-scrollbars-2'
+// import { Scrollbars } from "react-custom-scrollbars-2";
 import useFetch from 'hooks/useFetch'
 
 import CropSelectionCard from 'components/Cards/CropSelectionCard'
@@ -86,30 +86,28 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
         borderBottomWidth={{ base: 1, md: 0 }}
         borderBottomColor='gray.200'
       >
-        <Scrollbars style={{ height: '100vh' }}>
-          {data
-            ?.filter(f => f.status === 1)
-            ?.map(farm => (
-              <CropSelectionCard
-                key={farm._id}
-                farmName={farm.name}
-                acres={
-                  type === 'individual'
-                    ? Math.floor(farm.acreage)
-                    : farm?.acreage % 1 !== 0
-                    ? farm?.acreage.toFixed(1)
-                    : farm?.acreage
-                }
-                varietyName={farm.cropVariety?.name}
-                cropName={farm.cropVariety?.crop?.name}
-                selected={farm._id === selectedFarm?._id}
-                onClick={() => {
-                  setSelectedFarm(farm)
-                  sessionStorage.setItem('selected_farm', JSON.stringify(farm))
-                }}
-              />
-            ))}
-        </Scrollbars>
+        {data
+          ?.filter(f => f.status === 1)
+          ?.map(farm => (
+            <CropSelectionCard
+              key={farm._id}
+              farmName={farm.name}
+              acres={
+                type === 'individual'
+                  ? Math.floor(farm.acreage)
+                  : farm?.acreage % 1 !== 0
+                  ? farm?.acreage.toFixed(1)
+                  : farm?.acreage
+              }
+              varietyName={farm.cropVariety?.name}
+              cropName={farm.cropVariety?.crop?.name}
+              selected={farm._id === selectedFarm?._id}
+              onClick={() => {
+                setSelectedFarm(farm)
+                sessionStorage.setItem('selected_farm', JSON.stringify(farm))
+              }}
+            />
+          ))}
       </GridItem>
       <GridItem
         overflowY='scroll'
@@ -123,31 +121,29 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
           scrollBehavior: 'smooth'
         }}
       >
-        <Scrollbars style={{ height: '100vh' }}>
-          {selectedFarm && (
-            <Box p={8}>
-              <AboutFarm farm={selectedFarm} />
-            </Box>
-          )}
-          {dashboard && (
-            <Box my={10}>
-              <Button
-                as={ReachRouter}
-                to={{
-                  pathname: '/start-farm/individual'
-                }}
-                onClick={() => {
-                  sessionStorage.setItem('type', 'individual')
-                  setStep(x => x + 1)
-                }}
-                btntitle='Start this farm'
-                w={80}
-                h={14}
-                fontSize='md'
-              />
-            </Box>
-          )}
-        </Scrollbars>
+        {selectedFarm && (
+          <Box p={8}>
+            <AboutFarm farm={selectedFarm} />
+          </Box>
+        )}
+        {dashboard && (
+          <Box my={10}>
+            <Button
+              as={ReachRouter}
+              to={{
+                pathname: '/start-farm/individual'
+              }}
+              onClick={() => {
+                sessionStorage.setItem('type', 'individual')
+                setStep(x => x + 1)
+              }}
+              btntitle='Start this farm'
+              w={80}
+              h={14}
+              fontSize='md'
+            />
+          </Box>
+        )}
       </GridItem>
     </Grid>
   ) : (
