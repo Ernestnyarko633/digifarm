@@ -17,7 +17,7 @@ import { FirstLettersToUpperCase, getFormattedMoney } from 'helpers/misc'
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionGrid = motion(Grid)
 
@@ -43,7 +43,7 @@ const CooperativePayment = ({ farm, asMember }) => {
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem overflowY='hidden'>
-        <Scrollbar>
+        <Scrollbars style={{ height: '100vh' }}>
           <Box p={{ base: 8, md: 6 }}>
             <Box rounded='lg' p={4} bg='#F2F6F6'>
               <Flex align='center' justify='space-between'>
@@ -171,7 +171,7 @@ const CooperativePayment = ({ farm, asMember }) => {
               <Support />
             </Box>
           </Box>
-        </Scrollbar>
+        </Scrollbars>
       </GridItem>
       <GridItem
         borderLeftWidth={1}
@@ -184,7 +184,7 @@ const CooperativePayment = ({ farm, asMember }) => {
           scrollBehavior: 'smooth'
         }}
       >
-        <Scrollbar>
+        <Scrollbars style={{ height: '100vh' }}>
           <Box css={{ direction: 'ltr' }} p={8}>
             <Flex direction='column' align={{ base: 'center', md: 'initial' }}>
               <Heading as='h6' fontSize='xl' ml={{ md: 5 }}>
@@ -216,7 +216,7 @@ const CooperativePayment = ({ farm, asMember }) => {
               />
             </Flex>
           </Box>
-        </Scrollbar>
+        </Scrollbars>
       </GridItem>
     </MotionGrid>
   )

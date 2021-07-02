@@ -6,7 +6,7 @@ import Button from 'components/Button'
 import useApi from 'context/api'
 import useStartFarm from 'context/start-farm'
 import { Link as ReachRouter } from 'react-router-dom'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import useFetch from 'hooks/useFetch'
 
 import CropSelectionCard from 'components/Cards/CropSelectionCard'
@@ -86,7 +86,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
         borderBottomWidth={{ base: 1, md: 0 }}
         borderBottomColor='gray.200'
       >
-        <Scrollbar>
+        <Scrollbars style={{ height: '100vh' }}>
           {data
             ?.filter(f => f.status === 1)
             ?.map(farm => (
@@ -109,7 +109,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
                 }}
               />
             ))}
-        </Scrollbar>
+        </Scrollbars>
       </GridItem>
       <GridItem
         overflowY='scroll'
@@ -123,7 +123,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
           scrollBehavior: 'smooth'
         }}
       >
-        <Scrollbar>
+        <Scrollbars style={{ height: '100vh' }}>
           {selectedFarm && (
             <Box p={8}>
               <AboutFarm farm={selectedFarm} />
@@ -147,7 +147,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
               />
             </Box>
           )}
-        </Scrollbar>
+        </Scrollbars>
       </GridItem>
     </Grid>
   ) : (

@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicCard from '../Sidebar'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 export default function FarmRightSidebar({
   state,
   digitalFarmerFarm,
@@ -40,7 +40,7 @@ export default function FarmRightSidebar({
       shadow={{ md: 'md' }}
       overflowY='hidden'
     >
-      <Scrollbar>
+      <Scrollbars style={{ height: '100vh' }}>
         <DynamicCard
           card={state}
           scheduledTasks={ScheduledTasks}
@@ -62,7 +62,7 @@ export default function FarmRightSidebar({
           //helpers
           reloads={reloads}
         />
-      </Scrollbar>
+      </Scrollbars>
     </Box>
   )
 }

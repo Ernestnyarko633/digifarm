@@ -9,7 +9,7 @@ import { HiLocationMarker } from 'react-icons/hi'
 import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { BsPlus } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import { CooperativeSchema } from 'helpers/validation'
 
 import CooperativeMemberCard from '../../Cards/CooperativeMemberCard'
@@ -63,7 +63,7 @@ const Acreage = ({ name, farm, selectedType }) => {
             borderBottomWidth={{ base: 1, md: 0 }}
             py={{ base: 10, md: 6 }}
           >
-            <Scrollbar>
+            <Scrollbars style={{ height: '100vh' }}>
               <Image
                 w={{ sm: 95 }}
                 h={{ sm: 95 }}
@@ -75,7 +75,7 @@ const Acreage = ({ name, farm, selectedType }) => {
               <Box mt={10}>
                 <Support />
               </Box>
-            </Scrollbar>
+            </Scrollbars>
           </GridItem>
           <GridItem
             overflowY='scroll'
@@ -85,7 +85,7 @@ const Acreage = ({ name, farm, selectedType }) => {
               scrollBehavior: 'smooth'
             }}
           >
-            <Scrollbar>
+            <Scrollbars style={{ height: '100vh' }}>
               <Box css={{ direction: 'ltr' }} p={{ base: 4, md: 6, lg: 10 }}>
                 <Flex
                   d={{ base: 'block', md: 'flex' }}
@@ -266,7 +266,7 @@ const Acreage = ({ name, farm, selectedType }) => {
                   </form>
                 </Box>
               </Box>
-            </Scrollbar>
+            </Scrollbars>
           </GridItem>
         </MotionGrid>
       )}

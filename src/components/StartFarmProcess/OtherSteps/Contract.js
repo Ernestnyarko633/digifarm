@@ -17,7 +17,7 @@ import ModalWrapper from 'components/Modals/ModalWrapper'
 import SignatureSetup from 'components/Signature/SignatureSetup'
 import SignatureDisplay from 'components/Signature/SignatureDisplay'
 import Button from 'components/Button'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 import { IoMdCreate } from 'react-icons/io'
 
@@ -52,7 +52,7 @@ const Contract = ({ intersectionRef }) => {
         <SignatureSetup isEditing={isEditing} setIsEditing={setIsEditing} />
       </ModalWrapper>
       <GridItem overflowY='scroll' mb={10}>
-        <Scrollbar>
+        <Scrollbars style={{ height: '100vh' }}>
           <Box css={{ direction: 'ltr' }} p={{ base: 2, md: 10 }}>
             <Heading {...headerStyleProps} mt={{ base: 4, md: 0 }}>
               Complete Farmer DigiFarmer User Agreement
@@ -211,7 +211,7 @@ const Contract = ({ intersectionRef }) => {
               </Box>
             </Flex>
           </Box>
-        </Scrollbar>
+        </Scrollbars>
       </GridItem>
     </MotionGrid>
   )

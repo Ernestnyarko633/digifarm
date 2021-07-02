@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 const NotificationItem = ({
   item,
   mutation,
+  userMutation,
   toFarmBoard,
   renderNotificationIcons,
   active
@@ -24,7 +25,11 @@ const NotificationItem = ({
       color={active && 'gray.600'}
       d='flex'
       justifyContent='space-between'
-      onClick={() => mutation.mutateAsync(item._id)}
+      onClick={
+        item?.message?.entity === 'GENERIC'
+          ? () => mutation.mutateAsync(item._id)
+          : () => userMutation.mutateAsync(item._id)
+      }
       to={toFarmBoard !== null && toFarmBoard(item?.message?.type, item)}
       borderBottomWidth={1}
       borderBottomColor='gray.100'
@@ -70,6 +75,7 @@ const NotificationItem = ({
 NotificationItem.propTypes = {
   item: PropTypes.object.isRequired,
   mutation: PropTypes.any,
+  userMutation: PropTypes.any,
   toFarmBoard: PropTypes.func,
   renderNotificationIcons: PropTypes.func,
   active: PropTypes.string

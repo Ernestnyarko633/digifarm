@@ -9,11 +9,11 @@ import { ANNOUNCEMENT, NEWS, WEEKLYVIDEOS } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import NotificationItem from '../Notifications/NotificationItem'
 import { FaReceipt } from 'react-icons/all'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionBox = motion(Box)
 
-const Notifications = ({ notifications, loading, mutation }) => {
+const Notifications = ({ notifications, loading, mutation, userMutation }) => {
   const renderNotificationIcons = value => {
     switch (value) {
       case 'news':
@@ -52,6 +52,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
           <NotificationItem
             item={item}
             mutation={mutation}
+            userMutation={userMutation}
             renderNotificationIcons={renderNotificationIcons}
             toFarmBoard={toFarmBoard}
             active={active}
@@ -62,6 +63,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
           <NotificationItem
             item={item}
             mutation={mutation}
+            userMutation={userMutation}
             renderNotificationIcons={renderNotificationIcons}
             //toFarmBoard={toFarmBoard}
             toFarmBoard={null}
@@ -73,6 +75,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
           <NotificationItem
             item={item}
             mutation={mutation}
+            userMutation={userMutation}
             renderNotificationIcons={renderNotificationIcons}
             //toFarmBoard={toFarmBoard}
             toFarmBoard={null}
@@ -84,6 +87,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
           <NotificationItem
             item={item}
             mutation={mutation}
+            userMutation={userMutation}
             renderNotificationIcons={renderNotificationIcons}
             toFarmBoard={null}
             active={active}
@@ -153,7 +157,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
                 fontSize='sm'
                 lineHeight='shorter'
               >
-                <Scrollbar>
+                <Scrollbars style={{ height: '100vh' }}>
                   <Flex
                     h={10}
                     align='center'
@@ -179,7 +183,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
                             width={50}
                           />
                         </Flex>
-                      ) : notifications.length === 0 ? (
+                      ) : notifications?.length === 0 ? (
                         <Text fontSize='lg' textAlign='center' p={6}>
                           No notifications
                         </Text>
@@ -197,7 +201,7 @@ const Notifications = ({ notifications, loading, mutation }) => {
                       )}
                     </AnimatePresence>
                   </Box>
-                </Scrollbar>
+                </Scrollbars>
               </Menu.Items>
             )}
           </AnimatePresence>
@@ -210,7 +214,8 @@ const Notifications = ({ notifications, loading, mutation }) => {
 Notifications.propTypes = {
   notifications: PropTypes.any,
   loading: PropTypes.bool,
-  mutation: PropTypes.func
+  mutation: PropTypes.func,
+  userMutation: PropTypes.func
 }
 
 export default Notifications
