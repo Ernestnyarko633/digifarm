@@ -10,12 +10,12 @@ import useAuth from "context/auth";
 import useApi from "context/api";
 import Notifications from "components/Utils/Notifications";
 import Profile from "components/Utils/Profile";
-import FarmLegend from "components/Dynamic/Farm/FarmLegend";
 
 const Header = () => {
   const { isAuthenticated } = useAuth();
   const { user } = isAuthenticated();
-  const { getNotifications, updateNotification } = useApi();
+  const { getNotifications, updateNotification, updateUserNotification } =
+    useApi();
 
   const queryClient = useQueryClient();
 
@@ -27,6 +27,10 @@ const Header = () => {
   );
 
   const mutation = useMutation((id) => updateNotification(id, user._id), {
+    onSuccess: () => queryClient.invalidateQueries("notifications"),
+  });
+
+  const userMutation = useMutation((id) => updateUserNotification(id, "READ"), {
     onSuccess: () => queryClient.invalidateQueries("notifications"),
   });
 
@@ -56,6 +60,7 @@ const Header = () => {
           notifications={data?.notifications}
           loading={isLoading}
           mutation={mutation}
+          userMutation={userMutation}
         />
 
         <Profile user={user} />

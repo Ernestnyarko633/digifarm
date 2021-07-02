@@ -10,7 +10,7 @@ import PayOption from 'components/Cards/PayOption'
 
 import Constants from 'constant'
 import Support from 'components/Support'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionGrid = motion(Grid)
 
@@ -45,7 +45,7 @@ const PaymentOption = ({ farm }) => {
           scrollBehavior: 'smooth'
         }}
       >
-        <Scrollbar>
+        <Scrollbars style={{ height: '100vh' }}>
           <Box css={{ direction: 'ltr' }}>
             <Flex direction='column' align={{ base: 'center', md: 'initial' }}>
               <Heading as='h6' fontSize='xl' ml={{ md: 5 }}>
@@ -77,7 +77,7 @@ const PaymentOption = ({ farm }) => {
               />
             </Flex>
           </Box>
-        </Scrollbar>
+        </Scrollbars>
       </GridItem>
     </MotionGrid>
   )

@@ -295,6 +295,13 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const updateUserNotification = async (id, status, query) => {
+    return await http.patch({
+      url: `${NOTIFICATION_API}/notification/${id}/${status}`,
+      query
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
@@ -349,7 +356,8 @@ export const ApiContextProvider = ({ children }) => {
 
         //notification
         getNotifications,
-        updateNotification
+        updateNotification,
+        updateUserNotification
       }}
     >
       {children}

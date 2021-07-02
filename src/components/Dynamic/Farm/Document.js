@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicDocument from '../Document'
 import FarmReceiptCard from '../Cards/FarmReceiptCard'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 export default function Document({
   digitalFarmerFarm,
@@ -84,7 +84,7 @@ export default function Document({
           shadow={{ md: 'md' }}
           overflowY={{ md: 'hidden' }}
         >
-          <Scrollbar>
+          <Scrollbars style={{ height: '100vh' }}>
             <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
               <React.Fragment>
                 <FarmReceiptCard
@@ -104,7 +104,7 @@ export default function Document({
                 />
               </React.Fragment>
             </Grid>
-          </Scrollbar>
+          </Scrollbars>
         </Box>
       </GridItem>
     </Grid>
