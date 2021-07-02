@@ -110,15 +110,6 @@ const YourFarmCard = ({
           </Link>
         </Flex>
 
-        <Box
-          pos={{ md: 'absolute' }}
-          left={{ md: -2 }}
-          d={farms.length > 8 ? 'block' : 'none'}
-          mt={{ base: 6, md: 0 }}
-        >
-          <ArrowButton handleClick={handleClick} />
-        </Box>
-
         <Flex
           direction='column'
           align='center'
@@ -199,6 +190,15 @@ const YourFarmCard = ({
               </>
             ))}
           </MotionFlex>
+
+          <Box
+            pos={{ md: 'absolute' }}
+            left={{ md: -2 }}
+            d={farms.length > 8 ? 'block' : 'none'}
+            mt={{ base: 6, md: 0 }}
+          >
+            <ArrowButton handleClick={handleClick} />
+          </Box>
 
           <Flex
             align='center'
