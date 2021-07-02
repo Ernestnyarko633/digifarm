@@ -36,7 +36,7 @@ import Map from 'components/Map/Map'
 import { dateIntervals } from 'helpers/misc'
 import useApi from 'context/api'
 import getConfig from 'utils/configs'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 // const options = ['Yes', 'No']
 
@@ -284,7 +284,7 @@ const ChooseAcreage = ({ farm, selectedType }) => {
         }}
         mb={10}
       >
-        <Scrollbar>
+        <Scrollbars style={{ height: '100vh' }}>
           <Box css={{ direction: 'ltr' }} p={{ md: 10 }}>
             <Box px={{ base: 6, md: 0 }}>
               <Box>
@@ -440,7 +440,7 @@ const ChooseAcreage = ({ farm, selectedType }) => {
               </Box>
             </Box>
           </Box>
-        </Scrollbar>
+        </Scrollbars>
       </GridItem>
     </MotionGrid>
   )

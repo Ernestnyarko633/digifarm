@@ -28,7 +28,7 @@ import Contract from './Contract'
 import { getformattedDate } from 'helpers/misc'
 import ReloadPage from 'components/Reload'
 import { Safety } from '../../../theme/Icons'
-import Scrollbar from 'react-perfect-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionFlex = motion(Flex)
 
@@ -135,7 +135,7 @@ const OtherSteps = ({ data, history: { push } }) => {
     <>
       {isSubmitting && <Overlay text={text} />}
       {catFarms ? (
-        <Scrollbar>
+        <Scrollbars style={{ height: '100vh' }}>
           <Flex
             mx='auto'
             w='100%'
@@ -202,7 +202,7 @@ const OtherSteps = ({ data, history: { push } }) => {
               ))}
             </Flex>
           </Flex>
-        </Scrollbar>
+        </Scrollbars>
       ) : (
         <Box pt={{ base: 1, md: 2 }} />
       )}

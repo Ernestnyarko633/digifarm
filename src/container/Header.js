@@ -14,7 +14,8 @@ import Profile from "components/Utils/Profile";
 const Header = () => {
   const { isAuthenticated } = useAuth();
   const { user } = isAuthenticated();
-  const { getNotifications, updateNotification } = useApi();
+  const { getNotifications, updateNotification, updateUserNotification } =
+    useApi();
 
   const queryClient = useQueryClient();
 
@@ -26,6 +27,10 @@ const Header = () => {
   );
 
   const mutation = useMutation((id) => updateNotification(id, user._id), {
+    onSuccess: () => queryClient.invalidateQueries("notifications"),
+  });
+
+  const userMutation = useMutation((id) => updateUserNotification(id, "READ"), {
     onSuccess: () => queryClient.invalidateQueries("notifications"),
   });
 
@@ -55,6 +60,7 @@ const Header = () => {
           notifications={data?.notifications}
           loading={isLoading}
           mutation={mutation}
+          userMutation={userMutation}
         />
 
         <Profile user={user} />
