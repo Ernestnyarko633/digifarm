@@ -70,7 +70,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         Events
       </Heading>
 
-      <Box h='45%' overflowY='hidden' px={2} my={2}>
+      <Box h='45%' px={2} my={2}>
         {loading ? (
           <FetchCard
             direction='column'
@@ -85,8 +85,21 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             text='Loading events'
           />
         ) : (
-          <Scrollbars style={{ height: '100%' }}>
-            <Grid gap={4} mt={4} mb={4}>
+          <>
+            <Box as={Scrollbars} h='100vh' d={{ base: 'none', md: 'block' }}>
+              <Grid gap={4} mt={4} mb={4}>
+                {doc?.map((event, i) => (
+                  <EventCard
+                    key={mapKey(i)}
+                    onOpen={onOpen}
+                    setSelectedData={setSelectedData}
+                    event={event}
+                  />
+                ))}
+              </Grid>
+            </Box>
+
+            <Grid gap={4} mt={4} mb={4} d={{ base: 'grid', md: 'none' }}>
               {doc?.map((event, i) => (
                 <EventCard
                   key={mapKey(i)}
@@ -96,7 +109,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                 />
               ))}
             </Grid>
-          </Scrollbars>
+          </>
         )}
       </Box>
 
@@ -127,13 +140,19 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
               My cooperatives
             </Heading>
             <Box my={{ base: 3, xl: 2 }} h={{ base: '20%', xl: '40%' }} px={2}>
-              <Scrollbars style={{ height: '100%' }}>
+              <Box as={Scrollbars} h='100vh' d={{ base: 'none', md: 'block' }}>
                 <Box>
                   {data.map(coop => (
                     <CooperativesCard coop={coop} key={coop._id} />
                   ))}
                 </Box>
-              </Scrollbars>
+              </Box>
+
+              <Box d={{ base: 'block', md: 'none' }}>
+                {data.map(coop => (
+                  <CooperativesCard coop={coop} key={coop._id} />
+                ))}
+              </Box>
             </Box>
           </>
         )
