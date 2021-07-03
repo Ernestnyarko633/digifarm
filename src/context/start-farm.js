@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState, useContext, createContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
@@ -8,6 +9,7 @@ import useAuth from './auth'
 import useExternal from './external'
 
 import Constants from 'constant'
+import useRollover from './rollover'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[0]
@@ -53,6 +55,8 @@ export const StartFarmContextProvider = ({ children }) => {
     patchOrder,
     createCooperative
   } = useApi()
+
+  const { total } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -111,7 +115,16 @@ export const StartFarmContextProvider = ({ children }) => {
     setOtherStep(draft => draft - 1)
   }
 
-  const handleCreateOrder = async (cooperative, cooperativeUserAcreage) => {
+  const handleRolloverPayment = () => {
+    false && total
+    handleNextStep()
+  }
+
+  const handleCreateOrder = async (
+    cooperative,
+    cooperativeUserAcreage,
+    rollover
+  ) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
@@ -174,6 +187,7 @@ export const StartFarmContextProvider = ({ children }) => {
       sessionStorage.removeItem('my_farms')
       sessionStorage.removeItem('my_orders')
       handleNextStep()
+      rollover && handleRolloverPayment()
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {

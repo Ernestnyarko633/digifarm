@@ -1,54 +1,54 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
 import Button from 'components/Button'
 import { Box, Text } from '@chakra-ui/layout'
 import { Grid, GridItem, Heading, Divider } from '@chakra-ui/react'
 import WalletCard from 'components/Rollover/WalletCard'
-import Kill from 'assets/images/b.png'
+import { Link } from 'react-router-dom'
 import { getFormattedMoney } from 'helpers/misc'
 import useRollover from 'context/rollover'
+import useComponent from 'context/component'
+import FetchCard from 'components/FetchCard'
+import useFetch from 'hooks/useFetch'
+import useApi from 'context/api'
 const MotionGrid = motion(Grid)
 
 const WalletSelection = () => {
   const { total, selectedWallets } = useRollover()
-  const wallets = [
-    {
-      id: 0,
-      cropName: 'Soyabean',
-      amount: 12000
-    },
-    {
-      id: 1,
+  const { onClose } = useComponent()
+  // const { getMyFarms } = useApi()
+  // const [wallets, setWallets] = useState([])
+  // const [reload, setReload] = useState(0)
+  const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
+  // const triggerReload = setReload(p => p + 1)
 
-      cropName: 'Soyabean',
-      amount: 12000
-    },
-    {
-      id: 2,
-      cropName: 'Soyabean',
-      amount: 12000
-    },
-    {
-      id: 3,
+  console.log(farms, 'ssdl')
+  // React.useEffect(() => {
+  //   let mounted = true
+  //   let array = []
 
-      cropName: 'Soyabean',
-      amount: 12000
-    },
-    {
-      id: 4,
+  //   if (mounted && farms?.length) {
+  //     farms?.map(farm =>
+  //       array.push({
+  //         farm: farm,
+  //         acreage: farm?.order?.acreage,
+  //         name: farm?.name,
+  //         price: farm?.order?.product?.pricePerAcre,
+  //         cost:
+  //           farm?.order?.cost ||
+  //           farm?.order?.acreage * farm?.order?.product?.pricePerAcre,
+  //         wallet: farm?.order?.cost
+  //       })
+  //     )
 
-      cropName: 'Soyabean',
-      amount: 12000
-    },
-    {
-      id: 5,
+  //     setWallets(array)
+  //   }
 
-      cropName: 'Soyabean',
-      amount: 12000
-    }
-  ]
+  //   return () => (mounted = false)
+  // }, [farms])
 
   return (
     <MotionGrid
@@ -103,13 +103,13 @@ const WalletSelection = () => {
           w='100%'
           h={{ base: '78%', lg: '85%', xl: '80%' }}
         >
-          {wallets.map(wallet => (
+          {farms.map(wallet => (
             <WalletCard
-              key={wallet.id}
-              id={wallet.id}
-              name={wallet.cropName}
-              amount={wallet.amount}
-              image={Kill}
+              key={wallet?._id}
+              id={wallet?._id}
+              name={wallet.order?.product?.cropVariety?.crop?.name}
+              amount={wallet?.order?.cost}
+              image={wallet?.order?.product?.cropVariety?.crop?.imageUrl}
             />
           ))}
         </Grid>
@@ -147,8 +147,14 @@ const WalletSelection = () => {
         </Box>
 
         <Button
-          display={{ base: 'none', lg: 'block' }}
+          display={{ base: 'none', lg: 'flex' }}
+          as={Link}
+          textAlign='center'
           btntitle='Proceed to rollover'
+          to={{
+            pathname: '/start-farm/individual',
+            state: { rollover: true }
+          }}
           borderColor='cf.green'
           color='white'
           fontWeight={900}
@@ -158,7 +164,10 @@ const WalletSelection = () => {
           w='70%'
           h={65}
           fontSize={{ base: 'sm', xl: 'md' }}
-          onClick={() => {}}
+          onClick={() => {
+            sessionStorage.setItem('type', 'individual')
+            onClose()
+          }}
         />
       </GridItem>
     </MotionGrid>

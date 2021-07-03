@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Confetti from 'react-confetti'
@@ -21,6 +22,8 @@ const Individual = ({ location: { state }, history }) => {
   const { otherStep } = useStartFarm()
 
   const { width, height } = useWindowSize()
+
+  console.log('roolo', state)
 
   React.useEffect(() => {
     let mounted = true
@@ -47,7 +50,13 @@ const Individual = ({ location: { state }, history }) => {
       case 0:
         return <CropSelection />
       case 1:
-        return <OtherSteps data={state?.data} history={history} />
+        return (
+          <OtherSteps
+            data={state?.data}
+            rollover={state?.rollover}
+            history={history}
+          />
+        )
       default:
         return <ReloadPage />
     }

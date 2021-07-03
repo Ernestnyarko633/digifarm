@@ -10,9 +10,11 @@ import {
   Box,
   ModalOverlay
 } from '@chakra-ui/react'
+import { Link as ReachRouter } from 'react-router-dom'
 import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import useRollover from 'context/rollover'
+//import useStartFarm from 'context/start-farm'
 
 const ModalWrapper = ({
   isOpen,
@@ -25,6 +27,7 @@ const ModalWrapper = ({
   children
 }) => {
   const { step } = useRollover()
+  // const {} = useStartFarm()
 
   return (
     <Modal
@@ -65,6 +68,11 @@ const ModalWrapper = ({
               textAlign='center'
             >
               <Button
+                as={ReachRouter}
+                to={{
+                  pathname: '/start-farm/individual',
+                  state: { rollover: true }
+                }}
                 btntitle='Rollover'
                 borderColor='cf.green'
                 color='white'
@@ -74,7 +82,10 @@ const ModalWrapper = ({
                 w='90%'
                 h={50}
                 fontSize={{ base: 'sm', xl: 'md' }}
-                onClick={() => {}}
+                onClick={() => {
+                  sessionStorage.setItem('type', 'individual')
+                  onClose()
+                }}
               />
             </Box>
             <ModalHeader>
