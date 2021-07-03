@@ -1,4 +1,5 @@
 import React from 'react'
+import 'simplebar/dist/simplebar.min.css'
 import { BrowserRouter } from 'react-router-dom'
 import TagManager from 'react-gtm-module'
 import { StartFarmContextProvider } from 'context/start-farm'
@@ -8,6 +9,7 @@ import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
 import { ApiContextProvider } from 'context/api'
 import { WalletContextProvider } from 'context/wallet'
+import { RolloverContextProvider } from 'context/rollover'
 import Router from 'routes/register'
 
 const tagManagerArgs = {
@@ -22,19 +24,21 @@ const App = () => {
   return (
     <BrowserRouter>
       <ComponentContextProvider>
-        <ApiContextProvider>
-          <ExternalContextProvider>
-            <AuthContextProvider>
-              <StartFarmContextProvider>
-                <ModalContextProvider>
-                  <WalletContextProvider>
-                    <Router />
-                  </WalletContextProvider>
-                </ModalContextProvider>
-              </StartFarmContextProvider>
-            </AuthContextProvider>
-          </ExternalContextProvider>
-        </ApiContextProvider>
+        <RolloverContextProvider>
+          <ApiContextProvider>
+            <ExternalContextProvider>
+              <AuthContextProvider>
+                <StartFarmContextProvider>
+                  <ModalContextProvider>
+                    <WalletContextProvider>
+                      <Router />
+                    </WalletContextProvider>
+                  </ModalContextProvider>
+                </StartFarmContextProvider>
+              </AuthContextProvider>
+            </ExternalContextProvider>
+          </ApiContextProvider>
+        </RolloverContextProvider>
       </ComponentContextProvider>
     </BrowserRouter>
   )

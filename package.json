@@ -64,6 +64,7 @@
     "recharts": "^2.0.9",
     "redis": "^3.1.2",
     "rsuite": "^4.10.2",
+    "simplebar-react": "^2.3.4",
     "styletron-engine-atomic": "^1.4.7",
     "styletron-react": "^6.0.1",
     "use-immer": "^0.5.1",

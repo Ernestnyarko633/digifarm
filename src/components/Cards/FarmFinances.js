@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Grid, Flex, Image, Heading, Text, Icon } from '@chakra-ui/react'
 import Stack from '../../assets/images/finance.svg'
 import Money from '../../assets/images/money.svg'
@@ -8,10 +8,21 @@ import Graph from 'components/Utils/Graph'
 import { FaCircle } from 'react-icons/fa'
 import useComponent from 'context/component'
 import useWallet from 'context/wallet'
+import { useImmer } from 'use-immer'
 
 const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
   const { handleModalClick } = useComponent()
   const { totalAmount } = useWallet()
+  const [step, setStep] = useImmer(0)
+
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted) {
+      setStep(p => p * 0)
+    }
+    return () => (mounted = false)
+  }, [setStep])
 
   return (
     <Box
@@ -158,7 +169,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
                 borderColor='cf.green'
                 color='cf.green'
                 rounded='30px'
-                isDisabled={true}
+                isDisabled={false}
                 mx={{ base: 3, md: 0 }}
                 my={5}
                 colorScheme='none'
@@ -169,7 +180,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
                 fontSize={{ base: 'sm', xl: 'md' }}
                 mr={{ md: 5 }}
                 onClick={() => {
-                  handleModalClick('rollover')
+                  handleModalClick('rollover', { step, setStep })
                 }}
               />
               <Button

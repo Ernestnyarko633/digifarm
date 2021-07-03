@@ -119,6 +119,35 @@ section[style] {
   opacity: 1 !important;
 }
 
+@media only screen and (max-width: 415px) {
+ 
+  #myscrollbar{
+    height: 15.455rem !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+ 
+  #myscrollbar{
+    height: 35.563rem !important;
+  }
+}
+
+
+@media only screen and (max-width: 1024px) {
+ 
+  #myscrollbar{
+    height: 45.563rem !important;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+ 
+  #myscrollbar{
+    height: 39.996rem !important;
+  }
+}
+
 .intl-tel-input:focus {
   outline: none;
 }
