@@ -101,7 +101,13 @@ const YourFarmCard = ({
         pos='relative'
         pt={{ base: 16, md: 0 }}
       >
-        <Flex align='center' direction='row' justify='space-around' w='100%'>
+        <Flex
+          align='center'
+          direction='row'
+          justify='space-between'
+          ml={{ md: -16 }}
+          w={{ md: 130 }}
+        >
           <Heading as='h6' fontSize='lg'>
             {farms.length ? 'Your Farm(s)' : ''}
           </Heading>
@@ -112,7 +118,7 @@ const YourFarmCard = ({
 
         <Box
           pos={{ md: 'absolute' }}
-          left={{ md: -2 }}
+          right={{ md: -2 }}
           d={{ base: 'none', md: farms.length > 8 ? 'block' : 'none' }}
           mt={{ base: 6, md: 0 }}
         >
@@ -123,10 +129,11 @@ const YourFarmCard = ({
           direction='column'
           align='center'
           justify='flex-start'
-          maxW={{ md: 127 }}
-          w={{ md: 127 }}
+          maxW={{ md: 130 }}
+          w={{ md: 130 }}
           overflow='hidden'
           my={10}
+          ml={{ md: -16 }}
           px={{ base: 6, md: 0 }}
         >
           <MotionFlex
