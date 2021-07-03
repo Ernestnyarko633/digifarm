@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -14,12 +13,7 @@ import {
   Link,
   useToast,
   useDisclosure,
-  Tooltip,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Icon
+  Tooltip
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import CustomTable from 'components/Form/CustomTable'
@@ -28,7 +22,6 @@ import useApi from 'context/api'
 import useFetch from 'hooks/useFetch'
 import Header from 'container/Header'
 import { Button } from 'components'
-import { MdDashboard } from 'react-icons/md'
 import { getFormattedMoney } from 'helpers/misc'
 import SideBar from 'components/Cards/CooperativeDashboard/SideBar'
 import SideMenu from 'components/Cards/CooperativeDashboard/SideMenu'
@@ -64,6 +57,14 @@ const CooperativeMain = ({ match: { params } }) => {
     reload,
     params.id
   )
+
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }, [data])
 
   const downloadAgreement = async query => {
     try {
@@ -275,7 +276,7 @@ const CooperativeMain = ({ match: { params } }) => {
         pt={30}
         bg='white'
         w='full'
-        minH={{ base: '100vh', md: 'calc(100vh - 4rem)' }}
+        minH={{ md: 'calc(100vh - 4rem)' }}
         pos={{ '4xl': 'fixed', '5xl': 'fixed' }}
       >
         <Grid templateColumns='repeat(5, 1fr)' bg='white'>
@@ -284,7 +285,7 @@ const CooperativeMain = ({ match: { params } }) => {
             colSpan={1}
             bg='#FAFBFB'
             pt='70px'
-            h='100vh'
+            h={{ md: '100vh' }}
             display={{ base: 'none', lg: 'block' }}
           >
             {isLoading || error ? (
@@ -319,12 +320,12 @@ const CooperativeMain = ({ match: { params } }) => {
             colSpan={{ base: 5, lg: 4 }}
             px={{ xl: 12 }}
             pt={{ base: 12, xl: 20 }}
-            h='100vh'
+            h={{ md: '100vh' }}
             bg='white'
           >
             {isLoading || error ? (
               <FetchCard
-                h='100vh'
+                h={{ md: '100vh' }}
                 align='center'
                 justify='center'
                 direction='column'
@@ -379,7 +380,7 @@ const CooperativeMain = ({ match: { params } }) => {
                   d={{ base: 'block', md: 'none' }}
                   px={4}
                   pb='50px'
-                  h='100vh'
+                  h={{ md: '100vh' }}
                   bg='white'
                 >
                   {tableData?.map(item => (

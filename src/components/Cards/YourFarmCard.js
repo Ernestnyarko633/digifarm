@@ -113,7 +113,7 @@ const YourFarmCard = ({
         <Box
           pos={{ md: 'absolute' }}
           left={{ md: -2 }}
-          d={farms.length > 8 ? 'block' : 'none'}
+          d={{ base: 'none', md: farms.length > 8 ? 'block' : 'none' }}
           mt={{ base: 6, md: 0 }}
         >
           <ArrowButton handleClick={handleClick} />
@@ -127,6 +127,7 @@ const YourFarmCard = ({
           w={{ md: 127 }}
           overflow='hidden'
           my={10}
+          px={{ base: 6, md: 0 }}
         >
           <MotionFlex
             align='center'
@@ -162,8 +163,8 @@ const YourFarmCard = ({
                       {farm.name}
                     </Text>
                     <Box
-                      w={24}
-                      h={24}
+                      w={{ base: 20, md: 24 }}
+                      h={{ base: 20, md: 24 }}
                       rounded='100%'
                       borderWidth='1px'
                       pos='relative'
@@ -198,6 +199,15 @@ const YourFarmCard = ({
               </>
             ))}
           </MotionFlex>
+
+          <Box
+            pos={{ md: 'absolute' }}
+            left={{ md: -2 }}
+            d={{ base: farms.length > 8 ? 'block' : 'none', md: 'none' }}
+            mt={{ base: 6, md: 0 }}
+          >
+            <ArrowButton handleClick={handleClick} />
+          </Box>
 
           <Flex
             align='center'

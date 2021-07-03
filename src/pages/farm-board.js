@@ -6,6 +6,7 @@ import GetStartedNowCard from 'components/Cards/GetStartedNowCard'
 import FetchCard from 'components/FetchCard'
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
+import { Box } from '@chakra-ui/layout'
 
 const FarmBoard = () => {
   document.title = 'Complete Farmer | Farmboard'
@@ -18,12 +19,18 @@ const FarmBoard = () => {
     error: myFarmsHasError
   } = useFetch('my_farms', getMyFarms, reload)
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <Layout>
-      <Greetings
-        title='Welcome to your farm board'
-        text="Here's where you view, share and like all <br /> the news from your farm(s)"
-      />
+      <Box d={{ base: 'none', md: 'block' }}>
+        <Greetings
+          title='Welcome to your farm board'
+          text="Here's where you view, share and like all <br /> the news from your farm(s)"
+        />
+      </Box>
       {myFarmsIsLoading || myFarmsHasError ? (
         <FetchCard
           direction='column'
