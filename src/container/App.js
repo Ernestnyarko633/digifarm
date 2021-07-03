@@ -1,5 +1,4 @@
 import React from 'react'
-import 'simplebar/dist/simplebar.min.css'
 import { BrowserRouter } from 'react-router-dom'
 // import TagManager from 'react-gtm-module'
 import { StartFarmContextProvider } from 'context/start-farm'
