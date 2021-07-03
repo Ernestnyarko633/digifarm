@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import ModalWrapper from './ModalWrapper'
 import useComponent from 'context/component'
 import useRollover from 'context/rollover'
-import RequestRollover from 'components/Rollover/RequestRollover'
-import WalletSelection from 'components/Rollover/WalletSelection'
+import RequestRollover from 'components/Rollover&Payout/ModalContent/RequestRollover'
+import WalletSelection from 'components/Rollover&Payout/ModalContent/WalletSelection'
 
 const RolloverModal = () => {
   const { isOpen, onClose } = useComponent()

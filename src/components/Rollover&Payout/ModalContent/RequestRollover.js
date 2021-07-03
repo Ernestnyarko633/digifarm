@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import useComponent from 'context/component'
-import Vector from '../../assets/images/Vector.svg'
+import Vector from 'assets/images/Vector.svg'
 import Button from 'components/Button'
 import useRollover from 'context/rollover'
 

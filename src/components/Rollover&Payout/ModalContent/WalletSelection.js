@@ -1,61 +1,29 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
 import Button from 'components/Button'
 import { Box, Text } from '@chakra-ui/layout'
 import { Grid, GridItem, Heading, Divider } from '@chakra-ui/react'
-import WalletCard from 'components/Rollover/WalletCard'
+import WalletCard from 'components/Rollover&Payout/Cards/WalletCard'
 import { Link } from 'react-router-dom'
 import { getFormattedMoney } from 'helpers/misc'
 import useRollover from 'context/rollover'
 import useComponent from 'context/component'
-import FetchCard from 'components/FetchCard'
-import useFetch from 'hooks/useFetch'
-import useApi from 'context/api'
+
 const MotionGrid = motion(Grid)
 
 const WalletSelection = () => {
   const { total, selectedWallets } = useRollover()
   const { onClose } = useComponent()
-  // const { getMyFarms } = useApi()
-  // const [wallets, setWallets] = useState([])
-  // const [reload, setReload] = useState(0)
+
   const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
-  // const triggerReload = setReload(p => p + 1)
-
-  console.log(farms, 'ssdl')
-  // React.useEffect(() => {
-  //   let mounted = true
-  //   let array = []
-
-  //   if (mounted && farms?.length) {
-  //     farms?.map(farm =>
-  //       array.push({
-  //         farm: farm,
-  //         acreage: farm?.order?.acreage,
-  //         name: farm?.name,
-  //         price: farm?.order?.product?.pricePerAcre,
-  //         cost:
-  //           farm?.order?.cost ||
-  //           farm?.order?.acreage * farm?.order?.product?.pricePerAcre,
-  //         wallet: farm?.order?.cost
-  //       })
-  //     )
-
-  //     setWallets(array)
-  //   }
-
-  //   return () => (mounted = false)
-  // }, [farms])
 
   return (
     <MotionGrid
-      display={{ base: 'flex', md: 'flex' }}
+      display={{ base: 'flex' }}
       flexDir={{ base: 'column-reverse', md: 'row' }}
       w={{ base: '100%', xl: '75%' }}
-      pt={{ md: 'auto', xl: 'auto' }}
+      pt={{ md: 'auto' }}
       h={{ base: '90vh', md: '75vh', lg: 'auto' }}
       borderWidth={1}
       borderRadius={10}
@@ -101,7 +69,7 @@ const WalletSelection = () => {
             }
           }}
           w='100%'
-          h={{ base: '78%', lg: '85%', xl: '80%' }}
+          h={{ base: '78%', lg: '85%', '2xl': '70%', '3xl': '80%' }}
         >
           {farms.map(wallet => (
             <WalletCard

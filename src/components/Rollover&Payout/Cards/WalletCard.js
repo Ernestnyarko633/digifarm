@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, Text, Heading, Icon } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
