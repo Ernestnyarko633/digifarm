@@ -12,23 +12,29 @@ import {
   Checkbox,
   useToast,
   Box,
-  Icon,
   Text,
   Grid
 } from '@chakra-ui/react'
 
 import { Formik } from 'formik'
-import { AiFillInfoCircle } from 'react-icons/ai'
 import FormInput from 'components/Form/FormInput'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
 import { objDiff } from 'helpers/misc'
+import { default as usePayout } from 'context/rollover'
 const currencies = require('currencies.json')
-console.log(currencies, 'currencies')
 
 //import PropTypes from 'prop-types'
 
 const ConfirmBankingDetails = () => {
+  const {
+    loading,
+    setLoading,
+    error: confirmError,
+    setError,
+    setBigStepper
+  } = usePayout()
+
   const { isAuthenticated } = useAuth()
   const { createBankDetails, updateBankDetails, getUserBankingDetails } =
     useApi()
@@ -40,7 +46,7 @@ const ConfirmBankingDetails = () => {
   const toast = useToast()
 
   const { data, isLoading, error } = useFetch(
-    'banking_details',
+    null,
     user?._id ? getUserBankingDetails : null,
     reload,
     { user: user?._id }
@@ -64,11 +70,9 @@ const ConfirmBankingDetails = () => {
     homeAddress: data?.homeAddress || ''
   }
 
-  const onSubmit = async (
-    values,
-    { setSubmitting, setErrors, setStatus, resetForm }
-  ) => {
+  const onSubmit = async (values, { setSubmitting }) => {
     try {
+      setError(null)
       let res
       if (data._id) {
         let updatedValue = objDiff(values, user)
@@ -82,26 +86,29 @@ const ConfirmBankingDetails = () => {
 
       toast({
         title: 'Profile successfully updated.',
-        description: res.message,
+        description: res?.message,
         status: 'success',
         duration: 5000,
         position: 'top-right'
       })
-      window.location.reload()
+      setBigStepper(draft => draft + 1)
     } catch (error) {
       toast({
         status: 'error',
         duration: 5000,
         position: 'top-right',
         title: 'Error occured',
-        description: error.message
+        description: error?.message
       })
+      setError(error)
+    } finally {
+      setLoading(false)
       setSubmitting(false)
     }
   }
 
   return (
-    <Box w={{ md: '40%' }}>
+    <Box w={{ base: '100%', xl: '40%' }} h={{ base: '100vh' }}>
       <Formik
         enableReinitialize
         validationSchema={BankDetailsSchema}
@@ -113,22 +120,55 @@ const ConfirmBankingDetails = () => {
           handleChange,
           handleBlur,
           handleSubmit,
+          isSubmitting,
           errors,
           touched
         }) => (
-          <form onSubmit={handleSubmit}>
-            {!isLoading && !error && (
-              <Box>
+          <form
+            style={{
+              width: '100%',
+              height: '100%'
+            }}
+            onSubmit={handleSubmit}
+          >
+            {isLoading || loading || confirmError || error ? (
+              <Flex w='100%' align='center' justify='center'>
+                <FetchCard
+                  w='100vw'
+                  h='100vh'
+                  direction='column'
+                  align='center'
+                  justify='center'
+                  mx='auto'
+                  reload={() => {
+                    !data && triggerReload()
+                  }}
+                  loading={isLoading || loading}
+                  error={error || confirmError}
+                  text={
+                    isLoading
+                      ? 'Standby as we load some of your details'
+                      : loading
+                      ? 'Updating Banking Details'
+                      : null
+                  }
+                />
+              </Flex>
+            ) : (
+              <Box w='100%' h='100%'>
                 <Flex
                   align='center'
                   justify='center'
                   borderBottomWidth={1}
                   borderBottomColor='gray.200'
-                  px={{ md: 8 }}
                   w='100%'
                 >
-                  <Heading as='h3' fontSize='4xl' fontWeight={800}>
-                    Request for payout
+                  <Heading
+                    as='h3'
+                    fontSize={{ base: 'md', md: '4xl' }}
+                    fontWeight={800}
+                  >
+                    Confirm Bank Details
                   </Heading>
                 </Flex>
                 <Flex
@@ -136,34 +176,21 @@ const ConfirmBankingDetails = () => {
                   direction='column'
                   justify='center'
                   align='center'
-                  pt={{ md: 20 }}
+                  py={{ base: 2, md: 5 }}
                 >
-                  <Flex w='100%'>
-                    <Box>
-                      <Icon
-                        boxSize={5}
-                        as={AiFillInfoCircle}
-                        color='cf.green'
-                      />
-                    </Box>
-                    <Text ml={{ md: 4 }}>
-                      {' '}
-                      For authentication purposes, bank information provided
-                      here should be the same as that on your dashboard
-                    </Text>
-                  </Flex>
                   <Grid
                     templateColumns={{ md: 'repeat(1, 1fr)' }}
-                    gap={{ md: 8 }}
                     w='100%'
-                    py={{ md: 5 }}
                     direction='column'
+                    gap={{ base: 5 }}
                   >
                     <Grid
-                      templateColumns={{ md: 'repeat(2, 1fr)' }}
-                      gap={{ md: 8 }}
+                      templateColumns={{
+                        base: 'repeat(1, 1fr)',
+                        md: 'repeat(2, 1fr)'
+                      }}
                       w='100%'
-                      py={{ md: 5 }}
+                      gap={{ base: 5 }}
                       direction='column'
                     >
                       <FormInput
@@ -174,7 +201,7 @@ const ConfirmBankingDetails = () => {
                         touched={touched.accountName}
                         error={errors.accountName}
                         onBlur={handleBlur}
-                        borderBottomColor={{ md: 'black' }}
+                        borderBottomColor={{ base: 'black' }}
                         isRequired
                         bg='gray.100'
                       />
@@ -183,7 +210,7 @@ const ConfirmBankingDetails = () => {
                         label='Account number'
                         name='accountNumber'
                         value={values.accountNumber}
-                        h={{ md: 68 }}
+                        borderBottomColor={{ base: 'black' }}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         touched={touched.accountNumber}
@@ -200,12 +227,12 @@ const ConfirmBankingDetails = () => {
                         touched={touched.bankName}
                         error={errors.bankName}
                         isRequired
-                        h={{ md: 68 }}
-                        borderBottomColor={{ md: 'black' }}
+                        borderBottomColor={{ base: 'black' }}
                         bg='gray.100'
                       />
 
                       <CustomSelect
+                        mt={1}
                         isRequired
                         labelKey='name'
                         valueKey='name'
@@ -217,6 +244,7 @@ const ConfirmBankingDetails = () => {
                         value={values.branchCountry}
                         error={errors.branchCountry}
                         touched={touched.branchCountry}
+                        borderBottomColor={{ base: 'black' }}
                         placeholder='Enter your bank branch country'
                       />
                     </Grid>
@@ -229,7 +257,7 @@ const ConfirmBankingDetails = () => {
                       touched={touched.branchAddress}
                       error={errors.branchAddress}
                       onBlur={handleBlur}
-                      borderBottomColor={{ md: 'black' }}
+                      borderBottomColor={{ base: 'black' }}
                       isRequired
                       bg='gray.100'
                     />
@@ -243,7 +271,7 @@ const ConfirmBankingDetails = () => {
                       onBlur={handleBlur}
                       touched={touched.iban}
                       error={errors.iban}
-                      borderBottomColor={{ md: 'black' }}
+                      borderBottomColor={{ base: 'black' }}
                       isRequired
                       bg='gray.100'
                     />
@@ -259,22 +287,22 @@ const ConfirmBankingDetails = () => {
                       error={errors.currency}
                       touched={touched.currency}
                       onChange={handleChange}
+                      borderBottomColor={{ base: 'black' }}
                       placeholder='Enter your account currency'
                     />
                     <Grid
                       templateColumns={{ md: 'repeat(2, 1fr)' }}
-                      gap={{ md: 8 }}
+                      gap={{ base: 5, md: 8 }}
                       w='100%'
                     >
                       <FormInput
                         label='Sort code'
                         name='sortCode'
                         value={values.sortCode}
-                        h={{ md: 68 }}
                         onChange={handleChange}
                         touched={touched.sortCode}
                         error={errors.sortCode}
-                        borderBottomColor={{ md: 'black' }}
+                        borderBottomColor={{ base: 'black' }}
                         onBlur={handleBlur}
                         isRequired
                         bg='gray.100'
@@ -283,11 +311,10 @@ const ConfirmBankingDetails = () => {
                         label='Swift code'
                         name='swiftCode'
                         value={values.swiftCode}
-                        h={{ md: 68 }}
                         onChange={handleChange}
                         touched={touched.swiftCode}
                         error={errors.swiftCode}
-                        borderBottomColor={{ md: 'black' }}
+                        borderBottomColor={{ base: 'black' }}
                         onBlur={handleBlur}
                         isRequired
                         bg='gray.100'
@@ -301,25 +328,20 @@ const ConfirmBankingDetails = () => {
                       touched={touched.homeAddress}
                       error={errors.homeAddress}
                       h={{ md: 68 }}
-                      borderBottomColor={{ md: 'black' }}
+                      borderBottomColor={{ base: 'black' }}
                       onBlur={handleBlur}
                       isRequired
                       bg='gray.100'
                     />
                   </Grid>
-                  <Flex w='100%'>
-                    <Box pt={{ md: 1 }}>
-                      <Checkbox
-                        onClick={() => {
-                          if (check) {
-                            setCheck(false)
-                          } else {
-                            setCheck(true)
-                          }
-                        }}
-                      />
+                  <Flex w='100%' mt={{ base: 3, md: 5 }}>
+                    <Box mx={2} mt={{ base: 2, md: 'auto' }} pt={{ md: 1 }}>
+                      <Checkbox onChange={() => setCheck(!check)} />
                     </Box>
-                    <Text ml={{ md: 4 }}>
+                    <Text
+                      fontSize={{ base: 'base', md: 'auto' }}
+                      ml={{ md: 4 }}
+                    >
                       I hereby confirm that all the information provided on this
                       form is accurate. In addition, I agree that Complete
                       Farmer Limited will not be held liable for any loss or
@@ -328,14 +350,16 @@ const ConfirmBankingDetails = () => {
                     </Text>
                   </Flex>
                   <Button
+                    type='submit'
                     btntitle='Confirm'
                     borderColor='cf.green'
                     color='white'
-                    rounded='30px'
+                    rounded={30}
                     my={5}
+                    h={{ base: '3.688rem' }}
                     w='100%'
-                    h={100}
                     isDisabled={!check}
+                    isLoading={isSubmitting}
                     fontSize='xl'
                     // onClick={() => {
                     //   handleModalClick('payout')
@@ -343,22 +367,6 @@ const ConfirmBankingDetails = () => {
                   />
                 </Flex>
               </Box>
-            )}
-            {(isLoading || error) && (
-              <Flex w='100%' align='center' justify='center'>
-                <FetchCard
-                  direction='column'
-                  align='center'
-                  justify='center'
-                  mx='auto'
-                  reload={() => {
-                    !data && triggerReload()
-                  }}
-                  loading={isLoading}
-                  error={error}
-                  text='Standby as we load some of your details'
-                />
-              </Flex>
             )}
           </form>
         )}

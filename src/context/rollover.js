@@ -6,7 +6,10 @@ const RolloverContext = createContext()
 
 export const RolloverContextProvider = ({ children }) => {
   const [step, setStep] = useImmer(0)
+  const [bigStepper, setBigStepper] = useImmer(0)
   const [total, setTotal] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [selectedWallets, setSelectedWallets] = useState([])
   const handleNext = () => setStep(draft => draft + 1)
 
@@ -36,7 +39,13 @@ export const RolloverContextProvider = ({ children }) => {
     <RolloverContext.Provider
       value={{
         step,
+        error,
+        setError,
         setStep,
+        loading,
+        setLoading,
+        bigStepper,
+        setBigStepper,
         total,
         handleNext,
         selectedWallets,

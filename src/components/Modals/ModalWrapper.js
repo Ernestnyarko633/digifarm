@@ -26,7 +26,7 @@ const ModalWrapper = ({
   alt,
   children
 }) => {
-  const { step } = useRollover()
+  const { step, bigStepper } = useRollover()
   // const {} = useStartFarm()
 
   return (
@@ -37,7 +37,22 @@ const ModalWrapper = ({
       isCentered={isCentered}
     >
       {step !== 1 && (
-        <ModalContent rounded='2xl'>
+        <ModalContent
+          overflowY='scroll'
+          css={{
+            '&::-webkit-scrollbar': {
+              width: '4px'
+            },
+            '&::-webkit-scrollbar-track': {
+              width: '6px'
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: 'gray.200',
+              borderRadius: '24px'
+            }
+          }}
+          rounded='2xl'
+        >
           <ModalHeader>
             <Box>
               {title}
@@ -51,12 +66,39 @@ const ModalWrapper = ({
         </ModalContent>
       )}
 
-      {step === 1 && (
-        <ModalOverlay overflowY='hidden'>
+      {(step === 1 || bigStepper === 1) && (
+        <ModalOverlay
+          overflowY='scroll'
+          css={{
+            '&::-webkit-scrollbar': {
+              width: '4px'
+            },
+            '&::-webkit-scrollbar-track': {
+              width: '6px'
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: 'gray.200',
+              borderRadius: '24px'
+            }
+          }}
+        >
           <ModalContent
             position={{ base: 'absolute', lg: 'relative' }}
             zIndex={12}
             rounded='2xl'
+            overflowY='scroll'
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '4px'
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px'
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: 'gray.200',
+                borderRadius: '24px'
+              }
+            }}
           >
             <Box
               zIndex={50}

@@ -15,7 +15,7 @@ const MotionGrid = motion(Grid)
 
 const WalletSelection = ({ type, title }) => {
   const { data } = useComponent()
-  const { total, selectedWallets } = useRollover()
+  const { total, selectedWallets, setBigStepper } = useRollover()
   const { onClose } = useComponent()
 
   const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
@@ -126,10 +126,14 @@ const WalletSelection = ({ type, title }) => {
               ? 'Proceed to rollover'
               : `Payout $ ${getFormattedMoney(total)}`
           }
-          to={{
-            pathname: '/start-farm/individual',
-            state: { rollover: true }
-          }}
+          to={
+            type === 'rollover'
+              ? {
+                  pathname: '/start-farm/individual',
+                  state: { rollover: true }
+                }
+              : null
+          }
           borderColor='cf.green'
           color='white'
           fontWeight={900}
@@ -139,10 +143,16 @@ const WalletSelection = ({ type, title }) => {
           w='70%'
           h={65}
           fontSize={{ base: 'sm', xl: 'md' }}
-          onClick={() => {
-            sessionStorage.setItem('type', 'individual')
-            onClose()
-          }}
+          onClick={
+            type === 'rollover'
+              ? () => {
+                  sessionStorage.setItem('type', 'individual')
+                  onClose()
+                }
+              : () => {
+                  setBigStepper()
+                }
+          }
         />
       </GridItem>
     </MotionGrid>
