@@ -8,12 +8,12 @@ import Graph from 'components/Utils/Graph'
 import { FaCircle } from 'react-icons/fa'
 import useComponent from 'context/component'
 import useWallet from 'context/wallet'
-import { useImmer } from 'use-immer'
+import useRollover from 'context/rollover'
 
-const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
+const FarmFinances = ({ activities, tasks, scheduledTasks, wallet_id }) => {
   const { handleModalClick } = useComponent()
   const { totalAmount } = useWallet()
-  const [step, setStep] = useImmer(0)
+  const { step, setStep } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -180,7 +180,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
                 fontSize={{ base: 'sm', xl: 'md' }}
                 mr={{ md: 5 }}
                 onClick={() => {
-                  handleModalClick('rollover', { step, setStep })
+                  handleModalClick('rollover', { step, setStep, wallet_id })
                 }}
               />
               <Button
@@ -209,6 +209,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
 FarmFinances.propTypes = {
   activities: PropTypes.array.isRequired,
   tasks: PropTypes.array.isRequired,
-  scheduledTasks: PropTypes.array.isRequired
+  scheduledTasks: PropTypes.array.isRequired,
+  wallet_id: PropTypes.string
 }
 export default FarmFinances

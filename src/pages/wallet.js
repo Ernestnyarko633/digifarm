@@ -4,7 +4,7 @@ import Layout from 'container/Layout'
 import FarmWalletEmptyState from 'components/EmptyStates/FarmWalletEmptyState'
 import FundCard from 'components/Cards/FundCard'
 import Individual from 'components/Dynamic/Document/Individual'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import FarmFinances from 'components/Cards/FarmFinances'
 import useRollover from 'context/rollover'
 
@@ -12,6 +12,7 @@ const Wallet = () => {
   document.title = 'Complete Farmer | Farm wallet'
 
   const { setStep } = useRollover()
+  const { id: wallet_id } = useParams()
 
   useEffect(() => {
     let mounted = true
@@ -68,6 +69,7 @@ const Wallet = () => {
             display={{ base: 'none', md: 'block' }}
             as={FarmFinances}
             activities={activities}
+            wallet_id={wallet_id}
             tasks={tasks}
             scheduledTasks={ScheduledTasks}
           />

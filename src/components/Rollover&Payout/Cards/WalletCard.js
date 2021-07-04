@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, Text, Heading, Icon } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
@@ -5,7 +6,7 @@ import { AiOutlineCheck } from 'react-icons/ai'
 import { getFormattedMoney } from 'helpers/misc'
 import useRollover from 'context/rollover'
 
-const WalletCard = ({ name, image, amount, id }) => {
+const WalletCard = ({ name, image, amount, id, clicked }) => {
   const [selected, setSelected] = useState(false)
   const { setSelectedWallets } = useRollover()
 
@@ -23,6 +24,15 @@ const WalletCard = ({ name, image, amount, id }) => {
 
     return () => (mounted = false)
   }, [amount, id, name, selected, setSelectedWallets])
+
+  useEffect(() => {
+    let mounted = true
+    if (mounted && clicked) {
+      setSelected(true)
+    }
+
+    return () => (mounted = false)
+  }, [clicked])
 
   return (
     <Box
@@ -90,6 +100,7 @@ WalletCard.propTypes = {
   name: PropTypes.string,
   amount: PropTypes.number,
   image: PropTypes.any,
-  id: PropTypes.number
+  id: PropTypes.number,
+  clicked: PropTypes.bool
 }
 export default WalletCard

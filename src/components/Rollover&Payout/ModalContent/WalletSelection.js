@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
@@ -13,6 +14,7 @@ import useComponent from 'context/component'
 const MotionGrid = motion(Grid)
 
 const WalletSelection = () => {
+  const { data } = useComponent()
   const { total, selectedWallets } = useRollover()
   const { onClose } = useComponent()
 
@@ -75,9 +77,10 @@ const WalletSelection = () => {
             <WalletCard
               key={wallet?._id}
               id={wallet?._id}
+              clicked={data?.wallet_id === wallet?._id ? true : false}
               name={wallet.order?.product?.cropVariety?.crop?.name}
               amount={wallet?.order?.cost}
-              image={wallet?.order?.product?.cropVariety?.crop?.imageUrl}
+              image={wallet?.order?.product?.cropVariety?.imageUrl}
             />
           ))}
         </Grid>
