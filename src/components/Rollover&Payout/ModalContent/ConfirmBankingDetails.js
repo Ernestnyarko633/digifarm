@@ -59,7 +59,9 @@ const ConfirmBankingDetails = () => {
     accountName: data?.accountName || '',
     accountNumber: data?.accountNumber || '',
     branchAddress: data?.branchAddress || '',
-    iban: data?.iban || ''
+    iban: data?.iban || '',
+    sortCode: data?.sortCode || '',
+    homeAddress: data?.homeAddress || ''
   }
 
   const onSubmit = async (
@@ -169,6 +171,8 @@ const ConfirmBankingDetails = () => {
                         name='accountName'
                         value={values.accountName}
                         onChange={handleChange}
+                        touched={touched.accountName}
+                        error={errors.accountName}
                         onBlur={handleBlur}
                         borderBottomColor={{ md: 'black' }}
                         isRequired
@@ -182,6 +186,8 @@ const ConfirmBankingDetails = () => {
                         h={{ md: 68 }}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        touched={touched.accountNumber}
+                        error={errors.accountNumber}
                         isRequired
                         bg='gray.100'
                       />
@@ -191,6 +197,8 @@ const ConfirmBankingDetails = () => {
                         value={values.bankName}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        touched={touched.bankName}
+                        error={errors.bankName}
                         isRequired
                         h={{ md: 68 }}
                         borderBottomColor={{ md: 'black' }}
@@ -218,6 +226,8 @@ const ConfirmBankingDetails = () => {
                       value={values.branchAddress}
                       h={{ md: 68 }}
                       onChange={handleChange}
+                      touched={touched.branchAddress}
+                      error={errors.branchAddress}
                       onBlur={handleBlur}
                       borderBottomColor={{ md: 'black' }}
                       isRequired
@@ -231,6 +241,8 @@ const ConfirmBankingDetails = () => {
                       h={{ md: 68 }}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      touched={touched.iban}
+                      error={errors.iban}
                       borderBottomColor={{ md: 'black' }}
                       isRequired
                       bg='gray.100'
@@ -260,6 +272,8 @@ const ConfirmBankingDetails = () => {
                         value={values.sortCode}
                         h={{ md: 68 }}
                         onChange={handleChange}
+                        touched={touched.sortCode}
+                        error={errors.sortCode}
                         borderBottomColor={{ md: 'black' }}
                         onBlur={handleBlur}
                         isRequired
@@ -271,6 +285,8 @@ const ConfirmBankingDetails = () => {
                         value={values.swiftCode}
                         h={{ md: 68 }}
                         onChange={handleChange}
+                        touched={touched.swiftCode}
+                        error={errors.swiftCode}
                         borderBottomColor={{ md: 'black' }}
                         onBlur={handleBlur}
                         isRequired
@@ -282,6 +298,8 @@ const ConfirmBankingDetails = () => {
                       name='homeAddress'
                       value={values.homeAddress}
                       onChange={handleChange}
+                      touched={touched.homeAddress}
+                      error={errors.homeAddress}
                       h={{ md: 68 }}
                       borderBottomColor={{ md: 'black' }}
                       onBlur={handleBlur}

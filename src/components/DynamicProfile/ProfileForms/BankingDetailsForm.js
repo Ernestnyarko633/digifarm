@@ -28,7 +28,9 @@ const BankingDetailsForm = ({ bankDetails }) => {
       accountName: bankDetails?.accountName || '',
       accountNumber: bankDetails?.accountNumber || '',
       branchAddress: bankDetails?.branchAddress || '',
-      iban: bankDetails?.iban || ''
+      iban: bankDetails?.iban || '',
+      sortCode: bankDetails?.sortCode || '',
+      homeAddress: bankDetails?.homeAddress || ''
     },
     enableReinitialize: true,
     validationSchema: BankDetailsSchema,
@@ -211,6 +213,30 @@ const BankingDetailsForm = ({ bankDetails }) => {
               touched={touched.swiftCode}
               onChange={handleChange}
               placeholder='Enter your bank swift code'
+            />
+            <CustomInput
+              isRequired
+              type='text'
+              name='sortCode'
+              onBlur={handleBlur}
+              label='Sort Code'
+              value={values.sortCode}
+              error={errors.sortCode}
+              touched={touched.sortCode}
+              onChange={handleChange}
+              placeholder='Enter your bank sort code'
+            />
+            <CustomInput
+              isRequired
+              type='text'
+              name='homeAddress'
+              onBlur={handleBlur}
+              label='Home Address'
+              value={values.homeAddress}
+              error={errors.homeAddress}
+              touched={touched.homeAddress}
+              onChange={handleChange}
+              placeholder='Enter your home address'
             />
           </Grid>
 
