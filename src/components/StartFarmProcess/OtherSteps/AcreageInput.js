@@ -1,28 +1,29 @@
-import React, { useEffect } from 'react'
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
   Input,
   InputGroup,
   InputRightElement,
-  IconButton
+  IconButton,
+  useToast
 } from '@chakra-ui/react'
 
 import { IoAddCircleSharp, IoRemoveCircleOutline } from 'react-icons/io5'
-import useStartFarm from 'context/start-farm'
+import useRollover from 'context/rollover'
 
-const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
-  const { barrier } = useStartFarm()
-  useEffect(() => {
-    let mounted = true
-    if (mounted && cooperativeOps) {
-      if (cooperativeOps?.minAcre) {
-        setValue(cooperativeOps?.minAcre)
-      }
-    }
-
-    return () => (mounted = false)
-  }, [cooperativeOps, setValue])
+const AcreageInput = ({
+  totalAcres,
+  value,
+  setValue,
+  rollover,
+  currentAmount,
+  deteminant
+}) => {
+  let toast = useToast()
+  const { total } = useRollover()
 
   return (
     <Box w={{ base: 48, md: 80 }}>
@@ -42,16 +43,23 @@ const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
           }}
           placeholder='How many acres?'
           onChange={e => {
-            if (cooperativeOps?.minAcre) {
-              if (
-                e.target?.value >= cooperativeOps?.minAcre &&
-                e.target?.value < totalAcres
-              ) {
-                setValue(e.target.value * 1)
-              }
-            } else {
-              if (e.target?.value >= 1 && e.target?.value < totalAcres) {
+            if (e.target?.value >= 1 && e.target?.value < totalAcres) {
+              if (!rollover) {
                 setValue(e.target?.value * 1)
+              } else {
+                if (e.target?.value * deteminant > total) {
+                  toast({
+                    title: 'Insufficient funds in selected wallet(s)',
+                    description:
+                      'Insufficient funds in selected wallet(s) to farm above this number of acres for selected crop',
+                    status: 'error',
+                    duration: 10000,
+                    position: 'top-right'
+                  })
+                  e.preventDefault()
+                } else {
+                  setValue(e.target?.value * 1)
+                }
               }
             }
           }}
@@ -72,14 +80,8 @@ const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
             }}
             icon={<IoRemoveCircleOutline />}
             onClick={() => {
-              if (cooperativeOps) {
-                if (value > cooperativeOps?.minAcre) {
-                  setValue(draft => draft - 1)
-                }
-              } else {
-                if (value > 1) {
-                  setValue(draft => draft - 1)
-                }
+              if (value > 1) {
+                setValue(draft => draft - 1)
               }
             }}
           />
@@ -98,14 +100,24 @@ const AcreageInput = ({ totalAcres, value, setValue, cooperativeOps }) => {
               bg: 'transparent'
             }}
             icon={<IoAddCircleSharp />}
-            onClick={() => {
-              if (barrier) {
-                if (value < barrier) {
+            onClick={e => {
+              if (value < totalAcres) {
+                if (!rollover) {
                   setValue(draft => draft + 1)
-                }
-              } else {
-                if (value < totalAcres) {
-                  setValue(draft => draft + 1)
+                } else {
+                  if (currentAmount + deteminant > total) {
+                    toast({
+                      title: 'Insufficient funds in selected wallet(s)',
+                      description:
+                        'Insufficient funds in selected wallet(s) to farm above this number of acres for selected crop',
+                      status: 'error',
+                      duration: 10000,
+                      position: 'top-right'
+                    })
+                    e.preventDefault()
+                  } else {
+                    setValue(draft => draft + 1)
+                  }
                 }
               }
             }}
@@ -120,7 +132,10 @@ AcreageInput.propTypes = {
   totalAcres: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
   setValue: PropTypes.func.isRequired,
-  cooperativeOps: PropTypes.object
+  cooperativeOps: PropTypes.object,
+  rollover: PropTypes.bool,
+  currentAmount: PropTypes.number,
+  deteminant: PropTypes.number
 }
 
 export default AcreageInput

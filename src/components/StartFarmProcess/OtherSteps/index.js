@@ -67,7 +67,7 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
       case 0:
         return <AboutFarmManager farm={selectedFarm} />
       case 1:
-        return <ChooseAcreage farm={selectedFarm} />
+        return <ChooseAcreage rollover={rollover} farm={selectedFarm} />
       case 2:
         return (
           <Contract

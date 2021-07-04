@@ -23,8 +23,6 @@ const Individual = ({ location: { state }, history }) => {
 
   const { width, height } = useWindowSize()
 
-  console.log('roolo', state)
-
   React.useEffect(() => {
     let mounted = true
     if (mounted && state?.step) {
@@ -48,7 +46,7 @@ const Individual = ({ location: { state }, history }) => {
   const getFlow = key => {
     switch (key) {
       case 0:
-        return <CropSelection />
+        return <CropSelection rollover={state?.rollover} />
       case 1:
         return (
           <OtherSteps

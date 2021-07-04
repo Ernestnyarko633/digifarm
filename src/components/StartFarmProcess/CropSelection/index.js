@@ -3,19 +3,20 @@ import { Box, Flex, Heading, useToast } from '@chakra-ui/react'
 
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
-
+import PropTypes from 'prop-types'
 import useFetch from 'hooks/useFetch'
 
 import Tabs from 'components/Tabs/Tabs'
 import FetchCard from 'components/FetchCard'
 import FarmDetails from './FarmDetails'
 import { Button } from '../../index'
+import useRollover from 'context/rollover'
 
-const CropSelection = () => {
+const CropSelection = ({ rollover }) => {
   const gridRef = React.useRef(false)
   const { handleBack, handleNext, selectedCooperativeType, selectedFarm } =
     useStartFarm()
-
+  const { total } = useRollover()
   const [reload, setReload] = useState(0)
 
   const { getCropCategories } = useApi()
@@ -60,14 +61,42 @@ const CropSelection = () => {
       })
     }
 
+    if (
+      mounted &&
+      !isLoading &&
+      rollover &&
+      total < selectedFarm?.pricePerAcre &&
+      gridRef
+    ) {
+      toast({
+        title: 'Insufficient funds in selected wallet(s)',
+        description:
+          'The number of sums available in your selected farm wallet(s) is insufficient to farm this crop',
+        status: 'error',
+        duration: 10000,
+        position: 'top-right'
+      })
+    }
+
     return () => (mounted = false)
   }, [
     isLoading,
     selectedCooperativeType?.name,
     selectedFarm?.cropVariety?.crop?.name,
     toast,
-    cooperativebool
+    cooperativebool,
+    rollover,
+    total,
+    selectedFarm?.pricePerAcre
   ])
+
+  let disableButton =
+    (rollover && total < selectedFarm?.pricePerAcre) ||
+    cooperativebool ||
+    acreage ||
+    !selectedFarm ||
+    isLoading ||
+    error
 
   return (
     <Flex
@@ -134,13 +163,7 @@ const CropSelection = () => {
             <Box mx={2} />
             <Button
               btntitle='Continue'
-              disabled={
-                cooperativebool ||
-                acreage ||
-                !selectedFarm ||
-                isLoading ||
-                error
-              }
+              disabled={disableButton}
               w={{ base: 70, md: 40 }}
               h={12}
               fontSize='md'
@@ -151,6 +174,10 @@ const CropSelection = () => {
       )}
     </Flex>
   )
+}
+
+CropSelection.propTypes = {
+  rollover: PropTypes.bool
 }
 
 export default CropSelection
