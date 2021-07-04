@@ -52,7 +52,7 @@ const ModalWrapper = ({
       )}
 
       {step === 1 && (
-        <ModalOverlay>
+        <ModalOverlay overflowY='hidden'>
           <ModalContent
             position={{ base: 'absolute', lg: 'relative' }}
             zIndex={12}

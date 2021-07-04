@@ -29,7 +29,7 @@ const RolloverModal = () => {
               size='full'
             >
               <Flex w='100%' align='center' justify='center'>
-                <WalletSelection />
+                <WalletSelection title='Rollover amount' type='rollover' />
               </Flex>
             </ModalWrapper>
           </Box>

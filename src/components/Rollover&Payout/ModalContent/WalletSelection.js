@@ -13,7 +13,7 @@ import useComponent from 'context/component'
 
 const MotionGrid = motion(Grid)
 
-const WalletSelection = () => {
+const WalletSelection = ({ type, title }) => {
   const { data } = useComponent()
   const { total, selectedWallets } = useRollover()
   const { onClose } = useComponent()
@@ -50,7 +50,7 @@ const WalletSelection = () => {
             color='gray.600'
             mt={{ md: 5 }}
           >
-            Select the wallet you want to rollover with. You may select multiple
+            Select the wallet you want to {type} with. You may select multiple
             wallets
           </Text>
         </Box>
@@ -104,7 +104,7 @@ const WalletSelection = () => {
             fontSize={{ base: 'lg', md: '2xl' }}
             mb={{ base: 2, md: 5 }}
           >
-            Rollover amount
+            {title}
           </Heading>
           <Divider mb={{ base: 2, md: 5 }} />
           <Text mb={{ base: 2, md: 5 }}>
@@ -121,7 +121,11 @@ const WalletSelection = () => {
           display={{ base: 'none', lg: 'flex' }}
           as={Link}
           textAlign='center'
-          btntitle='Proceed to rollover'
+          btntitle={
+            type === 'rollover'
+              ? 'Proceed to rollover'
+              : `Payout $ ${getFormattedMoney(total)}`
+          }
           to={{
             pathname: '/start-farm/individual',
             state: { rollover: true }
@@ -146,9 +150,8 @@ const WalletSelection = () => {
 }
 
 WalletSelection.propTypes = {
-  farm: PropTypes.object,
-  name: PropTypes.string,
-  selectedType: PropTypes.object
+  title: PropTypes.string,
+  type: PropTypes.string
 }
 
 export default WalletSelection

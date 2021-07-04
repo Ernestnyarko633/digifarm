@@ -188,7 +188,6 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, wallet_id }) => {
                 borderColor='cf.green'
                 color='white'
                 rounded='30px'
-                isDisabled={true}
                 mx={{ base: 3, md: 0 }}
                 my={5}
                 w='50%'
