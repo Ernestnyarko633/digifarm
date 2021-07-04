@@ -21,6 +21,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
   }
 
+  const loginUser = async payload => {
+    return await http.post({
+      url: `${AUTH_API}/login`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   const patchUser = async (id, body) => {
     return await http.patch({ url: `${AUTH_API}/users/${id}`, body })
   }
@@ -306,6 +313,7 @@ export const ApiContextProvider = ({ children }) => {
     <ApiContext.Provider
       value={{
         signUp,
+        loginUser,
         logout,
         eosTask,
         getUser,

@@ -13,7 +13,7 @@ import useRollover from 'context/rollover'
 const FarmFinances = ({ activities, tasks, scheduledTasks, wallet_id }) => {
   const { handleModalClick } = useComponent()
   const { totalAmount } = useWallet()
-  const { step, setStep } = useRollover()
+  const { step, setStep, setType } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -180,6 +180,8 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, wallet_id }) => {
                 fontSize={{ base: 'sm', xl: 'md' }}
                 mr={{ md: 5 }}
                 onClick={() => {
+                  setType('asRollover')
+
                   handleModalClick('rollover', { step, setStep, wallet_id })
                 }}
               />
@@ -194,7 +196,8 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, wallet_id }) => {
                 h={50}
                 fontSize={{ base: 'sm', xl: 'md' }}
                 onClick={() => {
-                  handleModalClick('payout')
+                  setType('asPayout')
+                  handleModalClick('payout', { wallet_id })
                 }}
               />
             </Flex>

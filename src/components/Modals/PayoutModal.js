@@ -5,10 +5,11 @@ import useComponent from 'context/component'
 import ConfirmBankingDetails from 'components/Rollover&Payout/ModalContent/ConfirmBankingDetails'
 import { default as usePayout } from 'context/rollover'
 import WalletSelection from 'components/Rollover&Payout/ModalContent/WalletSelection'
+import ConfirmPassword from 'components/Rollover&Payout/ModalContent/ConfirmPassword'
 const PayoutModal = () => {
   const { isOpen, onClose } = useComponent()
 
-  const { bigStepper } = usePayout()
+  const { bigStepper: step } = usePayout()
 
   const getValue = value => {
     switch (value) {
@@ -20,14 +21,22 @@ const PayoutModal = () => {
           <WalletSelection type='withdraw' title='Total amount to be issued' />
         )
 
+      case 2:
+        return <ConfirmPassword />
+
       default:
         return null
     }
   }
   return (
-    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='full'>
+    <ModalWrapper
+      isCentered
+      isOpen={isOpen}
+      onClose={onClose}
+      size={step === 2 ? 'md' : 'full'}
+    >
       <Flex w='100%' align='center' justify='center'>
-        {getValue(bigStepper)}
+        {getValue(step)}
       </Flex>
     </ModalWrapper>
   )

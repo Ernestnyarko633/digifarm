@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import {
   Modal,
@@ -14,6 +13,7 @@ import { Link as ReachRouter } from 'react-router-dom'
 import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import useRollover from 'context/rollover'
+import { getFormattedMoney } from 'helpers/misc'
 //import useStartFarm from 'context/start-farm'
 
 const ModalWrapper = ({
@@ -26,7 +26,7 @@ const ModalWrapper = ({
   alt,
   children
 }) => {
-  const { step, bigStepper } = useRollover()
+  const { step, bigStepper, type, setBigStepper, total } = useRollover()
   // const {} = useStartFarm()
 
   return (
@@ -109,26 +109,51 @@ const ModalWrapper = ({
               h={{ base: '4.5rem' }}
               textAlign='center'
             >
-              <Button
-                as={ReachRouter}
-                to={{
-                  pathname: '/start-farm/individual',
-                  state: { rollover: true }
-                }}
-                btntitle='Rollover'
-                borderColor='cf.green'
-                color='white'
-                fontWeight={900}
-                rounded='30px'
-                my={{ base: 2, md: 5 }}
-                w='90%'
-                h={50}
-                fontSize={{ base: 'sm', xl: 'md' }}
-                onClick={() => {
-                  sessionStorage.setItem('type', 'individual')
-                  onClose()
-                }}
-              />
+              {type === 'asPayout' && (
+                <Button
+                  display={{ base: 'none', lg: 'flex' }}
+                  textAlign='center'
+                  btntitle={`Payout $ ${getFormattedMoney(total)}`}
+                  to={{
+                    pathname: '/start-farm/individual',
+                    state: { rollover: true }
+                  }}
+                  borderColor='cf.green'
+                  color='white'
+                  fontWeight={900}
+                  rounded={30}
+                  mx={{ base: 3, md: 0 }}
+                  my={{ base: 2, md: 10 }}
+                  w='70%'
+                  h={65}
+                  fontSize={{ base: 'sm', xl: 'md' }}
+                  onClick={() => {
+                    setBigStepper(p => p + 1)
+                  }}
+                />
+              )}
+              {type === 'asRollover' && (
+                <Button
+                  as={ReachRouter}
+                  to={{
+                    pathname: '/start-farm/individual',
+                    state: { rollover: true }
+                  }}
+                  btntitle='Rollover'
+                  borderColor='cf.green'
+                  color='white'
+                  fontWeight={900}
+                  rounded='30px'
+                  my={{ base: 2, md: 5 }}
+                  w='90%'
+                  h={50}
+                  fontSize={{ base: 'sm', xl: 'md' }}
+                  onClick={() => {
+                    sessionStorage.setItem('type', 'individual')
+                    onClose()
+                  }}
+                />
+              )}
             </Box>
             <ModalHeader>
               <Box>

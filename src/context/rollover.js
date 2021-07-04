@@ -11,7 +11,20 @@ export const RolloverContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [selectedWallets, setSelectedWallets] = useState([])
+  const [type, setType] = useState(null)
   const handleNext = () => setStep(draft => draft + 1)
+
+  useEffect(() => {
+    let mounted = true
+
+    if (type === 'asRollover' && mounted) {
+      setBigStepper(p => p * 0)
+    } else if (type === 'asPayout' && mounted) {
+      setStep(p => p * 0)
+    }
+
+    return () => (mounted = false)
+  }, [setBigStepper, setStep, type])
 
   useEffect(() => {
     let _total = 0
@@ -40,6 +53,8 @@ export const RolloverContextProvider = ({ children }) => {
       value={{
         step,
         error,
+        setType,
+        type,
         setError,
         setStep,
         loading,

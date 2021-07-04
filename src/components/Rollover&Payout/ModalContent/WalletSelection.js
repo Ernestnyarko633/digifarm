@@ -15,7 +15,7 @@ const MotionGrid = motion(Grid)
 
 const WalletSelection = ({ type, title }) => {
   const { data } = useComponent()
-  const { total, selectedWallets, setBigStepper } = useRollover()
+  const { total, selectedWallets, setBigStepper, type: useType } = useRollover()
   const { onClose } = useComponent()
 
   const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
@@ -116,44 +116,58 @@ const WalletSelection = ({ type, title }) => {
             $ {getFormattedMoney(total)}
           </Heading>
         </Box>
-
-        <Button
-          display={{ base: 'none', lg: 'flex' }}
-          as={Link}
-          textAlign='center'
-          btntitle={
-            type === 'rollover'
-              ? 'Proceed to rollover'
-              : `Payout $ ${getFormattedMoney(total)}`
-          }
-          to={
-            type === 'rollover'
-              ? {
-                  pathname: '/start-farm/individual',
-                  state: { rollover: true }
-                }
-              : null
-          }
-          borderColor='cf.green'
-          color='white'
-          fontWeight={900}
-          rounded={30}
-          mx={{ base: 3, md: 0 }}
-          my={{ base: 2, md: 10 }}
-          w='70%'
-          h={65}
-          fontSize={{ base: 'sm', xl: 'md' }}
-          onClick={
-            type === 'rollover'
-              ? () => {
-                  sessionStorage.setItem('type', 'individual')
-                  onClose()
-                }
-              : () => {
-                  setBigStepper()
-                }
-          }
-        />
+        {useType === 'asRollover' ? (
+          <Button
+            display={{ base: 'none', lg: 'flex' }}
+            as={Link}
+            textAlign='center'
+            btntitle={
+              'Proceed to rollover'
+              // : `Payout $ ${getFormattedMoney(total)}`
+            }
+            to={{
+              pathname: '/start-farm/individual',
+              state: { rollover: true }
+            }}
+            borderColor='cf.green'
+            color='white'
+            fontWeight={900}
+            rounded={30}
+            mx={{ base: 3, md: 0 }}
+            my={{ base: 2, md: 10 }}
+            w='70%'
+            h={65}
+            fontSize={{ base: 'sm', xl: 'md' }}
+            onClick={() => {
+              sessionStorage.setItem('type', 'individual')
+              onClose()
+            }}
+          />
+        ) : (
+          useType === 'asPayout' && (
+            <Button
+              display={{ base: 'none', lg: 'flex' }}
+              textAlign='center'
+              btntitle={`Payout $ ${getFormattedMoney(total)}`}
+              to={{
+                pathname: '/start-farm/individual',
+                state: { rollover: true }
+              }}
+              borderColor='cf.green'
+              color='white'
+              fontWeight={900}
+              rounded={30}
+              mx={{ base: 3, md: 0 }}
+              my={{ base: 2, md: 10 }}
+              w='70%'
+              h={65}
+              fontSize={{ base: 'sm', xl: 'md' }}
+              onClick={() => {
+                setBigStepper(p => p + 1)
+              }}
+            />
+          )
+        )}
       </GridItem>
     </MotionGrid>
   )

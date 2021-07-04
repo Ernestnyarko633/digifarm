@@ -89,6 +89,10 @@ export const SignupSchema = Yup.object().shape({
     .required('This field is required*')
 })
 
+export const ConfirmPassword = Yup.object().shape({
+  password: Yup.string().required('This field is required')
+})
+
 export const BankDetailsSchema = Yup.object()
   .shape({
     bankName: Yup.string().required('This field is required*'),
