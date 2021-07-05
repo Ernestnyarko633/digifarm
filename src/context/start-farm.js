@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-expressions */
+/* eslint-disable no-console */
 import React, { useState, useContext, createContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
@@ -53,10 +53,11 @@ export const StartFarmContextProvider = ({ children }) => {
     initiatePayment,
     initiatePaystackPayment,
     patchOrder,
-    createCooperative
+    createCooperative,
+    patchWallet
   } = useApi()
 
-  const { total } = useRollover()
+  const { total, selectedWallets } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -115,9 +116,83 @@ export const StartFarmContextProvider = ({ children }) => {
     setOtherStep(draft => draft - 1)
   }
 
-  const handleRolloverPayment = () => {
-    false && total
-    handleNextStep()
+  const handleRolloverPayment = async () => {
+    try {
+      let tempCost = total
+      setText("Processing payment, please don't reload/refresh page")
+      setSubmitting(true)
+      const data = {
+        amount: order.cost,
+        order_id: order._id,
+        purpose: 'FARM_PURCHASE',
+        transaction_type: 'WALLET'
+      }
+      const res = await initiatePayment(data)
+
+      const walletsPromises = selectedWallets.map(async wallet => {
+        if (tempCost) {
+          const response = await patchWallet(wallet?.id, {
+            wallet:
+              tempCost >= wallet.amount
+                ? tempCost - wallet.amount
+                : wallet.amount - tempCost
+          })
+          if (response.data) {
+            tempCost = tempCost >= wallet.amount ? tempCost - wallet.amount : 0
+            return response.data
+          }
+          return []
+        }
+      })
+
+      const allWalletPromises = await Promise.all(walletsPromises)
+
+      console.log(allWalletPromises)
+
+      await patchOrder(res?.data?.order_id?.$oid, {
+        payment: res?.data?._id?.$oid
+      })
+
+      toast({
+        duration: 9000,
+        isClosable: true,
+        status: 'success',
+        position: 'top-right',
+        title: 'Order created.',
+        description: 'Order saved successfully'
+      })
+
+      handleNextStep()
+    } catch (error) {
+      if (error) {
+        if ([401, 403].includes(error.status)) {
+          setSession(false)
+        } else {
+          toast({
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+            position: 'top-right',
+            title: 'An error occurred.',
+            description:
+              (error?.data?.message ||
+                error?.message ||
+                'Unknown error occurred') + '.'
+          })
+        }
+      } else {
+        toast({
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+          title: 'An error occurred.',
+          description: 'Unexpected network error.'
+        })
+      }
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleCreateOrder = async (
