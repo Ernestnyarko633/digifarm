@@ -64,7 +64,7 @@ const WaitingPage = () => {
               h={55}
               fontSize={{ base: 'sm', xl: 'md' }}
               onClick={() => {
-                window.open('https://www.completefarmer.com/', '_blank')
+                window.open('https://www.completefarmer.com/contact', '_blank')
               }}
             />
           </Flex>
