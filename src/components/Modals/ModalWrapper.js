@@ -66,9 +66,12 @@ const ModalWrapper = ({
         </ModalContent>
       )}
 
-      {(step === 1 || bigStepper === 1 || bigStepper === 3) && (
+      {(step === 1 ||
+        bigStepper === 1 ||
+        bigStepper === 3 ||
+        bigStepper === 4) && (
         <ModalOverlay
-          overflowY={bigStepper !== 3 ? 'scroll' : 'hidden'}
+          overflowY={bigStepper !== 3 || bigStepper !== 4 ? 'scroll' : 'hidden'}
           css={{
             '&::-webkit-scrollbar': {
               width: '4px'
@@ -109,7 +112,7 @@ const ModalWrapper = ({
               h={{ base: '4.5rem' }}
               textAlign='center'
             >
-              {bigStepper !== 3 && type === 'asPayout' && (
+              {(bigStepper !== 3 || bigStepper !== 4) && type === 'asPayout' && (
                 <Button
                   display={{ base: 'none', lg: 'flex' }}
                   textAlign='center'
@@ -132,7 +135,7 @@ const ModalWrapper = ({
                   }}
                 />
               )}
-              {bigStepper !== 3 && type === 'asRollover' && (
+              {(bigStepper !== 3 || bigStepper !== 4) && type === 'asRollover' && (
                 <Button
                   as={ReachRouter}
                   to={{

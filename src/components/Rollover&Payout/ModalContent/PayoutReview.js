@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import {
   Grid,
@@ -15,7 +16,6 @@ import { FormTextArea } from 'components/Form'
 import RatingStars from 'components/Rollover&Payout/Rating/RatingStars'
 import useRollover from 'context/rollover'
 import { useFormik } from 'formik'
-import { ReviewForm } from 'helpers/validation'
 import useApi from 'context/api'
 const MotionGrid = motion(Grid)
 
@@ -29,9 +29,10 @@ const PayoutReview = () => {
       comment: ''
     },
     enableReinitialize: true,
-    validationSchema: ReviewForm,
     onSubmit: async (values, { setSubmitting }) => {
       try {
+        setSubmitting(true)
+        setBigStepper(p => p + 1)
         const res = await submitReview({
           ratings: ratings,
           comment: values.comment
@@ -43,8 +44,6 @@ const PayoutReview = () => {
           duration: 5000,
           position: 'top-right'
         })
-
-        setBigStepper(p => p + 1)
       } catch (error) {
         toast({
           status: 'error',
@@ -70,48 +69,48 @@ const PayoutReview = () => {
   } = formik
 
   return (
-    <form onSubmit={handleSubmit}>
-      <MotionGrid
-        display={{ base: 'flex' }}
-        flexDir={{ base: 'column-reverse', md: 'row' }}
-        w={{ base: '100%', xl: '75%' }}
-        pt={{ md: 'auto' }}
-        h={{ base: '90vh', md: '75vh', lg: 'auto' }}
-        borderWidth={1}
-        borderRadius={10}
-        borderColor={{ base: 'transparent', md: 'gray.200' }}
-        templateColumns={{ xl: '50% 50%', '2xl': 'repeat(2, 1fr)' }}
+    <MotionGrid
+      display={{ base: 'flex' }}
+      flexDir={{ base: 'column-reverse', md: 'row' }}
+      w={{ base: '100%', xl: '75%' }}
+      pt={{ md: 'auto' }}
+      h={{ base: '90vh', md: '75vh', lg: 'auto' }}
+      borderWidth={1}
+      borderRadius={10}
+      borderColor={{ base: 'transparent', md: 'gray.200' }}
+      templateColumns={{ xl: '50% 50%', '2xl': 'repeat(2, 1fr)' }}
+    >
+      <GridItem
+        borderRightColor={{ base: 'transparent' }}
+        borderRightWidth={{ md: 1 }}
+        px={{ base: 2, md: 3, lg: 14 }}
+        borderBottomWidth={{ base: 1, md: 0 }}
+        py={{ base: 5, lg: 20 }}
+        pt={{ md: 16 }}
+        w={{ base: '100%', md: '30%' }}
+        h={{ base: '75%', md: 'auto', lg: '80vh', xl: '90vh' }}
       >
-        <GridItem
-          borderRightColor={{ base: 'transparent' }}
-          borderRightWidth={{ md: 1 }}
-          px={{ base: 2, md: 3, lg: 14 }}
-          borderBottomWidth={{ base: 1, md: 0 }}
-          py={{ base: 5, lg: 20 }}
-          pt={{ md: 16 }}
-          w={{ base: '100%', md: '30%' }}
-          h={{ base: '75%', md: 'auto', lg: '80vh', xl: '90vh' }}
+        <Flex
+          mt={{ md: 5 }}
+          w='100%'
+          dir='column'
+          align='flex-start'
+          justify='center'
+          h='100%'
         >
-          <Flex
-            mt={{ md: 5 }}
-            w='100%'
-            dir='column'
-            align='flex-start'
-            justify='center'
-            h='100%'
-          >
-            <Box bg='gray.500' w={{ base: '12.5rem' }} h={{ base: '12.5rem' }}>
-              <Image w='100%' h='100%' objectFit='cover' src={null} />
-            </Box>
-          </Flex>
-        </GridItem>
-        <GridItem
-          w={{ base: '100%', md: '50%' }}
-          overflowY='hidden'
-          px={{ base: 1, lg: 14 }}
-          py={{ base: 5, lg: 20 }}
-          h={{ base: '25%', md: 'auto' }}
-        >
+          <Box bg='gray.500' w={{ base: '12.5rem' }} h={{ base: '12.5rem' }}>
+            <Image w='100%' h='100%' objectFit='cover' src={null} />
+          </Box>
+        </Flex>
+      </GridItem>
+      <GridItem
+        w={{ base: '100%', md: '50%' }}
+        overflowY='hidden'
+        px={{ base: 1, lg: 14 }}
+        py={{ base: 5, lg: 20 }}
+        h={{ base: '25%', md: 'auto' }}
+      >
+        <form style={{ width: '100%', height: '100%' }} onSubmit={handleSubmit}>
           <Grid
             mt={{ md: 3 }}
             overflowY='scroll'
@@ -170,6 +169,7 @@ const PayoutReview = () => {
             display={{ base: 'none', lg: 'flex' }}
             textAlign='center'
             btntitle='Submit'
+            type='Submit'
             borderColor='cf.green'
             color='white'
             fontWeight={900}
@@ -180,11 +180,10 @@ const PayoutReview = () => {
             w='45%'
             h={55}
             fontSize={{ base: 'sm', xl: 'md' }}
-            onClick={() => {}}
           />
-        </GridItem>
-      </MotionGrid>
-    </form>
+        </form>
+      </GridItem>
+    </MotionGrid>
   )
 }
 
