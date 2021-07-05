@@ -15,7 +15,6 @@ export const RolloverContextProvider = ({ children }) => {
   const [ratings, setRatings] = useState(null)
   const handleNext = () => setStep(draft => draft + 1)
 
-  console.log(ratings, 'wrong')
   useEffect(() => {
     let mounted = true
 

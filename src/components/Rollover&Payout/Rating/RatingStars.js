@@ -1,31 +1,59 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
-import ReactStars from 'react-rating-stars-component'
-import PropTypes from 'prop-types'
-import { Box, Icon } from '@chakra-ui/react'
-import { BsStar } from 'react-icons/bs'
+import { Box, Icon, Flex, Text } from '@chakra-ui/react'
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
+import useRollover from 'context/rollover'
 
-const RatingStars = ({ count, onChange, size, activeColor, ...rest }) => {
+const RatingStars = () => {
+  const { ratings, setRatings } = useRollover()
+
+  const mapKey = i => i
+
+  const getRatingText = value => {
+    switch (value) {
+      case 1:
+        return 'Poor'
+      case 2:
+        return 'Alright'
+      case 3:
+        return 'Good'
+      case 4:
+        return 'Very good'
+      case 5:
+        return 'Excellent'
+      default:
+        return ''
+    }
+  }
   return (
-    <Box w='100%' h='100%'>
-      <ReactStars
-        {...rest}
-        count={count || 5}
-        onChange={onChange}
-        size={size || 24}
-        activeColor={activeColor || '#00ff00'}
-        classNames='star-ratings'
-        emptyIcon={BsStar}
-      />
-    </Box>
+    <Flex dir='row' align='center' justify='flex-start' w='100%' h='100%'>
+      {[...Array(5)].map((m, i) => {
+        return (
+          <Box px={{ md: 2 }} key={mapKey(i)}>
+            <Icon
+              cursor='pointer'
+              onClick={() => setRatings(i + 1)}
+              color={ratings >= i + 1 ? 'cf.400' : 'gray.200'}
+              boxSize={12}
+              as={ratings >= i + 1 ? AiFillStar : AiOutlineStar}
+            />
+          </Box>
+        )
+      })}
+
+      {
+        <Text px={{ md: 5 }} fontWeight={700} fontSize={{ md: 'lg' }}>
+          {getRatingText(ratings)}
+        </Text>
+      }
+    </Flex>
   )
 }
 
 RatingStars.propTypes = {
-  count: PropTypes.number,
-  onChange: PropTypes.func,
-  size: PropTypes.any,
-  activeColor: PropTypes.any
+  // count: PropTypes.number,
+  // onChange: PropTypes.func,
+  // size: PropTypes.any,
+  // activeColor: PropTypes.any
 }
 
 export default RatingStars

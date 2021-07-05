@@ -71,6 +71,10 @@
   color: #3c9130;
 }
 
+.star-ratings{
+  font-size: 24px !important;
+}
+
 .loading-text:after {
   content: ".";
   animation: dots 1s steps(5, end) infinite;
