@@ -25,6 +25,11 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
       onClick={() => {
         setFilter(text)
         setActiveFarmIndex(text === 'feeds' ? 0 : null)
+        window.scrollTo({
+          left: 0,
+          top: 0,
+          behavior: 'smooth'
+        })
       }}
       color={filter === text ? 'cf.green' : 'gray.500'}
       textAlign='center'
@@ -101,7 +106,14 @@ const YourFarmCard = ({
         pos='relative'
         pt={{ base: 16, md: 0 }}
       >
-        <Flex align='center' direction='row' justify='space-around' w='100%'>
+        <Flex
+          align='center'
+          direction='row'
+          justify='space-between'
+          ml={{ md: -16 }}
+          w={{ base: '100%', md: 130 }}
+          px={{ base: 4, md: 0 }}
+        >
           <Heading as='h6' fontSize='lg'>
             {farms.length ? 'Your Farm(s)' : ''}
           </Heading>
@@ -112,8 +124,8 @@ const YourFarmCard = ({
 
         <Box
           pos={{ md: 'absolute' }}
-          left={{ md: -2 }}
-          d={farms.length > 8 ? 'block' : 'none'}
+          right={{ md: -2 }}
+          d={{ base: 'none', md: farms.length > 8 ? 'block' : 'none' }}
           mt={{ base: 6, md: 0 }}
         >
           <ArrowButton handleClick={handleClick} />
@@ -123,10 +135,12 @@ const YourFarmCard = ({
           direction='column'
           align='center'
           justify='flex-start'
-          maxW={{ md: 127 }}
-          w={{ md: 127 }}
+          maxW={{ md: 130 }}
+          w={{ md: 130 }}
           overflow='hidden'
           my={10}
+          ml={{ md: -16 }}
+          px={{ base: 6, md: 0 }}
         >
           <MotionFlex
             align='center'
@@ -162,8 +176,8 @@ const YourFarmCard = ({
                       {farm.name}
                     </Text>
                     <Box
-                      w={24}
-                      h={24}
+                      w={{ base: 20, md: 24 }}
+                      h={{ base: 20, md: 24 }}
                       rounded='100%'
                       borderWidth='1px'
                       pos='relative'
@@ -198,6 +212,15 @@ const YourFarmCard = ({
               </>
             ))}
           </MotionFlex>
+
+          <Box
+            pos={{ md: 'absolute' }}
+            left={{ md: -2 }}
+            d={{ base: farms.length > 8 ? 'block' : 'none', md: 'none' }}
+            mt={{ base: 6, md: 0 }}
+          >
+            <ArrowButton handleClick={handleClick} />
+          </Box>
 
           <Flex
             align='center'
