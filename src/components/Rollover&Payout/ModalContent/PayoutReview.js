@@ -81,6 +81,7 @@ const PayoutReview = () => {
       templateColumns={{ xl: '50% 50%', '2xl': 'repeat(2, 1fr)' }}
     >
       <GridItem
+        display={{ base: 'none', md: 'flex' }}
         borderRightColor={{ base: 'transparent' }}
         borderRightWidth={{ md: 1 }}
         px={{ base: 2, md: 3, lg: 14 }}
@@ -104,11 +105,11 @@ const PayoutReview = () => {
         </Flex>
       </GridItem>
       <GridItem
-        w={{ base: '100%', md: '50%' }}
+        w={{ base: '100%', xl: '50%' }}
         overflowY='hidden'
         px={{ base: 1, lg: 14 }}
         py={{ base: 5, lg: 20 }}
-        h={{ base: '25%', md: 'auto' }}
+        h={{ base: '100%', md: 'auto' }}
       >
         <form style={{ width: '100%', height: '100%' }} onSubmit={handleSubmit}>
           <Grid
@@ -128,8 +129,9 @@ const PayoutReview = () => {
             }}
             w='100%'
             h={{ base: '78%', lg: '85%', '2xl': '70%', '3xl': '80%' }}
+            textAlign={{ base: 'center', md: 'auto' }}
           >
-            <Heading as='h3' fontSize='xl'>
+            <Heading as='h3' textAlign='left' fontSize='xl'>
               Our team will be processing your request and this process takes
               about 7 business days so relax and when the time is up we’ll
               notify you on what to do. Thank you.
@@ -146,9 +148,15 @@ const PayoutReview = () => {
               <Heading as='h4' fontSize='lg'>
                 How would you like rate your experience with this app?
               </Heading>
-              <Box mt={{ md: 10 }}>
+              <Flex
+                direction='row'
+                justify='center'
+                w='100%'
+                textAlign={{ base: 'center', md: 'auto' }}
+                mt={{ md: 10 }}
+              >
                 <RatingStars />
-              </Box>
+              </Flex>
 
               <Box mt={{ md: 10 }} mb={{ md: 5 }}>
                 <Text>Any comment (Optional)</Text>
@@ -166,7 +174,7 @@ const PayoutReview = () => {
             </Box>
           </Grid>
           <Button
-            display={{ base: 'none', lg: 'flex' }}
+            display={{ base: 'block', lg: 'flex' }}
             textAlign='center'
             btntitle='Submit'
             type='Submit'
@@ -176,8 +184,7 @@ const PayoutReview = () => {
             rounded={30}
             isDisabled={isSubmitting}
             isLoading={isSubmitting}
-            mx={{ base: 3, md: 0 }}
-            w='45%'
+            w={{ base: '100%', md: '45%' }}
             h={55}
             fontSize={{ base: 'sm', xl: 'md' }}
           />

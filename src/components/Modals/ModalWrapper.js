@@ -30,7 +30,7 @@ const ModalWrapper = ({
   const { step, bigStepper, type, setBigStepper, total } = useRollover()
   // const {} = useStartFarm()
 
-  console.log(bigStepper, 'roll')
+  console.log(bigStepper, type, 'rollingyx')
   return (
     <Modal
       isOpen={isOpen}
@@ -114,7 +114,7 @@ const ModalWrapper = ({
               h={{ base: '4.5rem' }}
               textAlign='center'
             >
-              {(bigStepper !== 3 || bigStepper !== 4) && type === 'asPayout' && (
+              {bigStepper !== 3 && bigStepper !== 4 && type === 'asPayout' && (
                 <Button
                   display={{ base: 'block', lg: 'none' }}
                   textAlign='center'
@@ -136,7 +136,7 @@ const ModalWrapper = ({
                   }}
                 />
               )}
-              {(bigStepper !== 3 || bigStepper !== 4) && type === 'asRollover' && (
+              {bigStepper !== 3 && bigStepper !== 4 && type === 'asRollover' && (
                 <Button
                   display={{ base: 'block', lg: 'none' }}
                   as={ReachRouter}

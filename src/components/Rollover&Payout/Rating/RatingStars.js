@@ -25,26 +25,32 @@ const RatingStars = () => {
     }
   }
   return (
-    <Flex dir='row' align='center' justify='flex-start' w='100%' h='100%'>
-      {[...Array(5)].map((m, i) => {
-        return (
-          <Box px={{ md: 2 }} key={mapKey(i)}>
-            <Icon
-              cursor='pointer'
-              onClick={() => setRatings(i + 1)}
-              color={ratings >= i + 1 ? 'cf.400' : 'gray.200'}
-              boxSize={12}
-              as={ratings >= i + 1 ? AiFillStar : AiOutlineStar}
-            />
-          </Box>
-        )
-      })}
+    <Flex
+      direction={{ base: 'column', md: 'row' }}
+      align='center'
+      justify={{ base: 'center', md: 'flex-start' }}
+      w='100%'
+      h='100%'
+    >
+      <Flex>
+        {[...Array(5)].map((m, i) => {
+          return (
+            <Box px={{ md: 2 }} key={mapKey(i)}>
+              <Icon
+                cursor='pointer'
+                onClick={() => setRatings(i + 1)}
+                color={ratings >= i + 1 ? 'cf.400' : 'gray.200'}
+                boxSize={12}
+                as={ratings >= i + 1 ? AiFillStar : AiOutlineStar}
+              />
+            </Box>
+          )
+        })}
+      </Flex>
 
-      {
-        <Text px={{ md: 5 }} fontWeight={700} fontSize={{ md: 'lg' }}>
-          {getRatingText(ratings)}
-        </Text>
-      }
+      <Text px={{ md: 5 }} fontWeight={700} fontSize={{ md: 'lg' }}>
+        {getRatingText(ratings)}
+      </Text>
     </Flex>
   )
 }
