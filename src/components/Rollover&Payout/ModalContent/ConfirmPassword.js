@@ -123,7 +123,12 @@ const ConfirmPassword = () => {
                 }}
               />
             </Box>
-            <Flex justify='center' align='center' mt={6}>
+            <Flex
+              w={{ base: '100%', md: 'auto' }}
+              justify='center'
+              align='center'
+              mt={6}
+            >
               <Button
                 h={12}
                 shadow='sm'

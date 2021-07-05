@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import {
   Modal,
@@ -29,6 +30,7 @@ const ModalWrapper = ({
   const { step, bigStepper, type, setBigStepper, total } = useRollover()
   // const {} = useStartFarm()
 
+  console.log(bigStepper, 'roll')
   return (
     <Modal
       isOpen={isOpen}
@@ -114,7 +116,7 @@ const ModalWrapper = ({
             >
               {(bigStepper !== 3 || bigStepper !== 4) && type === 'asPayout' && (
                 <Button
-                  display={{ base: 'none', lg: 'flex' }}
+                  display={{ base: 'block', lg: 'none' }}
                   textAlign='center'
                   btntitle={`Payout $ ${getFormattedMoney(total)}`}
                   to={{
@@ -125,9 +127,8 @@ const ModalWrapper = ({
                   color='white'
                   fontWeight={900}
                   rounded={30}
-                  mx={{ base: 3, md: 0 }}
                   my={{ base: 2, md: 10 }}
-                  w='70%'
+                  w='100%'
                   h={65}
                   fontSize={{ base: 'sm', xl: 'md' }}
                   onClick={() => {
@@ -137,6 +138,7 @@ const ModalWrapper = ({
               )}
               {(bigStepper !== 3 || bigStepper !== 4) && type === 'asRollover' && (
                 <Button
+                  display={{ base: 'block', lg: 'none' }}
                   as={ReachRouter}
                   to={{
                     pathname: '/start-farm/individual',

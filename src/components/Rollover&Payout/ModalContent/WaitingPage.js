@@ -12,7 +12,7 @@ const WaitingPage = () => {
       flexDir={{ base: 'column-reverse', md: 'row' }}
       w={{ base: '100%', xl: '75%' }}
       pt={{ md: 'auto' }}
-      h={{ base: '90vh', md: '75vh', lg: '80vh' }}
+      h={{ base: '90vh', md: '90vh', lg: '80vh' }}
       borderWidth={1}
       borderRadius={10}
       borderColor={{ base: 'transparent', md: 'gray.200' }}
@@ -25,12 +25,12 @@ const WaitingPage = () => {
         h='100%'
       >
         <Flex
-          h={{ md: '100%' }}
+          h={{ base: '100%' }}
           direction='column'
           align='center'
           justify='center'
-          w={{ md: '50%' }}
-          pb={{ md: 20 }}
+          w={{ base: '100%', md: '50%' }}
+          pb={{ base: 10, md: 20 }}
         >
           <Box>
             <Image
@@ -41,7 +41,7 @@ const WaitingPage = () => {
             />
           </Box>
 
-          <Box w='90%' textAlign='center' py={{ md: 20 }}>
+          <Box w='90%' textAlign='center' py={{ base: 20 }}>
             <Heading textAlign='center' as='h2' fontSize={{ md: 'xl' }}>
               Our team will be processing your request and this process takes
               about 7 business days so relax and when the time is up we’ll
@@ -52,7 +52,7 @@ const WaitingPage = () => {
           <Flex align='center' justify='center' w='100%'>
             <Button
               href='www.completefarmer.com'
-              display={{ base: 'none', lg: 'flex' }}
+              display={{ lg: 'flex' }}
               textAlign='center'
               btntitle='Contact sales'
               borderColor='cf.green'
