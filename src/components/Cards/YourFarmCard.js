@@ -25,6 +25,11 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
       onClick={() => {
         setFilter(text)
         setActiveFarmIndex(text === 'feeds' ? 0 : null)
+        window.scrollTo({
+          left: 0,
+          top: 0,
+          behavior: 'smooth'
+        })
       }}
       color={filter === text ? 'cf.green' : 'gray.500'}
       textAlign='center'
@@ -106,7 +111,8 @@ const YourFarmCard = ({
           direction='row'
           justify='space-between'
           ml={{ md: -16 }}
-          w={{ md: 130 }}
+          w={{ base: '100%', md: 130 }}
+          px={{ base: 4, md: 0 }}
         >
           <Heading as='h6' fontSize='lg'>
             {farms.length ? 'Your Farm(s)' : ''}
