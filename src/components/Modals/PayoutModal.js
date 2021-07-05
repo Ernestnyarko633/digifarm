@@ -6,6 +6,7 @@ import ConfirmBankingDetails from 'components/Rollover&Payout/ModalContent/Confi
 import { default as usePayout } from 'context/rollover'
 import WalletSelection from 'components/Rollover&Payout/ModalContent/WalletSelection'
 import ConfirmPassword from 'components/Rollover&Payout/ModalContent/ConfirmPassword'
+import PayoutReview from 'components/Rollover&Payout/ModalContent/PayoutReview'
 const PayoutModal = () => {
   const { isOpen, onClose } = useComponent()
 
@@ -23,6 +24,9 @@ const PayoutModal = () => {
 
       case 2:
         return <ConfirmPassword />
+
+      case 3:
+        return <PayoutReview />
 
       default:
         return null

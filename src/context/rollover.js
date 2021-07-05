@@ -12,8 +12,10 @@ export const RolloverContextProvider = ({ children }) => {
   const [error, setError] = useState(null)
   const [selectedWallets, setSelectedWallets] = useState([])
   const [type, setType] = useState(null)
+  const [ratings, setRatings] = useState(null)
   const handleNext = () => setStep(draft => draft + 1)
 
+  console.log(ratings, 'wrong')
   useEffect(() => {
     let mounted = true
 
@@ -64,7 +66,9 @@ export const RolloverContextProvider = ({ children }) => {
         total,
         handleNext,
         selectedWallets,
-        setSelectedWallets
+        setSelectedWallets,
+        setRatings,
+        ratings
       }}
     >
       {children}

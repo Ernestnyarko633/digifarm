@@ -334,10 +334,24 @@ const ConfirmBankingDetails = () => {
                       bg='gray.100'
                     />
                   </Grid>
-                  <Flex w='100%' mt={{ base: 3, md: 5 }}>
-                    <Box mx={2} mt={{ base: 2, md: 'auto' }} pt={{ md: 1 }}>
+                  <Flex
+                    w='100%'
+                    h='100%'
+                    direction='row'
+                    mt={{ base: 3, md: 5 }}
+                  >
+                    <Flex
+                      align='flex-start'
+                      h={{
+                        md: '4.625rem',
+                        '2xl': '6.625rem',
+                        '3xl': '4.625rem'
+                      }}
+                      mt={{ base: 2, md: 'auto' }}
+                      pt={{ md: 1 }}
+                    >
                       <Checkbox onChange={() => setCheck(!check)} />
-                    </Box>
+                    </Flex>
                     <Text
                       fontSize={{ base: 'base', md: 'auto' }}
                       ml={{ md: 4 }}

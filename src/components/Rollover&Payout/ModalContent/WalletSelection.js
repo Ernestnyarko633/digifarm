@@ -17,6 +17,7 @@ const WalletSelection = ({ type, title }) => {
   const { data } = useComponent()
   const { total, selectedWallets, setBigStepper, type: useType } = useRollover()
   const { onClose } = useComponent()
+  // const [toggle, setToggle] = useState(false)
 
   const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
 

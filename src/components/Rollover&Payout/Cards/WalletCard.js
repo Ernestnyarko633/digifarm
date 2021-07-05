@@ -14,7 +14,12 @@ const WalletCard = ({ name, image, amount, id, clicked }) => {
     let mounted = true
     if (mounted && selected) {
       setSelectedWallets(p =>
-        !p ? [...[], { name, amount, id }] : [...p, { name, amount, id }]
+        !p
+          ? [...[], { name, amount, id }]
+          : [...p, { name, amount, id }].filter(
+              (wallet, index, self) =>
+                index === self.findIndex(t => t.id === wallet.id)
+            )
       )
     }
 
@@ -66,12 +71,6 @@ const WalletCard = ({ name, image, amount, id, clicked }) => {
           bg={`url('${image}')`}
           pr={5}
         >
-          {/* <Image
-            w='100%'
-            h='100%'
-            src={image}
-            
-          /> */}
           <Box
             my={{ base: 2, md: 5 }}
             borderWidth='1px'
