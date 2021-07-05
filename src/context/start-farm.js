@@ -116,14 +116,15 @@ export const StartFarmContextProvider = ({ children }) => {
     setOtherStep(draft => draft - 1)
   }
 
-  const handleRolloverPayment = async () => {
+  const handleRolloverPayment = async _order => {
     try {
       let tempCost = total
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
+      console.log(_order, order, 'orderroll')
       const data = {
-        amount: order.cost,
-        order_id: order._id,
+        amount: _order?.cost || order?.cost,
+        order_id: _order?._id || order?._id,
         purpose: 'FARM_PURCHASE',
         transaction_type: 'WALLET'
       }
@@ -162,6 +163,7 @@ export const StartFarmContextProvider = ({ children }) => {
         description: 'Order saved successfully'
       })
 
+      handleNextStep()
       handleNextStep()
     } catch (error) {
       if (error) {
@@ -261,8 +263,8 @@ export const StartFarmContextProvider = ({ children }) => {
       setOrder(res.data)
       sessionStorage.removeItem('my_farms')
       sessionStorage.removeItem('my_orders')
-      handleNextStep()
-      rollover && handleRolloverPayment()
+      !rollover && handleNextStep()
+      rollover && handleRolloverPayment(res.data)
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
