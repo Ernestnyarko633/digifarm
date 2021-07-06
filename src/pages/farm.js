@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect, useRef } from 'react'
 import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'

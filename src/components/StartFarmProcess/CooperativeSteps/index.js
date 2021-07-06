@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import Overlay from '../../Loading/Overlay'
 import { Flex, Image, Link, Text, useToast } from '@chakra-ui/react'
