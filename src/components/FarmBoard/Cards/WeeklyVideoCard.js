@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -6,7 +5,7 @@ import { Box, Flex, Heading, Text, Icon } from '@chakra-ui/react'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 
-//import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+// import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import ReactPlayer from 'react-player/youtube'
 
 const WeeklyVideoCard = ({ status, timestamp, content }) => {
@@ -30,8 +29,8 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
   const YoutubeSlide = ({ url }) => (
     <ReactPlayer
       width='100%'
-      controls={true}
-      loop={true}
+      controls
+      loop
       volume={0.3}
       url={url}
       playing={false}
