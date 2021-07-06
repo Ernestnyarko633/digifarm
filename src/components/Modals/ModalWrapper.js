@@ -28,9 +28,7 @@ const ModalWrapper = ({
   children
 }) => {
   const { step, bigStepper, type, setBigStepper, total } = useRollover()
-  // const {} = useStartFarm()
 
-  console.log(bigStepper, type, 'rollingyx')
   return (
     <Modal
       isOpen={isOpen}

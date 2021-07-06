@@ -119,10 +119,9 @@ export const StartFarmContextProvider = ({ children }) => {
 
   const handleRolloverPayment = async _order => {
     try {
+      setSubmitting(true)
       let tempCost = order?.cost || _order?.cost
       setText("Processing payment, please don't reload/refresh page")
-      setSubmitting(true)
-      console.log(_order, order, 'orderroll')
       const data = {
         amount: _order?.cost || order?.cost,
         order_id: _order?._id || order?._id,

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
@@ -17,7 +16,6 @@ const WalletSelection = ({ type, title }) => {
   const { data } = useComponent()
   const { total, selectedWallets, setBigStepper, type: useType } = useRollover()
   const { onClose } = useComponent()
-  // const [toggle, setToggle] = useState(false)
 
   const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
 
@@ -74,16 +72,19 @@ const WalletSelection = ({ type, title }) => {
           w='100%'
           h={{ base: '78%', lg: '85%', '2xl': '70%', '3xl': '80%' }}
         >
-          {farms.map(wallet => (
-            <WalletCard
-              key={wallet?._id}
-              id={wallet?._id}
-              clicked={data?.wallet_id === wallet?._id ? true : false}
-              name={wallet.order?.product?.cropVariety?.crop?.name}
-              amount={wallet?.order?.cost}
-              image={wallet?.order?.product?.cropVariety?.imageUrl}
-            />
-          ))}
+          {farms.map(
+            wallet =>
+              wallet.wallet > 0 && (
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />
+              )
+          )}
         </Grid>
       </GridItem>
       <GridItem
@@ -122,10 +123,7 @@ const WalletSelection = ({ type, title }) => {
             display={{ base: 'none', lg: 'flex' }}
             as={Link}
             textAlign='center'
-            btntitle={
-              'Proceed to rollover'
-              // : `Payout $ ${getFormattedMoney(total)}`
-            }
+            btntitle='Proceed to rollover'
             to={{
               pathname: '/start-farm/individual',
               state: { rollover: true }

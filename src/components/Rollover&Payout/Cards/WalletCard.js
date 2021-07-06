@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
-import { Box, Flex, Text, Heading, Icon } from '@chakra-ui/react'
+import { Box, Flex, Text, Heading, Icon, Image } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { getFormattedMoney } from 'helpers/misc'
@@ -41,6 +41,7 @@ const WalletCard = ({ name, image, amount, id, clicked }) => {
 
   return (
     <Box
+      cursor='pointer'
       w='100%'
       my={{ base: 5 }}
       rounded={15}
@@ -60,35 +61,31 @@ const WalletCard = ({ name, image, amount, id, clicked }) => {
             <Text fontWeight={200}>Total amount in wallet</Text>
           </Flex>
         </Box>
-        <Flex
-          bgColor='red'
-          w='30%'
-          h='100%'
-          justify='flex-end'
-          borderRightRadius={15}
-          backgroundPosition='center'
-          objectFit='cover'
-          bg={`url('${image}')`}
-          pr={5}
-        >
-          <Box
-            my={{ base: 2, md: 5 }}
-            borderWidth='1px'
-            borderColor='white'
-            w={{ base: 4, md: 8 }}
-            h={{ base: 4, md: 8 }}
-            rounded={{ base: 8, md: 15 }}
-            bg={selected ? 'cf.400' : 'transparent'}
-          >
-            <Flex w='100%' h='100%' align='center' justify='center'>
-              {selected && (
-                <Icon
-                  boxSize={{ base: 2, lg: 4 }}
-                  color='white'
-                  as={AiOutlineCheck}
-                />
-              )}
-            </Flex>
+        <Flex w='30%' h='100%' justify='flex-end' borderRightRadius={15}>
+          <Box position='relative' w='100%' h='100%'>
+            <Image src={image} w='100%' h='100%' />
+            <Box
+              position='absolute'
+              bottom={{ base: '60%', md: '50%', '2xl': '60%', '3xl': '60%' }}
+              left={{ base: '70%', md: '50%', '2xl': '60%', '3xl': '70%' }}
+              my={{ base: 2, md: 5 }}
+              borderWidth='1px'
+              borderColor='white'
+              w={{ base: 4, md: 8 }}
+              h={{ base: 4, md: 8 }}
+              rounded={{ base: 8, md: 15 }}
+              bg={selected ? 'cf.400' : 'transparent'}
+            >
+              <Flex w='100%' h='100%' align='center' justify='center'>
+                {selected && (
+                  <Icon
+                    boxSize={{ base: 2, lg: 4 }}
+                    color='white'
+                    as={AiOutlineCheck}
+                  />
+                )}
+              </Flex>
+            </Box>
           </Box>
         </Flex>
       </Flex>
