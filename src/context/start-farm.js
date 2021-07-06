@@ -54,10 +54,11 @@ export const StartFarmContextProvider = ({ children }) => {
     initiatePaystackPayment,
     patchOrder,
     createCooperative,
-    patchWallet
+    patchWallet,
+    verifyWallet
   } = useApi()
 
-  const { total, selectedWallets } = useRollover()
+  const { selectedWallets } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -118,7 +119,7 @@ export const StartFarmContextProvider = ({ children }) => {
 
   const handleRolloverPayment = async _order => {
     try {
-      let tempCost = total
+      let tempCost = order?.cost || _order?.cost
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
       console.log(_order, order, 'orderroll')
@@ -130,41 +131,57 @@ export const StartFarmContextProvider = ({ children }) => {
       }
       const res = await initiatePayment(data)
 
-      const walletsPromises = selectedWallets.map(async wallet => {
-        if (tempCost) {
-          const response = await patchWallet(wallet?.id, {
-            wallet:
-              tempCost >= wallet.amount
-                ? tempCost - wallet.amount
-                : wallet.amount - tempCost
-          })
-          if (response.data) {
-            tempCost = tempCost >= wallet.amount ? tempCost - wallet.amount : 0
-            return response.data
+      if (res.data.status === 'VERIFIED') {
+        const walletsPromises = selectedWallets.map(async wallet => {
+          if (tempCost !== 0) {
+            let temp = tempCost
+            const response = await patchWallet(wallet?.id, {
+              wallet:
+                temp > wallet?.amount || temp === wallet?.amount
+                  ? 0
+                  : wallet?.amount > temp
+                  ? wallet?.amount - temp
+                  : 0
+            })
+            if (response.data) {
+              tempCost =
+                tempCost > wallet?.amount || tempCost === wallet?.amount
+                  ? tempCost - wallet?.amount
+                  : wallet?.amount > tempCost
+                  ? 0
+                  : 0
+              return response.data
+            }
+            return []
           }
-          return []
-        }
-      })
+        })
+        await Promise.all(walletsPromises)
 
-      const allWalletPromises = await Promise.all(walletsPromises)
+        const updatedOrder = await patchOrder(res?.data?.order_id?.$oid, {
+          payment: res?.data?._id?.$oid,
+          status: 'PAID'
+        })
 
-      console.log(allWalletPromises)
+        setOrder(updatedOrder?.data)
 
-      await patchOrder(res?.data?.order_id?.$oid, {
-        payment: res?.data?._id?.$oid
-      })
+        await verifyWallet({
+          type: 'ROLLOVER',
+          order_id: order?._id || _order?._id,
+          cost: order?.cost || _order?.cost
+        })
 
-      toast({
-        duration: 9000,
-        isClosable: true,
-        status: 'success',
-        position: 'top-right',
-        title: 'Order created.',
-        description: 'Order saved successfully'
-      })
+        toast({
+          duration: 9000,
+          isClosable: true,
+          status: 'success',
+          position: 'top-right',
+          title: 'Order created.',
+          description: 'Order saved successfully'
+        })
 
-      handleNextStep()
-      handleNextStep()
+        handleNextStep()
+        handleNextStep()
+      }
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {

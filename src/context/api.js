@@ -235,6 +235,13 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const verifyWallet = async payload => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/verify-wallet`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   const eosTask = async payload => {
     return await http.post({
       url: `${FMS_API}/eos-task`,
@@ -341,6 +348,7 @@ export const ApiContextProvider = ({ children }) => {
         createOrder,
         downloadFile,
         patchWallet,
+        verifyWallet,
 
         getActivities,
         verifyPayment,
