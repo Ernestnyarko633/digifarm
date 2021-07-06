@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -85,40 +87,24 @@ const WarehouseCard = ({
               View Farm
             </Button>
             {sellButton === 'true' && (
-              <>
-                {quantity === 0 && (
-                  <Button
-                    colorScheme='linear'
-                    rounded='30px'
-                    borderWidth={1}
-                    color='white'
-                    isDisabled
-                    px={8}
-                    ml={2}
-                  >
-                    Sell Produce
-                  </Button>
-                )}
-                {quantity !== 0 && (
-                  <Link
-                    as={ReachRouter}
-                    _hover={{ textDecor: 'none' }}
-                    to={{ pathname: '/marketplace', state: myfarm }}
-                  >
-                    <Button
-                      colorScheme='linear'
-                      rounded='30px'
-                      borderWidth={1}
-                      color='white'
-                      // isLoading
-                      px={8}
-                      ml={2}
-                    >
-                      Sell Produce
-                    </Button>
-                  </Link>
-                )}
-              </>
+              <Link
+                as={ReachRouter}
+                _hover={{ textDecor: 'none' }}
+                to={{ pathname: '/marketplace', state: myfarm }}
+              >
+                <Button
+                  colorScheme='linear'
+                  rounded='30px'
+                  borderWidth={1}
+                  color='white'
+                  // isLoading
+                  px={8}
+                  ml={2}
+                  isDisabled={myfarm?.storage.quantity === 0}
+                >
+                  Sell Produce
+                </Button>
+              </Link>
             )}
           </Link>
         </Flex>

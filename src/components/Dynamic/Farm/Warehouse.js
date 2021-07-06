@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import {
   Box,
@@ -58,11 +59,10 @@ const Warehouse = ({ digitalFarmerFarm }) => {
           )} */}
           <Grid templateColumns={{ md: 'repeat(1, 1fr)' }} gap={10} w='100%'>
             <WarehouseCard
-              sellButton={false}
               name={digitalFarmerFarm?.order?.product?.cropVariety?.crop?.name}
               location={digitalFarmerFarm?.order?.product?.location?.name}
               image={digitalFarmerFarm?.order?.product?.cropVariety?.imageUrl}
-              quantity={digitalFarmerFarm?.storage.quantity}
+              quantity={digitalFarmerFarm?.storage?.quantity}
               weight={`${digitalFarmerFarm?.storage?.weight}`}
               bags={`${digitalFarmerFarm?.storage?.numberOfBags}`}
               condition={digitalFarmerFarm?.storage.yieldConditions}
@@ -74,7 +74,6 @@ const Warehouse = ({ digitalFarmerFarm }) => {
           </Grid>
         </Box>
       </GridItem>
-      i
     </Grid>
   )
 }
