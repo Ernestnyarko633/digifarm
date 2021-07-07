@@ -40,7 +40,7 @@ const RatingStars = () => {
                 cursor='pointer'
                 onClick={() => setRatings(i + 1)}
                 color={ratings >= i + 1 ? 'cf.400' : 'gray.200'}
-                boxSize={12}
+                boxSize={{ base: 8, md: 12, '2xl': 6, '3xl': 12 }}
                 as={ratings >= i + 1 ? AiFillStar : AiOutlineStar}
               />
             </Box>

@@ -12,6 +12,7 @@ const FormTextArea = ({
   name,
   error,
   touched,
+  height,
   bg,
   backgroundColor,
   borderBottomColor,
@@ -48,6 +49,8 @@ const FormTextArea = ({
         overrides={{
           Root: {
             style: {
+              height: height,
+              borderRadius: '15px',
               backgroundColor: 'transparent',
               borderWidth: '0px'
             }
@@ -87,7 +90,8 @@ FormTextArea.propTypes = {
   borderBottomColor: PropTypes.any,
   backgroundColor: PropTypes.any,
   rounded: PropTypes.any,
-  onBlur: PropTypes.any.isRequired
+  onBlur: PropTypes.any.isRequired,
+  height: PropTypes.any
 }
 
 export default FormTextArea

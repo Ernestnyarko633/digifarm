@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import {
   Grid,
@@ -27,7 +28,6 @@ const PayoutReview = () => {
       display={{ base: 'flex' }}
       flexDir={{ base: 'column-reverse', md: 'row' }}
       w={{ base: '100%', xl: '75%' }}
-      pt={{ md: 'auto' }}
       h={{ base: '90vh', md: '75vh', lg: 'auto' }}
       borderWidth={1}
       borderRadius={10}
@@ -42,7 +42,7 @@ const PayoutReview = () => {
         borderBottomWidth={{ base: 1, md: 0 }}
         py={{ base: 5, lg: 20 }}
         pt={{ md: 16 }}
-        w={{ base: '100%', md: '30%' }}
+        w={{ base: '100%', md: '50%' }}
         h={{ base: '75%', md: 'auto', lg: '80vh', xl: '90vh' }}
       >
         <Flex
@@ -59,15 +59,13 @@ const PayoutReview = () => {
         </Flex>
       </GridItem>
       <GridItem
+        mt={{ md: 20 }}
         w={{ base: '100%', xl: '70%', '2xl': '100%' }}
         overflowY='hidden'
-        pr={{ xl: 60 }}
         px={{ base: 1, lg: 'auto' }}
-        py={{ base: 5, lg: 20 }}
-        h={{ base: '100%', md: 'auto' }}
+        h={{ base: '100%', lg: '50vh', xl: '100%' }}
       >
         <Grid
-          mt={{ md: 3 }}
           overflowY='scroll'
           css={{
             '&::-webkit-scrollbar': {
@@ -85,21 +83,40 @@ const PayoutReview = () => {
           h={{ base: '78%', lg: '85%', '2xl': '70%', '3xl': '80%' }}
           textAlign={{ base: 'center', md: 'auto' }}
         >
-          <Heading as='h3' textAlign='left' fontSize='xl'>
+          <Heading
+            w={{ md: '100%', '3xl': '70%' }}
+            mt={{ '2xl': 5 }}
+            as='h3'
+            textAlign={{ base: 'center', md: 'left' }}
+            fontSize='xl'
+            mb={{ base: 0, '2xl': 10 }}
+          >
             Our team will be processing your request and this process takes
             about 7 business days so relax and when the time is up we’ll notify
             you on what to do. Thank you.
           </Heading>
 
           <Box
-            p={{ base: 4, md: 6, lg: 10 }}
+            display={{ base: 'flex', md: 'block' }}
+            flexDirection='column'
+            justifyContent='center'
+            alignContent='center'
+            p={{ base: 4, md: 2, '3xl': 12 }}
+            px={{ '2xl': 12 }}
+            py={{ md: 12, '2xl': 'auto' }}
             rounded={15}
             borderWidth={{ base: 1, md: 0, lg: 1 }}
             borderColor='gray.200'
-            h={{ md: '80%' }}
-            w='100%'
+            pb={{ base: 0, md: 2, '2xl': 10 }}
+            h={{ md: '80%', xl: '60%', '2xl': '90%', '3xl': '100%' }}
+            w={{ base: '100%', xl: '80%', '3xl': '70%' }}
           >
-            <Heading textAlign='left' as='h4' fontSize='lg'>
+            <Heading
+              w='100%'
+              textAlign={{ base: 'center', md: 'left' }}
+              as='h4'
+              fontSize={{ '2xl': 'sm', '3xl': 'lg' }}
+            >
               How would you like rate your experience with this app?
             </Heading>
             <Flex
@@ -112,8 +129,10 @@ const PayoutReview = () => {
               <RatingStars />
             </Flex>
 
-            <Box textAlign='left' mt={{ md: 10 }} mb={{ md: 5 }}>
-              <Text>Any comment (Optional)</Text>
+            <Box textAlign='left' w='100%' mt={{ md: 3 }}>
+              <Text textAlign={{ base: 'center', md: 'left' }}>
+                Any comment (Optional)
+              </Text>
               <FormTextArea
                 onChange={handleChange}
                 value={comment}
@@ -125,8 +144,8 @@ const PayoutReview = () => {
           </Box>
         </Grid>
         <Button
-          mt={{ md: 20 }}
           display={{ base: 'block', lg: 'flex' }}
+          mt={{ base: 10, md: 0, '2xl': 5, '3xl': 12 }}
           textAlign='center'
           btntitle='Submit'
           borderColor='cf.green'
@@ -136,8 +155,8 @@ const PayoutReview = () => {
           onClick={async () => await handlePayout()}
           isDisabled={isSubmitting}
           isLoading={isSubmitting}
-          w={{ base: '100%', md: '45%' }}
-          h={55}
+          w={{ base: '100%', md: '45%', '3xl': '30%' }}
+          h={{ base: 50, '2xl': 55 }}
           fontSize={{ base: 'sm', xl: 'md' }}
         />
       </GridItem>
