@@ -84,7 +84,7 @@ const WarehouseCard = ({
             >
               View Farm
             </Button>
-            {sellButton === true && (
+            {sellButton === 'true' && (
               <Link
                 as={ReachRouter}
                 _hover={{ textDecor: 'none' }}
@@ -95,8 +95,10 @@ const WarehouseCard = ({
                   rounded='30px'
                   borderWidth={1}
                   color='white'
+                  // isLoading
                   px={8}
                   ml={2}
+                  isDisabled={myfarm?.storage.quantity === 0}
                 >
                   Sell Produce
                 </Button>
