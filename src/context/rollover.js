@@ -26,7 +26,7 @@ export const RolloverContextProvider = ({ children }) => {
 
   let toast = useToast()
 
-  const { submitPayout } = useApi()
+  const { submitPayout, patchWallet, patchPayout } = useApi()
 
   useEffect(() => {
     let mounted = true
@@ -64,6 +64,7 @@ export const RolloverContextProvider = ({ children }) => {
 
   const handlePayout = async () => {
     try {
+      let tempCost = total
       setSubmit(true)
 
       const data = {
@@ -76,7 +77,39 @@ export const RolloverContextProvider = ({ children }) => {
       if (!data.comment) delete data.comment
       if (data.ratings === null) delete data.ratings
 
-      await submitPayout(data)
+      const res = await submitPayout(data)
+
+      let array = []
+
+      const walletsPromises = selectedWallets.map(async wallet => {
+        if (tempCost !== 0) {
+          let temp = tempCost
+          array.push(wallet.id)
+          const response = await patchWallet(wallet?.id, {
+            wallet:
+              temp > wallet?.amount || temp === wallet?.amount
+                ? 0
+                : wallet?.amount > temp
+                ? wallet?.amount - temp
+                : 0
+          })
+          if (response.data) {
+            tempCost =
+              tempCost > wallet?.amount || tempCost === wallet?.amount
+                ? tempCost - wallet?.amount
+                : wallet?.amount > tempCost
+                ? 0
+                : 0
+            return response.data
+          }
+          return []
+        }
+      })
+      await Promise.all(walletsPromises)
+
+      await patchPayout(res.data._id, {
+        wallets: [...array]
+      })
 
       toast({
         duration: 9000,

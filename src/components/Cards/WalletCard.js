@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -18,8 +19,13 @@ import useWallet from 'context/wallet'
 const WalletCard = ({ acreage, price, farm }) => {
   const [reload, setReload] = useState(0)
   const { farmExpense } = useWallet()
-  const { getAllTasks, getActivities, getMyScheduledTasks, getMyFarmFeeds } =
-    useApi()
+  const {
+    getAllTasks,
+    getActivities,
+    getMyScheduledTasks,
+    getMyFarmFeeds,
+    getFarmProcessingPayouts
+  } = useApi()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
@@ -68,16 +74,28 @@ const WalletCard = ({ acreage, price, farm }) => {
     }
   )
 
+  const {
+    data: payouts,
+    isLoading: payoutsIsLoading,
+    error: payoutsHasErrors
+  } = useFetch(null, farm?._id ? getFarmProcessingPayouts : null, reload, {
+    wallet: farm?._id
+  })
+
   const loading =
     ScheduledTasksIsLoading ||
     tasksIsLoading ||
     myFarmActivitiesIsLoading ||
-    farmFeedsIsLoading
+    farmFeedsIsLoading ||
+    payoutsIsLoading
   const error =
     ScheduledTasksHasError ||
     tasksHasError ||
     myFarmActivitiesHasError ||
-    farmFeedsHasError
+    farmFeedsHasError ||
+    payoutsHasErrors
+
+  console.log(payouts, 'payrolls')
 
   return (
     <Box
@@ -175,6 +193,7 @@ const WalletCard = ({ acreage, price, farm }) => {
             to={{
               pathname: `/wallets/${farm?._id}`,
               state: {
+                processing_payout: payouts?.length ? true : false,
                 farm: farm || {},
                 activities: myFarmActivities || [],
                 tasks: tasks || [],

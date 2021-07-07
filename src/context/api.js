@@ -249,6 +249,19 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const patchPayout = async (id, payload) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/payrolls/${id}`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const getFarmProcessingPayouts = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/payrolls-wallet`,
+      query
+    })
+  }
   const eosTask = async payload => {
     return await http.post({
       url: `${FMS_API}/eos-task`,
@@ -357,6 +370,7 @@ export const ApiContextProvider = ({ children }) => {
         patchWallet,
         verifyWallet,
         submitPayout,
+        patchPayout,
 
         getActivities,
         verifyPayment,
@@ -378,6 +392,7 @@ export const ApiContextProvider = ({ children }) => {
         getUserBankingDetails,
         initiatePaystackPayment,
         verifyPaystackPayment,
+        getFarmProcessingPayouts,
 
         //cooperative
         acceptInvite,

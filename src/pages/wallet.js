@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import { Box, Heading, Grid } from '@chakra-ui/react'
 import Layout from 'container/Layout'
@@ -27,6 +28,7 @@ const Wallet = () => {
   const { state } = useLocation()
 
   const {
+    processing_payout,
     wallet,
     balance,
     expense,
@@ -36,6 +38,20 @@ const Wallet = () => {
     tasks,
     activities
   } = state
+
+  console.log(processing_payout, 'roll')
+
+  const { setBigStepper } = useRollover()
+
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted && processing_payout) {
+      setBigStepper(p => p + 4)
+    }
+
+    return () => (mounted = false)
+  }, [processing_payout, setBigStepper])
 
   return (
     <Layout>
