@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
@@ -72,19 +73,18 @@ const WalletSelection = ({ type, title }) => {
           w='100%'
           h={{ base: '78%', lg: '85%', '2xl': '70%', '3xl': '80%' }}
         >
-          {farms.map(
-            wallet =>
-              wallet.wallet > 0 && (
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />
-              )
-          )}
+          {farms
+            ?.filter(farm => farm.wallet > 0)
+            .map(wallet => (
+              <WalletCard
+                key={wallet?._id}
+                id={wallet?._id}
+                clicked={data?.wallet_id === wallet?._id ? true : false}
+                name={wallet.order?.product?.cropVariety?.crop?.name}
+                amount={wallet?.wallet}
+                image={wallet?.order?.product?.cropVariety?.imageUrl}
+              />
+            ))}
         </Grid>
       </GridItem>
       <GridItem
@@ -121,13 +121,17 @@ const WalletSelection = ({ type, title }) => {
         {useType === 'asRollover' ? (
           <Button
             display={{ base: 'none', lg: 'flex' }}
-            as={Link}
+            as={selectedWallets.length && Link}
+            isDisabled={!selectedWallets.length}
+            _disabled={!selectedWallets.length}
             textAlign='center'
             btntitle='Proceed to rollover'
-            to={{
-              pathname: '/start-farm/individual',
-              state: { rollover: true }
-            }}
+            to={
+              selectedWallets.length && {
+                pathname: '/start-farm/individual',
+                state: { rollover: true }
+              }
+            }
             borderColor='cf.green'
             color='white'
             fontWeight={900}
@@ -148,10 +152,8 @@ const WalletSelection = ({ type, title }) => {
               display={{ base: 'none', lg: 'flex' }}
               textAlign='center'
               btntitle={`Payout $ ${getFormattedMoney(total)}`}
-              to={{
-                pathname: '/start-farm/individual',
-                state: { rollover: true }
-              }}
+              isDisabled={!selectedWallets.length}
+              _disabled={!selectedWallets.length}
               borderColor='cf.green'
               color='white'
               fontWeight={900}

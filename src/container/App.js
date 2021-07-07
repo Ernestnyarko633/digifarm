@@ -23,10 +23,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <ComponentContextProvider>
-        <RolloverContextProvider>
-          <ApiContextProvider>
-            <ExternalContextProvider>
-              <AuthContextProvider>
+        <ApiContextProvider>
+          <ExternalContextProvider>
+            <AuthContextProvider>
+              <RolloverContextProvider>
                 <StartFarmContextProvider>
                   <ModalContextProvider>
                     <WalletContextProvider>
@@ -34,10 +34,10 @@ const App = () => {
                     </WalletContextProvider>
                   </ModalContextProvider>
                 </StartFarmContextProvider>
-              </AuthContextProvider>
-            </ExternalContextProvider>
-          </ApiContextProvider>
-        </RolloverContextProvider>
+              </RolloverContextProvider>
+            </AuthContextProvider>
+          </ExternalContextProvider>
+        </ApiContextProvider>
       </ComponentContextProvider>
     </BrowserRouter>
   )

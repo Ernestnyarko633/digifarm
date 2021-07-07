@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, useToast, Heading, Text } from '@chakra-ui/react'
 import { useFormik } from 'formik'
@@ -8,7 +9,7 @@ import CustomPasswordInput from 'components/Form/CustomPasswordInput'
 import { ConfirmPassword as PasswordValidation } from 'helpers/validation'
 import { default as usePayout } from 'context/rollover'
 const ConfirmPassword = () => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, store } = useAuth()
 
   const { user } = isAuthenticated()
 
@@ -33,6 +34,8 @@ const ConfirmPassword = () => {
         }
 
         const res = await loginUser(data)
+
+        store({ token: res.data.authToken, user: res.data.user })
 
         toast({
           title: 'Verification Successful',

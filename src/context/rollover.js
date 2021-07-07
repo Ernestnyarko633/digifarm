@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useToast } from '@chakra-ui/react'
+import useApi from 'context/api'
+import useAuth from 'context/auth'
 import { useImmer } from 'use-immer'
 const RolloverContext = createContext()
 
@@ -13,7 +16,17 @@ export const RolloverContextProvider = ({ children }) => {
   const [selectedWallets, setSelectedWallets] = useState([])
   const [type, setType] = useState(null)
   const [ratings, setRatings] = useState(null)
+  const [comment, setComment] = useState('')
+  const [isSubmitting, setSubmit] = useState(false)
   const handleNext = () => setStep(draft => draft + 1)
+
+  const { isAuthenticated, setSession } = useAuth()
+
+  const { user } = isAuthenticated()
+
+  let toast = useToast()
+
+  const { submitPayout } = useApi()
 
   useEffect(() => {
     let mounted = true
@@ -49,6 +62,63 @@ export const RolloverContextProvider = ({ children }) => {
     }
   }, [selectedWallets, total])
 
+  const handlePayout = async () => {
+    try {
+      setSubmit(true)
+
+      const data = {
+        type: 'PAYOUT',
+        digitalfarmer: user?._id,
+        cost: total,
+        comment: comment,
+        ratings: ratings
+      }
+      if (!data.comment) delete data.comment
+      if (data.ratings === null) delete data.ratings
+
+      await submitPayout(data)
+
+      toast({
+        duration: 9000,
+        isClosable: true,
+        status: 'success',
+        position: 'top-right',
+        title: 'Payout Submitted.',
+        description: 'Payout submitted successfully'
+      })
+      setBigStepper(p => p + 1)
+    } catch (error) {
+      if (error) {
+        if ([401, 403].includes(error.status)) {
+          setSession(false)
+        } else {
+          toast({
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+            position: 'top-right',
+            title: 'An error occurred.',
+            description:
+              (error?.data?.message ||
+                error?.message ||
+                'Unknown error occurred') + '.'
+          })
+        }
+      } else {
+        toast({
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+          title: 'An error occurred.',
+          description: 'Unexpected network error.'
+        })
+      }
+    } finally {
+      setSubmit(false)
+    }
+  }
+
   return (
     <RolloverContext.Provider
       value={{
@@ -60,7 +130,11 @@ export const RolloverContextProvider = ({ children }) => {
         setStep,
         loading,
         setLoading,
+        comment,
+        setComment,
+        handlePayout,
         bigStepper,
+        isSubmitting,
         setBigStepper,
         total,
         handleNext,

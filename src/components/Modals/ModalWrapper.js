@@ -27,7 +27,8 @@ const ModalWrapper = ({
   alt,
   children
 }) => {
-  const { step, bigStepper, type, setBigStepper, total } = useRollover()
+  const { step, bigStepper, type, setBigStepper, total, selectedWallets } =
+    useRollover()
 
   return (
     <Modal
@@ -116,6 +117,8 @@ const ModalWrapper = ({
                 <Button
                   display={{ base: 'block', lg: 'none' }}
                   textAlign='center'
+                  isDisabled={!selectedWallets.length}
+                  _disabled={!selectedWallets.length}
                   btntitle={`Payout $ ${getFormattedMoney(total)}`}
                   to={{
                     pathname: '/start-farm/individual',
@@ -137,11 +140,15 @@ const ModalWrapper = ({
               {bigStepper !== 3 && bigStepper !== 4 && type === 'asRollover' && (
                 <Button
                   display={{ base: 'block', lg: 'none' }}
-                  as={ReachRouter}
-                  to={{
-                    pathname: '/start-farm/individual',
-                    state: { rollover: true }
-                  }}
+                  as={selectedWallets.length && ReachRouter}
+                  isDisabled={!selectedWallets.length}
+                  _disabled={!selectedWallets.length}
+                  to={
+                    selectedWallets.length && {
+                      pathname: '/start-farm/individual',
+                      state: { rollover: true }
+                    }
+                  }
                   btntitle='Rollover'
                   borderColor='cf.green'
                   color='white'
