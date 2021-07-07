@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import { Box, Heading, Grid } from '@chakra-ui/react'
 import Layout from 'container/Layout'
@@ -38,8 +37,6 @@ const Wallet = () => {
     tasks,
     activities
   } = state
-
-  console.log(processing_payout, 'roll')
 
   const { setBigStepper } = useRollover()
 

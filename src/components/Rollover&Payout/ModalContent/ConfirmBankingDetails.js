@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import useAuth from 'context/auth'
 import useFetch from 'hooks/useFetch'

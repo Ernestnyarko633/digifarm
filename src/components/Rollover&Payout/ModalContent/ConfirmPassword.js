@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, useToast, Heading, Text } from '@chakra-ui/react'
 import { useFormik } from 'formik'

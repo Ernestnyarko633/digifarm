@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -94,8 +93,6 @@ const WalletCard = ({ acreage, price, farm }) => {
     myFarmActivitiesHasError ||
     farmFeedsHasError ||
     payoutsHasErrors
-
-  console.log(payouts, 'payrolls')
 
   return (
     <Box
