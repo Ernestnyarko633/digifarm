@@ -81,6 +81,7 @@ const Wallet = () => {
           <Box
             display={{ base: 'none', md: 'block' }}
             as={FarmFinances}
+            farm={farm}
             activities={activities}
             wallet_id={wallet_id}
             tasks={tasks}

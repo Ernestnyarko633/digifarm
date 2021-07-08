@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import { Box, Grid, Flex, Image, Heading, Text, Icon } from '@chakra-ui/react'
 import Stack from '../../assets/images/finance.svg'
@@ -10,10 +11,18 @@ import useComponent from 'context/component'
 import useWallet from 'context/wallet'
 import useRollover from 'context/rollover'
 
-const FarmFinances = ({ activities, tasks, scheduledTasks, wallet_id }) => {
+const FarmFinances = ({
+  activities,
+  tasks,
+  scheduledTasks,
+  wallet_id,
+  farm
+}) => {
   const { handleModalClick } = useComponent()
   const { totalAmount } = useWallet()
   const { step, setStep, setType } = useRollover()
+
+  console.log(farm.order.product, farm.wallet)
 
   useEffect(() => {
     let mounted = true
@@ -165,11 +174,13 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, wallet_id }) => {
               <Button
                 btntitle='Rollover'
                 bg='white'
+                isDisabled={
+                  farm.order.product.payoutStatus !== 'PAID' && farm.wallet <= 0
+                }
                 borderWidth={1}
                 borderColor='cf.green'
                 color='cf.green'
-                rounded='30px'
-                isDisabled={false}
+                rounded={30}
                 mx={{ base: 3, md: 0 }}
                 my={5}
                 colorScheme='none'
@@ -189,7 +200,10 @@ const FarmFinances = ({ activities, tasks, scheduledTasks, wallet_id }) => {
                 btntitle='Payout'
                 borderColor='cf.green'
                 color='white'
-                rounded='30px'
+                rounded={30}
+                isDisabled={
+                  farm.order.product.payoutStatus !== 'PAID' && farm.wallet <= 0
+                }
                 mx={{ base: 3, md: 0 }}
                 my={5}
                 w='50%'
@@ -212,6 +226,7 @@ FarmFinances.propTypes = {
   activities: PropTypes.array.isRequired,
   tasks: PropTypes.array.isRequired,
   scheduledTasks: PropTypes.array.isRequired,
-  wallet_id: PropTypes.string
+  wallet_id: PropTypes.string,
+  farm: PropTypes.object
 }
 export default FarmFinances
