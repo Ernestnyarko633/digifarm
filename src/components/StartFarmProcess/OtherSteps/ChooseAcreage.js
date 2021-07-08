@@ -42,7 +42,7 @@ import getConfig from 'utils/configs'
 
 const MotionGrid = motion(Grid)
 
-const ChooseAcreage = ({ farm, selectedType }) => {
+const ChooseAcreage = ({ farm, rollover }) => {
   const ENV = process.env.REACT_APP_ENVIRONMENT
 
   const { eosSearch } = useApi()
@@ -346,9 +346,13 @@ const ChooseAcreage = ({ farm, selectedType }) => {
               >
                 <AcreageInput
                   totalAcres={Math.floor(farm?.acreage)}
+                  rollover={rollover}
                   value={acreage}
                   setValue={setAcreage}
-                  cooperativeOps={selectedType}
+                  deteminant={farm.pricePerAcre * exchangeRate * 1}
+                  currentAmount={
+                    farm.pricePerAcre * exchangeRate * Math.floor(acreage)
+                  }
                 />
                 <Flex alignItems='center' marginLeft={{ md: 6 }}>
                   <Skeleton
@@ -446,7 +450,7 @@ const ChooseAcreage = ({ farm, selectedType }) => {
 
 ChooseAcreage.propTypes = {
   farm: PropTypes.object.isRequired,
-  selectedType: PropTypes.object
+  rollover: PropTypes.bool
 }
 
 export default ChooseAcreage

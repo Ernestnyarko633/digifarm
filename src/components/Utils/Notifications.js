@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import { Menu } from '@headlessui/react'

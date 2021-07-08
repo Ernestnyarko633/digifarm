@@ -45,9 +45,15 @@ const Individual = ({ location: { state }, history }) => {
   const getFlow = key => {
     switch (key) {
       case 0:
-        return <CropSelection />
+        return <CropSelection rollover={state?.rollover} />
       case 1:
-        return <OtherSteps data={state?.data} history={history} />
+        return (
+          <OtherSteps
+            data={state?.data}
+            rollover={state?.rollover}
+            history={history}
+          />
+        )
       default:
         return <ReloadPage />
     }

@@ -25,7 +25,7 @@ const FundCard = ({ amount, label }) => {
         <Flex direction='row' justify='space-between' align='center'>
           <Text
             lineHeight={{ base: '0.875rem', md: '1.125rem' }}
-            fontSize={{ base: 'sm', '2xl': 'xl' }}
+            fontSize={{ base: 'sm', '2xl': 'md', '3xl': 'xl' }}
             fontWeight={400}
             ml={{ base: 2, md: 3 }}
             mt={1}
@@ -43,7 +43,7 @@ const FundCard = ({ amount, label }) => {
           />
           <Text
             pt={1}
-            fontSize={{ base: 'md', xl: 'xl', '2xl': '4xl' }}
+            fontSize={{ base: 'md', xl: 'xl', '3xl': '4xl' }}
             fontWeight={900}
             mt={1}
           >

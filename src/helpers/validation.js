@@ -89,6 +89,15 @@ export const SignupSchema = Yup.object().shape({
     .required('This field is required*')
 })
 
+export const ConfirmPassword = Yup.object().shape({
+  password: Yup.string().required('This field is required')
+})
+
+export const ReviewForm = Yup.object().shape({
+  comment: Yup.string(),
+  ratings: Yup.number().required()
+})
+
 export const BankDetailsSchema = Yup.object()
   .shape({
     bankName: Yup.string().required('This field is required*'),
@@ -99,7 +108,9 @@ export const BankDetailsSchema = Yup.object()
     accountName: Yup.string().required('This field is required*'),
     accountNumber: Yup.number(),
     branchAddress: Yup.string().required('This field is required*'),
-    iban: Yup.string()
+    iban: Yup.string(),
+    sortCode: Yup.string().required('This field is required*'),
+    homeAddress: Yup.string().required('This field is required*')
   })
   .atLeastOneOf(['iban', 'accountNumber'])
 

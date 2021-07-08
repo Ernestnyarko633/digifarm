@@ -27,7 +27,7 @@ import { useLocation } from 'react-router-dom'
 
 const Marketplace = () => {
   document.title = "Complete Farmer | Farmer's Market"
-  const { getSourcingOrders } = useApi() //getMyFarms
+  const { getSourcingOrders } = useApi() // getMyFarms
   // const [varieties, setVarieties] = useState([])
   // const [buyers, setBuyers] = useState([])
   // const { isAuthenticated } = useAuth()
@@ -95,7 +95,7 @@ const Marketplace = () => {
         </Box>
       </Box>
 
-      <Box py={12} px={24} mt={20} bgColor='#ECECEC'>
+      <Box py={12} px={24} mt={20}>
         <Heading>Buyers you can sell to</Heading>
         <Flex
           align='center'
@@ -153,7 +153,7 @@ const Marketplace = () => {
             />
           ))}
         {state === 0 && data?.length === 0 && (
-          <BuyerEmptyState image={group} ml={90} />
+          <BuyerEmptyState image={group} mx='auto' />
         )}
 
         {state === 1 && (
@@ -161,7 +161,7 @@ const Marketplace = () => {
             image={transaction1}
             note='No ongoing transaction yet'
             info='Ongoing transactions will be available here'
-            ml={90}
+            mx='auto'
           />
         )}
         {state === 2 && (
@@ -169,7 +169,7 @@ const Marketplace = () => {
             image={transaction2}
             note={"You haven't made any transactions"}
             info='Past transaction history will show here'
-            ml={90}
+            mx='auto'
           />
         )}
       </Box>

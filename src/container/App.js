@@ -8,6 +8,7 @@ import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
 import { ApiContextProvider } from 'context/api'
 import { WalletContextProvider } from 'context/wallet'
+import { RolloverContextProvider } from 'context/rollover'
 import Router from 'routes/register'
 
 // const tagManagerArgs = {
@@ -25,13 +26,15 @@ const App = () => {
         <ApiContextProvider>
           <ExternalContextProvider>
             <AuthContextProvider>
-              <StartFarmContextProvider>
-                <ModalContextProvider>
-                  <WalletContextProvider>
-                    <Router />
-                  </WalletContextProvider>
-                </ModalContextProvider>
-              </StartFarmContextProvider>
+              <RolloverContextProvider>
+                <StartFarmContextProvider>
+                  <ModalContextProvider>
+                    <WalletContextProvider>
+                      <Router />
+                    </WalletContextProvider>
+                  </ModalContextProvider>
+                </StartFarmContextProvider>
+              </RolloverContextProvider>
             </AuthContextProvider>
           </ExternalContextProvider>
         </ApiContextProvider>

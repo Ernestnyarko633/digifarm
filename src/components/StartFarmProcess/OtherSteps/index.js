@@ -31,7 +31,7 @@ import { Safety } from '../../../theme/Icons'
 
 const MotionFlex = motion(Flex)
 
-const OtherSteps = ({ data, history: { push } }) => {
+const OtherSteps = ({ data, rollover, history: { push } }) => {
   const { user } = useAuth()
   const {
     text,
@@ -67,7 +67,7 @@ const OtherSteps = ({ data, history: { push } }) => {
       case 0:
         return <AboutFarmManager farm={selectedFarm} />
       case 1:
-        return <ChooseAcreage farm={selectedFarm} />
+        return <ChooseAcreage rollover={rollover} farm={selectedFarm} />
       case 2:
         return (
           <Contract
@@ -87,7 +87,7 @@ const OtherSteps = ({ data, history: { push } }) => {
 
   const handleAcceptAgreement = () => {
     if (user?.signature?.string) {
-      handleCreateOrder()
+      handleCreateOrder(null, null, rollover)
     } else {
       toast({
         title: 'Action needed',
@@ -300,7 +300,8 @@ const OtherSteps = ({ data, history: { push } }) => {
 
 OtherSteps.propTypes = {
   data: PropTypes.object,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  rollover: PropTypes.bool
 }
 
 export default OtherSteps

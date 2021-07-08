@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect, useRef } from 'react'
 import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
@@ -41,14 +40,14 @@ export default function Farm() {
   const [location, setLocation] = useState([])
   const [center, setCenter] = useState([])
 
-  //reloads
+  // reloads
   const [farmReload, setFarmReload] = useState(0)
   const [activitiesReload, setActivitiesReload] = useState(0)
   const [tasksReload, setTasksReload] = useState(0)
   const [farmFeedsReload, setFarmFeedsReload] = useState(0)
   const [scheduledTasksReload, setScheduledTasksReload] = useState(0)
 
-  //trigger Reloads
+  // trigger Reloads
   const triggerFarmReload = () => setFarmReload(prevState => prevState + 1)
   const triggerActivitiesReload = () =>
     setActivitiesReload(prevState => prevState + 1)
@@ -81,10 +80,10 @@ export default function Farm() {
   }, [farm?.order?.product, setInViewProduct])
   // lifecycle event to handle parsing of fms to coords to suitable data type for eos
   useEffect(() => {
-    let new_location_coords = []
-    let new_location_center = []
-    let farm_location = farm?.order?.product?.location
-    let farm_location_center = farm_location?.center
+    const new_location_coords = []
+    const new_location_center = []
+    const farm_location = farm?.order?.product?.location
+    const farm_location_center = farm_location?.center
     // fms coords are in strings "1.2334,0.4543434"
     // function splits strings to two strings and then converts or parses them to numbers
     const strToNumber = (value, array) =>
@@ -313,12 +312,12 @@ export default function Farm() {
         <Box>
           {location?.length > 0 && (
             <DynamicFarm
-              //loading
+              // loading
               farmFeedsIsLoading={farmFeedsIsLoading}
               ScheduledTasksIsLoading={ScheduledTasksIsLoading}
               myFarmActivitiesIsLoading={myFarmActivitiesIsLoading}
               tasksIsLoading={tasksIsLoading}
-              //state
+              // state
               farm={component}
               // data
               center={center || []}
@@ -328,7 +327,7 @@ export default function Farm() {
               digitalFarmerFarm={farm || {}}
               farmfeeds={farmFeeds || []}
               location={location || []}
-              //helpers
+              // helpers
               dateIntervals={dateIntervals}
               onOpen={getImage}
               reloads={[
@@ -337,7 +336,7 @@ export default function Farm() {
                 triggerFarmFeedsReload,
                 triggerScheduledTasksReload
               ]}
-              //errors
+              // errors
               farmFeedsHasError={farmFeedsHasError}
               ScheduledTasksHasError={ScheduledTasksHasError}
               myFarmActivitiesHasError={myFarmActivitiesHasError}

@@ -8,6 +8,7 @@ import useAuth from './auth'
 import useExternal from './external'
 
 import Constants from 'constant'
+import useRollover from './rollover'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[0]
@@ -51,8 +52,12 @@ export const StartFarmContextProvider = ({ children }) => {
     initiatePayment,
     initiatePaystackPayment,
     patchOrder,
-    createCooperative
+    createCooperative,
+    patchWallet,
+    verifyWallet
   } = useApi()
+
+  const { selectedWallets } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -111,7 +116,105 @@ export const StartFarmContextProvider = ({ children }) => {
     setOtherStep(draft => draft - 1)
   }
 
-  const handleCreateOrder = async (cooperative, cooperativeUserAcreage) => {
+  const handleRolloverPayment = async _order => {
+    try {
+      setSubmitting(true)
+      let tempCost = order?.cost || _order?.cost
+      setText("Processing payment, please don't reload/refresh page")
+      const data = {
+        amount: _order?.cost || order?.cost,
+        order_id: _order?._id || order?._id,
+        purpose: 'FARM_PURCHASE',
+        transaction_type: 'WALLET'
+      }
+      const res = await initiatePayment(data)
+
+      if (res.data.status === 'VERIFIED') {
+        const walletsPromises = selectedWallets.map(async wallet => {
+          if (tempCost !== 0) {
+            let temp = tempCost
+            const response = await patchWallet(wallet?.id, {
+              wallet:
+                temp > wallet?.amount || temp === wallet?.amount
+                  ? 0
+                  : wallet?.amount > temp
+                  ? wallet?.amount - temp
+                  : 0
+            })
+            if (response.data) {
+              tempCost =
+                tempCost > wallet?.amount || tempCost === wallet?.amount
+                  ? tempCost - wallet?.amount
+                  : 0
+              return response.data
+            }
+            return []
+          }
+        })
+        await Promise.all(walletsPromises)
+
+        const updatedOrder = await patchOrder(res?.data?.order_id?.$oid, {
+          payment: res?.data?._id?.$oid,
+          status: 'PAID'
+        })
+
+        setOrder(updatedOrder?.data)
+
+        await verifyWallet({
+          type: 'ROLLOVER',
+          order_id: order?._id || _order?._id,
+          cost: order?.cost || _order?.cost
+        })
+
+        toast({
+          duration: 9000,
+          isClosable: true,
+          status: 'success',
+          position: 'top-right',
+          title: 'Order created.',
+          description: 'Order saved successfully'
+        })
+
+        handleNextStep()
+        handleNextStep()
+      }
+    } catch (error) {
+      if (error) {
+        if ([401, 403].includes(error.status)) {
+          setSession(false)
+        } else {
+          toast({
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+            position: 'top-right',
+            title: 'An error occurred.',
+            description:
+              (error?.data?.message ||
+                error?.message ||
+                'Unknown error occurred') + '.'
+          })
+        }
+      } else {
+        toast({
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+          title: 'An error occurred.',
+          description: 'Unexpected network error.'
+        })
+      }
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleCreateOrder = async (
+    cooperative,
+    cooperativeUserAcreage,
+    rollover
+  ) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
@@ -173,7 +276,8 @@ export const StartFarmContextProvider = ({ children }) => {
       setOrder(res.data)
       sessionStorage.removeItem('my_farms')
       sessionStorage.removeItem('my_orders')
-      handleNextStep()
+      !rollover && handleNextStep()
+      rollover && handleRolloverPayment(res.data)
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
