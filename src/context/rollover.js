@@ -96,8 +96,6 @@ export const RolloverContextProvider = ({ children }) => {
             tempCost =
               tempCost > wallet?.amount || tempCost === wallet?.amount
                 ? tempCost - wallet?.amount
-                : wallet?.amount > tempCost
-                ? 0
                 : 0
             return response.data
           }
