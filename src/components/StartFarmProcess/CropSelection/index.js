@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Flex, Heading, useToast } from '@chakra-ui/react'
+import { Box, Flex, Heading, Icon, Link, useToast } from '@chakra-ui/react'
 
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
@@ -10,11 +10,12 @@ import Tabs from 'components/Tabs/Tabs'
 import FetchCard from 'components/FetchCard'
 import FarmDetails from './FarmDetails'
 import { Button } from '../../index'
+import { Link as ReachRouter } from 'react-router-dom'
+import { home } from '../../../theme/Icons'
 
 const CropSelection = () => {
   const gridRef = React.useRef(false)
-  const { handleBack, handleNext, selectedCooperativeType, selectedFarm } =
-    useStartFarm()
+  const { handleNext, selectedCooperativeType, selectedFarm } = useStartFarm()
 
   const [reload, setReload] = useState(0)
 
@@ -121,16 +122,18 @@ const CropSelection = () => {
             </Tabs>
           </Box>
           <Flex w='full' justify='flex-end' my={6}>
-            <Button
-              h={12}
-              width={40}
-              fontSize='md'
-              btntitle='Prev'
-              color='gray.700'
-              colorScheme='white'
-              onClick={handleBack}
-              borderWidth={1}
-            />
+            <Link as={ReachRouter} to='/dashboard'>
+              <Button
+                h={12}
+                width={{ md: 56 }}
+                fontSize='md'
+                btntitle='Go to Dashboard'
+                color='gray.700'
+                colorScheme='white'
+                borderWidth={1}
+                rightIcon={<Icon as={home} boxSize={5} />}
+              />
+            </Link>
             <Box mx={2} />
             <Button
               btntitle='Continue'

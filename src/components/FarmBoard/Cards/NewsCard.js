@@ -14,7 +14,7 @@ import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { urlify, embed_url } from 'helpers/misc'
 
-const NewsCard = ({ content, status }) => {
+const NewsCard = ({ content, status, loading }) => {
   const [show, setShow] = React.useState(false)
   const handleToggle = () => setShow(!show)
   const [items, setItems] = React.useState([])
@@ -153,13 +153,17 @@ const NewsCard = ({ content, status }) => {
           <NewHead />
         </Box>
         <Box pos='relative'>
-          {selectedItem?.slice_type !== 'video' && (
-            <Image
-              h={{ md: 85 }}
-              w='100%'
-              objectFit='cover'
-              src={selectedItem?.primary?.image?.url}
-            />
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            selectedItem?.slice_type !== 'video' && (
+              <Image
+                h={{ md: 85 }}
+                w='100%'
+                objectFit='cover'
+                src={selectedItem?.primary?.image?.url}
+              />
+            )
           )}
 
           {selectedItem?.slice_type === 'video' && (
@@ -312,7 +316,8 @@ const NewsCard = ({ content, status }) => {
 NewsCard.propTypes = {
   activeFarm: PropTypes.object,
   content: PropTypes.any,
-  status: PropTypes.any
+  status: PropTypes.any,
+  loading: PropTypes.bool
 }
 
 export default NewsCard

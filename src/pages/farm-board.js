@@ -45,7 +45,7 @@ const FarmBoard = () => {
           text='Standby as we load your current farms and pending orders'
         />
       ) : (
-        <FarmBoardContent farms={myFarms || []} />
+        <FarmBoardContent farms={myFarms || []} farmLoader={myFarmsIsLoading} />
       )}
 
       {!myFarms?.length && <GetStartedNowCard />}

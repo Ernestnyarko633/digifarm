@@ -12,7 +12,8 @@ const RenderCards = ({
   filter,
   farms,
   activeFarmIndex,
-  comparant
+  comparant,
+  loading
 }) => {
   // switch for data type using status
   const renderCard = (status, content) => {
@@ -21,7 +22,7 @@ const RenderCards = ({
         return (
           <>
             {filter === comparant && (
-              <NewsCard content={content} status={status} />
+              <NewsCard content={content} status={status} loading={loading} />
             )}
           </>
         )
@@ -29,7 +30,11 @@ const RenderCards = ({
         return (
           <>
             {filter === comparant && (
-              <WeeklyVideoCard content={content} status={status} />
+              <WeeklyVideoCard
+                content={content}
+                status={status}
+                loading={loading}
+              />
             )}
           </>
         )
@@ -41,6 +46,7 @@ const RenderCards = ({
                 <FarmFeedCard
                   activeFarm={farms[activeFarmIndex]}
                   content={content}
+                  loading={loading}
                   status={status}
                   timestamp={new Date(
                     latestDateForFarmFeed(content)
@@ -71,7 +77,8 @@ RenderCards.propTypes = {
   filter: PropTypes.string,
   farms: PropTypes.array,
   activeFarmIndex: PropTypes.number,
-  comparant: PropTypes.string
+  comparant: PropTypes.string,
+  loading: PropTypes.bool
 }
 
 export default RenderCards
