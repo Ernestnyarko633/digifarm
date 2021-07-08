@@ -10,7 +10,7 @@ import { usePrismic, useFeeds } from 'hooks/useFarmBoard'
 import { useLocation } from 'react-router-dom'
 import { checkProperties } from 'helpers/misc'
 
-const FarmBoardContent = ({ farms = [] }) => {
+const FarmBoardContent = ({ farms = [], farmLoader }) => {
   //using function to query search params
   const useQuery = () => new URLSearchParams(useLocation().search)
 
@@ -110,6 +110,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                     activeFarmIndex={activeFarmIndex}
                     status={content?.type}
                     content={content}
+                    loading={farmLoader}
                   />
                 )))
             : renderEmpty(key)
@@ -129,6 +130,7 @@ const FarmBoardContent = ({ farms = [] }) => {
               activeFarmIndex={activeFarmIndex}
               status={content?.type}
               content={content}
+              loading={farmLoader}
             />
           ))
       } else {
@@ -194,7 +196,8 @@ const FarmBoardContent = ({ farms = [] }) => {
 }
 
 FarmBoardContent.propTypes = {
-  farms: PropTypes.array.isRequired
+  farms: PropTypes.array.isRequired,
+  farmLoader: PropTypes.bool
 }
 
 export default FarmBoardContent
