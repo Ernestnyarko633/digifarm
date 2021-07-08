@@ -16,6 +16,7 @@ const CustomSelect = ({
   options,
   isRequired,
   isDisabled,
+  borderBottomColor,
   ...rest
 }) => {
   const isInvalid = error && touched
@@ -55,7 +56,7 @@ const CustomSelect = ({
         }}
         bgColor='white'
         borderWidth={1}
-        borderBottomColor={isInvalid ? '' : 'cf.green'}
+        borderBottomColor={isInvalid ? '' : borderBottomColor || 'cf.green'}
         {...rest}
       >
         {options?.map(e => (
@@ -79,6 +80,7 @@ CustomSelect.propTypes = {
   isRequired: PropTypes.bool,
   valueKey: PropTypes.string,
   options: PropTypes.array.isRequired,
-  isDisabled: PropTypes.bool
+  isDisabled: PropTypes.bool,
+  borderBottomColor: PropTypes.any
 }
 export default CustomSelect

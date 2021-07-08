@@ -21,6 +21,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({ url: `${AUTH_API}/users/profile` })
   }
 
+  const loginUser = async payload => {
+    return await http.post({
+      url: `${AUTH_API}/login`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   const patchUser = async (id, body) => {
     return await http.patch({ url: `${AUTH_API}/users/${id}`, body })
   }
@@ -59,6 +66,13 @@ export const ApiContextProvider = ({ children }) => {
     return await http.patch({
       url: `${DIGITAL_FARMER_API}/orders/${id}`,
       body
+    })
+  }
+
+  const patchWallet = async (id, payload) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/farms/${id}`,
+      body: JSON.stringify(payload)
     })
   }
 
@@ -221,6 +235,33 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const submitPayout = async payload => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/payrolls`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const verifyWallet = async payload => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/verify-wallet`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const patchPayout = async (id, payload) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/payrolls/${id}`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const getFarmProcessingPayouts = async query => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/payrolls-wallet`,
+      query
+    })
+  }
   const eosTask = async payload => {
     return await http.post({
       url: `${FMS_API}/eos-task`,
@@ -306,6 +347,7 @@ export const ApiContextProvider = ({ children }) => {
     <ApiContext.Provider
       value={{
         signUp,
+        loginUser,
         logout,
         eosTask,
         getUser,
@@ -325,6 +367,10 @@ export const ApiContextProvider = ({ children }) => {
         sellProduce,
         createOrder,
         downloadFile,
+        patchWallet,
+        verifyWallet,
+        submitPayout,
+        patchPayout,
 
         getActivities,
         verifyPayment,
@@ -346,6 +392,7 @@ export const ApiContextProvider = ({ children }) => {
         getUserBankingDetails,
         initiatePaystackPayment,
         verifyPaystackPayment,
+        getFarmProcessingPayouts,
 
         //cooperative
         acceptInvite,
