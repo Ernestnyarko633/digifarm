@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useHistory } from 'react-router-dom'
 // import TagManager from 'react-gtm-module'
 import { StartFarmContextProvider } from 'context/start-farm'
 import { ComponentContextProvider } from 'context/component'
@@ -16,9 +16,27 @@ import Router from 'routes/register'
 // }
 
 const App = () => {
+  const history = useHistory()
   // React.useEffect(() => {
   //   TagManager.initialize(tagManagerArgs)
   // }, [])
+
+  function FacebookPixel() {
+    React.useEffect(() => {
+      import('react-facebook-pixel')
+        .then(x => x.default)
+        .then(ReactPixel => {
+          ReactPixel.init('2143795925947401')
+          ReactPixel.pageView()
+
+          history?.listen(location => {
+            ReactPixel.pageView()
+            ReactPixel.fbq('track', 'PageView')
+          })
+        })
+    })
+    return null
+  }
 
   return (
     <BrowserRouter>
@@ -30,6 +48,7 @@ const App = () => {
                 <StartFarmContextProvider>
                   <ModalContextProvider>
                     <WalletContextProvider>
+                      <FacebookPixel />
                       <Router />
                     </WalletContextProvider>
                   </ModalContextProvider>
