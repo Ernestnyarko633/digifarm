@@ -36,7 +36,7 @@ const ThemeApp = () => {
           ReactPixel.init("2143795925947401");
           ReactPixel.pageView();
 
-          history?.listen((location) => {
+          history?.listen(() => {
             ReactPixel.pageView();
             ReactPixel.fbq("track", "PageView");
           });
