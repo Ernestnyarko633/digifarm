@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import Layout from 'container/Layout'
 import { Box, Grid, Heading, Flex } from '@chakra-ui/react'
@@ -22,6 +23,7 @@ const FarmWallet = () => {
     const _index = index
     return _index
   }
+
   return (
     <Layout>
       <FarmWalletEmptyState farms={myFarms || []}>
