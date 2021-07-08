@@ -17,7 +17,7 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { FirstLettersToUpperCase } from 'helpers/misc'
 import ReactPlayer from 'react-player/lazy'
 
-const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
+const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [show, setShow] = React.useState(false)
@@ -131,13 +131,17 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
             <Detail />
           </Box>
           <Box pos='relative'>
-            {selectedItem?.type === 'image' && (
-              <Image
-                h={{ md: 110 }}
-                w='100%'
-                objectFit='cover'
-                src={selectedItem?.url}
-              />
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              selectedItem?.type === 'image' && (
+                <Image
+                  h={{ md: 110 }}
+                  w='100%'
+                  objectFit='cover'
+                  src={selectedItem?.url}
+                />
+              )
             )}
 
             {selectedItem?.type === 'video' && (
@@ -148,7 +152,8 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
               justify='center'
               pos='absolute'
               bottom={6}
-              left={{ base: '20%', md: '45%' }}
+              left={{ base: '50%', md: '45%' }}
+              right={{ base: '50%' }}
             >
               <Flex
                 as='button'
@@ -158,8 +163,8 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 justify='center'
                 borderColor='white'
                 borderWidth={1}
-                w={10}
-                h={10}
+                minW={10}
+                minH={10}
                 rounded='100%'
                 // _hover={{
                 //   background: 'cf.green',
@@ -189,8 +194,8 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp }) => {
                 justify='center'
                 borderColor='white'
                 bg='white'
-                w={10}
-                h={10}
+                minW={10}
+                minH={10}
                 // _hover={{
                 //   background: 'cf.green',
                 //   color: 'white'
@@ -290,7 +295,8 @@ FarmFeedCard.propTypes = {
   activeFarm: PropTypes.object,
   status: PropTypes.any,
   content: PropTypes.any,
-  timestamp: PropTypes
+  timestamp: PropTypes.any,
+  loading: PropTypes.bool
 }
 
 export default FarmFeedCard
