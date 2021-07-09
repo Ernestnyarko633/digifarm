@@ -20,7 +20,8 @@ const menuLink = [
 
 const Sidebar = () => {
   const handleClick = () => {
-    ReactPixel?.fbq('StarFarm', {
+    if (!ReactPixel.fbq) return
+    ReactPixel.fbq('StarFarm', {
       title: 'Start a farm',
       description: 'https://digitalfarmer.completefarmer.com/start-farm'
     })
