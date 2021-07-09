@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable no-console */
+import React, { useEffect } from 'react'
 import { Box, Grid, Flex, Image, Heading, Text, Icon } from '@chakra-ui/react'
 import Stack from '../../assets/images/finance.svg'
 import Money from '../../assets/images/money.svg'
@@ -8,10 +9,29 @@ import Graph from 'components/Utils/Graph'
 import { FaCircle } from 'react-icons/fa'
 import useComponent from 'context/component'
 import useWallet from 'context/wallet'
+import useRollover from 'context/rollover'
 
-const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
+const FarmFinances = ({
+  activities,
+  tasks,
+  scheduledTasks,
+  wallet_id,
+  farm
+}) => {
   const { handleModalClick } = useComponent()
   const { totalAmount } = useWallet()
+  const { step, setStep, setType } = useRollover()
+
+  console.log(farm.order.product, farm.wallet)
+
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted) {
+      setStep(p => p * 0)
+    }
+    return () => (mounted = false)
+  }, [setStep])
 
   return (
     <Box
@@ -154,11 +174,14 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
               <Button
                 btntitle='Rollover'
                 bg='white'
+                isDisabled={
+                  farm?.order?.product?.payoutStatus !== 'PAID' &&
+                  farm?.wallet <= 0
+                }
                 borderWidth={1}
                 borderColor='cf.green'
                 color='cf.green'
-                rounded='30px'
-                isDisabled={true}
+                rounded={30}
                 mx={{ base: 3, md: 0 }}
                 my={5}
                 colorScheme='none'
@@ -169,22 +192,27 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
                 fontSize={{ base: 'sm', xl: 'md' }}
                 mr={{ md: 5 }}
                 onClick={() => {
-                  handleModalClick('rollover')
+                  setType('asRollover')
+
+                  handleModalClick('rollover', { step, setStep, wallet_id })
                 }}
               />
               <Button
                 btntitle='Payout'
                 borderColor='cf.green'
                 color='white'
-                rounded='30px'
-                isDisabled={true}
+                rounded={30}
+                isDisabled={
+                  farm.order.product.payoutStatus !== 'PAID' && farm.wallet <= 0
+                }
                 mx={{ base: 3, md: 0 }}
                 my={5}
                 w='50%'
                 h={50}
                 fontSize={{ base: 'sm', xl: 'md' }}
                 onClick={() => {
-                  handleModalClick('payout')
+                  setType('asPayout')
+                  handleModalClick('payout', { wallet_id })
                 }}
               />
             </Flex>
@@ -198,6 +226,8 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
 FarmFinances.propTypes = {
   activities: PropTypes.array.isRequired,
   tasks: PropTypes.array.isRequired,
-  scheduledTasks: PropTypes.array.isRequired
+  scheduledTasks: PropTypes.array.isRequired,
+  wallet_id: PropTypes.string,
+  farm: PropTypes.object
 }
 export default FarmFinances

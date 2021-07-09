@@ -1,16 +1,16 @@
 import React from 'react'
 import Layout from 'container/Layout'
-import { Heading, Box, Icon, Text, Center } from '@chakra-ui/react'
+import { Heading, Box, Icon, Text } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import useApi from 'context/api'
 import useAuth from 'context/auth'
 import useFetch from 'hooks/useFetch'
-import FarmsEmptyState from 'components/EmptyStates/FarmsEmptyState'
-import Greetings from 'components/Utils/Greetings'
-import { getCurrentDayParting } from 'helpers/misc'
-import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
-import vector from '../assets/images/vector.png'
+// import FarmsEmptyState from 'components/EmptyStates/FarmsEmptyState'
+// import Greetings from 'components/Utils/Greetings'
+// import { getCurrentDayParting } from 'helpers/misc'
+// import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
+// import vector from '../assets/images/vector.png'
 import FetchCard from 'components/FetchCard'
 
 const Warehouse = () => {
@@ -19,7 +19,7 @@ const Warehouse = () => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [reload, setReload] = React.useState(0)
-  const { message } = getCurrentDayParting()
+  // const { message } = getCurrentDayParting()
 
   const triggerReload = () => setReload(prevState => prevState + 1)
   const {
@@ -30,14 +30,25 @@ const Warehouse = () => {
 
   const isLoading = myFarmsIsLoading
   const hasError = myFarmsHasError
-  const filteredFarms = myfarms?.filter(farm => farm.storage.quantity > 0)
+  // const filteredFarms = myfarms?.filter(farm => farm.storage.quantity > 0)
 
-  return (
+  return isLoading || hasError ? (
+    <FetchCard
+      reload={() => !myfarms.length && triggerReload()}
+      w='100%'
+      mx='auto'
+      align='center'
+      justify='center'
+      direction='column'
+      error={hasError}
+      loading={isLoading}
+    />
+  ) : (
     <Layout height='100vh' bgColor='none'>
-      {myfarms?.length > 0 ? (
-        <>
-          {myfarms?.length === 1 && myfarms[0].storage.quantity === 0 ? (
-            <>
+      {/* {myfarms?.length > 0 ? ( */}
+      <>
+        {/* {myfarms?.length === 1 && myfarms[0].storage.quantity === 0 ? ( */}
+        {/* <>
               <Greetings title='Warehouse' />
               <Box
                 borderRadius={10}
@@ -64,70 +75,57 @@ const Warehouse = () => {
                 />
               </Center>
             </>
-          ) : (
-            <>
-              {isLoading || hasError ? (
-                <FetchCard
-                  reload={() => !myfarms.length && triggerReload()}
-                  w='100%'
-                  mx='auto'
-                  align='center'
-                  justify='center'
-                  direction='column'
-                  error={hasError}
-                  loading={isLoading}
-                />
-              ) : (
-                <Box py={12} px={{ base: 4, md: 24 }} my={{ base: 20, md: 0 }}>
-                  <Heading as='h3' mb={{ base: 6, md: 0 }}>
-                    Warehouse{' '}
-                  </Heading>
-                  <Box
-                    borderRadius={40}
-                    borderWidth={2}
-                    borderColor='rgba(208, 143, 49, 0.1)'
-                    bgColor='rgba(208, 143, 49, 0.1)'
-                    p={2}
-                    position={{ md: 'absolute' }}
-                  >
-                    <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
-                    <Text
-                      as='span'
-                      fontWeight='bold'
-                      fontSize='sm'
-                      color='#D08F31'
-                      px={2}
-                    >
-                      If produce in the warehouse are not sold within 2 weeks,
-                      they will automatically be sold to a buyer
-                    </Text>
-                  </Box>
-                  <Box mt={20}>
-                    {filteredFarms?.map(myfarm => (
-                      <WarehouseCard
-                        sellButton={true}
-                        _id={myfarm._id}
-                        key={myfarm?.name}
-                        mr={3}
-                        ml={14}
-                        myfarm={myfarm}
-                      />
-                    ))}
-                  </Box>
-                </Box>
-              )}
-            </>
-          )}
-        </>
-      ) : (
+          ) : ( */}
         <>
+          <Box py={12} px={{ base: 4, md: 24 }} my={{ base: 20, md: 0 }}>
+            <Heading as='h3' mb={{ base: 6, md: 0 }}>
+              Warehouse{' '}
+            </Heading>
+            <Box
+              borderRadius={40}
+              borderWidth={2}
+              borderColor='rgba(208, 143, 49, 0.1)'
+              bgColor='rgba(208, 143, 49, 0.1)'
+              p={2}
+              position={{ md: 'absolute' }}
+            >
+              <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
+              <Text
+                as='span'
+                fontWeight='bold'
+                fontSize='sm'
+                color='#D08F31'
+                px={2}
+              >
+                If produce in the warehouse are not sold within 2 weeks, they
+                will automatically be sold to a buyer
+              </Text>
+            </Box>
+            <Box mt={20}>
+              {myfarms?.map(myfarm => (
+                <WarehouseCard
+                  sellButton='true'
+                  _id={myfarm._id}
+                  key={myfarm?.name}
+                  mr={3}
+                  ml={14}
+                  myfarm={myfarm}
+                />
+              ))}
+            </Box>
+          </Box>
+        </>
+        {/* )} */}
+      </>
+      {/* ) : ( */}
+      {/* <>
           <Greetings
             title={`${message} Farmer ${user?.firstName}`}
             text='Get started by farming individually or with a group.'
           />
           <FarmsEmptyState />
-        </>
-      )}
+        </> */}
+      {/* )} */}
     </Layout>
   )
 }

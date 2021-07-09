@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Icon, Link, Text } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
+import * as ReactPixel from 'react-facebook-pixel'
 
 import { farm, home, market, Guide, wallet } from 'theme/Icons'
 import { FiPlay } from 'react-icons/fi'
@@ -17,18 +18,32 @@ const menuLink = [
   { icon: market, path: '/warehouses', name: 'Warehouse', size: 4 }
 ]
 
-const links = [
-  { icon: Guide, path: '/guide', name: 'How-To-Guide', size: 5 },
-  { icon: FiPlay, path: '/start-farm', name: 'Start-New-Farm', size: 5 }
-  // {
-  //   icon: IoIosHelpCircle,
-  //   path: '/support',
-  //   name: 'Customer Support',
-  //   size: 5
-  // }
-]
-
 const Sidebar = () => {
+  const handleClick = () => {
+    if (!ReactPixel.fbq) return
+    ReactPixel.fbq('StarFarm', {
+      title: 'Start a farm',
+      description: 'https://digitalfarmer.completefarmer.com/start-farm'
+    })
+  }
+
+  const links = [
+    { icon: Guide, path: '/guide', name: 'How-To-Guide', size: 5 },
+    {
+      icon: FiPlay,
+      path: '/start-farm',
+      name: 'Start-New-Farm',
+      size: 5,
+      click: handleClick
+    }
+    // {
+    //   icon: IoIosHelpCircle,
+    //   path: '/support',
+    //   name: 'Customer Support',
+    //   size: 5
+    // }
+  ]
+
   return (
     <Box
       pt={40}
@@ -103,7 +118,7 @@ const Sidebar = () => {
             _activeLink={{ color: 'cf.green', bg: 'cf.300' }}
           >
             <Icon as={item.icon} boxSize={item.size} mr={2} />
-            <Text fontSize='sm' textAlign='center' mt={1}>
+            <Text fontSize='sm' textAlign='center' mt={1} onClick={item.click}>
               {item.name}
             </Text>
           </Link>

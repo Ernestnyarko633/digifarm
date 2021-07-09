@@ -12,7 +12,11 @@ const FormTextArea = ({
   name,
   error,
   touched,
+  height,
   bg,
+  backgroundColor,
+  borderBottomColor,
+  rounded,
   ...rest
 }) => (
   <FormControl pos='relative' pt={2} isInvalid={error && touched} {...rest}>
@@ -20,7 +24,10 @@ const FormTextArea = ({
       bg={bg}
       borderWidth={1}
       borderColor='gray.100'
-      borderBottomColor={error && touched ? 'red.500' : 'cf.green'}
+      rounded={rounded || 15}
+      borderBottomColor={
+        error && touched ? 'red.500' : borderBottomColor || 'cf.green'
+      }
     >
       <FormLabel
         fontSize='xs'
@@ -42,6 +49,8 @@ const FormTextArea = ({
         overrides={{
           Root: {
             style: {
+              height: height,
+              borderRadius: '15px',
               backgroundColor: 'transparent',
               borderWidth: '0px'
             }
@@ -55,7 +64,7 @@ const FormTextArea = ({
           },
           InputContainer: {
             style: {
-              backgroundColor: 'transparent',
+              backgroundColor: backgroundColor || 'transparent',
               borderWidth: '0px'
             }
           }
@@ -78,7 +87,11 @@ FormTextArea.propTypes = {
   error: PropTypes.any,
   touched: PropTypes.any,
   bg: PropTypes.any,
-  onBlur: PropTypes.any.isRequired
+  borderBottomColor: PropTypes.any,
+  backgroundColor: PropTypes.any,
+  rounded: PropTypes.any,
+  onBlur: PropTypes.any.isRequired,
+  height: PropTypes.any
 }
 
 export default FormTextArea

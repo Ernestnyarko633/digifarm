@@ -3,6 +3,7 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import useComponent from 'context/component'
+import { getFormattedMoney } from 'helpers/misc'
 export default function FarmDocumentCard({
   title,
   subtitle,
@@ -30,7 +31,7 @@ export default function FarmDocumentCard({
   }
   const keys = [
     { name: 'Total Tasks', data: tasksNumber },
-    { name: 'Total Cost', data: `$ ${amount}` }
+    { name: 'Total Cost', data: `$ ${getFormattedMoney(amount)}` }
   ]
   return (
     <Box

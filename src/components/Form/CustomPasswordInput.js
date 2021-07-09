@@ -18,6 +18,7 @@ const PasswordInput = ({
   label,
   isDisabled,
   isRequired,
+  borderBottomColor,
   ...rest
 }) => {
   const [show, setShow] = React.useState(false)
@@ -59,7 +60,7 @@ const PasswordInput = ({
           borderWidth={1}
           _focus={{ outline: 'none' }}
           _hover={{ outline: 'none' }}
-          borderBottomColor={isInvalid ? '' : 'cf.green'}
+          borderBottomColor={isInvalid ? '' : borderBottomColor || 'cf.green'}
           type={show ? 'text' : 'password'}
           {...rest}
         />
@@ -93,7 +94,8 @@ PasswordInput.propTypes = {
   error: PropTypes.string,
   touched: PropTypes.bool,
   isRequired: PropTypes.bool,
-  isDisabled: PropTypes.bool
+  isDisabled: PropTypes.bool,
+  borderBottomColor: PropTypes.any
 }
 
 export default PasswordInput

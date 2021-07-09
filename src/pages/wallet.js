@@ -1,18 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Heading, Grid } from '@chakra-ui/react'
 import Layout from 'container/Layout'
 import FarmWalletEmptyState from 'components/EmptyStates/FarmWalletEmptyState'
 import FundCard from 'components/Cards/FundCard'
 import Individual from 'components/Dynamic/Document/Individual'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import FarmFinances from 'components/Cards/FarmFinances'
+import useRollover from 'context/rollover'
 
 const Wallet = () => {
   document.title = 'Complete Farmer | Farm wallet'
 
+  const { setStep } = useRollover()
+  const { id: wallet_id } = useParams()
+
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted) {
+      setStep(p => p * 0)
+    }
+
+    return () => (mounted = false)
+  }, [setStep])
+
   const { state } = useLocation()
 
   const {
+    processing_payout,
     wallet,
     balance,
     expense,
@@ -22,6 +37,18 @@ const Wallet = () => {
     tasks,
     activities
   } = state
+
+  const { setBigStepper } = useRollover()
+
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted && processing_payout) {
+      setBigStepper(p => p + 4)
+    }
+
+    return () => (mounted = false)
+  }, [processing_payout, setBigStepper])
 
   return (
     <Layout>
@@ -54,7 +81,9 @@ const Wallet = () => {
           <Box
             display={{ base: 'none', md: 'block' }}
             as={FarmFinances}
+            farm={farm}
             activities={activities}
+            wallet_id={wallet_id}
             tasks={tasks}
             scheduledTasks={ScheduledTasks}
           />

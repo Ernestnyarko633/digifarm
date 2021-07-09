@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -203,8 +204,8 @@ const FarmCard = ({ farm, id }) => {
               <>
                 <Box d={{ base: 'block', md: 'none' }}>
                   <Collapse startingHeight={80} in={show}>
-                    {data.length > 0 ? (
-                      data.map((activity, index) => (
+                    {data?.length > 0 ? (
+                      data?.map((activity, index) => (
                         <Step
                           activity={activity}
                           key={activity.title}

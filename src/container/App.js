@@ -8,6 +8,7 @@ import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
 import { ApiContextProvider } from 'context/api'
 import { WalletContextProvider } from 'context/wallet'
+import { RolloverContextProvider } from 'context/rollover'
 import Router from 'routes/register'
 
 // const tagManagerArgs = {
@@ -15,9 +16,27 @@ import Router from 'routes/register'
 // }
 
 const App = () => {
+  // const history = useHistory()
   // React.useEffect(() => {
   //   TagManager.initialize(tagManagerArgs)
   // }, [])
+
+  function FacebookPixel() {
+    React.useEffect(() => {
+      import('react-facebook-pixel')
+        .then(x => x.default)
+        .then(ReactPixel => {
+          ReactPixel.init('2143795925947401')
+          ReactPixel.pageView()
+
+          // history?.listen(location => {
+          //   ReactPixel.pageView()
+          //   ReactPixel.fbq('track', 'PageView')
+          // })
+        })
+    })
+    return null
+  }
 
   return (
     <BrowserRouter>
@@ -25,13 +44,16 @@ const App = () => {
         <ApiContextProvider>
           <ExternalContextProvider>
             <AuthContextProvider>
-              <StartFarmContextProvider>
-                <ModalContextProvider>
-                  <WalletContextProvider>
-                    <Router />
-                  </WalletContextProvider>
-                </ModalContextProvider>
-              </StartFarmContextProvider>
+              <RolloverContextProvider>
+                <StartFarmContextProvider>
+                  <ModalContextProvider>
+                    <WalletContextProvider>
+                      <FacebookPixel />
+                      <Router />
+                    </WalletContextProvider>
+                  </ModalContextProvider>
+                </StartFarmContextProvider>
+              </RolloverContextProvider>
             </AuthContextProvider>
           </ExternalContextProvider>
         </ApiContextProvider>
