@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, useHistory } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 // import TagManager from 'react-gtm-module'
 import { StartFarmContextProvider } from 'context/start-farm'
 import { ComponentContextProvider } from 'context/component'
@@ -16,7 +16,7 @@ import Router from 'routes/register'
 // }
 
 const App = () => {
-  const history = useHistory()
+  // const history = useHistory()
   // React.useEffect(() => {
   //   TagManager.initialize(tagManagerArgs)
   // }, [])
@@ -29,10 +29,10 @@ const App = () => {
           ReactPixel.init('2143795925947401')
           ReactPixel.pageView()
 
-          history?.listen(location => {
-            ReactPixel.pageView()
-            ReactPixel.fbq('track', 'PageView')
-          })
+          // history?.listen(location => {
+          //   ReactPixel.pageView()
+          //   ReactPixel.fbq('track', 'PageView')
+          // })
         })
     })
     return null
