@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, useToast, Heading, Button, Grid } from '@chakra-ui/react'
 import { useFormik } from 'formik'
@@ -39,15 +40,27 @@ const UserDetailsForm = () => {
     onSubmit: async (values, { setSubmitting }) => {
       try {
         let updatedValue = objDiff(values, user)
-        delete updatedValue?.country
-        Object.keys(values.address).forEach(function (key) {
-          Object.keys(updatedValue.address).forEach(function (_key) {
-            if (key === _key) {
-              values.address[key] = updatedValue.address[_key]
-            }
+        if (updatedValue?.address) {
+          if (updatedValue?.country) {
+            updatedValue.address.country = updatedValue.country
+            delete updatedValue?.country
+          }
+          Object.keys(values.address).forEach(function (key) {
+            Object.keys(updatedValue.address).forEach(function (_key) {
+              if (key === _key) {
+                values.address[key] = updatedValue.address[_key]
+              }
+            })
           })
-        })
-        updatedValue.address = values.address
+          updatedValue.address = values.address
+        } else if (updatedValue.country) {
+          updatedValue.address = {
+            country: updatedValue.country,
+            street: values.address.street,
+            state: values.address.state
+          }
+          delete updatedValue?.country
+        }
         const res = await patchUser(user?._id, updatedValue)
         toast({
           title: 'User successfully updated.',

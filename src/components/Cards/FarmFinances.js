@@ -22,8 +22,6 @@ const FarmFinances = ({
   const { totalAmount } = useWallet()
   const { step, setStep, setType } = useRollover()
 
-  console.log(farm.order.product, farm.wallet)
-
   useEffect(() => {
     let mounted = true
 
