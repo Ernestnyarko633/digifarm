@@ -42,7 +42,7 @@ const UserDetailsForm = () => {
         let updatedValue = objDiff(values, user)
         if (updatedValue?.address) {
           if (updatedValue?.country) {
-            updatedValue.address.country = updatedValue.country
+            updatedValue.address.country = values.address.country
             delete updatedValue?.country
           }
           Object.keys(values.address).forEach(function (key) {
@@ -55,12 +55,13 @@ const UserDetailsForm = () => {
           updatedValue.address = values.address
         } else if (updatedValue.country) {
           updatedValue.address = {
-            country: updatedValue.country,
+            country: values.address.country,
             street: values.address.street,
             state: values.address.state
           }
           delete updatedValue?.country
         }
+
         const res = await patchUser(user?._id, updatedValue)
         toast({
           title: 'User successfully updated.',
@@ -211,7 +212,7 @@ const UserDetailsForm = () => {
               name='address.country'
               options={Constants.countrys}
               onBlur={handleBlur}
-              onChange={handleChange}
+              onChange={e => handleChange(e)}
               value={values.address?.country}
               error={errors.address?.country}
               touched={touched.address?.country}

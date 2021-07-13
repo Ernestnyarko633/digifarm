@@ -39,7 +39,6 @@ const PayoutModal = () => {
     }
   }
 
-  console.log(step, 'hete')
   return (
     <ModalWrapper
       isCentered
