@@ -220,7 +220,6 @@ const BankingDetailsForm = ({ bankDetails }) => {
               placeholder='Enter your bank swift code'
             />
             <CustomInput
-              isRequired
               type='text'
               name='sortCode'
               onBlur={handleBlur}
