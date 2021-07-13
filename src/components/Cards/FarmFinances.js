@@ -16,11 +16,12 @@ const FarmFinances = ({
   tasks,
   scheduledTasks,
   wallet_id,
+  processing_payout,
   farm
 }) => {
   const { handleModalClick } = useComponent()
   const { totalAmount } = useWallet()
-  const { step, setStep, setType } = useRollover()
+  const { step, setStep, setType, setListening } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -172,10 +173,10 @@ const FarmFinances = ({
               <Button
                 btntitle='Rollover'
                 bg='white'
-                isDisabled={
-                  farm?.order?.product?.payoutStatus !== 'PAID' &&
-                  farm?.wallet <= 0
-                }
+                // isDisabled={
+                //   farm?.order?.product?.payoutStatus !== 'PAID' &&
+                //   farm?.wallet <= 0
+                // }
                 borderWidth={1}
                 borderColor='cf.green'
                 color='cf.green'
@@ -190,7 +191,13 @@ const FarmFinances = ({
                 fontSize={{ base: 'sm', xl: 'md' }}
                 mr={{ md: 5 }}
                 onClick={() => {
-                  setType('asRollover')
+                  if (processing_payout) {
+                    setListening(false)
+                    setType('asRollover')
+                  } else {
+                    setListening(true)
+                    setType('asRollover')
+                  }
 
                   handleModalClick('rollover', { step, setStep, wallet_id })
                 }}
@@ -201,7 +208,9 @@ const FarmFinances = ({
                 color='white'
                 rounded={30}
                 isDisabled={
-                  farm.order.product.payoutStatus !== 'PAID' && farm.wallet <= 0
+                  farm.order.product.payoutStatus !== 'PAID' &&
+                  farm.wallet <= 0 &&
+                  !processing_payout
                 }
                 mx={{ base: 3, md: 0 }}
                 my={5}
@@ -209,6 +218,7 @@ const FarmFinances = ({
                 h={50}
                 fontSize={{ base: 'sm', xl: 'md' }}
                 onClick={() => {
+                  setListening(true)
                   setType('asPayout')
                   handleModalClick('payout', { wallet_id })
                 }}
@@ -226,6 +236,7 @@ FarmFinances.propTypes = {
   tasks: PropTypes.array.isRequired,
   scheduledTasks: PropTypes.array.isRequired,
   wallet_id: PropTypes.string,
-  farm: PropTypes.object
+  farm: PropTypes.object,
+  processing_payout: PropTypes.bool
 }
 export default FarmFinances

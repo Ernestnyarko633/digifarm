@@ -114,6 +114,7 @@ const ModalWrapper = ({
             >
               {bigStepper !== 3 && bigStepper !== 4 && type === 'asPayout' && (
                 <Button
+                  ml={{ base: 5, md: 8, xl: 0 }}
                   display={{ base: 'block', lg: 'none' }}
                   textAlign='center'
                   isDisabled={!selectedWallets.length}
@@ -138,6 +139,7 @@ const ModalWrapper = ({
               )}
               {bigStepper !== 3 && bigStepper !== 4 && type === 'asRollover' && (
                 <Button
+                  ml={{ base: 5, md: 8, xl: 0 }}
                   display={{ base: 'block', lg: 'none' }}
                   as={selectedWallets.length && ReachRouter}
                   isDisabled={!selectedWallets.length}
