@@ -17,6 +17,7 @@ export const RolloverContextProvider = ({ children }) => {
   const [ratings, setRatings] = useState(null)
   const [comment, setComment] = useState('')
   const [isSubmitting, setSubmit] = useState(false)
+  const [listening, setListening] = useState(false)
   const handleNext = () => setStep(draft => draft + 1)
 
   const { isAuthenticated, setSession } = useAuth()
@@ -30,14 +31,14 @@ export const RolloverContextProvider = ({ children }) => {
   useEffect(() => {
     let mounted = true
 
-    if (type === 'asRollover' && mounted) {
+    if (type === 'asRollover' && listening && mounted) {
       setBigStepper(p => p * 0)
-    } else if (type === 'asPayout' && mounted) {
+    } else if (type === 'asPayout' && listening && mounted) {
       setStep(p => p * 0)
     }
 
     return () => (mounted = false)
-  }, [setBigStepper, setStep, type])
+  }, [listening, setBigStepper, setStep, type])
 
   useEffect(() => {
     let _total = 0
@@ -156,6 +157,7 @@ export const RolloverContextProvider = ({ children }) => {
         error,
         setType,
         type,
+        setListening,
         setError,
         setStep,
         loading,
