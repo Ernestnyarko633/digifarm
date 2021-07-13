@@ -173,10 +173,10 @@ const FarmFinances = ({
               <Button
                 btntitle='Rollover'
                 bg='white'
-                // isDisabled={
-                //   farm?.order?.product?.payoutStatus !== 'PAID' &&
-                //   farm?.wallet <= 0
-                // }
+                isDisabled={
+                  farm?.order?.product?.payoutStatus !== 'PAID' &&
+                  farm?.wallet <= 0
+                }
                 borderWidth={1}
                 borderColor='cf.green'
                 color='cf.green'
