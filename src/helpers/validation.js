@@ -109,7 +109,7 @@ export const BankDetailsSchema = Yup.object()
     accountNumber: Yup.number(),
     branchAddress: Yup.string().required('This field is required*'),
     iban: Yup.string(),
-    sortCode: Yup.string().required('This field is required*'),
+    sortCode: Yup.string(),
     homeAddress: Yup.string().required('This field is required*')
   })
   .atLeastOneOf(['iban', 'accountNumber'])

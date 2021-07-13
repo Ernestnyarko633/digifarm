@@ -44,7 +44,7 @@ const Wallet = () => {
     let mounted = true
 
     if (mounted && processing_payout) {
-      setBigStepper(p => p + 4)
+      setBigStepper(p => (p = 4))
     }
 
     return () => (mounted = false)
@@ -81,6 +81,7 @@ const Wallet = () => {
           <Box
             display={{ base: 'none', md: 'block' }}
             as={FarmFinances}
+            processing_payout={processing_payout}
             farm={farm}
             activities={activities}
             wallet_id={wallet_id}

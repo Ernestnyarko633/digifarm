@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
@@ -38,9 +39,13 @@ const BankingDetailsForm = ({ bankDetails }) => {
       try {
         let res
         if (bankDetails._id) {
+          if (!values.accountNumber) delete values.accountNumber
+          if (!values.iban) delete values.iban
           let updatedValue = objDiff(values, user)
           res = await updateBankDetails(bankDetails._id, updatedValue)
         } else {
+          if (!values.accountNumber) delete values.accountNumber
+          if (!values.iban) delete values.iban
           res = await createBankDetails({
             ...values,
             user: user._id
@@ -215,7 +220,6 @@ const BankingDetailsForm = ({ bankDetails }) => {
               placeholder='Enter your bank swift code'
             />
             <CustomInput
-              isRequired
               type='text'
               name='sortCode'
               onBlur={handleBlur}

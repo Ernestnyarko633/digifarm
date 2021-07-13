@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
 import Button from 'components/Button'
 import { Box, Text } from '@chakra-ui/layout'
-import { Grid, GridItem, Heading, Divider } from '@chakra-ui/react'
+import { Grid, GridItem, Heading, Divider, Flex } from '@chakra-ui/react'
 import WalletCard from 'components/Rollover&Payout/Cards/WalletCard'
 import { Link } from 'react-router-dom'
 import { getFormattedMoney } from 'helpers/misc'
@@ -54,7 +54,8 @@ const WalletSelection = ({ type, title }) => {
           </Text>
         </Box>
 
-        <Grid
+        <Flex
+          direction='column'
           mt={{ md: 3 }}
           overflowY='scroll'
           css={{
@@ -75,16 +76,74 @@ const WalletSelection = ({ type, title }) => {
           {farms
             ?.filter(farm => farm.wallet > 0)
             .map(wallet => (
-              <WalletCard
-                key={wallet?._id}
-                id={wallet?._id}
-                clicked={data?.wallet_id === wallet?._id ? true : false}
-                name={wallet.order?.product?.cropVariety?.crop?.name}
-                amount={wallet?.wallet}
-                image={wallet?.order?.product?.cropVariety?.imageUrl}
-              />
+              <>
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />{' '}
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />{' '}
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />{' '}
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />
+                <WalletCard
+                  key={wallet?._id}
+                  id={wallet?._id}
+                  clicked={data?.wallet_id === wallet?._id ? true : false}
+                  name={wallet.order?.product?.cropVariety?.crop?.name}
+                  amount={wallet?.wallet}
+                  image={wallet?.order?.product?.cropVariety?.imageUrl}
+                />
+              </>
             ))}
-        </Grid>
+        </Flex>
       </GridItem>
       <GridItem
         w={{ base: '100%', md: '50%' }}
