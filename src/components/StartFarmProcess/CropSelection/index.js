@@ -160,7 +160,6 @@ const CropSelection = ({ rollover }) => {
                 colorScheme='white'
                 borderWidth={1}
                 _hover={{ textDecor: 'none' }}
-                _active={{ textDecor: 'none' }}
               />
             </Link>
             <Box mx={2} />
