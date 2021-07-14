@@ -173,10 +173,10 @@ const FarmFinances = ({
               <Button
                 btntitle='Rollover'
                 bg='white'
-                isDisabled={
-                  farm?.order?.product?.payoutStatus !== 'PAID' &&
-                  farm?.wallet <= 0
-                }
+                // isDisabled={
+                //   farm?.order?.product?.payoutStatus !== 'PAID' &&
+                //   farm?.wallet <= 0
+                // }
                 borderWidth={1}
                 borderColor='cf.green'
                 color='cf.green'
@@ -207,11 +207,10 @@ const FarmFinances = ({
                 borderColor='cf.green'
                 color='white'
                 rounded={30}
-                isDisabled={
-                  farm.order.product.payoutStatus !== 'PAID' &&
-                  farm.wallet <= 0 &&
-                  !processing_payout
-                }
+                // farm.order.product.payoutStatus !== 'PAID' &&
+                //   farm.wallet <= 0 &&
+                //   !processing_payout
+                isDisabled={false}
                 mx={{ base: 3, md: 0 }}
                 my={5}
                 w='50%'

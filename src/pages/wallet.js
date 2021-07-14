@@ -14,16 +14,6 @@ const Wallet = () => {
   const { setStep } = useRollover()
   const { id: wallet_id } = useParams()
 
-  useEffect(() => {
-    let mounted = true
-
-    if (mounted) {
-      setStep(p => p * 0)
-    }
-
-    return () => (mounted = false)
-  }, [setStep])
-
   const { state } = useLocation()
 
   const {
@@ -43,12 +33,15 @@ const Wallet = () => {
   useEffect(() => {
     let mounted = true
 
-    if (mounted && processing_payout) {
-      setBigStepper(p => (p = 4))
+    if (mounted && processing_payout && wallet_id) {
+      setBigStepper(p => (p = 3))
+    } else {
+      setBigStepper(p => p * 0)
     }
 
+    if (mounted && wallet_id) setStep(p => p * 0)
     return () => (mounted = false)
-  }, [processing_payout, setBigStepper])
+  }, [processing_payout, setBigStepper, setStep, wallet_id])
 
   return (
     <Layout>

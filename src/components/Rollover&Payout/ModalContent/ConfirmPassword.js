@@ -7,14 +7,15 @@ import useApi from 'context/api'
 import CustomPasswordInput from 'components/Form/CustomPasswordInput'
 import { ConfirmPassword as PasswordValidation } from 'helpers/validation'
 import { default as usePayout } from 'context/rollover'
-const ConfirmPassword = () => {
+import PropTypes from 'prop-types'
+const ConfirmPassword = ({ setMiniStep }) => {
   const { isAuthenticated, store } = useAuth()
 
   const { user } = isAuthenticated()
 
   const { loginUser } = useApi()
 
-  const { setBigStepper: setStep } = usePayout()
+  const { setBigStepper: setStep, onCloseSecond } = usePayout()
 
   let toast = useToast()
   const formik = useFormik({
@@ -44,6 +45,8 @@ const ConfirmPassword = () => {
           position: 'top-right'
         })
         setStep(p => p + 1)
+        setMiniStep(p => p * 0)
+        onCloseSecond()
       } catch (error) {
         if (error) {
           if (error.status === 400) {
@@ -148,6 +151,10 @@ const ConfirmPassword = () => {
       </Flex>
     </Box>
   )
+}
+
+ConfirmPassword.propTypes = {
+  setMiniStep: PropTypes.func
 }
 
 export default ConfirmPassword

@@ -1,21 +1,168 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
 import Button from 'components/Button'
 import { Box, Text } from '@chakra-ui/layout'
-import { Grid, GridItem, Heading, Divider, Flex } from '@chakra-ui/react'
+import ModalWrapper from 'components/Modals/ModalWrapper'
+import ConfirmPassword from 'components/Rollover&Payout/ModalContent/ConfirmPassword'
+import { useImmer } from 'use-immer'
+import {
+  Grid,
+  GridItem,
+  Heading,
+  Divider,
+  Flex,
+  useToast
+} from '@chakra-ui/react'
 import WalletCard from 'components/Rollover&Payout/Cards/WalletCard'
 import { Link } from 'react-router-dom'
 import { getFormattedMoney } from 'helpers/misc'
 import useRollover from 'context/rollover'
 import useComponent from 'context/component'
+import FormInput from 'components/Form/FormInput'
 
 const MotionGrid = motion(Grid)
 
 const WalletSelection = ({ type, title }) => {
+  const [miniStep, setMiniStep] = useImmer(0)
+  let toast = useToast()
   const { data } = useComponent()
-  const { total, selectedWallets, setBigStepper, type: useType } = useRollover()
+  const {
+    total,
+    selectedWallets,
+    onCloseSecond,
+    open,
+    onOpen,
+    // setBigStepper,
+    type: useType,
+    setPayoutAmount,
+    payoutAmount
+  } = useRollover()
   const { onClose } = useComponent()
+
+  const ReviewModal = () => {
+    console.log(miniStep)
+    return (
+      <ModalWrapper
+        showButton={false}
+        isCentered
+        isOpen={open}
+        onClose={onCloseSecond}
+        size='2xl'
+      >
+        {miniStep === 0 ? (
+          <Flex w='100%' px={{ base: 5 }} direction='column' justify='center'>
+            <Flex
+              w='100%'
+              direction='row'
+              align='center'
+              justify='space-between'
+            >
+              <Box>
+                <Heading fontSize={{ base: 'lg', md: 'xl' }}>
+                  Review transaction
+                </Heading>
+              </Box>
+              <Box>
+                <Text
+                  w='100%'
+                  py={{ base: 1, md: 'auto' }}
+                  fontSize={{ base: 'sm' }}
+                  color='gray.300'
+                >
+                  {new Date().toDateString()}
+                </Text>
+              </Box>
+            </Flex>
+            <Divider mb={{ base: 2, md: 3 }} />
+            <Flex w='100%' direction='row' justify='space-between'>
+              <Box>
+                <Text color='gray.300' fontSize={{ base: 'sm' }}>
+                  Number of selected wallets
+                </Text>
+              </Box>
+              <Box>
+                <Text
+                  w='100%'
+                  py={{ base: 1, md: 'auto' }}
+                  fontSize={{ base: 'sm' }}
+                  color='gray.600'
+                  fontWeight={900}
+                >
+                  {selectedWallets.length}
+                </Text>
+              </Box>
+            </Flex>
+            <Divider mb={{ base: 2, md: 3 }} />
+            <Flex w='100%' direction='row' justify='space-between'>
+              <Box>
+                <Text color='gray.300' fontSize={{ base: 'sm' }}>
+                  Names of wallets
+                </Text>
+              </Box>
+              <Flex maxHeight='50%' direction='row' justify='flex-end'>
+                {selectedWallets.map((wallet, index) => (
+                  <Text
+                    key={wallet.id}
+                    w='100%'
+                    py={{ base: 1, md: 'auto' }}
+                    fontSize={{ base: 'sm' }}
+                    color='gray.600'
+                    fontWeight={900}
+                  >
+                    {index === 0 || index + 1 === selectedWallets.length
+                      ? wallet.name
+                      : wallet.name + ','}
+                  </Text>
+                ))}
+              </Flex>
+            </Flex>
+            <Divider mb={{ base: 2, md: 3 }} />
+            <Flex w='100%' direction='row' justify='space-between'>
+              <Box>
+                <Text color='gray.300' fontSize={{ base: 'sm' }}>
+                  Total amount to be issued
+                </Text>
+              </Box>
+              <Box>
+                <Text
+                  w='100%'
+                  py={{ base: 1, md: 'auto' }}
+                  fontSize={{ base: 'sm' }}
+                  color='gray.600'
+                  fontWeight={900}
+                >
+                  {payoutAmount}
+                </Text>
+              </Box>
+            </Flex>
+            <Divider mb={{ base: 2, md: 3 }} />
+            <Button
+              textAlign='center'
+              btntitle='Continue to payment'
+              //isDisabled={!selectedWallets.length || payoutAmount <= 0}
+              borderColor='cf.green'
+              color='white'
+              fontWeight={900}
+              rounded={30}
+              mx={{ base: 0 }}
+              my={{ base: 2, md: 5 }}
+              w='100%'
+              h={65}
+              fontSize={{ base: 'sm', xl: 'md' }}
+              onClick={() => {
+                console.log('clicking')
+                return setMiniStep(p => p + 1)
+              }}
+            />
+          </Flex>
+        ) : (
+          miniStep === 1 && <ConfirmPassword setMiniStep={setMiniStep} />
+        )}
+      </ModalWrapper>
+    )
+  }
 
   const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
 
@@ -31,6 +178,7 @@ const WalletSelection = ({ type, title }) => {
       borderColor={{ base: 'transparent', md: 'gray.200' }}
       templateColumns={{ xl: '50% 50%', '2xl': 'repeat(2, 1fr)' }}
     >
+      {useType === 'asPayout' && <ReviewModal />}
       <GridItem
         borderRightColor={{ base: 'transparent', md: 'gray.200' }}
         borderRightWidth={{ md: 1 }}
@@ -38,7 +186,12 @@ const WalletSelection = ({ type, title }) => {
         borderBottomWidth={{ base: 1, md: 0 }}
         py={{ base: 1, lg: 6 }}
         w={{ base: '100%', md: '50%' }}
-        h={{ base: '75%', md: 'auto', lg: '80vh', xl: '90vh' }}
+        h={{
+          base: useType === 'asPayout' ? '60%' : '75%',
+          md: 'auto',
+          lg: '80vh',
+          xl: '90vh'
+        }}
       >
         <Box mt={{ base: 1, md: 10 }} w='100%'>
           <Heading fontSize={{ base: 'lg', md: '2xl' }}>My Wallets</Heading>
@@ -76,72 +229,14 @@ const WalletSelection = ({ type, title }) => {
           {farms
             ?.filter(farm => farm.wallet > 0)
             .map(wallet => (
-              <>
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />{' '}
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />{' '}
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />{' '}
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />
-                <WalletCard
-                  key={wallet?._id}
-                  id={wallet?._id}
-                  clicked={data?.wallet_id === wallet?._id ? true : false}
-                  name={wallet.order?.product?.cropVariety?.crop?.name}
-                  amount={wallet?.wallet}
-                  image={wallet?.order?.product?.cropVariety?.imageUrl}
-                />
-              </>
+              <WalletCard
+                key={wallet?._id}
+                id={wallet?._id}
+                clicked={data?.wallet_id === wallet?._id ? true : false}
+                name={wallet.order?.product?.cropVariety?.crop?.name}
+                amount={wallet?.wallet}
+                image={wallet?.order?.product?.cropVariety?.imageUrl}
+              />
             ))}
         </Flex>
       </GridItem>
@@ -150,7 +245,7 @@ const WalletSelection = ({ type, title }) => {
         overflowY='hidden'
         px={{ base: 1, lg: 14 }}
         py={{ base: 5, lg: 20 }}
-        h={{ base: '25%', md: 'auto' }}
+        h={{ base: useType === 'asRollover' ? '25%' : '40%', md: 'auto' }}
       >
         <Box
           p={{ base: 4, md: 6, lg: 10 }}
@@ -166,52 +261,70 @@ const WalletSelection = ({ type, title }) => {
           >
             {title}
           </Heading>
+          <Divider mb={{ base: 2, md: 3 }} />
+          <Flex my={{ base: 2 }} w='100%' justify='space-between'>
+            <Flex direction='column' justify='flex-start'>
+              <Text mb={{ base: 2, md: 0 }}>
+                {selectedWallets.length === 1 ? 'Wallet' : 'Wallets'} selected
+              </Text>
+              <Heading as='h3' fontSize={{ base: 'xl', md: '3xl' }}>
+                {selectedWallets.length}
+              </Heading>
+            </Flex>
+            <Flex direction='column' justify='flex-end'>
+              <Text mb={{ base: 2, md: 0 }}>Total amounts($)</Text>
+              <Heading as='h3' fontSize={{ base: 'xl', md: '3xl' }}>
+                {getFormattedMoney(total)}
+              </Heading>
+            </Flex>
+          </Flex>
           <Divider mb={{ base: 2, md: 5 }} />
-          <Text mb={{ base: 2, md: 5 }}>
-            {selectedWallets.length}{' '}
-            {selectedWallets.length === 1 ? 'wallet' : 'wallets'} selected
-          </Text>
-          <Divider mb={{ base: 2, md: 5 }} />
-          <Heading as='h3' fontSize={{ base: 'xl', md: '4xl' }}>
-            $ {getFormattedMoney(total)}
-          </Heading>
-        </Box>
-        {useType === 'asRollover' ? (
-          <Button
-            display={{ base: 'none', lg: 'flex' }}
-            as={selectedWallets.length && Link}
-            isDisabled={!selectedWallets.length}
-            _disabled={!selectedWallets.length}
-            textAlign='center'
-            btntitle='Proceed to rollover'
-            to={
-              selectedWallets.length && {
-                pathname: '/start-farm/individual',
-                state: { rollover: true }
-              }
-            }
-            borderColor='cf.green'
-            color='white'
-            fontWeight={900}
-            rounded={30}
-            mx={{ base: 3, md: 0 }}
-            my={{ base: 2, md: 10 }}
-            w='70%'
-            h={65}
-            fontSize={{ base: 'sm', xl: 'md' }}
-            onClick={() => {
-              sessionStorage.setItem('type', 'individual')
-              onClose()
-            }}
-          />
-        ) : (
-          useType === 'asPayout' && (
+          {useType === 'asPayout' && (
+            <Flex w='100%' direction='column'>
+              <Text>How much do you want to </Text>
+              <FormInput
+                type='number'
+                label='Amount'
+                name='amount'
+                value={payoutAmount}
+                onChange={e => {
+                  if (e.target.value > total) {
+                    toast({
+                      title: 'Error occured',
+                      description:
+                        'Cannot withdraw more than total amount of selected wallets',
+                      status: 'error',
+                      duration: 5000,
+                      position: 'top-right'
+                    })
+
+                    e.preventDefault()
+                  } else {
+                    //setAmount(e.target.value)
+                    setPayoutAmount(e.target.value)
+                  }
+                }}
+                isRequired
+                borderBottomColor={{ base: 'black' }}
+                placeholder='Enter amount'
+                bg='gray.100'
+              />
+            </Flex>
+          )}
+          {useType === 'asRollover' ? (
             <Button
               display={{ base: 'none', lg: 'flex' }}
-              textAlign='center'
-              btntitle={`Payout $ ${getFormattedMoney(total)}`}
+              as={selectedWallets.length && Link}
               isDisabled={!selectedWallets.length}
               _disabled={!selectedWallets.length}
+              textAlign='center'
+              btntitle='Proceed to rollover'
+              to={
+                selectedWallets.length && {
+                  pathname: '/start-farm/individual',
+                  state: { rollover: true }
+                }
+              }
               borderColor='cf.green'
               color='white'
               fontWeight={900}
@@ -222,11 +335,35 @@ const WalletSelection = ({ type, title }) => {
               h={65}
               fontSize={{ base: 'sm', xl: 'md' }}
               onClick={() => {
-                setBigStepper(p => p + 1)
+                sessionStorage.setItem('type', 'individual')
+                onClose()
               }}
             />
-          )
-        )}
+          ) : (
+            useType === 'asPayout' && (
+              <Button
+                display={{ base: 'none', lg: 'flex' }}
+                textAlign='center'
+                btntitle='Continue to payment'
+                isDisabled={!selectedWallets.length || payoutAmount <= 0}
+                borderColor='cf.green'
+                color='white'
+                fontWeight={900}
+                rounded={30}
+                mx={{ base: 3, md: 0 }}
+                my={{ base: 2, md: 5 }}
+                w='100%'
+                h={65}
+                fontSize={{ base: 'sm', xl: 'md' }}
+                onClick={() => {
+                  // setPayoutAmount(amount)
+                  onOpen()
+                  //false && setBigStepper(p => p + 1)
+                }}
+              />
+            )
+          )}
+        </Box>
       </GridItem>
     </MotionGrid>
   )

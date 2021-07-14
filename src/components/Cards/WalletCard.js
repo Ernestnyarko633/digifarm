@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -94,11 +95,13 @@ const WalletCard = ({ acreage, price, farm }) => {
     farmFeedsHasError ||
     payoutsHasErrors
 
+  console.log(payouts?.length)
+
   return (
     <Box
       rounded='xl'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      bg='white'
+      bg={payouts?.length ? 'white' : 'cf.400'}
       w={{ base: 82, md: 80 }}
       minH={{ md: 'auto' }}
     >
@@ -190,7 +193,7 @@ const WalletCard = ({ acreage, price, farm }) => {
             to={{
               pathname: `/wallets/${farm?._id}`,
               state: {
-                processing_payout: payouts?.length ? true : false,
+                processing_payout: payouts?.length > 0 ? true : false,
                 farm: farm || {},
                 activities: myFarmActivities || [],
                 tasks: tasks || [],
