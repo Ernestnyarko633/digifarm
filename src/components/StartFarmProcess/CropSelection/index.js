@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Flex, Heading, useToast } from '@chakra-ui/react'
+import { Box, Flex, Heading, Link, useToast } from '@chakra-ui/react'
+import { Link as ReachRouter } from 'react-router-dom'
 
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
@@ -14,8 +15,7 @@ import useRollover from 'context/rollover'
 
 const CropSelection = ({ rollover }) => {
   const gridRef = React.useRef(false)
-  const { handleBack, handleNext, selectedCooperativeType, selectedFarm } =
-    useStartFarm()
+  const { handleNext, selectedCooperativeType, selectedFarm } = useStartFarm()
   const { total } = useRollover()
   const [reload, setReload] = useState(0)
 
@@ -150,16 +150,17 @@ const CropSelection = ({ rollover }) => {
             </Tabs>
           </Box>
           <Flex w='full' justify='flex-end' my={6}>
-            <Button
-              h={12}
-              width={40}
-              fontSize='md'
-              btntitle='Prev'
-              color='gray.700'
-              colorScheme='white'
-              onClick={handleBack}
-              borderWidth={1}
-            />
+            <Link as={ReachRouter} to='/dashboard'>
+              <Button
+                h={12}
+                width={40}
+                fontSize='md'
+                btntitle='Dashboard'
+                color='gray.700'
+                colorScheme='white'
+                borderWidth={1}
+              />
+            </Link>
             <Box mx={2} />
             <Button
               btntitle='Continue'
