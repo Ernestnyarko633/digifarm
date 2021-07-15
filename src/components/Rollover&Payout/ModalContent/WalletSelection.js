@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
@@ -27,7 +26,8 @@ const MotionGrid = motion(Grid)
 
 const WalletSelection = ({ type, title }) => {
   const [miniStep, setMiniStep] = useImmer(0)
-  const { acreage, selectedFarm, handleRolloverPayment } = useStartFarm()
+  const { acreage, selectedFarm, handleRolloverPayment, isSubmitting } =
+    useStartFarm()
   let toast = useToast()
   const { data } = useComponent()
   const {
@@ -43,9 +43,7 @@ const WalletSelection = ({ type, title }) => {
   } = useRollover()
   const { onClose } = useComponent()
 
-  console.log(selectedWallets, data, 'modalx')
   const ReviewModal = () => {
-    console.log(miniStep)
     return (
       <ModalWrapper
         showButton={false}
@@ -148,9 +146,10 @@ const WalletSelection = ({ type, title }) => {
               btntitle={
                 data?.inRollover ? 'Purchare crop' : 'Continue to payment'
               }
-              //isDisabled={!selectedWallets.length || payoutAmount <= 0}
               borderColor='cf.green'
               color='white'
+              isLoading={isSubmitting}
+              isDisabled={isSubmitting}
               fontWeight={900}
               rounded={30}
               mx={{ base: 0 }}
@@ -174,8 +173,6 @@ const WalletSelection = ({ type, title }) => {
   }
 
   const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
-
-  console.log(farms, 'farms')
 
   return (
     <MotionGrid
@@ -240,7 +237,9 @@ const WalletSelection = ({ type, title }) => {
           h={{ base: '78%', lg: '85%', '2xl': '70%', '3xl': '80%' }}
         >
           {farms
-            ?.filter(farm => farm.wallet > 0)
+            ?.filter(
+              farm => farm.wallet > 0 && farm?.order?.product?.payoutStatus
+            )
             .map(wallet => (
               <WalletCard
                 rollover={data?.inRollover}
@@ -378,7 +377,6 @@ const WalletSelection = ({ type, title }) => {
                   h={65}
                   fontSize={{ base: 'sm', xl: 'md' }}
                   onClick={() => {
-                    console.log('rooom')
                     onOpen()
                   }}
                 />

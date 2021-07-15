@@ -1,36 +1,24 @@
 /* eslint-disable no-console */
-import React, { useEffect } from 'react'
-import { Box, Grid, Flex, Image, Heading, Text, Icon } from '@chakra-ui/react'
+import React from 'react'
+import {
+  Box,
+  Grid,
+  Flex,
+  Image,
+  Heading,
+  Text,
+  Icon,
+  Divider
+} from '@chakra-ui/react'
 import Stack from '../../assets/images/finance.svg'
 import Money from '../../assets/images/money.svg'
-import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import Graph from 'components/Utils/Graph'
 import { FaCircle } from 'react-icons/fa'
-import useComponent from 'context/component'
 import useWallet from 'context/wallet'
-import useRollover from 'context/rollover'
 
-const FarmFinances = ({
-  activities,
-  tasks,
-  scheduledTasks,
-  wallet_id,
-  processing_payout,
-  farm
-}) => {
-  const { handleModalClick } = useComponent()
+const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
   const { totalAmount } = useWallet()
-  const { step, setStep, setType, setListening } = useRollover()
-
-  useEffect(() => {
-    let mounted = true
-
-    if (mounted) {
-      setStep(p => p * 0)
-    }
-    return () => (mounted = false)
-  }, [setStep])
 
   return (
     <Box
@@ -98,32 +86,35 @@ const FarmFinances = ({
             </Box>
           </Flex>
         </Flex>
-        <Flex w='100%' direction='column' pr={{ md: 5 }}>
-          <Flex
-            align='center'
-            borderBottomWidth={1}
-            borderBottomColor='gray.200'
-            px={{ md: 8 }}
-            py={4}
-          >
-            <Flex
-              justify='center'
-              align='center'
-              borderRadius='30px'
-              w='30px'
-              h='30px'
-              bg='gray.200'
-              mr={2}
-            >
-              <Image src={Money} />
+        <Flex
+          w='100%'
+          bg='#f9f9f9'
+          rounded={30}
+          direction='column'
+          pr={{ md: 5 }}
+        >
+          <Flex direction='column' align='center' px={{ md: 8 }} py={4}>
+            <Flex my={3} w='100%' justify='flex-start' align='center'>
+              <Flex
+                justify='center'
+                align='center'
+                borderRadius='30px'
+                w='30px'
+                h='30px'
+                bg='gray.200'
+                mr={2}
+              >
+                <Image src={Money} />
+              </Flex>
+              <Heading
+                as='h5'
+                fontSize={{ base: 'md', xl: 'lg' }}
+                fontWeight={800}
+              >
+                Farm expenses
+              </Heading>
             </Flex>
-            <Heading
-              as='h5'
-              fontSize={{ base: 'md', xl: 'lg' }}
-              fontWeight={800}
-            >
-              Farm expenses
-            </Heading>
+            <Divider />
           </Flex>
           <Flex
             direction='column'
@@ -147,8 +138,8 @@ const FarmFinances = ({
                     <Text
                       color={{
                         md: totalAmount(_activity, tasks, scheduledTasks)?.state
-                          ? 'gray.500'
-                          : 'gray.200'
+                          ? 'gray.800'
+                          : 'gray.400'
                       }}
                       fontSize='sm'
                     >
@@ -158,8 +149,8 @@ const FarmFinances = ({
                       fontSize='lg'
                       color={{
                         md: totalAmount(_activity, tasks, scheduledTasks)?.state
-                          ? null
-                          : 'gray.200'
+                          ? 'gray.800'
+                          : 'gray.400'
                       }}
                     >
                       {totalAmount(_activity, tasks, scheduledTasks)?.total}
@@ -167,63 +158,6 @@ const FarmFinances = ({
                   </Flex>
                 )
               })}
-            </Flex>
-
-            <Flex justify='flex-end'>
-              <Button
-                btntitle='Rollover'
-                bg='white'
-                // isDisabled={
-                //   farm?.order?.product?.payoutStatus !== 'PAID' &&
-                //   farm?.wallet <= 0
-                // }
-                borderWidth={1}
-                borderColor='cf.green'
-                color='cf.green'
-                rounded={30}
-                mx={{ base: 3, md: 0 }}
-                my={5}
-                colorScheme='none'
-                w='50%'
-                h={50}
-                _hover={{ bg: 'white' }}
-                shadow='none'
-                fontSize={{ base: 'sm', xl: 'md' }}
-                mr={{ md: 5 }}
-                onClick={() => {
-                  if (processing_payout) {
-                    setListening(false)
-                    setType('asRollover')
-                  } else {
-                    setListening(true)
-                    setType('asRollover')
-                  }
-
-                  sessionStorage.setItem('wallet', wallet_id)
-
-                  handleModalClick('rollover', { step, setStep, wallet_id })
-                }}
-              />
-              <Button
-                btntitle='Payout'
-                borderColor='cf.green'
-                color='white'
-                rounded={30}
-                // farm.order.product.payoutStatus !== 'PAID' &&
-                //   farm.wallet <= 0 &&
-                //   !processing_payout
-                isDisabled={false}
-                mx={{ base: 3, md: 0 }}
-                my={5}
-                w='50%'
-                h={50}
-                fontSize={{ base: 'sm', xl: 'md' }}
-                onClick={() => {
-                  setListening(true)
-                  setType('asPayout')
-                  handleModalClick('payout', { wallet_id })
-                }}
-              />
             </Flex>
           </Flex>
         </Flex>

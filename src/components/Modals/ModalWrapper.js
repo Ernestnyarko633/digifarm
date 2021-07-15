@@ -14,6 +14,7 @@ import { Link as ReachRouter } from 'react-router-dom'
 import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import useRollover from 'context/rollover'
+import useComponent from 'context/component'
 //import useStartFarm from 'context/start-farm'
 
 const ModalWrapper = ({
@@ -29,6 +30,8 @@ const ModalWrapper = ({
 }) => {
   const { step, bigStepper, type, onOpen, selectedWallets, payoutAmount } =
     useRollover()
+
+  const { data } = useComponent()
 
   return (
     <Modal
@@ -123,10 +126,6 @@ const ModalWrapper = ({
                     textAlign='center'
                     isDisabled={!selectedWallets.length || payoutAmount <= 0}
                     btntitle='Continuen to payment'
-                    to={{
-                      pathname: '/start-farm/individual',
-                      state: { rollover: true }
-                    }}
                     borderColor='cf.green'
                     color='white'
                     fontWeight={900}
@@ -136,16 +135,15 @@ const ModalWrapper = ({
                     h={65}
                     fontSize={{ base: 'sm', xl: 'md' }}
                     onClick={() => {
-                      //setPayoutAmount(amount)
                       onOpen()
-                      //setBigStepper(p => p + 1)
                     }}
                   />
                 )}
               {bigStepper !== 2 &&
-                bigStepper !== 3 &&
-                type === 'asRollover' &&
-                showButton && (
+              bigStepper !== 3 &&
+              type === 'asRollover' &&
+              showButton ? (
+                !data?.inRollover ? (
                   <Button
                     ml={{ base: 5, md: 8, xl: 0 }}
                     pt={{ base: 5, xl: 0 }}
@@ -173,7 +171,30 @@ const ModalWrapper = ({
                       onClose()
                     }}
                   />
-                )}
+                ) : (
+                  data?.showButton && (
+                    <Button
+                      display={{ base: 'none', lg: 'flex' }}
+                      isDisabled={!selectedWallets.length}
+                      _disabled={!selectedWallets.length}
+                      textAlign='center'
+                      btntitle='Proceed to purchase crop'
+                      borderColor='cf.green'
+                      color='white'
+                      fontWeight={900}
+                      rounded={30}
+                      mx={{ base: 3, md: 0 }}
+                      my={{ base: 2, md: 10 }}
+                      w='70%'
+                      h={65}
+                      fontSize={{ base: 'sm', xl: 'md' }}
+                      onClick={() => {
+                        onOpen()
+                      }}
+                    />
+                  )
+                )
+              ) : null}
             </Box>
             <ModalHeader>
               <Box>

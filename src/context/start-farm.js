@@ -281,16 +281,20 @@ export const StartFarmContextProvider = ({ children }) => {
 
       const res = await createOrder(data)
       setOrder(res.data)
-      !rollover && sessionStorage.removeItem('my_farms')
-      sessionStorage.removeItem('my_orders')
-      !rollover && handleNextStep()
-      rollover &&
+
+      if (rollover) {
+        sessionStorage.removeItem('my_orders')
         handleModalClick('rollover', {
           wallet_id: sessionStorage.getItem('wallet'),
           inRollover: true,
           showButton: true,
           order: res.data
         })
+      } else {
+        sessionStorage.removeItem('my_farms')
+        sessionStorage.removeItem('my_orders')
+        handleNextStep()
+      }
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {

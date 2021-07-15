@@ -10,6 +10,7 @@ const Button = ({
   fontSize = 'xs',
   fontWeight,
   icon,
+  iconProps = {},
   ...rest
 }) => (
   <ChakraButton
@@ -21,7 +22,7 @@ const Button = ({
     filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
     {...rest}
   >
-    {btntitle} {icon && <Icon as={icon} ml={2} boxSize={4} />}
+    {btntitle} {icon && <Icon as={icon} {...iconProps} ml={2} boxSize={4} />}
   </ChakraButton>
 )
 
@@ -33,7 +34,8 @@ Button.propTypes = {
   fontSize: PropTypes.any,
   icon: PropTypes.any,
   rest: PropTypes.any,
-  fontWeight: PropTypes.any
+  fontWeight: PropTypes.any,
+  iconProps: PropTypes.object
 }
 
 export default Button
