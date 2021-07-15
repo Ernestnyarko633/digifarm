@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Divider, Icon } from '@chakra-ui/react'
@@ -94,8 +92,6 @@ const WalletCard = ({ acreage, price, farm }) => {
     myFarmActivitiesHasError ||
     farmFeedsHasError ||
     payoutsHasErrors
-
-  console.log(payouts?.length)
 
   return (
     <Box

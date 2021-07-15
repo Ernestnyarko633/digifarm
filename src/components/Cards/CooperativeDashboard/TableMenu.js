@@ -45,6 +45,11 @@ const TableMenu = ({ id, email }) => {
       )
     })
 
+    Overlay.propTypes = {
+      style: PropTypes.any,
+      onClose: PropTypes.any
+    }
+
     return (
       <Box>
         <Whisper
@@ -68,6 +73,7 @@ const TableMenu = ({ id, email }) => {
       </Box>
     )
   }
+
   const handleInvite = async () => {
     try {
       setLoading(true)

@@ -1,9 +1,7 @@
-/* eslint-disable no-console */
 import React from 'react'
 import Layout from 'container/Layout'
 import { Box, Grid, Heading, Flex } from '@chakra-ui/react'
 import Button from 'components/Button'
-//import { Link as ReachRouter } from 'react-router-dom'
 import FetchCard from 'components/FetchCard'
 import FarmWalletEmptyState from 'components/EmptyStates/FarmWalletEmptyState'
 import NoFarmsCard from 'components/Cards/NoFarmsCard'
@@ -105,9 +103,6 @@ const FarmWallet = () => {
                   mr={{ md: 5 }}
                   onClick={() => {
                     setType('asRollover')
-
-                    //sessionStorage.setItem('wallet', wallet_id)
-
                     handleModalClick('rollover')
                   }}
                 />
@@ -116,9 +111,6 @@ const FarmWallet = () => {
                   borderColor='cf.green'
                   color='white'
                   rounded={30}
-                  // farm.order.product.payoutStatus !== 'PAID' &&
-                  //   farm.wallet <= 0 &&
-                  //   !processing_payout
                   isDisabled={!myFarms.length || !isPayRoll.length}
                   mx={{ base: 3, md: 0 }}
                   my={5}

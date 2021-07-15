@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import {
   Modal,
@@ -15,7 +14,6 @@ import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import useRollover from 'context/rollover'
 import useComponent from 'context/component'
-//import useStartFarm from 'context/start-farm'
 
 const ModalWrapper = ({
   isOpen,

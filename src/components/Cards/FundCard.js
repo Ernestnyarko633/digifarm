@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Flex, Text, Icon, Heading, Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
