@@ -319,7 +319,6 @@ const WalletSelection = ({ type, title }) => {
 
                     e.preventDefault()
                   } else {
-                    //setAmount(e.target.value)
                     setPayoutAmount(e.target.value)
                   }
                 }}
