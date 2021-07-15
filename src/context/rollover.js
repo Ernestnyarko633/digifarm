@@ -8,8 +8,10 @@ const RolloverContext = createContext()
 
 export const RolloverContextProvider = ({ children }) => {
   const [step, setStep] = useImmer(0)
+  const [open, setOpen] = React.useState(false)
   const [bigStepper, setBigStepper] = useImmer(0)
   const [total, setTotal] = useState(0)
+  const [payoutAmount, setPayoutAmount] = React.useState(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [selectedWallets, setSelectedWallets] = useState([])
@@ -19,6 +21,14 @@ export const RolloverContextProvider = ({ children }) => {
   const [isSubmitting, setSubmit] = useState(false)
   const [listening, setListening] = useState(false)
   const handleNext = () => setStep(draft => draft + 1)
+
+  const onOpen = () => {
+    setOpen(true)
+  }
+
+  const onCloseSecond = () => {
+    setOpen(false)
+  }
 
   const { isAuthenticated, setSession } = useAuth()
 
@@ -64,13 +74,13 @@ export const RolloverContextProvider = ({ children }) => {
 
   const handlePayout = async () => {
     try {
-      let tempCost = total
+      let tempCost = payoutAmount
       setSubmit(true)
 
       const data = {
         type: 'PAYOUT',
         digitalfarmer: user?._id,
-        cost: total,
+        cost: payoutAmount,
         comment: comment,
         ratings: ratings
       }
@@ -154,6 +164,11 @@ export const RolloverContextProvider = ({ children }) => {
     <RolloverContext.Provider
       value={{
         step,
+        open,
+        onCloseSecond,
+        onOpen,
+        payoutAmount,
+        setPayoutAmount,
         error,
         setType,
         type,

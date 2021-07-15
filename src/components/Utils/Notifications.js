@@ -8,7 +8,7 @@ import { ANNOUNCEMENT, NEWS, WEEKLYVIDEOS } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import NotificationItem from '../Notifications/NotificationItem'
 import { FaReceipt } from 'react-icons/all'
-import { Scrollbars } from 'react-custom-scrollbars-2'
+//import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionBox = motion(Box)
 
@@ -143,7 +143,7 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
                 pos={{ base: 'fixed', md: 'absolute' }}
                 w={{ base: 82, md: 85 }}
                 h={90}
-                overflowY='hidden'
+                overflowY='scroll'
                 mt={3}
                 bg='white'
                 rounded='md'
@@ -156,51 +156,49 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
                 fontSize='sm'
                 lineHeight='shorter'
               >
-                <Scrollbars style={{ height: '100vh' }}>
-                  <Flex
-                    h={10}
-                    align='center'
-                    px={6}
-                    borderBottomWidth={1}
-                    fontWeight={800}
-                    pos='fixed'
-                    top={0}
-                    w='100%'
-                    backgroundColor='white'
-                  >
-                    <Icon as={BsBell} boxSize={4} mr={2} />
-                    Notifications
-                  </Flex>
-                  <Box mt={10}>
-                    <AnimatePresence>
-                      {loading ? (
-                        <Flex align='center' justify='center' py={10}>
-                          <Loader
-                            type='Rings'
-                            color='#5AA250'
-                            height={50}
-                            width={50}
-                          />
-                        </Flex>
-                      ) : notifications?.length === 0 ? (
-                        <Text fontSize='lg' textAlign='center' p={6}>
-                          No notifications
-                        </Text>
-                      ) : (
-                        notifications?.map(item => (
-                          <Menu.Item key={item?._id} as={MotionBox}>
-                            {({ active }) => {
-                              return (
-                                item?.status === 'NEW' &&
-                                getNotified(item?.message?.entity, item, active)
-                              )
-                            }}
-                          </Menu.Item>
-                        ))
-                      )}
-                    </AnimatePresence>
-                  </Box>
-                </Scrollbars>
+                <Flex
+                  h={10}
+                  align='center'
+                  px={6}
+                  borderBottomWidth={1}
+                  fontWeight={800}
+                  pos='fixed'
+                  top={0}
+                  w='100%'
+                  backgroundColor='white'
+                >
+                  <Icon as={BsBell} boxSize={4} mr={2} />
+                  Notifications
+                </Flex>
+                <Box mt={10}>
+                  <AnimatePresence>
+                    {loading ? (
+                      <Flex align='center' justify='center' py={10}>
+                        <Loader
+                          type='Rings'
+                          color='#5AA250'
+                          height={50}
+                          width={50}
+                        />
+                      </Flex>
+                    ) : notifications?.length === 0 ? (
+                      <Text fontSize='lg' textAlign='center' p={6}>
+                        No notifications
+                      </Text>
+                    ) : (
+                      notifications?.map(item => (
+                        <Menu.Item key={item?._id} as={MotionBox}>
+                          {({ active }) => {
+                            return (
+                              item?.status === 'NEW' &&
+                              getNotified(item?.message?.entity, item, active)
+                            )
+                          }}
+                        </Menu.Item>
+                      ))
+                    )}
+                  </AnimatePresence>
+                </Box>
               </Menu.Items>
             )}
           </AnimatePresence>

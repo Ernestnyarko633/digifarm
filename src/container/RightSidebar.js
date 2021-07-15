@@ -8,7 +8,6 @@ import useApi from 'context/api'
 import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 import CooperativesCard from 'components/Cards/CooperativesCard'
-import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const RightSidebar = ({ onOpen, setSelectedData }) => {
   const [doc, setDocData] = React.useState(null)
@@ -86,18 +85,16 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
           />
         ) : (
           <>
-            <Box as={Scrollbars} h='100vh' d={{ base: 'none', md: 'block' }}>
-              <Grid gap={4} mt={4} mb={4}>
-                {doc?.map((event, i) => (
-                  <EventCard
-                    key={mapKey(i)}
-                    onOpen={onOpen}
-                    setSelectedData={setSelectedData}
-                    event={event}
-                  />
-                ))}
-              </Grid>
-            </Box>
+            <Grid gap={4} mt={4} mb={4}>
+              {doc?.map((event, i) => (
+                <EventCard
+                  key={mapKey(i)}
+                  onOpen={onOpen}
+                  setSelectedData={setSelectedData}
+                  event={event}
+                />
+              ))}
+            </Grid>
 
             <Grid gap={4} mt={4} mb={4} d={{ base: 'grid', md: 'none' }}>
               {doc?.map((event, i) => (
@@ -139,8 +136,13 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             >
               My cooperatives
             </Heading>
-            <Box my={{ base: 3, xl: 2 }} h={{ base: '20%', xl: '40%' }} px={2}>
-              <Box as={Scrollbars} h='100vh' d={{ base: 'none', md: 'block' }}>
+            <Box
+              overflowY='scroll'
+              my={{ base: 3, xl: 2 }}
+              h={{ base: '20%', xl: '40%' }}
+              px={2}
+            >
+              <Box d={{ base: 'none', md: 'block' }}>
                 <Box>
                   {data.map(coop => (
                     <CooperativesCard coop={coop} key={coop._id} />
@@ -148,7 +150,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                 </Box>
               </Box>
 
-              <Box d={{ base: 'block', md: 'none' }}>
+              <Box d={{ base: 'block', md: 'none' }} overflowY='scroll'>
                 {data.map(coop => (
                   <CooperativesCard coop={coop} key={coop._id} />
                 ))}

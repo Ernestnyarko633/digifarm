@@ -9,6 +9,8 @@ import {
   Link,
   Icon
 } from '@chakra-ui/react'
+import { Wallet } from 'theme/Icons'
+
 import { AnimateSharedLayout, motion } from 'framer-motion'
 import { useIntersection } from 'react-use'
 
@@ -22,6 +24,7 @@ import AboutFarmManager from './AboutFarmManager'
 import ChooseAcreage from './ChooseAcreage'
 import PaymentOption from './PaymentOption'
 import Confirmation from './Confirmation'
+import useComponent from 'context/component'
 
 import Contract from './Contract'
 
@@ -32,6 +35,7 @@ import { Safety } from '../../../theme/Icons'
 const MotionFlex = motion(Flex)
 
 const OtherSteps = ({ data, rollover, history: { push } }) => {
+  const { handleModalClick } = useComponent()
   const { user } = useAuth()
   const {
     text,
@@ -202,11 +206,11 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
       <Flex
         align='center'
         justify='space-between'
-        w={{ md: 143 }}
+        w={{ base: '100%', md: '80%', '3xl': '60%' }}
         mx='auto'
         mt={{ base: 5, md: 12 }}
         mb={4}
-        px={{ base: 2, md: 0 }}
+        px={{ base: 2, md: 3 }}
       >
         <Text fontSize={{ base: 'xs', md: 'sm' }} color='red.600' w='50%'>
           Farm starts :{' '}
@@ -220,34 +224,131 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
             }
           )}
         </Text>
-        <Link
-          href='https://gaip-info.com/multi-peril-crop-insurance'
-          isExternal
-          rel='noreferrer'
-          _hover={{ textDecor: 'none' }}
-        >
-          <Flex
-            py={1}
-            align='center'
-            rounded='30px'
-            w={{ md: '11rem' }}
-            px={{ base: 2, md: 4 }}
-            borderWidth={1}
-            borderColor='cf.green'
-            bg='cf.200'
-            color='cf.green'
-          >
-            <Icon as={Safety} />
-            <Text fontSize='sm' ml={2}>
-              Farm is insured
-            </Text>
+        {rollover ? (
+          <Flex justify='flex-end' align='center' w={{ md: '40%' }}>
+            <Link
+              display={{ base: 'none', xl: 'block' }}
+              href='https://gaip-info.com/multi-peril-crop-insurance'
+              isExternal
+              rel='noreferrer'
+              _hover={{ textDecor: 'none' }}
+              mr={3}
+            >
+              <Flex
+                py={2}
+                align='center'
+                rounded='30px'
+                w={{ md: '11rem' }}
+                px={{ base: 2, md: 4 }}
+                borderWidth={1}
+                borderColor='cf.green'
+                bg='cf.200'
+                color='cf.green'
+              >
+                <Icon as={Safety} />
+                <Text fontSize='sm' ml={2}>
+                  Farm is insured
+                </Text>
+              </Flex>
+            </Link>
+            <Button
+              display={{ base: 'none', xl: 'block' }}
+              align='center'
+              rounded='30px'
+              w={{ md: '11rem' }}
+              px={{ base: 2, md: 4 }}
+              color='cf.green'
+              bg='white'
+              textAlign='center'
+              borderWidth={1}
+              btntitle='View wallet'
+              borderColor='gray.400'
+              fontWeight={400}
+              onClick={async () => {
+                handleModalClick('rollover', {
+                  wallet_id: sessionStorage.getItem('wallet'),
+                  inRollover: true,
+                  showButton: false
+                })
+              }}
+              fontSize={{ base: 'sm', xl: 'md' }}
+            />
+            <Link
+              display={{ base: 'block', xl: 'none' }}
+              href='https://gaip-info.com/multi-peril-crop-insurance'
+              isExternal
+              rel='noreferrer'
+              _hover={{ textDecor: 'none' }}
+              mr={3}
+            >
+              <Flex
+                py={3}
+                align='center'
+                rounded='30px'
+                w={{ xl: '11rem' }}
+                px={{ base: 3, md: 4 }}
+                borderWidth={1}
+                borderColor='cf.green'
+                bg='cf.200'
+                color='cf.green'
+              >
+                <Icon as={Safety} />
+              </Flex>
+            </Link>
+            <Button
+              icon={Wallet}
+              display={{ base: 'flex', xl: 'none' }}
+              align='center'
+              rounded='60px'
+              w={{ xl: '11rem' }}
+              px={{ base: 0, md: 4 }}
+              color='cf.green'
+              bg='white'
+              textAlign='center'
+              borderWidth={1}
+              borderColor='gray.400'
+              fontWeight={400}
+              onClick={async () => {
+                handleModalClick('rollover', {
+                  wallet_id: sessionStorage.getItem('wallet'),
+                  inRollover: true,
+                  showButton: false
+                })
+              }}
+              fontSize={{ base: 'sm', xl: 'md' }}
+            />
           </Flex>
-        </Link>
+        ) : (
+          <Link
+            href='https://gaip-info.com/multi-peril-crop-insurance'
+            isExternal
+            rel='noreferrer'
+            _hover={{ textDecor: 'none' }}
+            mr={3}
+          >
+            <Flex
+              py={1}
+              align='center'
+              rounded='30px'
+              w={{ md: '11rem' }}
+              px={{ base: 2, md: 4 }}
+              borderWidth={1}
+              borderColor='cf.green'
+              bg='cf.200'
+              color='cf.green'
+            >
+              <Icon as={Safety} />
+              <Text fontSize='sm' ml={2}>
+                Farm is insured
+              </Text>
+            </Flex>
+          </Link>
+        )}
       </Flex>
 
       <AnimateSharedLayout>
         <MotionFlex
-          w={{ md: 143 }}
+          w={{ base: '100%', md: '80%', '3xl': '60%' }}
           h={{ md: 123 }}
           mx='auto'
           borderWidth={1}

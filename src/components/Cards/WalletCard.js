@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Divider, Icon } from '@chakra-ui/react'
@@ -77,9 +76,14 @@ const WalletCard = ({ acreage, price, farm }) => {
     data: payouts,
     isLoading: payoutsIsLoading,
     error: payoutsHasErrors
-  } = useFetch(null, farm?._id ? getFarmProcessingPayouts : null, reload, {
-    wallet: farm?._id
-  })
+  } = useFetch(
+    `${farm?._id}_payouts`,
+    farm?._id ? getFarmProcessingPayouts : null,
+    reload,
+    {
+      wallet: farm?._id
+    }
+  )
 
   const loading =
     ScheduledTasksIsLoading ||
@@ -98,7 +102,7 @@ const WalletCard = ({ acreage, price, farm }) => {
     <Box
       rounded='xl'
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      bg='white'
+      bg={payouts?.length ? 'white' : 'cf.400'}
       w={{ base: 82, md: 80 }}
       minH={{ md: 'auto' }}
     >
@@ -190,7 +194,7 @@ const WalletCard = ({ acreage, price, farm }) => {
             to={{
               pathname: `/wallets/${farm?._id}`,
               state: {
-                processing_payout: payouts?.length ? true : false,
+                processing_payout: payouts?.length > 0 ? true : false,
                 farm: farm || {},
                 activities: myFarmActivities || [],
                 tasks: tasks || [],

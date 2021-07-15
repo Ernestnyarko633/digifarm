@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   Box,
   Flex,
@@ -10,11 +9,9 @@ import {
   ListItem,
   Text
 } from '@chakra-ui/react'
-// import { MdKeyboardArrowRight } from 'react-icons/md'
 import { FaCheckCircle } from 'react-icons/fa'
 import React from 'react'
 import PropTypes from 'prop-types'
-// import useComponent from 'context/component'
 
 const FarmingTypeCard = ({
   subtitle,
@@ -90,21 +87,6 @@ const FarmingTypeCard = ({
             </ListItem>
           ))}
         </List>
-        {/*<Box>*/}
-        {/*  <Box*/}
-        {/*    d='block'*/}
-        {/*    fontSize='xs'*/}
-        {/*    color='cf.green'*/}
-        {/*    mt={1}*/}
-        {/*    fontFamily='body'*/}
-        {/*    as='button'*/}
-        {/*    role='button'*/}
-        {/*    aria-label='learn more button'*/}
-        {/*    onClick={() => handleModalClick('learnmore')}*/}
-        {/*  >*/}
-        {/*    Learn more <Icon as={MdKeyboardArrowRight} />*/}
-        {/*  </Box>*/}
-        {/*</Box>*/}
       </Box>
     </Box>
   )
@@ -120,7 +102,9 @@ FarmingTypeCard.propTypes = {
   state: PropTypes.object,
   mr: PropTypes.any,
   selected: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  id: PropTypes.any,
+  disabled: PropTypes.any
 }
 
 export default FarmingTypeCard

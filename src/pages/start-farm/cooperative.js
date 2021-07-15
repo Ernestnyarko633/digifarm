@@ -7,7 +7,6 @@ import useStartFarm from 'context/start-farm'
 import CooperativeType from 'components/StartFarmProcess/CooperativeType'
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import CooperativeSteps from 'components/StartFarmProcess/CooperativeSteps'
-import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const CooperativeFarm = ({ location, history }) => {
   document.title = 'Cooperative | Start Farm'
@@ -88,18 +87,16 @@ const CooperativeFarm = ({ location, history }) => {
   return (
     <>
       <Header />
-      <Scrollbars style={{ height: '100vh' }}>
-        <Box
-          as='main'
-          bgColor='white'
-          w={{ md: '100vw' }}
-          h={{ md: '100vh' }}
-          mt={{ base: 14, md: 20, xl: 8 }}
-          overflow='hidden'
-        >
-          {getContent(step)}
-        </Box>
-      </Scrollbars>
+      <Box
+        as='main'
+        bgColor='white'
+        w={{ md: '100vw' }}
+        h={{ md: '100vh' }}
+        mt={{ base: 14, md: 20, xl: 8 }}
+        overflow='scroll'
+      >
+        {getContent(step)}
+      </Box>
     </>
   )
 }

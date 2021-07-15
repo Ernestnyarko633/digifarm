@@ -13,6 +13,7 @@ import { motion } from 'framer-motion'
 import { FormTextArea } from 'components/Form'
 import RatingStars from 'components/Rollover&Payout/Rating/RatingStars'
 import useRollover from 'context/rollover'
+import Time from 'assets/images/time.png'
 const MotionGrid = motion(Grid)
 
 const PayoutReview = () => {
@@ -52,8 +53,8 @@ const PayoutReview = () => {
           justify='center'
           h='100%'
         >
-          <Box bg='gray.500' w={{ base: '12.5rem' }} h={{ base: '12.5rem' }}>
-            <Image w='100%' h='100%' objectFit='cover' src={null} />
+          <Box bg='white' w={{ base: '12.5rem' }} h={{ base: '12.5rem' }}>
+            <Image w='100%' h='100%' objectFit='cover' src={Time} />
           </Box>
         </Flex>
       </GridItem>
@@ -142,22 +143,46 @@ const PayoutReview = () => {
             </Box>
           </Box>
         </Grid>
-        <Button
-          display={{ base: 'block', lg: 'flex' }}
-          mt={{ base: 10, md: 0, '2xl': 5, '3xl': 12 }}
-          textAlign='center'
-          btntitle='Submit'
-          borderColor='cf.green'
-          color='white'
-          fontWeight={900}
-          rounded={30}
-          onClick={async () => await handlePayout()}
-          isDisabled={isSubmitting}
-          isLoading={isSubmitting}
-          w={{ base: '100%', md: '45%', '3xl': '30%' }}
-          h={{ base: 50, '2xl': 55 }}
-          fontSize={{ base: 'sm', xl: 'md' }}
-        />
+        <Flex
+          w={{ base: '100%', md: '90%' }}
+          direction={{ base: 'column', md: 'row' }}
+        >
+          <Button
+            mr={{ md: 3 }}
+            bg='white'
+            display={{ base: 'block', lg: 'flex' }}
+            mt={{ base: 10, md: 0, '2xl': 5, '3xl': 12 }}
+            textAlign='center'
+            borderWidth={1}
+            btntitle='Skip'
+            borderColor='gray.400'
+            color='cf.400'
+            fontWeight={900}
+            rounded={30}
+            onClick={async () => await handlePayout()}
+            isDisabled={isSubmitting}
+            isLoading={isSubmitting}
+            w={{ base: '100%', md: '45%', '3xl': '30%' }}
+            h={{ base: 50, '2xl': 55 }}
+            fontSize={{ base: 'sm', xl: 'md' }}
+          />
+          <Button
+            display={{ base: 'block', lg: 'flex' }}
+            mt={{ base: 10, md: 0, '2xl': 5, '3xl': 12 }}
+            textAlign='center'
+            btntitle='Submit'
+            borderColor='cf.green'
+            color='white'
+            fontWeight={900}
+            rounded={30}
+            onClick={async () => await handlePayout()}
+            isDisabled={isSubmitting}
+            isLoading={isSubmitting}
+            w={{ base: '100%', md: '45%', '3xl': '30%' }}
+            h={{ base: 50, '2xl': 55 }}
+            fontSize={{ base: 'sm', xl: 'md' }}
+          />
+        </Flex>
       </GridItem>
     </MotionGrid>
   )
