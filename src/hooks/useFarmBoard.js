@@ -86,20 +86,6 @@ export const usePrismic = () => {
 
   // returns and obj {loading, news, blogs, videos, errors} includes sorting according to dates
 
-  console.log(
-    news
-      ?.filter(
-        news =>
-          news?.data?.category !== 'news' && news?.data?.category !== 'blogs'
-      )
-      ?.slice()
-      ?.sort(
-        (a, b) =>
-          new Date(b.first_publication_date) -
-          new Date(a.first_publication_date)
-      ),
-    'data'
-  )
   return {
     loading,
     comments:
