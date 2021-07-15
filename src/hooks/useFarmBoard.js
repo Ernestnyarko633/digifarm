@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import getConfig from 'utils/configs'
 import Prismic from 'prismic-javascript'
@@ -84,6 +85,21 @@ export const usePrismic = () => {
   }, [comments])
 
   // returns and obj {loading, news, blogs, videos, errors} includes sorting according to dates
+
+  console.log(
+    news
+      ?.filter(
+        news =>
+          news?.data?.category !== 'news' && news?.data?.category !== 'blogs'
+      )
+      ?.slice()
+      ?.sort(
+        (a, b) =>
+          new Date(b.first_publication_date) -
+          new Date(a.first_publication_date)
+      ),
+    'data'
+  )
   return {
     loading,
     comments:
@@ -99,9 +115,7 @@ export const usePrismic = () => {
       news
         ?.filter(
           news =>
-            news?.data?.category === 'News' ||
-            news?.data?.category === null ||
-            news?.data?.category === 'news'
+            news?.data?.category === 'News' || news?.data?.category === 'news'
         )
         ?.slice()
         ?.sort(
@@ -113,8 +127,11 @@ export const usePrismic = () => {
       news
         ?.filter(
           blog =>
-            blog?.data?.category === 'Blog Post' ||
-            blog?.data?.category === 'blogs'
+            blog?.data?.category === 'blogs' ||
+            blog?.data?.category === 'blogposts' ||
+            blog?.data?.category === 'blogpost' ||
+            blog?.data?.category === 'blog' ||
+            blog?.data?.category === 'Blogpost'
         )
         ?.slice()
         ?.sort(
