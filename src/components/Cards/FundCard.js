@@ -30,7 +30,7 @@ const FundCard = ({ amount, label, bg, description }) => {
           >
             <Icon as={Funds} boxSize={4} />
           </Flex>
-          <Heading color={bg} as='h6' fontSize={{ base: 'sm', md: 'md' }}>
+          <Heading color={bg} as='h6' fontSize={{ base: 'xs', '3xl': 'md' }}>
             {label}
           </Heading>
         </Flex>
@@ -50,7 +50,7 @@ const FundCard = ({ amount, label, bg, description }) => {
           rounded={12}
           mt={5}
         >
-          <Heading as='h3' fontSize={{ base: 'xs', md: 'md', xl: '2xl' }}>
+          <Heading as='h3' fontSize={{ base: 'xs', md: 'md', '3xl': '2xl' }}>
             $ {amount}
           </Heading>
         </Box>

@@ -63,12 +63,12 @@ const FarmWallet = () => {
               justify='center'
               direction={{ base: 'column', md: 'row' }}
               align='center'
-              w='100%'
+              w={{ base: '100%', '2xl': '90%', '3xl': '100%' }}
             >
               <Flex
                 justify={{ base: 'center', md: 'flex-start' }}
                 align='center'
-                w='70%'
+                w={{ base: '70%', '2xl': '60%', '3xl': '70%' }}
               >
                 <Heading
                   textAlign='center'
@@ -80,7 +80,7 @@ const FarmWallet = () => {
               </Flex>
 
               <Flex
-                w={{ base: '100%', md: '30%' }}
+                w={{ base: '100%', md: '30%', '2xl': '40%', '3xl': '30%' }}
                 align='center'
                 justify={{ base: 'center', md: 'flex-end' }}
               >
