@@ -21,11 +21,13 @@ import { getFormattedMoney } from 'helpers/misc'
 import useRollover from 'context/rollover'
 import useComponent from 'context/component'
 import FormInput from 'components/Form/FormInput'
+import useStartFarm from 'context/start-farm'
 
 const MotionGrid = motion(Grid)
 
 const WalletSelection = ({ type, title }) => {
   const [miniStep, setMiniStep] = useImmer(0)
+  const { acreage, selectedFarm, handleRolloverPayment } = useStartFarm()
   let toast = useToast()
   const { data } = useComponent()
   const {
@@ -41,6 +43,7 @@ const WalletSelection = ({ type, title }) => {
   } = useRollover()
   const { onClose } = useComponent()
 
+  console.log(selectedWallets, data, 'modalx')
   const ReviewModal = () => {
     console.log(miniStep)
     return (
@@ -133,14 +136,18 @@ const WalletSelection = ({ type, title }) => {
                   color='gray.600'
                   fontWeight={900}
                 >
-                  {payoutAmount}
+                  {data?.inRollover
+                    ? data?.order?.cost || acreage * selectedFarm?.pricePerAcre
+                    : payoutAmount}
                 </Text>
               </Box>
             </Flex>
             <Divider mb={{ base: 2, md: 3 }} />
             <Button
               textAlign='center'
-              btntitle='Continue to payment'
+              btntitle={
+                data?.inRollover ? 'Purchare crop' : 'Continue to payment'
+              }
               //isDisabled={!selectedWallets.length || payoutAmount <= 0}
               borderColor='cf.green'
               color='white'
@@ -152,8 +159,10 @@ const WalletSelection = ({ type, title }) => {
               h={65}
               fontSize={{ base: 'sm', xl: 'md' }}
               onClick={() => {
-                console.log('clicking')
-                return setMiniStep(p => p + 1)
+                data?.inRollover &&
+                  data?.order &&
+                  handleRolloverPayment(data?.order)
+                !data?.inRollover && setMiniStep(p => p + 1)
               }}
             />
           </Flex>
@@ -165,6 +174,8 @@ const WalletSelection = ({ type, title }) => {
   }
 
   const farms = JSON.parse(sessionStorage.getItem('my_farms')) || []
+
+  console.log(farms, 'farms')
 
   return (
     <MotionGrid
@@ -178,7 +189,9 @@ const WalletSelection = ({ type, title }) => {
       borderColor={{ base: 'transparent', md: 'gray.200' }}
       templateColumns={{ xl: '50% 50%', '2xl': 'repeat(2, 1fr)' }}
     >
-      {useType === 'asPayout' && <ReviewModal />}
+      {(useType === 'asPayout' || (data?.inRollover && data?.showButton)) && (
+        <ReviewModal />
+      )}
       <GridItem
         borderRightColor={{ base: 'transparent', md: 'gray.200' }}
         borderRightWidth={{ md: 1 }}
@@ -230,9 +243,15 @@ const WalletSelection = ({ type, title }) => {
             ?.filter(farm => farm.wallet > 0)
             .map(wallet => (
               <WalletCard
+                rollover={data?.inRollover}
                 key={wallet?._id}
                 id={wallet?._id}
-                clicked={data?.wallet_id === wallet?._id ? true : false}
+                clicked={
+                  data?.wallet_id === wallet?._id ||
+                  selectedWallets.find(item => wallet._id === item.id)
+                    ? true
+                    : false
+                }
                 name={wallet.order?.product?.cropVariety?.crop?.name}
                 amount={wallet?.wallet}
                 image={wallet?.order?.product?.cropVariety?.imageUrl}
@@ -312,33 +331,59 @@ const WalletSelection = ({ type, title }) => {
             </Flex>
           )}
           {useType === 'asRollover' ? (
-            <Button
-              display={{ base: 'none', lg: 'flex' }}
-              as={selectedWallets.length && Link}
-              isDisabled={!selectedWallets.length}
-              _disabled={!selectedWallets.length}
-              textAlign='center'
-              btntitle='Proceed to rollover'
-              to={
-                selectedWallets.length && {
-                  pathname: '/start-farm/individual',
-                  state: { rollover: true }
+            !data?.inRollover ? (
+              <Button
+                display={{ base: 'none', lg: 'flex' }}
+                as={selectedWallets.length && Link}
+                isDisabled={!selectedWallets.length}
+                _disabled={!selectedWallets.length}
+                textAlign='center'
+                btntitle='Proceed to rollover'
+                to={
+                  selectedWallets.length && {
+                    pathname: '/start-farm/individual',
+                    state: { rollover: true }
+                  }
                 }
-              }
-              borderColor='cf.green'
-              color='white'
-              fontWeight={900}
-              rounded={30}
-              mx={{ base: 3, md: 0 }}
-              my={{ base: 2, md: 10 }}
-              w='70%'
-              h={65}
-              fontSize={{ base: 'sm', xl: 'md' }}
-              onClick={() => {
-                sessionStorage.setItem('type', 'individual')
-                onClose()
-              }}
-            />
+                borderColor='cf.green'
+                color='white'
+                fontWeight={900}
+                rounded={30}
+                mx={{ base: 3, md: 0 }}
+                my={{ base: 2, md: 10 }}
+                w='70%'
+                h={65}
+                fontSize={{ base: 'sm', xl: 'md' }}
+                onClick={() => {
+                  sessionStorage.setItem('type', 'individual')
+                  onClose()
+                }}
+              />
+            ) : (
+              data?.showButton && (
+                <Button
+                  display={{ base: 'none', lg: 'flex' }}
+                  as={selectedWallets.length && Link}
+                  isDisabled={!selectedWallets.length}
+                  _disabled={!selectedWallets.length}
+                  textAlign='center'
+                  btntitle='Proceed to purchase crop'
+                  borderColor='cf.green'
+                  color='white'
+                  fontWeight={900}
+                  rounded={30}
+                  mx={{ base: 3, md: 0 }}
+                  my={{ base: 2, md: 10 }}
+                  w='70%'
+                  h={65}
+                  fontSize={{ base: 'sm', xl: 'md' }}
+                  onClick={() => {
+                    console.log('rooom')
+                    onOpen()
+                  }}
+                />
+              )
+            )
           ) : (
             useType === 'asPayout' && (
               <Button

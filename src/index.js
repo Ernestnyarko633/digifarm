@@ -7,7 +7,6 @@ import { Provider as StyletronProvider } from "styletron-react";
 import { LightTheme, BaseProvider } from "baseui";
 import ReactGA from "react-ga4";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Scrollbars } from "react-custom-scrollbars-2";
 // import { useHistory } from "react-router-dom";
 
 import App from "container/App";
@@ -50,10 +49,8 @@ const ThemeApp = () => {
       <QueryClientProvider client={queryClient}>
         <StyletronProvider value={engine}>
           <BaseProvider theme={LightTheme}>
-            <Scrollbars style={{ height: "100vh" }}>
               <FacebookPixel />
               <App />
-            </Scrollbars>
           </BaseProvider>
         </StyletronProvider>
       </QueryClientProvider>

@@ -199,6 +199,8 @@ const FarmFinances = ({
                     setType('asRollover')
                   }
 
+                  sessionStorage.setItem('wallet', wallet_id)
+
                   handleModalClick('rollover', { step, setStep, wallet_id })
                 }}
               />

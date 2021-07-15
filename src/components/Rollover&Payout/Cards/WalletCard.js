@@ -5,7 +5,7 @@ import { AiOutlineCheck } from 'react-icons/ai'
 import { getFormattedMoney } from 'helpers/misc'
 import useRollover from 'context/rollover'
 
-const WalletCard = ({ name, image, amount, id, clicked }) => {
+const WalletCard = ({ name, image, amount, id, clicked, rollover }) => {
   const [selected, setSelected] = useState(false)
   const { setSelectedWallets } = useRollover()
 
@@ -47,7 +47,8 @@ const WalletCard = ({ name, image, amount, id, clicked }) => {
       h={{ base: '6.75rem', md: '8.65rem', lg: 40 }}
       borderColor={selected ? 'cf.400' : 'gray.300'}
       borderWidth={selected ? '3px' : '1px'}
-      onClick={() => setSelected(!selected)}
+      _disabled={rollover}
+      onClick={() => !rollover && setSelected(!selected)}
     >
       <Flex w='100%' direction='row' h='100%'>
         <Box w='70%' p={{ base: 4, lg: 8 }}>
@@ -96,6 +97,7 @@ WalletCard.propTypes = {
   amount: PropTypes.number,
   image: PropTypes.any,
   id: PropTypes.number,
-  clicked: PropTypes.bool
+  clicked: PropTypes.bool,
+  rollover: PropTypes.bool
 }
 export default WalletCard

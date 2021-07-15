@@ -172,7 +172,7 @@ const CooperativePayment = ({ farm, asMember }) => {
       <GridItem
         borderLeftWidth={1}
         borderLeftColor='gray.200'
-        overflowY='hidden'
+        overflowY='scroll'
         p={{ base: 4, md: 10 }}
         css={{
           direction: 'ltr',

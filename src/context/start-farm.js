@@ -9,6 +9,7 @@ import useExternal from './external'
 
 import Constants from 'constant'
 import useRollover from './rollover'
+import useComponent from './component'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[0]
@@ -16,6 +17,7 @@ const dpo = Constants.paymentOptions[0]
 const StartFarmContext = createContext({})
 
 export const StartFarmContextProvider = ({ children }) => {
+  const { handleModalClick, onClose } = useComponent()
   const [paymentOption, setPaymentOption] = useState(dpo)
   const [wantCycle, setWantCycle] = React.useState('No')
   const [selectedFarm, setSelectedFarm] = useState(
@@ -57,7 +59,7 @@ export const StartFarmContextProvider = ({ children }) => {
     verifyWallet
   } = useApi()
 
-  const { selectedWallets } = useRollover()
+  const { selectedWallets, onCloseSecond } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -172,11 +174,16 @@ export const StartFarmContextProvider = ({ children }) => {
           status: 'success',
           position: 'top-right',
           title: 'Order created.',
-          description: 'Order saved successfully'
+          description: 'Farm created successfully'
         })
+
+        sessionStorage.removeItem('my_farms')
+        sessionStorage.removeItem('my_orders')
 
         handleNextStep()
         handleNextStep()
+        onCloseSecond()
+        onClose()
       }
     } catch (error) {
       if (error) {
@@ -274,10 +281,16 @@ export const StartFarmContextProvider = ({ children }) => {
 
       const res = await createOrder(data)
       setOrder(res.data)
-      sessionStorage.removeItem('my_farms')
+      !rollover && sessionStorage.removeItem('my_farms')
       sessionStorage.removeItem('my_orders')
       !rollover && handleNextStep()
-      rollover && handleRolloverPayment(res.data)
+      rollover &&
+        handleModalClick('rollover', {
+          wallet_id: sessionStorage.getItem('wallet'),
+          inRollover: true,
+          showButton: true,
+          order: res.data
+        })
     } catch (error) {
       if (error) {
         if ([401, 403].includes(error.status)) {
@@ -498,7 +511,8 @@ export const StartFarmContextProvider = ({ children }) => {
         setCoopConfigErrors,
         handleCreateCooperative,
         selectedCooperativeType,
-        setSelectedCooperativeType
+        setSelectedCooperativeType,
+        handleRolloverPayment
       }}
     >
       {false && reload}

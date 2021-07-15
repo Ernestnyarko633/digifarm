@@ -3,7 +3,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicDocument from '../Document'
 import FarmReceiptCard from '../Cards/FarmReceiptCard'
-import { Scrollbars } from 'react-custom-scrollbars-2'
 
 export default function Document({
   digitalFarmerFarm,
@@ -82,29 +81,27 @@ export default function Document({
           h={{ lg: '84vh' }}
           w={{ md: '30%' }}
           shadow={{ md: 'md' }}
-          overflowY={{ md: 'hidden' }}
+          overflowY={{ md: 'scroll' }}
         >
-          <Scrollbars style={{ height: '100vh' }}>
-            <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
-              <React.Fragment>
-                <FarmReceiptCard
-                  title='Agreement'
-                  type='agreement'
-                  farm={digitalFarmerFarm}
-                />
-                <FarmReceiptCard
-                  title='Receipt'
-                  type='receipt'
-                  farm={digitalFarmerFarm}
-                />
-                <FarmReceiptCard
-                  title='Invoice'
-                  type='invoice'
-                  farm={digitalFarmerFarm}
-                />
-              </React.Fragment>
-            </Grid>
-          </Scrollbars>
+          <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
+            <React.Fragment>
+              <FarmReceiptCard
+                title='Agreement'
+                type='agreement'
+                farm={digitalFarmerFarm}
+              />
+              <FarmReceiptCard
+                title='Receipt'
+                type='receipt'
+                farm={digitalFarmerFarm}
+              />
+              <FarmReceiptCard
+                title='Invoice'
+                type='invoice'
+                farm={digitalFarmerFarm}
+              />
+            </React.Fragment>
+          </Grid>
         </Box>
       </GridItem>
     </Grid>
