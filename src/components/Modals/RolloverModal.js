@@ -7,7 +7,7 @@ import RequestRollover from 'components/Rollover&Payout/ModalContent/RequestRoll
 import WalletSelection from 'components/Rollover&Payout/ModalContent/WalletSelection'
 
 const RolloverModal = () => {
-  const { isOpen, onClose } = useComponent()
+  const { isOpen, onClose, data } = useComponent()
   const { step } = useRollover()
 
   const getContent = value => {
@@ -26,6 +26,7 @@ const RolloverModal = () => {
               isCentered
               isOpen={isOpen}
               onClose={onClose}
+              data={data}
               size='full'
             >
               <Flex w='100%' align='center' justify='center'>

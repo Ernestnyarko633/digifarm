@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import {
   Modal,
@@ -13,7 +14,6 @@ import { Link as ReachRouter } from 'react-router-dom'
 import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import useRollover from 'context/rollover'
-import useComponent from 'context/component'
 
 const ModalWrapper = ({
   isOpen,
@@ -24,12 +24,11 @@ const ModalWrapper = ({
   image,
   alt,
   children,
-  showButton = true
+  showButton = true,
+  data
 }) => {
   const { step, bigStepper, type, onOpen, selectedWallets, payoutAmount } =
     useRollover()
-
-  const { data } = useComponent()
 
   return (
     <Modal
@@ -144,8 +143,7 @@ const ModalWrapper = ({
                 !data?.inRollover ? (
                   <Button
                     ml={{ base: 5, md: 8, xl: 0 }}
-                    pt={{ base: 5, xl: 0 }}
-                    display={{ base: 'block', lg: 'none' }}
+                    display={{ base: 'flex', lg: 'none' }}
                     as={selectedWallets.length && ReachRouter}
                     isDisabled={!selectedWallets.length}
                     _disabled={!selectedWallets.length}
@@ -172,7 +170,8 @@ const ModalWrapper = ({
                 ) : (
                   data?.showButton && (
                     <Button
-                      display={{ base: 'none', lg: 'flex' }}
+                      ml={{ base: 5, md: 8, xl: 0 }}
+                      display={{ base: 'block', lg: 'none' }}
                       isDisabled={!selectedWallets.length}
                       _disabled={!selectedWallets.length}
                       textAlign='center'
@@ -181,9 +180,7 @@ const ModalWrapper = ({
                       color='white'
                       fontWeight={900}
                       rounded={30}
-                      mx={{ base: 3, md: 0 }}
-                      my={{ base: 2, md: 10 }}
-                      w='70%'
+                      w='90%'
                       h={65}
                       fontSize={{ base: 'sm', xl: 'md' }}
                       onClick={() => {
@@ -225,7 +222,8 @@ ModalWrapper.propTypes = {
   image: PropTypes.string,
   alt: PropTypes.string,
   children: PropTypes.node,
-  showButton: PropTypes.bool
+  showButton: PropTypes.bool,
+  data: PropTypes.any
 }
 
 export default ModalWrapper

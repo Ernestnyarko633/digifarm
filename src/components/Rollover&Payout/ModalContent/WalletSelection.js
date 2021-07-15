@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
@@ -149,7 +150,6 @@ const WalletSelection = ({ type, title }) => {
               borderColor='cf.green'
               color='white'
               isLoading={isSubmitting}
-              isDisabled={isSubmitting}
               fontWeight={900}
               rounded={30}
               mx={{ base: 0 }}
@@ -158,10 +158,11 @@ const WalletSelection = ({ type, title }) => {
               h={65}
               fontSize={{ base: 'sm', xl: 'md' }}
               onClick={() => {
-                data?.inRollover &&
-                  data?.order &&
+                if (data?.inRollover && data?.order) {
                   handleRolloverPayment(data?.order)
-                !data?.inRollover && setMiniStep(p => p + 1)
+                } else if (!data?.inRollover) {
+                  setMiniStep(p => p + 1)
+                }
               }}
             />
           </Flex>
