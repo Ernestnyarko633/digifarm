@@ -80,11 +80,14 @@ node {
                     sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=dashboards-stage"
                     slackSend(color: 'good', message: "Successfully deployed Digital Farmer Dashboard to staging environment View deployed changes at https://digitalfarmer-test.completefarmer.com")
                 }
-                
+                // Remove dangling images
+                sh 'docker system prune -f'
             }
         }catch(err){
             slackSend(color: '#F01717', message: "${err}")
-            error
+            // Remove dangling images
+            sh 'docker system prune -f'
+            error 'Error occured in pipeline'
         }
     }
     
