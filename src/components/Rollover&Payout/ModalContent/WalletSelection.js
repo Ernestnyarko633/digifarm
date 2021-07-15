@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
@@ -37,7 +36,6 @@ const WalletSelection = ({ type, title }) => {
     onCloseSecond,
     open,
     onOpen,
-    // setBigStepper,
     type: useType,
     setPayoutAmount,
     payoutAmount
@@ -399,9 +397,7 @@ const WalletSelection = ({ type, title }) => {
                 h={65}
                 fontSize={{ base: 'sm', xl: 'md' }}
                 onClick={() => {
-                  // setPayoutAmount(amount)
                   onOpen()
-                  //false && setBigStepper(p => p + 1)
                 }}
               />
             )
