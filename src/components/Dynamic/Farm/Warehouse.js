@@ -61,9 +61,18 @@ const Warehouse = ({ digitalFarmerFarm }) => {
               name={digitalFarmerFarm?.order?.product?.cropVariety?.crop?.name}
               location={digitalFarmerFarm?.order?.product?.location?.name}
               image={digitalFarmerFarm?.order?.product?.cropVariety?.imageUrl}
-              quantity={digitalFarmerFarm?.storage?.quantity}
-              weight={`${digitalFarmerFarm?.storage?.weight}`}
-              bags={`${digitalFarmerFarm?.storage?.numberOfBags}`}
+              quantity={
+                digitalFarmerFarm?.order?.acreage *
+                digitalFarmerFarm?.order?.product?.storagePerAcre
+              }
+              weight={`${
+                digitalFarmerFarm?.order?.acreage *
+                digitalFarmerFarm?.order?.product?.weightOfProducePerAcre
+              }`}
+              bags={`${
+                digitalFarmerFarm?.order?.acreage *
+                digitalFarmerFarm?.order?.product?.quantityOfStoragePerAcre
+              }`}
               condition={digitalFarmerFarm?.storage.yieldConditions}
               orderStatus={digitalFarmerFarm?.order?.status}
               mr={3}

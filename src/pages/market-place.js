@@ -54,55 +54,72 @@ const Marketplace = () => {
 
   return (
     <Layout>
-      <Box pt={12} px={24}>
+      <Box
+        py={{ base: 8, md: 12 }}
+        px={{ base: 4, md: 24 }}
+        mt={{ base: 10, md: 0 }}
+      >
         <Heading>Farmer's Market </Heading>
-        <Box
+        <Flex
           borderRadius={40}
           borderWidth={2}
           borderColor='rgba(208, 143, 49, 0.1)'
           bgColor='rgba(208, 143, 49, 0.1)'
           p={2}
+          align='center'
           position='absolute'
         >
           {false && triggerReload()}
           <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
           <Text
             as='span'
+            fontSize={{ base: 'xs', md: 'sm' }}
             fontWeight='bold'
-            fontSize='14px'
             color='#D08F31'
             px={2}
           >
             If produce in the warehouse are not sold within 2 weeks, they will
             automatically be sold to a buyer
           </Text>
-        </Box>
-
-        <Box mt={20}>
-          <WarehouseCard
-            sellButton={false}
-            _id={myfarm._id}
-            key={myfarm?.name}
-            name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
-            location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
-            image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
-            quantity={myfarm?.storage?.quantity}
-            weight={myfarm?.storage?.weight}
-            bags={myfarm?.storage?.numberOfBags}
-            mr={3}
-            ml={14}
-          />
-        </Box>
+        </Flex>
+      </Box>
+      <Box
+        py={{ base: 8, md: 12 }}
+        px={{ base: 4, md: 24 }}
+        mt={{ base: 10, md: 0 }}
+      >
+        <WarehouseCard
+          sellButton={false}
+          _id={myfarm._id}
+          key={myfarm?.name}
+          name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
+          location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
+          image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
+          quantity={
+            myfarm?.order?.acreage * myfarm?.order?.product?.storagePerAcre
+          }
+          weight={
+            myfarm?.order?.acreage *
+            myfarm?.order?.product?.weightOfProducePerAcre
+          }
+          bags={
+            myfarm?.order?.acreage *
+            myfarm?.order?.product?.quantityOfStoragePerAcre
+          }
+          mr={3}
+          ml={14}
+        />
       </Box>
 
-      <Box py={12} px={24} mt={20}>
-        <Heading>Buyers you can sell to</Heading>
+      <Box py={12} px={{ base: 2, md: 24 }}>
+        <Heading>Buyers</Heading>
         <Flex
           align='center'
           borderBottomWidth={1}
           borderBottomColor='cf-dark.300'
           pb={-1}
           mt={4}
+          justify='space-between'
         >
           <Box
             cursor='pointer'
@@ -113,9 +130,15 @@ const Marketplace = () => {
             pb={3}
             color={state === 0 ? 'cf.green' : 'gray.700'}
           >
-            Ready Buyers
+            <Text
+              as='span'
+              fontSize={{ base: 'xs', md: 'sm' }}
+              fontWeight='bold'
+              px={2}
+            >
+              Ready Buyers
+            </Text>
           </Box>
-          <Box mx={10} />
           <Box
             cursor='pointer'
             fontWeight={state === 1 ? 'bold' : 'normal'}
@@ -125,9 +148,15 @@ const Marketplace = () => {
             pb={3}
             color={state === 1 ? 'cf.green' : 'gray.700'}
           >
-            Ongoing Transactions
+            <Text
+              as='span'
+              fontSize={{ base: 'xs', md: 'sm' }}
+              fontWeight='bold'
+              px={2}
+            >
+              Ongoing Transactions
+            </Text>
           </Box>
-          <Box mx={10} />
           <Box
             cursor='pointer'
             fontWeight={state === 2 ? 'bold' : 'normal'}
@@ -137,7 +166,14 @@ const Marketplace = () => {
             pb={3}
             color={state === 2 ? 'cf.green' : 'gray.700'}
           >
-            Past Transactions
+            <Text
+              as='span'
+              fontSize={{ base: 'xs', md: 'sm' }}
+              fontWeight='bold'
+              px={2}
+            >
+              Past Transactions
+            </Text>
           </Box>
         </Flex>
         {state === 0 &&
@@ -153,7 +189,12 @@ const Marketplace = () => {
             />
           ))}
         {state === 0 && data?.length === 0 && (
-          <BuyerEmptyState image={group} mx='auto' />
+          <BuyerEmptyState
+            image={group}
+            note='No buyers available'
+            info='Ready buyers will be available here'
+            mx='auto'
+          />
         )}
 
         {state === 1 && (
