@@ -10,7 +10,8 @@ import {
   Text,
   Icon,
   Image,
-  Collapse
+  Collapse,
+  Skeleton
 } from '@chakra-ui/react'
 import useAuth from 'context/auth'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
@@ -132,10 +133,12 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
           </Box>
           <Box pos='relative'>
             {loading ? (
-              <p>Loading...</p>
+              <Skeleton height={{ md: 110 }} />
             ) : (
               selectedItem?.type === 'image' && (
                 <Image
+                  fallback={<Skeleton height={{ md: 110 }} />}
+                  fallbackSrc='https://via.placeholder.com/300'
                   h={{ md: 110 }}
                   w='100%'
                   objectFit='cover'
@@ -144,8 +147,12 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
               )
             )}
 
-            {selectedItem?.type === 'video' && (
-              <YoutubeSlide url={selectedItem?.url} muted playing={false} />
+            {loading ? (
+              <Skeleton height={{ md: '100%' }} />
+            ) : (
+              selectedItem?.type === 'video' && (
+                <YoutubeSlide url={selectedItem?.url} muted playing={false} />
+              )
             )}
             <Flex
               align='center'
