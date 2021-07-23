@@ -55,7 +55,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
       px={{ md: 5, xl: 5 }}
       pt={{ base: 12, md: 24 }}
       pb={{ base: 24, md: 0 }}
-      w={{ md: '22%', xl: '25%' }}
+      w={{ md: '22%', xl: '22%' }}
     >
       <Heading
         as='h4'
