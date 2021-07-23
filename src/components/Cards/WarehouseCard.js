@@ -43,11 +43,8 @@ const WarehouseCard = ({
       rounded='lg'
       bg='white'
       p={4}
-      mt={{ md: 5 }}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       w={{ md: 110 }}
-      mx='auto'
-      borderRadius='2xl'
     >
       <Flex justify='space-between'>
         <Flex align='center'>
@@ -100,7 +97,7 @@ const WarehouseCard = ({
             <Text fontWeight='thick' fontSize='md'>
               Quantity (Tonnes)
             </Text>
-            <Text fontWeight='bold' fontSize='md'>
+            <Text fontWeight='bold' fontSize='md' fontFamily='num'>
               {myfarm ? farmQuantity : quantity}
             </Text>
           </Flex>
@@ -110,7 +107,7 @@ const WarehouseCard = ({
             <Text fontWeight='thick' fontSize='md'>
               Weight (kg)
             </Text>
-            <Text fontWeight='bold' fontSize='md'>
+            <Text fontWeight='bold' fontSize='md' fontFamily='num'>
               {myfarm ? produceWeight : weight}
             </Text>
           </Flex>
@@ -121,7 +118,7 @@ const WarehouseCard = ({
             <Text fontWeight='thick' fontSize='md'>
               Number of Boxes (5kg Per Box)
             </Text>
-            <Text fontWeight='bold' fontSize='md'>
+            <Text fontWeight='bold' fontSize='md' fontFamily='num'>
               {myfarm ? numberOfBags : bags}
             </Text>
           </Flex>
