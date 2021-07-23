@@ -65,7 +65,9 @@ const NewsCard = ({ content, status, loading }) => {
       <Flex align='center'>
         <Box ml={4}>
           <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
-            {content?.data?.category === 'Blog Post'
+            {['blogs', 'blogposts', 'blogpost', 'blog', 'Blogpost'].includes(
+              content?.data?.category
+            )
               ? 'Blog Post'
               : 'Weekly News'}
           </Heading>
@@ -75,7 +77,13 @@ const NewsCard = ({ content, status, loading }) => {
       <Flex direction='column' justify='center' align='center'>
         <Box mx={{ base: 4 }}>
           <Text color='cf.green' fontWeight={700}>
-            {status === 'news' ? status.toUpperCase() : null}
+            {['blogs', 'blogposts', 'blogpost', 'blog', 'Blogpost'].includes(
+              content?.data?.category
+            )
+              ? 'BLOGS'
+              : status === 'news'
+              ? status.toUpperCase()
+              : null}
           </Text>
         </Box>
         <Text color='gray.500' fontSize={{ base: 'xs', md: 'sm' }} mt={-1}>
