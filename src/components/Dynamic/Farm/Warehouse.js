@@ -56,7 +56,13 @@ const Warehouse = ({ digitalFarmerFarm }) => {
               </Text>
             </Flex>
           )} */}
-          <Grid templateColumns={{ md: 'repeat(1, 1fr)' }} gap={10} w='100%'>
+          <Grid
+            templateColumns={{ md: 'repeat(1, 1fr)' }}
+            gap={10}
+            w='100%'
+            mt={{ base: 48, sm: 0 }}
+            px={{ base: 4, sm: 0 }}
+          >
             <WarehouseCard
               name={digitalFarmerFarm?.order?.product?.cropVariety?.crop?.name}
               location={digitalFarmerFarm?.order?.product?.location?.name}
