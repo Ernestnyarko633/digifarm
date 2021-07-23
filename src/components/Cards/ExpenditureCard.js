@@ -30,6 +30,7 @@ const ExpenditureCard = ({ amount, bg, action, color }) => {
             fontSize='2xl'
             color={color}
             isTruncated={true}
+            fontFamily='num'
           >
             {amount}
           </StatNumber>

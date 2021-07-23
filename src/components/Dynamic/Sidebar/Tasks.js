@@ -288,6 +288,8 @@ export default function Tasks({
                         Plant health
                       </Text>
                       <CircularProgress
+                        fontFamily='num'
+                        fontWeight={600}
                         value={(
                           eosStats[eosStats?.length - 1]?.indexes?.EVI
                             ?.average * 100
@@ -315,6 +317,8 @@ export default function Tasks({
                       </Text>
 
                       <CircularProgress
+                        fontFamily='num'
+                        fontWeight={600}
                         value={(
                           eosStats[eosStats?.length - 1]?.indexes?.NDVI
                             ?.average * 100
@@ -336,6 +340,8 @@ export default function Tasks({
                       </Text>
 
                       <CircularProgress
+                        fontFamily='num'
+                        fontWeight={600}
                         value={(
                           eosStats[eosStats?.length - 1]?.indexes?.CCCI
                             ?.average * 100

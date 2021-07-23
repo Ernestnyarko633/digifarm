@@ -31,6 +31,7 @@ export const theme = extendTheme({
     light: '"CeraGR" ,sans-serif',
     thin: '"CeraGR" ,sans-serif',
     body: '"CeraGR", sans-serif',
+    num: '"Source Sans Pro", sans-serif',
     signature: '"Smitta-Bali", cursive'
   },
   fontSizes: {

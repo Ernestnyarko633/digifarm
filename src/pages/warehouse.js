@@ -79,7 +79,7 @@ const Warehouse = () => {
         <>
           <Box
             py={{ base: 8, md: 12 }}
-            px={{ base: 4, md: 24 }}
+            px={{ base: 4, md: 20 }}
             mt={{ base: 10, md: 0 }}
           >
             <Box>
@@ -109,25 +109,21 @@ const Warehouse = () => {
               </Flex>
             </Box>
           </Box>
-          <Box px={{ base: 4, md: 24 }}>
+          <Flex justify='center' align='center' my={10}>
             <Grid
               templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
-              justifyContent='space-around'
-              gap={10}
-              w='100%'
+              gap={6}
             >
               {myfarms?.map(myfarm => (
                 <WarehouseCard
                   sellButton='true'
                   _id={myfarm._id}
                   key={myfarm?._id}
-                  mr={3}
-                  ml={14}
                   myfarm={myfarm}
                 />
               ))}
             </Grid>
-          </Box>
+          </Flex>
         </>
         {/* )} */}
       </>

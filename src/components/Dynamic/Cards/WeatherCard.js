@@ -31,6 +31,7 @@ export default function WeatherCard({ icon, title, duration, value }) {
       <Box mt={2} w={{ md: 70 }}>
         <Heading
           fontSize={{ md: '3xl' }}
+          fontFamily='num'
           textAlign='center'
           fontWeight={900}
           mt={1}
