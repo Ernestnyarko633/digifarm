@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -17,7 +16,6 @@ import Step from 'components/Form/Step'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
 import ImageLoader from 'components/ImageLoader'
-// import Scrollbar from 'react-perfect-scrollbar'
 
 import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'

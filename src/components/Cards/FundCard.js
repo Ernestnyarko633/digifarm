@@ -1,10 +1,9 @@
 import React from 'react'
-import { Flex, Text, Icon, Image, Box } from '@chakra-ui/react'
-import { FaDollarSign } from 'react-icons/fa'
-import { BsFillInfoCircleFill } from 'react-icons/bs'
+import { Flex, Text, Icon, Heading, Box } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-import DollarSign from 'assets/images/doll.png'
-const FundCard = ({ amount, label }) => {
+import { Funds } from 'theme/Icons'
+
+const FundCard = ({ amount, label, bg, description }) => {
   return (
     <Flex
       minW={{ base: '20%', xl: '80%', '2xl': '100%' }}
@@ -15,41 +14,46 @@ const FundCard = ({ amount, label }) => {
         md: 'drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
       }}
       align='center'
-      p={{ base: 4, md: 6, '2xl': 10 }}
+      p={{ base: 4 }}
       bg='white'
     >
       <Flex direction='column' align={{ base: 'flex-start' }} w='100%'>
-        <Box ml={3} mb={5}>
-          <Image src={DollarSign} />
-        </Box>
-        <Flex direction='row' justify='space-between' align='center'>
-          <Text
-            lineHeight={{ base: '0.875rem', md: '1.125rem' }}
-            fontSize={{ base: 'sm', '2xl': 'md', '3xl': 'xl' }}
-            fontWeight={400}
-            ml={{ base: 2, md: 3 }}
-            mt={1}
+        <Flex w='100%' direction='row' justify='flex-start' align='center'>
+          <Flex
+            align='center'
+            justify='center'
+            h={8}
+            w={8}
+            bg={bg}
+            rounded='100%'
+            mr={{ base: 2, md: 4 }}
           >
+            <Icon as={Funds} boxSize={4} />
+          </Flex>
+          <Heading color={bg} as='h6' fontSize={{ base: 'xs', '3xl': 'md' }}>
             {label}
-          </Text>
-          <Icon ml={2} color='cf.green' as={BsFillInfoCircleFill} boxSize={4} />
+          </Heading>
         </Flex>
-        <Flex align='center' pr={{ base: 4, md: 0 }} w='100%'>
-          <Icon
-            boxSize={{ base: 6, xl: 8 }}
-            as={FaDollarSign}
-            ml={{ base: 0, md: 1 }}
-            pt={1}
-          />
-          <Text
-            pt={1}
-            fontSize={{ base: 'md', xl: 'xl', '3xl': '4xl' }}
-            fontWeight={900}
-            mt={1}
-          >
-            {amount}
+        <Box my={3}>
+          <Text color='gray.600' fontSize={{ base: 'xs' }}>
+            {description}
           </Text>
-        </Flex>
+        </Box>
+
+        <Box
+          w='100%'
+          display='flex'
+          alignItems='center'
+          flexDirection='row'
+          p={5}
+          bg='#f7f7f7'
+          rounded={12}
+          mt={5}
+        >
+          <Heading as='h3' fontSize={{ base: 'xs', md: 'md', '3xl': '2xl' }}>
+            $ {amount}
+          </Heading>
+        </Box>
       </Flex>
     </Flex>
   )
@@ -57,7 +61,9 @@ const FundCard = ({ amount, label }) => {
 
 FundCard.propTypes = {
   amount: PropTypes.number.isRequired,
-  label: PropTypes.any.isRequired
+  label: PropTypes.any.isRequired,
+  bg: PropTypes.any,
+  description: PropTypes.any
 }
 
 export default FundCard

@@ -13,8 +13,6 @@ import { Link as ReachRouter } from 'react-router-dom'
 import Button from 'components/Button'
 import PropTypes from 'prop-types'
 import useRollover from 'context/rollover'
-import { getFormattedMoney } from 'helpers/misc'
-//import useStartFarm from 'context/start-farm'
 
 const ModalWrapper = ({
   isOpen,
@@ -24,9 +22,11 @@ const ModalWrapper = ({
   isCentered,
   image,
   alt,
-  children
+  children,
+  showButton = true,
+  data
 }) => {
-  const { step, bigStepper, type, setBigStepper, total, selectedWallets } =
+  const { step, bigStepper, type, onOpen, selectedWallets, payoutAmount } =
     useRollover()
 
   return (
@@ -68,10 +68,10 @@ const ModalWrapper = ({
 
       {(step === 1 ||
         bigStepper === 1 ||
-        bigStepper === 3 ||
-        bigStepper === 4) && (
+        bigStepper === 2 ||
+        bigStepper === 3) && (
         <ModalOverlay
-          overflowY={bigStepper !== 3 || bigStepper !== 4 ? 'scroll' : 'hidden'}
+          overflowY={bigStepper !== 2 || bigStepper !== 3 ? 'scroll' : 'hidden'}
           css={{
             '&::-webkit-scrollbar': {
               width: '4px'
@@ -89,7 +89,7 @@ const ModalWrapper = ({
             position={{ base: 'absolute', lg: 'relative' }}
             zIndex={12}
             rounded='2xl'
-            overflowY={bigStepper !== 3 ? 'scroll' : 'hidden'}
+            overflowY={bigStepper !== 2 ? 'scroll' : 'hidden'}
             css={{
               '&::-webkit-scrollbar': {
                 width: '4px'
@@ -112,59 +112,83 @@ const ModalWrapper = ({
               h={{ base: '4.5rem' }}
               textAlign='center'
             >
-              {bigStepper !== 3 && bigStepper !== 4 && type === 'asPayout' && (
-                <Button
-                  ml={{ base: 5, md: 8, xl: 0 }}
-                  display={{ base: 'block', lg: 'none' }}
-                  textAlign='center'
-                  isDisabled={!selectedWallets.length}
-                  _disabled={!selectedWallets.length}
-                  btntitle={`Payout $ ${getFormattedMoney(total)}`}
-                  to={{
-                    pathname: '/start-farm/individual',
-                    state: { rollover: true }
-                  }}
-                  borderColor='cf.green'
-                  color='white'
-                  fontWeight={900}
-                  rounded={30}
-                  my={{ base: 2, md: 10 }}
-                  w='100%'
-                  h={65}
-                  fontSize={{ base: 'sm', xl: 'md' }}
-                  onClick={() => {
-                    setBigStepper(p => p + 1)
-                  }}
-                />
-              )}
-              {bigStepper !== 3 && bigStepper !== 4 && type === 'asRollover' && (
-                <Button
-                  ml={{ base: 5, md: 8, xl: 0 }}
-                  display={{ base: 'block', lg: 'none' }}
-                  as={selectedWallets.length && ReachRouter}
-                  isDisabled={!selectedWallets.length}
-                  _disabled={!selectedWallets.length}
-                  to={
-                    selectedWallets.length && {
-                      pathname: '/start-farm/individual',
-                      state: { rollover: true }
+              {bigStepper !== 2 &&
+                bigStepper !== 3 &&
+                type === 'asPayout' &&
+                showButton && (
+                  <Button
+                    ml={{ base: 1, md: 1, xl: 0 }}
+                    display={{ base: 'block', lg: 'none' }}
+                    textAlign='center'
+                    isDisabled={!selectedWallets.length || payoutAmount <= 0}
+                    btntitle='Continuen to payment'
+                    borderColor='cf.green'
+                    color='white'
+                    fontWeight={900}
+                    rounded={30}
+                    my={{ base: 2, md: 10 }}
+                    w='100%'
+                    h={65}
+                    fontSize={{ base: 'sm', xl: 'md' }}
+                    onClick={() => {
+                      onOpen()
+                    }}
+                  />
+                )}
+              {bigStepper !== 2 &&
+              bigStepper !== 3 &&
+              type === 'asRollover' &&
+              showButton ? (
+                !data?.inRollover ? (
+                  <Button
+                    ml={{ base: 5, md: 8, xl: 0 }}
+                    display={{ base: 'flex', lg: 'none' }}
+                    as={selectedWallets.length && ReachRouter}
+                    isDisabled={!selectedWallets.length}
+                    _disabled={!selectedWallets.length}
+                    to={
+                      selectedWallets.length && {
+                        pathname: '/start-farm/individual',
+                        state: { rollover: true }
+                      }
                     }
-                  }
-                  btntitle='Rollover'
-                  borderColor='cf.green'
-                  color='white'
-                  fontWeight={900}
-                  rounded='30px'
-                  my={{ base: 2, md: 5 }}
-                  w='90%'
-                  h={50}
-                  fontSize={{ base: 'sm', xl: 'md' }}
-                  onClick={() => {
-                    sessionStorage.setItem('type', 'individual')
-                    onClose()
-                  }}
-                />
-              )}
+                    btntitle='Rollover'
+                    borderColor='cf.green'
+                    color='white'
+                    fontWeight={900}
+                    rounded='30px'
+                    my={{ base: 2, md: 5 }}
+                    w='90%'
+                    h={50}
+                    fontSize={{ base: 'sm', xl: 'md' }}
+                    onClick={() => {
+                      sessionStorage.setItem('type', 'individual')
+                      onClose()
+                    }}
+                  />
+                ) : (
+                  data?.showButton && (
+                    <Button
+                      ml={{ base: 5, md: 8, xl: 0 }}
+                      display={{ base: 'block', lg: 'none' }}
+                      isDisabled={!selectedWallets.length}
+                      _disabled={!selectedWallets.length}
+                      textAlign='center'
+                      btntitle='Proceed to purchase crop'
+                      borderColor='cf.green'
+                      color='white'
+                      fontWeight={900}
+                      rounded={30}
+                      w='90%'
+                      h={65}
+                      fontSize={{ base: 'sm', xl: 'md' }}
+                      onClick={() => {
+                        onOpen()
+                      }}
+                    />
+                  )
+                )
+              ) : null}
             </Box>
             <ModalHeader>
               <Box>
@@ -196,7 +220,9 @@ ModalWrapper.propTypes = {
   isCentered: PropTypes.bool,
   image: PropTypes.string,
   alt: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
+  showButton: PropTypes.bool,
+  data: PropTypes.any
 }
 
 export default ModalWrapper

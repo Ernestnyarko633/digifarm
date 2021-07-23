@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from 'container/Layout'
-import { Heading, Box, Icon, Text } from '@chakra-ui/react'
+import { Heading, Box, Icon, Text, Grid, Flex } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import useApi from 'context/api'
@@ -77,43 +77,53 @@ const Warehouse = () => {
             </>
           ) : ( */}
         <>
-          <Box py={12} px={{ base: 4, md: 24 }} my={{ base: 20, md: 0 }}>
-            <Heading as='h3' mb={{ base: 6, md: 0 }}>
-              Warehouse{' '}
-            </Heading>
-            <Box
-              borderRadius={40}
-              borderWidth={2}
-              borderColor='rgba(208, 143, 49, 0.1)'
-              bgColor='rgba(208, 143, 49, 0.1)'
-              p={2}
-              position={{ md: 'absolute' }}
-            >
-              <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
-              <Text
-                as='span'
-                fontWeight='bold'
-                fontSize='sm'
-                color='#D08F31'
-                px={2}
+          <Box
+            py={{ base: 8, md: 12 }}
+            px={{ base: 4, md: 20 }}
+            mt={{ base: 10, md: 0 }}
+          >
+            <Box>
+              <Heading as='h3' mb={{ base: 2, md: 0 }}>
+                Warehouse
+              </Heading>
+              <Flex
+                borderRadius={40}
+                borderWidth={2}
+                borderColor='rgba(208, 143, 49, 0.1)'
+                bgColor='rgba(208, 143, 49, 0.1)'
+                p={2}
+                position={{ md: 'absolute' }}
+                align='center'
               >
-                If produce in the warehouse are not sold within 2 weeks, they
-                will automatically be sold to a buyer
-              </Text>
+                <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
+                <Text
+                  as='span'
+                  fontWeight='bold'
+                  fontSize={{ base: 'xs', md: 'sm' }}
+                  color='#D08F31'
+                  px={2}
+                >
+                  If produce in the warehouse are not sold within 2 weeks, they
+                  will automatically be sold to a buyer
+                </Text>
+              </Flex>
             </Box>
-            <Box mt={20}>
+          </Box>
+          <Flex justify='center' align='center' my={10}>
+            <Grid
+              templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
+              gap={6}
+            >
               {myfarms?.map(myfarm => (
                 <WarehouseCard
                   sellButton='true'
                   _id={myfarm._id}
-                  key={myfarm?.name}
-                  mr={3}
-                  ml={14}
+                  key={myfarm?._id}
                   myfarm={myfarm}
                 />
               ))}
-            </Box>
-          </Box>
+            </Grid>
+          </Flex>
         </>
         {/* )} */}
       </>

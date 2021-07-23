@@ -2,19 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
-  Divider,
   Heading,
   Flex,
   Avatar,
   Text,
   Button,
-  Spacer,
   Grid,
   GridItem,
-  Center,
   Link
 } from '@chakra-ui/react'
-import { Link as ReachRouter } from 'react-router-dom'
+import { Link as ReachRouter, useHistory } from 'react-router-dom'
 
 const WarehouseCard = ({
   _id,
@@ -32,22 +29,28 @@ const WarehouseCard = ({
   ml,
   sellButton
 }) => {
+  const history = useHistory()
+
+  const farmQuantity =
+    myfarm?.order?.acreage * myfarm?.order?.product?.storagePerAcre
+  const produceWeight =
+    myfarm?.order?.acreage * myfarm?.order?.product?.weightOfProducePerAcre
+  const numberOfBags =
+    myfarm?.order?.acreage * myfarm?.order?.product?.quantityOfStoragePerAcre
+
   return (
     <Box
       rounded='lg'
       bg='white'
-      p={10}
-      pb={1}
-      my={6}
+      p={4}
       filter='drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.1))'
-      w='100%'
-      mx='auto'
-      borderRadius='20px'
+      w={{ md: 110 }}
     >
-      <Flex justify='space-between' pt={2}>
-        <Flex mb={4}>
+      <Flex justify='space-between'>
+        <Flex align='center'>
           <Avatar
             bg='gray.100'
+            size='sm'
             src={
               myfarm
                 ? `${myfarm?.order?.product?.cropVariety?.imageUrl}`
@@ -55,133 +58,92 @@ const WarehouseCard = ({
             }
           />
           <Box ml={2}>
-            <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
+            <Heading as='h6' fontSize={{ base: 'sm', md: 'lg' }}>
               {myfarm
                 ? `${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`
                 : name}
             </Heading>
-            <Text mt={{ md: -2 }} fontSize='sm' color='gray.500'>
+            <Text fontSize={{ base: 'xs', md: 'sm' }} color='gray.400'>
               {myfarm
                 ? `${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`
                 : location}
             </Text>
           </Box>
         </Flex>
-        <Spacer />
         <Flex>
-          <Link
-            as={ReachRouter}
-            _hover={{ textDecor: 'none' }}
-            to={`/farms/${myfarm?._id}`}
-          >
+          {myfarm ? (
             <Button
               colorScheme='none'
-              rounded='30px'
+              rounded='3xl'
               borderWidth={1}
               color='cf.green'
               borderColor='cf.green'
-              px={8}
+              // onClick={_ => history.push(`/farms/${myfarm._id}`)}
+              onClick={_ => {
+                sessionStorage.setItem('selectedFarm', JSON.stringify(myfarm))
+                setTimeout(() => {
+                  return history.push(`/farms/${myfarm._id}`)
+                }, 500)
+              }}
             >
               View Farm
             </Button>
-            {sellButton === 'true' && (
-              <Link
-                as={ReachRouter}
-                _hover={{ textDecor: 'none' }}
-                to={{ pathname: '/marketplace', state: myfarm }}
-              >
-                <Button
-                  colorScheme='linear'
-                  rounded='30px'
-                  borderWidth={1}
-                  color='white'
-                  // isLoading
-                  px={8}
-                  ml={2}
-                  isDisabled={myfarm?.storage.quantity === 0}
-                >
-                  Sell Produce
-                </Button>
-              </Link>
-            )}
-          </Link>
+          ) : null}
         </Flex>
       </Flex>
-      <Divider borderColor='gray.300' />
-      <Box>
-        <Grid templateColumns='repeat(3, 1fr)' w='100%' pt={4}>
-          <GridItem>
-            <Flex
-              w='80%'
-              direction='row'
-              align='center'
-              justify='space-between'
-            >
-              <Box pt={2} py={4}>
-                <Text fontWeight='bold' fontSize='28px'>
-                  {myfarm ? myfarm?.storage.quantity : quantity}
-                </Text>
-                <Text fontWeight='light' color='gray.500' fontSize='16px'>
-                  Quantity (Tonnes)
-                </Text>
-              </Box>
-              <Divider orientation='vertical' borderColor='gray.300' h='80px' />
-            </Flex>
-          </GridItem>
-          <GridItem>
-            <Flex
-              w='80%'
-              direction='row'
-              align='center'
-              justify='space-between'
-            >
-              <Box pt={2} py={4}>
-                <Text fontWeight='bold' fontSize='28px'>
-                  {myfarm ? myfarm?.storage?.weight : weight}
-                </Text>
-                <Text fontWeight='light' color='gray.500' fontSize='16px'>
-                  Weight (kg)
-                </Text>
-              </Box>
-              <Divider orientation='vertical' borderColor='gray.300' h='80px' />
-            </Flex>
-          </GridItem>
-          <GridItem>
-            <Flex
-              w='80%'
-              direction='row'
-              align='center'
-              justify='space-between'
-            >
-              <Box pt={2} py={4}>
-                <Text fontWeight='bold' fontSize='28px'>
-                  {myfarm ? myfarm?.storage?.numberOfBags : bags}
-                </Text>
-                <Text
-                  fontWeight='light'
-                  color='gray.500'
-                  fontSize='16px'
-                  pl={1}
-                >
-                  Number of bags
-                </Text>
-              </Box>
-            </Flex>
-          </GridItem>
-        </Grid>
+      <Grid templateColumns='repeat(1, 1fr)' w='100%' p={4}>
+        <GridItem>
+          <Flex py={2} direction='row' align='center' justify='space-between'>
+            <Text fontWeight='thick' fontSize='md'>
+              Quantity (Tonnes)
+            </Text>
+            <Text fontWeight='bold' fontSize='md' fontFamily='num'>
+              {myfarm ? farmQuantity : quantity}
+            </Text>
+          </Flex>
+        </GridItem>
+        <GridItem>
+          <Flex py={2} direction='row' align='center' justify='space-between'>
+            <Text fontWeight='thick' fontSize='md'>
+              Weight (kg)
+            </Text>
+            <Text fontWeight='bold' fontSize='md' fontFamily='num'>
+              {myfarm ? produceWeight : weight}
+            </Text>
+          </Flex>
+        </GridItem>
 
-        <Center>
-          <Button
-            pt={4}
-            color='cf.green'
-            size='16px'
-            pb={-8}
-            isDisabled='true'
-            variant='link'
+        <GridItem>
+          <Flex py={2} direction='row' align='center' justify='space-between'>
+            <Text fontWeight='thick' fontSize='md'>
+              Number of Boxes (5kg Per Box)
+            </Text>
+            <Text fontWeight='bold' fontSize='md' fontFamily='num'>
+              {myfarm ? numberOfBags : bags}
+            </Text>
+          </Flex>
+        </GridItem>
+      </Grid>
+      <Box align='center' justify='center'>
+        {sellButton === 'true' && (
+          <Link
+            as={ReachRouter}
+            _hover={{ textDecor: 'none' }}
+            to={{ pathname: '/marketplace', state: myfarm }}
           >
-            View auditor report
-          </Button>
-        </Center>
+            <Button
+              colorScheme='linear'
+              rounded='3xl'
+              borderWidth={1}
+              color='white'
+              // isLoading
+              w='100%'
+              isDisabled={farmQuantity === 0}
+            >
+              Sell Produce
+            </Button>
+          </Link>
+        )}
       </Box>
     </Box>
   )

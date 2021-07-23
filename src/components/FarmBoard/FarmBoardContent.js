@@ -39,7 +39,7 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
   // initialising useQuery hook
   let q = useQuery()
 
-  // returns a memorised value. antime q changes
+  // returns a memorised value. anytime q changes
   const query = React.useMemo(
     () => ({
       type: q.get('type'),

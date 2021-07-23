@@ -84,6 +84,7 @@ export const usePrismic = () => {
   }, [comments])
 
   // returns and obj {loading, news, blogs, videos, errors} includes sorting according to dates
+
   return {
     loading,
     comments:
@@ -99,9 +100,7 @@ export const usePrismic = () => {
       news
         ?.filter(
           news =>
-            news?.data?.category === 'News' ||
-            news?.data?.category === null ||
-            news?.data?.category === 'news'
+            news?.data?.category === 'News' || news?.data?.category === 'news'
         )
         ?.slice()
         ?.sort(
@@ -113,8 +112,11 @@ export const usePrismic = () => {
       news
         ?.filter(
           blog =>
-            blog?.data?.category === 'Blog Post' ||
-            blog?.data?.category === 'blogs'
+            blog?.data?.category === 'blogs' ||
+            blog?.data?.category === 'blogposts' ||
+            blog?.data?.category === 'blogpost' ||
+            blog?.data?.category === 'blog' ||
+            blog?.data?.category === 'Blogpost'
         )
         ?.slice()
         ?.sort(

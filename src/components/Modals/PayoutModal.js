@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Flex } from '@chakra-ui/react'
 import ModalWrapper from './ModalWrapper'
@@ -6,7 +5,6 @@ import useComponent from 'context/component'
 import ConfirmBankingDetails from 'components/Rollover&Payout/ModalContent/ConfirmBankingDetails'
 import { default as usePayout } from 'context/rollover'
 import WalletSelection from 'components/Rollover&Payout/ModalContent/WalletSelection'
-import ConfirmPassword from 'components/Rollover&Payout/ModalContent/ConfirmPassword'
 import PayoutReview from 'components/Rollover&Payout/ModalContent/PayoutReview'
 import WaitingPage from 'components/Rollover&Payout/ModalContent/WaitingPage'
 
@@ -26,12 +24,9 @@ const PayoutModal = () => {
         )
 
       case 2:
-        return <ConfirmPassword />
-
-      case 3:
         return <PayoutReview />
 
-      case 4:
+      case 3:
         return <WaitingPage />
 
       default:
@@ -40,12 +35,7 @@ const PayoutModal = () => {
   }
 
   return (
-    <ModalWrapper
-      isCentered
-      isOpen={isOpen}
-      onClose={onClose}
-      size={step === 2 ? 'md' : 'full'}
-    >
+    <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='full'>
       <Flex w='100%' align='center' justify='center'>
         {getValue(step)}
       </Flex>

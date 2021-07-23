@@ -117,7 +117,17 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
         css={{
           direction: 'ltr',
           scrollbarColor: 'rebeccapurple',
-          scrollBehavior: 'smooth'
+          scrollBehavior: 'smooth',
+          '&::-webkit-scrollbar': {
+            width: '4px'
+          },
+          '&::-webkit-scrollbar-track': {
+            width: '6px'
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'rgb(60, 145, 48)',
+            borderRadius: '24px'
+          }
         }}
       >
         {selectedFarm && (
