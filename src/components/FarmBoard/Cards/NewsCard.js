@@ -321,17 +321,6 @@ const NewsCard = ({ content, status, loading }) => {
                     })}
                 </>
               ))}
-              {/* {content?.data?.body[0]?.primary?.description?.map(item => (
-                <>
-                  <Text
-                    color='gray.500'
-                    mt={3}
-                    key={item.text}
-                    dangerouslySetInnerHTML={{ __html: urlify(item.text) }}
-                    fontSize={{ base: 'sm', md: 'md' }}
-                  />
-                </>
-              ))} */}
             </Collapse>
             <Box as='button' onClick={handleToggle}>
               <Text color='cf.green' py={{ base: 1 }}>
