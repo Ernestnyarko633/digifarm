@@ -101,7 +101,6 @@ const NewsCard = ({ content, status, loading }) => {
 
   const spanRenderer = item => {
     const { spans, text, type } = item
-
     if (type === 'paragraph') {
       if (spans?.length) {
         const array = spans?.map((span, index) => {
@@ -162,7 +161,7 @@ const NewsCard = ({ content, status, loading }) => {
           </>
         )
       }
-    } else if (type?.toLowerCase()?.indexOf('heading')) {
+    } else if (type?.toLowerCase()?.indexOf('heading') !== -1) {
       return (
         <>
           <Heading
