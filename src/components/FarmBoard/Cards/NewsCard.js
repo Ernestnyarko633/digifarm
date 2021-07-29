@@ -110,6 +110,23 @@ const NewsCard = ({ content, status, loading }) => {
               embed_url(temp?.substr(index, _end), url)
             )
           }
+
+          if (span_type === 'strong') {
+            let index = temp.indexOf(text.substr(start, end))
+            let diff = end - start
+            let _end = index + diff
+            temp = temp?.replace(
+              temp?.substr(index, _end),
+              `<Text
+                as='strong'
+                color='gray.600'
+                dangerouslySetInnerHTML={{
+                  __html: temp?.substr(index, _end)
+                }}
+                fontSize={{ base: 'sm', md: 'md' }}
+              />`
+            )
+          }
         })
 
         return (
