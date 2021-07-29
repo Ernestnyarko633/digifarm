@@ -106,7 +106,7 @@ const NewsCard = ({ content, status, loading }) => {
             let diff = end - start
             let _end = index + diff
             temp = temp?.replace(
-              temp?.substr(index, _end),
+              text?.substr(start, end),
               embed_url(temp?.substr(index, _end), url)
             )
           }
