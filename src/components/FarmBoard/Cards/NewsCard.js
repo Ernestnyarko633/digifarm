@@ -148,7 +148,7 @@ const NewsCard = ({ content, status, loading }) => {
               color='gray.500'
               mt={3}
               dangerouslySetInnerHTML={{
-                __html: urlify(text)
+                __html: text
               }}
               fontSize={{ base: 'sm', md: 'md' }}
             />
