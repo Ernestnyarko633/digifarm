@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -13,12 +12,7 @@ import {
 } from '@chakra-ui/react'
 import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import {
-  urlify,
-  embed_url,
-  FirstLettersToUpperCase,
-  trimFirstSpaceCharacter
-} from 'helpers/misc'
+import { urlify, embed_url } from 'helpers/misc'
 
 const NewsCard = ({ content, status, loading }) => {
   const [show, setShow] = React.useState(false)
@@ -34,7 +28,6 @@ const NewsCard = ({ content, status, loading }) => {
       index + value < 0
         ? 0
         : index + value
-
     indexFunc(comparant)
     selectedItemFunc(array[comparant])
   }
@@ -102,51 +95,52 @@ const NewsCard = ({ content, status, loading }) => {
   const spanRenderer = item => {
     const { spans, text, type } = item
     if (type === 'paragraph') {
+      let temp = text
       if (spans?.length) {
-        const array = spans?.map((span, index) => {
+        spans?.forEach(span => {
           const { start, end, type: span_type } = span
           if (span_type === 'hyperlink') {
             const { data } = span
             const { url } = data
-            return (
-              <>
-                <Text
-                  mt={index === 0 ? 3 : 0}
-                  color='gray.500'
-                  dangerouslySetInnerHTML={{
-                    __html: embed_url(
-                      index === 0
-                        ? FirstLettersToUpperCase(
-                            trimFirstSpaceCharacter(text?.substr(start, end))
-                          )
-                        : text?.substr(start, end),
-                      url
-                    )
-                  }}
-                  fontSize={{ base: 'sm', md: 'md' }}
-                />
-              </>
+            let index = temp.indexOf(text.substr(start, end))
+            let diff = end - start
+            let _end = index + diff
+            temp = temp?.replace(
+              text?.substr(start, end),
+              embed_url(temp?.substr(index, _end), url)
             )
           }
+
           if (span_type === 'strong') {
-            return (
-              <>
-                <Text
-                  as='strong'
-                  color='gray.600'
-                  mt={3}
-                  dangerouslySetInnerHTML={{
-                    __html: urlify(text?.substr(start, end))
-                  }}
-                  fontSize={{ base: 'sm', md: 'md' }}
-                />
-              </>
+            let index = temp.indexOf(text.substr(start, end))
+            let diff = end - start
+            let _end = index + diff
+            temp = temp?.replace(
+              text?.substr(start, end),
+              `<Text
+                as='strong'
+                color='gray.600'
+                dangerouslySetInnerHTML={{
+                  __html: ${temp?.substr(index, _end)}
+                }}
+                fontSize={{ base: 'sm', md: 'md' }}
+              />`
             )
           }
-          return null
         })
 
-        return array
+        return (
+          <>
+            <Text
+              color='gray.600'
+              mt={3}
+              dangerouslySetInnerHTML={{
+                __html: temp
+              }}
+              fontSize={{ base: 'sm', md: 'md' }}
+            />
+          </>
+        )
       } else {
         return (
           <>
@@ -154,7 +148,7 @@ const NewsCard = ({ content, status, loading }) => {
               color='gray.500'
               mt={3}
               dangerouslySetInnerHTML={{
-                __html: urlify(text)
+                __html: text
               }}
               fontSize={{ base: 'sm', md: 'md' }}
             />
@@ -327,17 +321,6 @@ const NewsCard = ({ content, status, loading }) => {
                     })}
                 </>
               ))}
-              {/* {content?.data?.body[0]?.primary?.description?.map(item => (
-                <>
-                  <Text
-                    color='gray.500'
-                    mt={3}
-                    key={item.text}
-                    dangerouslySetInnerHTML={{ __html: urlify(item.text) }}
-                    fontSize={{ base: 'sm', md: 'md' }}
-                  />
-                </>
-              ))} */}
             </Collapse>
             <Box as='button' onClick={handleToggle}>
               <Text color='cf.green' py={{ base: 1 }}>
