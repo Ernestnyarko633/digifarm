@@ -205,7 +205,7 @@ section[style] {
 }
 
 .farm-board:link {
-  color: #3c9130;
+  color: #718096;
   background-color: transparent;
   text-decoration: none;
 }
@@ -217,7 +217,7 @@ section[style] {
 }
 
 .farm-board:hover {
-  color: red;
+  color: #3c9130;
   background-color: transparent;
   text-decoration: underline;
 }

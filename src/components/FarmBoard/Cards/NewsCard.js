@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -12,7 +13,12 @@ import {
 } from '@chakra-ui/react'
 import ReactPlayer from 'react-player/lazy'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import { urlify, embed_url } from 'helpers/misc'
+import {
+  urlify,
+  embed_url,
+  FirstLettersToUpperCase,
+  trimFirstSpaceCharacter
+} from 'helpers/misc'
 
 const NewsCard = ({ content, status, loading }) => {
   const [show, setShow] = React.useState(false)
@@ -98,7 +104,7 @@ const NewsCard = ({ content, status, loading }) => {
 
     if (type === 'paragraph') {
       if (spans?.length) {
-        const array = spans?.map(span => {
+        const array = spans?.map((span, index) => {
           const { start, end, type: span_type } = span
           if (span_type === 'hyperlink') {
             const { data } = span
@@ -106,10 +112,17 @@ const NewsCard = ({ content, status, loading }) => {
             return (
               <>
                 <Text
+                  mt={index === 0 ? 3 : 0}
                   color='gray.500'
-                  mt={3}
                   dangerouslySetInnerHTML={{
-                    __html: embed_url(text?.substr(start, end), url)
+                    __html: embed_url(
+                      index === 0
+                        ? FirstLettersToUpperCase(
+                            trimFirstSpaceCharacter(text?.substr(start, end))
+                          )
+                        : text?.substr(start, end),
+                      url
+                    )
                   }}
                   fontSize={{ base: 'sm', md: 'md' }}
                 />
@@ -149,6 +162,20 @@ const NewsCard = ({ content, status, loading }) => {
           </>
         )
       }
+    } else if (type?.toLowerCase()?.indexOf('heading')) {
+      return (
+        <>
+          <Heading
+            as={`h${type.split('heading')[1]}`}
+            fontWeight={900}
+            mt={3}
+            dangerouslySetInnerHTML={{
+              __html: urlify(text)
+            }}
+            fontSize={{ base: 'sm', md: 'md' }}
+          />
+        </>
+      )
     }
 
     return null
@@ -276,24 +303,28 @@ const NewsCard = ({ content, status, loading }) => {
                   )}
                   {details?.slice_type === 'details' &&
                     details?.primary?.description?.map(item => {
-                      if (item?.type === 'paragraph') {
-                        return spanRenderer(item)
-                      }
-
                       if (item?.type === 'image') {
                         return (
-                          <Box p={15}>
+                          <Flex direction='column' w='100%'>
                             <Image
                               h={{ md: 85 }}
                               w='100%'
-                              objectFit='cover'
+                              objectFit='fit'
                               src={item?.url}
                             />
-                          </Box>
+                            <Text
+                              color='gray.500'
+                              mt={3}
+                              dangerouslySetInnerHTML={{
+                                __html: urlify(item?.text)
+                              }}
+                              fontSize={{ base: 'sm', md: 'md' }}
+                            />
+                          </Flex>
                         )
                       }
 
-                      return null
+                      return spanRenderer(item)
                     })}
                 </>
               ))}
