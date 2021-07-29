@@ -131,33 +131,20 @@ const NewsCard = ({ content, status, loading }) => {
           })
 
         process()
-
-        return (
-          <>
-            <Text
-              color='gray.600'
-              mt={3}
-              dangerouslySetInnerHTML={{
-                __html: temp
-              }}
-              fontSize={{ base: 'sm', md: 'md' }}
-            />
-          </>
-        )
-      } else {
-        return (
-          <>
-            <Text
-              color='gray.500'
-              mt={3}
-              dangerouslySetInnerHTML={{
-                __html: text
-              }}
-              fontSize={{ base: 'sm', md: 'md' }}
-            />
-          </>
-        )
       }
+
+      return (
+        <>
+          <Text
+            color='gray.600'
+            mt={3}
+            dangerouslySetInnerHTML={{
+              __html: temp
+            }}
+            fontSize={{ base: 'sm', md: 'md' }}
+          />
+        </>
+      )
     } else if (type?.toLowerCase()?.indexOf('heading') !== -1) {
       return (
         <>
