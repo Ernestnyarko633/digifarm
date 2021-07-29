@@ -97,27 +97,28 @@ const NewsCard = ({ content, status, loading }) => {
     if (type === 'paragraph') {
       let temp = text
       if (spans?.length) {
-        spans?.forEach(span => {
-          const { start, end, type: span_type } = span
-          if (span_type === 'hyperlink') {
-            const { data } = span
-            const { url } = data
-            let index = temp.indexOf(text.substr(start, end))
-            let diff = end - start
-            let _end = index + diff
-            temp = temp?.replace(
-              text?.substr(start, end),
-              embed_url(temp?.substr(index, _end), url)
-            )
-          }
+        const process = () =>
+          spans?.forEach(span => {
+            const { start, end, type: span_type } = span
+            if (span_type === 'hyperlink') {
+              const { data } = span
+              const { url } = data
+              let index = temp.indexOf(text.substr(start, end))
+              let diff = end - start
+              let _end = index + diff
+              temp = temp?.replace(
+                text?.substr(start, end),
+                embed_url(temp?.substr(index, _end), url)
+              )
+            }
 
-          if (span_type === 'strong') {
-            let index = temp.indexOf(text.substr(start, end))
-            let diff = end - start
-            let _end = index + diff
-            temp = temp?.replace(
-              text?.substr(start, end),
-              `<Text
+            if (span_type === 'strong') {
+              let index = temp.indexOf(text.substr(start, end))
+              let diff = end - start
+              let _end = index + diff
+              temp = temp?.replace(
+                text?.substr(start, end),
+                `<Text
                 as='strong'
                 color='gray.600'
                 dangerouslySetInnerHTML={{
@@ -125,36 +126,25 @@ const NewsCard = ({ content, status, loading }) => {
                 }}
                 fontSize={{ base: 'sm', md: 'md' }}
               />`
-            )
-          }
-        })
+              )
+            }
+          })
 
-        return (
-          <>
-            <Text
-              color='gray.600'
-              mt={3}
-              dangerouslySetInnerHTML={{
-                __html: temp
-              }}
-              fontSize={{ base: 'sm', md: 'md' }}
-            />
-          </>
-        )
-      } else {
-        return (
-          <>
-            <Text
-              color='gray.500'
-              mt={3}
-              dangerouslySetInnerHTML={{
-                __html: text
-              }}
-              fontSize={{ base: 'sm', md: 'md' }}
-            />
-          </>
-        )
+        process()
       }
+
+      return (
+        <>
+          <Text
+            color='gray.600'
+            mt={3}
+            dangerouslySetInnerHTML={{
+              __html: temp
+            }}
+            fontSize={{ base: 'sm', md: 'md' }}
+          />
+        </>
+      )
     } else if (type?.toLowerCase()?.indexOf('heading') !== -1) {
       return (
         <>
