@@ -116,12 +116,12 @@ const NewsCard = ({ content, status, loading }) => {
             let diff = end - start
             let _end = index + diff
             temp = temp?.replace(
-              temp?.substr(index, _end),
+              text?.substr(start, end),
               `<Text
                 as='strong'
                 color='gray.600'
                 dangerouslySetInnerHTML={{
-                  __html: temp?.substr(index, _end)
+                  __html: ${temp?.substr(index, _end)}
                 }}
                 fontSize={{ base: 'sm', md: 'md' }}
               />`
