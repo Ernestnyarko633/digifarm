@@ -34,7 +34,7 @@ const FundCard = ({ amount, label, bg, description }) => {
             {label}
           </Heading>
         </Flex>
-        <Box my={3}>
+        <Box my={4}>
           <Text color='gray.600' fontSize={{ base: 'xs' }}>
             {description}
           </Text>
