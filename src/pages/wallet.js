@@ -32,7 +32,7 @@ const Wallet = () => {
         <Box
           // w='100%'
           px={{ base: 4, lg: 20 }}
-          pt={{ base: 10, lg: 20 }}
+          pt={{ base: 10, lg: 0 }}
           pb={{ base: 5, lg: 10 }}
         >
           <Flex
