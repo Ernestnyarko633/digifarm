@@ -14,6 +14,11 @@ export const fileToBase64 = async file => {
   })
 }
 
+export const trimFirstSpaceCharacter = str => {
+  if (!str) return str
+  return str.replace(/^\s+/g, '')
+}
+
 export const isMobile = () => {
   let check = false
   ;(function (a) {

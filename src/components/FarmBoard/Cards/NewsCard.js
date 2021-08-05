@@ -28,7 +28,6 @@ const NewsCard = ({ content, status, loading }) => {
       index + value < 0
         ? 0
         : index + value
-
     indexFunc(comparant)
     selectedItemFunc(array[comparant])
   }
@@ -95,60 +94,71 @@ const NewsCard = ({ content, status, loading }) => {
 
   const spanRenderer = item => {
     const { spans, text, type } = item
-
     if (type === 'paragraph') {
+      let temp = text
       if (spans?.length) {
-        const array = spans?.map(span => {
-          const { start, end, type: span_type } = span
-          if (span_type === 'hyperlink') {
-            const { data } = span
-            const { url } = data
-            return (
-              <>
-                <Text
-                  color='gray.500'
-                  mt={3}
-                  dangerouslySetInnerHTML={{
-                    __html: embed_url(text?.substr(start, end), url)
-                  }}
-                  fontSize={{ base: 'sm', md: 'md' }}
-                />
-              </>
-            )
-          }
-          if (span_type === 'strong') {
-            return (
-              <>
-                <Text
-                  as='strong'
-                  color='gray.600'
-                  mt={3}
-                  dangerouslySetInnerHTML={{
-                    __html: urlify(text?.substr(start, end))
-                  }}
-                  fontSize={{ base: 'sm', md: 'md' }}
-                />
-              </>
-            )
-          }
-          return null
-        })
+        const process = () =>
+          spans?.forEach(span => {
+            const { start, end, type: span_type } = span
+            if (span_type === 'hyperlink') {
+              const { data } = span
+              const { url } = data
+              let index = temp.indexOf(text.substr(start, end))
+              let diff = end - start
+              let _end = index + diff
+              temp = temp?.replace(
+                text?.substr(start, end),
+                embed_url(temp?.substr(index, _end), url)
+              )
+            }
 
-        return array
-      } else {
-        return (
-          <>
-            <Text
-              color='gray.500'
-              mt={3}
-              dangerouslySetInnerHTML={{
-                __html: urlify(text)
-              }}
-              fontSize={{ base: 'sm', md: 'md' }}
-            />
-          </>
-        )
+            if (span_type === 'strong') {
+              let index = temp.indexOf(text.substr(start, end))
+              let diff = end - start
+              let _end = index + diff
+              temp = temp?.replace(
+                text?.substr(start, end),
+                `<Text
+                as='strong'
+                color='gray.600'
+                dangerouslySetInnerHTML={{
+                  __html: ${temp?.substr(index, _end)}
+                }}
+                fontSize={{ base: 'sm', md: 'md' }}
+              />`
+              )
+            }
+          })
+
+        process()
       }
+
+      return (
+        <>
+          <Text
+            color='gray.600'
+            mt={3}
+            dangerouslySetInnerHTML={{
+              __html: temp
+            }}
+            fontSize={{ base: 'sm', md: 'md' }}
+          />
+        </>
+      )
+    } else if (type?.toLowerCase()?.indexOf('heading') !== -1) {
+      return (
+        <>
+          <Heading
+            as={`h${type.split('heading')[1]}`}
+            fontWeight={900}
+            mt={3}
+            dangerouslySetInnerHTML={{
+              __html: urlify(text)
+            }}
+            fontSize={{ base: 'sm', md: 'md' }}
+          />
+        </>
+      )
     }
 
     return null
@@ -276,38 +286,31 @@ const NewsCard = ({ content, status, loading }) => {
                   )}
                   {details?.slice_type === 'details' &&
                     details?.primary?.description?.map(item => {
-                      if (item?.type === 'paragraph') {
-                        return spanRenderer(item)
-                      }
-
                       if (item?.type === 'image') {
                         return (
-                          <Box p={15}>
+                          <Flex direction='column' w='100%'>
                             <Image
                               h={{ md: 85 }}
                               w='100%'
-                              objectFit='cover'
+                              objectFit='fit'
                               src={item?.url}
                             />
-                          </Box>
+                            <Text
+                              color='gray.500'
+                              mt={3}
+                              dangerouslySetInnerHTML={{
+                                __html: urlify(item?.text)
+                              }}
+                              fontSize={{ base: 'sm', md: 'md' }}
+                            />
+                          </Flex>
                         )
                       }
 
-                      return null
+                      return spanRenderer(item)
                     })}
                 </>
               ))}
-              {/* {content?.data?.body[0]?.primary?.description?.map(item => (
-                <>
-                  <Text
-                    color='gray.500'
-                    mt={3}
-                    key={item.text}
-                    dangerouslySetInnerHTML={{ __html: urlify(item.text) }}
-                    fontSize={{ base: 'sm', md: 'md' }}
-                  />
-                </>
-              ))} */}
             </Collapse>
             <Box as='button' onClick={handleToggle}>
               <Text color='cf.green' py={{ base: 1 }}>
