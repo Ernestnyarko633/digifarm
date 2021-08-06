@@ -15,7 +15,7 @@ import {
 
 const MotionFlex = motion(Flex)
 
-const FarmBoardCardWrapper = ({ children, status, content }) => {
+const FarmBoardCardWrapper = ({ children, status, content, ref }) => {
   const arrayToString = (array = ['']) => {
     let aneow = []
     array.forEach(text => aneow.push(text.text))
@@ -69,6 +69,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
 
   return (
     <Box
+      ref={ref}
       rounded='xl'
       w={{ base: 82, md: '550px', xl: 125 }}
       mx='auto'
@@ -239,6 +240,7 @@ const FarmBoardCardWrapper = ({ children, status, content }) => {
 FarmBoardCardWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   status: PropTypes.any,
+  ref: PropTypes.any,
   content: PropTypes.any
 }
 
