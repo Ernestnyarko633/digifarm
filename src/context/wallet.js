@@ -7,11 +7,13 @@ export const WalletContextProvider = ({ children }) => {
   const totalAmount = (activity = {}, tasks = [], scheduledTasks = []) => {
     let totalAmount = 0
     let activity_tasks = tasks?.filter(task => task.activity === activity._id)
+
     if (activity_tasks) {
       activity_tasks.forEach(task => {
         totalAmount = totalAmount + task?.budget
       })
     }
+
     if (scheduledTasks) {
       let currentExpense = 0
       let completed_scheduled_tasks = scheduledTasks.filter(
