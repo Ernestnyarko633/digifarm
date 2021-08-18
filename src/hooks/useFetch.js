@@ -1,4 +1,4 @@
-/*eslint-disable*/
+/* eslint-disable */
 /* eslint-disable space-before-function-paren */
 import { useEffect, useReducer } from 'react'
 import useAuth from 'context/auth'
@@ -37,6 +37,17 @@ const useFetch = (key, func, reload, ...rest) => {
   const { setSession } = useAuth()
   const [state, dispatch] = useReducer(fetchReducer, INIT_STATE)
 
+  const sessionStorageIsFull = async () => {
+    const test = 'test'
+    try {
+      sessionStorage.setItem(test, test)
+      sessionStorage.removeItem(test)
+      return false
+    } catch (error) {
+      return true
+    }
+  }
+
   useEffect(() => {
     let mounted = true
     ;(async () => {
@@ -48,13 +59,21 @@ const useFetch = (key, func, reload, ...rest) => {
             dispatch({ type: 'success', payload: { data: dataFromStorage } })
           } else {
             const res = await func(...rest)
-            if (mounted && res) {
+            const storageIsFull = await sessionStorageIsFull()
+            if (mounted && res && !storageIsFull) {
               key &&
                 sessionStorage.setItem(
                   key,
                   JSON.stringify(res.data ? res.data : res)
                 )
               dispatch({ type: 'success', payload: res })
+            } else {
+              if (mounted && res) {
+                dispatch({
+                  type: 'success',
+                  payload: res
+                })
+              }
             }
           }
         }
