@@ -374,7 +374,6 @@ export const StartFarmContextProvider = ({ children }) => {
   }
 
   const handlePayment = async (id, name, cost) => {
-    const type = sessionStorage.getItem('type')
     try {
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
@@ -382,12 +381,7 @@ export const StartFarmContextProvider = ({ children }) => {
         amount: cost || order.cost,
         order_id: id || order._id,
         purpose: 'FARM_PURCHASE',
-        name: name || selectedFarm.name,
-        transaction_type: paymentOption,
-        institution: 'PAYSTACK',
-        redirect: `/start-farm/${type}`,
-        type: 'ORDER',
-        app: 'DIGITAL_FARMER'
+        transaction_type: paymentOption
       }
 
       if (paymentOption === Constants.paymentOptions[0]) {
@@ -399,8 +393,11 @@ export const StartFarmContextProvider = ({ children }) => {
 
         const cediAmt = data.amount * res.data[q]
 
-        const payload = data
-        payload.amount = parseFloat(cediAmt / 0.9805).toFixed(2) * 1
+        const payload = {
+          order: data.order_id,
+          name: name || selectedFarm.name,
+          amountToCharge: parseFloat(cediAmt / 0.9805).toFixed(2) * 1 //paystack charges included
+        }
 
         const result = await initiatePaystackPayment(payload)
         window.onbeforeunload = null
