@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import getConfig from 'utils/configs'
 import Prismic from 'prismic-javascript'
@@ -28,9 +29,12 @@ export const usePrismic = () => {
           setLoading(true)
           // await news and video prismic documents
           const [news_response, video_response] = await Promise.all([
-            Client.query(Prismic.Predicates.at('document.type', 'news')),
+            Client.query(Prismic.Predicates.at('document.type', 'news'), {
+              pageSize: 200
+            }),
             Client.query(
-              Prismic.Predicates.at('document.type', 'weekly_videos')
+              Prismic.Predicates.at('document.type', 'weekly_videos'),
+              { pageSize: 200 }
             )
           ])
 
@@ -85,6 +89,36 @@ export const usePrismic = () => {
 
   // returns and obj {loading, news, blogs, videos, errors} includes sorting according to dates
 
+  console.log(
+    news?.length,
+    news
+      ?.filter(
+        news =>
+          news?.data?.category === 'News' || news?.data?.category === 'news'
+      )
+      ?.slice()
+      ?.sort(
+        (a, b) =>
+          new Date(b.first_publication_date) -
+          new Date(a.first_publication_date)
+      ).length || [],
+    'news',
+    news
+      ?.filter(
+        blog =>
+          blog?.data?.category === 'blogs' ||
+          blog?.data?.category === 'blogposts' ||
+          blog?.data?.category === 'blogpost' ||
+          blog?.data?.category === 'blog' ||
+          blog?.data?.category === 'Blogpost'
+      )
+      ?.slice()
+      ?.sort(
+        (a, b) =>
+          new Date(b.first_publication_date) -
+          new Date(a.first_publication_date)
+      ).length || []
+  )
   return {
     loading,
     comments:
