@@ -68,7 +68,10 @@ export const usePrismic = () => {
           } else {
             const [res] = await Promise.all([
               Client.query(
-                Prismic.Predicates.at('document.type', 'manager_update')
+                Prismic.Predicates.at('document.type', 'manager_update'),
+                {
+                  pageSize: 200
+                }
               )
             ])
 
