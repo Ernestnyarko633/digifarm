@@ -410,6 +410,8 @@ export const StartFarmContextProvider = ({ children }) => {
           throw new Error('Unexpected payment gateway failure')
         }
         window.location.href = result.data.authorization_url
+      } else if (paymentOption === Constants.paymentOptions[2]) {
+        return
       } else {
         const res = await initiatePayment(data)
         await patchOrder(res?.data?.order_id?.$oid, {
