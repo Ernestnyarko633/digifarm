@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useContext, createContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
@@ -12,7 +13,8 @@ import useRollover from './rollover'
 import useComponent from './component'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
-const dpo = Constants.paymentOptions[0]
+const dpo = Constants.paymentOptions[2]
+console.log(dpo)
 
 const StartFarmContext = createContext({})
 

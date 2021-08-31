@@ -51,6 +51,17 @@ const PaymentOption = ({ farm }) => {
               Choose your payment Option
             </Heading>
             <PayOption
+              leftImage='tazapay'
+              rightImage='zpay'
+              height={4}
+              title='Escrow'
+              theme='For escrow payments'
+              description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
+              notice='All transactions are charged a transaction fee of'
+              selected={paymentOption === Constants.paymentOptions[2]}
+              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
+            />
+            <PayOption
               leftImage='mastercard'
               rightImage='visa'
               height={4}
