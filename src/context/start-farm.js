@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
 import { useToast } from '@chakra-ui/react'
 import { getCode } from 'country-list'
+import getConfig from 'utils/configs'
 
 import useApi from './api'
 import useAuth from './auth'
@@ -15,7 +16,6 @@ import useComponent from './component'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[2]
-console.log(dpo)
 
 const StartFarmContext = createContext({})
 
@@ -56,11 +56,17 @@ export const StartFarmContextProvider = ({ children }) => {
     createOrder,
     initiatePayment,
     initiatePaystackPayment,
+    createEscrowAccount,
+    payEscrow,
+    createEscrow,
     patchOrder,
+    patchUser,
     createCooperative,
     patchWallet,
     verifyWallet
   } = useApi()
+
+  const { ESCROW_SELLER_ID } = getConfig()
 
   const { selectedWallets, onCloseSecond } = useRollover()
 
@@ -94,7 +100,7 @@ export const StartFarmContextProvider = ({ children }) => {
   ])
 
   const { getExchangeRate } = useExternal()
-  const { setSession, isAuthenticated } = useAuth()
+  const { setSession, isAuthenticated, store } = useAuth()
   const { user } = isAuthenticated()
 
   const toast = useToast()
@@ -415,16 +421,72 @@ export const StartFarmContextProvider = ({ children }) => {
         //check if user has account
         if (!user?.escrow_account_id) {
           const payload = {
-            email: user.email,
-            first_name: user.firstName,
-            last_name: user.lastName,
-            country: getCode(user.address.country),
-            ind_bus_type: 'Individual'
+            email: user.email, // user email
+            first_name: user.firstName, // user firstname
+            last_name: user.lastName, // user lastName
+            country: getCode(user.address.country).toUpperCase(), // get the country of the human being and get the ISO code for it transform it to Upper Case letters
+            ind_bus_type: 'Individual' // Individual
           }
 
-          false && payload()
+          const response = await createEscrowAccount(payload) // create escrow account for user or client
+
+          // if successful
+          if (response.data) {
+            // patch the user with new information account id
+            const res = await patchUser(user?._id, {
+              escrow_account_id: response.data.account_id
+            })
+
+            // hopefully it should be successful unless someone did something behind the scence in that case we should have a successful update
+            if (res.data) {
+              store({ user: res.data })
+            } else {
+              // else throw this unable to patch
+              throw new Error('Unable to update user account details')
+            }
+          } else {
+            // else throw this if unable to create account
+            throw new Error('Unable to process/create escrow account')
+          }
         }
-        return
+
+        // initiate escrow payment
+
+        const escrow_payload = {
+          initiated_by: user.escrow_account_id, // escrow account of user who started this whole mess
+          seller_id: ESCROW_SELLER_ID, // escrow account of the person selling
+          buyer_id: user.escrow_account_id, // escrow account of the person buying
+          order_id: id || order._id, // order id of the farm
+          purpose: 'FARM_PURCHASE', // type
+          txn_description: `Purchase of ${selectedFarm.name} farm`, // description of transaction
+          invoice_amount: cost || order.cost, // cost of transaction
+          invoice_currency: 'USD', // currency
+
+          // must always be false
+          is_milestone: false, // false
+
+          // this two information might change
+          fee_paid_by: 'buyer', // buyer
+          fee_percentage: 100 // 100
+        }
+
+        // if everything is okay send the payload
+        const create_escrow_response = await createEscrow(escrow_payload)
+
+        // if successful
+        if (create_escrow_response.data) {
+          const payload = {
+            txn_no: create_escrow_response.data.txn_no,
+            complete_url: 'https://cf-test.com',
+            error_url: 'https://cf-error.com'
+          }
+
+          const response = await payEscrow(payload)
+          response()
+        } else {
+          // else throw this error if unsuccesful in creating escrow account
+          throw new Error('Unable to process request')
+        }
       } else {
         const res = await initiatePayment(data)
         await patchOrder(res?.data?.order_id?.$oid, {
