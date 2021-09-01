@@ -3,6 +3,7 @@ import React, { useState, useContext, createContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
 import { useToast } from '@chakra-ui/react'
+import { getCode } from 'country-list'
 
 import useApi from './api'
 import useAuth from './auth'
@@ -411,6 +412,18 @@ export const StartFarmContextProvider = ({ children }) => {
         }
         window.location.href = result.data.authorization_url
       } else if (paymentOption === Constants.paymentOptions[2]) {
+        //check if user has account
+        if (!user?.escrow_account_id) {
+          const payload = {
+            email: user.email,
+            first_name: user.firstName,
+            last_name: user.lastName,
+            country: getCode(user.address.country),
+            ind_bus_type: 'Individual'
+          }
+
+          false && payload()
+        }
         return
       } else {
         const res = await initiatePayment(data)
