@@ -477,12 +477,18 @@ export const StartFarmContextProvider = ({ children }) => {
         if (create_escrow_response.data) {
           const payload = {
             txn_no: create_escrow_response.data.txn_no,
-            complete_url: 'https://cf-test.com',
-            error_url: 'https://cf-error.com'
+            complete_url: `${window.location.origin}/tazapay/complete`,
+            error_url: `${window.location.origin}/tazapay/error`
           }
 
           const response = await payEscrow(payload)
-          response()
+          window.onbeforeunload = null
+
+          if (response.data.redirect_url) {
+            window.location.href = response.data.redirect_url
+          } else {
+            throw new Error('Unexpected payment gateway failure')
+          }
         } else {
           // else throw this error if unsuccesful in creating escrow account
           throw new Error('Unable to process request')
