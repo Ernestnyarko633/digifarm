@@ -51,7 +51,7 @@ const Router = () => {
           path='/payment-paystack'
           component={Pages.PaymentPaystack}
         />
-        <PrivateRoute path='/tazapay/complete' component={Pages.Tazapay} />
+        <PrivateRoute path='/tazapay' component={Pages.Tazapay} />
         <PrivateRoute path='/marketplace' component={Pages.Marketplace} />
         <PrivateRoute path='/warehouses' component={Pages.Warehouse} />
         <PrivateRoute path='/farms' component={Pages.FarmBoard} />

@@ -103,6 +103,12 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const verifyTazapayPayment = async params => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/${params.order}/${params.txn_no}`
+    })
+  }
+
   const createFarm = async (id, payment) => {
     return await http.patch({
       url: `${DIGITAL_FARMER_API}/orders/${id}/verify-payment`,
@@ -408,6 +414,7 @@ export const ApiContextProvider = ({ children }) => {
         uploadPaymentDetails,
         getUserBankingDetails,
         initiatePaystackPayment,
+        verifyTazapayPayment,
         verifyPaystackPayment,
         getFarmProcessingPayouts,
 

@@ -1,26 +1,26 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 
 import FetchCard from 'components/FetchCard'
 
-import qs from 'query-string'
+import queryString from 'query-string'
 
 import useApi from 'context/api'
 
 const Tazapay = ({ history, location: { search } }) => {
   const [isLoading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(false)
-  const [checker, setChecker] = React.useState(false)
-  const { verifyPaystackPayment } = useApi()
+  const { verifyTazapayPayment } = useApi()
 
   React.useEffect(() => {
     const type = sessionStorage.getItem('type')
 
-    const { trxref, reference } = qs.parse(search)
-    const verifyAndCreate = async ref => {
+    const verifyAndCreate = async params => {
       try {
         setLoading(true)
-        const res = await verifyPaystackPayment(ref)
+        if (params?.error) throw new Error(4)
+        const res = await verifyTazapayPayment(params)
         history.push({
           pathname: `start-farm/${type}`,
           state: {
@@ -35,22 +35,10 @@ const Tazapay = ({ history, location: { search } }) => {
         setLoading(false)
       }
     }
+    const parsed = queryString.parse(search)
 
-    if (reference === trxref && !checker) {
-      setChecker(true)
-      const queryParams = new URLSearchParams(search)
-      queryParams.delete('trxref')
-      queryParams.delete('reference')
-      history.replace({
-        search: queryParams.toString()
-      })
-      sessionStorage.removeItem('my_farms')
-      sessionStorage.removeItem('my_orders')
-      verifyAndCreate({ reference })
-    } else {
-      setError(true)
-    }
-  }, [verifyPaystackPayment, checker, search, history])
+    verifyAndCreate(parsed)
+  }, [history, search, verifyTazapayPayment])
 
   return isLoading || error ? (
     <FetchCard

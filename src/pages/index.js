@@ -22,7 +22,7 @@ const CooperativeInvite = lazy(() => import('./cooperative-invite'))
 const PaymentPaystack = lazy(() => import('./start-farm/payment-paystack'))
 const StartFarmIndividual = lazy(() => import('./start-farm/individual'))
 const StartFarmCooperative = lazy(() => import('./start-farm/cooperative'))
-const Tazapay = lazy(() => import('./start-farm/payment-paystack'))
+const Tazapay = lazy(() => import('./start-farm/tazapay'))
 
 const Pages = {
   Auth,

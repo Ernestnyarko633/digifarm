@@ -477,8 +477,12 @@ export const StartFarmContextProvider = ({ children }) => {
         if (create_escrow_response.data) {
           const payload = {
             txn_no: create_escrow_response.data.txn_no,
-            complete_url: `${window.location.origin}/tazapay/complete`,
-            error_url: `${window.location.origin}/tazapay/error`
+            complete_url: `${window.location.origin}/tazapay?order=${
+              id || order._id
+            }&txn_no=${create_escrow_response.data.txn_no}`,
+            error_url: `${window.location.origin}/tazapay?order=${
+              id || order._id
+            }&txn_no=${create_escrow_response.data.txn_no}&error=true`
           }
 
           const response = await payEscrow(payload)
