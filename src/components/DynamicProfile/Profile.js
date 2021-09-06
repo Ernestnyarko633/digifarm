@@ -10,6 +10,7 @@ import useAuth from 'context/auth'
 import useApi from 'context/api'
 import Signature from 'components/Signature'
 import FetchCard from 'components/FetchCard'
+import ProfileIdentity from './ProfileForms/ProfileIdentity'
 
 const Profile = () => {
   const { isAuthenticated } = useAuth()
@@ -45,6 +46,9 @@ const Profile = () => {
     <Container maxW={{ md: '4xl' }}>
       <AvatarForm />
       <UserDetailsForm />
+      <ProfileIdentity />
+
+      <BankingDetailsForm bankDetails={bankDetails || {}} />
       <Box
         mt={12}
         bg='white'
@@ -54,7 +58,6 @@ const Profile = () => {
       >
         <Signature data={user?.signature} />
       </Box>
-      <BankingDetailsForm bankDetails={bankDetails || {}} />
     </Container>
   )
 }
