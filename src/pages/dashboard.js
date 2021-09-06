@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/hooks'
