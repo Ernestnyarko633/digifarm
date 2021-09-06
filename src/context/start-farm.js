@@ -3,7 +3,6 @@ import React, { useState, useContext, createContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
 import { useToast } from '@chakra-ui/react'
-import { getCode } from 'country-list'
 import getConfig from 'utils/configs'
 
 import useApi from './api'
@@ -53,15 +52,13 @@ export const StartFarmContextProvider = ({ children }) => {
   const [selectedCooperativeType, setSelectedCooperativeType] =
     React.useState(null)
   const {
-    createOrder,
-    initiatePayment,
     initiatePaystackPayment,
-    createEscrowAccount,
-    payEscrow,
-    createEscrow,
-    patchOrder,
-    patchUser,
     createCooperative,
+    initiatePayment,
+    createEscrow,
+    createOrder,
+    payEscrow,
+    patchOrder,
     patchWallet,
     verifyWallet
   } = useApi()
@@ -100,7 +97,7 @@ export const StartFarmContextProvider = ({ children }) => {
   ])
 
   const { getExchangeRate } = useExternal()
-  const { setSession, isAuthenticated, store } = useAuth()
+  const { setSession, isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
 
   const toast = useToast()
@@ -393,7 +390,7 @@ export const StartFarmContextProvider = ({ children }) => {
         purpose: 'FARM_PURCHASE',
         name: name || selectedFarm.name,
         transaction_type: paymentOption,
-        institution: 'PAYSTACK',
+        institution: paymentOption,
         redirect: `/start-farm/${type}`,
         type: 'ORDER',
         app: 'DIGITAL_FARMER'
@@ -418,54 +415,18 @@ export const StartFarmContextProvider = ({ children }) => {
         }
         window.location.href = result.data.authorization_url
       } else if (paymentOption === Constants.paymentOptions[2]) {
-        //check if user has account
-        if (!user?.escrow_account_id) {
-          const payload = {
-            email: user.email, // user email
-            first_name: user.firstName, // user firstname
-            last_name: user.lastName, // user lastName
-            country: getCode(user.address.country).toUpperCase(), // get the country of the human being and get the ISO code for it transform it to Upper Case letters
-            ind_bus_type: 'Individual' // Individual
-          }
-
-          const response = await createEscrowAccount(payload) // create escrow account for user or client
-
-          // if successful
-          if (response.data) {
-            // patch the user with new information account id
-            const res = await patchUser(user?._id, {
-              escrow_account_id: response.data.account_id
-            })
-
-            // hopefully it should be successful unless someone did something behind the scence in that case we should have a successful update
-            if (res.data) {
-              store({ user: res.data })
-            } else {
-              // else throw this unable to patch
-              throw new Error('Unable to update user account details')
-            }
-          } else {
-            // else throw this if unable to create account
-            throw new Error('Unable to process/create escrow account')
-          }
-        }
-
         // initiate escrow payment
-
         const escrow_payload = {
-          initiated_by: user.escrow_account_id, // escrow account of user who started this whole mess
-          seller_id: ESCROW_SELLER_ID, // escrow account of the person selling
-          buyer_id: user.escrow_account_id, // escrow account of the person buying
-          order_id: id || order._id, // order id of the farm
-          purpose: 'FARM_PURCHASE', // type
+          initiated_by: user.escrowId,
+          seller_id: ESCROW_SELLER_ID,
+          buyer_id: user.escrowId,
+          order_id: id || order._id,
+          purpose: 'FARM_PURCHASE',
           txn_description: `Purchase of ${selectedFarm.name} farm`, // description of transaction
           invoice_amount: cost || order.cost, // cost of transaction
           invoice_currency: 'USD', // currency
-
-          // must always be false
-          is_milestone: false, // false
-
-          // this two information might change
+          is_milestone: false,
+          //TODO: this two information might change
           fee_paid_by: 'buyer', // buyer
           fee_percentage: 100 // 100
         }
@@ -494,7 +455,7 @@ export const StartFarmContextProvider = ({ children }) => {
             throw new Error('Unexpected payment gateway failure')
           }
         } else {
-          // else throw this error if unsuccesful in creating escrow account
+          // else throw this error if unsuccessful in creating escrow account
           throw new Error('Unable to process request')
         }
       } else {

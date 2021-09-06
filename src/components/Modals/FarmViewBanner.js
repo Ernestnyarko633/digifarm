@@ -9,7 +9,7 @@ import {
   AlertDescription
 } from '@chakra-ui/react'
 import Digifarmer from 'assets/images/digifarmer.svg'
-import { getformattedDate } from 'helpers/misc'
+import { getFormattedDate } from 'helpers/misc'
 import { motion } from 'framer-motion'
 
 const MotionAlert = motion(Alert)
@@ -32,7 +32,7 @@ const FarmViewBanner = ({ date, closed }) => {
       <Box w={{ md: '5xl' }} mr={{ md: 20 }} mb={{ base: 5, md: 0 }}>
         <AlertTitle fontSize={{ md: 'xl' }} mb={{ md: 3 }}>
           Farm will start on{' '}
-          {getformattedDate(date, {
+          {getFormattedDate(date, {
             weekday: 'short',
             year: 'numeric',
             month: 'long',

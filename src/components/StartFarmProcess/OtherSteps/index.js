@@ -28,7 +28,7 @@ import useComponent from 'context/component'
 
 import Contract from './Contract'
 
-import { getformattedDate } from 'helpers/misc'
+import { getFormattedDate } from 'helpers/misc'
 import ReloadPage from 'components/Reload'
 import { Safety } from '../../../theme/Icons'
 
@@ -142,10 +142,10 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
           mx='auto'
           w='100%'
           bg='cf-dark.400'
-          justify='space-between'
-          pt={{ base: 2, md: 8 }}
           px={{ md: 20 }}
           overflowX='hidden'
+          justify='space-between'
+          pt={{ base: 2, md: 8 }}
           direction={{ base: 'column', md: 'row' }}
           align={{ base: 'center', md: 'initial' }}
         >
@@ -204,17 +204,16 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
       )}
 
       <Flex
+        mb={4}
+        mx='auto'
         align='center'
         justify='space-between'
-        w={{ base: '100%', md: '80%', '3xl': '60%' }}
-        mx='auto'
         mt={{ base: 5, md: 12 }}
-        mb={4}
-        px={{ base: 2, md: 3 }}
+        w={{ md: '80%', '3xl': 138 }}
       >
         <Text fontSize={{ base: 'xs', md: 'sm' }} color='red.600' w='50%'>
           Farm starts :{' '}
-          {getformattedDate(
+          {getFormattedDate(
             selectedFarm?.startDate || data?.product?.startDate,
             {
               weekday: 'short',
@@ -324,18 +323,17 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
             isExternal
             rel='noreferrer'
             _hover={{ textDecor: 'none' }}
-            mr={3}
           >
             <Flex
               py={1}
+              bg='cf.200'
               align='center'
               rounded='30px'
+              borderWidth={1}
+              color='cf.green'
               w={{ md: '11rem' }}
               px={{ base: 2, md: 4 }}
-              borderWidth={1}
               borderColor='cf.green'
-              bg='cf.200'
-              color='cf.green'
             >
               <Icon as={Safety} />
               <Text fontSize='sm' ml={2}>
@@ -348,14 +346,14 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
 
       <AnimateSharedLayout>
         <MotionFlex
-          w={{ base: '100%', md: '80%', '3xl': '60%' }}
-          h={{ md: 123 }}
           mx='auto'
-          borderWidth={1}
-          borderColor='gray.200'
           rounded='md'
+          h={{ md: 123 }}
+          borderWidth={1}
           bgColor='white'
           overflow='hidden'
+          borderColor='gray.200'
+          w={{ md: '80%', '3xl': 138 }}
         >
           {getSteps(otherStep)}
         </MotionFlex>

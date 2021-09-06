@@ -79,7 +79,7 @@ export const latestDateForFarmFeed = feed => {
     return new Date(Math.max(...array?.map(date => new Date(date))))
 }
 
-export const getformattedDate = (
+export const getFormattedDate = (
   date,
   options = {
     day: 'numeric',

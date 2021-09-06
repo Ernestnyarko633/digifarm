@@ -4,6 +4,7 @@ import { Box, Flex, Heading, Grid, GridItem } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 
 import useStartFarm from 'context/start-farm'
+import useAuth from 'context/auth'
 
 import FarmInfo from 'components/Cards/FarmInfo'
 import PayOption from 'components/Cards/PayOption'
@@ -12,13 +13,13 @@ import Constants from 'constant'
 import Support from 'components/Support'
 import Tazapay from 'assets/images/taz.svg'
 
-// import { Scrollbars } from 'react-custom-scrollbars-2'
-
 const MotionGrid = motion(Grid)
 
 const PaymentOption = ({ farm }) => {
   const { order, currency, exchangeRate, paymentOption, setPaymentOption } =
     useStartFarm()
+  const { isAuthenticated } = useAuth()
+  const user = isAuthenticated().user
 
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
@@ -52,23 +53,26 @@ const PaymentOption = ({ farm }) => {
             <Heading as='h6' fontSize='xl' ml={{ md: 5 }}>
               Choose your payment Option
             </Heading>
-            <PayOption
-              support
-              leftImage='tazapay'
-              rightImage='zpay'
-              LeftPicture={Tazapay}
-              height={4}
-              title='Escrow'
-              theme='For escrow payments'
-              description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
-              selected={paymentOption === Constants.paymentOptions[2]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
-            />
+            {user.escrowId && (
+              <PayOption
+                support
+                leftImage='tazapay'
+                rightImage='zpay'
+                LeftPicture={Tazapay}
+                height={4}
+                title='Escrow'
+                theme='For escrow payments'
+                description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
+                selected={paymentOption === Constants.paymentOptions[2]}
+                onClick={() => setPaymentOption(Constants.paymentOptions[2])}
+              />
+            )}
+
             <PayOption
               leftImage='mastercard'
               rightImage='visa'
               height={4}
-              title='Card'
+              title='Paystack'
               theme='For card payments'
               description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
               notice='All transactions are charged a transaction fee of'

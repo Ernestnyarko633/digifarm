@@ -23,8 +23,9 @@ import Header from 'container/Header'
 import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfile'
 import { Button } from 'components'
 import { Link as ReachRouter } from 'react-router-dom'
-import useStartFarm from 'context/start-farm'
 import { FirstLettersToUpperCase } from 'helpers/misc'
+import useStartFarm from 'context/start-farm'
+
 const Cooperative = ({ location: { state } }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
