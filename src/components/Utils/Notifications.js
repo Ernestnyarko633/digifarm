@@ -8,7 +8,6 @@ import { ANNOUNCEMENT, NEWS, WEEKLYVIDEOS } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import NotificationItem from '../Notifications/NotificationItem'
 import { FaReceipt } from 'react-icons/all'
-//import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionBox = motion(Box)
 
@@ -38,7 +37,6 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
         return ''
       case 'DIGITAL_FARMER':
         return `/farms/${item?.message?.id}`
-      // return null
       default:
         return `/farms?type=${value}&title=${item?.message?.title}&id=${item?.messageId}`
     }
