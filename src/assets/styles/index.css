@@ -24,51 +24,51 @@
 
 
 @font-face {
-  font-family: "CeraGR";
+  font-family: "CeraPro";
+  font-weight: 200;
   font-style: normal;
-  font-weight: 700;
   font-display: swap;
-  src: url("../fonts/Cera\ GR\ Bold.woff") format("woff");
+  src: url("../fonts/CeraPRO-Thin.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "CeraGR";
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url("../fonts/Cera\ GR\ Black.woff") format("woff");
-}
-
-@font-face {
-  font-family: "CeraGR";
-  font-style: normal;
-  font-weight: 100;
-  font-display: swap;
-  src: url("../fonts/Cera\ GR\ Thin.woff") format("woff");
-}
-
-@font-face {
-  font-family: "CeraGR";
-  font-style: normal;
+  font-family: "CeraPro";
   font-weight: 300;
+  font-style: normal;
   font-display: swap;
-  src: url("../fonts/Cera\ GR\ Light.woff") format("woff");
+  src: url("../fonts/CeraPRO-Light.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "CeraGR";
-  font-style: normal;
+  font-family: "CeraPro";
   font-weight: 400;
+  font-style: normal;
   font-display: swap;
-  src: url("../fonts/Cera\ GR.woff") format("woff");
+  src: url("../fonts/CeraPRO-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "CeraGR";
+  font-family: "CeraPro";
+  font-weight: 500;
   font-style: normal;
-  font-weight: 600;
   font-display: swap;
-  src: url("../fonts/Cera\ GR\ Medium.woff") format("woff");
+  src: url("../fonts/CeraPRO-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "CeraPro";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/CeraPRO-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "CeraPro";
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/CeraPRO-Black.ttf") format("truetype");
 }
 
 @font-face {
@@ -172,7 +172,7 @@ section[style] {
 
 .intl-tel-input input {
   width: 100%;
-  min-width: 0px;
+  min-width: 0;
   outline: 0;
   position: relative;
   appearance: none;
