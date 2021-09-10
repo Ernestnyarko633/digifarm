@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import getConfig from 'utils/configs'
 import Prismic from 'prismic-javascript'
@@ -28,9 +29,12 @@ export const usePrismic = () => {
           setLoading(true)
           // await news and video prismic documents
           const [news_response, video_response] = await Promise.all([
-            Client.query(Prismic.Predicates.at('document.type', 'news')),
+            Client.query(Prismic.Predicates.at('document.type', 'news'), {
+              pageSize: 200
+            }),
             Client.query(
-              Prismic.Predicates.at('document.type', 'weekly_videos')
+              Prismic.Predicates.at('document.type', 'weekly_videos'),
+              { pageSize: 200 }
             )
           ])
 
@@ -64,7 +68,10 @@ export const usePrismic = () => {
           } else {
             const [res] = await Promise.all([
               Client.query(
-                Prismic.Predicates.at('document.type', 'manager_update')
+                Prismic.Predicates.at('document.type', 'manager_update'),
+                {
+                  pageSize: 200
+                }
               )
             ])
 

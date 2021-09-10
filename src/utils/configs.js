@@ -15,6 +15,7 @@ const configs = () => {
     FMS_API: process.env[`REACT_APP_${ENV}_FMS_API`],
     PAYMENT_API: process.env[`REACT_APP_${ENV}_PAYMENT_API`],
     ZENDESK_KEY: process.env.REACT_APP_ZENDESK_KEY,
+    ESCROW_SELLER_ID: process.env[`REACT_APP_${ENV}_ESCROW_SELLER_ID`],
     EXCHANGE_RATE_API: process.env[`REACT_APP_${ENV}_EXCHANGE_RATE_API`],
     EXCHANGE_RATE_API_KEY:
       process.env[`REACT_APP_${ENV}_EXCHANGE_RATE_API_KEY`],

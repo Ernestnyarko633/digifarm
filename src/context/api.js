@@ -103,6 +103,12 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  const verifyTazapayPayment = async params => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/${params.order}/${params.txn_no}`
+    })
+  }
+
   const createFarm = async (id, payment) => {
     return await http.patch({
       url: `${DIGITAL_FARMER_API}/orders/${id}/verify-payment`,
@@ -336,11 +342,35 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  //escrow
+  const createEscrowAccount = async payload => {
+    return http.post({
+      url: `${PAYMENT_API}/tazapay/client-registration`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const createEscrow = async payload => {
+    return http.post({
+      url: `${PAYMENT_API}/tazapay/create-escrow`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const payEscrow = async payload => {
+    return http.post({
+      url: `${PAYMENT_API}/tazapay/pay-escrow`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
         signUp,
+        createEscrow,
         loginUser,
+        payEscrow,
         logout,
         eosTask,
         getUser,
@@ -375,6 +405,7 @@ export const ApiContextProvider = ({ children }) => {
         createBankDetails,
         updateBankDetails,
         getBankDetails,
+        createEscrowAccount,
         createCooperative,
         deleteBankTransfer,
         downloadTaskReceipt,
@@ -383,6 +414,7 @@ export const ApiContextProvider = ({ children }) => {
         uploadPaymentDetails,
         getUserBankingDetails,
         initiatePaystackPayment,
+        verifyTazapayPayment,
         verifyPaystackPayment,
         getFarmProcessingPayouts,
 
