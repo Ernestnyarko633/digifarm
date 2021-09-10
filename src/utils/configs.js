@@ -12,6 +12,8 @@ const configs = () => {
     DIGITAL_FARMER_API: process.env[`REACT_APP_${ENV}_DIGITAL_FARMER_API`],
     BUYER_API: process.env[`REACT_APP_${ENV}_BUYER_API`],
     NOTIFICATION_API: process.env[`REACT_APP_${ENV}_NOTIFICATION_API`],
+    SOCKET_NOTIFICATION_API:
+      process.env[`REACT_APP_${ENV}_SOCKET_NOTIFICATION_API`],
     FMS_API: process.env[`REACT_APP_${ENV}_FMS_API`],
     PAYMENT_API: process.env[`REACT_APP_${ENV}_PAYMENT_API`],
     ZENDESK_KEY: process.env.REACT_APP_ZENDESK_KEY,

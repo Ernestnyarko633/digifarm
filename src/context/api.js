@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
@@ -100,6 +101,12 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({
       url: `${PAYMENT_API}/payment/verify/${reference}`,
       reference
+    })
+  }
+
+  const createFarmFromNotification = async id => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/create-farm/${id}`
     })
   }
 
@@ -417,6 +424,7 @@ export const ApiContextProvider = ({ children }) => {
         verifyTazapayPayment,
         verifyPaystackPayment,
         getFarmProcessingPayouts,
+        createFarmFromNotification,
 
         //cooperative
         acceptInvite,
