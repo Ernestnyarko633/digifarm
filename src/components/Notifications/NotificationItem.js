@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Link as ReachRouter } from 'react-router-dom'
 import { Box, Flex, Link, Text } from '@chakra-ui/react'
@@ -12,6 +13,7 @@ const NotificationItem = ({
   renderNotificationIcons,
   active
 }) => {
+  console.log('aasdslll')
   return (
     <Link
       py={2}

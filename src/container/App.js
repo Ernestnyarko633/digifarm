@@ -9,6 +9,7 @@ import { AuthContextProvider } from 'context/auth'
 import { ApiContextProvider } from 'context/api'
 import { WalletContextProvider } from 'context/wallet'
 import { RolloverContextProvider } from 'context/rollover'
+import { SocketContextProvider } from 'context/socket'
 import Router from 'routes/register'
 
 // const tagManagerArgs = {
@@ -40,24 +41,26 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <ComponentContextProvider>
-        <ApiContextProvider>
-          <ExternalContextProvider>
-            <AuthContextProvider>
-              <RolloverContextProvider>
-                <StartFarmContextProvider>
-                  <ModalContextProvider>
-                    <WalletContextProvider>
-                      <FacebookPixel />
-                      <Router />
-                    </WalletContextProvider>
-                  </ModalContextProvider>
-                </StartFarmContextProvider>
-              </RolloverContextProvider>
-            </AuthContextProvider>
-          </ExternalContextProvider>
-        </ApiContextProvider>
-      </ComponentContextProvider>
+      <SocketContextProvider>
+        <ComponentContextProvider>
+          <ApiContextProvider>
+            <ExternalContextProvider>
+              <AuthContextProvider>
+                <RolloverContextProvider>
+                  <StartFarmContextProvider>
+                    <ModalContextProvider>
+                      <WalletContextProvider>
+                        <FacebookPixel />
+                        <Router />
+                      </WalletContextProvider>
+                    </ModalContextProvider>
+                  </StartFarmContextProvider>
+                </RolloverContextProvider>
+              </AuthContextProvider>
+            </ExternalContextProvider>
+          </ApiContextProvider>
+        </ComponentContextProvider>
+      </SocketContextProvider>
     </BrowserRouter>
   )
 }
