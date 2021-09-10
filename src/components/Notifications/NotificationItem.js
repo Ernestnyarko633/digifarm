@@ -13,7 +13,6 @@ const NotificationItem = ({
   renderNotificationIcons,
   active
 }) => {
-  console.log('aasdslll')
   return (
     <Link
       py={2}
