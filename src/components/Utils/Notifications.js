@@ -52,24 +52,22 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
 
     const createFarm = async id => {
       try {
-        return await createFarmFromNotification(id)
+        await createFarmFromNotification(id)
       } catch (error) {
         console.log(error)
-        return
       }
     }
 
-    if (mounted && isDone) {
-      const verifiedEscrows = notifications?.filter(
-        item => item.message.entity === 'ESCROW_PAYMENT'
-      )
+    const verifiedEscrows = notifications?.filter(
+      item => item.message.entity === 'ESCROW_PAYMENT'
+    )
 
+    if (mounted && verifiedEscrows?.length && isDone !== 'done') {
       if (verifiedEscrows?.length) {
         const process = () =>
           verifiedEscrows?.map(
             async item => await createFarm(item?.message?.order_id)
           )
-
         process()
       }
 
