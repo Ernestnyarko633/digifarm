@@ -76,7 +76,6 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
 
     return () => (mounted = false)
   }, [createFarmFromNotification, notifications])
-
   const getNotified = (value, item, active) => {
     switch (value) {
       case 'GENERIC':
@@ -257,8 +256,8 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
 Notifications.propTypes = {
   notifications: PropTypes.any,
   loading: PropTypes.bool,
-  mutation: PropTypes.func,
-  userMutation: PropTypes.func
+  mutation: PropTypes.object,
+  userMutation: PropTypes.object
 }
 
 export default Notifications
