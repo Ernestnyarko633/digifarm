@@ -27,7 +27,9 @@ export const SocketContextProvider = ({ children }) => {
         native: true // os handle theming
       })
       if (notification?.message?.entity === 'ESCROW_PAYMENT') {
-        await createFarm(notification?.message?.order_id)
+        if (notification?.message?.order_id) {
+          await createFarm(notification?.message?.order_id)
+        }
       }
     } catch (error) {
       console.log(error)
