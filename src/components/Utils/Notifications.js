@@ -48,8 +48,6 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
   React.useEffect(() => {
     let mounted = true
 
-    const isDone = JSON.parse(window.sessionStorage.getItem('notify'))
-
     const createFarm = async id => {
       try {
         await createFarmFromNotification(id)
@@ -62,7 +60,7 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
       item => item.message.entity === 'ESCROW_PAYMENT'
     )
 
-    if (mounted && verifiedEscrows?.length && isDone !== 'done') {
+    if (mounted && verifiedEscrows?.length) {
       if (verifiedEscrows?.length) {
         const process = () =>
           verifiedEscrows?.map(
@@ -70,8 +68,6 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
           )
         process()
       }
-
-      sessionStorage.setItem('notify', JSON.stringify('done'))
     }
 
     return () => (mounted = false)
