@@ -15,12 +15,13 @@ const Tazapay = ({ history, location: { search } }) => {
 
   React.useEffect(() => {
     const type = sessionStorage.getItem('type')
+    const tazapay = sessionStorage.getItem('redirect')
 
     const verifyAndCreate = async params => {
       try {
         setLoading(true)
         if (params?.error) throw new Error(4)
-        const res = await verifyTazapayPayment(params)
+        const res = await verifyTazapayPayment(params, { redirect: tazapay })
         history.push({
           pathname: `start-farm/${type}`,
           state: {

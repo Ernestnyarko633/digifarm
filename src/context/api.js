@@ -110,9 +110,10 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const verifyTazapayPayment = async params => {
-    return await http.get({
-      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/${params.order}/${params.txn_no}`
+  const verifyTazapayPayment = async (params, payload) => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/${params.order}/${params.txn_no}`,
+      body: JSON.stringify(payload)
     })
   }
 
