@@ -64,7 +64,9 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
       if (verifiedEscrows?.length) {
         const process = () =>
           verifiedEscrows?.map(
-            async item => await createFarm(item?.message?.order_id)
+            async item =>
+              item?.message?.order_id &&
+              (await createFarm(item?.message?.order_id))
           )
         process()
       }
