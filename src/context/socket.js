@@ -11,17 +11,22 @@ export const SocketContextProvider = ({ children }) => {
   const { createFarmFromNotification: createFarm } = useApi()
   const { SOCKET_NOTIFICATION_API } = getConfigs()
   const type = 'DIGITAL_FARMER'
-  useWebSocket(SOCKET_NOTIFICATION_API, null, type, async d => {
+  useWebSocket(SOCKET_NOTIFICATION_API, null, type, async notification => {
     try {
       addNotification({
-        title: d?.message?.entity,
-        subtitle: 'New Notification',
-        message: d?.message?.text,
+        title: 'New Notification',
+        subtitle:
+          notification?.message?.type === 'weekly_videos'
+            ? notification?.message?.type.split('_').join(' ')
+            : notification?.message?.type,
+        message: notification?.message?.title
+          ? notification?.message?.title
+          : notification?.message?.text,
         theme: 'darkblue',
         native: true // when using native, your OS will handle theming.
       })
-      if (d?.message?.entity === 'ESCROW_PAYMENT') {
-        await createFarm(d?.message?.order_id)
+      if (notification?.message?.entity === 'ESCROW_PAYMENT') {
+        await createFarm(notification?.message?.order_id)
       }
     } catch (error) {
       console.log(error)
