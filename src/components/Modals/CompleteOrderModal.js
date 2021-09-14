@@ -105,6 +105,19 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                 }}
                 width={!order?.payment ? '100%' : '45%'}
               />
+              {order?.redirect && (
+                <Button
+                  btntitle='Pay with tazapay'
+                  isLoading={isSubmitting}
+                  isDisabled={isSubmitting}
+                  py={{ base: 1, md: 7 }}
+                  leftIcon={<FiCreditCard size={22} />}
+                  onClick={_ => {
+                    return (window.location.href = order?.redirect)
+                  }}
+                  width={!order?.payment ? '100%' : '45%'}
+                />
+              )}
               {order?.payment && (
                 <Button
                   btntitle='Upload payment slip'
