@@ -8,14 +8,11 @@ import useApi from 'context/api'
 const SocketContext = createContext()
 
 export const SocketContextProvider = ({ children }) => {
-  const { createFarmFromNotification } = useApi()
+  const { createFarmFromNotification: createFarm } = useApi()
   const { SOCKET_NOTIFICATION_API } = getConfigs()
   const type = 'DIGITAL_FARMER'
   useWebSocket(SOCKET_NOTIFICATION_API, null, type, async d => {
     try {
-      if (d?.message?.entity === 'ESCROW_PAYMENT') {
-        await createFarmFromNotification(d?.message?.order_id)
-      }
       addNotification({
         title: d?.message?.entity,
         subtitle: 'New Notification',
@@ -23,6 +20,9 @@ export const SocketContextProvider = ({ children }) => {
         theme: 'darkblue',
         native: true // when using native, your OS will handle theming.
       })
+      if (d?.message?.entity === 'ESCROW_PAYMENT') {
+        await createFarm(d?.message?.order_id)
+      }
     } catch (error) {
       console.log(error)
     }
