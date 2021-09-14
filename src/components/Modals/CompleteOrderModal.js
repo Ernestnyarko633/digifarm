@@ -3,6 +3,7 @@ import {
   Flex,
   Box,
   Text,
+  Image,
   Modal,
   useToast,
   Heading,
@@ -11,6 +12,7 @@ import {
   ModalContent,
   ModalCloseButton
 } from '@chakra-ui/react'
+import Tazapay from 'assets/images/taz.svg'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import { FiCreditCard, FiUpload } from 'react-icons/fi'
@@ -90,28 +92,30 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
           )}
           {!showUploadForm ? (
             <Flex mt={4} justify='space-between'>
-              <Button
-                btntitle='Pay with card'
-                isLoading={isSubmitting}
-                isDisabled={isSubmitting}
-                py={{ base: 1, md: 7 }}
-                leftIcon={<FiCreditCard size={22} />}
-                onClick={_ => {
-                  return handlePayment(
-                    order?._id,
-                    order?.product?.name,
-                    order?.cost
-                  )
-                }}
-                width={!order?.payment ? '100%' : '45%'}
-              />
-              {order?.redirect && (
+              {!order?.redirect && (
                 <Button
-                  btntitle='Pay with tazapay'
+                  btntitle='Pay with card'
                   isLoading={isSubmitting}
                   isDisabled={isSubmitting}
                   py={{ base: 1, md: 7 }}
                   leftIcon={<FiCreditCard size={22} />}
+                  onClick={_ => {
+                    return handlePayment(
+                      order?._id,
+                      order?.product?.name,
+                      order?.cost
+                    )
+                  }}
+                  width={!order?.payment ? '100%' : '45%'}
+                />
+              )}
+              {order?.redirect && (
+                <Button
+                  btntitle=''
+                  isLoading={isSubmitting}
+                  isDisabled={isSubmitting}
+                  py={{ base: 1, md: 7 }}
+                  leftIcon={<Image src={Tazapay} />}
                   onClick={_ => {
                     return (window.location.href = order?.redirect)
                   }}
@@ -120,6 +124,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
               )}
               {order?.payment && (
                 <Button
+                  ml={{ md: 2 }}
                   btntitle='Upload payment slip'
                   leftIcon={<FiUpload size={22} />}
                   py={{ base: 1, md: 7 }}
