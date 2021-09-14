@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import FetchCard from 'components/FetchCard'
 
 import queryString from 'query-string'
@@ -15,13 +14,12 @@ const Tazapay = ({ history, location: { search } }) => {
 
   React.useEffect(() => {
     const type = sessionStorage.getItem('type')
-    const tazapay = sessionStorage.getItem('redirect')
 
     const verifyAndCreate = async params => {
       try {
         setLoading(true)
         if (params?.error) throw new Error(4)
-        const res = await verifyTazapayPayment(params, { redirect: tazapay })
+        const res = await verifyTazapayPayment(params)
         history.push({
           pathname: `start-farm/${type}`,
           state: {
