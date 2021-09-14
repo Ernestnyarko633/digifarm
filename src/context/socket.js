@@ -24,7 +24,7 @@ export const SocketContextProvider = ({ children }) => {
           ? notification?.message?.title
           : notification?.message?.text,
         theme: 'darkblue',
-        native: true // when using native, your OS will handle theming.
+        native: true // os handle theming
       })
       if (notification?.message?.entity === 'ESCROW_PAYMENT') {
         await createFarm(notification?.message?.order_id)
