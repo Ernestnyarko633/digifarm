@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import React, { createContext, useContext } from 'react'
-import PropTypes from 'prop-types'
-import getConfigs from 'utils/configs'
-import useWebSocket from 'hooks/useWebSocket'
 import addNotification from 'react-push-notification'
+import useWebSocket from 'hooks/useWebSocket'
+import getConfigs from 'utils/configs'
+import PropTypes from 'prop-types'
 import useApi from 'context/api'
+
 const SocketContext = createContext()
 
 export const SocketContextProvider = ({ children }) => {
