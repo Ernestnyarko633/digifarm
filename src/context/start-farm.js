@@ -489,6 +489,10 @@ export const StartFarmContextProvider = ({ children }) => {
           window.onbeforeunload = null
 
           if (response.data.redirect_url) {
+            await patchOrder(id || order._id, {
+              redirect: response.data.redirect_url
+            })
+            window.onbeforeunload = null
             window.location.href = response.data.redirect_url
           } else {
             throw new Error('Unexpected payment gateway failure')

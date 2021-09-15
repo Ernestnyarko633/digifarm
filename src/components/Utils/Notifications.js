@@ -48,8 +48,6 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
   React.useEffect(() => {
     let mounted = true
 
-    const isDone = JSON.parse(window.sessionStorage.getItem('notify'))
-
     const createFarm = async id => {
       try {
         await createFarmFromNotification(id)
@@ -62,21 +60,20 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
       item => item.message.entity === 'ESCROW_PAYMENT'
     )
 
-    if (mounted && verifiedEscrows?.length && isDone !== 'done') {
+    if (mounted && verifiedEscrows?.length) {
       if (verifiedEscrows?.length) {
         const process = () =>
           verifiedEscrows?.map(
-            async item => await createFarm(item?.message?.order_id)
+            async item =>
+              item?.message?.order_id &&
+              (await createFarm(item?.message?.order_id))
           )
         process()
       }
-
-      sessionStorage.setItem('notify', JSON.stringify('done'))
     }
 
     return () => (mounted = false)
   }, [createFarmFromNotification, notifications])
-
   const getNotified = (value, item, active) => {
     switch (value) {
       case 'GENERIC':

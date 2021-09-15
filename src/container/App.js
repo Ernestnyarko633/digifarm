@@ -41,9 +41,9 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <SocketContextProvider>
-        <ComponentContextProvider>
-          <ApiContextProvider>
+      <ComponentContextProvider>
+        <ApiContextProvider>
+          <SocketContextProvider>
             <ExternalContextProvider>
               <AuthContextProvider>
                 <RolloverContextProvider>
@@ -58,9 +58,9 @@ const App = () => {
                 </RolloverContextProvider>
               </AuthContextProvider>
             </ExternalContextProvider>
-          </ApiContextProvider>
-        </ComponentContextProvider>
-      </SocketContextProvider>
+          </SocketContextProvider>
+        </ApiContextProvider>
+      </ComponentContextProvider>
     </BrowserRouter>
   )
 }
