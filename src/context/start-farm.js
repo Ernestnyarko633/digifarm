@@ -15,7 +15,7 @@ import useRollover from './rollover'
 import useComponent from './component'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
-const dpo = Constants.paymentOptions[0]
+const dpo = Constants.paymentOptions[1]
 
 const StartFarmContext = createContext({})
 
@@ -514,7 +514,7 @@ export const StartFarmContextProvider = ({ children }) => {
         app: 'DIGITAL_FARMER'
       }
 
-      if (paymentOption === Constants.paymentOptions[0]) {
+      if (paymentOption === Constants.paymentOptions[1]) {
         const q = 'USD_GHS'
         const res = await getExchangeRate({ q })
 
@@ -533,7 +533,7 @@ export const StartFarmContextProvider = ({ children }) => {
           throw new Error('Unexpected payment gateway failure')
         }
         window.location.href = result.data.authorization_url
-      } else if (paymentOption === Constants.paymentOptions[1]) {
+      } else if (paymentOption === Constants.paymentOptions[0]) {
         await handleTazapayPayment(
           user,
           store,
