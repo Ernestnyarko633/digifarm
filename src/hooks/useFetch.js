@@ -37,10 +37,10 @@ const useFetch = (key, func, reload, ...rest) => {
   const { setSession } = useAuth()
   const [state, dispatch] = useReducer(fetchReducer, INIT_STATE)
 
-  const sessionStorageIsFull = async (data) => {
+  const sessionStorageIsFull = async () => {
     const test = 'test'
     try {
-      sessionStorage.setItem(test, data)
+      sessionStorage.setItem(test, test)
       sessionStorage.removeItem(test)
       return false
     } catch (error) {
@@ -59,7 +59,7 @@ const useFetch = (key, func, reload, ...rest) => {
             dispatch({ type: 'success', payload: { data: dataFromStorage } })
           } else {
             const res = await func(...rest)
-            const storageIsFull = await sessionStorageIsFull( JSON.stringify(res.data ? res.data : res))
+            const storageIsFull = await sessionStorageIsFull()
             if (mounted && res && !storageIsFull) {
               key &&
                 sessionStorage.setItem(

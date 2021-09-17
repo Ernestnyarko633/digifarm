@@ -452,6 +452,7 @@ export const StartFarmContextProvider = ({ children }) => {
   }
 
   const handlePayment = async (id, name, cost) => {
+    const type = sessionStorage.getItem('type')
     try {
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
@@ -459,7 +460,12 @@ export const StartFarmContextProvider = ({ children }) => {
         amount: convertedAmount,
         order_id: id || order._id,
         purpose: 'FARM_PURCHASE',
-        transaction_type: paymentOption
+        name: name || selectedFarm.name,
+        transaction_type: paymentOption,
+        institution: 'PAYSTACK',
+        redirect: `/start-farm/${type}`,
+        type: 'ORDER',
+        app: 'DIGITAL_FARMER'
       }
 
       if (paymentOption === Constants.paymentOptions[0]) {
