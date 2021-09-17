@@ -15,7 +15,7 @@ import useRollover from './rollover'
 import useComponent from './component'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
-const dpo = Constants.paymentOptions[1]
+const dpo = Constants.paymentOptions[0]
 
 const StartFarmContext = createContext({})
 
@@ -35,6 +35,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const [currency, setCurrency] = useState(dcc)
   const [contract, setContract] = useState('')
   const [acreage, setAcreage] = useState(1)
+  const [convertedAmount, setConvertedAmount] = useState(undefined)
   const [acres, setAcres] = useState(0)
   const [order, setOrder] = useState(null)
   const [reload, setReload] = useState(0)
@@ -66,6 +67,7 @@ export const StartFarmContextProvider = ({ children }) => {
     verifyWallet
   } = useApi()
 
+  const PAYSTACK_LIMIT = 30000
   const { ESCROW_SELLER_ID } = getConfig()
 
   const { selectedWallets, onCloseSecond } = useRollover()
@@ -127,6 +129,34 @@ export const StartFarmContextProvider = ({ children }) => {
     setOtherStep(draft => draft - 1)
   }
 
+  const toastError = error => {
+    if (error) {
+      if ([401, 403].includes(error.status)) {
+        setSession(false)
+      } else {
+        toast({
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+          title: 'An error occurred.',
+          description:
+            (error?.data?.message ||
+              error?.message ||
+              'Unknown error occurred') + '.'
+        })
+      }
+    } else {
+      toast({
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+        title: 'An error occurred.',
+        description: 'Unexpected network error.'
+      })
+    }
+  }
   const handleRolloverPayment = async _order => {
     try {
       setSubmitting(true)
@@ -195,32 +225,26 @@ export const StartFarmContextProvider = ({ children }) => {
         onClose()
       }
     } catch (error) {
-      if (error) {
-        if ([401, 403].includes(error.status)) {
-          setSession(false)
-        } else {
-          toast({
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-            position: 'top-right',
-            title: 'An error occurred.',
-            description:
-              (error?.data?.message ||
-                error?.message ||
-                'Unknown error occurred') + '.'
-          })
-        }
-      } else {
-        toast({
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-          position: 'top-right',
-          title: 'An error occurred.',
-          description: 'Unexpected network error.'
-        })
+      toastError(error)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const convertToGhanaCedis = async order => {
+    try {
+      setSubmitting(true)
+      const q = 'USD_GHS'
+      const excRes = await getExchangeRate({ q })
+
+      if (!excRes.data) {
+        throw new Error('Unknown error occurred, try again')
       }
+
+      const cediAmt = order.cost * excRes.data[q]
+      return parseFloat(cediAmt / 0.9805).toFixed(2) * 1
+    } catch (error) {
+      toastError(error)
     } finally {
       setSubmitting(false)
     }
@@ -291,6 +315,13 @@ export const StartFarmContextProvider = ({ children }) => {
       const res = await createOrder(data)
       setOrder(res.data)
 
+      const cediAmt = await convertToGhanaCedis(res.data)
+
+      setConvertedAmount(cediAmt)
+
+      if (cediAmt >= PAYSTACK_LIMIT)
+        setPaymentOption(Constants.paymentOptions[1])
+
       if (rollover) {
         sessionStorage.removeItem('my_orders')
         handleModalClick('rollover', {
@@ -305,39 +336,13 @@ export const StartFarmContextProvider = ({ children }) => {
         handleNextStep()
       }
     } catch (error) {
-      if (error) {
-        if ([401, 403].includes(error.status)) {
-          setSession(false)
-        } else {
-          toast({
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-            position: 'top-right',
-            title: 'An error occurred.',
-            description:
-              (error?.data?.message ||
-                error?.message ||
-                'Unknown error occurred') + '.'
-          })
-        }
-      } else {
-        toast({
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-          position: 'top-right',
-          title: 'An error occurred.',
-          description: 'Unexpected network error.'
-        })
-      }
+      toastError(error)
     } finally {
       setSubmitting(false)
     }
   }
   const handleTazapayPayment = async (user, store, order, product) => {
     try {
-      setSubmitting(true)
       //check if user has account
       if (!user?.escrowId) {
         const payload = {
@@ -387,7 +392,7 @@ export const StartFarmContextProvider = ({ children }) => {
 
         // this two information might change
         fee_paid_by: 'buyer', // buyer
-        fee_percentage: 100 // 100
+        fee_percentage: 50 // 100
       }
 
       // if everything is okay send the payload
@@ -420,34 +425,7 @@ export const StartFarmContextProvider = ({ children }) => {
         throw new Error('Unable to process request')
       }
     } catch (error) {
-      if (error) {
-        if ([401, 403].includes(error.status)) {
-          setSession(false)
-        } else {
-          toast({
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-            position: 'top-right',
-            title: 'An error occurred.',
-            description:
-              (error?.data?.message ||
-                error?.message ||
-                'Unknown error occurred') + '.'
-          })
-        }
-      } else {
-        toast({
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-          position: 'top-right',
-          title: 'An error occurred.',
-          description: 'Unexpected network error.'
-        })
-      }
-    } finally {
-      setSubmitting(false)
+      toastError(error)
     }
   }
 
@@ -466,32 +444,7 @@ export const StartFarmContextProvider = ({ children }) => {
       setCooperative(res.data)
       handleCreateOrder(res.data, invites[0]?.acreage)
     } catch (error) {
-      if (error) {
-        if ([401, 403].includes(error.status)) {
-          setSession(false)
-        } else {
-          toast({
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-            position: 'top-right',
-            title: 'An error occurred.',
-            description:
-              (error?.data?.message ||
-                error?.message ||
-                'Unknown error occurred') + '.'
-          })
-        }
-      } else {
-        toast({
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-          position: 'top-right',
-          title: 'An error occurred.',
-          description: 'Unexpected network error.'
-        })
-      }
+      toastError(error)
     } finally {
       setSubmitting(false)
     }
@@ -503,7 +456,7 @@ export const StartFarmContextProvider = ({ children }) => {
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
       const data = {
-        amount: cost || order.cost,
+        amount: convertedAmount,
         order_id: id || order._id,
         purpose: 'FARM_PURCHASE',
         name: name || selectedFarm.name,
@@ -514,26 +467,18 @@ export const StartFarmContextProvider = ({ children }) => {
         app: 'DIGITAL_FARMER'
       }
 
-      if (paymentOption === Constants.paymentOptions[1]) {
-        const q = 'USD_GHS'
-        const res = await getExchangeRate({ q })
+      if (paymentOption === Constants.paymentOptions[0]) {
+        // Paystack
 
-        if (!res.data) {
-          throw new Error('Unknown error occurred, try again')
-        }
-
-        const cediAmt = data.amount * res.data[q]
-
-        const payload = data
-        payload.amount = parseFloat(cediAmt / 0.9805).toFixed(2) * 1
-
-        const result = await initiatePaystackPayment(payload)
+        const result = await initiatePaystackPayment(data)
         window.onbeforeunload = null
         if (!result?.data?.authorization_url) {
           throw new Error('Unexpected payment gateway failure')
         }
         window.location.href = result.data.authorization_url
-      } else if (paymentOption === Constants.paymentOptions[0]) {
+      } else if (paymentOption === Constants.paymentOptions[1]) {
+        // Tazapay
+
         await handleTazapayPayment(
           user,
           store,
@@ -556,32 +501,7 @@ export const StartFarmContextProvider = ({ children }) => {
         handleNextStep()
       }
     } catch (error) {
-      if (error) {
-        if ([401, 403].includes(error.status)) {
-          setSession(false)
-        } else {
-          toast({
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-            position: 'top-right',
-            title: 'An error occurred.',
-            description:
-              (error?.data?.message ||
-                error?.message ||
-                'Unknown error occurred') + '.'
-          })
-        }
-      } else {
-        toast({
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-          position: 'top-right',
-          title: 'An error occurred.',
-          description: 'Unexpected network error.'
-        })
-      }
+      toastError(error)
     } finally {
       setSubmitting(false)
     }
@@ -618,6 +538,7 @@ export const StartFarmContextProvider = ({ children }) => {
         setInvites,
         handleNext,
         handlePrev,
+        toastError,
         handleBack,
         setCoopType,
         setCurrency,
@@ -637,6 +558,8 @@ export const StartFarmContextProvider = ({ children }) => {
         setSubmitting,
         setCooperative,
         handleNextStep,
+        PAYSTACK_LIMIT,
+        convertedAmount,
         setSelectedType,
         cooperativeName,
         setSelectedFarm,
@@ -647,12 +570,14 @@ export const StartFarmContextProvider = ({ children }) => {
         coopConfigErrors,
         handleCreateOrder,
         setCooperativeName,
+        setConvertedAmount,
         setCoopConfigErrors,
+        convertToGhanaCedis,
         handleTazapayPayment,
-        handleCreateCooperative,
+        handleRolloverPayment,
         selectedCooperativeType,
-        setSelectedCooperativeType,
-        handleRolloverPayment
+        handleCreateCooperative,
+        setSelectedCooperativeType
       }}
     >
       {false && reload}
