@@ -21,12 +21,16 @@ import useApi from 'context/api'
 import Button from 'components/Button'
 import { Status } from 'helpers/misc'
 import ImageUpload from 'components/ImageUpload'
+import useAuth from 'context/auth'
 
 const CompleteOrderModal = ({ call, isOpen, onClose }) => {
+  const { isAuthenticated, store } = useAuth()
+  const { user } = isAuthenticated()
   const [showUploadForm, setShowUploadForm] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
   const { uploadPaymentDetails, patchOrder } = useApi()
-  const { handlePayment, isSubmitting, order } = useStartFarm()
+  const { handlePayment, isSubmitting, order, handleTazapayPayment } =
+    useStartFarm()
   const [file, setFile] = React.useState([])
 
   const toast = useToast()
@@ -109,19 +113,29 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                   width={!order?.payment ? '100%' : '45%'}
                 />
               )}
-              {order?.redirect && (
-                <Button
-                  btntitle=''
-                  isLoading={isSubmitting}
-                  isDisabled={isSubmitting}
-                  py={{ base: 1, md: 7 }}
-                  leftIcon={<Image src={Tazapay} />}
-                  onClick={_ => {
+
+              <Button
+                ml={order?.redirect ? 0 : 2}
+                btntitle=''
+                isLoading={isSubmitting}
+                isDisabled={isSubmitting}
+                py={{ base: 1, md: 7 }}
+                leftIcon={<Image src={Tazapay} />}
+                onClick={async _ => {
+                  if (order?.redirect) {
                     return (window.location.href = order?.redirect)
-                  }}
-                  width={!order?.payment ? '100%' : '45%'}
-                />
-              )}
+                  } else {
+                    return await handleTazapayPayment(
+                      user,
+                      store,
+                      order,
+                      order?.product
+                    )
+                  }
+                }}
+                width={!order?.payment ? '100%' : '45%'}
+              />
+
               {order?.payment && (
                 <Button
                   ml={{ md: 2 }}

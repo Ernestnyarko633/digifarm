@@ -53,18 +53,6 @@ const PaymentOption = ({ farm }) => {
               Choose your payment Option
             </Heading>
             <PayOption
-              support
-              leftImage='tazapay'
-              rightImage='zpay'
-              LeftPicture={Tazapay}
-              height={4}
-              title='Escrow'
-              theme='For escrow payments'
-              description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
-              selected={paymentOption === Constants.paymentOptions[2]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
-            />
-            <PayOption
               leftImage='mastercard'
               rightImage='visa'
               height={4}
@@ -77,16 +65,16 @@ const PaymentOption = ({ farm }) => {
               onClick={() => setPaymentOption(Constants.paymentOptions[0])}
             />
             <PayOption
-              leftImage='bank'
-              rightImage='transaction'
-              height={6}
-              title='Bank Payment'
-              theme='For bank payment'
-              description='Please note that bank transfer will take at most 2 weeks before money is transferred'
-              notice='Contact support for any help'
+              support
+              leftImage='tazapay'
+              rightImage='zpay'
+              LeftPicture={Tazapay}
+              height={4}
+              title='Escrow'
+              theme='For escrow payments'
+              description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
               selected={paymentOption === Constants.paymentOptions[1]}
               onClick={() => setPaymentOption(Constants.paymentOptions[1])}
-              dropDown
             />
           </Flex>
         </Box>
