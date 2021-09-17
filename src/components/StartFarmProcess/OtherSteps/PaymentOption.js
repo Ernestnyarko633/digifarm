@@ -76,6 +76,7 @@ const PaymentOption = ({ farm }) => {
             )}
             <PayOption
               support
+              filter='grayScale(100%)'
               leftImage='tazapay'
               rightImage='zpay'
               LeftPicture={Tazapay}
@@ -84,7 +85,24 @@ const PaymentOption = ({ farm }) => {
               theme='For escrow payments'
               description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
               selected={paymentOption === Constants.paymentOptions[1]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[1])}
+              onClick={e => {
+                return (
+                  e.preventDefault() &&
+                  setPaymentOption(Constants.paymentOptions[1])
+                )
+              }}
+            />
+            <PayOption
+              leftImage='bank'
+              rightImage='transaction'
+              height={6}
+              title='Bank Payment'
+              theme='For bank payment'
+              description='Please note that bank transfer will take at most 2 weeks before money is transferred'
+              notice='Contact support for any help'
+              selected={paymentOption === Constants.paymentOptions[2]}
+              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
+              dropDown
             />
           </Flex>
         </Box>

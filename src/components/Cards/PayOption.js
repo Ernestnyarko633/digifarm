@@ -31,12 +31,14 @@ const PayOption = ({
   extraCharge,
   LeftPicture,
   RightPicture,
-  description
+  description,
+  filter
 }) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
     <Flex
+      filter={filter}
       my={4}
       py={4}
       px={8}
@@ -188,6 +190,7 @@ const PayOption = ({
 }
 
 PayOption.propTypes = {
+  filter: PropTypes.any,
   dropDown: PropTypes.bool,
   extraCharge: PropTypes.any,
   theme: PropTypes.any.isRequired,

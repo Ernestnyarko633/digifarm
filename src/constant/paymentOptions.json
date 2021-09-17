@@ -1,4 +1,5 @@
 [
     "CARD",
-    "ESCROW"
+    "ESCROW",
+    "BANK_TRANSFER"
 ]

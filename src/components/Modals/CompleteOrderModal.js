@@ -124,12 +124,13 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
               )}
 
               <Button
-                ml={order?.redirect || convertedAmount < PAYSTACK_LIMIT ? 0 : 3}
+                filter='grayScale(100%)'
+                mx={2}
                 btntitle=''
                 isLoading={loading}
-                isDisabled={loading}
+                isDisabled={true}
                 py={{ base: 1, md: 7 }}
-                leftIcon={<Image src={Tazapay} />}
+                leftIcon={<Image h={5} src={Tazapay} />}
                 onClick={async _ => {
                   try {
                     setLoading(true)
