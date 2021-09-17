@@ -67,7 +67,8 @@ export const StartFarmContextProvider = ({ children }) => {
     verifyWallet
   } = useApi()
 
-  const PAYSTACK_LIMIT = 30000
+  const PAYSTACK_LIMIT = 1e96
+
   const { ESCROW_SELLER_ID } = getConfig()
 
   const { selectedWallets, onCloseSecond } = useRollover()
@@ -319,8 +320,8 @@ export const StartFarmContextProvider = ({ children }) => {
 
       setConvertedAmount(cediAmt)
 
-      if (cediAmt >= PAYSTACK_LIMIT)
-        setPaymentOption(Constants.paymentOptions[1])
+      // if (cediAmt >= PAYSTACK_LIMIT)
+      //   setPaymentOption(Constants.paymentOptions[1])
 
       if (rollover) {
         sessionStorage.removeItem('my_orders')
