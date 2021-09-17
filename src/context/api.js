@@ -90,17 +90,24 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const initiatePaystackPayment = async payload => {
-    return await http.post({
-      url: `${PAYMENT_API}/payment/`,
-      body: payload
+  const verifyPayment = async payload => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/verify-payment`,
+      body: JSON.stringify(payload)
     })
   }
 
-  const verifyPaystackPayment = async reference => {
+  const initiatePaystackPayment = async payload => {
+    return await http.post({
+      url: `${DIGITAL_FARMER_API}/orders/payment/paystack`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const verifyPaystackPayment = async query => {
     return await http.get({
-      url: `${PAYMENT_API}/payment/verify/${reference}`,
-      reference
+      url: `${DIGITAL_FARMER_API}/orders/payment/paystack`,
+      query
     })
   }
 
@@ -403,6 +410,7 @@ export const ApiContextProvider = ({ children }) => {
         patchPayout,
 
         getActivities,
+        verifyPayment,
         getMyFarmFeeds,
         changePassword,
         initiatePayment,
