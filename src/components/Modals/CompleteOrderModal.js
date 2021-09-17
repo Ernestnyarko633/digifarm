@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import {
   Flex,
@@ -25,12 +26,20 @@ import useAuth from 'context/auth'
 
 const CompleteOrderModal = ({ call, isOpen, onClose }) => {
   const { isAuthenticated, store } = useAuth()
+  const [loading, setLoading] = React.useState(false)
   const { user } = isAuthenticated()
   const [showUploadForm, setShowUploadForm] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
   const { uploadPaymentDetails, patchOrder } = useApi()
-  const { handlePayment, isSubmitting, order, handleTazapayPayment } =
-    useStartFarm()
+  const {
+    handlePayment,
+    convertedAmount,
+    isSubmitting,
+    toastError,
+    order,
+    handleTazapayPayment,
+    PAYSTACK_LIMIT
+  } = useStartFarm()
   const [file, setFile] = React.useState([])
 
   const toast = useToast()
@@ -96,7 +105,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
           )}
           {!showUploadForm ? (
             <Flex mt={4} justify='space-between'>
-              {!order?.redirect && (
+              {convertedAmount < PAYSTACK_LIMIT && (
                 <Button
                   btntitle='Pay with card'
                   isLoading={isSubmitting}
@@ -115,22 +124,29 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
               )}
 
               <Button
-                ml={order?.redirect ? 0 : 2}
+                ml={order?.redirect || convertedAmount < PAYSTACK_LIMIT ? 0 : 3}
                 btntitle=''
-                isLoading={isSubmitting}
-                isDisabled={isSubmitting}
+                isLoading={loading}
+                isDisabled={loading}
                 py={{ base: 1, md: 7 }}
                 leftIcon={<Image src={Tazapay} />}
                 onClick={async _ => {
-                  if (order?.redirect) {
-                    return (window.location.href = order?.redirect)
-                  } else {
-                    return await handleTazapayPayment(
-                      user,
-                      store,
-                      order,
-                      order?.product
-                    )
+                  try {
+                    setLoading(true)
+                    if (order?.redirect) {
+                      return (window.location.href = order?.redirect)
+                    } else {
+                      return await handleTazapayPayment(
+                        user,
+                        store,
+                        order,
+                        order?.product
+                      )
+                    }
+                  } catch (error) {
+                    toastError(error)
+                  } finally {
+                    setLoading(false)
                   }
                 }}
                 width={!order?.payment ? '100%' : '45%'}
