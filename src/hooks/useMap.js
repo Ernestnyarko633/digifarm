@@ -1,3 +1,4 @@
+/* eslint-disable import/no-webpack-loader-syntax */
 /**
  * useMap.js
  */
@@ -6,6 +7,10 @@ import mapboxgl from 'mapbox-gl'
 import configs from '../utils/configs'
 
 // Be sure to replace this with your own token
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass =
+  require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 
 mapboxgl.accessToken = configs().MAPBOX_API
 
