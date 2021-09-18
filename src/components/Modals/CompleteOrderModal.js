@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import React from 'react'
 import {
   Flex,
   Box,
   Text,
+  Image,
   Modal,
   useToast,
   Heading,
@@ -11,6 +13,7 @@ import {
   ModalContent,
   ModalCloseButton
 } from '@chakra-ui/react'
+import Tazapay from 'assets/images/taz.svg'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import { FiCreditCard, FiUpload } from 'react-icons/fi'
@@ -19,12 +22,24 @@ import useApi from 'context/api'
 import Button from 'components/Button'
 import { Status } from 'helpers/misc'
 import ImageUpload from 'components/ImageUpload'
+import useAuth from 'context/auth'
 
 const CompleteOrderModal = ({ call, isOpen, onClose }) => {
+  const { isAuthenticated, store } = useAuth()
+  const [loading, setLoading] = React.useState(false)
+  const { user } = isAuthenticated()
   const [showUploadForm, setShowUploadForm] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
   const { uploadPaymentDetails, patchOrder } = useApi()
-  const { handlePayment, isSubmitting, order } = useStartFarm()
+  const {
+    handlePayment,
+    convertedAmount,
+    isSubmitting,
+    toastError,
+    order,
+    handleTazapayPayment,
+    PAYSTACK_LIMIT
+  } = useStartFarm()
   const [file, setFile] = React.useState([])
 
   const toast = useToast()
@@ -90,23 +105,57 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
           )}
           {!showUploadForm ? (
             <Flex mt={4} justify='space-between'>
+              {convertedAmount < PAYSTACK_LIMIT && (
+                <Button
+                  btntitle='Pay with card'
+                  isLoading={isSubmitting}
+                  isDisabled={isSubmitting}
+                  py={{ base: 1, md: 7 }}
+                  leftIcon={<FiCreditCard size={22} />}
+                  onClick={_ => {
+                    return handlePayment(
+                      order?._id,
+                      order?.product?.name,
+                      order?.cost
+                    )
+                  }}
+                  width={!order?.payment ? '100%' : '45%'}
+                />
+              )}
+
               <Button
-                btntitle='Pay with card'
-                isLoading={isSubmitting}
-                isDisabled={isSubmitting}
+                filter='grayScale(100%)'
+                mx={2}
+                btntitle=''
+                isLoading={loading}
+                isDisabled={true}
                 py={{ base: 1, md: 7 }}
-                leftIcon={<FiCreditCard size={22} />}
-                onClick={_ => {
-                  return handlePayment(
-                    order?._id,
-                    order?.product?.name,
-                    order?.cost
-                  )
+                leftIcon={<Image h={5} src={Tazapay} />}
+                onClick={async _ => {
+                  try {
+                    setLoading(true)
+                    if (order?.redirect) {
+                      return (window.location.href = order?.redirect)
+                    } else {
+                      return await handleTazapayPayment(
+                        user,
+                        store,
+                        order,
+                        order?.product
+                      )
+                    }
+                  } catch (error) {
+                    toastError(error)
+                  } finally {
+                    setLoading(false)
+                  }
                 }}
                 width={!order?.payment ? '100%' : '45%'}
               />
+
               {order?.payment && (
                 <Button
+                  ml={{ md: 2 }}
                   btntitle='Upload payment slip'
                   leftIcon={<FiUpload size={22} />}
                   py={{ base: 1, md: 7 }}

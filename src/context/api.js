@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
@@ -89,24 +90,29 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const verifyPayment = async payload => {
-    return await http.patch({
-      url: `${DIGITAL_FARMER_API}/orders/verify-payment`,
-      body: JSON.stringify(payload)
-    })
-  }
-
   const initiatePaystackPayment = async payload => {
     return await http.post({
-      url: `${DIGITAL_FARMER_API}/orders/payment/paystack`,
-      body: JSON.stringify(payload)
+      url: `${PAYMENT_API}/payment/`,
+      body: payload
     })
   }
 
-  const verifyPaystackPayment = async query => {
+  const verifyPaystackPayment = async reference => {
     return await http.get({
-      url: `${DIGITAL_FARMER_API}/orders/payment/paystack`,
-      query
+      url: `${PAYMENT_API}/payment/verify/${reference}`,
+      reference
+    })
+  }
+
+  const createFarmFromNotification = async id => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/create-farm/${id}`
+    })
+  }
+
+  const verifyTazapayPayment = async params => {
+    return await http.get({
+      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/${params.order}/${params.txn_no}`
     })
   }
 
@@ -343,11 +349,35 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  //escrow
+  const createEscrowAccount = async payload => {
+    return http.post({
+      url: `${PAYMENT_API}/tazapay/client-registration`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const createEscrow = async payload => {
+    return http.post({
+      url: `${PAYMENT_API}/tazapay/create-escrow`,
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const payEscrow = async payload => {
+    return http.post({
+      url: `${PAYMENT_API}/tazapay/pay-escrow`,
+      body: JSON.stringify(payload)
+    })
+  }
+
   return (
     <ApiContext.Provider
       value={{
         signUp,
+        createEscrow,
         loginUser,
+        payEscrow,
         logout,
         eosTask,
         getUser,
@@ -373,7 +403,6 @@ export const ApiContextProvider = ({ children }) => {
         patchPayout,
 
         getActivities,
-        verifyPayment,
         getMyFarmFeeds,
         changePassword,
         initiatePayment,
@@ -383,6 +412,7 @@ export const ApiContextProvider = ({ children }) => {
         createBankDetails,
         updateBankDetails,
         getBankDetails,
+        createEscrowAccount,
         createCooperative,
         deleteBankTransfer,
         downloadTaskReceipt,
@@ -391,8 +421,10 @@ export const ApiContextProvider = ({ children }) => {
         uploadPaymentDetails,
         getUserBankingDetails,
         initiatePaystackPayment,
+        verifyTazapayPayment,
         verifyPaystackPayment,
         getFarmProcessingPayouts,
+        createFarmFromNotification,
 
         //cooperative
         acceptInvite,

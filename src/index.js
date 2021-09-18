@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Notifications } from 'react-push-notification'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Client as Styletron } from 'styletron-engine-atomic'
 import { Provider as StyletronProvider } from 'styletron-react'
@@ -41,6 +42,7 @@ const ThemeApp = () => {
         <StyletronProvider value={engine}>
           <BaseProvider theme={LightTheme}>
             <FacebookPixel />
+            <Notifications />
             <App />
           </BaseProvider>
         </StyletronProvider>

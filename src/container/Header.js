@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Flex, Image, Link } from '@chakra-ui/react'
 import { Link as ReachRouter } from 'react-router-dom'

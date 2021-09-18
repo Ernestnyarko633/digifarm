@@ -348,7 +348,13 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
 
       <AnimateSharedLayout>
         <MotionFlex
-          w={{ base: '100%', md: '80%', '3xl': '60%' }}
+          w={{
+            base: '100%',
+            xl: '78%',
+            '3xl': '75%',
+            '4xl': '70%',
+            '5xl': '55%'
+          }}
           h={{ md: 123 }}
           mx='auto'
           borderWidth={1}
