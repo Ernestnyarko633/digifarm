@@ -229,7 +229,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
           </>
         ) : (
           <>
-            {EOSViewID?.results && ['PROD', 'DEV', 'LOCAL'].includes(ENV) && (
+            {EOSViewID?.results && ['PROD'].includes(ENV) && (
               <Flex
                 w='100%'
                 h='90%'
@@ -242,7 +242,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
                 zoom={9}
               />
             )}
-            {['TEST'].includes(ENV) && (
+            {['DEV', 'LOCAL'].includes(ENV) && (
               <Box
                 display={{ base: 'block' }}
                 w='100%'
