@@ -172,7 +172,7 @@ export default function Farm({
           </Flex>
         ) : (
           <>
-            {EOSViewID && ENV === 'PROD' && (
+            {EOSViewID && ['PROD', 'DEV', 'LOCAL'].includes(ENV) && (
               <Box
                 h='100%'
                 w='100%'
@@ -187,7 +187,7 @@ export default function Farm({
                 reloads={reloads}
               />
             )}
-            {ENV !== 'PROD' && (
+            {['TEST'].includes(ENV) && (
               <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
@@ -211,7 +211,7 @@ export default function Farm({
                 </Box>
               </Box>
             )}
-            {EOSViewID && ENV === 'PROD' && (
+            {EOSViewID && ['PROD', 'DEV', 'LOCAL'].includes(ENV) && (
               <Flex
                 align='center'
                 justify='space-between'

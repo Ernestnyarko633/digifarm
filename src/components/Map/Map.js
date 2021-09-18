@@ -48,7 +48,13 @@ const Map = ({
     height,
     onInit: onInitHandler
   })
-  return <>{viewID && ENV === 'PROD' && <Box {...rest} ref={ref} />}</>
+  return (
+    <>
+      {viewID && ['PROD', 'DEV', 'LOCAL'].includes(ENV) && (
+        <Box {...rest} ref={ref} />
+      )}
+    </>
+  )
 }
 
 Map.propTypes = {
