@@ -28,7 +28,7 @@
   font-weight: 200;
   font-style: normal;
   font-display: swap;
-  src: url("../fonts/CeraProThin.otf") format("truetype");
+  src: url("../fonts/CeraPro-Thin.otf") format("opentype");
 }
 
 @font-face {
@@ -36,7 +36,7 @@
   font-weight: 300;
   font-style: normal;
   font-display: swap;
-  src: url("../fonts/CeraProLight.otf") format("truetype");
+  src: url("../fonts/CeraPro-Light.otf") format("opentype");
 }
 
 @font-face {
@@ -44,7 +44,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("../fonts/CeraProRegular.otf") format("truetype");
+  src: url("../fonts/CeraPro-Regular.otf") format("opentype");
 }
 
 @font-face {
@@ -52,7 +52,7 @@
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-  src: url("../fonts/CeraProMedium.otf") format("truetype");
+  src: url("../fonts/CeraPro-Medium.otf") format("opentype");
 }
 
 @font-face {
@@ -60,7 +60,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url("../fonts/CeraProBold.otf") format("truetype");
+  src: url("../fonts/CeraPro-Bold.otf") format("opentype");
 }
 
 @font-face {
@@ -68,14 +68,9 @@
   font-weight: 900;
   font-style: normal;
   font-display: swap;
-  src: url("../fonts/CeraProBlack.otf") format("truetype");
+  src: url("../fonts/CeraPro-Black.otf") format("opentype");
 }
 
-@font-face {
-  font-family: Smitta-Bali;
-  src: url("../fonts/Smitta-Bali-dafont.ttf") format("truetype");
-  font-weight: normal;
-}
 
 .loading-text {
   display: inline-block;
