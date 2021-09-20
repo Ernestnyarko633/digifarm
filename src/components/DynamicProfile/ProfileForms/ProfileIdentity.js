@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react'
 import {
   Box,
@@ -22,6 +23,7 @@ const ProfileIdentity = () => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
 
+  console.log(user, 'user')
   const MotionBox = motion(Box)
   const [identityFile, setIdentityFile] = useState(false)
   const [addressFile, setAddressFile] = useState(false)
@@ -60,12 +62,18 @@ const ProfileIdentity = () => {
               <Text ml={2}>Identity file uploaded- awaiting verification</Text>
             </Flex>
           ) : disapprovedIdentity ? (
-            <Flex justify='space-between' align='center' color='red'>
-              <Box>
+            <Flex
+              direction={{ base: 'column', md: 'row' }}
+              justify='space-between'
+              align='center'
+              color='red'
+            >
+              <Flex align='center'>
                 <Icon as={GiCancel} />
                 <Text ml={2}>Identity file disapproved</Text>
-              </Box>
+              </Flex>
               <Button
+                mt={{ base: 4, md: 'inherit' }}
                 shadow='sm'
                 rounded='30px'
                 colorScheme='linear'

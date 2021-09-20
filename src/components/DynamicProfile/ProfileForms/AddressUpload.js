@@ -14,7 +14,6 @@ const AddressUpload = () => {
 
   const formik = useFormik({
     initialValues: {
-      proofOfIdentity: {},
       proofOfAddress: {}
     },
     enableReinitialize: true,
