@@ -1,52 +1,43 @@
 import React from 'react'
 import ModalWrapper from './ModalWrapper'
-import {
-  Box,
-  Heading,
-  Flex,
-  Grid,
-  Image,
-  Text,
-  Button,
-  Icon
-} from '@chakra-ui/react'
-import { closeIcon } from 'theme/Icons'
+import { Box, Heading, Flex, Grid, Image, Text, Button } from '@chakra-ui/react'
+// import { closeIcon } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import Doc from 'assets/images/doc.png'
 
-const previewModal = ({ data, setShown }) => (
-  <Box
-    bg='#fff'
-    position='fixed'
-    top='50%'
-    left='50%'
-    transform='translate(-50%, -50%)'
-    m='auto'
-    height='800px'
-    width={{ md: '80%' }}
-    zIndex='9999px'
-    overflow='auto'
-  >
-    <Box pos='relative'>
-      <Box position='absolute' right={0} top={4} pr={{ md: 6 }}>
-        <Icon
-          as={closeIcon}
-          color='cf.green'
-          boxSize={8}
-          onClick={() => {
-            setShown(false)
-          }}
-        />
-      </Box>
-      <iframe
-        src={data?.url + '#toolbar=0'}
-        title={data?.url}
-        width='100%'
-        height='800px'
-      />
-    </Box>
-  </Box>
-)
+// const previewModal = ({ data, setShown }) => (
+//   <Box
+//     bg='#fff'
+//     position='fixed'
+//     top='50%'
+//     left='50%'
+//     transform='translate(-50%, -50%)'
+//     m='auto'
+//     height='800px'
+//     width={{ md: '80%' }}
+//     zIndex='9999px'
+//     overflow='auto'
+//   >
+//     <Box pos='relative'>
+//       <Box position='absolute' right={0} top={4} pr={{ md: 6 }}>
+//         <Icon
+//           as={closeIcon}
+//           color='cf.green'
+//           boxSize={8}
+//           onClick={() => {
+//             setShown(false)
+//           }}
+//         />
+//       </Box>
+//       <iframe
+//         src={data?.url + '#toolbar=0'}
+//         title={data?.url}
+//         width='100%'
+//         height='800px'
+//       />
+//     </Box>
+//   </Box>
+// )
 const TasksDocuments = ({ open, onClose, data }) => {
   const [shown, setShown] = React.useState(false)
   const [pdfs, setPdfs] = React.useState([])
