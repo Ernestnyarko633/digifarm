@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -83,7 +84,15 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
       case 3:
         return <PaymentOption farm={selectedFarm} />
       case 4:
-        return <Confirmation farm={selectedFarm} order={data || order} />
+        return (
+          <Confirmation
+            farm={
+              selectedFarm ||
+              JSON.parse(sessionStorage.getItem('selected_farm'))
+            }
+            order={data || order}
+          />
+        )
       default:
         return <ReloadPage />
     }

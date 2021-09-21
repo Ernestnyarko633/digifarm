@@ -34,6 +34,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
   const {
     handlePayment,
     convertedAmount,
+    setSelectedFarm,
     isSubmitting,
     toastError,
     order,
@@ -113,6 +114,17 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                   py={{ base: 1, md: 7 }}
                   leftIcon={<FiCreditCard size={22} />}
                   onClick={_ => {
+                    if (order?.cooperative) {
+                      sessionStorage.setItem('type', 'cooperative')
+                    } else {
+                      sessionStorage.setItem('type', 'individual')
+                    }
+                    setSelectedFarm(order?.product)
+                    sessionStorage.setItem(
+                      'selected_farm',
+                      JSON.stringify(order?.product)
+                    )
+
                     return handlePayment(
                       order?._id,
                       order?.product?.name,
@@ -124,16 +136,28 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
               )}
 
               <Button
-                filter='grayScale(100%)'
+                // filter='grayScale(100%)'
                 mx={2}
                 btntitle=''
                 isLoading={loading}
-                isDisabled={true}
+                isDisabled={loading}
                 py={{ base: 1, md: 7 }}
                 leftIcon={<Image h={5} src={Tazapay} />}
                 onClick={async _ => {
                   try {
+                    if (order?.cooperative) {
+                      sessionStorage.setItem('type', 'cooperative')
+                    } else {
+                      sessionStorage.setItem('type', 'individual')
+                    }
+
                     setLoading(true)
+                    setSelectedFarm(order?.product)
+                    sessionStorage.setItem(
+                      'selected_farm',
+                      JSON.stringify(order?.product)
+                    )
+
                     if (order?.redirect) {
                       return (window.location.href = order?.redirect)
                     } else {

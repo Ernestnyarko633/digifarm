@@ -111,7 +111,13 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
         return <CooperativePayment farm={selectedFarm} asMember={asMember} />
       case 5:
         return (
-          <Confirmation farm={selectedFarm} order={payment?.data || order} />
+          <Confirmation
+            farm={
+              selectedFarm ||
+              JSON.parse(sessionStorage.getItem('selected_farm'))
+            }
+            order={payment?.data || order}
+          />
         )
       default:
         return <ReloadPage />
