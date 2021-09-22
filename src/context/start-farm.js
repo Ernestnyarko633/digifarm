@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState, useContext, createContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
@@ -385,7 +386,9 @@ export const StartFarmContextProvider = ({ children }) => {
         buyer_id: user.escrowId, // escrow account of the person buying
         order_id: order._id, // order id of the farm
         purpose: 'FARM_PURCHASE', // type
-        txn_description: `Purchase of ${product.name} farm`, // description of transaction
+        txn_description: `Purchase of ${
+          product.name
+        } ${product?.cropVariety?.crop?.name?.toUpperCase()} farm`, // description of transaction
         invoice_amount: order.cost, // cost of transaction
         invoice_currency: 'USD', // currency
 
@@ -485,7 +488,7 @@ export const StartFarmContextProvider = ({ children }) => {
           user,
           store,
           order || { _id: id },
-          order.product
+          selectedFarm || JSON.parse(sessionStorage.getItem('selected_farm'))
         )
       } else {
         const res = await initiatePayment(data)
