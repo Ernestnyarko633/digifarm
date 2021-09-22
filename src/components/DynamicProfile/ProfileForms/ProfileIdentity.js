@@ -169,7 +169,7 @@ const ProfileIdentity = () => {
           ) : approvedAddress ? (
             <Flex align='center' color='cf.green'>
               <Icon as={GiCheckMark} />
-              <Text ml={2}>Identity file successfully uploaded</Text>
+              <Text ml={2}>Address file successfully uploaded</Text>
             </Flex>
           ) : (
             <Button
