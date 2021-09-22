@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/hooks'
@@ -85,6 +86,7 @@ const Dashboard = () => {
         title={`${message} Farmer ${user?.firstName}`}
         text='Get started by farming individually or with a group.'
       />
+
       {isLoading || hasError ? (
         <Box p={16}>
           <FetchCard

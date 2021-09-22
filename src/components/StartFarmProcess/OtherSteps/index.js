@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -83,7 +84,15 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
       case 3:
         return <PaymentOption farm={selectedFarm} />
       case 4:
-        return <Confirmation farm={selectedFarm} order={data || order} />
+        return (
+          <Confirmation
+            farm={
+              selectedFarm ||
+              JSON.parse(sessionStorage.getItem('selected_farm'))
+            }
+            order={data || order}
+          />
+        )
       default:
         return <ReloadPage />
     }
@@ -348,7 +357,13 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
 
       <AnimateSharedLayout>
         <MotionFlex
-          w={{ base: '100%', md: '80%', '3xl': '60%' }}
+          w={{
+            base: '100%',
+            xl: '78%',
+            '3xl': '75%',
+            '4xl': '70%',
+            '5xl': '55%'
+          }}
           h={{ md: 123 }}
           mx='auto'
           borderWidth={1}

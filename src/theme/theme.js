@@ -16,7 +16,7 @@ export const theme = extendTheme({
     global: () => ({
       body: {
         fontSize: 'md',
-        fontFamily: '"CeraGR", sans-serif',
+        fontFamily: '"CeraPro", sans-serif',
         lineHeight: 'tall',
         fontWeight: 400,
         bg: 'gray.50'
@@ -25,12 +25,12 @@ export const theme = extendTheme({
   },
   breakpoints,
   fonts: {
-    heading: '"CeraGR" ,sans-serif',
-    display: '"CeraGR" ,sans-serif',
-    medium: '"CeraGR" ,sans-serif',
-    light: '"CeraGR" ,sans-serif',
-    thin: '"CeraGR" ,sans-serif',
-    body: '"CeraGR", sans-serif',
+    heading: '"CeraPro" ,sans-serif',
+    display: '"CeraPro" ,sans-serif',
+    medium: '"CeraPro" ,sans-serif',
+    light: '"CeraPro" ,sans-serif',
+    thin: '"CeraPro" ,sans-serif',
+    body: '"CeraPro", sans-serif',
     num: '"Source Sans Pro", sans-serif',
     signature: '"Smitta-Bali", cursive'
   },

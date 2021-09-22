@@ -10,6 +10,9 @@ import {
   Collapse,
   Icon
 } from '@chakra-ui/react'
+import Visa from 'assets/images/visa.png'
+import WeChat from 'assets/images/wechat.png'
+import MasterCard from 'assets/images/mastercard.png'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import BankDetails from './BankDetails'
 import { FaCheckCircle } from 'react-icons/fa'
@@ -22,15 +25,20 @@ const PayOption = ({
   theme,
   notice,
   onClick,
+  support,
   selected,
   dropDown,
   extraCharge,
-  description
+  LeftPicture,
+  RightPicture,
+  description,
+  filter
 }) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
     <Flex
+      filter={filter}
       my={4}
       py={4}
       px={8}
@@ -76,12 +84,18 @@ const PayOption = ({
           <Image
             h='100%'
             mr={2}
-            src={require(`../../assets/images/${leftImage}.png`).default}
+            src={
+              LeftPicture ||
+              require(`../../assets/images/${leftImage}.png`).default
+            }
             alt='Card Image'
           />
           <Image
             h='100%'
-            src={require(`../../assets/images/${rightImage}.png`).default}
+            src={
+              RightPicture ||
+              require(`../../assets/images/${rightImage}.png`).default
+            }
             alt='Card Image'
           />
         </Flex>
@@ -100,6 +114,52 @@ const PayOption = ({
           </Text>
         </Box>
       </Flex>
+      {support && (
+        <Box w='100%'>
+          <Flex
+            mb={2}
+            w='100%'
+            py={1}
+            px={2}
+            align='center'
+            rounded='20px'
+            h={8}
+            borderWidth={1}
+            borderColor='gray.100'
+            bg='gray.100'
+            justify='center'
+            color='cf.green'
+            direction='row'
+          >
+            {[WeChat, MasterCard, Visa].map((item, index) => (
+              <Image key={item} h={index === 0 ? 8 : 4} mx={3} src={item} />
+            ))}
+          </Flex>
+          <Flex
+            w='100%'
+            py={1}
+            px={2}
+            align='center'
+            rounded='20px'
+            h={8}
+            borderWidth={1}
+            borderColor='gray.100'
+            bg='gray.100'
+            justify='center'
+            color='cf.green'
+            direction='row'
+          >
+            {[require('../../assets/images/transaction.png').default].map(
+              (item, index) => (
+                <Image key={item} h={5} mx={3} src={item} />
+              )
+            )}
+            <Text fontWeight={500} color='black'>
+              Bank Transfer
+            </Text>
+          </Flex>
+        </Box>
+      )}
       {dropDown && (
         <>
           <Flex
@@ -130,16 +190,20 @@ const PayOption = ({
 }
 
 PayOption.propTypes = {
+  filter: PropTypes.any,
   dropDown: PropTypes.bool,
   extraCharge: PropTypes.any,
   theme: PropTypes.any.isRequired,
   height: PropTypes.any,
+  support: PropTypes.bool,
   leftImage: PropTypes.string.isRequired,
   rightImage: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   notice: PropTypes.string.isRequired,
+  LeftPicture: PropTypes.string,
+  RightPicture: PropTypes.string,
   description: PropTypes.string.isRequired
 }
 
