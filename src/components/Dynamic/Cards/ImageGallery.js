@@ -55,7 +55,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
     setSelectedImage(array[0])
   }, [farmfeeds, activityName])
   return (
-    <Box>
+    <Box overflowX='hidden'>
       <Flex align='center' justify='space-between'>
         <Text fontWeight={800}>{title}</Text>
         <Box>
