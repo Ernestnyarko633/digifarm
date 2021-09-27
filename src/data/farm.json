@@ -23,6 +23,6 @@
       "Schedule farm visits",
       "Receive continuous farm updates"
     ],
-    "disabled": true
+    "disabled": false
   }
 ]
