@@ -347,6 +347,7 @@ export const StartFarmContextProvider = ({ children }) => {
   const handleTazapayPayment = async (user, store, order, product) => {
     try {
       //check if user has account
+      let id = null
       if (!user?.escrowId) {
         const payload = {
           email: user.email, // user email
@@ -365,6 +366,8 @@ export const StartFarmContextProvider = ({ children }) => {
             escrowId: response.data.account_id
           })
 
+          id = response.data.account_id
+
           // hopefully it should be successful unless someone did something behind the scence in that case we should have a successful update
           if (res.data) {
             store({ user: res.data })
@@ -381,9 +384,9 @@ export const StartFarmContextProvider = ({ children }) => {
       // initiate escrow payment
 
       const escrow_payload = {
-        initiated_by: user.escrowId, // escrow account of user who started this whole mess
+        initiated_by: user.escrowId || id, // escrow account of user who started this whole mess
         seller_id: ESCROW_SELLER_ID, // escrow account of the person selling
-        buyer_id: user.escrowId, // escrow account of the person buying
+        buyer_id: user.escrowId || id, // escrow account of the person buying
         order_id: order._id, // order id of the farm
         purpose: 'FARM_PURCHASE', // type
         txn_description: `Purchase of ${
@@ -461,7 +464,7 @@ export const StartFarmContextProvider = ({ children }) => {
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
       const data = {
-        amount: convertedAmount,
+        amount: convertedAmount || cost,
         order_id: id || order._id,
         purpose: 'FARM_PURCHASE',
         name: name || selectedFarm.name,
