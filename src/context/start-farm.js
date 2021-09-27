@@ -475,8 +475,6 @@ export const StartFarmContextProvider = ({ children }) => {
         app: 'DIGITAL_FARMER'
       }
 
-      console.log(data, 'hello')
-
       if (paymentOption === Constants.paymentOptions[0]) {
         // Paystack
 
