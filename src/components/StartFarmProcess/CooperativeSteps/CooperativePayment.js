@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Heading, Grid, GridItem, Divider } from '@chakra-ui/react'
+import Tazapay from 'assets/images/taz.svg'
 import { motion } from 'framer-motion'
 
 import useStartFarm from 'context/start-farm'
@@ -24,8 +25,15 @@ const MotionGrid = motion(Grid)
 const CooperativePayment = ({ farm, asMember }) => {
   const [reload, setReload] = React.useState(0)
   const { getCooperativeById } = useApi()
-  const { order, paymentOption, coopImg, setPaymentOption, cooperative } =
-    useStartFarm()
+  const {
+    order,
+    paymentOption,
+    coopImg,
+    setPaymentOption,
+    cooperative,
+    convertedAmount,
+    PAYSTACK_LIMIT
+  } = useStartFarm()
 
   const { data, isLoading, error } = useFetch(
     asMember?.cooperative?._id || cooperative?._id
@@ -185,17 +193,37 @@ const CooperativePayment = ({ farm, asMember }) => {
             <Heading as='h6' fontSize='xl' ml={{ md: 5 }}>
               Choose your payment Option
             </Heading>
+            {convertedAmount < PAYSTACK_LIMIT && (
+              <PayOption
+                leftImage='mastercard'
+                rightImage='visa'
+                height={4}
+                title='Card'
+                theme='For card payments'
+                description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
+                notice='All transactions are charged a transaction fee of'
+                extraCharge='1.95%'
+                selected={paymentOption === Constants.paymentOptions[0]}
+                onClick={() => setPaymentOption(Constants.paymentOptions[0])}
+              />
+            )}
             <PayOption
-              leftImage='mastercard'
-              rightImage='visa'
+              support
+              // filter='grayScale(100%)'
+              leftImage='tazapay'
+              rightImage='zpay'
+              LeftPicture={Tazapay}
               height={4}
-              title='Card'
-              theme='For card payments'
+              title='Escrow'
+              theme='For escrow payments'
               description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
-              notice='All transactions are charged a transaction fee of'
-              extraCharge='1.95%'
-              selected={paymentOption === Constants.paymentOptions[0]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[0])}
+              selected={paymentOption === Constants.paymentOptions[1]}
+              onClick={e => {
+                return (
+                  // e.preventDefault() &&
+                  setPaymentOption(Constants.paymentOptions[1])
+                )
+              }}
             />
             <PayOption
               leftImage='bank'
@@ -205,8 +233,8 @@ const CooperativePayment = ({ farm, asMember }) => {
               theme='For bank payment'
               description='Please note that bank transfer will take at most 2 weeks before money is transferred'
               notice='Contact support for any help'
-              selected={paymentOption === Constants.paymentOptions[1]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[1])}
+              selected={paymentOption === Constants.paymentOptions[2]}
+              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
               dropDown
             />
           </Flex>
