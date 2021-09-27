@@ -31,15 +31,15 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
 
   const [items, setItems] = React.useState([])
   const handleClick = (value, array, index, indexFunc, selectedItemFunc) => {
-    const comparant =
+    const subject =
       index + value === 0 ||
       index + value > array.length - 1 ||
       index + value < 0
         ? 0
         : index + value
 
-    indexFunc(comparant)
-    selectedItemFunc(array[comparant])
+    indexFunc(subject)
+    selectedItemFunc(array[subject])
   }
 
   const YoutubeSlide = ({ url }) => (
