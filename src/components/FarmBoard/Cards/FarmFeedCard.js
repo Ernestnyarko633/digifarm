@@ -22,6 +22,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [show, setShow] = React.useState(false)
+  const [titles, setTitles] = React.useState([])
   const handleToggle = () => setShow(!show)
 
   const [selectedItem, setSelectedItem] = React.useState({})
@@ -77,6 +78,19 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
       setSelectedItem(array[0])
     }
   }, [content, status])
+
+  React.useEffect(() => {
+    let titles = []
+    if (content) {
+      const process = () =>
+        content?.data?.map(item => titles.push(item?.task?.title))
+      process()
+      if (titles?.length) {
+        titles = Array.from(new Set(titles))
+        setTitles(titles)
+      }
+    }
+  }, [content])
 
   const Detail = () => {
     return (
@@ -173,10 +187,6 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                 minW={10}
                 minH={10}
                 rounded='100%'
-                // _hover={{
-                //   background: 'cf.green',
-                //   color: 'white'
-                // }}
                 color='white'
                 mr={2}
                 outlineColor='none'
@@ -203,10 +213,6 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                 bg='white'
                 minW={10}
                 minH={10}
-                // _hover={{
-                //   background: 'cf.green',
-                //   color: 'white'
-                // }}
                 rounded='100%'
                 color='cf.green'
                 outlineColor='black'
@@ -253,29 +259,32 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                 onClick={handleToggle}
                 cursor='pointer'
               >
-                {
-                  // content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')
-                  content?.data?.map((body, i) => {
-                    return (
-                      <Fragment key={mapKey(i)}>
-                        <Heading
-                          as='h6'
-                          mt={6}
-                          fontSize={{ base: 'sm', md: 'xl' }}
-                        >
-                          {body?.task?.title}
-                        </Heading>
-                        <Text
-                          color='gray.500'
-                          mt={3}
-                          fontSize={{ base: 'sm', md: 'md' }}
-                        >
-                          {body?.feed?.summary?.replace(/<[^>]*>/g, '')}
-                        </Text>
-                      </Fragment>
-                    )
-                  })
-                }
+                {titles?.map((title, i) => {
+                  return (
+                    <Fragment key={mapKey(i)}>
+                      <Heading
+                        as='h6'
+                        mt={6}
+                        fontSize={{ base: 'sm', md: 'xl' }}
+                      >
+                        {title}
+                      </Heading>
+                      {content?.data?.map(
+                        (body, i) =>
+                          title === body?.task?.title && (
+                            <Text
+                              key={mapKey(i)}
+                              color='gray.500'
+                              mt={3}
+                              fontSize={{ base: 'sm', md: 'md' }}
+                            >
+                              {body?.feed?.summary?.replace(/<[^>]*>/g, '')}
+                            </Text>
+                          )
+                      )}
+                    </Fragment>
+                  )
+                })}
               </Collapse>
               <Box as='button' onClick={handleToggle}>
                 <Text color='cf.green' py={{ base: 1 }}>
