@@ -15,7 +15,7 @@ import useRollover from './rollover'
 import useComponent from './component'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
-const dpo = Constants.paymentOptions[0]
+const dpo = Constants.paymentOptions[2]
 
 const StartFarmContext = createContext({})
 
