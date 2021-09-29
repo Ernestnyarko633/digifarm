@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -28,7 +29,7 @@ import useComponent from 'context/component'
 
 import Contract from './Contract'
 
-import { getFormattedDate } from 'helpers/misc'
+import { getformattedDate } from 'helpers/misc'
 import ReloadPage from 'components/Reload'
 import { Safety } from '../../../theme/Icons'
 
@@ -83,7 +84,15 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
       case 3:
         return <PaymentOption farm={selectedFarm} />
       case 4:
-        return <Confirmation farm={selectedFarm} order={data || order} />
+        return (
+          <Confirmation
+            farm={
+              selectedFarm ||
+              JSON.parse(sessionStorage.getItem('selected_farm'))
+            }
+            order={data || order}
+          />
+        )
       default:
         return <ReloadPage />
     }
@@ -142,10 +151,10 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
           mx='auto'
           w='100%'
           bg='cf-dark.400'
-          px={{ md: 20 }}
-          overflowX='hidden'
           justify='space-between'
           pt={{ base: 2, md: 8 }}
+          px={{ md: 20 }}
+          overflowX='hidden'
           direction={{ base: 'column', md: 'row' }}
           align={{ base: 'center', md: 'initial' }}
         >
@@ -204,16 +213,17 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
       )}
 
       <Flex
-        mb={4}
-        mx='auto'
         align='center'
         justify='space-between'
+        w={{ base: '100%', md: '80%', '3xl': '60%' }}
+        mx='auto'
         mt={{ base: 5, md: 12 }}
-        w={{ md: '80%', '3xl': 138 }}
+        mb={4}
+        px={{ base: 2, md: 3 }}
       >
         <Text fontSize={{ base: 'xs', md: 'sm' }} color='red.600' w='50%'>
           Farm starts :{' '}
-          {getFormattedDate(
+          {getformattedDate(
             selectedFarm?.startDate || data?.product?.startDate,
             {
               weekday: 'short',
@@ -323,17 +333,18 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
             isExternal
             rel='noreferrer'
             _hover={{ textDecor: 'none' }}
+            mr={3}
           >
             <Flex
               py={1}
-              bg='cf.200'
               align='center'
               rounded='30px'
-              borderWidth={1}
-              color='cf.green'
               w={{ md: '11rem' }}
               px={{ base: 2, md: 4 }}
+              borderWidth={1}
               borderColor='cf.green'
+              bg='cf.200'
+              color='cf.green'
             >
               <Icon as={Safety} />
               <Text fontSize='sm' ml={2}>
@@ -346,14 +357,20 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
 
       <AnimateSharedLayout>
         <MotionFlex
-          mx='auto'
-          rounded='md'
+          w={{
+            base: '100%',
+            xl: '78%',
+            '3xl': '75%',
+            '4xl': '70%',
+            '5xl': '55%'
+          }}
           h={{ md: 123 }}
+          mx='auto'
           borderWidth={1}
+          borderColor='gray.200'
+          rounded='md'
           bgColor='white'
           overflow='hidden'
-          borderColor='gray.200'
-          w={{ md: '80%', '3xl': 138 }}
         >
           {getSteps(otherStep)}
         </MotionFlex>

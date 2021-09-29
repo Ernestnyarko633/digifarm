@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   Avatar,
   Box,
@@ -19,9 +20,11 @@ import { saveAs } from 'file-saver'
 import useApi from 'context/api'
 
 const OrderCard = ({ order, onOpen }) => {
+  const { convertToGhanaCedis, setConvertedAmount, toastError } = useStartFarm()
   const { PENDING } = Status
   const { setOrder } = useStartFarm()
   const [loading, setLoading] = React.useState(false)
+  const [loadingOrder, setLoadingOrder] = React.useState(false)
   const toast = useToast()
   const { downloadFile } = useApi()
 
@@ -132,12 +135,23 @@ const OrderCard = ({ order, onOpen }) => {
           <Button
             btntitle='Complete order'
             rounded='30px'
+            isDisabled={loadingOrder}
+            isLoading={loadingOrder}
             w='100%'
             h={{ base: 12, md: 16 }}
             fontSize={{ md: 'lg' }}
-            onClick={() => {
-              setOrder(order)
-              onOpen()
+            onClick={async () => {
+              try {
+                setLoadingOrder(true)
+                setOrder(order)
+                const cediAmt = await convertToGhanaCedis(order)
+                setConvertedAmount(cediAmt)
+                onOpen()
+              } catch (error) {
+                toastError(error)
+              } finally {
+                setLoadingOrder(false)
+              }
             }}
           />
         </Box>

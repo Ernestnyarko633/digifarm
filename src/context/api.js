@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
@@ -31,6 +32,12 @@ export const ApiContextProvider = ({ children }) => {
   const patchUser = async (id, body) => {
     return await http.patch({ url: `${AUTH_API}/users/${id}`, body })
   }
+  // const patchUserIdentity = async payload => {
+  //   return await http.patch({
+  //     url: `${AUTH_API}/users/profile-identity`,
+  //     body: JSON.stringify(payload)
+  //   })
+  // }
 
   const changePassword = async payload => {
     return await http.patch({
@@ -100,6 +107,12 @@ export const ApiContextProvider = ({ children }) => {
     return await http.get({
       url: `${PAYMENT_API}/payment/verify/${reference}`,
       reference
+    })
+  }
+
+  const createFarmFromNotification = async id => {
+    return await http.patch({
+      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/create-farm/${id}`
     })
   }
 
@@ -379,6 +392,7 @@ export const ApiContextProvider = ({ children }) => {
         eosSearch,
         patchOrder,
         patchUser,
+        // patchUserIdentity,
         getMyFarm,
         createFarm,
         getReceipt,
@@ -417,6 +431,7 @@ export const ApiContextProvider = ({ children }) => {
         verifyTazapayPayment,
         verifyPaystackPayment,
         getFarmProcessingPayouts,
+        createFarmFromNotification,
 
         //cooperative
         acceptInvite,

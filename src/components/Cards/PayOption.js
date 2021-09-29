@@ -31,12 +31,14 @@ const PayOption = ({
   extraCharge,
   LeftPicture,
   RightPicture,
-  description
+  description,
+  filter
 }) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
     <Flex
+      filter={filter}
       my={4}
       py={4}
       px={8}
@@ -113,24 +115,50 @@ const PayOption = ({
         </Box>
       </Flex>
       {support && (
-        <Flex
-          w='100%'
-          py={1}
-          px={2}
-          align='center'
-          rounded='20px'
-          h={8}
-          borderWidth={1}
-          borderColor='gray.100'
-          bg='gray.100'
-          justify='center'
-          color='cf.green'
-          direction='row'
-        >
-          {[WeChat, MasterCard, Visa].map((item, index) => (
-            <Image key={item} h={index === 0 ? 8 : 4} mx={3} src={item} />
-          ))}
-        </Flex>
+        <Box w='100%'>
+          <Flex
+            mb={2}
+            w='100%'
+            py={1}
+            px={2}
+            align='center'
+            rounded='20px'
+            h={8}
+            borderWidth={1}
+            borderColor='gray.100'
+            bg='gray.100'
+            justify='center'
+            color='cf.green'
+            direction='row'
+          >
+            {[WeChat, MasterCard, Visa].map((item, index) => (
+              <Image key={item} h={index === 0 ? 8 : 4} mx={3} src={item} />
+            ))}
+          </Flex>
+          <Flex
+            w='100%'
+            py={1}
+            px={2}
+            align='center'
+            rounded='20px'
+            h={8}
+            borderWidth={1}
+            borderColor='gray.100'
+            bg='gray.100'
+            justify='center'
+            color='cf.green'
+            direction='row'
+          >
+            {[require('../../assets/images/transaction.png').default].map(
+              (item, index) => (
+                <Image key={item} h={5} mx={3} src={item} />
+              )
+            )}
+            <Text fontWeight={500} color='black'>
+              Bank Transfer
+            </Text>
+          </Flex>
+        </Box>
       )}
       {dropDown && (
         <>
@@ -162,6 +190,7 @@ const PayOption = ({
 }
 
 PayOption.propTypes = {
+  filter: PropTypes.any,
   dropDown: PropTypes.bool,
   extraCharge: PropTypes.any,
   theme: PropTypes.any.isRequired,

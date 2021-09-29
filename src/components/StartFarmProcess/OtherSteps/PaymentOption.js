@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Heading, Grid, GridItem } from '@chakra-ui/react'
@@ -16,10 +17,15 @@ import Tazapay from 'assets/images/taz.svg'
 const MotionGrid = motion(Grid)
 
 const PaymentOption = ({ farm }) => {
-  const { order, currency, exchangeRate, paymentOption, setPaymentOption } =
-    useStartFarm()
-  const { isAuthenticated } = useAuth()
-  const user = isAuthenticated().user
+  const {
+    order,
+    currency,
+    exchangeRate,
+    paymentOption,
+    setPaymentOption,
+    convertedAmount,
+    PAYSTACK_LIMIT
+  } = useStartFarm()
 
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
@@ -53,32 +59,37 @@ const PaymentOption = ({ farm }) => {
             <Heading as='h6' fontSize='xl' ml={{ md: 5 }}>
               Choose your payment Option
             </Heading>
-            {user.escrowId && (
+            {convertedAmount < PAYSTACK_LIMIT && (
               <PayOption
-                support
-                leftImage='tazapay'
-                rightImage='zpay'
-                LeftPicture={Tazapay}
+                leftImage='mastercard'
+                rightImage='visa'
                 height={4}
-                title='Escrow'
-                theme='For escrow payments'
+                title='Card'
+                theme='For card payments'
                 description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
-                selected={paymentOption === Constants.paymentOptions[2]}
-                onClick={() => setPaymentOption(Constants.paymentOptions[2])}
+                notice='All transactions are charged a transaction fee of'
+                extraCharge='1.95%'
+                selected={paymentOption === Constants.paymentOptions[0]}
+                onClick={() => setPaymentOption(Constants.paymentOptions[0])}
               />
             )}
-
             <PayOption
-              leftImage='mastercard'
-              rightImage='visa'
+              support
+              // filter='grayScale(100%)'
+              leftImage='tazapay'
+              rightImage='zpay'
+              LeftPicture={Tazapay}
               height={4}
-              title='Paystack'
-              theme='For card payments'
+              title='Escrow'
+              theme='For escrow payments'
               description='Stated USD prices are converted to Ghana cedis equivalent to the current exchange rate and payments it is processed in.'
-              notice='All transactions are charged a transaction fee of'
-              extraCharge='1.95%'
-              selected={paymentOption === Constants.paymentOptions[0]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[0])}
+              selected={paymentOption === Constants.paymentOptions[1]}
+              onClick={e => {
+                return (
+                  // e.preventDefault() &&
+                  setPaymentOption(Constants.paymentOptions[1])
+                )
+              }}
             />
             <PayOption
               leftImage='bank'
@@ -88,8 +99,8 @@ const PaymentOption = ({ farm }) => {
               theme='For bank payment'
               description='Please note that bank transfer will take at most 2 weeks before money is transferred'
               notice='Contact support for any help'
-              selected={paymentOption === Constants.paymentOptions[1]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[1])}
+              selected={paymentOption === Constants.paymentOptions[2]}
+              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
               dropDown
             />
           </Flex>

@@ -86,6 +86,7 @@ const Dashboard = () => {
         title={`${message} Farmer ${user?.firstName}`}
         text='Get started by farming individually or with a group.'
       />
+
       {isLoading || hasError ? (
         <Box p={16}>
           <FetchCard
