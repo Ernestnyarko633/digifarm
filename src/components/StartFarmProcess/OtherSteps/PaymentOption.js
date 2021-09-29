@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Heading, Grid, GridItem } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 
 import useStartFarm from 'context/start-farm'
-import useAuth from 'context/auth'
 
 import FarmInfo from 'components/Cards/FarmInfo'
 import PayOption from 'components/Cards/PayOption'
