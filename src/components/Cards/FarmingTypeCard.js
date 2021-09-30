@@ -52,13 +52,13 @@ const FarmingTypeCard = ({
           />
         )}
       </Box>
-      <Box pos='absolute' top={1} left={2}>
+      {/* <Box pos='absolute' top={1} left={2}>
         {id === 'cooperative' && (
           <Heading fontSize='2xl' color='cf.green'>
             Coming Soon
           </Heading>
         )}
-      </Box>
+      </Box> */}
       <Box mb={3}>
         <Image w='100%' h={{ base: '100%', sm: 64 }} src={image} />
       </Box>
