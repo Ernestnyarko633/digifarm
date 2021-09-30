@@ -39,7 +39,6 @@ export const StartFarmContextProvider = ({ children }) => {
   const [convertedAmount, setConvertedAmount] = useState(undefined)
   const [acres, setAcres] = useState(0)
   const [order, setOrder] = useState(null)
-  const [reload, setReload] = useState(0)
   const [cycle, setCycle] = useState(1)
   const [text, setText] = useState(null)
   const [step, setStep] = useImmer(0)
@@ -110,8 +109,6 @@ export const StartFarmContextProvider = ({ children }) => {
 
   const toast = useToast()
 
-  const triggerMapReload = () => setReload(prevState => prevState + 1)
-
   function handleNext() {
     setStep(draft => draft + 1)
   }
@@ -160,6 +157,7 @@ export const StartFarmContextProvider = ({ children }) => {
       })
     }
   }
+
   const handleRolloverPayment = async _order => {
     try {
       setSubmitting(true)
@@ -344,6 +342,7 @@ export const StartFarmContextProvider = ({ children }) => {
       setSubmitting(false)
     }
   }
+
   const handleTazapayPayment = async (user, store, order, product) => {
     try {
       //check if user has account
@@ -584,7 +583,6 @@ export const StartFarmContextProvider = ({ children }) => {
         cooperativeName,
         setSelectedFarm,
         setExchangeRate,
-        triggerMapReload,
         cooperativeTypes,
         setPaymentOption,
         coopConfigErrors,
@@ -600,7 +598,6 @@ export const StartFarmContextProvider = ({ children }) => {
         setSelectedCooperativeType
       }}
     >
-      {false && reload}
       {children}
     </StartFarmContext.Provider>
   )

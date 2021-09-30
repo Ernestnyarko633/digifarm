@@ -12,16 +12,7 @@ import { RolloverContextProvider } from 'context/rollover'
 import { SocketContextProvider } from 'context/socket'
 import Router from 'routes/register'
 
-// const tagManagerArgs = {
-//   gtmId: process.env.REACT_APP_GTM
-// }
-
 const App = () => {
-  // const history = useHistory()
-  // React.useEffect(() => {
-  //   TagManager.initialize(tagManagerArgs)
-  // }, [])
-
   function FacebookPixel() {
     React.useEffect(() => {
       import('react-facebook-pixel')
@@ -29,11 +20,6 @@ const App = () => {
         .then(ReactPixel => {
           ReactPixel.init('2143795925947401')
           ReactPixel.pageView()
-
-          // history?.listen(location => {
-          //   ReactPixel.pageView()
-          //   ReactPixel.fbq('track', 'PageView')
-          // })
         })
     })
     return null
@@ -42,10 +28,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <ComponentContextProvider>
-        <ApiContextProvider>
-          <SocketContextProvider>
-            <ExternalContextProvider>
-              <AuthContextProvider>
+        <AuthContextProvider>
+          <ApiContextProvider>
+            <SocketContextProvider>
+              <ExternalContextProvider>
                 <RolloverContextProvider>
                   <StartFarmContextProvider>
                     <ModalContextProvider>
@@ -56,10 +42,10 @@ const App = () => {
                     </ModalContextProvider>
                   </StartFarmContextProvider>
                 </RolloverContextProvider>
-              </AuthContextProvider>
-            </ExternalContextProvider>
-          </SocketContextProvider>
-        </ApiContextProvider>
+              </ExternalContextProvider>
+            </SocketContextProvider>
+          </ApiContextProvider>
+        </AuthContextProvider>
       </ComponentContextProvider>
     </BrowserRouter>
   )

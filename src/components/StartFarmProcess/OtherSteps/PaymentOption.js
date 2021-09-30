@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Heading, Grid, GridItem } from '@chakra-ui/react'
@@ -12,8 +11,6 @@ import PayOption from 'components/Cards/PayOption'
 import Constants from 'constant'
 import Support from 'components/Support'
 import Tazapay from 'assets/images/taz.svg'
-
-// import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionGrid = motion(Grid)
 
