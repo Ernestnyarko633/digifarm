@@ -23,7 +23,6 @@ const ProfileIdentity = () => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
 
-  console.log(user, 'user')
   const MotionBox = motion(Box)
   const [identityFile, setIdentityFile] = useState(false)
   const [addressFile, setAddressFile] = useState(false)
