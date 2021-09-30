@@ -140,13 +140,15 @@ const ProfileIdentity = () => {
           {user?.proofOfAddress?.file && pendingAddress ? (
             <Flex align='center' color='#F6AD55'>
               <Icon as={BiHourglass} />
-              <Text ml={2}>Address file uploaded- awaiting verification</Text>
+              <Text ml={2}>
+                Proof of Address uploaded- awaiting verification
+              </Text>
             </Flex>
           ) : disapprovedAddress ? (
             <Flex justify='space-between' align='center' color='red'>
               <Box>
                 <Icon as={GiCancel} />
-                <Text ml={2}>Address file disapproved</Text>
+                <Text ml={2}>Proof of Address disapproved</Text>
               </Box>
               <Button
                 shadow='sm'
@@ -168,7 +170,7 @@ const ProfileIdentity = () => {
           ) : approvedAddress ? (
             <Flex align='center' color='cf.green'>
               <Icon as={GiCheckMark} />
-              <Text ml={2}>Address file successfully uploaded</Text>
+              <Text ml={2}>Proof of Address successfully uploaded</Text>
             </Flex>
           ) : (
             <Button
