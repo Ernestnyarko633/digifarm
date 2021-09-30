@@ -37,7 +37,7 @@ export const SocketContextProvider = ({ children }) => {
   useWebSocket(
     SOCKET_NOTIFICATION_API,
     null,
-    isAuthenticated()?.user?._id,
+    isAuthenticated()?.user?._id || '',
     notification => {
       addNotification({
         duration: 15000,
