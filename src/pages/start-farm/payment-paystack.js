@@ -17,13 +17,9 @@ const PaymentVerificaiton = ({ history }) => {
   )
 
   React.useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('hello')
     if (data) {
-      // eslint-disable-next-line no-console
-      console.log('hello')
       history.push({
-        pathname: `start-farm/${type}`,
+        pathname: `/start-farm/${type}`,
         state: {
           data: data,
           payment: true,
@@ -46,7 +42,7 @@ const PaymentVerificaiton = ({ history }) => {
       text='Standby as we verify your payment'
     />
   ) : (
-    <div>Helloworld</div>
+    <div />
   )
 }
 
