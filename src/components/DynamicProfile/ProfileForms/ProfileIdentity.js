@@ -56,7 +56,7 @@ const ProfileIdentity = () => {
               (passport or national ID)
             </Box>
           </Text>
-          {pendingIdentity ? (
+          {user?.proofOfIdentity?.file && pendingIdentity ? (
             <Flex align='center' color='#F6AD55'>
               <Icon as={BiHourglass} />
               <Text ml={2}>Identity file uploaded- awaiting verification</Text>
@@ -138,7 +138,7 @@ const ProfileIdentity = () => {
               (any document with residential address)
             </Box>
           </Text>
-          {pendingAddress ? (
+          {user?.proofOfAddress?.file && pendingAddress ? (
             <Flex align='center' color='#F6AD55'>
               <Icon as={BiHourglass} />
               <Text ml={2}>Address file uploaded- awaiting verification</Text>
