@@ -469,15 +469,26 @@ export const StartFarmContextProvider = ({ children }) => {
         name: name || selectedFarm.name,
         transaction_type: paymentOption,
         institution: 'PAYSTACK',
-        redirect: `/start-farm/${type}`,
+        redirect: `/payment-paystack/${order._id}/${type}`,
         type: 'ORDER',
-        app: 'DIGITAL_FARMER'
+        app: 'DIGITAL_FARMER',
+        callback_uri: ['/orders/' + order._id + '/approve-order']
       }
 
       if (paymentOption === Constants.paymentOptions[0]) {
         // Paystack
+        const q = 'USD_GHS'
+        const res = await getExchangeRate({ q })
+        if (!res.data) {
+          throw new Error('Unknown error occurred, try again')
+        }
 
-        const result = await initiatePaystackPayment(data)
+        const cediAmt = data.amount * res.data[q]
+
+        const payload = data
+        payload.amount = parseFloat(cediAmt / 0.9805).toFixed(2) * 1
+
+        const result = await initiatePaystackPayment(payload)
         window.onbeforeunload = null
         if (!result?.data?.authorization_url) {
           throw new Error('Unexpected payment gateway failure')
@@ -508,6 +519,7 @@ export const StartFarmContextProvider = ({ children }) => {
         handleNextStep()
       }
     } catch (error) {
+      console.log(error)
       toastError(error)
     } finally {
       setSubmitting(false)

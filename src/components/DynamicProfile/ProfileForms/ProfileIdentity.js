@@ -23,7 +23,6 @@ const ProfileIdentity = () => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
 
-  console.log(user, 'user')
   const MotionBox = motion(Box)
   const [identityFile, setIdentityFile] = useState(false)
   const [addressFile, setAddressFile] = useState(false)
@@ -56,7 +55,7 @@ const ProfileIdentity = () => {
               (passport or national ID)
             </Box>
           </Text>
-          {pendingIdentity ? (
+          {user?.proofOfIdentity?.file && pendingIdentity ? (
             <Flex align='center' color='#F6AD55'>
               <Icon as={BiHourglass} />
               <Text ml={2}>Identity file uploaded- awaiting verification</Text>
@@ -138,16 +137,18 @@ const ProfileIdentity = () => {
               (any document with residential address)
             </Box>
           </Text>
-          {pendingAddress ? (
+          {user?.proofOfAddress?.file && pendingAddress ? (
             <Flex align='center' color='#F6AD55'>
               <Icon as={BiHourglass} />
-              <Text ml={2}>Address file uploaded- awaiting verification</Text>
+              <Text ml={2}>
+                Proof of Address uploaded- awaiting verification
+              </Text>
             </Flex>
           ) : disapprovedAddress ? (
             <Flex justify='space-between' align='center' color='red'>
               <Box>
                 <Icon as={GiCancel} />
-                <Text ml={2}>Address file disapproved</Text>
+                <Text ml={2}>Proof of Address disapproved</Text>
               </Box>
               <Button
                 shadow='sm'
@@ -169,7 +170,7 @@ const ProfileIdentity = () => {
           ) : approvedAddress ? (
             <Flex align='center' color='cf.green'>
               <Icon as={GiCheckMark} />
-              <Text ml={2}>Address file successfully uploaded</Text>
+              <Text ml={2}>Proof of Address successfully uploaded</Text>
             </Flex>
           ) : (
             <Button
