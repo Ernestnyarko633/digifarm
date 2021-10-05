@@ -12,7 +12,7 @@ import {
 import { BsInfoCircleFill } from 'react-icons/bs'
 import { IoLocation } from 'react-icons/io5'
 
-import { getformattedDate } from 'helpers/misc'
+import { getFormattedDate } from 'helpers/misc'
 import ImageLoader from 'components/ImageLoader'
 
 const AboutFarm = ({ farm }) => {
@@ -80,7 +80,7 @@ const AboutFarm = ({ farm }) => {
           mt={4}
         >
           <Flex align='center' justify='space-between' fontSize='sm'>
-            <Text>Farm starts: {getformattedDate(farm?.startDate)} </Text>
+            <Text>Farm starts: {getFormattedDate(farm?.startDate)} </Text>
             <Text>Farm duration: {farm?.duration} months </Text>
           </Flex>
           <Divider orientation='horizontal' my={4} />

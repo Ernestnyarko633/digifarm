@@ -12,7 +12,7 @@ import {
   Image
 } from '@chakra-ui/react'
 
-import { FirstLettersToUpperCase, getformattedDate } from 'helpers/misc'
+import { FirstLettersToUpperCase, getFormattedDate } from 'helpers/misc'
 import PropTypes from 'prop-types'
 import Details from './Details'
 import { HiPencil } from 'react-icons/all'
@@ -80,7 +80,7 @@ const SideMenu = ({ data, border, bg, ml, click, loading }) => {
         <Text color='red.300' textAlign='center'>
           Farm starts:
           <Text as='span' color='#D0021B' fontWeight='bold' ml={2}>
-            {getformattedDate(data?.product?.startDate)}
+            {getFormattedDate(data?.product?.startDate)}
           </Text>
         </Text>
       </Box>

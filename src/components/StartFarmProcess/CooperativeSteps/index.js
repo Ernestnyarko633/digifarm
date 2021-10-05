@@ -1,7 +1,7 @@
 import React from 'react'
 import Overlay from '../../Loading/Overlay'
 import { Flex, Image, Link, Text, useToast } from '@chakra-ui/react'
-import { getformattedDate, validateEmailAndAcrege } from '../../../helpers/misc'
+import { getFormattedDate, validateEmailAndAcrege } from '../../../helpers/misc'
 import { AnimatePresence, motion } from 'framer-motion'
 import Button from '../../Button'
 import useAuth from '../../../context/auth'
@@ -252,7 +252,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
               d={{ base: 'block', md: 'inline-block' }}
               mt={{ base: -1, md: 0 }}
             >
-              {getformattedDate(
+              {getFormattedDate(
                 selectedFarm?.startDate || data?.product?.startDate,
                 {
                   weekday: 'short',

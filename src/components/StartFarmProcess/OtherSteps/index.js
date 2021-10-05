@@ -29,7 +29,7 @@ import useComponent from 'context/component'
 
 import Contract from './Contract'
 
-import { getformattedDate } from 'helpers/misc'
+import { getFormattedDate } from 'helpers/misc'
 import ReloadPage from 'components/Reload'
 import { Safety } from '../../../theme/Icons'
 
@@ -223,7 +223,7 @@ const OtherSteps = ({ data, rollover, history: { push } }) => {
       >
         <Text fontSize={{ base: 'xs', md: 'sm' }} color='red.600' w='50%'>
           Farm starts :{' '}
-          {getformattedDate(
+          {getFormattedDate(
             selectedFarm?.startDate || data?.product?.startDate,
             {
               weekday: 'short',

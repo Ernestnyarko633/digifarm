@@ -65,11 +65,11 @@ const StartFarm = () => {
               }
               selected={selected.name === item.name}
               onClick={e => {
-                // if (item?.id === 'cooperative') return e?.preventDefault()
+                if (item?.id === 'cooperative') return e?.preventDefault()
                 sessionStorage.setItem('type', item.id)
                 setSelected(item)
               }}
-              // disabled={item.disabled}
+              disabled={item.disabled}
             />
           ))}
         </Flex>
