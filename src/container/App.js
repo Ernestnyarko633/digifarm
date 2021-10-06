@@ -10,7 +10,7 @@ import { ApiContextProvider } from 'context/api'
 import { WalletContextProvider } from 'context/wallet'
 import { RolloverContextProvider } from 'context/rollover'
 import { SocketContextProvider } from 'context/socket'
-import Router from 'routes/register'
+import Router from 'routes/Router'
 
 const App = () => {
   function FacebookPixel() {

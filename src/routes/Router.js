@@ -5,7 +5,7 @@ import Splash from 'components/Loading/Splash'
 
 import Pages from 'pages'
 
-import PrivateRoute from './private'
+import PrivateRoute from './PrivateRoute'
 
 const Router = () => {
   return (

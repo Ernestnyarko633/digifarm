@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Divider, Icon } from '@chakra-ui/react'
 import { Box, Flex, Grid, Heading, Link, Text } from '@chakra-ui/layout'
@@ -9,13 +9,12 @@ import Button from 'components/Button'
 import { Link as ReachRouter } from 'react-router-dom'
 import { HiLocationMarker } from 'react-icons/hi'
 import { FirstLettersToUpperCase } from 'helpers/misc'
-import useFetch from 'hooks/useFetch'
+import { useQuery } from 'react-query'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard/index'
 import useWallet from 'context/wallet'
 
 const WalletCard = ({ acreage, price, farm }) => {
-  const [reload, setReload] = useState(0)
   const { farmExpense } = useWallet()
   const {
     getAllTasks,
@@ -25,65 +24,76 @@ const WalletCard = ({ acreage, price, farm }) => {
     getFarmProcessingPayouts
   } = useApi()
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
-
   const {
     data: myFarmActivities,
     isLoading: myFarmActivitiesIsLoading,
-    error: myFarmActivitiesHasError
-  } = useFetch(
-    `${farm?.order?.product?._id}_activities`,
-    getActivities,
-    reload,
-    {
-      farm: farm?.order?.product?._id
-    }
+    error: myFarmActivitiesHasError,
+    refetch: myFarmActivitiesRefetch
+  } = useQuery(
+    [`${farm?.order?.product?._id}_activities`, farm?.order?.product?._id],
+    () =>
+      farm?.order?.product?._id &&
+      getActivities({
+        farm: farm?.order?.product?._id
+      })
   )
 
   const {
     data: tasks,
     isLoading: tasksIsLoading,
-    error: tasksHasError
-  } = useFetch('tasks', getAllTasks, reload)
+    error: tasksHasError,
+    refetch: tasksRefetch
+  } = useQuery('tasks', () => getAllTasks())
 
   const {
     data: ScheduledTasks,
     isLoading: ScheduledTasksIsLoading,
-    error: ScheduledTasksHasError
-  } = useFetch(
-    `${farm?.order?.product?._id}_scheduled_tasks`,
-    getMyScheduledTasks,
-    reload,
-    {
-      farm: farm?.order?.product?._id
-    }
+    error: ScheduledTasksHasError,
+    refetch: ScheduledTasksRefetch
+  } = useQuery(
+    [`${farm?.order?.product?._id}_scheduled_tasks`, farm?.order?.product?._id],
+    () =>
+      farm?.order?.product?._id &&
+      getMyScheduledTasks({
+        farm: farm?.order?.product?._id
+      })
   )
 
   const {
     data: farmFeeds,
     isLoading: farmFeedsIsLoading,
-    error: farmFeedsHasError
-  } = useFetch(
-    `${farm?.order?.product?._id}_farm_feeds`,
-    farm?.order?.product?._id ? getMyFarmFeeds : null,
-    reload,
-    {
-      farm: farm?.order?.product?._id
-    }
+    error: farmFeedsHasError,
+    refetch: farmFeedsRefetch
+  } = useQuery(
+    [`${farm?.order?.product?._id}_farm_feeds`, farm?.order?.product?._id],
+    () =>
+      farm?.order?.product?._id &&
+      getMyFarmFeeds({
+        farm: farm?.order?.product?._id
+      })
   )
 
   const {
     data: payouts,
     isLoading: payoutsIsLoading,
-    error: payoutsHasErrors
-  } = useFetch(
-    `${farm?._id}_payouts`,
-    farm?._id ? getFarmProcessingPayouts : null,
-    reload,
-    {
-      wallet: farm?._id
-    }
+    error: payoutsHasErrors,
+    refetch: payoutsRefetch
+  } = useQuery(
+    [`${farm?._id}_payouts`, farm?._id],
+    () =>
+      farm?._id &&
+      getFarmProcessingPayouts({
+        wallet: farm?._id
+      })
   )
+
+  const triggerReload = () => {
+    ScheduledTasksHasError && ScheduledTasksRefetch()
+    tasksHasError && tasksRefetch()
+    myFarmActivitiesHasError && myFarmActivitiesRefetch()
+    farmFeedsHasError && farmFeedsRefetch()
+    payoutsHasErrors && payoutsRefetch()
+  }
 
   const loading =
     ScheduledTasksIsLoading ||
@@ -161,9 +171,9 @@ const WalletCard = ({ acreage, price, farm }) => {
               mx='auto'
               reload={() => {
                 ;(!farm?.length ||
-                  !tasks?.length ||
-                  !myFarmActivities?.length ||
-                  !ScheduledTasks?.length) &&
+                  !tasks?.data?.length ||
+                  !myFarmActivities?.data?.length ||
+                  !ScheduledTasks?.data?.length) &&
                   triggerReload()
               }}
               loading={loading}
@@ -176,7 +186,11 @@ const WalletCard = ({ acreage, price, farm }) => {
             <ExpenditureCard
               bg='yellow.light'
               amount={getFormattedMoney(
-                farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                farmExpense(
+                  myFarmActivities?.data,
+                  tasks?.data,
+                  ScheduledTasks?.data
+                )
               )}
               action='spent'
               color='yellow.deep'
@@ -194,23 +208,35 @@ const WalletCard = ({ acreage, price, farm }) => {
             to={{
               pathname: `/wallets/${farm?._id}`,
               state: {
-                processing_payout: payouts?.length > 0 ? true : false,
+                processing_payout: payouts?.data?.length > 0 ? true : false,
                 farm: farm || {},
-                activities: myFarmActivities || [],
-                tasks: tasks || [],
-                farmfeeds: farmFeeds || [],
-                ScheduledTasks: ScheduledTasks || [],
+                activities: myFarmActivities?.data || [],
+                tasks: tasks?.data || [],
+                farmfeeds: farmFeeds?.data || [],
+                ScheduledTasks: ScheduledTasks?.data || [],
                 wallet: getFormattedMoney(farm?.order?.cost || price * acreage),
                 balance:
                   farm?.order?.cost >=
-                  farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                  farmExpense(
+                    myFarmActivities?.data,
+                    tasks?.data,
+                    ScheduledTasks?.data
+                  )
                     ? getFormattedMoney(
                         farm?.order?.cost -
-                          farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                          farmExpense(
+                            myFarmActivities?.data,
+                            tasks?.data,
+                            ScheduledTasks?.data
+                          )
                       )
                     : 0,
                 expense: getFormattedMoney(
-                  farmExpense(myFarmActivities, tasks, ScheduledTasks)
+                  farmExpense(
+                    myFarmActivities?.data,
+                    tasks?.data,
+                    ScheduledTasks?.data
+                  )
                 )
               }
             }}

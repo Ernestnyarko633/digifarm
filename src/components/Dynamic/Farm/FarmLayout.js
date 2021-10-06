@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Grid, GridItem } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import FarmLeftSideBar from '../Container/FarmLeftSideBar'
 import FarmRightSidebar from '../Container/FarmRightSidebar'
 import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
 import useComponent from 'context/component'
+import { useQuery } from 'react-query'
 export default function FarmLayout({
   children,
   digitalFarmerFarm,
@@ -29,22 +30,23 @@ export default function FarmLayout({
 }) {
   const { compState, setCompState } = useComponent()
   const { eosStats } = useApi()
-  const [eosStatsReload, setEosStatsReload] = React.useState(0)
 
-  const triggerEosStatsReload = () => setEosStatsReload(prev => prev + 1)
   // for health card stats
   const {
     data: EOSStatistics,
     isLoading: EOSStatisticsIsLoading,
-    error: EOSStatisticsHasError
-  } = useFetch(
-    eosTask?.task_id ? `${eosTask?.task_id}_stats` : null,
-    eosTask?.task_id ? eosStats : null,
-    eosStatsReload,
-    {
-      task: eosTask?.task_id
-    }
+    error: EOSStatisticsHasError,
+    refetch: EOSStatisticsRefetch
+  } = useQuery(
+    [`${eosTask?.task_id}_stats`, eosTask?.task_id],
+    () =>
+      eosTask?.task_id &&
+      eosStats({
+        task: eosTask?.task_id
+      })
   )
+
+  const triggerEosStatsReload = () => EOSStatisticsRefetch()
   return (
     <Grid
       templateRows={{ md: 'repeat(1 1fr)' }}
@@ -77,7 +79,7 @@ export default function FarmLayout({
           farmfeeds={farmfeeds}
           WeatherForeCasts={WeatherForeCasts}
           ScheduledTasks={ScheduledTasks}
-          eosStats={EOSStatistics}
+          eosStats={EOSStatistics?.data}
           digitalFarmerFarm={digitalFarmerFarm}
           location={location}
           state={compState}

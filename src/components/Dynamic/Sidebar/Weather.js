@@ -1,4 +1,4 @@
-import { Grid, Box } from '@chakra-ui/react'
+import { Grid, Box, Text } from '@chakra-ui/react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Weather as WeatherIcon } from 'theme/Icons'
@@ -27,8 +27,7 @@ export default function Weather({
             text={"Standby as we load your farm's weather forecasts"}
           />
         </Box>
-      ) : (
-        weatherForeCasts?.length &&
+      ) : weatherForeCasts?.length > 0 ? (
         weatherForeCasts?.map(weather => (
           <WeatherCard
             key={weather.Date}
@@ -38,6 +37,10 @@ export default function Weather({
             duration={new Date(weather.Date).toLocaleDateString()}
           />
         ))
+      ) : (
+        <Text color='cf.400' textAlign='center' fontSize='lg'>
+          Weather conditions are currently unavailable
+        </Text>
       )}
     </Grid>
   )

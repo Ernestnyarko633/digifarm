@@ -5,18 +5,20 @@ import EventCard from 'components/Cards/EventCard'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
 import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
 import FetchCard from 'components/FetchCard'
 import CooperativesCard from 'components/Cards/CooperativesCard'
+import { useQuery } from 'react-query'
 
 const RightSidebar = ({ onOpen, setSelectedData }) => {
   const [doc, setDocData] = React.useState(null)
-  const [reload, setReload] = React.useState(0)
   const [loading, setLoading] = React.useState(false)
   const { getCooperatives } = useApi()
-  const triggerReload = () => setReload(prevState => prevState + 1)
 
-  const { data, isLoading, error } = useFetch(null, getCooperatives, reload)
+  const { data, isLoading, error, refetch } = useQuery('cooperatives', () =>
+    getCooperatives()
+  )
+
+  const triggerReload = () => refetch()
 
   const mapKey = index => index
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
@@ -124,7 +126,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
           text='Loading cooperatives'
         />
       ) : (
-        !!data?.length && (
+        !!data?.data?.length && (
           <>
             <Heading
               as='h4'
@@ -144,14 +146,14 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             >
               <Box d={{ base: 'none', md: 'block' }}>
                 <Box>
-                  {data.map(coop => (
+                  {data?.data?.map(coop => (
                     <CooperativesCard coop={coop} key={coop._id} />
                   ))}
                 </Box>
               </Box>
 
               <Box d={{ base: 'block', md: 'none' }} overflowY='scroll'>
-                {data.map(coop => (
+                {data?.data?.map(coop => (
                   <CooperativesCard coop={coop} key={coop._id} />
                 ))}
               </Box>

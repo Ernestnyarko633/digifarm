@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 //import useExternalApi from 'context/external'
-import useFetch from 'hooks/useFetch'
+import { useQuery } from 'react-query'
 import useApi from 'context/api'
 
 const { default: Document } = require('./Farm/Document')
@@ -41,19 +42,6 @@ const DynamicFarm = ({
   const SelectedFarm = components[farm]
   const { eosTask, eosSearch, eosWeather } = useApi()
 
-  //reloads
-  const [eosTaskReload, setEosTaskReload] = React.useState(0)
-  const [eosSearchReload, setEosSearchReload] = React.useState(0)
-  const [eosWeatherReload, setEosWeatherReload] = React.useState(0)
-
-  //trigger Reloads
-  const triggerEosTaskReload = () =>
-    setEosTaskReload(prevState => prevState + 1)
-  const triggerEosSearchReload = () =>
-    setEosSearchReload(prevState => prevState + 1)
-  const triggerEosWeatherReload = () =>
-    setEosWeatherReload(prevState => prevState + 1)
-
   const eosViewIdPayload = {
     fields: ['sceneID', 'cloudCoverage'],
     limit: 1,
@@ -80,15 +68,12 @@ const DynamicFarm = ({
   const {
     data: EOSViewID,
     isLoading: EOSViewIDIsLoading,
-    error: EOSViewIDHasError
-  } = useFetch(
-    `${digitalFarmerFarm?._id}_eos_view_id`,
-    digitalFarmerFarm?._id ? eosSearch : null,
-    eosTaskReload,
-    eosViewIdPayload,
-    'sentinel2'
+    error: EOSViewIDHasError,
+    refetch: EOSViewIDRefetch
+  } = useQuery(
+    [`${digitalFarmerFarm?._id}_eos_view_id`, digitalFarmerFarm?._id],
+    () => digitalFarmerFarm?._id && eosSearch(eosViewIdPayload, 'sentinel2')
   )
-
   // payload of health eos task_id creation
   const EOSTaskForStats = {
     type: 'mt_stats',
@@ -109,12 +94,14 @@ const DynamicFarm = ({
   const {
     data: _eosTask,
     isLoading: eosTaskIsLoading,
-    error: eosTaskHasError
-  } = useFetch(
-    `${digitalFarmerFarm?._id}_eos_task_stats_for_health`,
-    digitalFarmerFarm?._id ? eosTask : null,
-    eosSearchReload,
-    EOSTaskForStats
+    error: eosTaskHasError,
+    refetch: _eosTaskRefetch
+  } = useQuery(
+    [
+      `${digitalFarmerFarm?._id}_eos_task_stats_for_health`,
+      digitalFarmerFarm?._id
+    ],
+    () => digitalFarmerFarm?._id && eosTask(EOSTaskForStats)
   )
 
   const weatherForeCastsPayload = {
@@ -127,19 +114,17 @@ const DynamicFarm = ({
   const {
     data: WeatherForeCasts,
     isLoading: WeatherForeCastsIsLoading,
-    error: WeatherForeCastsHasError
-  } = useFetch(
-    `${digitalFarmerFarm?._id}_eos_weather_forecasts`,
-    digitalFarmerFarm?._id ? eosWeather : null,
-    eosWeatherReload,
-    weatherForeCastsPayload
+    error: WeatherForeCastsHasError,
+    refetch: WeatherForeCastsRefetch
+  } = useQuery(
+    [`${digitalFarmerFarm?._id}_eos_weather_forecasts`, digitalFarmerFarm?._id],
+    () => digitalFarmerFarm?._id && eosWeather(weatherForeCastsPayload)
   )
 
-  // const isLoading =
-  //   EOSViewIDIsLoading || WeatherForeCastsIsLoading || eosTaskIsLoading
-
-  // const eosHasError =
-  //   EOSViewIDHasError || WeatherForeCastsHasError || eosTaskHasError
+  //trigger Reloads
+  const triggerEosTaskReload = () => _eosTaskRefetch()
+  const triggerEosSearchReload = () => EOSViewIDRefetch()
+  const triggerEosWeatherReload = () => WeatherForeCastsRefetch()
 
   return (
     <React.Fragment>
@@ -165,9 +150,9 @@ const DynamicFarm = ({
           digitalFarmerFarm={digitalFarmerFarm}
           farmfeeds={farmfeeds}
           activities={activities}
-          eosTask={_eosTask}
-          EOSViewID={EOSViewID}
-          WeatherForeCasts={WeatherForeCasts}
+          eosTask={_eosTask?.data}
+          EOSViewID={EOSViewID?.data}
+          WeatherForeCasts={WeatherForeCasts?.data}
           ScheduledTasks={ScheduledTasks}
           location={location}
           tasks={tasks}

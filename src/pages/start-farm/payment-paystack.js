@@ -3,32 +3,29 @@ import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
+import { useQuery } from 'react-query'
 
 const PaymentVerificaiton = ({ history }) => {
   const { id, type } = useParams()
   const { getMyOrder } = useApi()
 
-  const { data, isLoading, error } = useFetch(
-    `Order_${id}`,
-    getMyOrder,
-    false,
-    id
+  const { data, isLoading, error } = useQuery(
+    [`Order_${id}`, id],
+    () => id && getMyOrder(id)
   )
 
   React.useEffect(() => {
-    if (data) {
+    if (data?.data) {
       history.push({
         pathname: `/start-farm/${type}`,
         state: {
-          data: data,
+          data: data?.data,
           payment: true,
           step: type === 'individual' ? 4 : 5
         }
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  }, [data?.data, history, type])
 
   return isLoading || error ? (
     <FetchCard

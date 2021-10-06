@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Flex, Heading, Link, useToast } from '@chakra-ui/react'
 import { Link as ReachRouter } from 'react-router-dom'
 
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
 import PropTypes from 'prop-types'
-import useFetch from 'hooks/useFetch'
 import { isMobile } from 'helpers/misc'
 import Tabs from 'components/Tabs/Tabs'
 import FetchCard from 'components/FetchCard'
@@ -13,6 +12,7 @@ import FarmDetails from './FarmDetails'
 import { Button } from '../../index'
 import useRollover from 'context/rollover'
 import useComponent from 'context/component'
+import { useQuery } from 'react-query'
 
 const CropSelection = ({ rollover }) => {
   const { handleModalClick } = useComponent()
@@ -20,28 +20,24 @@ const CropSelection = ({ rollover }) => {
   const gridRef = React.useRef(false)
   const { handleNext, selectedCooperativeType, selectedFarm } = useStartFarm()
   const { total } = useRollover()
-  const [reload, setReload] = useState(0)
 
   const { getCropCategories } = useApi()
   const toast = useToast()
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
-
-  const { data, isLoading, error } = useFetch(
-    'categories',
-    getCropCategories,
-    reload
+  const { data, isLoading, error, refetch } = useQuery('categories', () =>
+    getCropCategories()
   )
+  const triggerReload = () => refetch()
 
   let categories = []
 
-  if (data) {
-    categories = [{ _id: 'defualt', title: 'Top-selling farms' }, ...data]
+  if (data?.data) {
+    categories = [{ _id: 'defualt', title: 'Top-selling farms' }, ...data?.data]
   }
 
   const type = sessionStorage.getItem('type')
 
-  const cooperativebool =
+  const cooperativeBoolean =
     type === 'cooperative'
       ? selectedCooperativeType?.minAcre > selectedFarm?.acreage
       : false
@@ -54,7 +50,7 @@ const CropSelection = ({ rollover }) => {
   useEffect(() => {
     let mounted = true
 
-    if (mounted && !isLoading && cooperativebool && gridRef) {
+    if (mounted && !isLoading && cooperativeBoolean && gridRef) {
       toast({
         title: 'Insufficient farm acres',
         description: `The number of acres available on the platform for the entire  ${selectedFarm?.cropVariety?.crop?.name} Farm is insufficient to meet the  ${selectedCooperativeType?.name}'s basic requirements`,
@@ -87,7 +83,7 @@ const CropSelection = ({ rollover }) => {
     selectedCooperativeType?.name,
     selectedFarm?.cropVariety?.crop?.name,
     toast,
-    cooperativebool,
+    cooperativeBoolean,
     rollover,
     total,
     selectedFarm?.pricePerAcre
@@ -95,7 +91,7 @@ const CropSelection = ({ rollover }) => {
 
   let disableButton =
     (rollover && total < selectedFarm?.pricePerAcre) ||
-    cooperativebool ||
+    cooperativeBoolean ||
     acreage ||
     !selectedFarm ||
     isLoading ||

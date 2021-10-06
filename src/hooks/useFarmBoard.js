@@ -3,9 +3,9 @@ import React from 'react'
 import getConfig from 'utils/configs'
 import Prismic from 'prismic-javascript'
 import useApi from 'context/api'
-import useFetch from './useFetch'
 import { latestDateForFarmFeed } from 'helpers/misc'
 import useComponent from 'context/component'
+import { useQuery } from 'react-query'
 
 const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
@@ -147,25 +147,26 @@ export const useFeeds = () => {
   const [feeds, setFeeds] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
-  const [reload, setReload] = React.useState(0)
   const { getMyFarmFeeds, getMyFarms } = useApi()
 
-  const triggerReload = () => setReload(r => r + 1)
   const {
     data: farms,
     isLoading: farmsIsLoading,
-    error: farmsHasError
-  } = useFetch('my_farms', getMyFarms, reload)
+    error: farmsHasError,
+    refetch
+  } = useQuery('my_farms', () => getMyFarms())
+
+  const triggerReload = React.useCallback(() => refetch(), [refetch])
 
   React.useEffect(() => {
     let mounted = true
 
-    if (mounted && farms && feeds === null) {
+    if (mounted && farms?.data && feeds === null) {
       const fetchData = async () => {
         try {
           setLoading(true)
 
-          const feedPromises = farms.map(async farm => {
+          const feedPromises = farms?.data?.map(async farm => {
             const response = await getMyFarmFeeds({
               farm: farm?.order?.product?._id
             })
@@ -198,7 +199,7 @@ export const useFeeds = () => {
       row && !error && !feeds?.length && triggerReload()
     }
     return () => (mounted = false)
-  }, [farms, getMyFarmFeeds, feeds, error])
+  }, [farms?.data, getMyFarmFeeds, feeds, error, triggerReload])
 
   return {
     loading: farmsIsLoading || loading,

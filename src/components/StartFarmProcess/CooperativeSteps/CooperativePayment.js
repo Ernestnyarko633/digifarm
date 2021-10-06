@@ -15,15 +15,13 @@ import { Text } from '@chakra-ui/layout'
 import CropItemInfo from './CropItemInfo'
 import { QuestionIcon } from '@chakra-ui/icons'
 import { FirstLettersToUpperCase, getFormattedMoney } from 'helpers/misc'
-import useFetch from 'hooks/useFetch'
+import { useQuery } from 'react-query'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
-// import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionGrid = motion(Grid)
 
 const CooperativePayment = ({ farm, asMember }) => {
-  const [reload, setReload] = React.useState(0)
   const { getCooperativeById } = useApi()
   const {
     order,
@@ -35,19 +33,16 @@ const CooperativePayment = ({ farm, asMember }) => {
     PAYSTACK_LIMIT
   } = useStartFarm()
 
-  const { data, isLoading, error } = useFetch(
-    asMember?.cooperative?._id || cooperative?._id
-      ? `welcome_to_coop_${asMember?.cooperative?._id || cooperative?._id}`
-      : null,
-    asMember?.cooperative?._id || cooperative?._id ? getCooperativeById : null,
-    asMember?.cooperative?._id || cooperative?._id ? reload : null,
-    asMember?.cooperative?._id || cooperative?._id
-      ? asMember?.cooperative?._id || cooperative?._id
-      : null
+  const { data, isLoading, error, refetch } = useQuery(
+    [
+      `welcome_to_coop_${asMember?.cooperative?._id || cooperative?._id}`,
+      asMember?.cooperative?._id || cooperative?._id
+    ],
+    (asMember?.cooperative?._id || cooperative?._id) &&
+      getCooperativeById(asMember?.cooperative?._id || cooperative?._id)
   )
 
-  const triggerReload = () => setReload(p => p + 1)
-
+  const triggerReload = () => refetch()
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem overflowY='hidden'>
@@ -77,8 +72,8 @@ const CooperativePayment = ({ farm, asMember }) => {
                   ) : (
                     <Text mt={-1} fontSize='sm' color='gray.500'>
                       created by{' '}
-                      {data?.users[0]?.info?.firstName +
-                        data?.users[0]?.info?.lastName}
+                      {data?.data?.users[0]?.info?.firstName +
+                        data?.data?.users[0]?.info?.lastName}
                     </Text>
                   )}
                 </Box>

@@ -17,7 +17,6 @@ import PropTypes from 'prop-types'
 
 import FetchCard from 'components/FetchCard'
 import cooperative_avatar from 'assets/images/cooperative_avatar.png'
-import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import Header from 'container/Header'
 import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfile'
@@ -25,20 +24,18 @@ import { Button } from 'components'
 import { Link as ReachRouter } from 'react-router-dom'
 import { FirstLettersToUpperCase } from 'helpers/misc'
 import useStartFarm from 'context/start-farm'
+import { useQuery } from 'react-query'
 
 const Cooperative = ({ location: { state } }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  const [reload, setReload] = useState(0)
   const { setSelectedFarm, setStep, setOtherStep, setSelectedCooperativeType } =
     useStartFarm()
 
   const { getCooperativeById } = useApi()
-  const { data, isLoading, error } = useFetch(
-    null,
-    getCooperativeById,
-    reload,
-    state?.data?.coop?._id
+  const { data, isLoading, error, refetch } = useQuery(
+    [`cooperative_${state?.data?.coop?._id}`, state?.data?.coop?._id],
+    () => state?.data?.coop?._id && getCooperativeById(state?.data?.coop?._id)
   )
 
   document.title = `Welcome to ${data?.name} Cooperative`
@@ -87,7 +84,7 @@ const Cooperative = ({ location: { state } }) => {
     setSelectedCooperativeType
   ])
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
+  const triggerReload = () => refetch()
 
   const date = () => {
     return new Date(data?.product?.startDate).toLocaleDateString('en-GB')

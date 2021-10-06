@@ -17,7 +17,6 @@ import {
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import { motion } from 'framer-motion'
-import useFetch from 'hooks/useFetch'
 import useExternal from 'context/external'
 import useStartFarm from 'context/start-farm'
 import EmptyMap from 'assets/images/map404.png'
@@ -36,6 +35,7 @@ import Map from 'components/Map/Map'
 import { dateIntervals } from 'helpers/misc'
 import useApi from 'context/api'
 import getConfig from 'utils/configs'
+import { useQuery } from 'react-query'
 // import { Scrollbars } from 'react-custom-scrollbars-2'
 
 // const options = ['Yes', 'No']
@@ -49,10 +49,8 @@ const ChooseAcreage = ({ farm, rollover }) => {
   const [isLoading, setLoading] = React.useState(false)
   const [location, setLocation] = React.useState([])
   const [center, setCenter] = React.useState([])
-  const [reload, setReload] = React.useState(0)
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
-  const triggerMapReload = () => setReload(prevState => prevState + 1)
 
   const {
     cycle,
@@ -138,14 +136,14 @@ const ChooseAcreage = ({ farm, rollover }) => {
   const {
     data: EOSViewID,
     isLoading: EOSViewIDIsLoading,
-    error: EOSViewIDHasError
-  } = useFetch(
+    error: EOSViewIDHasError,
+    refetch
+  } = useQuery(
     null,
-    farm?._id && location.length > 0 ? eosSearch : null,
-    reload,
-    eosViewIdPayload,
-    'sentinel2'
+    farm?._id && location.length > 0 && eosSearch(eosViewIdPayload, 'sentinel2')
   )
+
+  const triggerMapReload = () => refetch()
 
   React.useEffect(() => {
     if (currency.id !== 'US') {
@@ -186,7 +184,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
       <GridItem w='100%' h='100%'>
         {loading || error ? (
           <>
-            {!EOSViewID?.results && (
+            {!EOSViewID?.data?.results && (
               <Box
                 display={{ base: 'block' }}
                 w='100%'
@@ -229,12 +227,12 @@ const ChooseAcreage = ({ farm, rollover }) => {
           </>
         ) : (
           <>
-            {EOSViewID?.results && ['PROD'].includes(ENV) && (
+            {EOSViewID?.data?.results && ['PROD'].includes(ENV) && (
               <Flex
                 w='100%'
                 h='90%'
                 as={Map}
-                viewID={EOSViewID?.results[0]?.view_id}
+                viewID={EOSViewID?.data?.results[0]?.view_id}
                 loading={loading}
                 error={error}
                 band={null}

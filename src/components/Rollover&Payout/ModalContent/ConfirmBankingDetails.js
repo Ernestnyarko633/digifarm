@@ -1,6 +1,5 @@
 import React from 'react'
 import useAuth from 'context/auth'
-import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import CustomSelect from 'components/Form/CustomSelect'
 import { BankDetailsSchema } from 'helpers/validation'
@@ -14,7 +13,7 @@ import {
   Text,
   Grid
 } from '@chakra-ui/react'
-
+import { useQuery } from 'react-query'
 import { Formik } from 'formik'
 import FormInput from 'components/Form/FormInput'
 import Button from 'components/Button'
@@ -39,43 +38,40 @@ const ConfirmBankingDetails = () => {
     useApi()
 
   const [check, setCheck] = React.useState(false)
-  const [reload, setReload] = React.useState(0)
 
   const { user } = isAuthenticated()
   const toast = useToast()
 
-  const { data, isLoading, error } = useFetch(
+  const { data, isLoading, error, refetch } = useQuery(
     null,
-    user?._id ? getUserBankingDetails : null,
-    reload,
-    { user: user?._id }
+    () => user?._id && getUserBankingDetails({ user: user?._id })
   )
 
   const triggerReload = () => {
-    return setReload(prevState => prevState + 1)
+    return refetch()
   }
 
   const initialValues = {
-    bankName: data?.bankName || '',
-    bankBranch: data?.bankBranch || '',
-    branchCountry: data?.branchCountry || '',
-    currency: data?.currency || '',
-    swiftCode: data?.swiftCode || '',
-    accountName: data?.accountName || '',
-    accountNumber: data?.accountNumber || '',
-    branchAddress: data?.branchAddress || '',
-    iban: data?.iban || '',
-    sortCode: data?.sortCode || '',
-    homeAddress: data?.homeAddress || ''
+    bankName: data?.data?.bankName || '',
+    bankBranch: data?.data?.bankBranch || '',
+    branchCountry: data?.data?.branchCountry || '',
+    currency: data?.data?.currency || '',
+    swiftCode: data?.data?.swiftCode || '',
+    accountName: data?.data?.accountName || '',
+    accountNumber: data?.data?.accountNumber || '',
+    branchAddress: data?.data?.branchAddress || '',
+    iban: data?.data?.iban || '',
+    sortCode: data?.data?.sortCode || '',
+    homeAddress: data?.data?.homeAddress || ''
   }
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       setError(null)
       let res
-      if (data._id) {
+      if (data?.data._id) {
         let updatedValue = objDiff(values, user)
-        res = await updateBankDetails(data._id, updatedValue)
+        res = await updateBankDetails(data?.data._id, updatedValue)
       } else {
         res = await createBankDetails({
           ...values,
@@ -140,7 +136,7 @@ const ConfirmBankingDetails = () => {
                   justify='center'
                   mx='auto'
                   reload={() => {
-                    !data && triggerReload()
+                    !data?.data && triggerReload()
                   }}
                   loading={isLoading || loading}
                   error={error || confirmError}

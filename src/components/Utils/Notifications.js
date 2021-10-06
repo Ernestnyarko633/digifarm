@@ -52,7 +52,7 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
       try {
         await createFarmFromNotification(id)
       } catch (error) {
-        console.log(error)
+        console.log(false && error)
       }
     }
 
