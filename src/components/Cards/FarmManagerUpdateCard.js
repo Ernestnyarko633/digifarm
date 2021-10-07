@@ -5,7 +5,6 @@ import { Box, Text, Heading } from '@chakra-ui/react'
 const FarmManagerUpdateCard = ({ update }) => {
   return (
     <Box
-      my={4}
       px={3}
       py={5}
       rounded='xl'

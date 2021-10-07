@@ -1,7 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Grid, Heading } from '@chakra-ui/react'
+import {
+  Box,
+  Grid,
+  Heading,
+  Text,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel
+} from '@chakra-ui/react'
 import EventCard from 'components/Cards/EventCard'
 import Prismic from 'prismic-javascript'
 import getConfig from 'utils/configs'
@@ -20,6 +30,8 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
   const [reload, setReload] = React.useState(0)
   const [loading, setLoading] = React.useState(false)
   const { getCooperatives } = useApi()
+  const { myFarms } = useFarmData()
+
   const triggerReload = () => setReload(prevState => prevState + 1)
 
   const { data, isLoading, error } = useFetch(null, getCooperatives, reload)
@@ -30,10 +42,6 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
   const Client = Prismic.client(PRISMIC_API, {
     accessToken: PRISMIC_ACCESS_TOKEN
   })
-
-  const { myFarms } = useFarmData()
-  // eslint-disable-next-line no-console
-  console.log('farms', myFarms)
 
   React.useEffect(() => {
     let mounted = true
@@ -74,21 +82,23 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
     return () => (mounted = false)
   }, [Client, announcements, managerUpdates])
 
-  // eslint-disable-next-line no-console
-  console.log(announcements, 'announcements')
-  // eslint-disable-next-line no-console
-  console.log(managerUpdates, 'managerUpdates')
-
-  // const farmUpdates = managerUpdates?.filter(
-  //   ({ update }) =>
-  //     !myFarms?.some(
-  //       ({ farm }) =>
-  //         farm?.order?.product?._id === update?.data?.farm_id[0]?.text
-  //     )
-  // )
-
-  // // eslint-disable-next-line no-console
-  // console.log('farmUpdates', farmUpdates)
+  // filtering farm manager updates to get updates for farms bought by digital farmer;
+  const farmUpdates =
+    managerUpdates
+      ?.filter(update => {
+        const x = myFarms?.find(
+          farm => farm?.order?.product?._id === update?.data?.farm_id[0]?.text
+        )
+        if (x) {
+          return update
+        }
+        return null
+      })
+      .sort(
+        (a, b) =>
+          new Date(b.first_publication_date) -
+          new Date(a.first_publication_date)
+      ) || []
 
   return (
     <Box
@@ -103,7 +113,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
       pb={{ base: 24, md: 0 }}
       w={{ md: '22%', xl: '22%' }}
     >
-      {loading ? (
+      {/* {loading ? (
         <FetchCard
           direction='column'
           align='center'
@@ -118,7 +128,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         />
       ) : (
         <>
-          {managerUpdates ? (
+          {farmUpdates ? (
             <>
               <Heading
                 as='h4'
@@ -137,7 +147,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                 my={2}
                 h={{ base: '20%', xl: '30%' }}
               >
-                {managerUpdates?.map((update, i) => (
+                {farmUpdates?.map((update, i) => (
                   <FarmManagerUpdateCard key={mapKey(i)} update={update} />
                 ))}
               </Box>
@@ -193,10 +203,146 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                 />
               ))}
             </Grid> */}
-          </>
-        )}
-      </Box>
+      {/* </> */}
+      {/* )} */}
+      {/* </Box> */}
+      <Box>
+        <Tabs>
+          <TabList borderBottomWidth={1} mx='auto'>
+            <Tab _selected={{ color: 'cf.400' }} mx='auto'>
+              <Heading
+                as='h4'
+                textTransform='uppercase'
+                fontSize={{ base: 'lg', md: '1xl' }}
+                fontWeight={700}
+                borderBottomColor='gray.300'
+                pb={2}
+              >
+                Manager's Update
+              </Heading>
+            </Tab>
 
+            <Tab _selected={{ color: 'cf.400' }} mx='auto'>
+              <Heading
+                as='h4'
+                textTransform='uppercase'
+                fontSize={{ base: 'lg', md: '1xl' }}
+                fontWeight={700}
+                borderBottomColor='gray.300'
+                pb={2}
+              >
+                Events
+              </Heading>
+            </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Box my={2}>
+                {loading ? (
+                  <FetchCard
+                    direction='column'
+                    align='center'
+                    justify='center'
+                    mx='auto'
+                    w={{ xl: 24 }}
+                    h={{ xl: 80 }}
+                    reload={null}
+                    loading={loading}
+                    error={null}
+                    text='Loading farm manager`s updates'
+                  />
+                ) : (
+                  <>
+                    {farmUpdates?.length > 0 ? (
+                      <Grid
+                        // h={{ base: '20%', xl: '45%' }}
+                        overflowY='scroll'
+                        h={{ base: 80, md: 90 }}
+                        gap={4}
+                        mt={4}
+                        mb={4}
+                        px={2}
+                      >
+                        {farmUpdates?.map((update, i) => (
+                          <FarmManagerUpdateCard
+                            key={mapKey(i)}
+                            update={update}
+                          />
+                        ))}
+                      </Grid>
+                    ) : (
+                      <Box w='40%' m='auto'>
+                        <Text
+                          as='h4'
+                          py='auto'
+                          align='center'
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          fontWeight='bold'
+                          pb={2}
+                        >
+                          There's currently no update.
+                        </Text>
+                      </Box>
+                    )}
+                  </>
+                )}
+              </Box>
+            </TabPanel>
+            <TabPanel>
+              <Box h={{ base: 80, md: 90 }} px={2} my={2}>
+                {loading ? (
+                  <FetchCard
+                    direction='column'
+                    align='center'
+                    justify='center'
+                    mx='auto'
+                    w={{ xl: 24 }}
+                    h={{ xl: 80 }}
+                    reload={null}
+                    loading={loading}
+                    error={null}
+                    text='Loading events'
+                  />
+                ) : (
+                  <>
+                    {announcements?.length > 0 ? (
+                      <Grid
+                        // h={{ base: '20%', xl: '45%' }}
+                        overflowY='scroll'
+                        gap={4}
+                        mt={4}
+                        mb={4}
+                      >
+                        {announcements?.map((event, i) => (
+                          <EventCard
+                            key={mapKey(i)}
+                            onOpen={onOpen}
+                            setSelectedData={setSelectedData}
+                            event={event}
+                          />
+                        ))}
+                      </Grid>
+                    ) : (
+                      <Box w='40%' m='auto'>
+                        <Text
+                          as='h4'
+                          py='auto'
+                          align='center'
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          fontWeight='bold'
+                          pb={2}
+                        >
+                          There are currently no upcoming events.
+                        </Text>
+                      </Box>
+                    )}
+                  </>
+                )}
+              </Box>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
       {isLoading || error ? (
         <FetchCard
           m='auto'
@@ -226,15 +372,14 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             </Heading>
             <Box
               overflowY='scroll'
+              d={{ base: 'block', md: 'block' }}
               my={{ base: 3, xl: 2 }}
-              h={{ base: '20%', xl: '40%' }}
+              h={{ base: 80, md: 90 }}
               px={2}
             >
-              <Box d={{ base: 'block', md: 'block' }}>
-                {data.map(coop => (
-                  <CooperativesCard coop={coop} key={coop._id} />
-                ))}
-              </Box>
+              {data.map((coop, i) => (
+                <CooperativesCard coop={coop} key={mapKey(i)} />
+              ))}
             </Box>
           </>
         )

@@ -12,6 +12,8 @@ const WeatherCard = ({
   farmFeedsHasError,
   reloads
 }) => {
+  // eslint-disable-next-line no-console
+  console.log('farmfeeds', farmfeeds)
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
       {farmFeedsIsLoading || farmFeedsHasError ? (
