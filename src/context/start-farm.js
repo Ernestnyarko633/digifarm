@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState, useContext, createContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useImmer } from 'use-immer'
 import { useToast } from '@chakra-ui/react'
 import { getCode } from 'country-list'
+import { useQueryClient } from 'react-query'
 import getConfig from 'utils/configs'
 
 import useApi from './api'
@@ -12,8 +12,6 @@ import useAuth from './auth'
 import useExternal from './external'
 
 import Constants from 'constant'
-import useRollover from './rollover'
-import useComponent from './component'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
 const dpo = Constants.paymentOptions[0]
@@ -21,7 +19,7 @@ const dpo = Constants.paymentOptions[0]
 const StartFarmContext = createContext({})
 
 export const StartFarmContextProvider = ({ children }) => {
-  const { handleModalClick, onClose } = useComponent()
+  const queryClient = useQueryClient()
   const [paymentOption, setPaymentOption] = useState(dpo)
   const [wantCycle, setWantCycle] = React.useState('No')
   const [selectedFarm, setSelectedFarm] = useState(
@@ -62,17 +60,13 @@ export const StartFarmContextProvider = ({ children }) => {
     createEscrow,
     patchOrder,
     patchUser,
-    createCooperative,
-    patchWallet,
-    verifyWallet
+    createCooperative
   } = useApi()
 
   // const PAYSTACK_LIMIT = 1e96
   const PAYSTACK_LIMIT = 30000
 
   const { ESCROW_SELLER_ID } = getConfig()
-
-  const { selectedWallets, onCloseSecond } = useRollover()
 
   useEffect(() => {
     let mounted = true
@@ -158,81 +152,7 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const handleRolloverPayment = async _order => {
-    try {
-      setSubmitting(true)
-      let tempCost = order?.cost || _order?.cost
-      setText("Processing payment, please don't reload/refresh page")
-      const data = {
-        amount: _order?.cost || order?.cost,
-        order_id: _order?._id || order?._id,
-        purpose: 'FARM_PURCHASE',
-        transaction_type: 'WALLET'
-      }
-      const res = await initiatePayment(data)
-
-      if (res.data.status === 'VERIFIED') {
-        const walletsPromises = selectedWallets.map(async wallet => {
-          if (tempCost !== 0) {
-            let temp = tempCost
-            const response = await patchWallet(wallet?.id, {
-              wallet:
-                temp > wallet?.amount || temp === wallet?.amount
-                  ? 0
-                  : wallet?.amount > temp
-                  ? wallet?.amount - temp
-                  : 0
-            })
-            if (response.data) {
-              tempCost =
-                tempCost > wallet?.amount || tempCost === wallet?.amount
-                  ? tempCost - wallet?.amount
-                  : 0
-              return response.data
-            }
-            return []
-          }
-        })
-        await Promise.all(walletsPromises)
-
-        const updatedOrder = await patchOrder(res?.data?.order_id?.$oid, {
-          payment: res?.data?._id?.$oid,
-          status: 'PAID'
-        })
-
-        setOrder(updatedOrder?.data)
-
-        await verifyWallet({
-          type: 'ROLLOVER',
-          order_id: order?._id || _order?._id,
-          cost: order?.cost || _order?.cost
-        })
-
-        toast({
-          duration: 9000,
-          isClosable: true,
-          status: 'success',
-          position: 'top-right',
-          title: 'Order created.',
-          description: 'Farm created successfully'
-        })
-
-        sessionStorage.removeItem('my_farms')
-        sessionStorage.removeItem('my_orders')
-
-        handleNextStep()
-        handleNextStep()
-        onCloseSecond()
-        onClose()
-      }
-    } catch (error) {
-      toastError(error)
-    } finally {
-      setSubmitting(false)
-    }
-  }
-
-  const convertToGhanaCedis = async order => {
+  const convertToGhanaCedis = async object => {
     try {
       setSubmitting(true)
       const q = 'USD_GHS'
@@ -242,7 +162,7 @@ export const StartFarmContextProvider = ({ children }) => {
         throw new Error('Unknown error occurred, try again')
       }
 
-      const cediAmt = order.cost * excRes.data[q]
+      const cediAmt = object.cost * excRes.data[q]
       return parseFloat(cediAmt / 0.9805).toFixed(2) * 1
     } catch (error) {
       toastError(error)
@@ -251,19 +171,15 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const handleCreateOrder = async (
-    cooperative,
-    cooperativeUserAcreage,
-    rollover
-  ) => {
+  const handleCreateOrder = async (_cooperative, cooperativeUserAcreage) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
-      const calculateCost = (acreage, pricePerAcre, discount) => {
+      const calculateCost = (acres, pricePerAcre, discount) => {
         let cost = 0
         let price = 0
         price = pricePerAcre - pricePerAcre * discount
-        cost = price * acreage
+        cost = price * acres
         return cost
       }
 
@@ -288,8 +204,8 @@ export const StartFarmContextProvider = ({ children }) => {
             100
         }
       }
-      if (cooperative?._id) {
-        data.cooperative = cooperative._id
+      if (_cooperative?._id) {
+        data.cooperative = _cooperative._id
 
         data.cost = calculateCost(
           cooperativeUserAcreage || acreage,
@@ -323,19 +239,9 @@ export const StartFarmContextProvider = ({ children }) => {
       if (cediAmt >= PAYSTACK_LIMIT)
         setPaymentOption(Constants.paymentOptions[1])
 
-      if (rollover) {
-        sessionStorage.removeItem('my_orders')
-        handleModalClick('rollover', {
-          wallet_id: sessionStorage.getItem('wallet'),
-          inRollover: true,
-          showButton: true,
-          order: res.data
-        })
-      } else {
-        sessionStorage.removeItem('my_farms')
-        sessionStorage.removeItem('my_orders')
-        handleNextStep()
-      }
+      queryClient.invalidateQueries('my_farms')
+      queryClient.invalidateQueries('my_orders')
+      handleNextStep()
     } catch (error) {
       toastError(error)
     } finally {
@@ -343,16 +249,16 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const handleTazapayPayment = async (user, store, order, product) => {
+  const handleTazapayPayment = async (_user, _store, _order, product) => {
     try {
       //check if user has account
       let id = null
-      if (!user?.escrowId) {
+      if (!_user?.escrowId) {
         const payload = {
-          email: user.email, // user email
-          first_name: user.firstName, // user firstname
-          last_name: user.lastName, // user lastName
-          country: getCode(user.address.country).toUpperCase(), // get the country of the human being and get the ISO code for it transform it to Upper Case letters
+          email: _user.email, // user email
+          first_name: _user.firstName, // user firstname
+          last_name: _user.lastName, // user lastName
+          country: getCode(_user.address.country).toUpperCase(), // get the country of the human being and get the ISO code for it transform it to Upper Case letters
           ind_bus_type: 'Individual' // Individual
         }
 
@@ -361,7 +267,7 @@ export const StartFarmContextProvider = ({ children }) => {
         // if successful
         if (response.data) {
           // patch the user with new information account id
-          const res = await patchUser(user?._id, {
+          const res = await patchUser(_user?._id, {
             escrowId: response.data.account_id
           })
 
@@ -369,7 +275,7 @@ export const StartFarmContextProvider = ({ children }) => {
 
           // hopefully it should be successful unless someone did something behind the scence in that case we should have a successful update
           if (res.data) {
-            store({ user: res.data })
+            _store({ user: res.data })
           } else {
             // else throw this unable to patch
             throw new Error('Unable to update user account details')
@@ -383,15 +289,15 @@ export const StartFarmContextProvider = ({ children }) => {
       // initiate escrow payment
 
       const escrow_payload = {
-        initiated_by: user.escrowId || id, // escrow account of user who started this whole mess
+        initiated_by: _user.escrowId || id, // escrow account of user who started this whole mess
         seller_id: ESCROW_SELLER_ID, // escrow account of the person selling
-        buyer_id: user.escrowId || id, // escrow account of the person buying
-        order_id: order._id, // order id of the farm
+        buyer_id: _user.escrowId || id, // escrow account of the person buying
+        order_id: _order._id, // _order id of the farm
         purpose: 'FARM_PURCHASE', // type
         txn_description: `Purchase of ${
           product.name
         } ${product?.cropVariety?.crop?.name?.toUpperCase()} farm`, // description of transaction
-        invoice_amount: order.cost, // cost of transaction
+        invoice_amount: _order.cost, // cost of transaction
         invoice_currency: 'USD', // currency
 
         // must always be false
@@ -409,15 +315,15 @@ export const StartFarmContextProvider = ({ children }) => {
       if (create_escrow_response.data) {
         const payload = {
           txn_no: create_escrow_response.data.txn_no,
-          complete_url: `${window.location.origin}/tazapay?order=${order._id}&txn_no=${create_escrow_response.data.txn_no}`,
-          error_url: `${window.location.origin}/tazapay?order=${order._id}&txn_no=${create_escrow_response.data.txn_no}&error=true`
+          complete_url: `${window.location.origin}/tazapay?order=${_order._id}&txn_no=${create_escrow_response.data.txn_no}`,
+          error_url: `${window.location.origin}/tazapay?order=${_order._id}&txn_no=${create_escrow_response.data.txn_no}&error=true`
         }
 
         const response = await payEscrow(payload)
         window.onbeforeunload = null
 
         if (response.data.redirect_url) {
-          const res = await patchOrder(order._id, {
+          const res = await patchOrder(_order._id, {
             redirect: response.data.redirect_url
           })
           if (res.data) {
@@ -477,18 +383,8 @@ export const StartFarmContextProvider = ({ children }) => {
 
       if (paymentOption === Constants.paymentOptions[0]) {
         // Paystack
-        const q = 'USD_GHS'
-        const res = await getExchangeRate({ q })
-        if (!res.data) {
-          throw new Error('Unknown error occurred, try again')
-        }
 
-        const cediAmt = data.amount * res.data[q]
-
-        const payload = data
-        payload.amount = parseFloat(cediAmt / 0.9805).toFixed(2) * 1
-
-        const result = await initiatePaystackPayment(payload)
+        const result = await initiatePaystackPayment(data)
         window.onbeforeunload = null
         if (!result?.data?.authorization_url) {
           throw new Error('Unexpected payment gateway failure')
@@ -519,7 +415,6 @@ export const StartFarmContextProvider = ({ children }) => {
         handleNextStep()
       }
     } catch (error) {
-      console.log(error)
       toastError(error)
     } finally {
       setSubmitting(false)
@@ -592,7 +487,6 @@ export const StartFarmContextProvider = ({ children }) => {
         setCoopConfigErrors,
         convertToGhanaCedis,
         handleTazapayPayment,
-        handleRolloverPayment,
         selectedCooperativeType,
         handleCreateCooperative,
         setSelectedCooperativeType

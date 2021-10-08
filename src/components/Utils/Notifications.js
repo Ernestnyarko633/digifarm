@@ -9,12 +9,12 @@ import { ANNOUNCEMENT, NEWS, WEEKLYVIDEOS } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import NotificationItem from '../Notifications/NotificationItem'
 import { FaReceipt } from 'react-icons/all'
-import useApi from 'context/api'
 
 const MotionBox = motion(Box)
 
 const Notifications = ({ notifications, loading, mutation, userMutation }) => {
-  const { createFarmFromNotification } = useApi()
+  console.log(notifications, 'Notifications')
+
   const renderNotificationIcons = value => {
     switch (value) {
       case 'news':
@@ -45,35 +45,6 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
     }
   }
 
-  React.useEffect(() => {
-    let mounted = true
-
-    const createFarm = async id => {
-      try {
-        await createFarmFromNotification(id)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    const verifiedEscrows = notifications?.filter(
-      item => item.message.entity === 'ESCROW_PAYMENT'
-    )
-
-    if (mounted && verifiedEscrows?.length) {
-      if (verifiedEscrows?.length) {
-        const process = () =>
-          verifiedEscrows?.map(
-            async item =>
-              item?.message?.order_id &&
-              (await createFarm(item?.message?.order_id))
-          )
-        process()
-      }
-    }
-
-    return () => (mounted = false)
-  }, [createFarmFromNotification, notifications])
   const getNotified = (value, item, active) => {
     switch (value) {
       case 'GENERIC':
@@ -88,30 +59,7 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
           />
         )
       case 'ORDER':
-        return (
-          <NotificationItem
-            item={item}
-            mutation={mutation}
-            R
-            userMutation={userMutation}
-            renderNotificationIcons={renderNotificationIcons}
-            //toFarmBoard={toFarmBoard}
-            toFarmBoard={null}
-            active={active}
-          />
-        )
       case 'PAYMENT':
-        return (
-          <NotificationItem
-            item={item}
-            mutation={mutation}
-            userMutation={userMutation}
-            renderNotificationIcons={renderNotificationIcons}
-            //toFarmBoard={toFarmBoard}
-            toFarmBoard={null}
-            active={active}
-          />
-        )
       case 'ESCROW_PAYMENT':
         return (
           <NotificationItem
@@ -119,22 +67,11 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
             mutation={mutation}
             userMutation={userMutation}
             renderNotificationIcons={renderNotificationIcons}
-            //toFarmBoard={toFarmBoard}
             toFarmBoard={null}
             active={active}
           />
         )
       case 'farm':
-        return (
-          <NotificationItem
-            item={item}
-            mutation={mutation}
-            userMutation={userMutation}
-            renderNotificationIcons={renderNotificationIcons}
-            toFarmBoard={null}
-            active={active}
-          />
-        )
       default:
         return null
     }

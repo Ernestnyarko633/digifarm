@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Grid, GridItem, Heading } from '@chakra-ui/react'
 import Button from 'components/Button'
@@ -6,22 +6,30 @@ import useApi from 'context/api'
 import useStartFarm from 'context/start-farm'
 import { Link as ReachRouter } from 'react-router-dom'
 // import { Scrollbars } from "react-custom-scrollbars-2";
-import useFetch from 'hooks/useFetch'
 
 import CropSelectionCard from 'components/Cards/CropSelectionCard'
 import FetchCard from 'components/FetchCard'
 import AboutFarm from './AboutFarm'
+import { useQuery } from 'react-query'
 
 const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
   const { selectedFarm, setSelectedFarm, setStep } = useStartFarm()
   const { getFarms } = useApi()
 
-  const [reload, setReload] = useState(0)
+  const { data, isLoading, error, refetch } = useQuery('farms', () =>
+    getFarms(query)
+  )
+  useEffect(() => {
+    let mounted = true
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
+    if (mounted && data?.data) {
+      sessionStorage.setItem('farms', JSON.stringify(data?.data))
+    }
 
-  const { data, isLoading, error } = useFetch(null, getFarms, reload, query)
-  sessionStorage.setItem('farms', JSON.stringify(data))
+    return () => (mounted = false)
+  }, [data?.data])
+
+  const triggerReload = () => refetch()
 
   const type = sessionStorage.getItem('type')
 
@@ -35,10 +43,10 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
 
   useEffect(() => {
     let mounted = true
-    if (mounted && data) {
-      if (data.length) {
-        setSelectedFarm(data[0])
-        sessionStorage.setItem('selected_farm', JSON.stringify(data[0]))
+    if (mounted && data?.data) {
+      if (data?.data?.length) {
+        setSelectedFarm(data?.data[0])
+        sessionStorage.setItem('selected_farm', JSON.stringify(data?.data[0]))
       }
 
       if (catName) {
@@ -46,7 +54,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
       }
     }
     return () => (mounted = false)
-  }, [data, catName, setSelectedFarm])
+  }, [data?.data, catName, setSelectedFarm])
 
   return isLoading || error ? (
     <FetchCard
@@ -61,7 +69,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
       loading={isLoading}
       reload={triggerReload}
     />
-  ) : data?.filter(f => f.status === 1)?.length > 0 ? (
+  ) : data?.data?.filter(f => f.status === 1)?.length > 0 ? (
     <Grid
       ref={gridRef}
       templateColumns={{ base: '100%', md: '40% 55%' }}
@@ -85,7 +93,7 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
         borderBottomWidth={{ base: 1, md: 0 }}
         borderBottomColor='gray.200'
       >
-        {data
+        {data?.data
           ?.filter(f => f.status === 1)
           ?.map(farm => (
             <CropSelectionCard

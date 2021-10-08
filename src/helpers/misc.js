@@ -194,7 +194,7 @@ export const isDateG8Today = date => {
   return today > start
 }
 
-export const objDiff = (object, base) => {
+export const objDiff = (obj, ba) => {
   function changes(object, base) {
     return _.transform(object, (result, value, key) => {
       if (!_.isEqual(value, base[key])) {
@@ -205,7 +205,7 @@ export const objDiff = (object, base) => {
       }
     })
   }
-  return changes(object, base)
+  return changes(obj, ba)
 }
 
 export const urlify = text => {
@@ -268,4 +268,17 @@ export const Status = {
   IN_PROGRESS: 'IN_PROGRESS',
   INACTIVE: 'INACTIVE',
   PROCESSING: 'PROCESSING'
+}
+
+export const uniqueIdentifier = (list = []) => {
+  const keys = Object.keys
+  const process = () =>
+    list.map((listItem, index) => {
+      if (!keys.includes('id')) {
+        listItem.id = index + 1
+      }
+      return null
+    })
+
+  return process()
 }

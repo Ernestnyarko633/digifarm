@@ -54,12 +54,12 @@ const CustomPhoneInput = ({
         defaultValue={value}
         containerClassName='intl-tel-input'
         inputClassName='chakra-input'
-        onPhoneNumberBlur={(status, value, countryData) => {
+        onPhoneNumberBlur={(status, changedValue, countryData) => {
           setFieldTouched('phoneNumber', true)
-          if (value.split('').includes('+')) {
-            setFieldValue('phoneNumber', value)
+          if (changedValue.split('').includes('+')) {
+            setFieldValue('phoneNumber', changedValue)
           } else {
-            const number = `+${countryData.dialCode}${value
+            const number = `+${countryData.dialCode}${changedValue
               .replace(/^0+/, '')
               .replace(/\s/g, '')}`
             setFieldValue('phoneNumber', number)
@@ -67,12 +67,12 @@ const CustomPhoneInput = ({
           const name = countryData.name.split(' (', 1).toString()
           name && setFieldValue('country', name)
         }}
-        onPhoneNumberChange={(status, value, countryData) => {
+        onPhoneNumberChange={(status, changedValue, countryData) => {
           setFieldTouched('phoneNumber', true)
-          if (value.split('').includes('+')) {
-            setFieldValue('phoneNumber', value)
+          if (changedValue.split('').includes('+')) {
+            setFieldValue('phoneNumber', changedValue)
           } else {
-            const number = `+${countryData.dialCode}${value
+            const number = `+${countryData.dialCode}${changedValue
               .replace(/^0+/, '')
               .replace(/\s/g, '')}`
             setFieldValue('phoneNumber', number)

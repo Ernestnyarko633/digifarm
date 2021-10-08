@@ -1,45 +1,39 @@
 import useApi from 'context/api'
-import React from 'react'
-import useFetch from './useFetch'
+import { useQuery } from 'react-query'
 
 export function useFarmData() {
-  const [reloadMyFarms, setReloadMyFarms] = React.useState(0)
-  const [reloadMyOrders, setReloadMyOrders] = React.useState(0)
-
   const { getMyFarms, getMyOrders } = useApi()
-
-  const triggerReloadMyFarms = () =>
-    setReloadMyFarms(prevState => prevState + 1)
-
-  const triggerReloadMyOrders = () =>
-    setReloadMyOrders(prevState => prevState + 1)
 
   const {
     data: myFarms,
     isLoading: myFarmsIsLoading,
-    error: myFarmsHasError
-  } = useFetch('my_farms', getMyFarms, reloadMyFarms)
+    error: myFarmsHasError,
+    refetch: myFarmsRefetch
+  } = useQuery('my_farms', () => getMyFarms())
 
+  const triggerReloadMyFarms = () => myFarmsRefetch()
   const {
     data: myOrders,
     isLoading: myOrdersIsLoading,
-    error: myOrdersHasError
-  } = useFetch('my_orders', getMyOrders, reloadMyOrders)
+    error: myOrdersHasError,
+    refetch: myOrdersRefetch
+  } = useQuery('my_orders', () => getMyOrders())
+  const triggerReloadMyOrders = () => myOrdersRefetch()
 
   const isLoading = myFarmsIsLoading || myOrdersIsLoading
   const hasError = myFarmsHasError || myOrdersHasError
   const hasData =
-    myFarms?.length || myOrders?.pending?.length || myOrders?.processing?.length
+    myFarms?.data?.length ||
+    myOrders?.data?.pending?.length ||
+    myOrders?.data?.processing?.length
 
   return {
-    reloadMyFarms,
-    reloadMyOrders,
     triggerReloadMyFarms,
     triggerReloadMyOrders,
-    myFarms,
+    myFarms: myFarms?.data,
     myFarmsIsLoading,
     myFarmsHasError,
-    myOrders,
+    myOrders: myOrders?.data,
     myOrdersIsLoading,
     myOrdersHasError,
     isLoading,

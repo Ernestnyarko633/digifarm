@@ -46,8 +46,7 @@ const TasksDocuments = ({ open, onClose, data }) => {
     let array = []
     const res = () =>
       data?.forEach(feed => {
-        let media = feed?.media?.filter(media => media.type === 'pdf')
-        array.push(...media)
+        array.push(...feed?.media?.filter(media => media.type === 'pdf'))
       })
 
     res()

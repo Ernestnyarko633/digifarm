@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -16,7 +17,7 @@ import {
 import useAuth from 'context/auth'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { FirstLettersToUpperCase } from 'helpers/misc'
-import ReactPlayer from 'react-player/lazy'
+import ReactPlayer from 'react-player'
 
 const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
   const { isAuthenticated } = useAuth()
@@ -80,14 +81,14 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
   }, [content, status])
 
   React.useEffect(() => {
-    let titles = []
+    let strings = []
     if (content) {
       const process = () =>
-        content?.data?.map(item => titles.push(item?.task?.title))
+        content?.data?.map(item => strings.push(item?.task?.title))
       process()
-      if (titles?.length) {
-        titles = Array.from(new Set(titles))
-        setTitles(titles)
+      if (strings?.length) {
+        strings = Array.from(new Set(strings))
+        setTitles(strings)
       }
     }
   }, [content])
@@ -259,9 +260,9 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                 onClick={handleToggle}
                 cursor='pointer'
               >
-                {titles?.map((title, i) => {
+                {titles?.map((title, inx) => {
                   return (
-                    <Fragment key={mapKey(i)}>
+                    <Fragment key={mapKey(inx)}>
                       <Heading
                         as='h6'
                         mt={6}

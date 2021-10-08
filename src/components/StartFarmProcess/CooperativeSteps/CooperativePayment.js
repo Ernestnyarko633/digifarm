@@ -1,13 +1,11 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Heading, Grid, GridItem, Divider } from '@chakra-ui/react'
 import Tazapay from 'assets/images/taz.svg'
 import { motion } from 'framer-motion'
-
 import useStartFarm from 'context/start-farm'
-
 import PayOption from 'components/Cards/PayOption'
-
 import Constants from 'constant'
 import Support from 'components/Support'
 import { Avatar } from '@chakra-ui/avatar'
@@ -15,15 +13,13 @@ import { Text } from '@chakra-ui/layout'
 import CropItemInfo from './CropItemInfo'
 import { QuestionIcon } from '@chakra-ui/icons'
 import { FirstLettersToUpperCase, getFormattedMoney } from 'helpers/misc'
-import useFetch from 'hooks/useFetch'
+import { useQuery } from 'react-query'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
-// import { Scrollbars } from 'react-custom-scrollbars-2'
 
 const MotionGrid = motion(Grid)
 
 const CooperativePayment = ({ farm, asMember }) => {
-  const [reload, setReload] = React.useState(0)
   const { getCooperativeById } = useApi()
   const {
     order,
@@ -35,22 +31,20 @@ const CooperativePayment = ({ farm, asMember }) => {
     PAYSTACK_LIMIT
   } = useStartFarm()
 
-  const { data, isLoading, error } = useFetch(
-    asMember?.cooperative?._id || cooperative?._id
-      ? `welcome_to_coop_${asMember?.cooperative?._id || cooperative?._id}`
-      : null,
-    asMember?.cooperative?._id || cooperative?._id ? getCooperativeById : null,
-    asMember?.cooperative?._id || cooperative?._id ? reload : null,
-    asMember?.cooperative?._id || cooperative?._id
-      ? asMember?.cooperative?._id || cooperative?._id
-      : null
+  const { data, isLoading, error, refetch } = useQuery(
+    [
+      `welcome_to_coop_${asMember?.cooperative?.data?._id || cooperative?._id}`,
+      asMember?.cooperative?.data?._id || cooperative?._id
+    ],
+    () =>
+      (asMember?.cooperative?.data?._id || cooperative?._id) &&
+      getCooperativeById(asMember?.cooperative?.data?._id || cooperative?._id)
   )
 
-  const triggerReload = () => setReload(p => p + 1)
-
+  const triggerReload = () => refetch()
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
-      <GridItem overflowY='hidden'>
+      <GridItem overflowY='scroll'>
         <Box p={{ base: 8, md: 6 }}>
           <Box rounded='lg' p={4} bg='#F2F6F6'>
             <Flex align='center' justify='space-between'>
@@ -66,7 +60,7 @@ const CooperativePayment = ({ farm, asMember }) => {
                 />
                 <Box ml={2}>
                   <Text fontWeight={700} fontSize={{ md: 'xl' }}>
-                    {cooperative?.name || asMember?.cooperative?.name}
+                    {cooperative?.name || asMember?.cooperative?.data?.name}
                   </Text>
                   {isLoading || error ? (
                     <FetchCard
@@ -77,8 +71,8 @@ const CooperativePayment = ({ farm, asMember }) => {
                   ) : (
                     <Text mt={-1} fontSize='sm' color='gray.500'>
                       created by{' '}
-                      {data?.users[0]?.info?.firstName +
-                        data?.users[0]?.info?.lastName}
+                      {data?.data?.users[0]?.info?.firstName +
+                        data?.data?.users[0]?.info?.lastName}
                     </Text>
                   )}
                 </Box>
@@ -90,7 +84,9 @@ const CooperativePayment = ({ farm, asMember }) => {
                 </Text>
                 <Text fontWeight={700} textAlign='right'>
                   {FirstLettersToUpperCase(cooperative?.type?.name) ||
-                    FirstLettersToUpperCase(asMember?.cooperative?.type?.name)}
+                    FirstLettersToUpperCase(
+                      asMember?.cooperative?.data?.type?.name
+                    )}
                 </Text>
               </Box>
             </Flex>
@@ -133,7 +129,7 @@ const CooperativePayment = ({ farm, asMember }) => {
                   </Flex>
                   <Text fontWeight={900}>
                     {cooperative?.type?.discount * 100 ||
-                      asMember?.cooperative?.type?.discount * 100}
+                      asMember?.cooperative?.data?.type?.discount * 100}
                     %
                   </Text>
                 </Flex>

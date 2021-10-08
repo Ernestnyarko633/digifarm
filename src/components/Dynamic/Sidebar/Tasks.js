@@ -70,24 +70,20 @@ export default function Tasks({
         ) === index
     )
   //get Todays task
-  const getTodaysTasks = (scheduledTasks, type) => {
+  const getTodaysTasks = (task, type) => {
     let today = new Date().toLocaleDateString()
 
     let comparant = value => new Date(value).toLocaleDateString()
 
-    if (scheduledTasks) {
+    if (task) {
       if (type === 'today') {
-        const res = scheduledTasks?.filter(
-          task => today === comparant(task?.startDate)
-        )
+        const res = task?.filter(task => today === comparant(task?.startDate))
 
         return res
       }
 
       if (type === 'scheduled') {
-        const res = scheduledTasks?.filter(
-          task => today !== comparant(task?.startDate)
-        )
+        const res = task?.filter(task => today !== comparant(task?.startDate))
 
         return res
       }
@@ -249,7 +245,7 @@ export default function Tasks({
           </Box>
         ) : (
           <>
-            {eosStats?.length && (
+            {eosStats?.length > 0 && (
               <Box
                 bg='white'
                 w='100%'

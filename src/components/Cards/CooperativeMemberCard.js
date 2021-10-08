@@ -36,8 +36,8 @@ const CooperativeMemberCard = ({
     let total = 0
     if (mounted && value?.acreage) {
       const process = () =>
-        values?.map(member => {
-          const { acreage } = member
+        values?.map(individual => {
+          const { acreage } = individual
           if (acreage) return (total = total + acreage)
           return null
         })

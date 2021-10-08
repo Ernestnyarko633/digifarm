@@ -55,9 +55,9 @@ const FarmOrderSection = ({
     ?.slice()
     ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
     .filter(
-      (processingOrder, index, self) =>
+      (processedOrder, index, self) =>
         self.findIndex(
-          item => JSON.stringify(item) === JSON.stringify(processingOrder)
+          item => JSON.stringify(item) === JSON.stringify(processedOrder)
         ) === index
     )
 

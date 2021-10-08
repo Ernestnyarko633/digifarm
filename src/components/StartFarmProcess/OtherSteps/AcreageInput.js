@@ -5,24 +5,12 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  IconButton,
-  useToast
+  IconButton
 } from '@chakra-ui/react'
 
 import { IoAddCircleSharp, IoRemoveCircleOutline } from 'react-icons/io5'
-import useRollover from 'context/rollover'
 
-const AcreageInput = ({
-  totalAcres,
-  value,
-  setValue,
-  rollover,
-  currentAmount,
-  deteminant
-}) => {
-  let toast = useToast()
-  const { total } = useRollover()
-
+const AcreageInput = ({ totalAcres, value, setValue }) => {
   return (
     <Box w={{ base: 48, md: 80 }}>
       <InputGroup>
@@ -42,23 +30,7 @@ const AcreageInput = ({
           placeholder='How many acres?'
           onChange={e => {
             if (e.target?.value >= 1 && e.target?.value < totalAcres) {
-              if (!rollover) {
-                setValue(e.target?.value * 1)
-              } else {
-                if (e.target?.value * deteminant > total) {
-                  toast({
-                    title: 'Insufficient funds in selected wallet(s)',
-                    description:
-                      'Insufficient funds in selected wallet(s) to farm above this number of acres for selected crop',
-                    status: 'error',
-                    duration: 10000,
-                    position: 'top-right'
-                  })
-                  e.preventDefault()
-                } else {
-                  setValue(e.target?.value * 1)
-                }
-              }
+              setValue(e.target?.value * 1)
             }
           }}
         />
@@ -100,23 +72,7 @@ const AcreageInput = ({
             icon={<IoAddCircleSharp />}
             onClick={e => {
               if (value < totalAcres) {
-                if (!rollover) {
-                  setValue(draft => draft + 1)
-                } else {
-                  if (currentAmount + deteminant > total) {
-                    toast({
-                      title: 'Insufficient funds in selected wallet(s)',
-                      description:
-                        'Insufficient funds in selected wallet(s) to farm above this number of acres for selected crop',
-                      status: 'error',
-                      duration: 10000,
-                      position: 'top-right'
-                    })
-                    e.preventDefault()
-                  } else {
-                    setValue(draft => draft + 1)
-                  }
-                }
+                setValue(draft => draft + 1)
               }
             }}
           />
@@ -130,10 +86,7 @@ AcreageInput.propTypes = {
   totalAcres: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
   setValue: PropTypes.func.isRequired,
-  cooperativeOps: PropTypes.object,
-  rollover: PropTypes.bool,
-  currentAmount: PropTypes.number,
-  deteminant: PropTypes.number
+  cooperativeOps: PropTypes.object
 }
 
 export default AcreageInput

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
@@ -17,42 +18,32 @@ import {
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import { motion } from 'framer-motion'
-import useFetch from 'hooks/useFetch'
 import useExternal from 'context/external'
 import useStartFarm from 'context/start-farm'
 import EmptyMap from 'assets/images/map404.png'
 import Sat from 'assets/images/sateilite.png'
-
 import BaseSelect from 'components/Form/BaseSelect'
-// import FormRadio from 'components/Form/FormRadio'
 import Prismic from 'prismic-javascript'
-
 import { getFormattedMoney } from 'helpers/misc'
-
 import Constants from 'constant'
-
 import AcreageInput from './AcreageInput'
 import Map from 'components/Map/Map'
 import { dateIntervals } from 'helpers/misc'
 import useApi from 'context/api'
 import getConfig from 'utils/configs'
-// import { Scrollbars } from 'react-custom-scrollbars-2'
-
-// const options = ['Yes', 'No']
+import { useQuery } from 'react-query'
 
 const MotionGrid = motion(Grid)
 
-const ChooseAcreage = ({ farm, rollover }) => {
+const ChooseAcreage = ({ farm }) => {
   const ENV = process.env.REACT_APP_ENVIRONMENT
 
   const { eosSearch } = useApi()
   const [isLoading, setLoading] = React.useState(false)
   const [location, setLocation] = React.useState([])
   const [center, setCenter] = React.useState([])
-  const [reload, setReload] = React.useState(0)
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
-  const triggerMapReload = () => setReload(prevState => prevState + 1)
 
   const {
     cycle,
@@ -61,7 +52,6 @@ const ChooseAcreage = ({ farm, rollover }) => {
     currency,
     wantCycle,
     setCurrency,
-    // setWantCycle,
     exchangeRate,
     setExchangeRate,
     setAcreage
@@ -138,14 +128,17 @@ const ChooseAcreage = ({ farm, rollover }) => {
   const {
     data: EOSViewID,
     isLoading: EOSViewIDIsLoading,
-    error: EOSViewIDHasError
-  } = useFetch(
-    null,
-    farm?._id && location.length > 0 ? eosSearch : null,
-    reload,
-    eosViewIdPayload,
-    'sentinel2'
+    error: EOSViewIDHasError,
+    refetch
+  } = useQuery(
+    [`eos_view_id_${farm?._id}`, farm?._id],
+    () =>
+      farm?._id &&
+      location.length > 0 &&
+      eosSearch(eosViewIdPayload, 'sentinel2')
   )
+
+  const triggerMapReload = () => refetch()
 
   React.useEffect(() => {
     if (currency.id !== 'US') {
@@ -157,7 +150,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
           if (res.data[query]) {
             setExchangeRate(res.data[query])
           }
-        } catch (error) {
+        } catch (err) {
           toast({
             status: 'error',
             duration: 9000,
@@ -165,9 +158,8 @@ const ChooseAcreage = ({ farm, rollover }) => {
             position: 'top-right',
             title: 'An error occurred.',
             description:
-              (error?.data?.message ||
-                error?.message ||
-                'Unknown error occurred') + '.'
+              (err?.data?.message || err?.message || 'Unknown error occurred') +
+              '.'
           })
         } finally {
           setLoading(false)
@@ -181,39 +173,39 @@ const ChooseAcreage = ({ farm, rollover }) => {
   const loading = EOSViewIDIsLoading
   const error = EOSViewIDHasError
 
+  console.log(error, 'tests')
+
+  const MapUnavailabe = () => {
+    return (
+      <Box
+        position='relative'
+        display={{ base: 'block' }}
+        w='100%'
+        h={{ base: '50%', md: '100%' }}
+      >
+        <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
+        <Box pos='absolute' top={10} w='100%' h='auto'>
+          <Flex direction='column' align='center' justify='center'>
+            <Image src={Sat} boxSize={12} />
+            <Text
+              textAlign='center'
+              color='white'
+              fontWeight={900}
+              fontSize='xl'
+            >
+              satellite imagery currently not available
+            </Text>
+          </Flex>
+        </Box>
+      </Box>
+    )
+  }
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem w='100%' h='100%'>
         {loading || error ? (
           <>
-            {!EOSViewID?.results && (
-              <Box
-                display={{ base: 'block' }}
-                w='100%'
-                h={{ base: '50%', md: '100%' }}
-              >
-                <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
-                <Box
-                  pos='absolute'
-                  top={{ base: '30%', md: '50%', xl: '40%' }}
-                  left={{ base: '10%', md: '18%', '2xl': '25%' }}
-                  w={{ base: '80%', md: '20%' }}
-                  h='auto'
-                >
-                  <Flex direction='column' align='center' justify='center'>
-                    <Image src={Sat} boxSize={12} />
-                    <Text
-                      textAlign='center'
-                      color='white'
-                      fontWeight={900}
-                      fontSize='xl'
-                    >
-                      satellite imagery currently not available
-                    </Text>
-                  </Flex>
-                </Box>
-              </Box>
-            )}
+            {!EOSViewID?.data?.results && <MapUnavailabe />}
             <FetchCard
               w={{ base: 48, md: '100%' }}
               h={{ base: 48, md: '100%' }}
@@ -229,12 +221,12 @@ const ChooseAcreage = ({ farm, rollover }) => {
           </>
         ) : (
           <>
-            {EOSViewID?.results && ['PROD'].includes(ENV) && (
+            {EOSViewID?.data?.results && ['PROD'].includes(ENV) && (
               <Flex
                 w='100%'
                 h='90%'
                 as={Map}
-                viewID={EOSViewID?.results[0]?.view_id}
+                viewID={EOSViewID?.data?.results[0]?.view_id}
                 loading={loading}
                 error={error}
                 band={null}
@@ -242,34 +234,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
                 zoom={9}
               />
             )}
-            {['DEV', 'LOCAL'].includes(ENV) && (
-              <Box
-                display={{ base: 'block' }}
-                w='100%'
-                h={{ base: '50%', md: '100%' }}
-              >
-                <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
-                <Box
-                  pos='absolute'
-                  top={{ base: '30%', md: '50%', xl: '40%' }}
-                  left={{ base: '10%', md: '18%', '2xl': '25%' }}
-                  w={{ base: '80%', md: '20%' }}
-                  h='auto'
-                >
-                  <Flex direction='column' align='center' justify='center'>
-                    <Image src={Sat} boxSize={12} />
-                    <Text
-                      textAlign='center'
-                      color='white'
-                      fontWeight={900}
-                      fontSize='xl'
-                    >
-                      satellite imagery currently not available
-                    </Text>
-                  </Flex>
-                </Box>
-              </Box>
-            )}
+            {['DEV', 'LOCAL'].includes(ENV) && <MapUnavailabe />}
           </>
         )}
       </GridItem>
@@ -315,12 +280,12 @@ const ChooseAcreage = ({ farm, rollover }) => {
                       }}
                       onChange={e => setCurrency(JSON.parse(e.target.value))}
                     >
-                      {Constants.countries.map(currency => (
+                      {Constants.countries.map(mappedCurrency => (
                         <option
-                          key={currency.id}
-                          value={JSON.stringify(currency)}
+                          key={mappedCurrency.id}
+                          value={JSON.stringify(mappedCurrency)}
                         >
-                          {currency.currencyId}
+                          {mappedCurrency.currencyId}
                         </option>
                       ))}
                     </Select>
@@ -346,13 +311,8 @@ const ChooseAcreage = ({ farm, rollover }) => {
               >
                 <AcreageInput
                   totalAcres={Math.floor(farm?.acreage)}
-                  rollover={rollover}
                   value={acreage}
                   setValue={setAcreage}
-                  deteminant={farm.pricePerAcre * exchangeRate * 1}
-                  currentAmount={
-                    farm.pricePerAcre * exchangeRate * Math.floor(acreage)
-                  }
                 />
                 <Flex alignItems='center' marginLeft={{ md: 6 }}>
                   <Skeleton
@@ -449,8 +409,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
 }
 
 ChooseAcreage.propTypes = {
-  farm: PropTypes.object.isRequired,
-  rollover: PropTypes.bool
+  farm: PropTypes.object.isRequired
 }
 
 export default ChooseAcreage

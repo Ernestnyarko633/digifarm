@@ -3,55 +3,40 @@ import Layout from 'container/Layout'
 import { Box, Flex, Icon, Text, Heading } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
 import BuyerCard from 'components/Cards/BuyerCard'
-// import IllustrationImage from '../assets/images/home/illustration.png'
 import transaction1 from '../assets/images/transaction1.png'
 import transaction2 from '../assets/images/transaction2.png'
 import group from '../assets/images/group.png'
 
-// import Oval from '../assets/images/Oval.svg'
 import WarehouseCard from 'components/Cards/WarehouseCard'
-// import ArrowButton from '../components/Button/ArrowButton'
 import useApi from '../context/api'
-// import useAuth from 'context/auth'
 
-// import { motion } from 'framer-motion'
-// import AboutBuyer from 'components/Modals/AboutBuyer'
 import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
-import useFetch from 'hooks/useFetch'
-// import { Button } from 'carbon-components-react'
-// import useComponent from 'context/component'
 import { useLocation } from 'react-router-dom'
-
-// const MotionFlex = motion.custom(Flex)
-// const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
+import { useQuery } from 'react-query'
 
 const Marketplace = () => {
   document.title = "Complete Farmer | Farmer's Market"
-  const { getSourcingOrders } = useApi() // getMyFarms
-  // const [varieties, setVarieties] = useState([])
-  // const [buyers, setBuyers] = useState([])
-  // const { isAuthenticated } = useAuth()
-  // const { user } = isAuthenticated()
-  // const [loading, setLoading] = useState('fetching')
-  const [reload, setReload] = React.useState(0)
+  const { getSourcingOrders } = useApi()
   const [state, setState] = React.useState(0)
-  const { state: myfarm } = useLocation()
-
-  const triggerReload = () => setReload(prev => prev++)
+  const { state: myFarm } = useLocation()
 
   const toggle = value => {
     return setState(value)
   }
 
-  const { data, isLoading, error } = useFetch(
-    's_orders',
-    getSourcingOrders,
-    reload,
-    {
-      cropVariety: myfarm?.order?.product?.cropVariety?._id
-    }
+  const { data, isLoading, error, refetch } = useQuery(
+    [
+      `s_orders_${myFarm?.order?.product?.cropVariety?._id}`,
+      myFarm?.order?.product?.cropVariety?._id
+    ],
+    () =>
+      myFarm?.order?.product?.cropVariety?._id &&
+      getSourcingOrders({
+        cropVariety: myFarm?.order?.product?.cropVariety?._id
+      })
   )
 
+  const triggerReload = () => refetch()
   return (
     <Layout>
       <Box
@@ -90,21 +75,21 @@ const Marketplace = () => {
       >
         <WarehouseCard
           sellButton={false}
-          _id={myfarm._id}
-          key={myfarm?.name}
-          name={`${myfarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
-          location={`${myfarm?.order?.product?.location?.name},${myfarm?.order?.product?.location?.state}`}
-          image={`${myfarm?.order?.product?.cropVariety?.imageUrl}`}
+          _id={myFarm._id}
+          key={myFarm?.name}
+          name={`${myFarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
+          location={`${myFarm?.order?.product?.location?.name},${myFarm?.order?.product?.location?.state}`}
+          image={`${myFarm?.order?.product?.cropVariety?.imageUrl}`}
           quantity={
-            myfarm?.order?.acreage * myfarm?.order?.product?.storagePerAcre
+            myFarm?.order?.acreage * myFarm?.order?.product?.storagePerAcre
           }
           weight={
-            myfarm?.order?.acreage *
-            myfarm?.order?.product?.weightOfProducePerAcre
+            myFarm?.order?.acreage *
+            myFarm?.order?.product?.weightOfProducePerAcre
           }
           bags={
-            myfarm?.order?.acreage *
-            myfarm?.order?.product?.quantityOfStoragePerAcre
+            myFarm?.order?.acreage *
+            myFarm?.order?.product?.quantityOfStoragePerAcre
           }
           mr={3}
           ml={14}
@@ -179,16 +164,16 @@ const Marketplace = () => {
         {state === 0 &&
           !isLoading &&
           !error &&
-          data?.map(buyers => (
+          data?.data?.map(buyers => (
             // add condition for when there are no buyer and error handling
             <BuyerCard
               _id={buyers._id}
               key={buyers._id}
               buyers={buyers}
-              myfarm={myfarm}
+              myFarm={myFarm}
             />
           ))}
-        {state === 0 && data?.length === 0 && (
+        {state === 0 && data?.data?.length === 0 && (
           <BuyerEmptyState
             image={group}
             note='No buyers available'

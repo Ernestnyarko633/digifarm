@@ -29,8 +29,8 @@ const StartFarm = () => {
         direction='column'
         bgColor='white'
         w={{ md: '100vw' }}
-        h={{ md: 'calc(100vh - 5rem)' }}
-        overflow='hidden'
+        h={{ md: 'calc(100vh - 0)' }}
+        overflow='scroll'
         mt={{ base: 14, md: 20, xl: 20 }}
         pt={{ base: 8 }}
         pb={{ base: 8 }}
@@ -65,7 +65,7 @@ const StartFarm = () => {
               }
               selected={selected.name === item.name}
               onClick={e => {
-                if (item?.id === 'cooperative') return e?.preventDefault()
+                // if (item?.id === 'cooperative') return e?.preventDefault()
                 sessionStorage.setItem('type', item.id)
                 setSelected(item)
               }}

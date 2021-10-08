@@ -7,10 +7,10 @@ import useStartFarm from 'context/start-farm'
 import CooperativeType from 'components/StartFarmProcess/CooperativeType'
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import CooperativeSteps from 'components/StartFarmProcess/CooperativeSteps'
-
+import { useQueryClient } from 'react-query'
 const CooperativeFarm = ({ location, history }) => {
   document.title = 'Cooperative | Start Farm'
-
+  const queryClient = useQueryClient()
   const { state, selected } = location || {}
   const {
     step,
@@ -44,8 +44,8 @@ const CooperativeFarm = ({ location, history }) => {
         setSelectedCooperativeType(null)
         setAcres(0)
         // clear cache data in session storage
-        sessionStorage.removeItem('categories')
-        sessionStorage.removeItem('farms')
+        queryClient.invalidateQueries('categories')
+        queryClient.invalidateQueries('farms')
       }
     }
 
@@ -61,9 +61,9 @@ const CooperativeFarm = ({ location, history }) => {
     setInvites,
     setCoopImg,
     setSelectedCooperativeType,
-    setAcres
+    setAcres,
+    queryClient
   ])
-
   const getContent = value => {
     switch (value) {
       case 0:

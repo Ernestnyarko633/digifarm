@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect, useRef } from 'react'
 import { Box, Flex, Text, Avatar, Icon, Button } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { useScreenshot } from 'use-react-screenshot'
 import { Menu } from '@headlessui/react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
 
 import DynamicFarm from 'components/Dynamic'
 import Header from 'container/Header'
@@ -21,10 +23,10 @@ import {
   FarmSchedule,
   Updates
 } from 'theme/Icons'
-import useFetch from 'hooks/useFetch'
 import useComponent from 'context/component'
 
 import { dateIntervals, isDateG8Today } from 'helpers/misc'
+import { useQuery } from 'react-query'
 
 const MotionBox = motion(Box)
 
@@ -32,6 +34,7 @@ export default function Farm() {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { id } = useParams()
+  const { state } = useLocation()
   const ref = useRef(null)
   const [component, setComponent] = useState('compA')
   const [isOpen, setIsOpen] = useState(false)
@@ -41,21 +44,6 @@ export default function Farm() {
   const [center, setCenter] = useState([])
 
   // reloads
-  const [farmReload, setFarmReload] = useState(0)
-  const [activitiesReload, setActivitiesReload] = useState(0)
-  const [tasksReload, setTasksReload] = useState(0)
-  const [farmFeedsReload, setFarmFeedsReload] = useState(0)
-  const [scheduledTasksReload, setScheduledTasksReload] = useState(0)
-
-  // trigger Reloads
-  const triggerFarmReload = () => setFarmReload(prevState => prevState + 1)
-  const triggerActivitiesReload = () =>
-    setActivitiesReload(prevState => prevState + 1)
-  const triggerTasksReload = () => setTasksReload(prevState => prevState + 1)
-  const triggerFarmFeedsReload = () =>
-    setFarmFeedsReload(prevState => prevState + 1)
-  const triggerScheduledTasksReload = () =>
-    setScheduledTasksReload(prevState => prevState + 1)
 
   const { compState, setCompState, setInViewProduct } = useComponent()
 
@@ -70,19 +58,25 @@ export default function Farm() {
   const {
     data: farm,
     isLoading: farmIsLoading,
-    error: farmHasError
-  } = useFetch('selectedFarm', getMyFarm, farmReload, id)
+    error: farmHasError,
+    refetch: farmRefetch
+  } = useQuery(`selectedFarm_${id}`, () => id && !state && getMyFarm(id))
+
+  const triggerFarmReload = () => farmRefetch()
 
   useEffect(() => {
-    if (farm?.order?.product) {
-      setInViewProduct(farm?.order?.product._id)
+    if (farm?.data?.order?.product || state?.order?.product?._id) {
+      setInViewProduct(
+        farm?.data?.order?.product._id || state?.order?.product?._id
+      )
     }
-  }, [farm?.order?.product, setInViewProduct])
+  }, [farm?.data?.order?.product, setInViewProduct, state?.order?.product?._id])
   // lifecycle event to handle parsing of fms to coords to suitable data type for eos
   useEffect(() => {
     const new_location_coords = []
     const new_location_center = []
-    const farm_location = farm?.order?.product?.location
+    const farm_location =
+      state?.order?.product?.location || farm?.data?.order?.product?.location
     const farm_location_center = farm_location?.center
     // fms coords are in strings "1.2334,0.4543434"
     // function splits strings to two strings and then converts or parses them to numbers
@@ -98,58 +92,82 @@ export default function Farm() {
     strToNumber(farm_location_center, new_location_center)
     setLocation(new_location_coords)
     setCenter(new_location_center)
-  }, [farm])
+  }, [farm, state?.order?.product?.location])
 
   const {
     data: farmFeeds,
     isLoading: farmFeedsIsLoading,
-    error: farmFeedsHasError
-  } = useFetch(
-    null,
-    farm?.order?.product?._id ? getMyFarmFeeds : null,
-    farmFeedsReload,
-    {
-      farm: farm?.order?.product?._id
-    }
+    error: farmFeedsHasError,
+    refetch: farmFeedsRefetch
+  } = useQuery(
+    [
+      `farm_feeds_${
+        state?.order?.product?._id || farm?.data?.order?.product?._id
+      }`,
+      state?.order?.product?._id || farm?.data?.order?.product?._id
+    ],
+    () =>
+      (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
+      getMyFarmFeeds({
+        farm: state?.order?.product?._id || farm?.data?.order?.product?._id
+      })
   )
 
   const {
     data: ScheduledTasks,
     isLoading: ScheduledTasksIsLoading,
-    error: ScheduledTasksHasError
-  } = useFetch(
-    null,
-    farm?.order?.product?._id ? getMyScheduledTasks : null,
-    scheduledTasksReload,
-    {
-      farm: farm?.order?.product?._id
-    }
+    error: ScheduledTasksHasError,
+    refetch: ScheduledTasksRefetch
+  } = useQuery(
+    [
+      `scheduled_tasks_farm_${
+        state?.order?.product?._id || farm?.data?.order?.product?._id
+      }`,
+      state?.order?.product?._id || farm?.data?.order?.product?._id
+    ],
+    () =>
+      (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
+      getMyScheduledTasks({
+        farm: state?.order?.product?._id || farm?.data?.order?.product?._id
+      })
   )
 
   const {
     data: myFarmActivities,
     isLoading: myFarmActivitiesIsLoading,
-    error: myFarmActivitiesHasError
-  } = useFetch(
-    null,
-    farm?.order?.product?._id ? getActivities : null,
-    activitiesReload,
-    {
-      farm: farm?.order?.product?._id
-    }
+    error: myFarmActivitiesHasError,
+    refetch: myFarmActivitiesRefetch
+  } = useQuery(
+    [
+      `activities_farm_${
+        state?.order?.product?._id || farm?.data?.order?.product?._id
+      }`,
+      state?.order?.product?._id || farm?.data?.order?.product?._id
+    ],
+    () =>
+      (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
+      getActivities({
+        farm: state?.order?.product?._id || farm?.data?.order?.product?._id
+      })
   )
 
   const {
     data: tasks,
     isLoading: tasksIsLoading,
-    error: tasksHasError
-  } = useFetch(
-    null,
-    farm?.order?.product?._id ? getAllTasks : null,
-    tasksReload,
-    {
-      farm: farm?.order?.product?._id
-    }
+    error: tasksHasError,
+    refetch: tasksRefetch
+  } = useQuery(
+    [
+      `tasks_farm_${
+        state?.order?.product?._id || farm?.data?.order?.product?._id
+      }`,
+      state?.order?.product?._id || farm?.data?.order?.product?._id
+    ],
+    () =>
+      (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
+      getAllTasks({
+        farm: state?.order?.product?._id || farm?.data?.order?.product?._id
+      })
   )
 
   const onClose = () => setIsOpen(false)
@@ -161,6 +179,12 @@ export default function Farm() {
     takeScreenShot(ref.current)
     onOpen()
   }
+
+  // trigger Reloads
+  const triggerActivitiesReload = () => myFarmActivitiesRefetch()
+  const triggerTasksReload = () => tasksRefetch()
+  const triggerFarmFeedsReload = () => farmFeedsRefetch()
+  const triggerScheduledTasksReload = () => ScheduledTasksRefetch()
 
   const menus = [
     { name: 'Farm', comp: 'compA' },
@@ -196,11 +220,11 @@ export default function Farm() {
       <Share isOpen={isOpen} onClose={onClose} image={image} />
       <Header />
       <AnimatePresence>
-        {farm.order?.product?.startDate &&
-          !isDateG8Today(farm.order?.product?.startDate) &&
+        {farm?.data?.order?.product?.startDate &&
+          !isDateG8Today(farm?.data?.order?.product?.startDate) &&
           open && (
             <FarmViewBanner
-              date={farm.order?.product?.startDate}
+              date={farm?.data?.order?.product?.startDate}
               closed={closed}
             />
           )}
@@ -261,7 +285,7 @@ export default function Farm() {
           boxShadow='0px 1px 24px rgba(0, 0, 0, 0.1)'
           w='100%'
         >
-          {({ open }) => (
+          {({ open: isOpen }) => (
             <>
               <Menu.Button as={Box} w='100%' _focus={{ outline: 'none' }}>
                 <Flex align='center' justify='space-between'>
@@ -272,7 +296,7 @@ export default function Farm() {
                   </Box>
 
                   <Box>
-                    <Icon as={open ? chevronUp : chevronDown} boxSize={6} />
+                    <Icon as={isOpen ? chevronUp : chevronDown} boxSize={6} />
                   </Box>
                 </Flex>
               </Menu.Button>
@@ -321,11 +345,11 @@ export default function Farm() {
               farm={component}
               // data
               center={center || []}
-              tasks={tasks || []}
-              activities={myFarmActivities || []}
-              ScheduledTasks={ScheduledTasks || []}
-              digitalFarmerFarm={farm || {}}
-              farmfeeds={farmFeeds || []}
+              tasks={tasks?.data || []}
+              activities={myFarmActivities?.data || []}
+              ScheduledTasks={ScheduledTasks?.data || []}
+              digitalFarmerFarm={farm?.data || state || {}}
+              farmfeeds={farmFeeds?.data || []}
               location={location || []}
               // helpers
               dateIntervals={dateIntervals}
@@ -343,43 +367,7 @@ export default function Farm() {
               tasksHasError={tasksHasError}
             />
           )}
-          {/* {isLoading && (
-            <FetchCard
-              direction='column'
-              align='center'
-              justify='center'
-              mx='auto'
-              reload={() => {
-                hasError && triggerReload()
-              }}
-              loading={isLoading}
-              error={hasError}
-              text={
-                !hasError
-                  ? 'Standby as we load your current farms and pending orders'
-                  : 'Something went wrong, please dont fret'
-              }
-            />
-          )} */}
         </Box>
-
-        {/* <Box d={{ base: 'block', md: 'none' }}>
-        {!loading && !EOSStatisticsIsLoading && (
-          <FarmRightSidebar
-            farmfeeds={farmfeeds}
-            WeatherForeCasts={WeatherForeCasts}
-            ScheduledTasks={ScheduledTasks}
-            loading={loading || EOSStatisticsIsLoading}
-            error={error || EOSStatisticsHasError}
-            _error={_error}
-            state={state}
-            reloads={reloads}
-            eosStats={EOSStatistics?.result}
-            digitalFarmerFarm={digitalFarmerFarm}
-            location={location}
-          />
-        )}
-      </Box> */}
 
         {component === 'compA' && (
           <Flex

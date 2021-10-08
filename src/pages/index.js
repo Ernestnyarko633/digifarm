@@ -14,7 +14,6 @@ const FarmBoard = lazy(() => import('./farm-board'))
 const FarmWallet = lazy(() => import('./farm-wallet'))
 const Marketplace = lazy(() => import('./market-place'))
 const Cooperative_ = lazy(() => import('./cooperative'))
-const Payment = lazy(() => import('./start-farm/payment'))
 const StartFarm = lazy(() => import('./start-farm/index'))
 const CooperativeMain = lazy(() => import('./cooperative-main'))
 const CooperativeIntro = lazy(() => import('./cooperativeIntro'))
@@ -31,7 +30,6 @@ const Pages = {
   Guide,
   Wallet,
   Logout,
-  Payment,
   Profile,
   Tazapay,
   NotFound,

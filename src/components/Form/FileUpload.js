@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Flex, Icon, Input, Text, Heading, Image } from '@chakra-ui/react'
+import { Box, Flex, Icon, Input, Text, Heading } from '@chakra-ui/react'
 import { useDropzone } from 'react-dropzone'
 import { UilPaperclip, UilTimes } from '@iconscout/react-unicons'
 import { FaRegFilePdf, FaRegFileImage } from 'react-icons/fa'
@@ -40,30 +38,44 @@ const FileUpload = ({
     const newImages = files?.filter(item => item.name !== id)
     setFiles(newImages)
   }
-  const baseStyle = {
-    borderWidth: 1,
-    borderRadius: '50px',
-    borderColor: '#fff',
-    borderStyle: 'solid',
-    color: '#bdbdbd',
-    outline: 'none',
-    transition: 'border .24s ease-in-out',
-    margin: '0 auto',
-    width: '100%'
-  }
-  const activeStyle = {
-    borderColor: '#2196f3',
-    opacity: 0.6
-  }
-  const acceptStyle = {
-    borderColor: '#31BC2E',
-    opacity: 0.6
-  }
-  const rejectStyle = {
-    borderColor: '#ff1744',
-    backgroundColor: '#ff1744',
-    opacity: 0.6
-  }
+  const baseStyle = React.useMemo(
+    () => ({
+      borderWidth: 1,
+      borderRadius: '50px',
+      borderColor: '#fff',
+      borderStyle: 'solid',
+      color: '#bdbdbd',
+      outline: 'none',
+      transition: 'border .24s ease-in-out',
+      margin: '0 auto',
+      width: '100%'
+    }),
+    []
+  )
+  const activeStyle = React.useMemo(
+    () => ({
+      borderColor: '#2196f3',
+      opacity: 0.6
+    }),
+    []
+  )
+
+  const acceptStyle = React.useMemo(
+    () => ({
+      borderColor: '#31BC2E',
+      opacity: 0.6
+    }),
+    []
+  )
+
+  const rejectStyle = React.useMemo(
+    () => ({
+      borderColor: '#ff1744',
+      backgroundColor: '#ff1744',
+      opacity: 0.6
+    }),
+    []
+  )
   const style = useMemo(
     () => ({
       ...baseStyle,

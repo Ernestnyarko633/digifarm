@@ -54,10 +54,10 @@ const CooperativeSignUp = () => {
       confirmPassword: ''
     },
     validationSchema: SignupSchema,
-    onSubmit: async (values, { setSubmitting }) => {
+    onSubmit: async (formikValues, { setSubmitting }) => {
       if (acceptConditionWithTerm) {
         try {
-          const data = Object.assign({}, values)
+          const data = Object.assign({}, formikValues)
           delete data.confirmPassword
           setSubmitting(true)
           await signUp(data)
