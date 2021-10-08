@@ -2,16 +2,19 @@ import React from 'react'
 import { Box, Grid, Heading, Text, Flex } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
+import useFarm from 'context/farm'
+import { numberWithCommas } from 'helpers/misc'
 
-const WeatherCards = ({
-  farmfeeds,
-  weatherForeCasts,
-  WeatherForeCastsIsLoading,
-  WeatherForeCastsHasError,
-  farmFeedsIsLoading,
-  farmFeedsHasError,
-  reloads
-}) => {
+const WeatherCards = ({ farmfeeds }) => {
+  const {
+    WeatherForeCasts: weatherForeCasts,
+    WeatherForeCastsHasError,
+    WeatherForeCastsIsLoading,
+    triggerEosWeatherReload,
+    farmFeedsIsLoading,
+    farmFeedsHasError,
+    triggerFarmFeedsReload
+  } = useFarm()
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
       {farmFeedsIsLoading || farmFeedsHasError ? (
@@ -22,7 +25,7 @@ const WeatherCards = ({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => reloads[2]()}
+            reload={() => triggerFarmFeedsReload()}
             loading={farmFeedsIsLoading}
             error={farmFeedsHasError}
             text={"Standby as we load your farm's feed"}
@@ -49,10 +52,10 @@ const WeatherCards = ({
                   mt={1}
                   fontFamily='num'
                 >
-                  {
+                  {numberWithCommas(
                     farmfeeds[farmfeeds?.length - 1]?.feed?.plantInfo
                       ?.population
-                  }
+                  )}
                 </Heading>
               </Flex>
             </Box>
@@ -68,7 +71,7 @@ const WeatherCards = ({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => reloads[6]()}
+            reload={() => triggerEosWeatherReload()}
             loading={WeatherForeCastsIsLoading}
             error={WeatherForeCastsHasError}
             text={"Standby as we load your farm's feed"}
@@ -101,7 +104,7 @@ const WeatherCards = ({
                       weatherForeCasts[0]?.Temp_land_max) /
                     2
                   )?.toFixed(0)}{' '}
-                  C
+                  °C
                 </Heading>
               </Flex>
             </Box>

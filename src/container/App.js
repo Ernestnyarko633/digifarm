@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { FarmContextProvider } from 'context/farm'
 // import TagManager from 'react-gtm-module'
 import { StartFarmContextProvider } from 'context/start-farm'
 import { ComponentContextProvider } from 'context/component'
@@ -27,8 +28,10 @@ const App = () => {
                 <StartFarmContextProvider>
                   <ModalContextProvider>
                     <WalletContextProvider>
-                      <FacebookPixel />
-                      <Router />
+                      <FarmContextProvider>
+                        <FacebookPixel />
+                        <Router />
+                      </FarmContextProvider>
                     </WalletContextProvider>
                   </ModalContextProvider>
                 </StartFarmContextProvider>

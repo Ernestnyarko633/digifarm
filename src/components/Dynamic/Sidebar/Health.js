@@ -3,15 +3,19 @@ import PropTypes from 'prop-types'
 import { Box, Flex, Text } from '@chakra-ui/react'
 import FetchCard from 'components/FetchCard'
 import CropHealthCard from '../Cards/CropHealthCard'
+import useFarm from 'context/farm'
 
-export default function Health({
-  eosStats,
-  EOSStatisticsIsLoading,
-  EOSStatisticsHasError,
-  eosTaskHasError,
-  eosTaskIsLoading,
-  reloads
-}) {
+export default function Health() {
+  const {
+    EOSStatisticsIsLoading,
+    EOSStatisticsHasError,
+    eosTaskHasError,
+    eosTaskIsLoading,
+    _eosTaskRefetch,
+    triggerEosStatsReload,
+    EOSStatistics: eosStats
+  } = useFarm()
+
   return (
     <Box mx={8} my={8}>
       {EOSStatisticsIsLoading ||
@@ -26,8 +30,8 @@ export default function Health({
             w='100%'
             mx='auto'
             reload={() => {
-              eosTaskHasError && reloads[4]()
-              EOSStatisticsHasError && reloads[7]()
+              eosTaskHasError && _eosTaskRefetch()
+              EOSStatisticsHasError && triggerEosStatsReload()
             }}
             loading={EOSStatisticsIsLoading || eosTaskIsLoading}
             error={EOSStatisticsHasError || eosTaskHasError}
@@ -48,8 +52,8 @@ export default function Health({
           {!EOSStatisticsHasError && !eosStats?.length && (
             <Flex w='100%' justify='center' align='center'>
               <Text w='100%' color='cf.green' fontSize='xl' textAlign='center'>
-                Crop health is currently unvailable, it would be updated as soon
-                as possible.
+                Crop health is currently unavailable, it would be updated as
+                soon as possible.
               </Text>
             </Flex>
           )}

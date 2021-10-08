@@ -12,7 +12,6 @@ const Map = ({
   error,
   band,
   height,
-  reloads,
   zoom,
   ...rest
 }) => {
@@ -56,7 +55,6 @@ Map.propTypes = {
   loading: PropTypes.any,
   error: PropTypes.any,
   viewID: PropTypes.string,
-  reloads: PropTypes.array,
   zoom: PropTypes.number,
   band: PropTypes.string,
   height: PropTypes.any

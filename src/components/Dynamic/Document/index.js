@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Individual from './Individual'
+import useFarm from 'context/farm'
 //import Cooperative from './Cooperative'
 
 const components = {
@@ -9,29 +10,24 @@ const components = {
   // compB: Cooperative
 }
 
-const DynamicDocument = ({
-  document,
-  digitalFarmerFarm,
-  activities,
-  farmfeeds,
-  ScheduledTasks,
-  tasks,
-  //errors
-  farmFeedsHasError,
-  ScheduledTasksHasError,
-  myFarmActivitiesHasError,
-  tasksHasError,
-  //loading
-  farmFeedsIsLoading,
-  ScheduledTasksIsLoading,
-  myFarmActivitiesIsLoading,
-  tasksIsLoading,
-  reloads
-}) => {
+const DynamicDocument = ({ document, digitalFarmerFarm }) => {
   const SelectedCard = components[document]
+  const {
+    tasks,
+    ScheduledTasks,
+    farmFeeds: farmfeeds,
+    myFarmActivities: activities,
+    farmFeedsHasError,
+    ScheduledTasksHasError,
+    myFarmActivitiesHasError,
+    tasksHasError,
+    farmFeedsIsLoading,
+    ScheduledTasksIsLoading,
+    myFarmActivitiesIsLoading,
+    tasksIsLoading
+  } = useFarm()
   return (
     <SelectedCard
-      reloads={reloads}
       digitalFarmerFarm={digitalFarmerFarm}
       ScheduledTasks={ScheduledTasks}
       activities={activities}
