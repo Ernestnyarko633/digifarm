@@ -269,3 +269,16 @@ export const Status = {
   INACTIVE: 'INACTIVE',
   PROCESSING: 'PROCESSING'
 }
+
+export const uniqueIdentifier = (list = []) => {
+  const keys = Object.keys
+  const process = () =>
+    list.map((listItem, index) => {
+      if (!keys.includes('id')) {
+        listItem.id = index + 1
+      }
+      return null
+    })
+
+  return process()
+}

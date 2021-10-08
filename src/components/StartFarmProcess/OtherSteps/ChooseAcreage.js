@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
@@ -130,8 +131,11 @@ const ChooseAcreage = ({ farm }) => {
     error: EOSViewIDHasError,
     refetch
   } = useQuery(
-    `eos_view_id_${farm?._id}`,
-    farm?._id && location.length > 0 && eosSearch(eosViewIdPayload, 'sentinel2')
+    [`eos_view_id_${farm?._id}`, farm?._id],
+    () =>
+      farm?._id &&
+      location.length > 0 &&
+      eosSearch(eosViewIdPayload, 'sentinel2')
   )
 
   const triggerMapReload = () => refetch()
@@ -169,39 +173,39 @@ const ChooseAcreage = ({ farm }) => {
   const loading = EOSViewIDIsLoading
   const error = EOSViewIDHasError
 
+  console.log(error, 'tests')
+
+  const MapUnavailabe = () => {
+    return (
+      <Box
+        position='relative'
+        display={{ base: 'block' }}
+        w='100%'
+        h={{ base: '50%', md: '100%' }}
+      >
+        <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
+        <Box pos='absolute' top={10} w='100%' h='auto'>
+          <Flex direction='column' align='center' justify='center'>
+            <Image src={Sat} boxSize={12} />
+            <Text
+              textAlign='center'
+              color='white'
+              fontWeight={900}
+              fontSize='xl'
+            >
+              satellite imagery currently not available
+            </Text>
+          </Flex>
+        </Box>
+      </Box>
+    )
+  }
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
       <GridItem w='100%' h='100%'>
         {loading || error ? (
           <>
-            {!EOSViewID?.data?.results && (
-              <Box
-                display={{ base: 'block' }}
-                w='100%'
-                h={{ base: '50%', md: '100%' }}
-              >
-                <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
-                <Box
-                  pos='absolute'
-                  top={{ base: '30%', md: '50%', xl: '40%' }}
-                  left={{ base: '10%', md: '18%', '2xl': '25%' }}
-                  w={{ base: '80%', md: '20%' }}
-                  h='auto'
-                >
-                  <Flex direction='column' align='center' justify='center'>
-                    <Image src={Sat} boxSize={12} />
-                    <Text
-                      textAlign='center'
-                      color='white'
-                      fontWeight={900}
-                      fontSize='xl'
-                    >
-                      satellite imagery currently not available
-                    </Text>
-                  </Flex>
-                </Box>
-              </Box>
-            )}
+            {!EOSViewID?.data?.results && <MapUnavailabe />}
             <FetchCard
               w={{ base: 48, md: '100%' }}
               h={{ base: 48, md: '100%' }}
@@ -230,34 +234,7 @@ const ChooseAcreage = ({ farm }) => {
                 zoom={9}
               />
             )}
-            {['DEV', 'LOCAL'].includes(ENV) && (
-              <Box
-                display={{ base: 'block' }}
-                w='100%'
-                h={{ base: '50%', md: '100%' }}
-              >
-                <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
-                <Box
-                  pos='absolute'
-                  top={{ base: '30%', md: '50%', xl: '40%' }}
-                  left={{ base: '10%', md: '18%', '2xl': '25%' }}
-                  w={{ base: '80%', md: '20%' }}
-                  h='auto'
-                >
-                  <Flex direction='column' align='center' justify='center'>
-                    <Image src={Sat} boxSize={12} />
-                    <Text
-                      textAlign='center'
-                      color='white'
-                      fontWeight={900}
-                      fontSize='xl'
-                    >
-                      satellite imagery currently not available
-                    </Text>
-                  </Flex>
-                </Box>
-              </Box>
-            )}
+            {['DEV', 'LOCAL'].includes(ENV) && <MapUnavailabe />}
           </>
         )}
       </GridItem>
