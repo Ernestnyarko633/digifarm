@@ -1,13 +1,8 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-
 import useComponent from './component'
-
 import LearnMoreModal from 'components/Modals/LearnMoreModal'
 import DocumentsReceipts from 'components/Modals/DocumentReceipts'
-import RolloverModal from 'components/Modals/RolloverModal'
-import PayoutModal from 'components/Modals/PayoutModal'
-import SuccessModal from 'components/Modals/SuccessModal'
 import ReceiptModal from 'components/Modals/ReceiptModal'
 import ShareModal from 'components/Modals/ShareModal'
 import Payment from 'components/Cards/CooperativeDashboard/Payment'
@@ -23,12 +18,6 @@ export const ModalContextProvider = ({ children }) => {
         return <LearnMoreModal />
       case 'activity-receipts':
         return <DocumentsReceipts />
-      case 'rollover':
-        return <RolloverModal />
-      case 'payout':
-        return <PayoutModal />
-      case 'successmodal':
-        return <SuccessModal />
       case 'viewreceipt':
         return <ReceiptModal />
       case 'viewdocuments':

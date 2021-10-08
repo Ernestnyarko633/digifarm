@@ -6,7 +6,7 @@ import useAuth from 'context/auth'
 import ReceiptModal from 'components/Modals/ReceiptModal'
 import TasksDocuments from 'components/Modals/TasksDocuments'
 
-export default function FarmDocumentCard({
+export default function DocumentActivityReceiptsCard({
   data,
   digitalFarmerFarm,
   title,
@@ -45,8 +45,8 @@ export default function FarmDocumentCard({
       setReceipt(res?.data)
       setLoading(false)
       onOpen('viewreceipt')
-    } catch (error) {
-      setError(error)
+    } catch (err) {
+      setError(err)
       setLoading(false)
     }
   }
@@ -198,7 +198,7 @@ export default function FarmDocumentCard({
   )
 }
 
-FarmDocumentCard.propTypes = {
+DocumentActivityReceiptsCard.propTypes = {
   data: PropTypes.any,
   title: PropTypes.any,
   amount: PropTypes.any,

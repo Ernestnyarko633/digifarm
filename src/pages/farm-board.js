@@ -9,7 +9,7 @@ import { Box } from '@chakra-ui/layout'
 import { useQuery } from 'react-query'
 
 const FarmBoard = () => {
-  document.title = 'Complete Farmer | Farmboard'
+  document.title = 'Complete Farmer | FarmBoard'
   const { getMyFarms } = useApi()
   const {
     data: myFarms,

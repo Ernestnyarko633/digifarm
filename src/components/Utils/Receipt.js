@@ -31,8 +31,8 @@ const Receipt = ({
       })
       setLoading(false)
       saveAs(blob, `${query.reference}-agreement.pdf`)
-    } catch (error) {
-      setError(error)
+    } catch (err) {
+      setError(err)
       setLoading(false)
     }
   }

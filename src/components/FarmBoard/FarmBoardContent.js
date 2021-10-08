@@ -17,11 +17,11 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
   //initial states
   const [activeFarmIndex, setActiveFarmIndex] = React.useState(0)
   const {
-    loading: prismic_loading,
+    loading: prismicLoading,
     news,
     videos,
     blogs,
-    error: prismic_error
+    error: prismicError
   } = usePrismic()
   const { loading: feedsLoading, feeds, error: feedsError } = useFeeds()
   const [filter, setFilter] = React.useState(farms.length ? 'feeds' : 'videos')
@@ -33,13 +33,13 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
   const executeScroll = () => queriedElement?.current?.scrollIntoView()
 
   //changing state variables
-  let loading = prismic_loading || feedsLoading
-  let error = prismic_error || feedsError
+  let loading = prismicLoading || feedsLoading
+  let error = prismicError || feedsError
 
-  // initialising useQuery hook
+  // initializing useQuery hook
   let q = useQuery()
 
-  // returns a memorised value. anytime q changes
+  // returns a memorized value. anytime q changes
   const query = React.useMemo(
     () => ({
       type: q.get('type'),
@@ -74,7 +74,7 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
   }, [blogs, news, query])
 
   //handles all rending of the board's content
-  const RenderDataType = filter => {
+  const RenderDataType = _filter => {
     const mapKey = i => i
     // data is an object with fields newsm feeds and videos represents each board data type
     const data = { news, feeds, videos, blogs }
@@ -88,7 +88,7 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
     return Object.keys(data).map(key => {
       let array = []
       // if filter is equal to current key and has data
-      if (key === filter && data[key].length) {
+      if (key === _filter && data[key]?.length) {
         // if key is feeds filter the feed by farm and render else render empty for that farm
         if (key === 'feeds')
           return data[key]?.filter(
@@ -104,7 +104,7 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
                 .map((content, index) => (
                   <RenderCards
                     key={mapKey(index)}
-                    filter={filter}
+                    filter={_filter}
                     farms={farms}
                     comparant={key}
                     activeFarmIndex={activeFarmIndex}
@@ -124,7 +124,7 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
             <RenderCards
               ref={queriedElement}
               key={mapKey(index)}
-              filter={filter}
+              filter={_filter}
               farms={farms}
               comparant={key}
               activeFarmIndex={activeFarmIndex}
@@ -135,8 +135,8 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
           ))
       } else {
         //if empty render empty component
-        if (filter === key) {
-          return renderEmpty(filter)
+        if (_filter === key) {
+          return renderEmpty(_filter)
         }
       }
       // return array
@@ -144,7 +144,7 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
     })
   }
 
-  // lifecycle component that executes when query filter or activeFarmindex has changes
+  // lifecycle component that executes when query filter or activeFarmIndex has changes
   // positions content to screen or scrolls to content
   useEffect(() => {
     let mounted = true

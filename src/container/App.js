@@ -8,22 +8,14 @@ import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
 import { ApiContextProvider } from 'context/api'
 import { WalletContextProvider } from 'context/wallet'
-import { RolloverContextProvider } from 'context/rollover'
 import { SocketContextProvider } from 'context/socket'
+import useInterval from 'hooks/useInterval'
 import Router from 'routes/Router'
+import FacebookPixel from 'hooks/FacebookPixel'
 
 const App = () => {
-  function FacebookPixel() {
-    React.useEffect(() => {
-      import('react-facebook-pixel')
-        .then(x => x.default)
-        .then(ReactPixel => {
-          ReactPixel.init('2143795925947401')
-          ReactPixel.pageView()
-        })
-    })
-    return null
-  }
+  //remove "feeds" cache
+  useInterval(() => sessionStorage.removeItem('feeds'), 300000)
 
   return (
     <BrowserRouter>
@@ -32,16 +24,14 @@ const App = () => {
           <ApiContextProvider>
             <SocketContextProvider>
               <ExternalContextProvider>
-                <RolloverContextProvider>
-                  <StartFarmContextProvider>
-                    <ModalContextProvider>
-                      <WalletContextProvider>
-                        <FacebookPixel />
-                        <Router />
-                      </WalletContextProvider>
-                    </ModalContextProvider>
-                  </StartFarmContextProvider>
-                </RolloverContextProvider>
+                <StartFarmContextProvider>
+                  <ModalContextProvider>
+                    <WalletContextProvider>
+                      <FacebookPixel />
+                      <Router />
+                    </WalletContextProvider>
+                  </ModalContextProvider>
+                </StartFarmContextProvider>
               </ExternalContextProvider>
             </SocketContextProvider>
           </ApiContextProvider>

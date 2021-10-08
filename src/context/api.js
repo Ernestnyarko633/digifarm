@@ -247,13 +247,6 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const submitPayout = async payload => {
-    return await http.post({
-      url: `${DIGITAL_FARMER_API}/payrolls`,
-      body: JSON.stringify(payload)
-    })
-  }
-
   const verifyWallet = async payload => {
     return await http.patch({
       url: `${DIGITAL_FARMER_API}/orders/verify-wallet`,
@@ -261,19 +254,6 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const patchPayout = async (id, payload) => {
-    return await http.patch({
-      url: `${DIGITAL_FARMER_API}/payrolls/${id}`,
-      body: JSON.stringify(payload)
-    })
-  }
-
-  const getFarmProcessingPayouts = async query => {
-    return await http.get({
-      url: `${DIGITAL_FARMER_API}/payrolls-wallet`,
-      query
-    })
-  }
   const eosTask = async payload => {
     return await http.post({
       url: `${FMS_API}/eos-task`,
@@ -406,8 +386,6 @@ export const ApiContextProvider = ({ children }) => {
         downloadFile,
         patchWallet,
         verifyWallet,
-        submitPayout,
-        patchPayout,
 
         getActivities,
         getMyFarmFeeds,
@@ -430,7 +408,6 @@ export const ApiContextProvider = ({ children }) => {
         initiatePaystackPayment,
         verifyTazapayPayment,
         verifyPaystackPayment,
-        getFarmProcessingPayouts,
         createFarmFromNotification,
 
         //cooperative

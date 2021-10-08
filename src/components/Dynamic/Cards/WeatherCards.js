@@ -3,7 +3,7 @@ import { Box, Grid, Heading, Text, Flex } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
 
-const WeatherCard = ({
+const WeatherCards = ({
   farmfeeds,
   weatherForeCasts,
   WeatherForeCastsIsLoading,
@@ -112,7 +112,7 @@ const WeatherCard = ({
   )
 }
 
-WeatherCard.propTypes = {
+WeatherCards.propTypes = {
   farmfeeds: PropTypes.any,
   weatherForeCasts: PropTypes.any,
   WeatherForeCastsIsLoading: PropTypes.bool,
@@ -122,4 +122,4 @@ WeatherCard.propTypes = {
   reloads: PropTypes.array
 }
 
-export default WeatherCard
+export default WeatherCards

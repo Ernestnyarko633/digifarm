@@ -4,18 +4,15 @@ import Layout from 'container/Layout'
 import FarmWalletEmptyState from 'components/EmptyStates/FarmWalletEmptyState'
 import FundCard from 'components/Cards/FundCard'
 import Individual from 'components/Dynamic/Document/Individual'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import FarmFinances from 'components/Cards/FarmFinances'
 
 const Wallet = () => {
   document.title = 'Complete Farmer | Farm wallet'
 
-  const { id: wallet_id } = useParams()
-
   const { state } = useLocation()
 
   const {
-    processing_payout,
     wallet,
     balance,
     expense,
@@ -103,10 +100,8 @@ const Wallet = () => {
           <Box
             display={{ base: 'none', md: 'block' }}
             as={FarmFinances}
-            processing_payout={processing_payout}
             farm={farm}
             activities={activities}
-            wallet_id={wallet_id}
             tasks={tasks}
             scheduledTasks={ScheduledTasks}
           />

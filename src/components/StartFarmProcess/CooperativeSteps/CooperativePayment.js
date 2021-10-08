@@ -1,13 +1,11 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Heading, Grid, GridItem, Divider } from '@chakra-ui/react'
 import Tazapay from 'assets/images/taz.svg'
 import { motion } from 'framer-motion'
-
 import useStartFarm from 'context/start-farm'
-
 import PayOption from 'components/Cards/PayOption'
-
 import Constants from 'constant'
 import Support from 'components/Support'
 import { Avatar } from '@chakra-ui/avatar'
@@ -35,17 +33,18 @@ const CooperativePayment = ({ farm, asMember }) => {
 
   const { data, isLoading, error, refetch } = useQuery(
     [
-      `welcome_to_coop_${asMember?.cooperative?._id || cooperative?._id}`,
-      asMember?.cooperative?._id || cooperative?._id
+      `welcome_to_coop_${asMember?.cooperative?.data?._id || cooperative?._id}`,
+      asMember?.cooperative?.data?._id || cooperative?._id
     ],
-    (asMember?.cooperative?._id || cooperative?._id) &&
-      getCooperativeById(asMember?.cooperative?._id || cooperative?._id)
+    () =>
+      (asMember?.cooperative?.data?._id || cooperative?._id) &&
+      getCooperativeById(asMember?.cooperative?.data?._id || cooperative?._id)
   )
 
   const triggerReload = () => refetch()
   return (
     <MotionGrid templateColumns={{ md: 'repeat(2, 1fr)' }}>
-      <GridItem overflowY='hidden'>
+      <GridItem overflowY='scroll'>
         <Box p={{ base: 8, md: 6 }}>
           <Box rounded='lg' p={4} bg='#F2F6F6'>
             <Flex align='center' justify='space-between'>
@@ -61,7 +60,7 @@ const CooperativePayment = ({ farm, asMember }) => {
                 />
                 <Box ml={2}>
                   <Text fontWeight={700} fontSize={{ md: 'xl' }}>
-                    {cooperative?.name || asMember?.cooperative?.name}
+                    {cooperative?.name || asMember?.cooperative?.data?.name}
                   </Text>
                   {isLoading || error ? (
                     <FetchCard
@@ -85,7 +84,9 @@ const CooperativePayment = ({ farm, asMember }) => {
                 </Text>
                 <Text fontWeight={700} textAlign='right'>
                   {FirstLettersToUpperCase(cooperative?.type?.name) ||
-                    FirstLettersToUpperCase(asMember?.cooperative?.type?.name)}
+                    FirstLettersToUpperCase(
+                      asMember?.cooperative?.data?.type?.name
+                    )}
                 </Text>
               </Box>
             </Flex>
@@ -128,7 +129,7 @@ const CooperativePayment = ({ farm, asMember }) => {
                   </Flex>
                   <Text fontWeight={900}>
                     {cooperative?.type?.discount * 100 ||
-                      asMember?.cooperative?.type?.discount * 100}
+                      asMember?.cooperative?.data?.type?.discount * 100}
                     %
                   </Text>
                 </Flex>

@@ -77,14 +77,14 @@ export default function Individual({
   }
 
   const totalAmount = __activity => {
-    let totalAmount = 0
+    let totaledAmount = 0
     let tempTasks = tasks?.filter(_task => _task.activity === __activity._id)
     if (tempTasks) {
       tempTasks.forEach(_task => {
-        totalAmount = totalAmount + _task?.budget
+        totaledAmount = totaledAmount + _task?.budget
       })
     }
-    return totalAmount
+    return totaledAmount
   }
 
   return (

@@ -23,10 +23,7 @@ const Warehouse = () => {
     isLoading: myFarmsIsLoading,
     error: myFarmsHasError,
     refetch
-  } = useQuery(
-    ['my_farms', user?._id],
-    () => user?._id && getMyFarms({ user: user?._id })
-  )
+  } = useQuery('my_farms', () => getMyFarms())
 
   const isLoading = myFarmsIsLoading
   const hasError = myFarmsHasError

@@ -15,6 +15,7 @@ import CooperativeName from '../OtherSteps/CooperativeName'
 import Acreage from './Acreage'
 import PropTypes from 'prop-types'
 import CooperativePayment from './CooperativePayment'
+// import { useLocation } from 'react-router-dom'
 
 const MotionFlex = motion(Flex)
 
@@ -131,7 +132,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           await handleCreateCooperative(selectedType?._id)
         } else {
           await handleCreateOrder(
-            { _id: asMember?.cooperative?._id },
+            { _id: asMember?.cooperative?.data?._id },
             asMember?.acreage
           )
         }

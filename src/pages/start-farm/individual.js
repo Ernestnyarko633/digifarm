@@ -36,23 +36,15 @@ const Individual = ({ location: { state }, history }) => {
       // clear cache data in session storage
       setStep(x => x * 0)
       setOtherStep(x => x * 0)
-      sessionStorage.removeItem('categories')
-      sessionStorage.removeItem('farms')
     }
   }, [setStep, setOtherStep])
 
   const getFlow = key => {
     switch (key) {
       case 0:
-        return <CropSelection rollover={state?.rollover} />
+        return <CropSelection />
       case 1:
-        return (
-          <OtherSteps
-            data={state?.data}
-            rollover={state?.rollover}
-            history={history}
-          />
-        )
+        return <OtherSteps data={state?.data} history={history} />
       default:
         return <ReloadPage />
     }

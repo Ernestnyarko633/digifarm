@@ -100,7 +100,12 @@ export default function Farm() {
     error: farmFeedsHasError,
     refetch: farmFeedsRefetch
   } = useQuery(
-    'key',
+    [
+      `farm_feeds_${
+        state?.order?.product?._id || farm?.data?.order?.product?._id
+      }`,
+      state?.order?.product?._id || farm?.data?.order?.product?._id
+    ],
     () =>
       (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
       getMyFarmFeeds({

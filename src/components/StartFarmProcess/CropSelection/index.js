@@ -1,25 +1,17 @@
 import React, { useEffect } from 'react'
 import { Box, Flex, Heading, Link, useToast } from '@chakra-ui/react'
 import { Link as ReachRouter } from 'react-router-dom'
-
 import useStartFarm from 'context/start-farm'
 import useApi from 'context/api'
-import PropTypes from 'prop-types'
-import { isMobile } from 'helpers/misc'
 import Tabs from 'components/Tabs/Tabs'
 import FetchCard from 'components/FetchCard'
 import FarmDetails from './FarmDetails'
 import { Button } from '../../index'
-import useRollover from 'context/rollover'
-import useComponent from 'context/component'
 import { useQuery } from 'react-query'
 
-const CropSelection = ({ rollover }) => {
-  const { handleModalClick } = useComponent()
-
+const CropSelection = () => {
   const gridRef = React.useRef(false)
   const { handleNext, selectedCooperativeType, selectedFarm } = useStartFarm()
-  const { total } = useRollover()
 
   const { getCropCategories } = useApi()
   const toast = useToast()
@@ -60,23 +52,6 @@ const CropSelection = ({ rollover }) => {
       })
     }
 
-    if (
-      mounted &&
-      !isLoading &&
-      rollover &&
-      total < selectedFarm?.pricePerAcre &&
-      gridRef
-    ) {
-      toast({
-        title: 'Insufficient funds in selected wallet(s)',
-        description:
-          'The number of sums available in your selected farm wallet(s) is insufficient to farm this crop',
-        status: 'error',
-        duration: 10000,
-        position: 'top-right'
-      })
-    }
-
     return () => (mounted = false)
   }, [
     isLoading,
@@ -84,18 +59,11 @@ const CropSelection = ({ rollover }) => {
     selectedFarm?.cropVariety?.crop?.name,
     toast,
     cooperativeBoolean,
-    rollover,
-    total,
     selectedFarm?.pricePerAcre
   ])
 
   let disableButton =
-    (rollover && total < selectedFarm?.pricePerAcre) ||
-    cooperativeBoolean ||
-    acreage ||
-    !selectedFarm ||
-    isLoading ||
-    error
+    cooperativeBoolean || acreage || !selectedFarm || isLoading || error
 
   return (
     <Flex
@@ -108,60 +76,13 @@ const CropSelection = ({ rollover }) => {
       pb={{ base: 0 }}
       px={{ base: 0, md: 0 }}
     >
-      {rollover && (
-        <Flex
-          w='100%'
-          mt={{ md: 0, '2xl': '15rem', '3xl': '2.5rem' }}
-          px={{ base: 2 }}
-          justify='flex-end'
-        >
-          <Flex
-            align='center'
-            direction='row'
-            w={{ base: '100%', xl: '80%', '2xl': '73%', '3xl': '80%' }}
-            justify='space-between'
-          >
-            <Flex justify='flex-start' w='50%' textAlign='center' py={10}>
-              <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
-                {isMobile()
-                  ? 'Choose crop'
-                  : 'Choose the crop you want to farm'}
-              </Heading>
-            </Flex>
-            <Flex justify='flex-end' w='50%'>
-              <Button
-                mr={{ md: 3 }}
-                bg='white'
-                display={{ base: 'block', lg: 'flex' }}
-                textAlign='center'
-                borderWidth={1}
-                btntitle='View wallet'
-                borderColor='gray.400'
-                color='cf.400'
-                fontWeight={900}
-                rounded={30}
-                onClick={async () => {
-                  handleModalClick('rollover', {
-                    wallet_id: sessionStorage.getItem('wallet'),
-                    inRollover: true,
-                    showButton: false
-                  })
-                }}
-                w={{ base: '80%', md: '45%', '3xl': '30%' }}
-                h={{ base: 50, '2xl': 55 }}
-                fontSize={{ base: 'sm', xl: 'md' }}
-              />
-            </Flex>
-          </Flex>
-        </Flex>
-      )}
-      {!rollover && (
+      {
         <Box textAlign='center' py={10}>
           <Heading as='h4' fontSize={{ base: 'lg', md: '2xl' }}>
             Choose the crop you want to farm
           </Heading>
         </Box>
-      )}
+      }
       {isLoading || error ? (
         <FetchCard
           w='100%'
@@ -224,10 +145,6 @@ const CropSelection = ({ rollover }) => {
       )}
     </Flex>
   )
-}
-
-CropSelection.propTypes = {
-  rollover: PropTypes.bool
 }
 
 export default CropSelection

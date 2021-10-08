@@ -23,8 +23,10 @@ import Button from 'components/Button'
 import { Status } from 'helpers/misc'
 import ImageUpload from 'components/ImageUpload'
 import useAuth from 'context/auth'
+import { useQueryClient } from 'react-query'
 
 const CompleteOrderModal = ({ call, isOpen, onClose }) => {
+  const queryClient = useQueryClient()
   const { isAuthenticated, store } = useAuth()
   const [loading, setLoading] = React.useState(false)
   const { user } = isAuthenticated()
@@ -64,8 +66,8 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
           position: 'top-right'
         })
         setSuccess(true)
-        sessionStorage.removeItem('my_farms')
-        sessionStorage.removeItem('my_orders')
+        queryClient.invalidateQueries('my_farms')
+        queryClient.invalidateQueries('my_orders')
         call()
       } catch (error) {
         toast({

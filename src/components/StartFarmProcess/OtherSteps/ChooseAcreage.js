@@ -21,28 +21,20 @@ import useExternal from 'context/external'
 import useStartFarm from 'context/start-farm'
 import EmptyMap from 'assets/images/map404.png'
 import Sat from 'assets/images/sateilite.png'
-
 import BaseSelect from 'components/Form/BaseSelect'
-// import FormRadio from 'components/Form/FormRadio'
 import Prismic from 'prismic-javascript'
-
 import { getFormattedMoney } from 'helpers/misc'
-
 import Constants from 'constant'
-
 import AcreageInput from './AcreageInput'
 import Map from 'components/Map/Map'
 import { dateIntervals } from 'helpers/misc'
 import useApi from 'context/api'
 import getConfig from 'utils/configs'
 import { useQuery } from 'react-query'
-// import { Scrollbars } from 'react-custom-scrollbars-2'
-
-// const options = ['Yes', 'No']
 
 const MotionGrid = motion(Grid)
 
-const ChooseAcreage = ({ farm, rollover }) => {
+const ChooseAcreage = ({ farm }) => {
   const ENV = process.env.REACT_APP_ENVIRONMENT
 
   const { eosSearch } = useApi()
@@ -59,7 +51,6 @@ const ChooseAcreage = ({ farm, rollover }) => {
     currency,
     wantCycle,
     setCurrency,
-    // setWantCycle,
     exchangeRate,
     setExchangeRate,
     setAcreage
@@ -139,7 +130,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
     error: EOSViewIDHasError,
     refetch
   } = useQuery(
-    null,
+    `eos_view_id_${farm?._id}`,
     farm?._id && location.length > 0 && eosSearch(eosViewIdPayload, 'sentinel2')
   )
 
@@ -155,7 +146,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
           if (res.data[query]) {
             setExchangeRate(res.data[query])
           }
-        } catch (error) {
+        } catch (err) {
           toast({
             status: 'error',
             duration: 9000,
@@ -163,9 +154,8 @@ const ChooseAcreage = ({ farm, rollover }) => {
             position: 'top-right',
             title: 'An error occurred.',
             description:
-              (error?.data?.message ||
-                error?.message ||
-                'Unknown error occurred') + '.'
+              (err?.data?.message || err?.message || 'Unknown error occurred') +
+              '.'
           })
         } finally {
           setLoading(false)
@@ -313,12 +303,12 @@ const ChooseAcreage = ({ farm, rollover }) => {
                       }}
                       onChange={e => setCurrency(JSON.parse(e.target.value))}
                     >
-                      {Constants.countries.map(currency => (
+                      {Constants.countries.map(mappedCurrency => (
                         <option
-                          key={currency.id}
-                          value={JSON.stringify(currency)}
+                          key={mappedCurrency.id}
+                          value={JSON.stringify(mappedCurrency)}
                         >
-                          {currency.currencyId}
+                          {mappedCurrency.currencyId}
                         </option>
                       ))}
                     </Select>
@@ -344,13 +334,8 @@ const ChooseAcreage = ({ farm, rollover }) => {
               >
                 <AcreageInput
                   totalAcres={Math.floor(farm?.acreage)}
-                  rollover={rollover}
                   value={acreage}
                   setValue={setAcreage}
-                  deteminant={farm.pricePerAcre * exchangeRate * 1}
-                  currentAmount={
-                    farm.pricePerAcre * exchangeRate * Math.floor(acreage)
-                  }
                 />
                 <Flex alignItems='center' marginLeft={{ md: 6 }}>
                   <Skeleton
@@ -447,8 +432,7 @@ const ChooseAcreage = ({ farm, rollover }) => {
 }
 
 ChooseAcreage.propTypes = {
-  farm: PropTypes.object.isRequired,
-  rollover: PropTypes.bool
+  farm: PropTypes.object.isRequired
 }
 
 export default ChooseAcreage

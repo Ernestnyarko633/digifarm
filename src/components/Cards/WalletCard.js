@@ -16,13 +16,8 @@ import useWallet from 'context/wallet'
 
 const WalletCard = ({ acreage, price, farm }) => {
   const { farmExpense } = useWallet()
-  const {
-    getAllTasks,
-    getActivities,
-    getMyScheduledTasks,
-    getMyFarmFeeds,
-    getFarmProcessingPayouts
-  } = useApi()
+  const { getAllTasks, getActivities, getMyScheduledTasks, getMyFarmFeeds } =
+    useApi()
 
   const {
     data: myFarmActivities,
@@ -73,40 +68,24 @@ const WalletCard = ({ acreage, price, farm }) => {
       })
   )
 
-  const {
-    data: payouts,
-    isLoading: payoutsIsLoading,
-    error: payoutsHasErrors,
-    refetch: payoutsRefetch
-  } = useQuery(
-    [`${farm?._id}_payouts`, farm?._id],
-    () =>
-      farm?._id &&
-      getFarmProcessingPayouts({
-        wallet: farm?._id
-      })
-  )
-
   const triggerReload = () => {
     ScheduledTasksHasError && ScheduledTasksRefetch()
     tasksHasError && tasksRefetch()
     myFarmActivitiesHasError && myFarmActivitiesRefetch()
     farmFeedsHasError && farmFeedsRefetch()
-    payoutsHasErrors && payoutsRefetch()
   }
 
   const loading =
     ScheduledTasksIsLoading ||
     tasksIsLoading ||
     myFarmActivitiesIsLoading ||
-    farmFeedsIsLoading ||
-    payoutsIsLoading
+    farmFeedsIsLoading
+
   const error =
     ScheduledTasksHasError ||
     tasksHasError ||
     myFarmActivitiesHasError ||
-    farmFeedsHasError ||
-    payoutsHasErrors
+    farmFeedsHasError
 
   return (
     <Box
@@ -170,11 +149,13 @@ const WalletCard = ({ acreage, price, farm }) => {
               justify='center'
               mx='auto'
               reload={() => {
-                ;(!farm?.length ||
-                  !tasks?.data?.length ||
-                  !myFarmActivities?.data?.length ||
-                  !ScheduledTasks?.data?.length) &&
+                return (
+                  (!farm?.length ||
+                    !tasks?.data?.length ||
+                    !myFarmActivities?.data?.length ||
+                    !ScheduledTasks?.data?.length) &&
                   triggerReload()
+                )
               }}
               loading={loading}
               error={error}
@@ -208,7 +189,6 @@ const WalletCard = ({ acreage, price, farm }) => {
             to={{
               pathname: `/wallets/${farm?._id}`,
               state: {
-                processing_payout: payouts?.data?.length > 0 ? true : false,
                 farm: farm || {},
                 activities: myFarmActivities?.data || [],
                 tasks: tasks?.data || [],

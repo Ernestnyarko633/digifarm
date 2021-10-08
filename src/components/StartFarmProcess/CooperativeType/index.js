@@ -23,6 +23,17 @@ const CooperativeType = () => {
   const { data, loading, error, refetch } = useQuery('cooperative-types', () =>
     getCooperativeTypes()
   )
+
+  React.useEffect(() => {
+    let mounted = true
+
+    if (mounted && data?.data) {
+      sessionStorage.setItem('cooperative-types', JSON.stringify(data?.data))
+    }
+
+    return () => (mounted = false)
+  }, [data?.data])
+
   const triggerReload = () => refetch()
 
   return (

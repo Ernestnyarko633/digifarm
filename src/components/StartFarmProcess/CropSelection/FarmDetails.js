@@ -16,13 +16,20 @@ const FarmDetails = ({ query, catName, dashboard, gridRef }) => {
   const { selectedFarm, setSelectedFarm, setStep } = useStartFarm()
   const { getFarms } = useApi()
 
-  const { data, isLoading, error, refetch } = useQuery('_farms', () =>
+  const { data, isLoading, error, refetch } = useQuery('farms', () =>
     getFarms(query)
   )
+  useEffect(() => {
+    let mounted = true
+
+    if (mounted && data?.data) {
+      sessionStorage.setItem('farms', JSON.stringify(data?.data))
+    }
+
+    return () => (mounted = false)
+  }, [data?.data])
 
   const triggerReload = () => refetch()
-
-  data?.data && sessionStorage.setItem('farms', JSON.stringify(data?.data))
 
   const type = sessionStorage.getItem('type')
 

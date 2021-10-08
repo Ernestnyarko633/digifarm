@@ -1,12 +1,12 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Flex, Heading, Text, Icon } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, Icon, Spinner } from '@chakra-ui/react'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 
 // import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import ReactPlayer from 'react-player/youtube'
+import ReactPlayer from 'react-player'
 
 const WeeklyVideoCard = ({ status, timestamp, content }) => {
   const [activeVideoIndex, setVideoActiveIndex] = React.useState(0)
@@ -29,6 +29,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
   const YoutubeSlide = ({ url }) => (
     <ReactPlayer
       width='100%'
+      fallback={<Spinner />}
       controls
       loop
       volume={0.3}
@@ -41,7 +42,7 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
     url: PropTypes.any
   }
 
-  const NewHead = () => (
+  const NewsHead = () => (
     <Flex align='center' justify='space-between'>
       <Flex align='center'>
         <Box ml={4}>
@@ -64,15 +65,11 @@ const WeeklyVideoCard = ({ status, timestamp, content }) => {
     </Flex>
   )
 
-  // const customRenderItem = (item, props) => (
-  //   <item.type {...item.props} {...props} />
-  // )
-
   return (
     <FarmBoardCardWrapper status={status} content={content}>
       <Box>
         <Box pt={{ base: 4 }} pb={2} px={{ base: 4, md: 8 }}>
-          <NewHead />
+          <NewsHead />
         </Box>
         <Box w='100%' h={{ md: 90 }}>
           <YoutubeSlide
