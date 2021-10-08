@@ -1,50 +1,55 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Grid, Heading } from '@chakra-ui/react'
+import {
+  Box,
+  Grid,
+  Heading,
+  Text,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel
+} from '@chakra-ui/react'
 import EventCard from 'components/Cards/EventCard'
-import Prismic from 'prismic-javascript'
-import getConfig from 'utils/configs'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
 import CooperativesCard from 'components/Cards/CooperativesCard'
+import FarmManagerUpdateCard from 'components/Cards/FarmManagerUpdateCard'
 import { useQuery } from 'react-query'
+import { usePrismic } from 'hooks/useFarmBoard'
 
 const RightSidebar = ({ onOpen, setSelectedData }) => {
-  const [doc, setDocData] = React.useState(null)
-  const [loading, setLoading] = React.useState(false)
   const { getCooperatives } = useApi()
+
+  const { managerUpdates: farmUpdates, announcements, loading } = usePrismic()
 
   const { data, isLoading, error, refetch } = useQuery('cooperatives', () =>
     getCooperatives()
   )
 
+  // const {
+  //   data: announcementsAndManagerUpdates,
+  //   isLoading: announcementsAndManagerUpdatesIsLoading,
+  //   error: announcementsAndManagerUpdatesHasError,
+  //   refetch: announcementsAndManagerUpdatesRefetch
+  // } = useQuery(
+  //   'announcementsAndManagerUpdates',
+  //   async () =>
+  //     await Promise.all([
+
+  //     ])
+  // )
+
   const triggerReload = () => refetch()
 
   const mapKey = index => index
-  const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
-  const Client = Prismic.client(PRISMIC_API, {
-    accessToken: PRISMIC_ACCESS_TOKEN
-  })
-
-  React.useEffect(() => {
-    let mounted = true
-    if (mounted && !doc) {
-      const fetchData = async () => {
-        setLoading(true)
-        const response = await Client.query(
-          Prismic.Predicates.at('document.type', 'announcements')
-        )
-        if (response) {
-          setDocData(response.results)
-        }
-
-        setLoading(false)
-      }
-      fetchData()
-    }
-    return () => (mounted = false)
-  }, [Client, doc])
+  // filtering farm manager updates to get updates for farms bought by digital farmer;
+  // const farmUpdates =
+  //   managerUpdates
+  //     ?
 
   return (
     <Box
@@ -59,59 +64,143 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
       pb={{ base: 24, md: 0 }}
       w={{ md: '22%', xl: '22%' }}
     >
-      <Heading
-        as='h4'
-        textTransform='uppercase'
-        fontSize={{ base: 'lg', md: '2xl' }}
-        fontWeight={700}
-        borderBottomWidth={1}
-        borderBottomColor='gray.300'
-        pb={2}
-      >
-        Events
-      </Heading>
+      <Box>
+        <Tabs>
+          <TabList borderBottomWidth={1} mx='auto'>
+            <Tab _selected={{ color: 'cf.400' }} mx='auto'>
+              <Heading
+                as='h4'
+                textTransform='uppercase'
+                fontSize={{ base: 'lg', md: '1xl' }}
+                fontWeight={700}
+                borderBottomColor='gray.300'
+                pb={2}
+              >
+                Manager's Update
+              </Heading>
+            </Tab>
 
-      <Box h='45%' px={2} my={2}>
-        {loading ? (
-          <FetchCard
-            direction='column'
-            align='center'
-            justify='center'
-            mx='auto'
-            w={{ xl: 24 }}
-            h={{ xl: 80 }}
-            reload={null}
-            loading={loading}
-            error={null}
-            text='Loading events'
-          />
-        ) : (
-          <>
-            <Grid gap={4} mt={4} mb={4}>
-              {doc?.map((event, i) => (
-                <EventCard
-                  key={mapKey(i)}
-                  onOpen={onOpen}
-                  setSelectedData={setSelectedData}
-                  event={event}
-                />
-              ))}
-            </Grid>
-
-            <Grid gap={4} mt={4} mb={4} d={{ base: 'grid', md: 'none' }}>
-              {doc?.map((event, i) => (
-                <EventCard
-                  key={mapKey(i)}
-                  onOpen={onOpen}
-                  setSelectedData={setSelectedData}
-                  event={event}
-                />
-              ))}
-            </Grid>
-          </>
-        )}
+            <Tab _selected={{ color: 'cf.400' }} mx='auto'>
+              <Heading
+                as='h4'
+                textTransform='uppercase'
+                fontSize={{ base: 'lg', md: '1xl' }}
+                fontWeight={700}
+                borderBottomColor='gray.300'
+                pb={2}
+              >
+                Events
+              </Heading>
+            </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Box my={2}>
+                {loading ? (
+                  <FetchCard
+                    direction='column'
+                    align='center'
+                    justify='center'
+                    mx='auto'
+                    w={{ xl: 24 }}
+                    h={{ xl: 80 }}
+                    reload={null}
+                    loading={loading}
+                    error={null}
+                    text='Loading farm manager`s updates'
+                  />
+                ) : (
+                  <>
+                    {farmUpdates?.length > 0 ? (
+                      <Grid
+                        // h={{ base: '20%', xl: '45%' }}
+                        overflowY='scroll'
+                        h={{ base: 80, md: 90 }}
+                        gap={4}
+                        mt={4}
+                        mb={4}
+                        px={2}
+                      >
+                        {farmUpdates?.map((update, i) => (
+                          <FarmManagerUpdateCard
+                            key={mapKey(i)}
+                            update={update}
+                          />
+                        ))}
+                      </Grid>
+                    ) : (
+                      <Box w='40%' m='auto'>
+                        <Text
+                          as='h4'
+                          py='auto'
+                          align='center'
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          fontWeight='bold'
+                          pb={2}
+                        >
+                          There's currently no update.
+                        </Text>
+                      </Box>
+                    )}
+                  </>
+                )}
+              </Box>
+            </TabPanel>
+            <TabPanel>
+              <Box h={{ base: 80, md: 90 }} px={2} my={2}>
+                {loading ? (
+                  <FetchCard
+                    direction='column'
+                    align='center'
+                    justify='center'
+                    mx='auto'
+                    w={{ xl: 24 }}
+                    h={{ xl: 80 }}
+                    reload={null}
+                    loading={loading}
+                    error={null}
+                    text='Loading events'
+                  />
+                ) : (
+                  <>
+                    {announcements?.length > 0 ? (
+                      <Grid
+                        // h={{ base: '20%', xl: '45%' }}
+                        overflowY='scroll'
+                        gap={4}
+                        mt={4}
+                        mb={4}
+                      >
+                        {announcements?.map((event, i) => (
+                          <EventCard
+                            key={mapKey(i)}
+                            onOpen={onOpen}
+                            setSelectedData={setSelectedData}
+                            event={event}
+                          />
+                        ))}
+                      </Grid>
+                    ) : (
+                      <Box w='40%' m='auto'>
+                        <Text
+                          as='h4'
+                          py='auto'
+                          align='center'
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          fontWeight='bold'
+                          pb={2}
+                        >
+                          There are currently no upcoming events.
+                        </Text>
+                      </Box>
+                    )}
+                  </>
+                )}
+              </Box>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
-
       {isLoading || error ? (
         <FetchCard
           m='auto'
@@ -130,8 +219,9 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
           <>
             <Heading
               as='h4'
-              fontSize={{ base: 'lg', md: '2xl' }}
+              fontSize={{ base: 'lg', md: '1xl' }}
               fontWeight={700}
+              textTransform='uppercase'
               borderBottomWidth={1}
               borderBottomColor='gray.300'
               pb={2}
@@ -140,23 +230,14 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
             </Heading>
             <Box
               overflowY='scroll'
+              d={{ base: 'block', md: 'block' }}
               my={{ base: 3, xl: 2 }}
-              h={{ base: '20%', xl: '40%' }}
+              h={{ base: 80, md: 90 }}
               px={2}
             >
-              <Box d={{ base: 'none', md: 'block' }}>
-                <Box>
-                  {data?.data?.map(coop => (
-                    <CooperativesCard coop={coop} key={coop._id} />
-                  ))}
-                </Box>
-              </Box>
-
-              <Box d={{ base: 'block', md: 'none' }} overflowY='scroll'>
-                {data?.data?.map(coop => (
-                  <CooperativesCard coop={coop} key={coop._id} />
-                ))}
-              </Box>
+              {data.map((coop, i) => (
+                <CooperativesCard coop={coop} key={mapKey(i)} />
+              ))}
             </Box>
           </>
         )

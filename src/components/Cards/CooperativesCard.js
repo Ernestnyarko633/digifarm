@@ -14,12 +14,12 @@ const CooperativesCard = ({ coop }) => {
       my={{ base: 4, lg: 4 }}
     >
       <Flex p={{ base: 4, xl: 4 }}>
-        <Avatar name={coop?.name} src={coop?.imageUrl} size='lg' />
+        <Avatar name={coop?.name} src={coop?.imageUrl} size='md' />
         <Box ml={3}>
-          <Heading as='h5' fontSize={{ md: 'sm', xl: 'md', '5xl': 'lg' }}>
+          <Heading as='h3' fontSize={{ md: 'sm', xl: 'md', '3xl': 'lg' }}>
             {coop?.name}
           </Heading>
-          <Text fontSize='sm' pt={2} lineHeight='shorter'>
+          <Text fontSize='xs' pt={2} lineHeight='shorter'>
             {coop?.product?.cropVariety?.crop?.name} (
             {coop?.product?.cropVariety?.crop?.sciName}) #{coop?.product?.name}
           </Text>
@@ -28,7 +28,7 @@ const CooperativesCard = ({ coop }) => {
           </Text>
         </Box>
       </Flex>
-      <Flex justify='center' pb={{ base: 4, xl: 4 }}>
+      <Flex justify='center' pb={{ base: 2, xl: 2 }}>
         <Link
           as={ReachRouter}
           to={{

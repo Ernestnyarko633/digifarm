@@ -1,0 +1,35 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Text, Heading } from '@chakra-ui/react'
+
+const FarmManagerUpdateCard = ({ update }) => {
+  return (
+    <Box
+      px={3}
+      py={5}
+      rounded='xl'
+      cursor='pointer'
+      color='white'
+      bgGradient='linear(to-l, #93CF88,#5AA250)'
+    >
+      <Heading
+        textTransform='uppercase'
+        pb={2}
+        as='h6'
+        fontWeight='bold'
+        fontSize='md'
+      >
+        {update.data.farm[0]?.text} Farm
+      </Heading>
+      <Text fontSize='sm' fontWeight='bold'>
+        {update.data.comments[0]?.text}
+      </Text>
+    </Box>
+  )
+}
+
+FarmManagerUpdateCard.propTypes = {
+  update: PropTypes.any
+}
+
+export default FarmManagerUpdateCard

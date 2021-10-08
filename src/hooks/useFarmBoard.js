@@ -7,6 +7,7 @@ import useApi from 'context/api'
 import { latestDateForFarmFeed } from 'helpers/misc'
 import useComponent from 'context/component'
 import { useQuery } from 'react-query'
+import { useFarmData } from './useFarmData'
 
 const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
@@ -15,6 +16,7 @@ const Client = Prismic.client(PRISMIC_API, {
 })
 
 export const usePrismic = () => {
+  const { myFarms } = useFarmData()
   const { inViewProduct: farm } = useComponent()
   const { data, isLoading, error, refetch, isFetched } = useQuery(
     'prismic',
@@ -28,6 +30,9 @@ export const usePrismic = () => {
         }),
         Client.query(Prismic.Predicates.at('document.type', 'manager_update'), {
           pageSize: 200
+        }),
+        Client.query(Prismic.Predicates.at('document.type', 'announcements'), {
+          pageSize: 200
         })
       ])
   )
@@ -36,6 +41,25 @@ export const usePrismic = () => {
 
   return {
     loading: isLoading,
+    managerUpdates: isFetched
+      ? data[2].results
+          ?.filter(update => {
+            const x = myFarms?.find(
+              farm =>
+                farm?.order?.product?._id === update?.data?.farm_id[0]?.text
+            )
+            if (x) {
+              return update
+            }
+            return null
+          })
+          .sort(
+            (a, b) =>
+              new Date(b.first_publication_date) -
+              new Date(a.first_publication_date)
+          ) || []
+      : [],
+    announcements: isFetched ? data[3]?.results : [],
     comments: isFetched
       ? data[2]?.results
           ?.filter(c => (farm ? c?.data?.farm_id[0]?.text === farm : {}))
