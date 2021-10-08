@@ -299,18 +299,20 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
 
       <AnimatePresence>
         <MotionFlex
-          mx='auto'
-          rounded='md'
-          overflow='hidden'
-          borderColor='gray.200'
-          borderWidth={otherStep !== 1 && 1}
-          align={otherStep === 1 && 'center'}
-          justify={otherStep === 1 && 'center'}
-          bgColor={otherStep !== 1 && 'white'}
-          h={{
-            base: otherStep === 1 && '80vh',
-            md: otherStep !== 1 ? 120 : '80vh'
+          w={{
+            base: '100%',
+            xl: '78%',
+            '3xl': '75%',
+            '4xl': '70%',
+            '5xl': '55%'
           }}
+          h={{ md: 123 }}
+          mx='auto'
+          borderWidth={1}
+          borderColor='gray.200'
+          rounded='md'
+          bgColor='white'
+          overflow='scroll'
         >
           {getSteps(otherStep)}
         </MotionFlex>

@@ -271,7 +271,7 @@ const OtherSteps = ({ data, history: { push } }) => {
           borderColor='gray.200'
           rounded='md'
           bgColor='white'
-          overflow='hidden'
+          overflow='scroll'
         >
           {getSteps(otherStep)}
         </MotionFlex>
