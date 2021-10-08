@@ -173,8 +173,6 @@ const ChooseAcreage = ({ farm }) => {
   const loading = EOSViewIDIsLoading
   const error = EOSViewIDHasError
 
-  console.log(error, 'tests')
-
   const MapUnavailabe = () => {
     return (
       <Box

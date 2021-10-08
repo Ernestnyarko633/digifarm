@@ -13,8 +13,6 @@ import { FaReceipt } from 'react-icons/all'
 const MotionBox = motion(Box)
 
 const Notifications = ({ notifications, loading, mutation, userMutation }) => {
-  console.log(notifications, 'Notifications')
-
   const renderNotificationIcons = value => {
     switch (value) {
       case 'news':
