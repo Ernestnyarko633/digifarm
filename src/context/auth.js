@@ -9,11 +9,11 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(window.sessionStorage.getItem('_cfu'))
   )
 
-  const store = ({ token, user }) => {
+  const store = ({ token, user: individual }) => {
     if (token) window.sessionStorage.setItem('_cft', token)
-    if (user) {
-      setUser(user)
-      window.sessionStorage.setItem('_cfu', JSON.stringify(user))
+    if (individual) {
+      setUser(individual)
+      window.sessionStorage.setItem('_cfu', JSON.stringify(individual))
     }
   }
 

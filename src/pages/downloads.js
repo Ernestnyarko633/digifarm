@@ -17,10 +17,10 @@ const Downloads = ({ data }) => {
   const triggerReload = () => setReload(p => p + 1)
 
   const _downloadFile = useCallback(
-    async query => {
+    async _query => {
       try {
         setLoading(true)
-        const res = await downloadFile('orders', query)
+        const res = await downloadFile('orders', _query)
         let blob = new Blob([res.data], {
           type: 'application/pdf;charset=utf-8'
         })
@@ -30,18 +30,18 @@ const Downloads = ({ data }) => {
           duration: 5000,
           position: 'top-right'
         })
-        saveAs(blob, `${query.reference}-agreement.pdf`)
-      } catch (error) {
+        saveAs(blob, `${_query.reference}-agreement.pdf`)
+      } catch (err) {
         toast({
           title: 'Download failed',
           description:
-            error?.message || error?.data?.message || 'Unexpected error.',
+            err?.message || err?.data?.message || 'Unexpected error.',
           status: 'error',
           duration: 5000,
           position: 'top-right'
         })
 
-        setError(error?.message || error?.data?.message || 'Unexpected error')
+        setError(err?.message || err?.data?.message || 'Unexpected error')
       } finally {
         setLoading(false)
       }

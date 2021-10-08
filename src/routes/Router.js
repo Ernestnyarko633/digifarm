@@ -45,7 +45,6 @@ const Router = () => {
           path='/cooperative/:id'
           component={Pages.Cooperative_}
         />
-        <PrivateRoute exact path='/payment' component={Pages.Payment} />
         <PrivateRoute
           path='/payment-paystack/:id/:type'
           component={Pages.PaymentPaystack}

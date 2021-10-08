@@ -152,7 +152,7 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const convertToGhanaCedis = async order => {
+  const convertToGhanaCedis = async object => {
     try {
       setSubmitting(true)
       const q = 'USD_GHS'
@@ -162,7 +162,7 @@ export const StartFarmContextProvider = ({ children }) => {
         throw new Error('Unknown error occurred, try again')
       }
 
-      const cediAmt = order.cost * excRes.data[q]
+      const cediAmt = object.cost * excRes.data[q]
       return parseFloat(cediAmt / 0.9805).toFixed(2) * 1
     } catch (error) {
       toastError(error)
@@ -171,15 +171,15 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const handleCreateOrder = async (cooperative, cooperativeUserAcreage) => {
+  const handleCreateOrder = async (_cooperative, cooperativeUserAcreage) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
-      const calculateCost = (acreage, pricePerAcre, discount) => {
+      const calculateCost = (acres, pricePerAcre, discount) => {
         let cost = 0
         let price = 0
         price = pricePerAcre - pricePerAcre * discount
-        cost = price * acreage
+        cost = price * acres
         return cost
       }
 
@@ -204,8 +204,8 @@ export const StartFarmContextProvider = ({ children }) => {
             100
         }
       }
-      if (cooperative?._id) {
-        data.cooperative = cooperative._id
+      if (_cooperative?._id) {
+        data.cooperative = _cooperative._id
 
         data.cost = calculateCost(
           cooperativeUserAcreage || acreage,
@@ -249,16 +249,16 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const handleTazapayPayment = async (user, store, order, product) => {
+  const handleTazapayPayment = async (_user, _store, _order, product) => {
     try {
       //check if user has account
       let id = null
-      if (!user?.escrowId) {
+      if (!_user?.escrowId) {
         const payload = {
-          email: user.email, // user email
-          first_name: user.firstName, // user firstname
-          last_name: user.lastName, // user lastName
-          country: getCode(user.address.country).toUpperCase(), // get the country of the human being and get the ISO code for it transform it to Upper Case letters
+          email: _user.email, // user email
+          first_name: _user.firstName, // user firstname
+          last_name: _user.lastName, // user lastName
+          country: getCode(_user.address.country).toUpperCase(), // get the country of the human being and get the ISO code for it transform it to Upper Case letters
           ind_bus_type: 'Individual' // Individual
         }
 
@@ -267,7 +267,7 @@ export const StartFarmContextProvider = ({ children }) => {
         // if successful
         if (response.data) {
           // patch the user with new information account id
-          const res = await patchUser(user?._id, {
+          const res = await patchUser(_user?._id, {
             escrowId: response.data.account_id
           })
 
@@ -275,7 +275,7 @@ export const StartFarmContextProvider = ({ children }) => {
 
           // hopefully it should be successful unless someone did something behind the scence in that case we should have a successful update
           if (res.data) {
-            store({ user: res.data })
+            _store({ user: res.data })
           } else {
             // else throw this unable to patch
             throw new Error('Unable to update user account details')
@@ -289,15 +289,15 @@ export const StartFarmContextProvider = ({ children }) => {
       // initiate escrow payment
 
       const escrow_payload = {
-        initiated_by: user.escrowId || id, // escrow account of user who started this whole mess
+        initiated_by: _user.escrowId || id, // escrow account of user who started this whole mess
         seller_id: ESCROW_SELLER_ID, // escrow account of the person selling
-        buyer_id: user.escrowId || id, // escrow account of the person buying
-        order_id: order._id, // order id of the farm
+        buyer_id: _user.escrowId || id, // escrow account of the person buying
+        order_id: _order._id, // _order id of the farm
         purpose: 'FARM_PURCHASE', // type
         txn_description: `Purchase of ${
           product.name
         } ${product?.cropVariety?.crop?.name?.toUpperCase()} farm`, // description of transaction
-        invoice_amount: order.cost, // cost of transaction
+        invoice_amount: _order.cost, // cost of transaction
         invoice_currency: 'USD', // currency
 
         // must always be false
@@ -315,15 +315,15 @@ export const StartFarmContextProvider = ({ children }) => {
       if (create_escrow_response.data) {
         const payload = {
           txn_no: create_escrow_response.data.txn_no,
-          complete_url: `${window.location.origin}/tazapay?order=${order._id}&txn_no=${create_escrow_response.data.txn_no}`,
-          error_url: `${window.location.origin}/tazapay?order=${order._id}&txn_no=${create_escrow_response.data.txn_no}&error=true`
+          complete_url: `${window.location.origin}/tazapay?order=${_order._id}&txn_no=${create_escrow_response.data.txn_no}`,
+          error_url: `${window.location.origin}/tazapay?order=${_order._id}&txn_no=${create_escrow_response.data.txn_no}&error=true`
         }
 
         const response = await payEscrow(payload)
         window.onbeforeunload = null
 
         if (response.data.redirect_url) {
-          const res = await patchOrder(order._id, {
+          const res = await patchOrder(_order._id, {
             redirect: response.data.redirect_url
           })
           if (res.data) {

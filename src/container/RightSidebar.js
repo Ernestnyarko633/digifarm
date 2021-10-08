@@ -22,34 +22,24 @@ import { usePrismic } from 'hooks/useFarmBoard'
 
 const RightSidebar = ({ onOpen, setSelectedData }) => {
   const { getCooperatives } = useApi()
-
-  const { managerUpdates: farmUpdates, announcements, loading } = usePrismic()
+  const {
+    managerUpdates: farmUpdates,
+    announcements,
+    loading,
+    refetch: PrismicRefetch,
+    error: PrismicError
+  } = usePrismic()
 
   const { data, isLoading, error, refetch } = useQuery('cooperatives', () =>
     getCooperatives()
   )
 
-  // const {
-  //   data: announcementsAndManagerUpdates,
-  //   isLoading: announcementsAndManagerUpdatesIsLoading,
-  //   error: announcementsAndManagerUpdatesHasError,
-  //   refetch: announcementsAndManagerUpdatesRefetch
-  // } = useQuery(
-  //   'announcementsAndManagerUpdates',
-  //   async () =>
-  //     await Promise.all([
-
-  //     ])
-  // )
-
-  const triggerReload = () => refetch()
+  const triggerReload = () => {
+    PrismicError && PrismicRefetch()
+    error && refetch()
+  }
 
   const mapKey = index => index
-
-  // filtering farm manager updates to get updates for farms bought by digital farmer;
-  // const farmUpdates =
-  //   managerUpdates
-  //     ?
 
   return (
     <Box
@@ -113,7 +103,6 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                   <>
                     {farmUpdates?.length > 0 ? (
                       <Grid
-                        // h={{ base: '20%', xl: '45%' }}
                         overflowY='scroll'
                         h={{ base: 80, md: 90 }}
                         gap={4}
@@ -235,7 +224,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
               h={{ base: 80, md: 90 }}
               px={2}
             >
-              {data.map((coop, i) => (
+              {data.data?.map((coop, i) => (
                 <CooperativesCard coop={coop} key={mapKey(i)} />
               ))}
             </Box>

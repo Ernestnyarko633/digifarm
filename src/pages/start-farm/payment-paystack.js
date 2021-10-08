@@ -5,7 +5,7 @@ import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
 import { useQuery } from 'react-query'
 
-const PaymentVerificaiton = ({ history }) => {
+const PaymentPaystack = ({ history }) => {
   const { id, type } = useParams()
   const { getMyOrder } = useApi()
 
@@ -43,9 +43,9 @@ const PaymentVerificaiton = ({ history }) => {
   )
 }
 
-PaymentVerificaiton.propTypes = {
+PaymentPaystack.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object
 }
 
-export default PaymentVerificaiton
+export default PaymentPaystack

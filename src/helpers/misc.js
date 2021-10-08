@@ -194,7 +194,7 @@ export const isDateG8Today = date => {
   return today > start
 }
 
-export const objDiff = (object, base) => {
+export const objDiff = (obj, ba) => {
   function changes(object, base) {
     return _.transform(object, (result, value, key) => {
       if (!_.isEqual(value, base[key])) {
@@ -205,7 +205,7 @@ export const objDiff = (object, base) => {
       }
     })
   }
-  return changes(object, base)
+  return changes(obj, ba)
 }
 
 export const urlify = text => {

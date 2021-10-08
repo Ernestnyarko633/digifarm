@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import React from 'react'
 import getConfig from 'utils/configs'
 import Prismic from 'prismic-javascript'
