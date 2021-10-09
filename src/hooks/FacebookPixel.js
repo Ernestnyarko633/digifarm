@@ -5,8 +5,8 @@ function FacebookPixel() {
     import('react-facebook-pixel')
       .then(x => x.default)
       .then(ReactPixel => {
-        ReactPixel.init('2143795925947401')
-        ReactPixel.pageView()
+        ReactPixel?.init('2143795925947401')
+        ReactPixel?.pageView()
       })
   })
   return null

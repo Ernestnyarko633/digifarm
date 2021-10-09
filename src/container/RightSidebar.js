@@ -39,6 +39,25 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
     error && refetch()
   }
 
+  const Header = ({ title }) => {
+    return (
+      <Heading
+        as='h4'
+        textTransform='uppercase'
+        fontSize={{ base: 'lg', md: '1xl' }}
+        fontWeight={700}
+        borderBottomColor='gray.300'
+        pb={2}
+      >
+        {title}
+      </Heading>
+    )
+  }
+
+  Header.propTypes = {
+    title: PropTypes.string
+  }
+
   const mapKey = index => index
 
   return (
@@ -58,29 +77,11 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         <Tabs>
           <TabList borderBottomWidth={1} mx='auto'>
             <Tab _selected={{ color: 'cf.400' }} mx='auto'>
-              <Heading
-                as='h4'
-                textTransform='uppercase'
-                fontSize={{ base: 'lg', md: '1xl' }}
-                fontWeight={700}
-                borderBottomColor='gray.300'
-                pb={2}
-              >
-                Manager's Update
-              </Heading>
+              <Header title="Manager's Update" />
             </Tab>
 
             <Tab _selected={{ color: 'cf.400' }} mx='auto'>
-              <Heading
-                as='h4'
-                textTransform='uppercase'
-                fontSize={{ base: 'lg', md: '1xl' }}
-                fontWeight={700}
-                borderBottomColor='gray.300'
-                pb={2}
-              >
-                Events
-              </Heading>
+              <Header title='Events' />
             </Tab>
           </TabList>
           <TabPanels>
