@@ -149,14 +149,14 @@ const WarehouseCard = ({
   )
 }
 WarehouseCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
-  image: PropTypes.any.isRequired,
-  buttontitle: PropTypes.string.isRequired,
-  weight: PropTypes.string.isRequired,
-  bags: PropTypes.string.isRequired,
-  quantity: PropTypes.string.isRequired,
-  condition: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  location: PropTypes.string,
+  image: PropTypes.any,
+  buttontitle: PropTypes.string,
+  weight: PropTypes.string,
+  bags: PropTypes.string,
+  quantity: PropTypes.string,
+  condition: PropTypes.string,
   mr: PropTypes.any,
   ml: PropTypes.any,
   status: PropTypes.string,

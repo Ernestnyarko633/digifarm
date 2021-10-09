@@ -45,12 +45,12 @@ const Auth = ({
               const { data: user } = await getUser()
               // store user data
               store({ user })
-            } catch (error) {
-              if (error) {
-                if ([401, 403].includes(error.status)) {
+            } catch (err) {
+              if (err) {
+                if ([401, 403].includes(err.status)) {
                   replaceURI('AUTH', '/redirects?from=DIGITAL_FARMER&off=true')
                 } else {
-                  setError(error.message)
+                  setError(err.message)
                 }
               } else {
                 setError('Unexpected network error')

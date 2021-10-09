@@ -77,13 +77,17 @@ export default function Tasks() {
 
     if (task) {
       if (type === 'today') {
-        const res = task?.filter(task => today === comparant(task?.startDate))
+        const res = task?.filter(
+          filteredTask => today === comparant(filteredTask?.startDate)
+        )
 
         return res
       }
 
       if (type === 'scheduled') {
-        const res = task?.filter(task => today !== comparant(task?.startDate))
+        const res = task?.filter(
+          filteredTask => today !== comparant(filteredTask?.startDate)
+        )
 
         return res
       }

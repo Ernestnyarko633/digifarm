@@ -158,7 +158,7 @@ export default function Farm() {
             boxShadow='0px 1px 24px rgba(0, 0, 0, 0.1)'
             w='100%'
           >
-            {({ open: isOpen }) => (
+            {({ open: _open }) => (
               <>
                 <Menu.Button as={Box} w='100%' _focus={{ outline: 'none' }}>
                   <Flex align='center' justify='space-between'>
@@ -169,7 +169,7 @@ export default function Farm() {
                     </Box>
 
                     <Box>
-                      <Icon as={isOpen ? chevronUp : chevronDown} boxSize={6} />
+                      <Icon as={_open ? chevronUp : chevronDown} boxSize={6} />
                     </Box>
                   </Flex>
                 </Menu.Button>
