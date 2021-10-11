@@ -125,10 +125,10 @@ const BuyerCard = ({ buyers, myfarm }) => {
           </GridItem>
           <GridItem>
             <Flex
-              w='80%'
-              direction='row'
-              align='center'
               justify='space-between'
+              direction='row'
+              w='80%'
+              align='center'
             >
               <Box pt={2} py={4}>
                 <Text fontWeight='bold' fontSize='28px'>

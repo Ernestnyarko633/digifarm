@@ -69,15 +69,15 @@ const YourFarmCard = ({
   const mapKeys = i => i
   const randomColors = [
     { color: '#FF9F9F' },
+    { color: '#FF9F9F' },
+    { color: '#FF9F9F' },
+    { color: '#76B1F6' },
+    { color: '#76B1F6' },
     { color: '#76B1F6' },
     { color: '#FF9F9F' },
     { color: '#76B1F6' },
-    { color: '#FF9F9F' },
     { color: '#76B1F6' },
     { color: '#FF9F9F' },
-    { color: '#76B1F6' },
-    { color: '#FF9F9F' },
-    { color: '#76B1F6' },
     { color: '#FF9F9F' },
     { color: '#76B1F6' }
   ]

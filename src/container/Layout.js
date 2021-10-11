@@ -110,16 +110,16 @@ const Layout = ({
 
           <Flex
             align='center'
-            justify='space-between'
             pos='fixed'
-            bottom={0}
+            justify='space-between'
             h={16}
-            d={{ base: 'flex', md: 'none' }}
+            bottom={0}
             bg='white'
-            shadow='lg'
+            d={{ base: 'flex', md: 'none' }}
             w='100%'
-            zIndex={50}
+            shadow='lg'
             px={4}
+            zIndex={50}
           >
             {menuLink.map((item, i) => (
               <ReachRouter

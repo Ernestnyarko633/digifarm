@@ -89,16 +89,16 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
               <Box my={2}>
                 {loading ? (
                   <FetchCard
-                    direction='column'
                     align='center'
-                    justify='center'
+                    direction='column'
                     mx='auto'
-                    w={{ xl: 24 }}
+                    justify='center'
                     h={{ xl: 80 }}
-                    reload={null}
+                    w={{ xl: 24 }}
                     loading={loading}
-                    error={null}
+                    reload={null}
                     text='Loading farm manager`s updates'
+                    error={null}
                   />
                 ) : (
                   <>
@@ -121,12 +121,12 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                     ) : (
                       <Box w='40%' m='auto'>
                         <Text
-                          as='h4'
                           py='auto'
-                          align='center'
+                          as='h4'
                           fontSize={{ base: 'sm', md: 'md' }}
-                          fontWeight='bold'
+                          align='center'
                           pb={2}
+                          fontWeight='bold'
                         >
                           There's currently no update.
                         </Text>

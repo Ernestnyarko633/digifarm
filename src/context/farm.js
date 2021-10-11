@@ -64,10 +64,13 @@ export const FarmContextProvider = ({ children }) => {
     refetch: farmRefetch
   } = useQuery(`selectedFarm_${id}`, () => id && !state && getMyFarm(id))
 
+  const DigitalFarmerFarm =
+    state?.order?.product?._id || farm?.data?.order?.product?._id
+
   const triggerFarmReload = () => farmRefetch()
 
   useEffect(() => {
-    if (farm?.data?.order?.product || state?.order?.product?._id) {
+    if (farm?.data?.order?.product?._id || state?.order?.product?._id) {
       setInViewProduct(
         farm?.data?.order?.product._id || state?.order?.product?._id
       )
@@ -102,16 +105,11 @@ export const FarmContextProvider = ({ children }) => {
     error: farmFeedsHasError,
     refetch: farmFeedsRefetch
   } = useQuery(
-    [
-      `farm_feeds_${
-        state?.order?.product?._id || farm?.data?.order?.product?._id
-      }`,
-      state?.order?.product?._id || farm?.data?.order?.product?._id
-    ],
+    [`farm_feeds_${DigitalFarmerFarm}`, DigitalFarmerFarm],
     () =>
-      (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
+      DigitalFarmerFarm &&
       getMyFarmFeeds({
-        farm: state?.order?.product?._id || farm?.data?.order?.product?._id
+        farm: DigitalFarmerFarm
       })
   )
 
@@ -121,16 +119,11 @@ export const FarmContextProvider = ({ children }) => {
     error: ScheduledTasksHasError,
     refetch: ScheduledTasksRefetch
   } = useQuery(
-    [
-      `scheduled_tasks_farm_${
-        state?.order?.product?._id || farm?.data?.order?.product?._id
-      }`,
-      state?.order?.product?._id || farm?.data?.order?.product?._id
-    ],
+    [`scheduled_tasks_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm],
     () =>
-      (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
+      DigitalFarmerFarm &&
       getMyScheduledTasks({
-        farm: state?.order?.product?._id || farm?.data?.order?.product?._id
+        farm: DigitalFarmerFarm
       })
   )
 
@@ -140,16 +133,11 @@ export const FarmContextProvider = ({ children }) => {
     error: myFarmActivitiesHasError,
     refetch: myFarmActivitiesRefetch
   } = useQuery(
-    [
-      `activities_farm_${
-        state?.order?.product?._id || farm?.data?.order?.product?._id
-      }`,
-      state?.order?.product?._id || farm?.data?.order?.product?._id
-    ],
+    [`activities_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm],
     () =>
-      (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
+      DigitalFarmerFarm &&
       getActivities({
-        farm: state?.order?.product?._id || farm?.data?.order?.product?._id
+        farm: DigitalFarmerFarm
       })
   )
 
@@ -159,16 +147,11 @@ export const FarmContextProvider = ({ children }) => {
     error: tasksHasError,
     refetch: tasksRefetch
   } = useQuery(
-    [
-      `tasks_farm_${
-        state?.order?.product?._id || farm?.data?.order?.product?._id
-      }`,
-      state?.order?.product?._id || farm?.data?.order?.product?._id
-    ],
+    [`tasks_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm],
     () =>
-      (state?.order?.product?._id || farm?.data?.order?.product?._id) &&
+      DigitalFarmerFarm &&
       getAllTasks({
-        farm: state?.order?.product?._id || farm?.data?.order?.product?._id
+        farm: DigitalFarmerFarm
       })
   )
 

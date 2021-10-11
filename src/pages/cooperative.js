@@ -254,17 +254,17 @@ const Cooperative = ({ location: { state } }) => {
                 }}
               >
                 <Flex
-                  bg='#F8F8F8'
                   p='17px'
-                  top={0}
+                  bg='#F8F8F8'
                   zIndex={2}
-                  pos='sticky'
+                  top={0}
                   w='full'
+                  pos='sticky'
                 >
                   <Text
+                    pl={{ md: 1, lg: 5, '5xl': 10 }}
                     fontWeight='bold'
                     fontSize={{ base: 16, md: 16 }}
-                    pl={{ md: 1, lg: 5, '5xl': 10 }}
                   >
                     Cooperative members
                   </Text>
