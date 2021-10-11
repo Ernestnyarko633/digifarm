@@ -62,10 +62,18 @@ export const FarmContextProvider = ({ children }) => {
     isLoading: farmIsLoading,
     error: farmHasError,
     refetch: farmRefetch
-  } = useQuery(`selectedFarm_${id}`, () => id && !state && getMyFarm(id))
+  } = useQuery(`selectedFarm_${id}`, () => {
+    if (id && !state) {
+      return getMyFarm(id)
+    }
+    return null
+  })
 
-  const DigitalFarmerFarm =
-    state?.order?.product?._id || farm?.data?.order?.product?._id
+  const DigitalFarmerFarm = id
+    ? state?.order?.product?._id || farm?.data?.order?.product?._id
+    : null
+
+  const digiFarmId = state?._id || farm?.data?._id
 
   const triggerFarmReload = () => farmRefetch()
 
@@ -104,14 +112,14 @@ export const FarmContextProvider = ({ children }) => {
     isLoading: farmFeedsIsLoading,
     error: farmFeedsHasError,
     refetch: farmFeedsRefetch
-  } = useQuery(
-    [`farm_feeds_${DigitalFarmerFarm}`, DigitalFarmerFarm],
-    () =>
-      DigitalFarmerFarm &&
-      getMyFarmFeeds({
+  } = useQuery([`farm_feeds_${DigitalFarmerFarm}`, DigitalFarmerFarm], () => {
+    if (DigitalFarmerFarm) {
+      return getMyFarmFeeds({
         farm: DigitalFarmerFarm
       })
-  )
+    }
+    return null
+  })
 
   const {
     data: ScheduledTasks,
@@ -120,11 +128,14 @@ export const FarmContextProvider = ({ children }) => {
     refetch: ScheduledTasksRefetch
   } = useQuery(
     [`scheduled_tasks_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm],
-    () =>
-      DigitalFarmerFarm &&
-      getMyScheduledTasks({
-        farm: DigitalFarmerFarm
-      })
+    () => {
+      if (DigitalFarmerFarm) {
+        return getMyScheduledTasks({
+          farm: DigitalFarmerFarm
+        })
+      }
+      return null
+    }
   )
 
   const {
@@ -134,11 +145,14 @@ export const FarmContextProvider = ({ children }) => {
     refetch: myFarmActivitiesRefetch
   } = useQuery(
     [`activities_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm],
-    () =>
-      DigitalFarmerFarm &&
-      getActivities({
-        farm: DigitalFarmerFarm
-      })
+    () => {
+      if (DigitalFarmerFarm) {
+        return getActivities({
+          farm: DigitalFarmerFarm
+        })
+      }
+      return null
+    }
   )
 
   const {
@@ -146,14 +160,14 @@ export const FarmContextProvider = ({ children }) => {
     isLoading: tasksIsLoading,
     error: tasksHasError,
     refetch: tasksRefetch
-  } = useQuery(
-    [`tasks_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm],
-    () =>
-      DigitalFarmerFarm &&
-      getAllTasks({
+  } = useQuery([`tasks_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm], () => {
+    if (DigitalFarmerFarm) {
+      return getAllTasks({
         farm: DigitalFarmerFarm
       })
-  )
+    }
+    return null
+  })
 
   // trigger Reloads
   const triggerActivitiesReload = () => myFarmActivitiesRefetch()
@@ -189,16 +203,13 @@ export const FarmContextProvider = ({ children }) => {
     isLoading: EOSViewIDIsLoading,
     error: EOSViewIDHasError,
     refetch: EOSViewIDRefetch
-  } = useQuery(
-    [
-      `${state?._id || farm?.data?._id}_eos_view_id`,
-      state?._id || farm?.data?._id
-    ],
-    () =>
-      location?.length &&
-      (state?._id || farm?.data?._id) &&
-      eosSearch(eosViewIdPayload, 'sentinel2')
-  )
+  } = useQuery([`${digiFarmId}_eos_view_id`, digiFarmId, location], () => {
+    if (location?.length && digiFarmId) {
+      return eosSearch(eosViewIdPayload, 'sentinel2')
+    }
+    return null
+  })
+
   // payload of health eos task_id creation
   const EOSTaskForStats = {
     type: 'mt_stats',
@@ -222,14 +233,13 @@ export const FarmContextProvider = ({ children }) => {
     error: eosTaskHasError,
     refetch: _eosTaskRefetch
   } = useQuery(
-    [
-      `${state?._id || farm?.data?._id}_eos_task_stats_for_health`,
-      state?._id || farm?.data?._id
-    ],
-    () =>
-      location?.length &&
-      (state?._id || farm?.data?._id) &&
-      eosTask(EOSTaskForStats)
+    [`${digiFarmId}_eos_task_stats_for_health`, digiFarmId, location],
+    () => {
+      if (location?.length && digiFarmId) {
+        return eosTask(EOSTaskForStats)
+      }
+      return null
+    }
   )
 
   const weatherForeCastsPayload = {
@@ -245,14 +255,13 @@ export const FarmContextProvider = ({ children }) => {
     error: WeatherForeCastsHasError,
     refetch: WeatherForeCastsRefetch
   } = useQuery(
-    [
-      `${state?._id || farm?.data?._id}_eos_weather_forecasts`,
-      state?._id || farm?.data?._id
-    ],
-    () =>
-      location?.length &&
-      (state?._id || farm?.data?._id) &&
-      eosWeather(weatherForeCastsPayload)
+    [`${digiFarmId}_eos_weather_forecasts`, digiFarmId, location],
+    () => {
+      if (location?.length && digiFarmId) {
+        return eosWeather(weatherForeCastsPayload)
+      }
+      return null
+    }
   )
 
   // for health card stats
@@ -262,12 +271,15 @@ export const FarmContextProvider = ({ children }) => {
     error: EOSStatisticsHasError,
     refetch: EOSStatisticsRefetch
   } = useQuery(
-    [`${_eosTask?.data?.task_id}_stats`, _eosTask?.data?.task_id],
-    () =>
-      _eosTask?.data?.task_id &&
-      eosStats({
-        task: eosTask?.data?.task_id
-      })
+    [`${_eosTask?.data?.task_id}_stats`, _eosTask?.data?.task_id, location],
+    () => {
+      if (_eosTask?.data?.task_id) {
+        eosStats({
+          task: _eosTask?.data?.task_id
+        })
+      }
+      return null
+    }
   )
 
   const triggerEosStatsReload = () => EOSStatisticsRefetch()
@@ -308,7 +320,7 @@ export const FarmContextProvider = ({ children }) => {
         farmFeedsRefetch,
         farmFeedsHasError,
         farmIsLoading,
-        farm: state || farm,
+        farm: state || farm?.data,
         farmHasError,
         farmRefetch,
         triggerFarmReload,
@@ -322,7 +334,7 @@ export const FarmContextProvider = ({ children }) => {
         eosTaskHasError,
         eosTaskIsLoading,
         _eosTaskRefetch,
-        EOSViewID: EOSViewID?.data || [],
+        EOSViewID: EOSViewID?.data?.results || [],
         EOSViewIDIsLoading,
         EOSViewIDHasError,
         EOSViewIDRefetch,

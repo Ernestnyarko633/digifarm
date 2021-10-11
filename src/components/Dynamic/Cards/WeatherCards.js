@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Grid, Heading, Text, Flex } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
@@ -15,6 +16,7 @@ const WeatherCards = ({ farmfeeds }) => {
     farmFeedsHasError,
     triggerFarmFeedsReload
   } = useFarm()
+
   return (
     <Grid templateColumns={{ md: 'repeat(2, 1fr)' }} gap={8} my={{ md: 8 }}>
       {farmFeedsIsLoading || farmFeedsHasError ? (
