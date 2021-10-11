@@ -5,15 +5,19 @@ import { Updates as FarmUpdates } from 'theme/Icons'
 import FetchCard from 'components/FetchCard'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import { usePrismic } from 'hooks/useFarmBoard'
+import useFarm from 'context/farm'
 
-export default function Updates({
-  farmfeeds,
-  farmFeedsIsLoading,
-  farmFeedsHasError,
-  reloads
-}) {
+export default function Updates() {
   const [feeds, setFeeds] = React.useState([])
-  const { comments, loading } = usePrismic()
+  const { comments, loading, error, refetch } = usePrismic()
+
+  const {
+    farmFeeds: farmfeeds,
+    farmFeedsHasError,
+    farmFeedsIsLoading,
+    triggerFarmFeedsReload
+  } = useFarm()
+
   React.useEffect(() => {
     const getFeeds = () =>
       farmfeeds?.forEach(feed => {
@@ -42,7 +46,10 @@ export default function Updates({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => reloads[2]()}
+            reload={() => {
+              error && refetch()
+              farmFeedsHasError && triggerFarmFeedsReload()
+            }}
             loading={farmFeedsIsLoading}
             error={farmFeedsHasError}
             text={"Standby as we load your farm's feed"}

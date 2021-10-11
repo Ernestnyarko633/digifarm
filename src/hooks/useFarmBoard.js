@@ -14,7 +14,7 @@ const Client = Prismic.client(PRISMIC_API, {
 })
 
 export const usePrismic = () => {
-  const { myFarms } = useFarmData()
+  const { myFarms, myFarmsIsLoading } = useFarmData()
   const { inViewProduct: farm } = useComponent()
   const { data, isLoading, error, refetch, isFetched } = useQuery(
     'prismic',
@@ -38,13 +38,14 @@ export const usePrismic = () => {
   // returns and obj {loading, news, blogs, videos, errors} includes sorting according to dates
 
   return {
-    loading: isLoading,
+    loading: isLoading || myFarmsIsLoading,
     managerUpdates: isFetched
       ? data[2].results
           ?.filter(update => {
             const x = myFarms?.find(
-              farm =>
-                farm?.order?.product?._id === update?.data?.farm_id[0]?.text
+              filteredFarm =>
+                filteredFarm?.order?.product?._id ===
+                update?.data?.farm_id[0]?.text
             )
             if (x) {
               return update
@@ -162,9 +163,9 @@ export const useFeeds = () => {
           } else {
             setFeeds([])
           }
-        } catch (error) {
+        } catch (err) {
           setFeeds([])
-          setError(error)
+          setError(err)
         } finally {
           setLoading(false)
         }

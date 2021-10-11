@@ -16,27 +16,27 @@ import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
 import { Status } from 'helpers/misc'
 import { usePrismic } from 'hooks/useFarmBoard'
-export default function Tasks({
-  scheduledTasks,
-  farmfeeds,
-  weatherForeCasts,
-  eosStats,
-  //loading
-  farmFeedsIsLoading,
-  ScheduledTasksIsLoading,
-  WeatherForeCastsIsLoading,
-  EOSStatisticsIsLoading,
-  eosTaskIsLoading,
-  //errors
-  WeatherForeCastsHasError,
-  farmFeedsHasError,
-  ScheduledTasksHasError,
-  EOSStatisticsHasError,
-  eosTaskHasError,
-  reloads
-}) {
+import useFarm from 'context/farm'
+export default function Tasks() {
   const [feeds, setFeeds] = React.useState([])
-  const { comments, loading, error } = usePrismic()
+  const { comments, loading, error, refetch } = usePrismic()
+  const {
+    ScheduledTasks: scheduledTasks,
+    farmFeeds: farmfeeds,
+    EOSStatistics: eosStats,
+    ScheduledTasksHasError,
+    triggerEosStatsReload,
+    ScheduledTasksIsLoading,
+    triggerScheduledTasksReload,
+    farmFeedsIsLoading,
+    farmFeedsHasError,
+    farmFeedsRefetch,
+    EOSStatisticsIsLoading,
+    EOSStatisticsHasError,
+    eosTaskHasError,
+    eosTaskIsLoading,
+    triggerEosTaskReload
+  } = useFarm()
 
   //let _comments = comments.filter((c) => c?.data?.farm_id[0]?.text === )
   React.useEffect(() => {
@@ -77,13 +77,17 @@ export default function Tasks({
 
     if (task) {
       if (type === 'today') {
-        const res = task?.filter(task => today === comparant(task?.startDate))
+        const res = task?.filter(
+          filteredTask => today === comparant(filteredTask?.startDate)
+        )
 
         return res
       }
 
       if (type === 'scheduled') {
-        const res = task?.filter(task => today !== comparant(task?.startDate))
+        const res = task?.filter(
+          filteredTask => today !== comparant(filteredTask?.startDate)
+        )
 
         return res
       }
@@ -109,7 +113,7 @@ export default function Tasks({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => reloads[3]()}
+            reload={() => triggerScheduledTasksReload()}
             loading={ScheduledTasksIsLoading}
             error={ScheduledTasksHasError}
             text={"Standby as we load your farm's scheduled tasks"}
@@ -138,15 +142,7 @@ export default function Tasks({
         </>
       )}
 
-      <WeatherCards
-        reloads={reloads}
-        farmfeeds={feeds}
-        weatherForeCasts={weatherForeCasts}
-        WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
-        farmFeedsIsLoading={farmFeedsIsLoading}
-        WeatherForeCastsHasError={WeatherForeCastsHasError}
-        farmFeedsHasError={farmFeedsHasError}
-      />
+      <WeatherCards farmfeeds={feeds} />
       <Grid gap={8}>
         {ScheduledTasksIsLoading || ScheduledTasksHasError ? (
           <Box pt={{ md: 10 }}>
@@ -156,7 +152,7 @@ export default function Tasks({
               justify='center'
               w='100%'
               mx='auto'
-              reload={() => reloads[3]()}
+              reload={() => triggerScheduledTasksReload()}
               loading={ScheduledTasksIsLoading}
               error={ScheduledTasksHasError}
               text={"Standby as we load your farm's scheduled tasks"}
@@ -189,7 +185,10 @@ export default function Tasks({
               justify='center'
               w='100%'
               mx='auto'
-              reload={() => reloads[2]()}
+              reload={() => {
+                error && refetch()
+                farmFeedsHasError && farmFeedsRefetch()
+              }}
               loading={farmFeedsIsLoading || loading}
               error={farmFeedsHasError || error}
               text={"Standby as we load your farm's feed"}
@@ -235,8 +234,8 @@ export default function Tasks({
               w='100%'
               mx='auto'
               reload={() => {
-                eosTaskHasError && reloads[4]()
-                EOSStatisticsHasError && reloads[7]()
+                eosTaskHasError && triggerEosTaskReload()
+                EOSStatisticsHasError && triggerEosStatsReload()
               }}
               loading={EOSStatisticsIsLoading || eosTaskIsLoading}
               error={EOSStatisticsHasError || eosTaskHasError}

@@ -39,6 +39,25 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
     error && refetch()
   }
 
+  const Header = ({ title }) => {
+    return (
+      <Heading
+        as='h4'
+        textTransform='uppercase'
+        fontSize={{ base: 'lg', md: '1xl' }}
+        fontWeight={700}
+        borderBottomColor='gray.300'
+        pb={2}
+      >
+        {title}
+      </Heading>
+    )
+  }
+
+  Header.propTypes = {
+    title: PropTypes.string
+  }
+
   const mapKey = index => index
 
   return (
@@ -58,29 +77,11 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
         <Tabs>
           <TabList borderBottomWidth={1} mx='auto'>
             <Tab _selected={{ color: 'cf.400' }} mx='auto'>
-              <Heading
-                as='h4'
-                textTransform='uppercase'
-                fontSize={{ base: 'lg', md: '1xl' }}
-                fontWeight={700}
-                borderBottomColor='gray.300'
-                pb={2}
-              >
-                Manager's Update
-              </Heading>
+              <Header title="Manager's Update" />
             </Tab>
 
             <Tab _selected={{ color: 'cf.400' }} mx='auto'>
-              <Heading
-                as='h4'
-                textTransform='uppercase'
-                fontSize={{ base: 'lg', md: '1xl' }}
-                fontWeight={700}
-                borderBottomColor='gray.300'
-                pb={2}
-              >
-                Events
-              </Heading>
+              <Header title='Events' />
             </Tab>
           </TabList>
           <TabPanels>
@@ -88,16 +89,16 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
               <Box my={2}>
                 {loading ? (
                   <FetchCard
-                    direction='column'
                     align='center'
-                    justify='center'
+                    direction='column'
                     mx='auto'
-                    w={{ xl: 24 }}
+                    justify='center'
                     h={{ xl: 80 }}
-                    reload={null}
+                    w={{ xl: 24 }}
                     loading={loading}
-                    error={null}
+                    reload={null}
                     text='Loading farm manager`s updates'
+                    error={null}
                   />
                 ) : (
                   <>
@@ -120,12 +121,12 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                     ) : (
                       <Box w='40%' m='auto'>
                         <Text
-                          as='h4'
                           py='auto'
-                          align='center'
+                          as='h4'
                           fontSize={{ base: 'sm', md: 'md' }}
-                          fontWeight='bold'
+                          align='center'
                           pb={2}
+                          fontWeight='bold'
                         >
                           There's currently no update.
                         </Text>

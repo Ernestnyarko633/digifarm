@@ -63,8 +63,8 @@ const FarmInfo = ({ farm, order, width = 108, margin = 4 }) => {
               <Text>Inclusive</Text>
             </Flex>
           </Box>
-          <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
-            <Flex as='td' align='center' justify='space-between' py={2}>
+          <Box borderBottomWidth={2} as='tr' borderBottomColor='gray.100'>
+            <Flex as='td' justify='space-between' align='center' py={2}>
               <Text mr={2} color='gray.600'>
                 VAT
               </Text>

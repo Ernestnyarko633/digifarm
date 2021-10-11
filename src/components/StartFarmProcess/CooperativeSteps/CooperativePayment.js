@@ -108,10 +108,10 @@ const CooperativePayment = ({ farm, asMember }) => {
                   <Text fontWeight={900}>{order?.acreage}</Text>
                 </Flex>
               </Box>
-              <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.100'>
-                <Flex as='td' align='center' justify='space-between' py={2}>
+              <Box borderBottomWidth={2} as='tr' borderBottomColor='gray.100'>
+                <Flex py={2} as='td' align='center' justify='space-between'>
                   <Flex align='center'>
-                    <Text mr={2} color='gray.500'>
+                    <Text color='gray.500' mr={2}>
                       Unit Amount
                     </Text>
                   </Flex>

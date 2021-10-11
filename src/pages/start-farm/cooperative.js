@@ -8,7 +8,7 @@ import CooperativeType from 'components/StartFarmProcess/CooperativeType'
 import CropSelection from 'components/StartFarmProcess/CropSelection'
 import CooperativeSteps from 'components/StartFarmProcess/CooperativeSteps'
 import { useQueryClient } from 'react-query'
-const CooperativeFarm = ({ location, history }) => {
+const Cooperative = ({ location, history }) => {
   document.title = 'Cooperative | Start Farm'
   const queryClient = useQueryClient()
   const { state, selected } = location || {}
@@ -101,9 +101,9 @@ const CooperativeFarm = ({ location, history }) => {
   )
 }
 
-CooperativeFarm.propTypes = {
+Cooperative.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object
 }
 
-export default CooperativeFarm
+export default Cooperative

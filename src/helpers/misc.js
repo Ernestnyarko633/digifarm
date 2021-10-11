@@ -282,3 +282,7 @@ export const uniqueIdentifier = (list = []) => {
 
   return process()
 }
+
+export const numberWithCommas = x => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}

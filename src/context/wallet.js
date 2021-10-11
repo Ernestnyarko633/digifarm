@@ -5,12 +5,12 @@ const WalletContext = createContext()
 
 export const WalletContextProvider = ({ children }) => {
   const totalAmount = (activity = {}, tasks = [], scheduledTasks = []) => {
-    let totalAmount = 0
+    let totaledAmount = 0
     let activity_tasks = tasks?.filter(task => task.activity === activity._id)
 
     if (activity_tasks) {
       activity_tasks.forEach(task => {
-        totalAmount = totalAmount + task?.budget
+        totaledAmount = totaledAmount + task?.budget
       })
     }
 
@@ -29,7 +29,7 @@ export const WalletContextProvider = ({ children }) => {
       }
 
       return {
-        total: currentExpense ? currentExpense : totalAmount,
+        total: currentExpense ? currentExpense : totaledAmount,
         state: currentExpense ? true : false
       }
     }

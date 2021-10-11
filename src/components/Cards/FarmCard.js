@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -208,7 +207,7 @@ const FarmCard = ({ farm, id }) => {
                       data?.data?.map((activity, index) => (
                         <Step
                           activity={activity}
-                          key={activity.title}
+                          key={activity._id}
                           cutThread={data.length - 1 === index}
                         />
                       ))
@@ -238,7 +237,7 @@ const FarmCard = ({ farm, id }) => {
                       data?.data.map((activity, index) => (
                         <Step
                           activity={activity}
-                          key={activity.title}
+                          key={activity?._id}
                           cutThread={data?.data.length - 1 === index}
                         />
                       ))

@@ -1,16 +1,17 @@
 import { Grid, Box, Text } from '@chakra-ui/react'
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Weather as WeatherIcon } from 'theme/Icons'
 import WeatherCard from '../Cards/WeatherCard'
 import FetchCard from 'components/FetchCard'
+import useFarm from 'context/farm'
 
-export default function Weather({
-  weatherForeCasts,
-  WeatherForeCastsHasError,
-  WeatherForeCastsIsLoading,
-  reloads
-}) {
+export default function Weather() {
+  const {
+    WeatherForeCastsIsLoading,
+    WeatherForeCastsHasError,
+    triggerEosWeatherReload,
+    WeatherForeCasts
+  } = useFarm()
   return (
     <Grid gap={8} mx={8} mb={8}>
       {WeatherForeCastsHasError || WeatherForeCastsIsLoading ? (
@@ -21,14 +22,14 @@ export default function Weather({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => reloads[6]()}
+            reload={() => triggerEosWeatherReload()}
             loading={WeatherForeCastsIsLoading}
             error={WeatherForeCastsHasError}
             text={"Standby as we load your farm's weather forecasts"}
           />
         </Box>
-      ) : weatherForeCasts?.length > 0 ? (
-        weatherForeCasts?.map(weather => (
+      ) : WeatherForeCasts?.length > 0 ? (
+        WeatherForeCasts?.map(weather => (
           <WeatherCard
             key={weather.Date}
             title='WEATHER'
@@ -46,9 +47,4 @@ export default function Weather({
   )
 }
 
-Weather.propTypes = {
-  weatherForeCasts: PropTypes.any,
-  WeatherForeCastsHasError: PropTypes.any,
-  WeatherForeCastsIsLoading: PropTypes.bool,
-  reloads: PropTypes.array
-}
+Weather.propTypes = {}

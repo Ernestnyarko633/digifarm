@@ -73,7 +73,7 @@ const PaymentOption = ({ farm }) => {
             )}
             <PayOption
               support
-              // filter='grayScale(100%)'
+              filter='grayScale(100%)'
               leftImage='tazapay'
               rightImage='zpay'
               LeftPicture={Tazapay}
@@ -84,7 +84,7 @@ const PaymentOption = ({ farm }) => {
               selected={paymentOption === Constants.paymentOptions[1]}
               onClick={e => {
                 return (
-                  // e.preventDefault() &&
+                  e.preventDefault() &&
                   setPaymentOption(Constants.paymentOptions[1])
                 )
               }}

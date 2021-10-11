@@ -63,8 +63,8 @@ export const StartFarmContextProvider = ({ children }) => {
     createCooperative
   } = useApi()
 
-  // const PAYSTACK_LIMIT = 1e96
-  const PAYSTACK_LIMIT = 30000
+  const PAYSTACK_LIMIT = 1e96
+  //const PAYSTACK_LIMIT = 30000
 
   const { ESCROW_SELLER_ID } = getConfig()
 
@@ -175,11 +175,11 @@ export const StartFarmContextProvider = ({ children }) => {
     try {
       setText("Preparing payment option, please don't reload/refresh page")
       setSubmitting(true)
-      const calculateCost = (acres, pricePerAcre, discount) => {
+      const calculateCost = (_acres, pricePerAcre, discount) => {
         let cost = 0
         let price = 0
         price = pricePerAcre - pricePerAcre * discount
-        cost = price * acres
+        cost = price * _acres
         return cost
       }
 

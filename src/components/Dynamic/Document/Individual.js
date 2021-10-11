@@ -7,8 +7,8 @@ import FarmDocumentCard from '../Cards/FarmDocumentCard'
 import Doc from 'assets/images/doc.png'
 import FetchCard from 'components/FetchCard'
 import { Status } from 'helpers/misc'
+import useFarm from 'context/farm'
 export default function Individual({
-  reloads,
   digitalFarmerFarm,
   activities,
   farmfeeds,
@@ -26,6 +26,12 @@ export default function Individual({
   myFarmActivitiesIsLoading,
   tasksIsLoading
 }) {
+  const {
+    ScheduledTasksRefetch,
+    farmFeedsRefetch,
+    tasksRefetch,
+    myFarmActivitiesRefetch
+  } = useFarm()
   const loading =
     farmFeedsIsLoading ||
     ScheduledTasksIsLoading ||
@@ -98,10 +104,10 @@ export default function Individual({
             justify='center'
             mx='auto'
             reload={() => {
-              farmFeedsHasError && reloads[2]()
-              ScheduledTasksHasError && reloads[3]()
-              myFarmActivitiesHasError && reloads[0]()
-              tasksHasError && reloads[1]()
+              farmFeedsHasError && farmFeedsRefetch()
+              ScheduledTasksHasError && ScheduledTasksRefetch()
+              myFarmActivitiesHasError && myFarmActivitiesRefetch()
+              tasksHasError && tasksRefetch()
             }}
             loading={loading}
             error={error}
