@@ -176,7 +176,7 @@ export default function Farm() {
                 </Box>
               </Box>
             )}
-            {EOSViewID && ['PROD'].includes(ENV) && (
+            {EOSViewID?.length > 0 && ['PROD'].includes(ENV) && (
               <Flex
                 align='center'
                 justify='space-between'

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -147,7 +148,8 @@ const FarmCard = ({ farm, id }) => {
             fontWeight='bold'
             fontSize={{ md: 'lg' }}
             to={{
-              pathname: `/farms/${farm._id}`
+              pathname: `/farms/${farm._id}`,
+              state: farm
             }}
             // onClick={_ => {
             //   setTimeout(() => {
