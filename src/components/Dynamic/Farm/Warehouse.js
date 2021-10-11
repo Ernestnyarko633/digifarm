@@ -79,7 +79,7 @@ const Warehouse = ({ digitalFarmerFarm }) => {
                 digitalFarmerFarm?.order?.acreage *
                 digitalFarmerFarm?.order?.product?.quantityOfStoragePerAcre
               }`}
-              condition={digitalFarmerFarm?.storage.yieldConditions}
+              condition={digitalFarmerFarm?.storage?.yieldConditions}
               orderStatus={digitalFarmerFarm?.order?.status}
               mr={3}
               ml={14}

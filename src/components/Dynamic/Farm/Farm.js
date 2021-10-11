@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
@@ -40,9 +41,7 @@ export default function Farm() {
     let EOSTaskForStatsCreationPayload = {
       type: 'lbe',
       params: {
-        view_id: EOSViewID?.results?.length
-          ? EOSViewID?.results[0]?.view_id
-          : '',
+        view_id: EOSViewID?.length ? EOSViewID[0]?.view_id : '',
         bands: ['B02', 'B03', 'B04'],
         geometry: {
           type: 'Polygon',
@@ -56,7 +55,7 @@ export default function Farm() {
 
     const fetchData = async payload => {
       try {
-        let key = `${EOSViewID?.results[0]?.view_id}_os_task_stats_creation`
+        let key = `${EOSViewID[0]?.view_id}_os_task_stats_creation`
         const dataFromStorage = JSON.parse(sessionStorage.getItem(key))
         if (dataFromStorage) {
           return setEOSTaskForStatsCreated(dataFromStorage)
@@ -100,7 +99,7 @@ export default function Farm() {
       <Box h={{ base: 90, md: 128 }} w='100%' mt={{ base: 32, md: 0 }}>
         {EOSViewIDIsLoading || EOSViewIDHasError ? (
           <Flex w='100%' h='100%' direction='column'>
-            {!EOSViewID && (
+            {!EOSViewID?.length && (
               <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
@@ -139,13 +138,13 @@ export default function Farm() {
           </Flex>
         ) : (
           <>
-            {EOSViewID && ['PROD'].includes(ENV) && (
+            {EOSViewID?.length > 0 && ['PROD'].includes(ENV) && (
               <Box
                 h='100%'
                 w='100%'
                 objectFit='cover'
                 as={Map}
-                viewID={EOSViewID?.results[0]?.view_id}
+                viewID={EOSViewID[0]?.view_id}
                 loading={EOSViewIDIsLoading || EOSTaskForStatsCreationIsLoading}
                 error={EOSViewIDHasError}
                 band={null}
@@ -153,7 +152,7 @@ export default function Farm() {
                 zoom={14}
               />
             )}
-            {['DEV', 'LOCAL'].includes(ENV) && (
+            {['LOCAL', 'DEV'].includes(ENV) && (
               <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box

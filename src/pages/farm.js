@@ -55,7 +55,10 @@ export default function Farm() {
       setId(id)
     }
 
-    return () => (mounted = false)
+    return () => {
+      mounted = false
+      setId(undefined)
+    }
   }, [id, setId])
 
   const menus = [

@@ -94,7 +94,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                     mx='auto'
                     justify='center'
                     h={{ xl: 80 }}
-                    w={{ xl: 24 }}
+                    w='100%'
                     loading={loading}
                     reload={null}
                     text='Loading farm manager`s updates'
@@ -194,7 +194,7 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
       {isLoading || error ? (
         <FetchCard
           m='auto'
-          w={{ xl: 24 }}
+          w='100%'
           h={{ xl: 80 }}
           direction='column'
           align='center'

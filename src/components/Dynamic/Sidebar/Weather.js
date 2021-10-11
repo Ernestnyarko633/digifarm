@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Grid, Box, Text } from '@chakra-ui/react'
 import React from 'react'
 import { Weather as WeatherIcon } from 'theme/Icons'
@@ -12,6 +13,7 @@ export default function Weather() {
     triggerEosWeatherReload,
     WeatherForeCasts
   } = useFarm()
+
   return (
     <Grid gap={8} mx={8} mb={8}>
       {WeatherForeCastsHasError || WeatherForeCastsIsLoading ? (

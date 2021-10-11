@@ -147,8 +147,7 @@ const FarmCard = ({ farm, id }) => {
             fontWeight='bold'
             fontSize={{ md: 'lg' }}
             to={{
-              pathname: `/farms/${farm._id}`,
-              state: farm
+              pathname: `/farms/${farm._id}`
             }}
             // onClick={_ => {
             //   setTimeout(() => {
