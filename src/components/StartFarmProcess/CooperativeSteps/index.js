@@ -300,30 +300,30 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
       <AnimatePresence>
         <MotionFlex
           w={{
-            base: '100%',
             xl: '78%',
-            '3xl': '75%',
             '4xl': '70%',
-            '5xl': '55%'
+            base: '100%',
+            '5xl': '55%',
+            '3xl': '75%'
           }}
-          h={{ md: 123 }}
           mx='auto'
-          borderWidth={1}
-          borderColor='gray.200'
-          rounded='md'
-          bgColor='white'
           overflow='scroll'
+          borderColor='gray.200'
+          h={{ md: 123 }}
+          rounded='md'
+          borderWidth={1}
+          bgColor='white'
         >
           {getSteps(otherStep)}
         </MotionFlex>
       </AnimatePresence>
 
       <Flex
-        align='center'
-        justify='center'
-        mt={6}
         px={{ base: 4, md: 0 }}
+        align='center'
         mb={{ base: 4, md: 0 }}
+        mt={6}
+        justify='center'
       >
         <Button
           h={12}
@@ -337,9 +337,9 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           borderWidth={1}
         />
         <Button
+          fontSize={{ md: 'lg' }}
           ml={{ base: 4, md: 6 }}
           h={12}
-          fontSize={{ md: 'lg' }}
           disabled={
             disabled ||
             (otherStep === 2 &&
