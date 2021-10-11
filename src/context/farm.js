@@ -22,6 +22,7 @@ export const FarmContextProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [open, setOpen] = useState(true)
   const [image, takeScreenShot] = useScreenshot()
+  const { compState, setCompState } = useComponent()
 
   React.useEffect(() => {
     let mounted = true
@@ -29,11 +30,10 @@ export const FarmContextProvider = ({ children }) => {
       setComponent('compA')
       setOpen(true)
       setIsOpen(false)
+      setCompState('compA')
     }
     return () => (mounted = false)
-  }, [id])
-
-  const { compState, setCompState } = useComponent()
+  }, [id, setCompState])
 
   const onClose = () => setIsOpen(false)
   const closed = () => setOpen(false)

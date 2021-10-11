@@ -63,8 +63,8 @@ export const StartFarmContextProvider = ({ children }) => {
     createCooperative
   } = useApi()
 
-  // const PAYSTACK_LIMIT = 1e96
-  const PAYSTACK_LIMIT = 30000
+  const PAYSTACK_LIMIT = 1e96
+  //const PAYSTACK_LIMIT = 30000
 
   const { ESCROW_SELLER_ID } = getConfig()
 

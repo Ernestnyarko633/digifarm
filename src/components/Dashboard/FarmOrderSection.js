@@ -60,6 +60,16 @@ const FarmOrderSection = ({
         ) === index
     )
 
+  const sortedFarms = farms
+    ?.slice()
+    ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+    .filter(
+      (filteredFarm, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(filteredFarm)
+        ) === index
+    )
+
   return (
     <ComponentWrapper
       state={sliderType}
@@ -76,8 +86,11 @@ const FarmOrderSection = ({
         <Flex>
           {sliderType === 'farms' && (
             <>
-              {farms.length > 0 ? (
-                <FarmsCard data={farms} currentSlide={currentFarmsSlide} />
+              {sortedFarms?.length > 0 ? (
+                <FarmsCard
+                  data={sortedFarms}
+                  currentSlide={currentFarmsSlide}
+                />
               ) : (
                 <EmptyState text='You have no farm yet' />
               )}
