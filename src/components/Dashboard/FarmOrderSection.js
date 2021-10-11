@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Text, Icon } from '@chakra-ui/react'
 import { MdRemoveShoppingCart } from 'react-icons/md'
-
 import ComponentWrapper from 'components/Wrapper/ComponentWrapper'
 import OrdersCard from 'components/Cards/OrdersCard'
 import useComponent from 'context/component'
