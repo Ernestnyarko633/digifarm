@@ -76,8 +76,8 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
       <Box>
         <Tabs>
           <TabList borderBottomWidth={1} mx='auto'>
-            <Tab _selected={{ color: 'cf.400' }} mx='auto'>
-              <Header title="Manager's Update" />
+            <Tab _selected={{ color: 'cf.400' }} mx='left'>
+              <Header title='Updates' />
             </Tab>
 
             <Tab _selected={{ color: 'cf.400' }} mx='auto'>
@@ -97,36 +97,30 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                     w='100%'
                     loading={loading}
                     reload={null}
-                    text='Loading farm manager`s updates'
+                    text='Loading updates'
                     error={null}
                   />
                 ) : (
                   <>
                     {farmUpdates?.length > 0 ? (
-                      <Grid
-                        overflowY='scroll'
-                        h={{ base: 80, md: 90 }}
-                        gap={4}
-                        mt={4}
-                        mb={4}
-                        px={2}
-                      >
-                        {farmUpdates?.map((update, i) => (
-                          <FarmManagerUpdateCard
-                            key={mapKey(i)}
-                            update={update}
-                          />
-                        ))}
-                      </Grid>
+                      <Box h={{ base: 90, md: 90 }}>
+                        <Grid overflowY='scroll' gap={4} my={4} px={2}>
+                          {farmUpdates?.map((update, i) => (
+                            <FarmManagerUpdateCard
+                              key={mapKey(i)}
+                              update={update}
+                            />
+                          ))}
+                        </Grid>
+                      </Box>
                     ) : (
-                      <Box w='40%' m='auto'>
+                      <Box w='80%' m='auto'>
                         <Text
                           py='auto'
                           as='h4'
                           fontSize={{ base: 'sm', md: 'md' }}
                           align='center'
                           pb={2}
-                          fontWeight='bold'
                         >
                           There's currently no update.
                         </Text>
@@ -171,13 +165,12 @@ const RightSidebar = ({ onOpen, setSelectedData }) => {
                         ))}
                       </Grid>
                     ) : (
-                      <Box w='40%' m='auto'>
+                      <Box w='80%' m='auto'>
                         <Text
                           as='h4'
                           py='auto'
                           align='center'
                           fontSize={{ base: 'sm', md: 'md' }}
-                          fontWeight='bold'
                           pb={2}
                         >
                           There are currently no upcoming events.

@@ -17,13 +17,11 @@ const FarmManagerUpdateCard = ({ update }) => {
         pb={2}
         as='h6'
         fontWeight='bold'
-        fontSize='md'
+        fontSize='2xl'
       >
         {update.data.farm[0]?.text} Farm
       </Heading>
-      <Text fontSize='sm' fontWeight='bold'>
-        {update.data.comments[0]?.text}
-      </Text>
+      <Text fontSize='xl'>{update.data.comments[0]?.text}</Text>
     </Box>
   )
 }
