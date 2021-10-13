@@ -110,9 +110,9 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const createFarmFromNotification = async id => {
+  const approvalOrder = async id => {
     return await http.patch({
-      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/create-farm/${id}`
+      url: `${DIGITAL_FARMER_API}/orders/${id}/approve-order`
     })
   }
 
@@ -386,6 +386,7 @@ export const ApiContextProvider = ({ children }) => {
         downloadFile,
         patchWallet,
         verifyWallet,
+        approvalOrder,
 
         getActivities,
         getMyFarmFeeds,
@@ -408,7 +409,6 @@ export const ApiContextProvider = ({ children }) => {
         initiatePaystackPayment,
         verifyTazapayPayment,
         verifyPaystackPayment,
-        createFarmFromNotification,
 
         //cooperative
         acceptInvite,

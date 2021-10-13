@@ -9,10 +9,12 @@ import { ANNOUNCEMENT, NEWS, WEEKLYVIDEOS } from 'theme/Icons'
 import PropTypes from 'prop-types'
 import NotificationItem from '../Notifications/NotificationItem'
 import { FaReceipt } from 'react-icons/all'
+import useApi from 'context/api'
 
 const MotionBox = motion(Box)
 
 const Notifications = ({ notifications, loading, mutation, userMutation }) => {
+  const { approvalOrder } = useApi()
   const renderNotificationIcons = value => {
     switch (value) {
       case 'news':
@@ -42,6 +44,36 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
         return `/farms?type=${value}&title=${item?.message?.title}&id=${item?.messageId}`
     }
   }
+
+  React.useEffect(() => {
+    let mounted = true
+
+    const createFarm = async id => {
+      try {
+        await approvalOrder(id)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    const verifiedEscrows = notifications?.filter(
+      item => item.message.entity === 'ESCROW_PAYMENT'
+    )
+
+    if (mounted && verifiedEscrows?.length) {
+      if (verifiedEscrows?.length) {
+        const process = () =>
+          verifiedEscrows?.map(
+            async item =>
+              item?.message?.order_id &&
+              (await createFarm(item?.message?.order_id))
+          )
+        process()
+      }
+    }
+
+    return () => (mounted = false)
+  }, [approvalOrder, notifications])
 
   const getNotified = (value, item, active) => {
     switch (value) {
