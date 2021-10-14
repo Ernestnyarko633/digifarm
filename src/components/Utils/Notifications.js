@@ -57,7 +57,7 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
     }
 
     const verifiedEscrows = notifications?.filter(
-      item => item.message.entity === 'ESCROW_PAYMENT'
+      item => item.message.entity?.toUpperCase() === 'ESCROW_PAYMENT'
     )
 
     if (mounted && verifiedEscrows?.length) {
@@ -77,6 +77,7 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
 
   const getNotified = (value, item, active) => {
     switch (value) {
+      case 'generic':
       case 'GENERIC':
         return (
           <NotificationItem
@@ -88,6 +89,9 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
             active={active}
           />
         )
+      case 'order':
+      case 'payment':
+      case 'escrow_payment':
       case 'ORDER':
       case 'PAYMENT':
       case 'ESCROW_PAYMENT':
@@ -102,6 +106,7 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
           />
         )
       case 'farm':
+      case 'FARM':
       default:
         return null
     }
@@ -201,7 +206,11 @@ const Notifications = ({ notifications, loading, mutation, userMutation }) => {
                           {({ active }) => {
                             return (
                               item?.status === 'NEW' &&
-                              getNotified(item?.message?.entity, item, active)
+                              getNotified(
+                                item?.message?.entity?.toUpperCase(),
+                                item,
+                                active
+                              )
                             )
                           }}
                         </Menu.Item>
