@@ -5,13 +5,16 @@ import { BiTime } from 'react-icons/bi'
 import FetchCard from 'components/FetchCard'
 import FarmUpdateCard from '../Cards/FarmUpdateCard'
 import { Status } from 'helpers/misc'
+import useFarm from 'context/farm'
 
-export default function Events({
-  scheduledTasks,
-  ScheduledTasksHasError,
-  ScheduledTasksIsLoading,
-  reloads
-}) {
+export default function Events() {
+  const {
+    ScheduledTasks: scheduledTasks,
+    ScheduledTasksHasError,
+    ScheduledTasksIsLoading,
+    triggerScheduledTasksReload
+  } = useFarm()
+
   const sortedScheduledTasks = scheduledTasks
     ?.slice()
     ?.sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
@@ -32,7 +35,7 @@ export default function Events({
             justify='center'
             w='100%'
             mx='auto'
-            reload={() => reloads[3]()}
+            reload={() => triggerScheduledTasksReload()}
             loading={ScheduledTasksIsLoading}
             error={ScheduledTasksHasError}
             text={"Standby as we load your farm's scheduled tasks"}

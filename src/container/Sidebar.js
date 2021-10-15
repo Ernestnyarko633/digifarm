@@ -106,15 +106,15 @@ const Sidebar = () => {
             activeClassName='activeClasName'
             as={NavLink}
             to={item.path}
-            cursor='pointer'
             className='active-link'
-            transition='background-color .2s ease-in'
+            cursor='pointer'
             _hover={{
-              textDecor: 'none',
               color: 'gray.700',
-              bg: 'gray.50',
-              rounded: 'md'
+              textDecor: 'none',
+              rounded: 'md',
+              bg: 'gray.50'
             }}
+            transition='background-color .2s ease-in'
             _activeLink={{ color: 'cf.green', bg: 'cf.300' }}
           >
             <Icon as={item.icon} boxSize={item.size} mr={2} />

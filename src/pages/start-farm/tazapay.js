@@ -1,10 +1,7 @@
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
-
 import queryString from 'query-string'
-
 import useApi from 'context/api'
 
 const Tazapay = ({ history, location: { search } }) => {
@@ -14,7 +11,6 @@ const Tazapay = ({ history, location: { search } }) => {
 
   React.useEffect(() => {
     const type = sessionStorage.getItem('type')
-
     const verifyAndCreate = async params => {
       try {
         setLoading(true)
@@ -35,7 +31,6 @@ const Tazapay = ({ history, location: { search } }) => {
       }
     }
     const parsed = queryString.parse(search)
-
     verifyAndCreate(parsed)
   }, [history, search, verifyTazapayPayment])
 

@@ -4,13 +4,12 @@ import { NavLink } from 'react-router-dom'
 import CooperativeCard from 'components/Cards/CooperativeCard'
 import { Button } from 'components'
 import useAuth from 'context/auth'
-import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import FetchCard from 'components/FetchCard'
 import useStartFarm from 'context/start-farm'
+import { useQuery } from 'react-query'
 
 const CooperativeType = () => {
-  const [reload, setReload] = React.useState(0)
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const {
@@ -21,12 +20,21 @@ const CooperativeType = () => {
   } = useStartFarm()
   const { getCooperativeTypes } = useApi()
 
-  const triggerReload = () => setReload(p => p + 1)
-  const { data, loading, error } = useFetch(
-    'cooperative-types',
-    getCooperativeTypes,
-    reload
+  const { data, loading, error, refetch } = useQuery('cooperative-types', () =>
+    getCooperativeTypes()
   )
+
+  React.useEffect(() => {
+    let mounted = true
+
+    if (mounted && data?.data) {
+      sessionStorage.setItem('cooperative-types', JSON.stringify(data?.data))
+    }
+
+    return () => (mounted = false)
+  }, [data?.data])
+
+  const triggerReload = () => refetch()
 
   return (
     <Flex
@@ -70,7 +78,7 @@ const CooperativeType = () => {
             px={{ base: 4, md: 0 }}
             gap={6}
           >
-            {data?.map(item => (
+            {data?.data?.map(item => (
               <CooperativeCard
                 key={item?.name}
                 item={item}

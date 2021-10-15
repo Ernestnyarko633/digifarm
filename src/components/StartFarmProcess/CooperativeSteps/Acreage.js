@@ -9,7 +9,6 @@ import { HiLocationMarker } from 'react-icons/hi'
 import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { BsPlus } from 'react-icons/all'
 import useStartFarm from 'context/start-farm'
-// import { Scrollbars } from 'react-custom-scrollbars-2'
 import { CooperativeSchema } from 'helpers/validation'
 
 import CooperativeMemberCard from '../../Cards/CooperativeMemberCard'

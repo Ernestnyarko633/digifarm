@@ -150,6 +150,7 @@ export const theme = extendTheme({
     130: '55rem',
     135: '60rem',
     137: '65rem',
+    138: '66rem',
     140: '70rem',
     143: '72rem',
     145: '76rem',

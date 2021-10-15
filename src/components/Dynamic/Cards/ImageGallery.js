@@ -55,7 +55,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
     setSelectedImage(array[0])
   }, [farmfeeds, activityName])
   return (
-    <Box>
+    <Box overflowX='hidden'>
       <Flex align='center' justify='space-between'>
         <Text fontWeight={800}>{title}</Text>
         <Box>
@@ -123,7 +123,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
           </Flex>
         </Box>
 
-        <MotionFlex pos='relative' w={120} mt={4} overflowX='hidden'>
+        <MotionFlex pos='relative' w={130} mt={4} overflowX='hidden'>
           {images.map((item, index) => (
             <Box
               key={mapKey(index)}
@@ -141,7 +141,7 @@ export default function ImageGallery({ title, farmfeeds, activityName }) {
             >
               <Image
                 h={20}
-                w={{ base: 32, md: 32 }}
+                minW={{ base: 32, md: 32 }}
                 objectFit='cover'
                 rounded='md'
                 src={item.url}

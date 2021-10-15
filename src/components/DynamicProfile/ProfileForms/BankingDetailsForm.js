@@ -34,19 +34,19 @@ const BankingDetailsForm = ({ bankDetails }) => {
     },
     enableReinitialize: true,
     validationSchema: BankDetailsSchema,
-    onSubmit: async (values, { setSubmitting }) => {
+    onSubmit: async (formikValues, { setSubmitting }) => {
       try {
         let res
         if (bankDetails._id) {
-          if (!values.accountNumber) delete values.accountNumber
-          if (!values.iban) delete values.iban
-          let updatedValue = objDiff(values, user)
+          if (!formikValues.accountNumber) delete formikValues.accountNumber
+          if (!formikValues.iban) delete formikValues.iban
+          let updatedValue = objDiff(formikValues, user)
           res = await updateBankDetails(bankDetails._id, updatedValue)
         } else {
-          if (!values.accountNumber) delete values.accountNumber
-          if (!values.iban) delete values.iban
+          if (!formikValues.accountNumber) delete formikValues.accountNumber
+          if (!formikValues.iban) delete formikValues.iban
           res = await createBankDetails({
-            ...values,
+            ...formikValues,
             user: user._id
           })
         }

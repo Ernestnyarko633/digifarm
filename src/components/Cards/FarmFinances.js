@@ -170,7 +170,6 @@ FarmFinances.propTypes = {
   tasks: PropTypes.array.isRequired,
   scheduledTasks: PropTypes.array.isRequired,
   wallet_id: PropTypes.string,
-  farm: PropTypes.object,
-  processing_payout: PropTypes.bool
+  farm: PropTypes.object
 }
 export default FarmFinances

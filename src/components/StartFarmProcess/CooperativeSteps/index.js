@@ -1,7 +1,7 @@
 import React from 'react'
 import Overlay from '../../Loading/Overlay'
 import { Flex, Image, Link, Text, useToast } from '@chakra-ui/react'
-import { getformattedDate, validateEmailAndAcrege } from '../../../helpers/misc'
+import { getFormattedDate, validateEmailAndAcrege } from '../../../helpers/misc'
 import { AnimatePresence, motion } from 'framer-motion'
 import Button from '../../Button'
 import useAuth from '../../../context/auth'
@@ -15,6 +15,7 @@ import CooperativeName from '../OtherSteps/CooperativeName'
 import Acreage from './Acreage'
 import PropTypes from 'prop-types'
 import CooperativePayment from './CooperativePayment'
+// import { useLocation } from 'react-router-dom'
 
 const MotionFlex = motion(Flex)
 
@@ -111,7 +112,13 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
         return <CooperativePayment farm={selectedFarm} asMember={asMember} />
       case 5:
         return (
-          <Confirmation farm={selectedFarm} order={payment?.data || order} />
+          <Confirmation
+            farm={
+              selectedFarm ||
+              JSON.parse(sessionStorage.getItem('selected_farm'))
+            }
+            order={payment?.data || order}
+          />
         )
       default:
         return <ReloadPage />
@@ -125,7 +132,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           await handleCreateCooperative(selectedType?._id)
         } else {
           await handleCreateOrder(
-            { _id: asMember?.cooperative?._id },
+            { _id: asMember?.cooperative?.data?._id },
             asMember?.acreage
           )
         }
@@ -246,7 +253,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
               d={{ base: 'block', md: 'inline-block' }}
               mt={{ base: -1, md: 0 }}
             >
-              {getformattedDate(
+              {getFormattedDate(
                 selectedFarm?.startDate || data?.product?.startDate,
                 {
                   weekday: 'short',
@@ -292,29 +299,31 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
 
       <AnimatePresence>
         <MotionFlex
-          mx='auto'
-          rounded='md'
-          overflow='hidden'
-          borderColor='gray.200'
-          borderWidth={otherStep !== 1 && 1}
-          align={otherStep === 1 && 'center'}
-          justify={otherStep === 1 && 'center'}
-          bgColor={otherStep !== 1 && 'white'}
-          h={{
-            base: otherStep === 1 && '80vh',
-            md: otherStep !== 1 ? 120 : '80vh'
+          w={{
+            xl: '78%',
+            '4xl': '70%',
+            base: '100%',
+            '5xl': '55%',
+            '3xl': '75%'
           }}
+          mx='auto'
+          overflow='scroll'
+          borderColor='gray.200'
+          h={{ md: 123 }}
+          rounded='md'
+          borderWidth={1}
+          bgColor='white'
         >
           {getSteps(otherStep)}
         </MotionFlex>
       </AnimatePresence>
 
       <Flex
-        align='center'
-        justify='center'
-        mt={6}
         px={{ base: 4, md: 0 }}
+        align='center'
         mb={{ base: 4, md: 0 }}
+        mt={6}
+        justify='center'
       >
         <Button
           h={12}
@@ -328,9 +337,9 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
           borderWidth={1}
         />
         <Button
+          fontSize={{ md: 'lg' }}
           ml={{ base: 4, md: 6 }}
           h={12}
-          fontSize={{ md: 'lg' }}
           disabled={
             disabled ||
             (otherStep === 2 &&

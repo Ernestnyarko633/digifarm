@@ -17,30 +17,28 @@ import PropTypes from 'prop-types'
 
 import FetchCard from 'components/FetchCard'
 import cooperative_avatar from 'assets/images/cooperative_avatar.png'
-import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 import Header from 'container/Header'
 import ManagerProfile from 'components/StartFarmProcess/OtherSteps/ManagerProfile'
 import { Button } from 'components'
 import { Link as ReachRouter } from 'react-router-dom'
-import useStartFarm from 'context/start-farm'
 import { FirstLettersToUpperCase } from 'helpers/misc'
+import useStartFarm from 'context/start-farm'
+import { useQuery } from 'react-query'
+
 const Cooperative = ({ location: { state } }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
-  const [reload, setReload] = useState(0)
   const { setSelectedFarm, setStep, setOtherStep, setSelectedCooperativeType } =
     useStartFarm()
 
   const { getCooperativeById } = useApi()
-  const { data, isLoading, error } = useFetch(
-    null,
-    getCooperativeById,
-    reload,
-    state?.data?.coop?._id
+  const { data, isLoading, error, refetch } = useQuery(
+    [`cooperative_${state?.data?.coop?._id}`, state?.data?.coop?._id],
+    () => state?.data?.coop?._id && getCooperativeById(state?.data?.coop?._id)
   )
 
-  document.title = `Welcome to ${data?.name} Cooperative`
+  document.title = `Welcome to ${data?.data?.name} Cooperative`
 
   const { PRISMIC_API, PRISMIC_ACCESS_TOKEN } = getConfig()
 
@@ -53,7 +51,10 @@ const Cooperative = ({ location: { state } }) => {
   useEffect(() => {
     let mounted = true
     const fetchData = async () => {
-      const res = await Client.getByUID('farm_managers', data?.product._id)
+      const res = await Client.getByUID(
+        'farm_managers',
+        data?.data?.product?._id
+      )
       if (res) {
         setDocData(res.data)
       }
@@ -62,34 +63,37 @@ const Cooperative = ({ location: { state } }) => {
       fetchData()
     }
     return () => (mounted = false)
-  }, [Client, doc, data?.product._id])
+  }, [Client, doc, data?.data?.product?._id])
 
   useEffect(() => {
     let mounted = true
 
-    if (mounted && data?.product?._id) {
-      setSelectedFarm(data?.product)
-      setSelectedCooperativeType(data?.type)
+    if (mounted && data?.data?.product?._id) {
+      setSelectedFarm(data?.data?.product)
+      setSelectedCooperativeType(data?.data?.type)
       sessionStorage.setItem('type', 'cooperative')
-      sessionStorage.setItem('selected_farm', JSON.stringify(data?.product))
+      sessionStorage.setItem(
+        'selected_farm',
+        JSON.stringify(data?.data?.product)
+      )
       setStep(x => x + 2)
       setOtherStep(x => x + 3)
     }
 
     return () => (mounted = false)
   }, [
-    data?.product,
-    data?.type,
+    data?.data?.product,
+    data?.data?.type,
     setOtherStep,
     setSelectedFarm,
     setStep,
     setSelectedCooperativeType
   ])
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
+  const triggerReload = () => refetch()
 
   const date = () => {
-    return new Date(data?.product?.startDate).toLocaleDateString('en-GB')
+    return new Date(data?.data?.product?.startDate).toLocaleDateString('en-GB')
   }
 
   return (
@@ -154,20 +158,20 @@ const Cooperative = ({ location: { state } }) => {
                 <Flex>
                   <Avatar
                     name={
-                      data?.product?.cropVariety?.crop?.imageUrl ||
-                      data?.product?.cropVariety?.crop?.name
+                      data?.data?.product?.cropVariety?.crop?.imageUrl ||
+                      data?.data?.product?.cropVariety?.crop?.name
                     }
                     size='md'
                     mt={2}
                   />
                   <Box px={3} pt={{ base: 3, md: 0 }}>
                     <Text fontWeight='bold' fontSize={{ base: 16, md: 24 }}>
-                      {data?.product?.cropVariety?.crop?.name}
+                      {data?.data?.product?.cropVariety?.crop?.name}
                     </Text>
                     <Text fontSize={{ base: 12, md: 16 }}>
-                      {data?.product?.cropVariety?.crop?.sciName +
+                      {data?.data?.product?.cropVariety?.crop?.sciName +
                         '  #' +
-                        data?.product?.name}
+                        data?.data?.product?.name}
                     </Text>
                   </Box>
                 </Flex>
@@ -175,23 +179,27 @@ const Cooperative = ({ location: { state } }) => {
                   <Text fontSize={20} py={1}>
                     Location:{' '}
                     <Text as='span' fontWeight='bold'>
-                      {FirstLettersToUpperCase(data?.product?.location?.name) +
+                      {FirstLettersToUpperCase(
+                        data?.data?.product?.location?.name
+                      ) +
                         ' , ' +
-                        FirstLettersToUpperCase(data?.product?.location?.state)}
+                        FirstLettersToUpperCase(
+                          data?.data?.product?.location?.state
+                        )}
                     </Text>
                   </Text>
                   <Text fontSize={20} py={1}>
                     Cooperative type:
                     <Text as='span' fontWeight='bold' ml={2}>
-                      {FirstLettersToUpperCase(data?.type?.name)}
+                      {FirstLettersToUpperCase(data?.data?.type?.name)}
                     </Text>
                   </Text>
                   <Text fontSize={20} py={1}>
                     Cooperative Admin:
                     <Text as='span' fontWeight='bold' ml={2}>
-                      {data?.users[0]?.info?.firstName +
+                      {data?.data?.users[0]?.info?.firstName +
                         ' ' +
-                        data?.users[0]?.info?.lastName}
+                        data?.data?.users[0]?.info?.lastName}
                     </Text>
                   </Text>
                 </Box>
@@ -209,7 +217,7 @@ const Cooperative = ({ location: { state } }) => {
               >
                 <Box>
                   <Image
-                    src={data?.imageUrl || cooperative_avatar}
+                    src={data?.data?.imageUrl || cooperative_avatar}
                     w='10rem'
                     h='10rem'
                     rounded='100%'
@@ -220,7 +228,7 @@ const Cooperative = ({ location: { state } }) => {
                     py={3}
                     fontSize={{ base: 16, md: 24 }}
                   >
-                    {data?.name}
+                    {data?.data?.name}
                   </Text>
                 </Box>
               </Flex>
@@ -246,23 +254,23 @@ const Cooperative = ({ location: { state } }) => {
                 }}
               >
                 <Flex
-                  bg='#F8F8F8'
                   p='17px'
-                  top={0}
+                  bg='#F8F8F8'
                   zIndex={2}
-                  pos='sticky'
+                  top={0}
                   w='full'
+                  pos='sticky'
                 >
                   <Text
+                    pl={{ md: 1, lg: 5, '5xl': 10 }}
                     fontWeight='bold'
                     fontSize={{ base: 16, md: 16 }}
-                    pl={{ md: 1, lg: 5, '5xl': 10 }}
                   >
                     Cooperative members
                   </Text>
                 </Flex>
                 <Box px={{ md: 1, lg: 4, '5xl': 10 }} pt={2}>
-                  {data?.users?.map(item => (
+                  {data?.data?.users?.map(item => (
                     <Flex
                       py='5px'
                       px={{ base: 4, md: 4, lg: 4 }}
@@ -272,7 +280,7 @@ const Cooperative = ({ location: { state } }) => {
                       <Text fontSize={{ base: 16, md: 16 }} fontWeight='bold'>
                         {item?.info?.firstName || item?.info?.lastName
                           ? item?.info?.firstName + ' ' + item?.info?.lastName
-                          : 'Annonymous'}
+                          : 'Anonymous'}
                       </Text>
                       <Text fontSize={{ base: 16, md: 16 }}>Invited</Text>
                     </Flex>
@@ -324,10 +332,11 @@ const Cooperative = ({ location: { state } }) => {
                   pathname: '/start-farm/cooperative',
                   state: {
                     cooperative: data,
-                    acreage: data?.users?.filter(u => u.id === user?._id)[0]
-                      ?.acreage,
+                    acreage: data?.data?.users?.filter(
+                      u => u.id === user?._id
+                    )[0]?.acreage,
                     user: user?._id,
-                    product: data?.product?._id
+                    product: data?.data?.product?._id
                   }
                 }}
                 _hover={{ textDecor: 'none' }}

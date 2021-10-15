@@ -71,15 +71,15 @@ const Profile = ({ user }) => {
                       as={MotionBox}
                       custom={i}
                       variants={{
-                        hidden: i => ({
-                          y: -50 * i,
+                        hidden: hid => ({
+                          y: -50 * hid,
                           opacity: 0
                         }),
-                        visible: i => ({
+                        visible: vix => ({
                           y: 0,
                           opacity: 1,
                           transition: {
-                            delay: i * 0.025
+                            delay: vix * 0.025
                           }
                         }),
                         removed: {

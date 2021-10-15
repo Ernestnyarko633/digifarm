@@ -16,10 +16,10 @@ import {
   Tooltip
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
+import { useQuery } from 'react-query'
 import CustomTable from 'components/Form/CustomTable'
 import FetchCard from 'components/FetchCard'
 import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
 import Header from 'container/Header'
 import { Button } from 'components'
 import { getFormattedMoney } from 'helpers/misc'
@@ -38,7 +38,6 @@ import TableMenu from 'components/Cards/CooperativeDashboard/TableMenu'
 const CooperativeMain = ({ match: { params } }) => {
   document.title = 'Cooperative Dashboard'
   //states
-  const [reload, setReload] = useState(0)
   const [tableData, setTableData] = useState([])
   const [loading, setLoading] = useState(false)
   //hooks
@@ -48,23 +47,20 @@ const CooperativeMain = ({ match: { params } }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
-
   const { getCooperativeById, downloadFile } = useApi()
-  const { data, isLoading, error } = useFetch(
-    null,
-    getCooperativeById,
-    reload,
-    params.id
+  const { data, isLoading, error, refetch } = useQuery(
+    [`cooperative_${params.id}`, params.id],
+    () => params.id && getCooperativeById(params.id)
   )
 
+  const triggerReload = () => refetch()
   React.useEffect(() => {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: 'smooth'
     })
-  }, [data])
+  }, [data?.data])
 
   const downloadAgreement = async query => {
     try {
@@ -93,7 +89,7 @@ const CooperativeMain = ({ match: { params } }) => {
       setLoading(false)
     }
   }
-  const userData = data?.users?.filter(item => {
+  const userData = data?.data?.users?.filter(item => {
     return item?.id === user._id
   })
 
@@ -176,10 +172,10 @@ const CooperativeMain = ({ match: { params } }) => {
         <Text fontWeight='semibold'>
           $
           {getFormattedMoney(
-            data?.product?.pricePerAcre * row.values.acreage -
-              data?.product?.pricePerAcre *
+            data?.data?.product?.pricePerAcre * row.values.acreage -
+              data?.data?.product?.pricePerAcre *
                 row.values.acreage *
-                data?.type?.discount
+                data?.data?.type?.discount
           )}
         </Text>
       )
@@ -235,7 +231,7 @@ const CooperativeMain = ({ match: { params } }) => {
                     py='10px'
                     onClick={() => {
                       handleModalClick('payment', {
-                        product: data?.product,
+                        product: data?.data?.product,
                         order: row?.original?.order
                       })
                     }}
@@ -245,11 +241,11 @@ const CooperativeMain = ({ match: { params } }) => {
             )}
           {/* admin gets to see the option to resend invite to other users but not to himself  */}
           {/* if there's no id in the user object, meaning the invite hasn't been accepted */}
-          {user?.email === data?.users[0].email &&
+          {user?.email === data?.data?.users[0].email &&
             row.original.email !== user?.email &&
             !row.original.id && (
               <Flex pos='sticky' justify='center'>
-                <TableMenu id={data._id} email={row.original.email} />
+                <TableMenu id={data.data?._id} email={row.original.email} />
               </Flex>
             )}
         </>
@@ -258,10 +254,10 @@ const CooperativeMain = ({ match: { params } }) => {
   ]
 
   React.useEffect(() => {
-    if (data?.users?.length) {
-      setTableData(data.users || [])
+    if (data?.data?.users?.length) {
+      setTableData(data?.data?.users || [])
     }
-  }, [data])
+  }, [data?.data])
 
   return (
     <>
@@ -302,7 +298,7 @@ const CooperativeMain = ({ match: { params } }) => {
               </Box>
             ) : (
               <SideMenu
-                data={data}
+                data={data?.data}
                 border={1}
                 bg='#F6F6F6'
                 ml='49px'
@@ -343,7 +339,7 @@ const CooperativeMain = ({ match: { params } }) => {
                   w='100%'
                   px={{ base: 4 }}
                 >
-                  <SideBar data={data} />
+                  <SideBar data={data?.data} />
 
                   <Heading
                     fontSize={{ base: 16, xl: 16 }}
@@ -387,11 +383,11 @@ const CooperativeMain = ({ match: { params } }) => {
                     <Box key={item?._id}>
                       <CooperativeCard
                         item={item}
-                        data={data}
+                        data={data?.data}
                         order={userData?.[0].order}
                         handleClick={() => {
                           handleModalClick('payment', {
-                            product: data?.product,
+                            product: data?.data?.product,
                             order: userData?.[0].order
                           })
                         }}

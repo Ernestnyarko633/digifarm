@@ -15,71 +15,13 @@ const components = {
   compE: Updates
 }
 
-const DynamicCard = ({
-  card,
-  scheduledTasks,
-  weatherForeCasts,
-  farmfeeds,
-  farm,
-  eosStats,
-  //loading
-  farmFeedsIsLoading,
-  ScheduledTasksIsLoading,
-  WeatherForeCastsIsLoading,
-  EOSStatisticsIsLoading,
-  eosTaskIsLoading,
-  //errors
-  WeatherForeCastsHasError,
-  farmFeedsHasError,
-  ScheduledTasksHasError,
-  EOSStatisticsHasError,
-  eosTaskHasError,
-  reloads
-}) => {
+const DynamicCard = ({ card }) => {
   const SelectedCard = components[card]
-  return (
-    <SelectedCard
-      scheduledTasks={scheduledTasks}
-      weatherForeCasts={weatherForeCasts}
-      farmfeeds={farmfeeds}
-      farm={farm}
-      eosStats={eosStats}
-      //loadings
-      farmFeedsIsLoading={farmFeedsIsLoading}
-      WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
-      ScheduledTasksIsLoading={ScheduledTasksIsLoading}
-      EOSStatisticsIsLoading={EOSStatisticsIsLoading}
-      eosTaskIsLoading={eosTaskIsLoading}
-      //errors
-      WeatherForeCastsHasError={WeatherForeCastsHasError}
-      farmFeedsHasError={farmFeedsHasError}
-      ScheduledTasksHasError={ScheduledTasksHasError}
-      EOSStatisticsHasError={EOSStatisticsHasError}
-      eosTaskHasError={eosTaskHasError}
-      //helpers
-      reloads={reloads}
-    />
-  )
+  return <SelectedCard />
 }
 
 DynamicCard.propTypes = {
-  card: PropTypes.string.isRequired,
-  scheduledTasks: PropTypes.any,
-  farmfeeds: PropTypes.any,
-  farm: PropTypes.any,
-  weatherForeCasts: PropTypes.any,
-  eosStats: PropTypes.any,
-  farmFeedsIsLoading: PropTypes.bool,
-  EOSStatisticsIsLoading: PropTypes.bool,
-  ScheduledTasksIsLoading: PropTypes.bool,
-  WeatherForeCastsIsLoading: PropTypes.bool,
-  eosTaskIsLoading: PropTypes.bool,
-  WeatherForeCastsHasError: PropTypes.any,
-  farmFeedsHasError: PropTypes.any,
-  ScheduledTasksHasError: PropTypes.any,
-  EOSStatisticsHasError: PropTypes.any,
-  eosTaskHasError: PropTypes.any,
-  reloads: PropTypes.array
+  card: PropTypes.string
 }
 
 export default DynamicCard

@@ -35,11 +35,11 @@ const BankDetails = () => (
       </Box>
       <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.200'>
         <Flex
-          as='td'
-          align='center'
-          justify='space-between'
           w={{ md: 80 }}
+          justify='space-between'
+          as='td'
           p={{ md: 4 }}
+          align='center'
         >
           <Text color='gray.600' w={{ md: 40 }}>
             Branch:
@@ -56,11 +56,11 @@ const BankDetails = () => (
       </Box>
       <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.200'>
         <Flex
-          as='td'
-          align='center'
-          justify='space-between'
-          w={{ md: 80 }}
           p={{ md: 4 }}
+          justify='space-between'
+          align='center'
+          w={{ md: 80 }}
+          as='td'
         >
           <Text color='gray.600' w={{ md: 40 }}>
             Account no:
@@ -78,10 +78,10 @@ const BankDetails = () => (
       <Box as='tr' borderBottomWidth={2} borderBottomColor='gray.200'>
         <Flex
           as='td'
-          align='center'
           justify='space-between'
-          w={{ md: 80 }}
           p={{ md: 4 }}
+          align='center'
+          w={{ md: 80 }}
         >
           <Text color='gray.600' w={{ md: 40 }}>
             Swift code:

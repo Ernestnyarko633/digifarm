@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -10,39 +11,36 @@ import {
   Tag,
   Collapse
 } from '@chakra-ui/react'
+import { useQuery } from 'react-query'
 import { useHistory } from 'react-router-dom'
 import { Status } from 'helpers/misc'
 import Step from 'components/Form/Step'
+import { Link as ReachRouter } from 'react-router-dom'
 import Button from 'components/Button'
 import FetchCard from 'components/FetchCard'
 import ImageLoader from 'components/ImageLoader'
-
-import useFetch from 'hooks/useFetch'
 import useApi from 'context/api'
 
 const FarmCard = ({ farm, id }) => {
-  const [reload, setReload] = React.useState(0)
   const { getActivities } = useApi()
   const [imageUrl, setImageUrl] = React.useState(null)
   const history = useHistory()
 
-  const triggerReload = () => setReload(prevState => prevState + 1)
-
-  const { data, isLoading, error } = useFetch(
-    `${farm?.order?.product?._id}_activities`,
-    getActivities,
-    reload,
-    {
-      farm: farm?.order?.product?._id
-    }
+  const { data, isLoading, error, refetch } = useQuery(
+    [`${farm?.order?.product?._id}_activities`, farm?.order?.product?._id],
+    () =>
+      farm?.order?.product?._id &&
+      getActivities({
+        farm: farm?.order?.product?._id
+      })
   )
 
+  const triggerReload = () => refetch()
   //lifecycle runs on mount and if farm and data changes
   React.useEffect(() => {
     let mounted = true
-    if (data && mounted && farm) {
-      let activities = data
-      // get current activities being worked on
+    if (data?.data && mounted && farm) {
+      let activities = data?.data
       let startedActivities = activities.filter(
         activity => activity?.status === Status.IN_PROGRESS
       )
@@ -69,7 +67,7 @@ const FarmCard = ({ farm, id }) => {
       }
     }
     return () => (mounted = false)
-  }, [data, farm])
+  }, [data?.data, data?.data?.farm, farm])
 
   const [show, setShow] = React.useState(false)
 
@@ -142,18 +140,22 @@ const FarmCard = ({ farm, id }) => {
 
         <Box d={{ base: 'none', xl: 'block' }}>
           <Button
+            as={ReachRouter}
             rounded='full'
             h={{ md: 12, '2xl': 14 }}
             btntitle='View Farm'
             w={{ md: 44, '2xl': 52 }}
             fontWeight='bold'
             fontSize={{ md: 'lg' }}
-            onClick={_ => {
-              sessionStorage.setItem('selectedFarm', JSON.stringify(farm))
-              setTimeout(() => {
-                return history.push(`/farms/${farm._id}`)
-              }, 500)
+            to={{
+              pathname: `/farms/${farm._id}`,
+              state: farm
             }}
+            // onClick={_ => {
+            //   setTimeout(() => {
+            //     return history.push(`/farms/${farm._id}`)
+            //   }, 500)
+            // }}
           />
         </Box>
       </Flex>
@@ -202,11 +204,11 @@ const FarmCard = ({ farm, id }) => {
               <>
                 <Box d={{ base: 'block', md: 'none' }}>
                   <Collapse startingHeight={80} in={show}>
-                    {data?.length > 0 ? (
-                      data?.map((activity, index) => (
+                    {data?.data?.length > 0 ? (
+                      data?.data?.map((activity, index) => (
                         <Step
                           activity={activity}
-                          key={activity.title}
+                          key={activity._id}
                           cutThread={data.length - 1 === index}
                         />
                       ))
@@ -215,7 +217,7 @@ const FarmCard = ({ farm, id }) => {
                     )}
                   </Collapse>
 
-                  {data?.length > 1 && (
+                  {data?.data?.length > 1 && (
                     <Box
                       as='button'
                       role='button'
@@ -232,12 +234,12 @@ const FarmCard = ({ farm, id }) => {
 
                 <Box d={{ base: 'none', md: 'block' }}>
                   <Collapse startingHeight={190} in={show}>
-                    {data.length > 0 ? (
-                      data.map((activity, index) => (
+                    {data?.data?.length > 0 ? (
+                      data?.data.map((activity, index) => (
                         <Step
                           activity={activity}
-                          key={activity.title}
-                          cutThread={data.length - 1 === index}
+                          key={activity?._id}
+                          cutThread={data?.data.length - 1 === index}
                         />
                       ))
                     ) : (
@@ -245,7 +247,7 @@ const FarmCard = ({ farm, id }) => {
                     )}
                   </Collapse>
 
-                  {data?.length > 3 && (
+                  {data?.data?.length > 3 && (
                     <Box
                       as='button'
                       role='button'

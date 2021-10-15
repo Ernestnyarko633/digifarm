@@ -5,9 +5,16 @@ import { useDropzone } from 'react-dropzone'
 import { BsX } from 'react-icons/bs'
 import { Add } from 'theme/Icons'
 
-const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
+const ImageUpload = ({
+  files,
+  setFiles,
+  setFieldValue,
+  values,
+  upload = 'Upload image here',
+  acceptedFormat = 'image/*'
+}) => {
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
+    accept: acceptedFormat,
     onDrop: acceptedFiles => {
       acceptedFiles.forEach(async file => {
         const formData = new FormData()
@@ -101,7 +108,7 @@ const ImageUpload = ({ files, setFiles, setFieldValue, values }) => {
                 <Icon as={Add} />
               </Flex>
               <Text color='gray.400' mt={1} fontSize='sm'>
-                Upload image here
+                {upload}
               </Text>
             </>
           )}
@@ -118,6 +125,8 @@ ImageUpload.propTypes = {
   files: PropTypes.any,
   setFiles: PropTypes.any,
   setFieldValue: PropTypes.any,
+  upload: PropTypes.string,
+  acceptedFormat: PropTypes.string,
   values: PropTypes.any
 }
 

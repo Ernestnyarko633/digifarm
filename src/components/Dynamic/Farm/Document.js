@@ -3,24 +3,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DynamicDocument from '../Document'
 import FarmReceiptCard from '../Cards/FarmReceiptCard'
+import useFarm from 'context/farm'
 
-export default function Document({
-  digitalFarmerFarm,
-  activities,
-  tasks,
-  ScheduledTasks,
-  farmfeeds,
-  farmFeedsHasError,
-  ScheduledTasksHasError,
-  myFarmActivitiesHasError,
-  tasksHasError,
-  farmFeedsIsLoading,
-  ScheduledTasksIsLoading,
-  myFarmActivitiesIsLoading,
-  tasksIsLoading,
-  reloads
-}) {
+export default function Document() {
   let state = 'compA'
+  const { farm } = useFarm()
 
   return (
     <Grid
@@ -46,26 +33,7 @@ export default function Document({
           minH={{ lg: '100vh' }}
         >
           <Box mt={{ md: 10 }}>
-            <DynamicDocument
-              document={state}
-              //data
-              activities={activities}
-              tasks={tasks}
-              ScheduledTasks={ScheduledTasks}
-              digitalFarmerFarm={digitalFarmerFarm}
-              farmfeeds={farmfeeds}
-              //errors
-              farmFeedsHasError={farmFeedsHasError}
-              ScheduledTasksHasError={ScheduledTasksHasError}
-              myFarmActivitiesHasError={myFarmActivitiesHasError}
-              tasksHasError={tasksHasError}
-              //loading
-              farmFeedsIsLoading={farmFeedsIsLoading}
-              ScheduledTasksIsLoading={ScheduledTasksIsLoading}
-              myFarmActivitiesIsLoading={myFarmActivitiesIsLoading}
-              tasksIsLoading={tasksIsLoading}
-              reloads={reloads}
-            />
+            <DynamicDocument document={state} digitalFarmerFarm={farm} />
           </Box>
         </Box>
       </GridItem>
@@ -85,21 +53,9 @@ export default function Document({
         >
           <Grid gap={8} d={{ base: 'block', md: 'grid' }}>
             <React.Fragment>
-              <FarmReceiptCard
-                title='Agreement'
-                type='agreement'
-                farm={digitalFarmerFarm}
-              />
-              <FarmReceiptCard
-                title='Receipt'
-                type='receipt'
-                farm={digitalFarmerFarm}
-              />
-              <FarmReceiptCard
-                title='Invoice'
-                type='invoice'
-                farm={digitalFarmerFarm}
-              />
+              <FarmReceiptCard title='Agreement' type='agreement' farm={farm} />
+              <FarmReceiptCard title='Receipt' type='receipt' farm={farm} />
+              <FarmReceiptCard title='Invoice' type='invoice' farm={farm} />
             </React.Fragment>
           </Grid>
         </Box>

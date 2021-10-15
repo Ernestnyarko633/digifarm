@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { FiEyeOff, FiEye } from 'react-icons/fi'
 
-const PasswordInput = ({
+const CustomPasswordInput = ({
   id,
   error,
   touched,
@@ -88,7 +88,7 @@ const PasswordInput = ({
   )
 }
 
-PasswordInput.propTypes = {
+CustomPasswordInput.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.string,
@@ -98,4 +98,4 @@ PasswordInput.propTypes = {
   borderBottomColor: PropTypes.any
 }
 
-export default PasswordInput
+export default CustomPasswordInput

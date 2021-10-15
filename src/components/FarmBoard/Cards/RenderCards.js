@@ -16,13 +16,13 @@ const RenderCards = ({
   loading
 }) => {
   // switch for data type using status
-  const renderCard = (status, content) => {
-    switch (status) {
+  const renderCard = (s, c) => {
+    switch (s) {
       case 'news':
         return (
           <>
             {filter === comparant && (
-              <NewsCard content={content} status={status} loading={loading} />
+              <NewsCard content={c} status={s} loading={loading} />
             )}
           </>
         )
@@ -30,11 +30,7 @@ const RenderCards = ({
         return (
           <>
             {filter === comparant && (
-              <WeeklyVideoCard
-                content={content}
-                status={status}
-                loading={loading}
-              />
+              <WeeklyVideoCard content={c} status={s} loading={loading} />
             )}
           </>
         )
@@ -42,14 +38,14 @@ const RenderCards = ({
         return (
           <>
             {filter === comparant &&
-              farms[activeFarmIndex]?.order?.product?._id === content?.farm && (
+              farms[activeFarmIndex]?.order?.product?._id === c?.farm && (
                 <FarmFeedCard
                   activeFarm={farms[activeFarmIndex]}
-                  content={content}
+                  content={c}
                   loading={loading}
-                  status={status}
+                  status={s}
                   timestamp={new Date(
-                    latestDateForFarmFeed(content)
+                    latestDateForFarmFeed(c)
                   ).toLocaleDateString()}
                 />
               )}

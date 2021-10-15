@@ -5,7 +5,7 @@ import Splash from 'components/Loading/Splash'
 
 import Pages from 'pages'
 
-import PrivateRoute from './private'
+import PrivateRoute from './PrivateRoute'
 
 const Router = () => {
   return (
@@ -45,10 +45,8 @@ const Router = () => {
           path='/cooperative/:id'
           component={Pages.Cooperative_}
         />
-        <PrivateRoute exact path='/payment' component={Pages.Payment} />
         <PrivateRoute
-          exact
-          path='/payment-paystack'
+          path='/payment-paystack/:id/:type'
           component={Pages.PaymentPaystack}
         />
         <PrivateRoute path='/tazapay' component={Pages.Tazapay} />

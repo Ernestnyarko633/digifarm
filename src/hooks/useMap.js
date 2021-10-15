@@ -14,12 +14,7 @@ mapboxgl.workerClass =
 
 mapboxgl.accessToken = configs().MAPBOX_API
 
-export default function useMapbox({
-  center,
-  onInit,
-  zoom = 14,
-  height = 1000
-}) {
+export default function useMap({ center, onInit, zoom = 14, height = 1000 }) {
   const ref = useRef(null)
   const [map, setMap] = useState(null)
   useEffect(() => {

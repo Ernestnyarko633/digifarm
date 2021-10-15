@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Text, Icon } from '@chakra-ui/react'
 import { MdRemoveShoppingCart } from 'react-icons/md'
-
 import ComponentWrapper from 'components/Wrapper/ComponentWrapper'
 import OrdersCard from 'components/Cards/OrdersCard'
 import useComponent from 'context/component'
@@ -54,9 +53,19 @@ const FarmOrderSection = ({
     ?.slice()
     ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
     .filter(
-      (processingOrder, index, self) =>
+      (processedOrder, index, self) =>
         self.findIndex(
-          item => JSON.stringify(item) === JSON.stringify(processingOrder)
+          item => JSON.stringify(item) === JSON.stringify(processedOrder)
+        ) === index
+    )
+
+  const sortedFarms = farms
+    ?.slice()
+    ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+    .filter(
+      (filteredFarm, index, self) =>
+        self.findIndex(
+          item => JSON.stringify(item) === JSON.stringify(filteredFarm)
         ) === index
     )
 
@@ -76,8 +85,11 @@ const FarmOrderSection = ({
         <Flex>
           {sliderType === 'farms' && (
             <>
-              {farms.length > 0 ? (
-                <FarmsCard data={farms} currentSlide={currentFarmsSlide} />
+              {sortedFarms?.length > 0 ? (
+                <FarmsCard
+                  data={sortedFarms}
+                  currentSlide={currentFarmsSlide}
+                />
               ) : (
                 <EmptyState text='You have no farm yet' />
               )}

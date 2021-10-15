@@ -12,13 +12,15 @@ import Gal from 'assets/images/gallery.png'
 import ImageGallery from '../Cards/ImageGallery'
 import PropTypes from 'prop-types'
 import FetchCard from 'components/FetchCard'
+import useFarm from 'context/farm'
 
-export default function Gallery({
-  farmfeeds,
-  farmFeedsIsLoading,
-  farmFeedsHasError,
-  reloads
-}) {
+export default function Gallery() {
+  const {
+    farmFeedsIsLoading,
+    farmFeedsHasError,
+    farmFeedsRefetch,
+    farmFeeds: farmfeeds
+  } = useFarm()
   return (
     <Grid
       templateRows='repeat(1 1fr)'
@@ -46,7 +48,7 @@ export default function Gallery({
               justify='center'
               mx='auto'
               // FIX ME
-              reload={() => reloads[2]()}
+              reload={() => farmFeedsRefetch()}
               loading={farmFeedsIsLoading}
               error={farmFeedsHasError}
               text='Standby as we load your gallery'

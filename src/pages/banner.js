@@ -156,11 +156,11 @@ const Banner = () => {
 
           <Flex align='center' d={{ base: 'none', lg: 'flex' }}>
             <Link
-              isExternal
               href='https://www.completefarmer.com/terms/'
-              rel='noreferrer'
               px={{ md: 4 }}
+              rel='noreferrer'
               _focus={{ textDecor: 'none' }}
+              isExternal
             >
               Terms &amp; Conditions
             </Link>
@@ -175,23 +175,23 @@ const Banner = () => {
             </Link>
 
             <Link
+              rel='noreferrer'
               isExternal
               href='https://twitter.com/completefarmer'
-              rel='noreferrer'
               px={{ md: 2 }}
-              _focus={{ textDecor: 'none' }}
               color='gray.600'
+              _focus={{ textDecor: 'none' }}
             >
               <Icon as={FaInstagramSquare} boxSize={5} />
             </Link>
 
             <Link
               isExternal
-              href='https://www.facebook.com/CompleteFarmer/'
               rel='noreferrer'
+              href='https://www.facebook.com/CompleteFarmer/'
+              color='gray.600'
               px={{ md: 2 }}
               _focus={{ textDecor: 'none' }}
-              color='gray.600'
             >
               <Icon as={FaFacebookSquare} boxSize={5} />
             </Link>
@@ -199,10 +199,10 @@ const Banner = () => {
             <Link
               isExternal
               href='https://www.instagram.com/completefarmer'
-              rel='noreferrer'
               px={{ md: 2 }}
-              _focus={{ textDecor: 'none' }}
+              rel='noreferrer'
               color='gray.600'
+              _focus={{ textDecor: 'none' }}
             >
               <Icon as={FaLinkedin} boxSize={5} />
             </Link>

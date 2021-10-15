@@ -3,48 +3,10 @@ import { Box, Grid, GridItem } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import FarmLeftSideBar from '../Container/FarmLeftSideBar'
 import FarmRightSidebar from '../Container/FarmRightSidebar'
-import useApi from 'context/api'
-import useFetch from 'hooks/useFetch'
 import useComponent from 'context/component'
-export default function FarmLayout({
-  children,
-  digitalFarmerFarm,
-  eosTask,
-  WeatherForeCasts,
-  ScheduledTasks,
-  location,
-  farmfeeds,
-  reloads,
-  //loading
-  farmFeedsIsLoading,
-  ScheduledTasksIsLoading,
-  WeatherForeCastsIsLoading,
-  //errors
-  WeatherForeCastsHasError,
-  farmFeedsHasError,
-  ScheduledTasksHasError,
-  eosTaskIsLoading,
-  eosTaskHasError,
-  ...rest
-}) {
+export default function FarmLayout({ children, ...rest }) {
   const { compState, setCompState } = useComponent()
-  const { eosStats } = useApi()
-  const [eosStatsReload, setEosStatsReload] = React.useState(0)
 
-  const triggerEosStatsReload = () => setEosStatsReload(prev => prev + 1)
-  // for health card stats
-  const {
-    data: EOSStatistics,
-    isLoading: EOSStatisticsIsLoading,
-    error: EOSStatisticsHasError
-  } = useFetch(
-    eosTask?.task_id ? `${eosTask?.task_id}_stats` : null,
-    eosTask?.task_id ? eosStats : null,
-    eosStatsReload,
-    {
-      task: eosTask?.task_id
-    }
-  )
   return (
     <Grid
       templateRows={{ md: 'repeat(1 1fr)' }}
@@ -72,30 +34,7 @@ export default function FarmLayout({
         </Box>
       </GridItem>
       <GridItem shadow={{ md: 'xl' }}>
-        <FarmRightSidebar
-          // data
-          farmfeeds={farmfeeds}
-          WeatherForeCasts={WeatherForeCasts}
-          ScheduledTasks={ScheduledTasks}
-          eosStats={EOSStatistics}
-          digitalFarmerFarm={digitalFarmerFarm}
-          location={location}
-          state={compState}
-          //extras
-          reloads={[...reloads, triggerEosStatsReload]}
-          //loadings
-          farmFeedsIsLoading={farmFeedsIsLoading}
-          WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
-          ScheduledTasksIsLoading={ScheduledTasksIsLoading}
-          EOSStatisticsIsLoading={EOSStatisticsIsLoading}
-          eosTaskIsLoading={eosTaskIsLoading}
-          //errors
-          WeatherForeCastsHasError={WeatherForeCastsHasError}
-          farmFeedsHasError={farmFeedsHasError}
-          ScheduledTasksHasError={ScheduledTasksHasError}
-          EOSStatisticsHasError={EOSStatisticsHasError}
-          eosTaskHasError={eosTaskHasError}
-        />
+        <FarmRightSidebar state={compState} />
       </GridItem>
     </Grid>
   )

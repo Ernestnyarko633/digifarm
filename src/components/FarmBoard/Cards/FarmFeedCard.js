@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -16,12 +17,13 @@ import {
 import useAuth from 'context/auth'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { FirstLettersToUpperCase } from 'helpers/misc'
-import ReactPlayer from 'react-player/lazy'
+import ReactPlayer from 'react-player'
 
 const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [show, setShow] = React.useState(false)
+  const [titles, setTitles] = React.useState([])
   const handleToggle = () => setShow(!show)
 
   const [selectedItem, setSelectedItem] = React.useState({})
@@ -30,15 +32,15 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
 
   const [items, setItems] = React.useState([])
   const handleClick = (value, array, index, indexFunc, selectedItemFunc) => {
-    const comparant =
+    const subject =
       index + value === 0 ||
       index + value > array.length - 1 ||
       index + value < 0
         ? 0
         : index + value
 
-    indexFunc(comparant)
-    selectedItemFunc(array[comparant])
+    indexFunc(subject)
+    selectedItemFunc(array[subject])
   }
 
   const YoutubeSlide = ({ url }) => (
@@ -77,6 +79,19 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
       setSelectedItem(array[0])
     }
   }, [content, status])
+
+  React.useEffect(() => {
+    let strings = []
+    if (content) {
+      const process = () =>
+        content?.data?.map(item => strings.push(item?.task?.title))
+      process()
+      if (strings?.length) {
+        strings = Array.from(new Set(strings))
+        setTitles(strings)
+      }
+    }
+  }, [content])
 
   const Detail = () => {
     return (
@@ -173,10 +188,6 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                 minW={10}
                 minH={10}
                 rounded='100%'
-                // _hover={{
-                //   background: 'cf.green',
-                //   color: 'white'
-                // }}
                 color='white'
                 mr={2}
                 outlineColor='none'
@@ -203,10 +214,6 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                 bg='white'
                 minW={10}
                 minH={10}
-                // _hover={{
-                //   background: 'cf.green',
-                //   color: 'white'
-                // }}
                 rounded='100%'
                 color='cf.green'
                 outlineColor='black'
@@ -253,29 +260,32 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                 onClick={handleToggle}
                 cursor='pointer'
               >
-                {
-                  // content?.data[0]?.feed?.summary?.replace(/<[^>]*>/g, '')
-                  content?.data?.map((body, i) => {
-                    return (
-                      <Fragment key={mapKey(i)}>
-                        <Heading
-                          as='h6'
-                          mt={6}
-                          fontSize={{ base: 'sm', md: 'xl' }}
-                        >
-                          {body?.task?.title}
-                        </Heading>
-                        <Text
-                          color='gray.500'
-                          mt={3}
-                          fontSize={{ base: 'sm', md: 'md' }}
-                        >
-                          {body?.feed?.summary?.replace(/<[^>]*>/g, '')}
-                        </Text>
-                      </Fragment>
-                    )
-                  })
-                }
+                {titles?.map((title, inx) => {
+                  return (
+                    <Fragment key={mapKey(inx)}>
+                      <Heading
+                        as='h6'
+                        mt={6}
+                        fontSize={{ base: 'sm', md: 'xl' }}
+                      >
+                        {title}
+                      </Heading>
+                      {content?.data?.map(
+                        (body, i) =>
+                          title === body?.task?.title && (
+                            <Text
+                              key={mapKey(i)}
+                              color='gray.500'
+                              mt={3}
+                              fontSize={{ base: 'sm', md: 'md' }}
+                            >
+                              {body?.feed?.summary?.replace(/<[^>]*>/g, '')}
+                            </Text>
+                          )
+                      )}
+                    </Fragment>
+                  )
+                })}
               </Collapse>
               <Box as='button' onClick={handleToggle}>
                 <Text color='cf.green' py={{ base: 1 }}>

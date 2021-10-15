@@ -36,27 +36,27 @@ const UserDetailsForm = () => {
     },
     enableReinitialize: true,
     validationSchema: PersonalInfoSchema,
-    onSubmit: async (values, { setSubmitting }) => {
+    onSubmit: async (formikValues, { setSubmitting }) => {
       try {
-        let updatedValue = objDiff(values, user)
+        let updatedValue = objDiff(formikValues, user)
         if (updatedValue?.address) {
           if (updatedValue?.country) {
-            updatedValue.address.country = values.address.country
+            updatedValue.address.country = formikValues.address.country
             delete updatedValue?.country
           }
-          Object.keys(values.address).forEach(function (key) {
+          Object.keys(formikValues.address).forEach(function (key) {
             Object.keys(updatedValue.address).forEach(function (_key) {
               if (key === _key) {
-                values.address[key] = updatedValue.address[_key]
+                formikValues.address[key] = updatedValue.address[_key]
               }
             })
           })
-          updatedValue.address = values.address
+          updatedValue.address = formikValues.address
         } else if (updatedValue.country) {
           updatedValue.address = {
-            country: values.address.country,
-            street: values.address.street,
-            state: values.address.state
+            country: formikValues.address.country,
+            street: formikValues.address.street,
+            state: formikValues.address.state
           }
           delete updatedValue?.country
         }

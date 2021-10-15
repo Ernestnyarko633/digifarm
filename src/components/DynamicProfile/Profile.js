@@ -5,17 +5,16 @@ import AvatarForm from './ProfileForms/AvatarForm'
 import UserDetailsForm from './ProfileForms/UserDetailsForm'
 import BankingDetailsForm from './ProfileForms/BankingDetailsForm'
 
-import useFetch from 'hooks/useFetch'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
 import Signature from 'components/Signature'
 import FetchCard from 'components/FetchCard'
+import ProfileIdentity from './ProfileForms/ProfileIdentity'
+import { useQuery } from 'react-query'
 
 const Profile = () => {
   const { isAuthenticated } = useAuth()
-  const [reload, setReload] = React.useState(0)
 
-  const triggerReload = () => setReload(s => s + 1)
   const { getBankDetails } = useApi()
 
   const { user } = isAuthenticated()
@@ -23,8 +22,11 @@ const Profile = () => {
   const {
     data: bankDetails,
     isLoading: loading,
-    error
-  } = useFetch(null, getBankDetails, reload)
+    error,
+    refetch
+  } = useQuery('banking_details', () => getBankDetails())
+
+  const triggerReload = () => refetch()
 
   return loading || error ? (
     <Box y={{ md: 20 }}>
@@ -45,6 +47,9 @@ const Profile = () => {
     <Container maxW={{ md: '4xl' }}>
       <AvatarForm />
       <UserDetailsForm />
+      <ProfileIdentity />
+
+      <BankingDetailsForm bankDetails={bankDetails?.data || {}} />
       <Box
         mt={12}
         bg='white'
@@ -54,7 +59,6 @@ const Profile = () => {
       >
         <Signature data={user?.signature} />
       </Box>
-      <BankingDetailsForm bankDetails={bankDetails || {}} />
     </Container>
   )
 }

@@ -32,6 +32,12 @@ export const ApiContextProvider = ({ children }) => {
   const patchUser = async (id, body) => {
     return await http.patch({ url: `${AUTH_API}/users/${id}`, body })
   }
+  // const patchUserIdentity = async payload => {
+  //   return await http.patch({
+  //     url: `${AUTH_API}/users/profile-identity`,
+  //     body: JSON.stringify(payload)
+  //   })
+  // }
 
   const changePassword = async payload => {
     return await http.patch({
@@ -104,9 +110,9 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const createFarmFromNotification = async id => {
+  const approvalOrder = async id => {
     return await http.patch({
-      url: `${DIGITAL_FARMER_API}/orders/payment/tazapay/create-farm/${id}`
+      url: `${DIGITAL_FARMER_API}/orders/${id}/approve-order`
     })
   }
 
@@ -241,13 +247,6 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const submitPayout = async payload => {
-    return await http.post({
-      url: `${DIGITAL_FARMER_API}/payrolls`,
-      body: JSON.stringify(payload)
-    })
-  }
-
   const verifyWallet = async payload => {
     return await http.patch({
       url: `${DIGITAL_FARMER_API}/orders/verify-wallet`,
@@ -255,19 +254,6 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
-  const patchPayout = async (id, payload) => {
-    return await http.patch({
-      url: `${DIGITAL_FARMER_API}/payrolls/${id}`,
-      body: JSON.stringify(payload)
-    })
-  }
-
-  const getFarmProcessingPayouts = async query => {
-    return await http.get({
-      url: `${DIGITAL_FARMER_API}/payrolls-wallet`,
-      query
-    })
-  }
   const eosTask = async payload => {
     return await http.post({
       url: `${FMS_API}/eos-task`,
@@ -386,6 +372,7 @@ export const ApiContextProvider = ({ children }) => {
         eosSearch,
         patchOrder,
         patchUser,
+        // patchUserIdentity,
         getMyFarm,
         createFarm,
         getReceipt,
@@ -399,8 +386,7 @@ export const ApiContextProvider = ({ children }) => {
         downloadFile,
         patchWallet,
         verifyWallet,
-        submitPayout,
-        patchPayout,
+        approvalOrder,
 
         getActivities,
         getMyFarmFeeds,
@@ -423,8 +409,6 @@ export const ApiContextProvider = ({ children }) => {
         initiatePaystackPayment,
         verifyTazapayPayment,
         verifyPaystackPayment,
-        getFarmProcessingPayouts,
-        createFarmFromNotification,
 
         //cooperative
         acceptInvite,

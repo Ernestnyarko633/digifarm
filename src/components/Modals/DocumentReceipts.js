@@ -4,7 +4,7 @@ import ModalWrapper from './ModalWrapper'
 import useComponent from 'context/component'
 import DocumentActivityReceiptCard from 'components/Cards/DocumentActivityReceiptsCard'
 
-const DocumentsReceipts = () => {
+const DocumentReceipts = () => {
   const { isOpen, onClose, data } = useComponent()
   return (
     <ModalWrapper isCentered isOpen={isOpen} onClose={onClose} size='3xl'>
@@ -36,4 +36,4 @@ const DocumentsReceipts = () => {
   )
 }
 
-export default DocumentsReceipts
+export default DocumentReceipts

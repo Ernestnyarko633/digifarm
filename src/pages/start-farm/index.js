@@ -29,8 +29,8 @@ const StartFarm = () => {
         direction='column'
         bgColor='white'
         w={{ md: '100vw' }}
-        h={{ md: 'calc(100vh - 5rem)' }}
-        overflow='hidden'
+        h={{ md: 'calc(100vh - 0)' }}
+        overflow='scroll'
         mt={{ base: 14, md: 20, xl: 20 }}
         pt={{ base: 8 }}
         pb={{ base: 8 }}

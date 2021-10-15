@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
@@ -9,34 +10,19 @@ import useApi from 'context/api'
 import Sat from 'assets/images/sateilite.png'
 import FetchCard from 'components/FetchCard'
 import FarmLegend from './FarmLegend'
+import useFarm from 'context/farm'
 
-export default function Farm({
-  farmFeedsIsLoading,
-  ScheduledTasksIsLoading,
-  myFarmActivitiesIsLoading,
-  EOSViewIDIsLoading,
-  WeatherForeCastsIsLoading,
-  tasksIsLoading,
-  onOpen,
-  center,
-  zoom = 14,
-  eosTask,
-  digitalFarmerFarm,
-  WeatherForeCasts,
-  ScheduledTasks,
-  EOSViewID,
-  location,
-  farmfeeds,
-  reloads,
-  EOSViewIDHasError,
-  WeatherForeCastsHasError,
-  eosTaskHasError,
-  eosTaskIsLoading,
-  farmFeedsHasError,
-  ScheduledTasksHasError,
-  myFarmActivitiesHasError,
-  tasksHasError
-}) {
+export default function Farm() {
+  const {
+    EOSViewID,
+    location,
+    EOSViewIDIsLoading,
+    EOSViewIDHasError,
+    EOSViewIDRefetch,
+    center
+    // getImage
+  } = useFarm()
+
   const [_loading, _setLoading] = React.useState(false)
   // const [band, setBand] = React.useState('NDVI')
   const ENV = process.env.REACT_APP_ENVIRONMENT
@@ -55,7 +41,7 @@ export default function Farm({
     let EOSTaskForStatsCreationPayload = {
       type: 'lbe',
       params: {
-        view_id: EOSViewID?.results[0]?.view_id,
+        view_id: EOSViewID?.length ? EOSViewID[0]?.view_id : '',
         bands: ['B02', 'B03', 'B04'],
         geometry: {
           type: 'Polygon',
@@ -69,7 +55,7 @@ export default function Farm({
 
     const fetchData = async payload => {
       try {
-        let key = `${EOSViewID?.results[0]?.view_id}_os_task_stats_creation`
+        let key = `${EOSViewID[0]?.view_id}_os_task_stats_creation`
         const dataFromStorage = JSON.parse(sessionStorage.getItem(key))
         if (dataFromStorage) {
           return setEOSTaskForStatsCreated(dataFromStorage)
@@ -108,32 +94,12 @@ export default function Farm({
   }
 
   return (
-    <FarmLayout
-      //data
-      digitalFarmerFarm={digitalFarmerFarm || {}}
-      WeatherForeCasts={WeatherForeCasts || []}
-      ScheduledTasks={ScheduledTasks || []}
-      location={location || []}
-      farmfeeds={farmfeeds || []}
-      eosTask={eosTask}
-      //loading
-      farmFeedsIsLoading={farmFeedsIsLoading}
-      ScheduledTasksIsLoading={ScheduledTasksIsLoading}
-      WeatherForeCastsIsLoading={WeatherForeCastsIsLoading}
-      eosTaskIsLoading={eosTaskIsLoading}
-      //errors
-      WeatherForeCastsHasError={WeatherForeCastsHasError}
-      farmFeedsHasError={farmFeedsHasError}
-      ScheduledTasksHasError={ScheduledTasksHasError}
-      eosTaskHasError={eosTaskHasError}
-      //extras
-      reloads={reloads}
-    >
-      {EOSTaskForStatsCreationHasError || __error}
+    <FarmLayout>
+      {false && (EOSTaskForStatsCreationHasError || __error)}
       <Box h={{ base: 90, md: 128 }} w='100%' mt={{ base: 32, md: 0 }}>
         {EOSViewIDIsLoading || EOSViewIDHasError ? (
           <Flex w='100%' h='100%' direction='column'>
-            {!EOSViewID && (
+            {!EOSViewID?.length && (
               <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
@@ -163,7 +129,7 @@ export default function Farm({
                 align='center'
                 justify='center'
                 mx='auto'
-                reload={() => reloads[5]()}
+                reload={() => EOSViewIDRefetch()}
                 loading={EOSViewIDIsLoading}
                 error={EOSViewIDHasError}
                 text={"Standby as we load your farm's map"}
@@ -172,22 +138,21 @@ export default function Farm({
           </Flex>
         ) : (
           <>
-            {EOSViewID && ['PROD'].includes(ENV) && (
+            {EOSViewID?.length > 0 && ['PROD'].includes(ENV) && (
               <Box
                 h='100%'
                 w='100%'
                 objectFit='cover'
                 as={Map}
-                viewID={EOSViewID?.results[0]?.view_id}
+                viewID={EOSViewID[0]?.view_id}
                 loading={EOSViewIDIsLoading || EOSTaskForStatsCreationIsLoading}
                 error={EOSViewIDHasError}
                 band={null}
                 center={center || location[0]}
-                zoom={zoom}
-                reloads={reloads}
+                zoom={14}
               />
             )}
-            {['DEV', 'LOCAL'].includes(ENV) && (
+            {['LOCAL', 'DEV'].includes(ENV) && (
               <Box display={{ base: 'block' }} w='100%' h='100%'>
                 <Image fit='cover' w='100%' h='100%' src={EmptyMap} />
                 <Box
@@ -211,7 +176,7 @@ export default function Farm({
                 </Box>
               </Box>
             )}
-            {EOSViewID && ['PROD'].includes(ENV) && (
+            {EOSViewID?.length > 0 && ['PROD'].includes(ENV) && (
               <Flex
                 align='center'
                 justify='space-between'
@@ -241,13 +206,14 @@ export default function Farm({
                   }
                 />
                 {/* <Button
-              btntitle='Share'
-              rounded='30px'
-              h={12}
-              isDisabled
-              w={{ base: 20, md: 40 }}
-              onClick={onOpen}
-            /> */}
+                  display='none'
+                  btntitle='Share'
+                  rounded='30px'
+                  h={12}
+                  isDisabled
+                  w={{ base: 20, md: 40 }}
+                  onClick={getImage}
+                /> */}
               </Flex>
             )}
           </>

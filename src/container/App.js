@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { FarmContextProvider } from 'context/farm'
 // import TagManager from 'react-gtm-module'
 import { StartFarmContextProvider } from 'context/start-farm'
 import { ComponentContextProvider } from 'context/component'
@@ -8,58 +9,36 @@ import { ModalContextProvider } from 'context/modal'
 import { AuthContextProvider } from 'context/auth'
 import { ApiContextProvider } from 'context/api'
 import { WalletContextProvider } from 'context/wallet'
-import { RolloverContextProvider } from 'context/rollover'
 import { SocketContextProvider } from 'context/socket'
-import Router from 'routes/register'
-
-// const tagManagerArgs = {
-//   gtmId: process.env.REACT_APP_GTM
-// }
+import useInterval from 'hooks/useInterval'
+import Router from 'routes/Router'
+import FacebookPixel from 'hooks/FacebookPixel'
 
 const App = () => {
-  // const history = useHistory()
-  // React.useEffect(() => {
-  //   TagManager.initialize(tagManagerArgs)
-  // }, [])
-
-  function FacebookPixel() {
-    React.useEffect(() => {
-      import('react-facebook-pixel')
-        .then(x => x.default)
-        .then(ReactPixel => {
-          ReactPixel.init('2143795925947401')
-          ReactPixel.pageView()
-
-          // history?.listen(location => {
-          //   ReactPixel.pageView()
-          //   ReactPixel.fbq('track', 'PageView')
-          // })
-        })
-    })
-    return null
-  }
+  //remove "feeds" cache
+  useInterval(() => sessionStorage.removeItem('feeds'), 300000)
 
   return (
     <BrowserRouter>
       <ComponentContextProvider>
-        <ApiContextProvider>
-          <SocketContextProvider>
-            <ExternalContextProvider>
-              <AuthContextProvider>
-                <RolloverContextProvider>
-                  <StartFarmContextProvider>
-                    <ModalContextProvider>
-                      <WalletContextProvider>
+        <AuthContextProvider>
+          <ApiContextProvider>
+            <SocketContextProvider>
+              <ExternalContextProvider>
+                <StartFarmContextProvider>
+                  <ModalContextProvider>
+                    <WalletContextProvider>
+                      <FarmContextProvider>
                         <FacebookPixel />
                         <Router />
-                      </WalletContextProvider>
-                    </ModalContextProvider>
-                  </StartFarmContextProvider>
-                </RolloverContextProvider>
-              </AuthContextProvider>
-            </ExternalContextProvider>
-          </SocketContextProvider>
-        </ApiContextProvider>
+                      </FarmContextProvider>
+                    </WalletContextProvider>
+                  </ModalContextProvider>
+                </StartFarmContextProvider>
+              </ExternalContextProvider>
+            </SocketContextProvider>
+          </ApiContextProvider>
+        </AuthContextProvider>
       </ComponentContextProvider>
     </BrowserRouter>
   )

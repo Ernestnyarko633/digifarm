@@ -1,16 +1,16 @@
 import React from 'react'
-import { Flex, Heading, Icon, Text } from '@chakra-ui/react'
+import { Flex, Heading, Icon, Text, Box } from '@chakra-ui/react'
 import { Support as SupportIcon, Schedule, Update } from 'theme/Icons'
 
 const Support = () => {
   return (
-    <box>
+    <Box>
       <Heading as='h6' fontSize='md' mb={3} textAlign='center'>
         What is included in this farm
       </Heading>
       <Flex justify='space-between' align='center' fontSize='sm'>
         <Flex align='center' direction={{ base: 'column', md: 'row' }}>
-          <Icon as={Update} color='cf.green' boxSize={5} />
+          <Icon as={Update} color='cf.green' BoxSize={5} />
           <Text ml={1}>Farm Updates</Text>
         </Flex>
         <Flex
@@ -26,7 +26,7 @@ const Support = () => {
           <Text ml={1}>Scheduled Farm Visits</Text>
         </Flex>
       </Flex>
-    </box>
+    </Box>
   )
 }
 
