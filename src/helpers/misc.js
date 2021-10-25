@@ -67,7 +67,7 @@ export const getFormattedMoney = val => {
     .split('$')[1]
 }
 export const latestDateForFarmFeed = feed => {
-  const { data } = feed
+  const data = feed?.data?.length ? feed?.data : []
 
   let array = []
   const process = () =>

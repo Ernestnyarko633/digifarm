@@ -19,18 +19,16 @@ const useNews = ({ content }) => {
   }
 
   useEffect(() => {
-    let array = []
-    let temp = content?.data?.body || []
+    let mounted = true
+    let array = content?.data ? [content?.data] : []
 
-    const slice = () => temp.forEach(item => array.push(item))
-
-    slice()
-
-    if (array.length) {
+    if (array.length && mounted) {
       setItems(array)
       setSelectedItem(array[0])
     }
-  }, [content?.data?.body])
+
+    return () => (mounted = false)
+  }, [content?.data])
 
   return {
     selectedItem,

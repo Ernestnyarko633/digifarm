@@ -6,11 +6,7 @@ const NewsHead = ({ content, status }) => (
     <Flex align='center'>
       <Box ml={4}>
         <Heading as='h4' fontSize={{ md: 'xl' }} fontWeight={700}>
-          {['blogs', 'blogposts', 'blogpost', 'blog', 'Blogpost'].includes(
-            content?.data?.category
-          )
-            ? 'Blog Post'
-            : 'Weekly News'}
+          {['BLOGS'].includes(status) ? 'Blog Post' : 'Weekly News'}
         </Heading>
       </Box>
     </Flex>
@@ -18,11 +14,9 @@ const NewsHead = ({ content, status }) => (
     <Flex direction='column' justify='center' align='center'>
       <Box mx={{ base: 4 }}>
         <Text color='cf.green' fontWeight={700}>
-          {['blogs', 'blogposts', 'blogpost', 'blog', 'Blogpost'].includes(
-            content?.data?.category
-          )
+          {['BLOGS'].includes(status)
             ? 'BLOGS'
-            : status === 'news'
+            : status === 'NEWS'
             ? status.toUpperCase()
             : null}
         </Text>

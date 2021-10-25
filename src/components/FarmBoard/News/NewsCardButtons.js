@@ -21,14 +21,12 @@ const NewsCardButtons = ({ content, loading }) => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        selectedItem?.slice_type !== 'video' && (
-          <Image
-            h={{ md: 85 }}
-            w='100%'
-            objectFit='cover'
-            src={selectedItem?.primary?.image?.url}
-          />
-        )
+        <Image
+          h={{ md: 85 }}
+          w='100%'
+          objectFit='cover'
+          src={selectedItem?.image?.url}
+        />
       )}
 
       {selectedItem?.slice_type === 'video' && (
