@@ -12,7 +12,9 @@ import { useLocation } from 'react-router-dom'
 import { checkProperties } from 'helpers/misc'
 
 const FarmBoardContent = ({ farms = [] }) => {
-  const [component, setComponent] = React.useState('FEEDS')
+  const [component, setComponent] = React.useState(
+    farms?.length ? 'FEEDS' : 'VIDEOS'
+  )
   const [hasBeenClicked, setHasBeenClicked] = React.useState(false)
   const useQuery = () => new URLSearchParams(useLocation().search)
 
