@@ -370,6 +370,7 @@ export const StartFarmContextProvider = ({ children }) => {
       setSubmitting(true)
       const data = {
         amount: convertedAmount || cost,
+        // actual_amount: order?.cost,
         order_id: id || order._id,
         purpose: 'FARM_PURCHASE',
         name: name || selectedFarm.name,
