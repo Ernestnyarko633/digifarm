@@ -277,7 +277,6 @@ export const FarmContextProvider = ({ children }) => {
     [`${_eosTask?.data?.task_id}_stats`, _eosTask?.data?.task_id, location],
     () => {
       if (_eosTask?.data?.task_id) {
-        console.log('got here')
         return eosStats({
           task: _eosTask?.data?.task_id
         })
@@ -285,8 +284,6 @@ export const FarmContextProvider = ({ children }) => {
       return null
     }
   )
-
-  console.log(_eosTask?.data?.task_id, 'resultinh')
 
   const triggerEosStatsReload = () => EOSStatisticsRefetch()
 
