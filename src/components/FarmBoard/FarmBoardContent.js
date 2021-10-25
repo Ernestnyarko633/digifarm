@@ -11,10 +11,9 @@ import { latestDateForFarmFeed } from 'helpers/misc'
 import { useLocation } from 'react-router-dom'
 import { checkProperties } from 'helpers/misc'
 
-const FarmBoardContent = ({ farms = [], farmLoader }) => {
+const FarmBoardContent = ({ farms = [] }) => {
   const [component, setComponent] = React.useState('FEEDS')
   const [hasBeenClicked, setHasBeenClicked] = React.useState(false)
-  //using function to query search params
   const useQuery = () => new URLSearchParams(useLocation().search)
 
   //initial states
