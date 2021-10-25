@@ -1,9 +1,7 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 const NewsHead = ({ content, status }) => {
-  console.log(status === 'BLOGS' ? content : null)
   return (
     <Flex align='center' justify='space-between'>
       <Flex align='center'>
