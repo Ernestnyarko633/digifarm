@@ -112,7 +112,7 @@ export const dateIntervals = () => {
   // 30 days ago date
   let ThirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30))
 
-  let SixtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 60))
+  let SixtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 90))
 
   let dd = today.getDate()
   let _dd = ThirtyDaysAgo.getDate()
