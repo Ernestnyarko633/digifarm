@@ -299,7 +299,7 @@ export const FarmContextProvider = ({ children }) => {
           ? EOSStatistics?.data
               ?.slice()
               ?.sort((a, b) => new Date(b?.date) - new Date(a?.date))
-          : [] || [],
+          : [],
         EOSStatisticsIsLoading,
         EOSStatisticsHasError,
         triggerEosStatsReload,
