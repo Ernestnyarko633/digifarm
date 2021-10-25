@@ -39,6 +39,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
     setSelectedFarm,
     isSubmitting,
     toastError,
+    convertToGhanaCedis,
     order,
     handleTazapayPayment,
     PAYSTACK_LIMIT
@@ -115,7 +116,7 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                   isDisabled={isSubmitting}
                   py={{ base: 1, md: 7 }}
                   leftIcon={<FiCreditCard size={22} />}
-                  onClick={_ => {
+                  onClick={async _ => {
                     if (order?.cooperative) {
                       sessionStorage.setItem('type', 'cooperative')
                     } else {
@@ -126,10 +127,12 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                       'selected_farm',
                       JSON.stringify(order?.product)
                     )
+                    const cediAmt = await convertToGhanaCedis(order)
 
                     return handlePayment(
                       order?._id,
                       order?.product?.name,
+                      cediAmt || convertedAmount,
                       order?.cost
                     )
                   }}
