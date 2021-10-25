@@ -117,9 +117,7 @@ const FarmBoardContent = ({ farms = [] }) => {
             content={feed}
             loading={loading}
             status='FEEDS'
-            timestamp={new Date(
-              latestDateForFarmFeed(feed)
-            ).toLocaleDateString()}
+            timestamp={new Date(latestDateForFarmFeed(feed)).toDateString()}
           />
         ))
     ) : (
