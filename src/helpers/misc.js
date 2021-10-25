@@ -67,7 +67,7 @@ export const getFormattedMoney = val => {
     .split('$')[1]
 }
 export const latestDateForFarmFeed = feed => {
-  const { data } = feed
+  const data = feed?.data?.length ? feed?.data : []
 
   let array = []
   const process = () =>
@@ -112,7 +112,7 @@ export const dateIntervals = () => {
   // 30 days ago date
   let ThirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30))
 
-  let SixtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 60))
+  let SixtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 90))
 
   let dd = today.getDate()
   let _dd = ThirtyDaysAgo.getDate()

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import FarmBoardCardWrapper from './FarmBoardCardWrapper'
@@ -22,9 +23,7 @@ const NewsCard = ({ content, status, loading }) => {
               {content?.data?.headline[0]?.text}
             </Heading>
             <Collapse startingHeight={85} in={show} cursor='pointer'>
-              <TextField
-                render={content?.data?.body[0]?.primary?.description}
-              />
+              <TextField render={content?.data?.description} />
             </Collapse>
             <Box as='button' onClick={handleToggle}>
               <Text color='cf.green' py={{ base: 1 }}>

@@ -96,9 +96,12 @@ export const FarmContextProvider = ({ children }) => {
     const strToNumber = (value, array) =>
       value?.forEach(coordinate => {
         return array?.push(
-          coordinate.split(',').map(item => {
-            return parseFloat(item, 10)
-          })
+          coordinate
+            .split(',')
+            ?.reverse()
+            .map(item => {
+              return parseFloat(item, 10)
+            })
         )
       })
     strToNumber(farm_location?.coords, new_location_coords)
@@ -214,7 +217,7 @@ export const FarmContextProvider = ({ children }) => {
   const EOSTaskForStats = {
     type: 'mt_stats',
     params: {
-      bm_type: ['NDVI', 'MSI', 'EVI', 'CCCI', 'NDRE', 'GCI'],
+      bm_type: ['NDVI', 'EVI', 'CCCI'],
       date_start: dateIntervals()?.SixtyDaysAgo,
       date_end: dateIntervals()?.today,
       geometry: {
@@ -274,7 +277,7 @@ export const FarmContextProvider = ({ children }) => {
     [`${_eosTask?.data?.task_id}_stats`, _eosTask?.data?.task_id, location],
     () => {
       if (_eosTask?.data?.task_id) {
-        eosStats({
+        return eosStats({
           task: _eosTask?.data?.task_id
         })
       }
@@ -292,7 +295,11 @@ export const FarmContextProvider = ({ children }) => {
   return (
     <FarmContext.Provider
       value={{
-        EOSStatistics: EOSStatistics?.data || [],
+        EOSStatistics: EOSStatistics?.data?.length
+          ? EOSStatistics?.data
+              ?.slice()
+              ?.sort((a, b) => new Date(b?.date) - new Date(a?.date))
+          : [] || [],
         EOSStatisticsIsLoading,
         EOSStatisticsHasError,
         triggerEosStatsReload,

@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react'
-import { Heading, Flex, Box } from '@chakra-ui/react'
-import FarmBoardEmptyState from 'components/FarmBoard/EmptyState/FarmBoardEmptyState'
+import { Heading, Flex, Box, Text } from '@chakra-ui/react'
+import FarmFeedCard from 'components/FarmBoard/Cards/FarmFeedCard'
+import NewsCard from 'components/FarmBoard/Cards/NewsCard'
 import YourFarmCard from '../Cards/YourFarmCard'
+import WeeklyVideoCard from 'components/FarmBoard/Cards/WeeklyVideoCard'
 import FetchCard from 'components/FetchCard/index'
-import RenderCards from 'components/FarmBoard/Cards/RenderCards'
 import PropTypes from 'prop-types'
-import { renderEmpty } from './Cards/RenderCards'
 import { usePrismic, useFeeds } from 'hooks/useFarmBoard'
+import { latestDateForFarmFeed } from 'helpers/misc'
 import { useLocation } from 'react-router-dom'
 import { checkProperties } from 'helpers/misc'
 
-const FarmBoardContent = ({ farms = [], farmLoader }) => {
-  //using function to query search params
+const FarmBoardContent = ({ farms = [] }) => {
+  const [component, setComponent] = React.useState('FEEDS')
+  const [hasBeenClicked, setHasBeenClicked] = React.useState(false)
   const useQuery = () => new URLSearchParams(useLocation().search)
 
   //initial states
@@ -24,7 +26,6 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
     error: prismicError
   } = usePrismic()
   const { loading: feedsLoading, feeds, error: feedsError } = useFeeds()
-  const [filter, setFilter] = React.useState(farms.length ? 'feeds' : 'videos')
   const queriedElement = React.useRef(null)
   const [farmName, setFarmName] = React.useState(
     farms?.length ? farms[0]?.name : null
@@ -54,18 +55,21 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
     //if all values of query are present
     if (checkProperties(query)) {
       //set filter to type 'news' or 'videos'
-      if (query?.type === 'news') {
+      if (query?.type === 'NEWS') {
         const isBlog = blogs?.find(item => item?.id === query?.id)
         const isNews = news?.find(item => item?.id === query?.id)
         if (isBlog) {
-          setFilter('blogs')
+          setComponent('BLOGS')
         }
         if (isNews) {
-          setFilter('news')
+          setComponent('NEWS')
         }
       } else {
-        // prolly the others videos feeds : blah blah
-        setFilter(query?.type)
+        if (query.type === 'weekly_videos') {
+          setComponent('VIDEOS')
+        } else {
+          setComponent('FEEDS')
+        }
       }
 
       // make sure index of farm is null
@@ -73,84 +77,97 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
     }
   }, [blogs, news, query])
 
-  //handles all rending of the board's content
-  const RenderDataType = _filter => {
-    const mapKey = i => i
-    // data is an object with fields newsm feeds and videos represents each board data type
-    const data = { news, feeds, videos, blogs }
-
-    //if we dont have any data return empty state
-    if (!feeds?.length && !news?.length && !videos?.length) {
-      return <FarmBoardEmptyState />
-    }
-
-    //proceed to render.
-    return Object.keys(data).map(key => {
-      let array = []
-      // if filter is equal to current key and has data
-      if (key === _filter && data[key]?.length) {
-        // if key is feeds filter the feed by farm and render else render empty for that farm
-        if (key === 'feeds')
-          return data[key]?.filter(
-            content =>
-              farms[activeFarmIndex]?.order?.product?._id === content?.farm
-          ).length
-            ? (array = data[key]
-                ?.filter(
-                  content =>
-                    farms[activeFarmIndex]?.order?.product?._id ===
-                    content?.farm
-                )
-                .map((content, index) => (
-                  <RenderCards
-                    key={mapKey(index)}
-                    filter={_filter}
-                    farms={farms}
-                    comparant={key}
-                    activeFarmIndex={activeFarmIndex}
-                    status={content?.type}
-                    content={content}
-                    loading={farmLoader}
-                  />
-                )))
-            : renderEmpty(key)
-
-        //if key was not equal to feed filter if there is query in params else return all data if there's none. key should be equal to filter as usual
-        array = data[key]
-          ?.filter(content =>
-            checkProperties(query) ? content.id === query?.id : {}
-          )
-          .map((content, index) => (
-            <RenderCards
-              ref={queriedElement}
-              key={mapKey(index)}
-              filter={_filter}
-              farms={farms}
-              comparant={key}
-              activeFarmIndex={activeFarmIndex}
-              status={content?.type}
-              content={content}
-              loading={farmLoader}
-            />
-          ))
-      } else {
-        //if empty render empty component
-        if (_filter === key) {
-          return renderEmpty(_filter)
-        }
-      }
-      // return array
-      return array
-    })
-  }
-
   // lifecycle component that executes when query filter or activeFarmIndex has changes
   // positions content to screen or scrolls to content
   useEffect(() => {
     let mounted = true
-    if (mounted) executeScroll()
+    if (mounted && hasBeenClicked) {
+      executeScroll()
+      setHasBeenClicked(false)
+    }
     return () => (mounted = false)
-  }, [filter, activeFarmIndex, query])
+  }, [component, activeFarmIndex, query, hasBeenClicked])
+
+  const mapKey = i => i
+
+  const EmptyComponent = ({ type }) => (
+    <Flex w='100%' align='center' justify='center'>
+      <Text color='cf.green' fontSize={{ base: 'md' }}>
+        Oops, {type} unavailable currently
+      </Text>
+    </Flex>
+  )
+
+  EmptyComponent.propTypes = {
+    type: PropTypes.string
+  }
+
+  const DECISION = {
+    FEEDS: feeds?.filter(
+      feed => farms[activeFarmIndex]?.order?.product?._id === feed?.farm
+    )?.length ? (
+      feeds
+        ?.filter(
+          feed => farms[activeFarmIndex]?.order?.product?._id === feed?.farm
+        )
+        ?.map((feed, index) => (
+          <FarmFeedCard
+            key={mapKey(index)}
+            activeFarm={farms[activeFarmIndex]}
+            content={feed}
+            loading={loading}
+            status='FEEDS'
+            timestamp={new Date(latestDateForFarmFeed(feed)).toDateString()}
+          />
+        ))
+    ) : (
+      <EmptyComponent type='Feeds' />
+    ),
+    VIDEOS: videos?.length ? (
+      videos?.map((video, index) => {
+        return (
+          <WeeklyVideoCard
+            key={mapKey(index)}
+            content={video}
+            status='VIDEOS'
+            loading={loading}
+          />
+        )
+      })
+    ) : (
+      <EmptyComponent type='Videos' />
+    ),
+
+    NEWS: news?.length ? (
+      news?.map((newsItem, index) => {
+        return (
+          <NewsCard
+            key={mapKey(index)}
+            content={newsItem}
+            status='NEWS'
+            loading={loading}
+          />
+        )
+      })
+    ) : (
+      <EmptyComponent type='News' />
+    ),
+
+    BLOGS: blogs?.length ? (
+      blogs?.map((blog, index) => {
+        return (
+          <NewsCard
+            key={mapKey(index)}
+            content={blog}
+            status='BLOGS'
+            loading={loading}
+          />
+        )
+      })
+    ) : (
+      <EmptyComponent type='Blogs' />
+    )
+  }
 
   return (
     <Flex w='100%' align='center' direction='column' mt={{ base: 16, md: 0 }}>
@@ -171,9 +188,10 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
       ) : (
         <>
           <YourFarmCard
-            filter={filter}
+            filter={component}
             farms={farms}
-            setFilter={setFilter}
+            setHasBeenClicked={setHasBeenClicked}
+            setFilter={setComponent}
             activeFarmIndex={activeFarmIndex}
             setActiveFarmIndex={setActiveFarmIndex}
             farmName={farmName}
@@ -187,7 +205,7 @@ const FarmBoardContent = ({ farms = [], farmLoader }) => {
                 ? "See what's happening"
                 : ''}
             </Heading>
-            <Box>{RenderDataType(filter)}</Box>
+            <Box> {DECISION[component]} </Box>
           </Box>
         </>
       )}

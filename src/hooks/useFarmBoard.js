@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import getConfig from 'utils/configs'
 import Prismic from 'prismic-javascript'
@@ -20,7 +21,13 @@ export const usePrismic = () => {
     'prismic',
     async () =>
       await Promise.all([
-        Client.query(Prismic.Predicates.at('document.type', 'news'), {
+        Client.query(Prismic.Predicates.at('document.type', 'news-items'), {
+          pageSize: 200
+        }),
+        Client.query(Prismic.Predicates.at('document.type', 'blogs'), {
+          pageSize: 200
+        }),
+        Client.query(Prismic.Predicates.at('document.type', 'farm-board'), {
           pageSize: 200
         }),
         Client.query(Prismic.Predicates.at('document.type', 'weekly_videos'), {
@@ -40,7 +47,7 @@ export const usePrismic = () => {
   return {
     loading: isLoading || myFarmsIsLoading,
     managerUpdates: isFetched
-      ? data[2].results
+      ? data[4].results
           ?.filter(update => {
             const x = myFarms?.find(
               filteredFarm =>
@@ -58,9 +65,9 @@ export const usePrismic = () => {
               new Date(a.first_publication_date)
           ) || []
       : [],
-    announcements: isFetched ? data[3]?.results : [],
+    announcements: isFetched ? data[5]?.results : [],
     comments: isFetched
-      ? data[2]?.results
+      ? data[4]?.results
           ?.filter(c => (farm ? c?.data?.farm_id[0]?.text === farm : {}))
           ?.slice()
           .sort(
@@ -71,10 +78,6 @@ export const usePrismic = () => {
       : [],
     news: isFetched
       ? data[0]?.results
-          ?.filter(
-            news =>
-              news?.data?.category === 'News' || news?.data?.category === 'news'
-          )
           ?.slice()
           ?.sort(
             (a, b) =>
@@ -83,15 +86,7 @@ export const usePrismic = () => {
           )
       : [],
     blogs: isFetched
-      ? data[0]?.results
-          ?.filter(
-            blog =>
-              blog?.data?.category === 'blogs' ||
-              blog?.data?.category === 'blogposts' ||
-              blog?.data?.category === 'blogpost' ||
-              blog?.data?.category === 'blog' ||
-              blog?.data?.category === 'Blogpost'
-          )
+      ? [...data[1]?.results, ...data[2]?.results]
           ?.slice()
           ?.sort(
             (a, b) =>
@@ -100,7 +95,7 @@ export const usePrismic = () => {
           )
       : [],
     videos: isFetched
-      ? data[1]?.results
+      ? data[3]?.results
           ?.slice()
           ?.sort(
             (a, b) =>

@@ -173,7 +173,7 @@ const ChooseAcreage = ({ farm }) => {
   const loading = EOSViewIDIsLoading
   const error = EOSViewIDHasError
 
-  const MapUnavailabe = () => {
+  const MapUnAvailable = () => {
     return (
       <Box
         position='relative'
@@ -203,7 +203,7 @@ const ChooseAcreage = ({ farm }) => {
       <GridItem w='100%' h='100%'>
         {loading || error ? (
           <>
-            {!EOSViewID?.data?.results && <MapUnavailabe />}
+            {!EOSViewID?.data?.results && <MapUnAvailable />}
             <FetchCard
               w={{ base: 48, md: '100%' }}
               h={{ base: 48, md: '100%' }}
@@ -232,7 +232,7 @@ const ChooseAcreage = ({ farm }) => {
                 zoom={9}
               />
             )}
-            {['DEV', 'LOCAL'].includes(ENV) && <MapUnavailabe />}
+            {['DEV', 'LOCAL'].includes(ENV) && <MapUnAvailable />}
           </>
         )}
       </GridItem>
