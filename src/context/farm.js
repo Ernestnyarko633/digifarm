@@ -11,12 +11,14 @@ import PropTypes from 'prop-types'
 const FarmContext = createContext()
 
 export const FarmContextProvider = ({ children }) => {
+  const pathname = useLocation().pathname
   const [id, setId] = useState(undefined)
   const { state } = useLocation()
   const [location, setLocation] = useState([])
   const [center, setCenter] = useState([])
   const { setInViewProduct } = useComponent()
 
+  const isRoute = [`/farms/${id}`].includes(pathname)
   const ref = React.useRef(null)
   const [component, setComponent] = useState('compA')
   const [isOpen, setIsOpen] = useState(false)
@@ -26,14 +28,14 @@ export const FarmContextProvider = ({ children }) => {
 
   React.useEffect(() => {
     let mounted = true
-    if (mounted) {
+    if (mounted && isRoute) {
       setComponent('compA')
       setOpen(true)
       setIsOpen(false)
       setCompState('compA')
     }
     return () => (mounted = false)
-  }, [id, setCompState])
+  }, [id, isRoute, setCompState])
 
   const onClose = () => setIsOpen(false)
   const closed = () => setOpen(false)
@@ -63,7 +65,7 @@ export const FarmContextProvider = ({ children }) => {
     error: farmHasError,
     refetch: farmRefetch
   } = useQuery(`selectedFarm_${id}`, () => {
-    if (id && !state) {
+    if (id && isRoute && !state) {
       return getMyFarm(id)
     }
     return null
@@ -78,12 +80,20 @@ export const FarmContextProvider = ({ children }) => {
   const triggerFarmReload = () => farmRefetch()
 
   useEffect(() => {
-    if (farm?.data?.order?.product?._id || state?.order?.product?._id) {
+    if (
+      (farm?.data?.order?.product?._id || state?.order?.product?._id) &&
+      isRoute
+    ) {
       setInViewProduct(
         farm?.data?.order?.product._id || state?.order?.product?._id
       )
     }
-  }, [farm?.data?.order?.product, setInViewProduct, state?.order?.product?._id])
+  }, [
+    farm?.data?.order?.product,
+    isRoute,
+    setInViewProduct,
+    state?.order?.product?._id
+  ])
   // lifecycle event to handle parsing of fms to coords to suitable data type for eos
   useEffect(() => {
     const new_location_coords = []
@@ -97,7 +107,7 @@ export const FarmContextProvider = ({ children }) => {
       value?.forEach(coordinate => {
         return array?.push(
           coordinate.split(',').map(item => {
-            return parseFloat(item, 10)
+            return parseFloat(item?.reverse(), 10)
           })
         )
       })
@@ -129,7 +139,7 @@ export const FarmContextProvider = ({ children }) => {
   } = useQuery(
     [`scheduled_tasks_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm],
     () => {
-      if (DigitalFarmerFarm) {
+      if (DigitalFarmerFarm && isRoute) {
         return getMyScheduledTasks({
           farm: DigitalFarmerFarm
         })
@@ -146,7 +156,7 @@ export const FarmContextProvider = ({ children }) => {
   } = useQuery(
     [`activities_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm],
     () => {
-      if (DigitalFarmerFarm) {
+      if (DigitalFarmerFarm && isRoute) {
         return getActivities({
           farm: DigitalFarmerFarm
         })
@@ -161,7 +171,7 @@ export const FarmContextProvider = ({ children }) => {
     error: tasksHasError,
     refetch: tasksRefetch
   } = useQuery([`tasks_farm_${DigitalFarmerFarm}`, DigitalFarmerFarm], () => {
-    if (DigitalFarmerFarm) {
+    if (DigitalFarmerFarm && isRoute) {
       return getAllTasks({
         farm: DigitalFarmerFarm
       })
@@ -204,7 +214,7 @@ export const FarmContextProvider = ({ children }) => {
     error: EOSViewIDHasError,
     refetch: EOSViewIDRefetch
   } = useQuery([`${digiFarmId}_eos_view_id`, digiFarmId, location], () => {
-    if (location?.length && digiFarmId) {
+    if (location?.length && digiFarmId && isRoute) {
       return eosSearch(eosViewIdPayload, 'sentinel2')
     }
     return null
@@ -235,7 +245,7 @@ export const FarmContextProvider = ({ children }) => {
   } = useQuery(
     [`${digiFarmId}_eos_task_stats_for_health`, digiFarmId, location],
     () => {
-      if (location?.length && digiFarmId) {
+      if (location?.length && digiFarmId && isRoute) {
         return eosTask(EOSTaskForStats)
       }
       return null
@@ -257,7 +267,7 @@ export const FarmContextProvider = ({ children }) => {
   } = useQuery(
     [`${digiFarmId}_eos_weather_forecasts`, digiFarmId, location],
     () => {
-      if (location?.length && digiFarmId) {
+      if (location?.length && digiFarmId && isRoute) {
         return eosWeather(weatherForeCastsPayload)
       }
       return null
@@ -273,7 +283,7 @@ export const FarmContextProvider = ({ children }) => {
   } = useQuery(
     [`${_eosTask?.data?.task_id}_stats`, _eosTask?.data?.task_id, location],
     () => {
-      if (_eosTask?.data?.task_id) {
+      if (_eosTask?.data?.task_id && isRoute) {
         eosStats({
           task: _eosTask?.data?.task_id
         })
