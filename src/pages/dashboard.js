@@ -1,12 +1,8 @@
-/* eslint-disable no-console */
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/hooks'
-
 import Layout from 'container/Layout'
-
 import useAuth from 'context/auth'
-
 import FetchCard from 'components/FetchCard'
 import GetStartedNowCard from 'components/Cards/GetStartedNowCard'
 import FarmOrderSection from 'components/Dashboard/FarmOrderSection'

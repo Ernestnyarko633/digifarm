@@ -363,14 +363,14 @@ export const StartFarmContextProvider = ({ children }) => {
     }
   }
 
-  const handlePayment = async (id, name, cost) => {
+  const handlePayment = async (id, name, cost, actual_cost) => {
     const type = sessionStorage.getItem('type')
     try {
       setText("Processing payment, please don't reload/refresh page")
       setSubmitting(true)
       const data = {
         amount: convertedAmount || cost,
-        // actual_amount: order?.cost,
+        actual_amount: actual_cost || order?.cost,
         order_id: id || order._id,
         purpose: 'FARM_PURCHASE',
         name: name || selectedFarm.name,

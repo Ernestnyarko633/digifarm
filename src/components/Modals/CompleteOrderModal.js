@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import {
   Flex,
@@ -24,6 +23,8 @@ import { Status } from 'helpers/misc'
 import ImageUpload from 'components/ImageUpload'
 import useAuth from 'context/auth'
 import { useQueryClient } from 'react-query'
+import Constants from 'constant'
+const dpo = Constants.paymentOptions[0]
 
 const CompleteOrderModal = ({ call, isOpen, onClose }) => {
   const queryClient = useQueryClient()
@@ -39,6 +40,8 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
     setSelectedFarm,
     isSubmitting,
     toastError,
+    convertToGhanaCedis,
+    setPaymentOption,
     order,
     handleTazapayPayment,
     PAYSTACK_LIMIT
@@ -115,7 +118,8 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                   isDisabled={isSubmitting}
                   py={{ base: 1, md: 7 }}
                   leftIcon={<FiCreditCard size={22} />}
-                  onClick={_ => {
+                  onClick={async _ => {
+                    setPaymentOption(dpo)
                     if (order?.cooperative) {
                       sessionStorage.setItem('type', 'cooperative')
                     } else {
@@ -126,10 +130,12 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                       'selected_farm',
                       JSON.stringify(order?.product)
                     )
+                    const cediAmt = await convertToGhanaCedis(order)
 
                     return handlePayment(
                       order?._id,
                       order?.product?.name,
+                      cediAmt || convertedAmount,
                       order?.cost
                     )
                   }}
@@ -147,6 +153,8 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
                 leftIcon={<Image h={5} src={Tazapay} />}
                 onClick={async _ => {
                   try {
+                    setPaymentOption(Constants.paymentOptions[1])
+
                     if (order?.cooperative) {
                       sessionStorage.setItem('type', 'cooperative')
                     } else {
