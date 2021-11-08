@@ -300,11 +300,7 @@ const CooperativeSteps = ({ asMember, data, history, payment }) => {
       <AnimatePresence>
         <MotionFlex
           w={{
-            xl: '78%',
-            '4xl': '70%',
-            base: '100%',
-            '5xl': '55%',
-            '3xl': '75%'
+            base: '100%'
           }}
           mx='auto'
           overflow='scroll'
