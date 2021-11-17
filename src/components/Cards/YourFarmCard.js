@@ -18,13 +18,21 @@ import ArrowButton from '../Button/ArrowButton'
 const MotionFlex = motion(Flex)
 const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }
 
-const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
+const ItemTag = ({
+  setFilter,
+  filter,
+  title,
+  setActiveFarmIndex,
+  text,
+  setHasBeenClicked
+}) => {
   return (
     <Tag
       my={2}
       onClick={() => {
         setFilter(text)
-        setActiveFarmIndex(text === 'feeds' ? 0 : null)
+        setActiveFarmIndex(text === 'FEEDS' ? 0 : null)
+        setHasBeenClicked(true)
         window.scrollTo({
           left: 0,
           top: 0,
@@ -52,15 +60,16 @@ const ItemTag = ({ setFilter, filter, title, setActiveFarmIndex, text }) => {
 }
 
 const items = [
-  { id: 0, title: 'All Feeds', filter: 'feeds' },
-  { id: 1, title: 'Weekly Videos', filter: 'videos' },
-  { id: 2, title: 'News', filter: 'news' },
-  { id: 3, title: 'Blog Posts', filter: 'blogs' }
+  { id: 0, title: 'All Feeds', filter: 'FEEDS' },
+  { id: 1, title: 'Weekly Videos', filter: 'VIDEOS' },
+  { id: 2, title: 'News', filter: 'NEWS' },
+  { id: 3, title: 'Blog Posts', filter: 'BLOGS' }
 ]
 
 const YourFarmCard = ({
   farms,
   setActiveFarmIndex,
+  setHasBeenClicked,
   setFarmName,
   activeFarmIndex,
   setFilter,
@@ -162,8 +171,9 @@ const YourFarmCard = ({
                     mr={4}
                     onClick={() => {
                       setFarmName(farm.name)
-                      setFilter('feeds')
+                      setFilter('FEEDS')
                       setActiveFarmIndex(index)
+                      setHasBeenClicked(true)
                     }}
                   >
                     <Text
@@ -234,9 +244,10 @@ const YourFarmCard = ({
             }}
           >
             {items.map(item => {
-              if (farms.length && item.filter === 'feeds') {
+              if (farms.length && item.filter === 'FEEDS') {
                 return (
                   <ItemTag
+                    setHasBeenClicked={setHasBeenClicked}
                     key={item.id}
                     setFilter={setFilter}
                     setActiveFarmIndex={setActiveFarmIndex}
@@ -246,10 +257,11 @@ const YourFarmCard = ({
                   />
                 )
               } else {
-                if (item.filter !== 'feeds') {
+                if (item.filter !== 'FEEDS') {
                   return (
                     <Box>
                       <ItemTag
+                        setHasBeenClicked={setHasBeenClicked}
                         key={item.id}
                         setFilter={setFilter}
                         setActiveFarmIndex={setActiveFarmIndex}
@@ -272,24 +284,29 @@ const YourFarmCard = ({
 }
 
 ItemTag.propTypes = {
-  id: PropTypes.number,
-  setFilter: PropTypes.func,
-  setFarmIndex: PropTypes.func,
-  filter: PropTypes.string,
-  title: PropTypes.string,
-  text: PropTypes.string,
   activeFarmIndex: PropTypes.any,
-  setActiveFarmIndex: PropTypes.any
+  filter: PropTypes.string,
+  id: PropTypes.number,
+  setActiveFarmIndex: PropTypes.func,
+  setFarmIndex: PropTypes.func,
+  setFilter: PropTypes.func,
+  setHasBeenClicked: PropTypes.func,
+  text: PropTypes.string,
+  title: PropTypes.string
 }
 
 YourFarmCard.propTypes = {
-  farms: PropTypes.any,
-  setActiveFarmIndex: PropTypes.func,
   activeFarmIndex: PropTypes.any,
   farmName: PropTypes.any,
+  farms: PropTypes.shape({
+    length: PropTypes.number,
+    map: PropTypes.func
+  }),
+  filter: PropTypes.any,
+  setActiveFarmIndex: PropTypes.func,
   setFarmName: PropTypes.func,
   setFilter: PropTypes.func,
-  filter: PropTypes.any
+  setHasBeenClicked: PropTypes.any
 }
 
 export default YourFarmCard

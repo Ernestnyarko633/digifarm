@@ -39,6 +39,7 @@ const CooperativeName = () => {
 
   return (
     <Flex
+      w='100%'
       align='center'
       justify='center'
       direction='column'
