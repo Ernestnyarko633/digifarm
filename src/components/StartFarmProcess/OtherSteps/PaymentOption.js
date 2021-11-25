@@ -57,21 +57,8 @@ const PaymentOption = ({ farm }) => {
             <Heading as='h6' fontSize='xl' ml={{ md: 5 }}>
               Choose your payment Option
             </Heading>
-            <PayOption
-              leftImage='bank'
-              rightImage='transaction'
-              height={6}
-              title='Bank Payment'
-              theme='For bank payment'
-              description='Please note that bank transfer will take at most 2 weeks before money is transferred'
-              notice='Contact support for any help'
-              selected={paymentOption === Constants.paymentOptions[2]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
-              dropDown
-            />
             {convertedAmount < PAYSTACK_LIMIT && (
               <PayOption
-                filter='grayScale(100%)'
                 leftImage='mastercard'
                 rightImage='visa'
                 height={4}
@@ -81,12 +68,7 @@ const PaymentOption = ({ farm }) => {
                 notice='All transactions are charged a transaction fee of'
                 extraCharge='1.95%'
                 selected={paymentOption === Constants.paymentOptions[0]}
-                onClick={e => {
-                  return (
-                    e.preventDefault() &&
-                    setPaymentOption(Constants.paymentOptions[0])
-                  )
-                }}
+                onClick={() => setPaymentOption(Constants.paymentOptions[0])}
               />
             )}
             <PayOption
@@ -106,6 +88,18 @@ const PaymentOption = ({ farm }) => {
                   setPaymentOption(Constants.paymentOptions[1])
                 )
               }}
+            />
+            <PayOption
+              leftImage='bank'
+              rightImage='transaction'
+              height={6}
+              title='Bank Payment'
+              theme='For bank payment'
+              description='Please note that bank transfer will take at most 2 weeks before money is transferred'
+              notice='Contact support for any help'
+              selected={paymentOption === Constants.paymentOptions[2]}
+              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
+              dropDown
             />
           </Flex>
         </Box>
