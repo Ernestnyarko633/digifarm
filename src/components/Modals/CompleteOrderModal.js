@@ -113,10 +113,9 @@ const CompleteOrderModal = ({ call, isOpen, onClose }) => {
             <Flex mt={4} justify='space-between'>
               {convertedAmount < PAYSTACK_LIMIT && (
                 <Button
-                  filter='grayScale(100%)'
                   btntitle='Pay with card'
                   isLoading={isSubmitting}
-                  isDisabled={true}
+                  isDisabled={isSubmitting}
                   py={{ base: 1, md: 7 }}
                   leftIcon={<FiCreditCard size={22} />}
                   onClick={async _ => {
