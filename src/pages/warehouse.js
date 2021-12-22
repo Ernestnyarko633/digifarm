@@ -32,7 +32,7 @@ const Warehouse = () => {
 
   return isLoading || hasError ? (
     <FetchCard
-      reload={() => !myFarms?.data?.length && triggerReload()}
+      reload={() => hasError && triggerReload()}
       w='100%'
       mx='auto'
       align='center'

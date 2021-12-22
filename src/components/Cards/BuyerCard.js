@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -17,10 +18,10 @@ import {
   useDisclosure,
   Button
 } from '@chakra-ui/react'
-import AboutBuyer from 'components/Modals/AboutBuyer'
+// import AboutBuyer from 'components/Modals/AboutBuyer'
 import ConfirmSale from 'components/Modals/ConfirmSale'
 
-const BuyerCard = ({ buyers, myfarm }) => {
+const BuyerCard = ({ buyers, myFarm, _id }) => {
   const { onClose } = useDisclosure()
 
   const [isOpened, setOpened] = React.useState(false)
@@ -45,7 +46,11 @@ const BuyerCard = ({ buyers, myfarm }) => {
     >
       <Flex justify='space-between' pt={2}>
         <Flex mb={4}>
-          <Avatar bg='gray.100' src={buyers?.user?.avatar} />
+          <Avatar
+            bg='cf.400'
+            name={`${buyers?.user?.firstName} ${buyers?.user?.lastName}`}
+            src={buyers?.user?.avatar}
+          />
           <Box ml={2}>
             <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
               {buyers?.user?.firstName} {buyers?.user?.lastName}
@@ -58,14 +63,14 @@ const BuyerCard = ({ buyers, myfarm }) => {
         </Flex>
         <Spacer />
         <Flex>
-          <AboutBuyer buyers={buyers} />
+          {/* <AboutBuyer buyers={buyers} /> */}
           <ConfirmSale
             onClick={onOpenx}
             onClose={onClose}
             isOpenx={isOpened}
             onClosex={onClosex}
             buyers={buyers}
-            myfarm={myfarm}
+            myFarm={myFarm}
           />
           <Button
             colorScheme='linear'
@@ -192,7 +197,28 @@ const BuyerCard = ({ buyers, myfarm }) => {
   )
 }
 BuyerCard.propTypes = {
-  buyers: PropTypes.any.isRequired,
-  myfarm: PropTypes.any.isRequired
+  _id: PropTypes.any,
+  buyers: PropTypes.shape({
+    deliveryMethod: PropTypes.shape({
+      rule: PropTypes.any
+    }),
+    demand: PropTypes.any,
+    onboarding: PropTypes.shape({
+      info: PropTypes.shape({
+        address: PropTypes.shape({
+          state: PropTypes.any
+        }),
+        name: PropTypes.any
+      })
+    }),
+    pricePerUnit: PropTypes.any,
+    supply: PropTypes.any,
+    user: PropTypes.shape({
+      avatar: PropTypes.any,
+      firstName: PropTypes.any,
+      lastName: PropTypes.any
+    })
+  }).isRequired,
+  myFarm: PropTypes.any.isRequired
 }
 export default BuyerCard

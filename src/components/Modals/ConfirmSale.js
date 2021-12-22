@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -6,7 +7,7 @@ import {
   ModalContent,
   ModalBody,
   ModalCloseButton,
-  // useToast,
+  useToast,
   Button,
   Box,
   Text,
@@ -15,9 +16,10 @@ import {
   Divider,
   Center
 } from '@chakra-ui/react'
-
 import { CheckIcon } from '@chakra-ui/icons'
 import useApi from 'context/api'
+import { useQueryClient } from 'react-query'
+import { useHistory } from 'react-router-dom'
 
 const ConfirmSale = ({
   title,
@@ -27,11 +29,16 @@ const ConfirmSale = ({
   isOpenx,
   onClose,
   buyers,
-  myfarm
+  myFarm
 }) => {
+  const history = useHistory()
   // const toast = useToast()
   const [modal, setModal] = useState(true)
+  const toast = useToast()
   const { sellProduce } = useApi()
+  const [loading, setLoading] = React.useState(false)
+
+  const queryClient = useQueryClient()
 
   const handleKeyPress = e => {
     const key = e.keyCode || e.charCode
@@ -47,10 +54,36 @@ const ConfirmSale = ({
   }
 
   const _sellProduce = async (id, payload) => {
-    await sellProduce(id, payload)
+    try {
+      setLoading(true)
+      const res = await sellProduce(id, payload)
+      toast({
+        position: 'top-right',
+        isClosable: true,
+        title: 'Farm sold successfully',
+        description: res?.message,
+        status: 'success',
+        onCloseComplete: () => {
+          queryClient.invalidateQueries('my_farms')
+          onClosex()
+          history.push('/warehouses')
+        },
+        duration: 3000
+      })
+    } catch (error) {
+      toast({
+        status: 'error',
+        duration: 5000,
+        position: 'top-right',
+        title: 'Error occurred',
+        description:
+          error?.data?.message || error?.message || 'Something went wrong'
+      })
+    } finally {
+      setLoading(false)
+    }
     // onClosex()
   }
-
   React.useEffect(() => {
     if (!isOpenx) {
       setModal(true)
@@ -105,12 +138,26 @@ const ConfirmSale = ({
                     Cancel
                   </Button>
                   <Button
+                    isLoading={loading}
+                    isDisabled={loading}
                     colorScheme='linear'
                     rounded='30px'
                     w={{ md: '120px' }}
                     onKeyPress={handleKeyPress}
                     onClick={
-                      () => _sellProduce(myfarm._id, { sourcing: buyers._id })
+                      () =>
+                        _sellProduce(myFarm?._id, {
+                          cost:
+                            myFarm?.order?.cost +
+                            myFarm?.order?.cost *
+                              (myFarm?.order?.product
+                                ?.projectedMarketReturnsRangePerAcre?.min /
+                                100 +
+                                buyers?.rate / 100),
+                          quantity:
+                            myFarm?.order?.acreage *
+                            myFarm?.order?.product?.storagePerAcre
+                        })
                       // eslint-disable-next-line react/jsx-curly-newline
                     }
                   >
@@ -173,7 +220,7 @@ ConfirmSale.propTypes = {
   onClosex: PropTypes.any,
   isOpenx: PropTypes.any,
   onClose: PropTypes.any,
-  myfarm: PropTypes.any,
+  myFarm: PropTypes.any,
   buyers: PropTypes.any
 }
 
