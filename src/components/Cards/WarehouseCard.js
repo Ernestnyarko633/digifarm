@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -32,11 +33,18 @@ const WarehouseCard = ({
   const history = useHistory()
 
   const farmQuantity =
-    myfarm?.order?.acreage * myfarm?.order?.product?.storagePerAcre
+    myfarm?.status === 'SOLD'
+      ? 0
+      : myfarm?.order?.acreage * myfarm?.order?.product?.storagePerAcre
   const produceWeight =
-    myfarm?.order?.acreage * myfarm?.order?.product?.weightOfProducePerAcre
+    myfarm?.status === 'SOLD'
+      ? 0
+      : myfarm?.order?.acreage * myfarm?.order?.product?.weightOfProducePerAcre
   const numberOfBags =
-    myfarm?.order?.acreage * myfarm?.order?.product?.quantityOfStoragePerAcre
+    myfarm?.status === 'SOLD'
+      ? 0
+      : myfarm?.order?.acreage *
+        myfarm?.order?.product?.quantityOfStoragePerAcre
 
   return (
     <Box
@@ -138,7 +146,7 @@ const WarehouseCard = ({
               color='white'
               // isLoading
               w='100%'
-              isDisabled={farmQuantity === 0}
+              isDisabled={farmQuantity === 0 || myfarm?.status === 'SOLD'}
             >
               Sell Produce
             </Button>

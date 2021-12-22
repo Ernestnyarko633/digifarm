@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import Layout from 'container/Layout'
 import { Box, Flex, Icon, Text, Heading } from '@chakra-ui/react'
@@ -23,19 +25,113 @@ const Marketplace = () => {
   const toggle = value => {
     return setState(value)
   }
-
+  const dummyBuyers = [
+    {
+      _id: 0,
+      user: {
+        avatar: '',
+        firstName: 'Ruth',
+        lastName: 'Ntim'
+      },
+      crop: {
+        variety: {
+          name: ''
+        }
+      },
+      onboarding: {
+        info: {
+          name: 'Wanda Johnston',
+          description: 'An excellent buyer from Beijeng, China.',
+          address: {
+            state: 'Tema',
+            street: '',
+            country: 'Ghana'
+          }
+        }
+      },
+      buyingAt: 0,
+      deliveryMethod: { rule: 'FOB' },
+      // pricePerUnit: 100,
+      supply: 0,
+      demand: 50000,
+      rate: -5
+    },
+    {
+      _id: 1,
+      user: {
+        avatar: '',
+        firstName: 'Aishwarya',
+        lastName: 'Kumar'
+      },
+      crop: {
+        variety: {
+          name: ''
+        }
+      },
+      onboarding: {
+        info: {
+          name: 'Aishwarya Kumar',
+          description: 'An excellent buyer from Beijeng, China.',
+          address: {
+            state: 'Nhava Sheva',
+            street: '',
+            country: 'India'
+          }
+        }
+      },
+      buyingAt: 0,
+      deliveryMethod: { rule: 'CIP' },
+      pricePerUnit: 100,
+      supply: 0,
+      demand: 50000,
+      rate: 0
+    },
+    {
+      _id: 2,
+      user: {
+        avatar: '',
+        firstName: 'Xia',
+        lastName: 'Qing'
+      },
+      crop: {
+        variety: {
+          name: ''
+        }
+      },
+      onboarding: {
+        info: {
+          name: 'Xi Qing',
+          description: 'An excellent buyer from Beijeng, China.',
+          address: {
+            state: 'Tiajin',
+            street: '',
+            country: 'China'
+          }
+        }
+      },
+      buyingAt: 0,
+      deliveryMethod: { rule: 'CIF' },
+      pricePerUnit: 100,
+      supply: 0,
+      demand: 50000,
+      rate: -5
+    }
+  ]
   const { data, isLoading, error, refetch } = useQuery(
     [
       `s_orders_${myFarm?.order?.product?.cropVariety?._id}`,
       myFarm?.order?.product?.cropVariety?._id
     ],
-    () =>
+    () => {
       myFarm?.order?.product?.cropVariety?._id &&
-      getSourcingOrders({
-        cropVariety: myFarm?.order?.product?.cropVariety?._id
-      })
+        getSourcingOrders({
+          cropVariety: myFarm?.order?.product?.cropVariety?._id
+        })
+      return dummyBuyers
+    }
   )
 
+  console.log(myFarm)
   const triggerReload = () => refetch()
   return (
     <Layout>
@@ -81,15 +177,21 @@ const Marketplace = () => {
           location={`${myFarm?.order?.product?.location?.name},${myFarm?.order?.product?.location?.state}`}
           image={`${myFarm?.order?.product?.cropVariety?.imageUrl}`}
           quantity={
-            myFarm?.order?.acreage * myFarm?.order?.product?.storagePerAcre
+            myFarm.status === 'SOLD'
+              ? 0
+              : myFarm?.order?.acreage * myFarm?.order?.product?.storagePerAcre
           }
           weight={
-            myFarm?.order?.acreage *
-            myFarm?.order?.product?.weightOfProducePerAcre
+            myFarm.status === 'SOLD'
+              ? 0
+              : myFarm?.order?.acreage *
+                myFarm?.order?.product?.weightOfProducePerAcre
           }
           bags={
-            myFarm?.order?.acreage *
-            myFarm?.order?.product?.quantityOfStoragePerAcre
+            myFarm.status === 'SOLD'
+              ? 0
+              : myFarm?.order?.acreage *
+                myFarm?.order?.product?.quantityOfStoragePerAcre
           }
           mr={3}
           ml={14}
@@ -164,7 +266,7 @@ const Marketplace = () => {
         {state === 0 &&
           !isLoading &&
           !error &&
-          data?.data?.map(buyers => (
+          data?.map(buyers => (
             // add condition for when there are no buyer and error handling
             <BuyerCard
               _id={buyers._id}
