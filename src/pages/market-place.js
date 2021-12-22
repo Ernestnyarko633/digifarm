@@ -52,7 +52,7 @@ const Marketplace = () => {
       buyingAt: 0,
       deliveryMethod: { rule: 'FOB' },
       supply: 0,
-      demand: 50000,
+      demand: 30000,
       rate: -5
     },
     {
@@ -82,7 +82,7 @@ const Marketplace = () => {
       deliveryMethod: { rule: 'CIP' },
       pricePerUnit: 100,
       supply: 0,
-      demand: 50000,
+      demand: 45000,
       rate: 0
     },
     {
@@ -112,7 +112,7 @@ const Marketplace = () => {
       deliveryMethod: { rule: 'CIF' },
       pricePerUnit: 100,
       supply: 0,
-      demand: 50000,
+      demand: 120000,
       rate: -5
     }
   ]
@@ -130,7 +130,6 @@ const Marketplace = () => {
     }
   )
 
-  console.log(myFarm)
   const triggerReload = () => refetch()
   return (
     <Layout>
@@ -170,24 +169,24 @@ const Marketplace = () => {
       >
         <WarehouseCard
           sellButton={false}
-          _id={myFarm._id}
+          _id={myFarm?._id}
           key={myFarm?.name}
           name={`${myFarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
           location={`${myFarm?.order?.product?.location?.name},${myFarm?.order?.product?.location?.state}`}
           image={`${myFarm?.order?.product?.cropVariety?.imageUrl}`}
           quantity={
-            myFarm.status === 'SOLD'
+            myFarm?.status === 'SOLD'
               ? 0
               : myFarm?.order?.acreage * myFarm?.order?.product?.storagePerAcre
           }
           weight={
-            myFarm.status === 'SOLD'
+            myFarm?.status === 'SOLD'
               ? 0
               : myFarm?.order?.acreage *
                 myFarm?.order?.product?.weightOfProducePerAcre
           }
           bags={
-            myFarm.status === 'SOLD'
+            myFarm?.status === 'SOLD'
               ? 0
               : myFarm?.order?.acreage *
                 myFarm?.order?.product?.quantityOfStoragePerAcre
@@ -268,8 +267,8 @@ const Marketplace = () => {
           data?.map(buyers => (
             // add condition for when there are no buyer and error handling
             <BuyerCard
-              _id={buyers._id}
-              key={buyers._id}
+              _id={buyers?._id}
+              key={buyers?._id}
               buyers={buyers}
               myFarm={myFarm}
             />
