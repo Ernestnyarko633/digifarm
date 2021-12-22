@@ -57,6 +57,7 @@ const ConfirmSale = ({
     try {
       setLoading(true)
       const res = await sellProduce(id, payload)
+      queryClient.invalidateQueries('my_farms')
       toast({
         position: 'top-right',
         isClosable: true,
@@ -66,7 +67,7 @@ const ConfirmSale = ({
         onCloseComplete: () => {
           queryClient.invalidateQueries('my_farms')
           onClosex()
-          history.push('/warehouses')
+          history.push('/warehouses', { reload: true })
         },
         duration: 3000
       })
