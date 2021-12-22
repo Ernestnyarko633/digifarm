@@ -51,7 +51,6 @@ const Marketplace = () => {
       },
       buyingAt: 0,
       deliveryMethod: { rule: 'FOB' },
-      // pricePerUnit: 100,
       supply: 0,
       demand: 50000,
       rate: -5
