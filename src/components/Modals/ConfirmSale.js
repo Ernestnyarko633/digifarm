@@ -157,7 +157,11 @@ const ConfirmSale = ({
                                 buyers?.rate / 100),
                           quantity:
                             myFarm?.order?.acreage *
-                            myFarm?.order?.product?.storagePerAcre
+                            myFarm?.order?.product?.storagePerAcre,
+                          buyer:
+                            buyers?.user?.firstName +
+                            ' ' +
+                            buyers?.user?.lastName
                         })
                       // eslint-disable-next-line react/jsx-curly-newline
                     }
