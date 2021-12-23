@@ -12,6 +12,7 @@ import useApi from '../context/api'
 import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
 import { useLocation } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import Spinner from 'components/FetchCard/Spinner'
 
 const Marketplace = () => {
   document.title = "Complete Farmer | Farmer's Market"
@@ -169,18 +170,25 @@ const Marketplace = () => {
             </Text>
           </Box> */}
         </Flex>
-        {state === 0 &&
-          !isLoading &&
-          !error &&
-          dummyBuyers?.data?.map(buyers => (
-            // add condition for when there are no buyer and error handling
-            <BuyerCard
-              _id={buyers?._id}
-              key={buyers?._id}
-              buyers={buyers}
-              myFarm={myFarm}
-            />
-          ))}
+        {state === 0 && (
+          <Spinner
+            hook={{
+              loading: isLoading,
+              triggerReload: () => refetch(),
+              error: error
+            }}
+          >
+            {dummyBuyers?.data?.map(buyers => (
+              // add condition for when there are no buyer and error handling
+              <BuyerCard
+                _id={buyers?._id}
+                key={buyers?._id}
+                buyers={buyers}
+                myFarm={myFarm}
+              />
+            ))}
+          </Spinner>
+        )}
         {state === 0 && dummyBuyers?.data?.length === 0 && (
           <BuyerEmptyState
             image={group}
