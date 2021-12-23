@@ -11,13 +11,14 @@ import Greetings from 'components/Utils/Greetings'
 import { getCurrentDayParting } from 'helpers/misc'
 import FetchCard from 'components/FetchCard'
 import { useQuery } from 'react-query'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
 
 const Warehouse = () => {
   document.title = 'Complete Farmer | Warehouse'
   const { getMyFarms } = useApi()
   const { isAuthenticated } = useAuth()
+  const history = useHistory()
   const { user } = isAuthenticated()
   const { message } = getCurrentDayParting()
   const { state } = useLocation()
@@ -25,11 +26,11 @@ const Warehouse = () => {
   React.useEffect(() => {
     let mounted = true
     if (mounted && state?.reload) {
-      state.reload = false
       queryClient.invalidateQueries('my_farms')
-      window.location.reload()
+      // window.location.reload()
+      history.push('/warehouses')
     }
-  }, [queryClient, state])
+  }, [history, queryClient, state])
 
   const {
     data: myFarms,

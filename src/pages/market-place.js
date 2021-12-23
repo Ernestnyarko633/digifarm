@@ -28,6 +28,7 @@ const Marketplace = () => {
   const dummyBuyers = [
     {
       _id: 0,
+      payoutDays: 35,
       user: {
         avatar: '',
         firstName: 'Ruth',
@@ -57,6 +58,7 @@ const Marketplace = () => {
     },
     {
       _id: 1,
+      payoutDays: 45,
       user: {
         avatar: '',
         firstName: 'Aishwarya',
@@ -87,6 +89,7 @@ const Marketplace = () => {
     },
     {
       _id: 2,
+      payoutDays: 60,
       user: {
         avatar: '',
         firstName: 'Xia',
