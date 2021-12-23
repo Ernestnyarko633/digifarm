@@ -1,14 +1,11 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import Layout from 'container/Layout'
 import { Box, Flex, Icon, Text, Heading } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
 import BuyerCard from 'components/Cards/BuyerCard'
-import transaction1 from '../assets/images/transaction1.png'
-import transaction2 from '../assets/images/transaction2.png'
+// import transaction1 from '../assets/images/transaction1.png'
+// import transaction2 from '../assets/images/transaction2.png'
 import group from '../assets/images/group.png'
-
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import useApi from '../context/api'
 
@@ -18,122 +15,30 @@ import { useQuery } from 'react-query'
 
 const Marketplace = () => {
   document.title = "Complete Farmer | Farmer's Market"
-  const { getSourcingOrders } = useApi()
+  const { getDummyBuyers } = useApi()
   const [state, setState] = React.useState(0)
   const { state: myFarm } = useLocation()
 
   const toggle = value => {
     return setState(value)
   }
-  const dummyBuyers = [
-    {
-      _id: 0,
-      payoutDays: 35,
-      user: {
-        avatar: '',
-        firstName: 'Ruth',
-        lastName: 'Ntim'
-      },
-      crop: {
-        variety: {
-          name: ''
-        }
-      },
-      onboarding: {
-        info: {
-          name: 'Wanda Johnston',
-          description: 'An excellent buyer from Beijeng, China.',
-          address: {
-            state: 'Tema',
-            street: '',
-            country: 'Ghana'
-          }
-        }
-      },
-      buyingAt: 0,
-      deliveryMethod: { rule: 'FOB' },
-      supply: 0,
-      demand: 30000,
-      rate: -5
-    },
-    {
-      _id: 1,
-      payoutDays: 45,
-      user: {
-        avatar: '',
-        firstName: 'Aishwarya',
-        lastName: 'Kumar'
-      },
-      crop: {
-        variety: {
-          name: ''
-        }
-      },
-      onboarding: {
-        info: {
-          name: 'Aishwarya Kumar',
-          description: 'An excellent buyer from Beijeng, China.',
-          address: {
-            state: 'Nhava Sheva',
-            street: '',
-            country: 'India'
-          }
-        }
-      },
-      buyingAt: 0,
-      deliveryMethod: { rule: 'CIP' },
-      pricePerUnit: 100,
-      supply: 0,
-      demand: 45000,
-      rate: 0
-    },
-    {
-      _id: 2,
-      payoutDays: 60,
-      user: {
-        avatar: '',
-        firstName: 'Xia',
-        lastName: 'Qing'
-      },
-      crop: {
-        variety: {
-          name: ''
-        }
-      },
-      onboarding: {
-        info: {
-          name: 'Xi Qing',
-          description: 'An excellent buyer from Beijeng, China.',
-          address: {
-            state: 'Tiajin',
-            street: '',
-            country: 'China'
-          }
-        }
-      },
-      buyingAt: 0,
-      deliveryMethod: { rule: 'CIF' },
-      pricePerUnit: 100,
-      supply: 0,
-      demand: 120000,
-      rate: -5
-    }
-  ]
-  const { data, isLoading, error, refetch } = useQuery(
+
+  const {
+    data: dummyBuyers,
+    isLoading,
+    error,
+    refetch
+  } = useQuery(
     [
       `s_orders_${myFarm?.order?.product?.cropVariety?._id}`,
       myFarm?.order?.product?.cropVariety?._id
     ],
-    () => {
-      myFarm?.order?.product?.cropVariety?._id &&
-        getSourcingOrders({
-          cropVariety: myFarm?.order?.product?.cropVariety?._id
-        })
-      return dummyBuyers
+    async () => {
+      return await getDummyBuyers()
     }
   )
 
-  const triggerReload = () => refetch()
+  // const triggerReload = () => refetch()
   return (
     <Layout>
       <Box
@@ -151,7 +56,7 @@ const Marketplace = () => {
           align='center'
           position='absolute'
         >
-          {false && triggerReload()}
+          {false && refetch()}
           <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
           <Text
             as='span'
@@ -227,7 +132,7 @@ const Marketplace = () => {
               Ready Buyers
             </Text>
           </Box>
-          <Box
+          {/* <Box
             cursor='pointer'
             fontWeight={state === 1 ? 'bold' : 'normal'}
             onClick={() => toggle(1)}
@@ -244,8 +149,8 @@ const Marketplace = () => {
             >
               Ongoing Transactions
             </Text>
-          </Box>
-          <Box
+          </Box> */}
+          {/* <Box
             cursor='pointer'
             fontWeight={state === 2 ? 'bold' : 'normal'}
             onClick={() => toggle(2)}
@@ -262,12 +167,12 @@ const Marketplace = () => {
             >
               Past Transactions
             </Text>
-          </Box>
+          </Box> */}
         </Flex>
         {state === 0 &&
           !isLoading &&
           !error &&
-          data?.map(buyers => (
+          dummyBuyers?.data?.map(buyers => (
             // add condition for when there are no buyer and error handling
             <BuyerCard
               _id={buyers?._id}
@@ -276,7 +181,7 @@ const Marketplace = () => {
               myFarm={myFarm}
             />
           ))}
-        {state === 0 && data?.data?.length === 0 && (
+        {state === 0 && dummyBuyers?.data?.length === 0 && (
           <BuyerEmptyState
             image={group}
             note='No buyers available'
@@ -285,22 +190,22 @@ const Marketplace = () => {
           />
         )}
 
-        {state === 1 && (
+        {/* {state === 1 && (
           <BuyerEmptyState
             image={transaction1}
             note='No ongoing transaction yet'
             info='Ongoing transactions will be available here'
             mx='auto'
           />
-        )}
-        {state === 2 && (
+        )} */}
+        {/* {state === 2 && (
           <BuyerEmptyState
             image={transaction2}
             note={"You haven't made any transactions"}
             info='Past transaction history will show here'
             mx='auto'
           />
-        )}
+        )} */}
       </Box>
     </Layout>
   )

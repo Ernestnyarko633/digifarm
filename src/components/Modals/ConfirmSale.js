@@ -16,6 +16,8 @@ import {
   Divider,
   Center
 } from '@chakra-ui/react'
+// import { writeJsonFile } from 'write-json-file'
+// import dummyBuyers from 'data/buyers.json'
 import { CheckIcon } from '@chakra-ui/icons'
 import useApi from 'context/api'
 import { useQueryClient } from 'react-query'
@@ -157,10 +159,7 @@ const ConfirmSale = ({
                         quantity:
                           myFarm?.order?.acreage *
                           myFarm?.order?.product?.storagePerAcre,
-                        buyer:
-                          buyers?.user?.firstName +
-                          ' ' +
-                          buyers?.user?.lastName,
+                        buyer: JSON.stringify(buyers),
                         payoutDays: buyers?.payoutDays
                       })
                     }}

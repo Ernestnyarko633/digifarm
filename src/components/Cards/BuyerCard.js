@@ -42,7 +42,8 @@ const BuyerCard = ({ buyers, myFarm, _id }) => {
     }
     return (mounted = false)
   }, [history, myFarm])
-
+  const quantity =
+    myFarm?.order?.acreage * myFarm?.order?.product?.storagePerAcre
   return (
     <Box
       rounded='lg'
@@ -93,6 +94,7 @@ const BuyerCard = ({ buyers, myFarm, _id }) => {
             myFarm={myFarm}
           />
           <Button
+            isDisabled={quantity > buyers.demand}
             colorScheme='linear'
             rounded='30px'
             ml={2}

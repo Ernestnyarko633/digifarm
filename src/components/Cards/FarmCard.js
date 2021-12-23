@@ -35,6 +35,8 @@ const FarmCard = ({ farm, id }) => {
       })
   )
 
+  console.log(farm.name === 'FM-UW22' ? data?.data : '', 'activities')
+
   const triggerReload = () => refetch()
   //lifecycle runs on mount and if farm and data changes
   React.useEffect(() => {
