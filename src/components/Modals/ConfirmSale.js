@@ -69,7 +69,7 @@ const ConfirmSale = ({
           onClosex()
           history.push('/warehouses', { reload: true })
         },
-        duration: 3000
+        duration: 1000
       })
     } catch (error) {
       toast({
@@ -158,7 +158,10 @@ const ConfirmSale = ({
                           myFarm?.order?.acreage *
                           myFarm?.order?.product?.storagePerAcre,
                         buyer:
-                          buyers?.user?.firstName + ' ' + buyers?.user?.lastName
+                          buyers?.user?.firstName +
+                          ' ' +
+                          buyers?.user?.lastName,
+                        payoutDays: buyers?.payoutDays
                       })
                     }}
                   >
