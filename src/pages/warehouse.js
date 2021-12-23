@@ -27,8 +27,8 @@ const Warehouse = () => {
     let mounted = true
     if (mounted && state?.reload) {
       queryClient.invalidateQueries('my_farms')
-      // window.location.reload()
       history.push('/warehouses')
+      window.location.reload()
     }
   }, [history, queryClient, state])
 
