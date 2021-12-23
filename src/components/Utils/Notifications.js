@@ -12,7 +12,7 @@ import { FaReceipt } from 'react-icons/all'
 import useApi from 'context/api'
 
 const MotionBox = motion(Box)
-
+//
 const Notifications = ({ notifications, loading, mutation, userMutation }) => {
   const { approvalOrder } = useApi()
   const renderNotificationIcons = value => {

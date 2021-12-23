@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -17,10 +18,12 @@ import {
   useDisclosure,
   Button
 } from '@chakra-ui/react'
-import AboutBuyer from 'components/Modals/AboutBuyer'
+// import AboutBuyer from 'components/Modals/AboutBuyer'
 import ConfirmSale from 'components/Modals/ConfirmSale'
+import { useHistory } from 'react-router-dom'
 
-const BuyerCard = ({ buyers, myfarm }) => {
+const BuyerCard = ({ buyers, myFarm, _id }) => {
+  const history = useHistory()
   const { onClose } = useDisclosure()
 
   const [isOpened, setOpened] = React.useState(false)
@@ -32,6 +35,15 @@ const BuyerCard = ({ buyers, myfarm }) => {
     setOpened(false)
   }
 
+  React.useEffect(() => {
+    let mounted = true
+    if (mounted && !myFarm) {
+      history.push('/warehouses')
+    }
+    return (mounted = false)
+  }, [history, myFarm])
+  const quantity =
+    myFarm?.order?.acreage * myFarm?.order?.product?.storagePerAcre
   return (
     <Box
       rounded='lg'
@@ -43,9 +55,23 @@ const BuyerCard = ({ buyers, myfarm }) => {
       w='100%'
       borderRadius='20px'
     >
-      <Flex justify='space-between' pt={2}>
-        <Flex mb={4}>
-          <Avatar bg='gray.100' src={buyers?.user?.avatar} />
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        align={{ base: 'center', md: 'auto' }}
+        justify={{ base: 'center', md: 'space-between' }}
+        pt={2}
+      >
+        <Flex
+          w={{ base: '100%', md: 'auto' }}
+          align={{ base: 'center', md: 'auto' }}
+          justify={{ base: 'center', md: 'auto' }}
+          mb={4}
+        >
+          <Avatar
+            bg='cf.400'
+            name={`${buyers?.user?.firstName} ${buyers?.user?.lastName}`}
+            src={buyers?.user?.avatar}
+          />
           <Box ml={2}>
             <Heading as='h6' mb={{ md: 2 }} fontSize={{ md: 'lg' }}>
               {buyers?.user?.firstName} {buyers?.user?.lastName}
@@ -58,20 +84,22 @@ const BuyerCard = ({ buyers, myfarm }) => {
         </Flex>
         <Spacer />
         <Flex>
-          <AboutBuyer buyers={buyers} />
+          {/* <AboutBuyer buyers={buyers} /> */}
           <ConfirmSale
             onClick={onOpenx}
             onClose={onClose}
             isOpenx={isOpened}
             onClosex={onClosex}
             buyers={buyers}
-            myfarm={myfarm}
+            myFarm={myFarm}
           />
           <Button
+            isDisabled={quantity > buyers.demand}
             colorScheme='linear'
             rounded='30px'
             ml={2}
             mt={1}
+            mb={{ base: 3, md: 'auto' }}
             borderWidth={1}
             color='white'
             borderColor='cf.green'
@@ -102,19 +130,20 @@ const BuyerCard = ({ buyers, myfarm }) => {
         <Grid templateColumns='repeat(4, 1fr)' w='100%' pt={4}>
           <GridItem>
             <Flex
+              pr={{ base: 1, md: 'auto' }}
               w='80%'
               direction='row'
               align='center'
-              justify='space-between'
+              justify={{ base: 'center', md: 'space-between' }}
             >
-              <Box pt={2} py={4}>
-                <Text fontWeight='bold' fontSize='28px'>
+              <Box pt={2} mr={{ base: 2, md: 'auto' }} py={4}>
+                <Text fontWeight='bold' fontSize={{ base: 'md', md: '28px' }}>
                   {buyers?.demand}
                 </Text>
                 <Text
                   fontWeight='light'
                   color='gray.500'
-                  fontSize='16px'
+                  fontSize={{ base: 'sm', md: '16px' }}
                   pl={1}
                 >
                   Tonnes needed
@@ -125,19 +154,20 @@ const BuyerCard = ({ buyers, myfarm }) => {
           </GridItem>
           <GridItem>
             <Flex
-              justify='space-between'
+              pr={{ base: 1, md: 'auto' }}
+              justify={{ base: 'center', md: 'space-between' }}
               direction='row'
               w='80%'
               align='center'
             >
-              <Box pt={2} py={4}>
-                <Text fontWeight='bold' fontSize='28px'>
+              <Box pt={2} py={4} mr={{ base: 2, md: 'auto' }}>
+                <Text fontWeight='bold' fontSize={{ base: 'md', md: '28px' }}>
                   {buyers?.supply}
                 </Text>
                 <Text
                   fontWeight='light'
                   color='gray.500'
-                  fontSize='16px'
+                  fontSize={{ base: 'sm', md: '16px' }}
                   pl={1}
                 >
                   Tonnes bought
@@ -148,16 +178,21 @@ const BuyerCard = ({ buyers, myfarm }) => {
           </GridItem>
           <GridItem>
             <Flex
+              pl={{ base: 1, md: 'auto' }}
               w='80%'
               direction='row'
               align='center'
-              justify='space-between'
+              justify={{ base: 'center', md: 'space-between' }}
             >
-              <Box pt={2} py={4}>
-                <Text fontWeight='bold' fontSize='28px'>
+              <Box pt={2} py={4} mr={{ base: 2, md: 'auto' }}>
+                <Text fontWeight='bold' fontSize={{ base: 'md', md: '28px' }}>
                   {buyers?.demand - buyers?.supply}
                 </Text>
-                <Text fontWeight='light' color='gray.500' fontSize='16px'>
+                <Text
+                  fontWeight='light'
+                  color='gray.500'
+                  fontSize={{ base: 'sm', md: '16px' }}
+                >
                   Tonnes remaining
                 </Text>
               </Box>
@@ -165,11 +200,15 @@ const BuyerCard = ({ buyers, myfarm }) => {
             </Flex>
           </GridItem>
           <GridItem>
-            <Box pt={2} py={4}>
-              <Text fontWeight='bold' fontSize='28px'>
+            <Box pt={2} py={4} ml={{ base: 2, md: 'auto' }}>
+              <Text fontWeight='bold' fontSize={{ base: 'md', md: '28px' }}>
                 {buyers?.deliveryMethod?.rule}
               </Text>
-              <Text fontWeight='light' color='gray.500' fontSize='16px'>
+              <Text
+                fontWeight='light'
+                color='gray.500'
+                fontSize={{ base: 'sm', md: '16px' }}
+              >
                 Delivery option
               </Text>
             </Box>
@@ -192,7 +231,28 @@ const BuyerCard = ({ buyers, myfarm }) => {
   )
 }
 BuyerCard.propTypes = {
-  buyers: PropTypes.any.isRequired,
-  myfarm: PropTypes.any.isRequired
+  _id: PropTypes.any,
+  buyers: PropTypes.shape({
+    deliveryMethod: PropTypes.shape({
+      rule: PropTypes.any
+    }),
+    demand: PropTypes.any,
+    onboarding: PropTypes.shape({
+      info: PropTypes.shape({
+        address: PropTypes.shape({
+          state: PropTypes.any
+        }),
+        name: PropTypes.any
+      })
+    }),
+    pricePerUnit: PropTypes.any,
+    supply: PropTypes.any,
+    user: PropTypes.shape({
+      avatar: PropTypes.any,
+      firstName: PropTypes.any,
+      lastName: PropTypes.any
+    })
+  }).isRequired,
+  myFarm: PropTypes.any.isRequired
 }
 export default BuyerCard

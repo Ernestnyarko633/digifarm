@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Flex, Icon, Tag, Text } from '@chakra-ui/react'
@@ -64,9 +65,9 @@ const Step = ({ activity, cutThread }) => {
           >
             Completed
           </Tag>
-          <Text fontSize={{ base: 'tiny', md: 'xs' }} color='gray.500' mr={2}>
+          {/* <Text fontSize={{ base: 'tiny', md: 'xs' }} color='gray.500' mr={2}>
             {new Date(activity?.updatedAt).toLocaleDateString()}
-          </Text>
+          </Text> */}
         </Box>
       )}
       {isInProgess && (

@@ -3,20 +3,20 @@ import Layout from 'container/Layout'
 import { Box, Flex, Icon, Text, Heading } from '@chakra-ui/react'
 import { IoWarningOutline } from 'react-icons/io5'
 import BuyerCard from 'components/Cards/BuyerCard'
-import transaction1 from '../assets/images/transaction1.png'
-import transaction2 from '../assets/images/transaction2.png'
+// import transaction1 from '../assets/images/transaction1.png'
+// import transaction2 from '../assets/images/transaction2.png'
 import group from '../assets/images/group.png'
-
 import WarehouseCard from 'components/Cards/WarehouseCard'
 import useApi from '../context/api'
 
 import BuyerEmptyState from 'components/EmptyStates/BuyerEmptyState'
 import { useLocation } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import Spinner from 'components/FetchCard/Spinner'
 
 const Marketplace = () => {
   document.title = "Complete Farmer | Farmer's Market"
-  const { getSourcingOrders } = useApi()
+  const { getDummyBuyers } = useApi()
   const [state, setState] = React.useState(0)
   const { state: myFarm } = useLocation()
 
@@ -24,19 +24,22 @@ const Marketplace = () => {
     return setState(value)
   }
 
-  const { data, isLoading, error, refetch } = useQuery(
+  const {
+    data: dummyBuyers,
+    isLoading,
+    error,
+    refetch
+  } = useQuery(
     [
       `s_orders_${myFarm?.order?.product?.cropVariety?._id}`,
       myFarm?.order?.product?.cropVariety?._id
     ],
-    () =>
-      myFarm?.order?.product?.cropVariety?._id &&
-      getSourcingOrders({
-        cropVariety: myFarm?.order?.product?.cropVariety?._id
-      })
+    async () => {
+      return await getDummyBuyers()
+    }
   )
 
-  const triggerReload = () => refetch()
+  // const triggerReload = () => refetch()
   return (
     <Layout>
       <Box
@@ -54,7 +57,7 @@ const Marketplace = () => {
           align='center'
           position='absolute'
         >
-          {false && triggerReload()}
+          {false && refetch()}
           <Icon as={IoWarningOutline} color='#D08F31' w={5} h={5} />
           <Text
             as='span'
@@ -75,21 +78,27 @@ const Marketplace = () => {
       >
         <WarehouseCard
           sellButton={false}
-          _id={myFarm._id}
+          _id={myFarm?._id}
           key={myFarm?.name}
           name={`${myFarm?.order?.product?.cropVariety?.crop?.name} Warehouse`}
           location={`${myFarm?.order?.product?.location?.name},${myFarm?.order?.product?.location?.state}`}
           image={`${myFarm?.order?.product?.cropVariety?.imageUrl}`}
           quantity={
-            myFarm?.order?.acreage * myFarm?.order?.product?.storagePerAcre
+            myFarm?.status === 'SOLD'
+              ? 0
+              : myFarm?.order?.acreage * myFarm?.order?.product?.storagePerAcre
           }
           weight={
-            myFarm?.order?.acreage *
-            myFarm?.order?.product?.weightOfProducePerAcre
+            myFarm?.status === 'SOLD'
+              ? 0
+              : myFarm?.order?.acreage *
+                myFarm?.order?.product?.weightOfProducePerAcre
           }
           bags={
-            myFarm?.order?.acreage *
-            myFarm?.order?.product?.quantityOfStoragePerAcre
+            myFarm?.status === 'SOLD'
+              ? 0
+              : myFarm?.order?.acreage *
+                myFarm?.order?.product?.quantityOfStoragePerAcre
           }
           mr={3}
           ml={14}
@@ -124,7 +133,7 @@ const Marketplace = () => {
               Ready Buyers
             </Text>
           </Box>
-          <Box
+          {/* <Box
             cursor='pointer'
             fontWeight={state === 1 ? 'bold' : 'normal'}
             onClick={() => toggle(1)}
@@ -141,8 +150,8 @@ const Marketplace = () => {
             >
               Ongoing Transactions
             </Text>
-          </Box>
-          <Box
+          </Box> */}
+          {/* <Box
             cursor='pointer'
             fontWeight={state === 2 ? 'bold' : 'normal'}
             onClick={() => toggle(2)}
@@ -159,21 +168,28 @@ const Marketplace = () => {
             >
               Past Transactions
             </Text>
-          </Box>
+          </Box> */}
         </Flex>
-        {state === 0 &&
-          !isLoading &&
-          !error &&
-          data?.data?.map(buyers => (
-            // add condition for when there are no buyer and error handling
-            <BuyerCard
-              _id={buyers._id}
-              key={buyers._id}
-              buyers={buyers}
-              myFarm={myFarm}
-            />
-          ))}
-        {state === 0 && data?.data?.length === 0 && (
+        {state === 0 && (
+          <Spinner
+            hook={{
+              loading: isLoading,
+              triggerReload: () => refetch(),
+              error: error
+            }}
+          >
+            {dummyBuyers?.data?.map(buyers => (
+              // add condition for when there are no buyer and error handling
+              <BuyerCard
+                _id={buyers?._id}
+                key={buyers?._id}
+                buyers={buyers}
+                myFarm={myFarm}
+              />
+            ))}
+          </Spinner>
+        )}
+        {state === 0 && dummyBuyers?.data?.length === 0 && (
           <BuyerEmptyState
             image={group}
             note='No buyers available'
@@ -182,22 +198,22 @@ const Marketplace = () => {
           />
         )}
 
-        {state === 1 && (
+        {/* {state === 1 && (
           <BuyerEmptyState
             image={transaction1}
             note='No ongoing transaction yet'
             info='Ongoing transactions will be available here'
             mx='auto'
           />
-        )}
-        {state === 2 && (
+        )} */}
+        {/* {state === 2 && (
           <BuyerEmptyState
             image={transaction2}
             note={"You haven't made any transactions"}
             info='Past transaction history will show here'
             mx='auto'
           />
-        )}
+        )} */}
       </Box>
     </Layout>
   )

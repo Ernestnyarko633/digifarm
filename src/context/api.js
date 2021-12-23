@@ -356,6 +356,12 @@ export const ApiContextProvider = ({ children }) => {
       body: JSON.stringify(payload)
     })
   }
+  const getDummyBuyers = async query => {
+    return http.get({
+      url: `${DIGITAL_FARMER_API}/buyers`,
+      query
+    })
+  }
 
   return (
     <ApiContext.Provider
@@ -420,7 +426,8 @@ export const ApiContextProvider = ({ children }) => {
         //notification
         getNotifications,
         updateNotification,
-        updateUserNotification
+        updateUserNotification,
+        getDummyBuyers
       }}
     >
       {children}

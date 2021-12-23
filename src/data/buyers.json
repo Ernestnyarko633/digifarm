@@ -1,0 +1,58 @@
+[
+  {
+    "_id": 0,
+    "payoutDays": 35,
+    "user": { "avatar": "", "firstName": "Ruth", "lastName": "Ntim" },
+    "crop": { "variety": { "name": "" } },
+    "onboarding": {
+      "info": {
+        "name": "Ruth Ntim",
+        "description": "An excellent buyer from Beijeng, China.",
+        "address": { "state": "Tema", "street": "", "country": "Ghana" }
+      }
+    },
+    "buyingAt": 0,
+    "deliveryMethod": { "rule": "FOB" },
+    "supply": 0,
+    "demand": 30000,
+    "rate": -5
+  },
+  {
+    "_id": 1,
+    "payoutDays": 45,
+    "user": { "avatar": "", "firstName": "Aishwarya", "lastName": "Kumar" },
+    "crop": { "variety": { "name": "" } },
+    "onboarding": {
+      "info": {
+        "name": "Aishwarya Kumar",
+        "description": "An excellent buyer from Beijeng, China.",
+        "address": { "state": "Nhava Sheva", "street": "", "country": "India" }
+      }
+    },
+    "buyingAt": 0,
+    "deliveryMethod": { "rule": "CIP" },
+    "pricePerUnit": 100,
+    "supply": 0,
+    "demand": 45000,
+    "rate": 0
+  },
+  {
+    "_id": 2,
+    "payoutDays": 60,
+    "user": { "avatar": "", "firstName": "Xia", "lastName": "Qing" },
+    "crop": { "variety": { "name": "" } },
+    "onboarding": {
+      "info": {
+        "name": "Xia Qing",
+        "description": "An excellent buyer from Beijeng, China.",
+        "address": { "state": "Tianjin", "street": "", "country": "China" }
+      }
+    },
+    "buyingAt": 0,
+    "deliveryMethod": { "rule": "CIF" },
+    "pricePerUnit": 100,
+    "supply": 0,
+    "demand": 120000,
+    "rate": -5
+  }
+]

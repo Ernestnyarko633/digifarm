@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import Layout from 'container/Layout'
 import { Heading, Box, Icon, Text, Grid, Flex } from '@chakra-ui/react'
@@ -10,13 +11,26 @@ import Greetings from 'components/Utils/Greetings'
 import { getCurrentDayParting } from 'helpers/misc'
 import FetchCard from 'components/FetchCard'
 import { useQuery } from 'react-query'
+import { useHistory, useLocation } from 'react-router-dom'
+import { useQueryClient } from 'react-query'
 
 const Warehouse = () => {
   document.title = 'Complete Farmer | Warehouse'
   const { getMyFarms } = useApi()
   const { isAuthenticated } = useAuth()
+  const history = useHistory()
   const { user } = isAuthenticated()
   const { message } = getCurrentDayParting()
+  const { state } = useLocation()
+  const queryClient = useQueryClient()
+  React.useEffect(() => {
+    let mounted = true
+    if (mounted && state?.reload) {
+      queryClient.invalidateQueries('my_farms')
+      history.push('/warehouses')
+      window.location.reload()
+    }
+  }, [history, queryClient, state])
 
   const {
     data: myFarms,
@@ -32,7 +46,7 @@ const Warehouse = () => {
 
   return isLoading || hasError ? (
     <FetchCard
-      reload={() => !myFarms?.data?.length && triggerReload()}
+      reload={() => hasError && triggerReload()}
       w='100%'
       mx='auto'
       align='center'
