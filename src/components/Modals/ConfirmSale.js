@@ -145,22 +145,22 @@ const ConfirmSale = ({
                     rounded='30px'
                     w={{ md: '120px' }}
                     onKeyPress={handleKeyPress}
-                    onClick={
-                      () =>
-                        _sellProduce(myFarm?._id, {
-                          cost:
-                            myFarm?.order?.cost +
-                            myFarm?.order?.cost *
-                              (myFarm?.order?.product
-                                ?.projectedMarketReturnsRangePerAcre?.min /
-                                100 +
-                                buyers?.rate / 100),
-                          quantity:
-                            myFarm?.order?.acreage *
-                            myFarm?.order?.product?.storagePerAcre
-                        })
-                      // eslint-disable-next-line react/jsx-curly-newline
-                    }
+                    onClick={() => {
+                      return _sellProduce(myFarm?._id, {
+                        cost:
+                          myFarm?.order?.cost +
+                          myFarm?.order?.cost *
+                            (myFarm?.order?.product
+                              ?.projectedMarketReturnsRangePerAcre?.min /
+                              100 +
+                              buyers?.rate / 100),
+                        quantity:
+                          myFarm?.order?.acreage *
+                          myFarm?.order?.product?.storagePerAcre,
+                        buyer:
+                          buyers?.user?.firstName + ' ' + buyers?.user?.lastName
+                      })
+                    }}
                   >
                     Sell crop
                   </Button>
