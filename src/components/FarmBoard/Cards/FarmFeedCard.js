@@ -77,7 +77,7 @@ const FarmFeedCard = ({
       _feeds(content?.feed)
     }
 
-    if (array.length) {
+    if (array?.length) {
       setItems(array)
       setSelectedItem(array[0])
     }

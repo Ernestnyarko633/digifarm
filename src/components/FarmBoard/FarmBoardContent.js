@@ -122,7 +122,7 @@ const FarmBoardContent = ({ farms = [] }) => {
         )
         ?.map(feed =>
           feed?.data?.map((item, index) => {
-            const _feed = item.feed
+            const _feed = item?.feed
             const media = _feed?.media?.filter(item =>
               ['image', 'video'].includes(item?.type)
             )
@@ -136,7 +136,7 @@ const FarmBoardContent = ({ farms = [] }) => {
                   content={item}
                   loading={loading}
                   status='FEEDS'
-                  timestamp={new Date(item.feed.updatedAt).toDateString()}
+                  timestamp={new Date(item?.feed?.updatedAt).toDateString()}
                 />
               )
             } else {
