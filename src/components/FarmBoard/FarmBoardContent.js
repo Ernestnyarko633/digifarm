@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import { Heading, Flex, Box, Text } from '@chakra-ui/react'
 import FarmFeedCard from 'components/FarmBoard/Cards/FarmFeedCard'
@@ -7,7 +8,7 @@ import WeeklyVideoCard from 'components/FarmBoard/Cards/WeeklyVideoCard'
 import FetchCard from 'components/FetchCard/index'
 import PropTypes from 'prop-types'
 import { usePrismic, useFeeds } from 'hooks/useFarmBoard'
-import { latestDateForFarmFeed } from 'helpers/misc'
+// import { latestDateForFarmFeed } from 'helpers/misc'
 import { useLocation } from 'react-router-dom'
 import { checkProperties } from 'helpers/misc'
 
@@ -104,6 +105,13 @@ const FarmBoardContent = ({ farms = [] }) => {
     type: PropTypes.string
   }
 
+  console.table(
+    feeds?.filter(
+      feed => farms[activeFarmIndex]?.order?.product?._id === feed?.farm
+    ),
+    'feeds'
+  )
+
   const DECISION = {
     FEEDS: feeds?.filter(
       feed => farms[activeFarmIndex]?.order?.product?._id === feed?.farm
@@ -112,16 +120,30 @@ const FarmBoardContent = ({ farms = [] }) => {
         ?.filter(
           feed => farms[activeFarmIndex]?.order?.product?._id === feed?.farm
         )
-        ?.map((feed, index) => (
-          <FarmFeedCard
-            key={mapKey(index)}
-            activeFarm={farms[activeFarmIndex]}
-            content={feed}
-            loading={loading}
-            status='FEEDS'
-            timestamp={new Date(latestDateForFarmFeed(feed)).toDateString()}
-          />
-        ))
+        ?.map(feed =>
+          feed?.data?.map((item, index) => {
+            const _feed = item.feed
+            const media = _feed?.media?.filter(item =>
+              ['image', 'video'].includes(item?.type)
+            )
+
+            if (media.length > 0) {
+              return (
+                <FarmFeedCard
+                  title={feed?.title}
+                  key={mapKey(index)}
+                  activeFarm={farms[activeFarmIndex]}
+                  content={item}
+                  loading={loading}
+                  status='FEEDS'
+                  timestamp={new Date(item.feed.updatedAt).toDateString()}
+                />
+              )
+            } else {
+              return null
+            }
+          })
+        )
     ) : (
       <EmptyComponent type='Feeds' />
     ),

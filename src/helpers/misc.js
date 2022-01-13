@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-useless-escape */
 import _ from 'lodash'
 import configs from '../utils/configs'
