@@ -279,6 +279,8 @@ export const ApiContextProvider = ({ children }) => {
     })
   }
 
+  //dkl
+
   const createBankDetails = async payload => {
     return await http.post({
       url: `${DIGITAL_FARMER_API}/banking-details`,
