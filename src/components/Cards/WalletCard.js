@@ -194,29 +194,32 @@ const WalletCard = ({ acreage, price, farm }) => {
                 tasks: tasks?.data || [],
                 farmfeeds: farmFeeds?.data || [],
                 ScheduledTasks: ScheduledTasks?.data || [],
-                wallet: getFormattedMoney(farm?.order?.cost || price * acreage),
+                wallet: getFormattedMoney(farm?.order?.cost || price),
                 balance:
                   farm?.order?.cost >=
-                  farmExpense(
-                    myFarmActivities?.data,
-                    tasks?.data,
-                    ScheduledTasks?.data
-                  )
+                  farm?.order?.acreage *
+                    farmExpense(
+                      myFarmActivities?.data,
+                      tasks?.data,
+                      ScheduledTasks?.data
+                    )
                     ? getFormattedMoney(
                         farm?.order?.cost -
-                          farmExpense(
-                            myFarmActivities?.data,
-                            tasks?.data,
-                            ScheduledTasks?.data
-                          )
+                          farm?.order?.acreage *
+                            farmExpense(
+                              myFarmActivities?.data,
+                              tasks?.data,
+                              ScheduledTasks?.data
+                            )
                       )
                     : 0,
                 expense: getFormattedMoney(
-                  farmExpense(
-                    myFarmActivities?.data,
-                    tasks?.data,
-                    ScheduledTasks?.data
-                  )
+                  farm?.order?.acreage *
+                    farmExpense(
+                      myFarmActivities?.data,
+                      tasks?.data,
+                      ScheduledTasks?.data
+                    )
                 )
               }
             }}
