@@ -90,8 +90,6 @@ const BankingDetailsForm = ({ bankDetails }) => {
     isSubmitting
   } = formik
 
-  console.log(errors)
-
   return (
     <form onSubmit={handleSubmit}>
       <Box

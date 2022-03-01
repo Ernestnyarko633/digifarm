@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { Box, Flex, Heading, Text, Button } from '@chakra-ui/react'
 import useApi from 'context/api'
@@ -5,15 +7,17 @@ import PropTypes from 'prop-types'
 import useAuth from 'context/auth'
 import ReceiptModal from 'components/Modals/ReceiptModal'
 import TasksDocuments from 'components/Modals/TasksDocuments'
+import { getFormattedMoney } from 'helpers/misc'
 
 export default function DocumentActivityReceiptsCard({
   data,
   digitalFarmerFarm,
   title,
   amount,
-  farmfeeds,
+  farmfeeds: formfeeds,
   viewDoc
 }) {
+  const [actualFeeds, setActualFeeds] = React.useState(undefined)
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { downloadTaskReceipt } = useApi()
@@ -29,6 +33,21 @@ export default function DocumentActivityReceiptsCard({
     setOpen(true)
   }
 
+  React.useEffect(() => {
+    let mounted = true
+    if (mounted && formfeeds.length && actualFeeds === undefined) {
+      let tempFeeds = []
+      const process = () =>
+        formfeeds.forEach(feedItem =>
+          feedItem.data.forEach(actualFeed =>
+            tempFeeds.push({ ...actualFeed.feed, task: actualFeed.task })
+          )
+        )
+      process()
+      setActualFeeds(tempFeeds)
+    }
+    return () => (mounted = false)
+  }, [actualFeeds, formfeeds, formfeeds.length])
   const onClose = () => {
     setOpen(false)
   }
@@ -70,7 +89,7 @@ export default function DocumentActivityReceiptsCard({
           <TasksDocuments
             open={open}
             onClose={onClose}
-            data={farmfeeds?.filter(
+            data={formfeeds?.filter(
               feed => feed?.task?._id === selectedTask?.task?._id
             )}
           />
@@ -101,7 +120,7 @@ export default function DocumentActivityReceiptsCard({
           {title}
         </Heading>
         <Heading as='h5' fontSize={{ base: 'md', md: 'lg' }} fontWeight={800}>
-          $ {amount}
+          $ {getFormattedMoney(amount)}
         </Heading>
       </Flex>
       <Flex direction='column' w='100%' px={{ base: 4, md: 8 }}>
@@ -159,7 +178,9 @@ export default function DocumentActivityReceiptsCard({
               </Box>
               <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>
-                  {_key?.task?.budget}
+                  {getFormattedMoney(
+                    _key?.task?.budget * digitalFarmerFarm?.order?.acreage
+                  )}
                 </Heading>
               </Box>
               <Flex w='25%'>

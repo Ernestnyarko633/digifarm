@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Heading, Grid } from '@chakra-ui/react'
 import Layout from 'container/Layout'
