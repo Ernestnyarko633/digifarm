@@ -48,8 +48,6 @@ const WalletCard = ({ acreage, price, farm }) => {
       }))
   )
 
-  console.log(tasks, 'tasks')
-
   const {
     data: ScheduledTasks,
     isLoading: ScheduledTasksIsLoading,

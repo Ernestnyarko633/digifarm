@@ -16,7 +16,8 @@ export default function Graph({
   activities,
   tasks,
   scheduledTasks,
-  totalAmount
+  totalAmount,
+  farm
 }) {
   const [data, setData] = React.useState([])
   const [animation, setAnimation] = React.useState(true)
@@ -27,12 +28,12 @@ export default function Graph({
         const { state, total } = totalAmount(activity, tasks, scheduledTasks)
         array.push({
           name: activity?.title,
-          amount: state ? total : 0
+          amount: state ? farm?.order?.acreage * total : 0
         })
       })
     }
     setData(array)
-  }, [activities, tasks, scheduledTasks, totalAmount])
+  }, [activities, tasks, scheduledTasks, totalAmount, farm?.order?.acreage])
 
   const mapKey = i => i
 
@@ -90,7 +91,8 @@ export default function Graph({
 
 Graph.propTypes = {
   activities: PropTypes.array,
-  tasks: PropTypes.array,
+  farm: PropTypes.any,
   scheduledTasks: PropTypes.array,
+  tasks: PropTypes.array,
   totalAmount: PropTypes.func.isRequired
 }
