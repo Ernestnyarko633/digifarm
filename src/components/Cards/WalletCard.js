@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Divider, Icon } from '@chakra-ui/react'
@@ -38,7 +39,14 @@ const WalletCard = ({ acreage, price, farm }) => {
     isLoading: tasksIsLoading,
     error: tasksHasError,
     refetch: tasksRefetch
-  } = useQuery('tasks', () => getAllTasks())
+  } = useQuery(
+    ['tasks' + farm?.order?.product?._id, farm?.order?.product?._id],
+    async () =>
+      farm?.order?.product?._id &&
+      (await getAllTasks({
+        farm: farm?.order?.product?._id
+      }))
+  )
 
   const {
     data: ScheduledTasks,
@@ -167,11 +175,12 @@ const WalletCard = ({ acreage, price, farm }) => {
             <ExpenditureCard
               bg='yellow.light'
               amount={getFormattedMoney(
-                farmExpense(
-                  myFarmActivities?.data,
-                  tasks?.data,
-                  ScheduledTasks?.data
-                )
+                farm?.order?.acreage *
+                  farmExpense(
+                    myFarmActivities?.data,
+                    tasks?.data,
+                    ScheduledTasks?.data
+                  )
               )}
               action='spent'
               color='yellow.deep'
@@ -179,7 +188,7 @@ const WalletCard = ({ acreage, price, farm }) => {
             <ExpenditureCard
               bg='cf.light'
               action='available'
-              amount={getFormattedMoney(farm?.order?.cost || price * acreage)}
+              amount={getFormattedMoney(farm?.order?.cost || price)}
             />
           </Grid>
         )}
@@ -194,29 +203,32 @@ const WalletCard = ({ acreage, price, farm }) => {
                 tasks: tasks?.data || [],
                 farmfeeds: farmFeeds?.data || [],
                 ScheduledTasks: ScheduledTasks?.data || [],
-                wallet: getFormattedMoney(farm?.order?.cost || price * acreage),
+                wallet: getFormattedMoney(farm?.order?.cost || price),
                 balance:
                   farm?.order?.cost >=
-                  farmExpense(
-                    myFarmActivities?.data,
-                    tasks?.data,
-                    ScheduledTasks?.data
-                  )
+                  farm?.order?.acreage *
+                    farmExpense(
+                      myFarmActivities?.data,
+                      tasks?.data,
+                      ScheduledTasks?.data
+                    )
                     ? getFormattedMoney(
                         farm?.order?.cost -
-                          farmExpense(
-                            myFarmActivities?.data,
-                            tasks?.data,
-                            ScheduledTasks?.data
-                          )
+                          farm?.order?.acreage *
+                            farmExpense(
+                              myFarmActivities?.data,
+                              tasks?.data,
+                              ScheduledTasks?.data
+                            )
                       )
                     : 0,
                 expense: getFormattedMoney(
-                  farmExpense(
-                    myFarmActivities?.data,
-                    tasks?.data,
-                    ScheduledTasks?.data
-                  )
+                  farm?.order?.acreage *
+                    farmExpense(
+                      myFarmActivities?.data,
+                      tasks?.data,
+                      ScheduledTasks?.data
+                    )
                 )
               }
             }}

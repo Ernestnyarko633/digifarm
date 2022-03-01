@@ -19,7 +19,14 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { FirstLettersToUpperCase } from 'helpers/misc'
 import ReactPlayer from 'react-player'
 
-const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
+const FarmFeedCard = ({
+  activeFarm,
+  status,
+  content,
+  timestamp,
+  loading,
+  title
+}) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const [show, setShow] = React.useState(false)
@@ -65,16 +72,12 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
           array.push(_media)
       })
     }
-    const feeds = () =>
-      content?.data?.map(feed => {
-        return _feeds(feed?.feed)
-      })
 
     if (status !== 'news' && status !== 'weekly_videos') {
-      feeds()
+      _feeds(content?.feed)
     }
 
-    if (array.length) {
+    if (array?.length) {
       setItems(array)
       setSelectedItem(array[0])
     }
@@ -83,8 +86,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
   React.useEffect(() => {
     let strings = []
     if (content) {
-      const process = () =>
-        content?.data?.map(item => strings.push(item?.task?.title))
+      const process = () => strings.push(content?.task?.title)
       process()
       if (strings?.length) {
         strings = Array.from(new Set(strings))
@@ -249,9 +251,7 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                 >
                   <Text fontWeight={600}>Activity</Text>
                 </Tag>
-                <Text fontWeight={400}>
-                  {FirstLettersToUpperCase(content?.title)}
-                </Text>
+                <Text fontWeight={400}>{FirstLettersToUpperCase(title)}</Text>
               </Flex>
 
               <Collapse
@@ -270,28 +270,24 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
                       >
                         {title}
                       </Heading>
-                      {content?.data?.map(
-                        (body, i) =>
-                          title === body?.task?.title && (
-                            <Text
-                              key={mapKey(i)}
-                              color='gray.500'
-                              mt={3}
-                              fontSize={{ base: 'sm', md: 'md' }}
-                            >
-                              {body?.feed?.summary?.replace(/<[^>]*>/g, '')}
-                            </Text>
-                          )
+                      {title === content?.task?.title && (
+                        <Text
+                          color='gray.500'
+                          mt={3}
+                          fontSize={{ base: 'sm', md: 'md' }}
+                        >
+                          {content?.feed?.summary?.replace(/<[^>]*>/g, '')}
+                        </Text>
                       )}
                     </Fragment>
                   )
                 })}
               </Collapse>
-              <Box as='button' onClick={handleToggle}>
+              {/* <Box as='button' onClick={handleToggle}>
                 <Text color='cf.green' py={{ base: 1 }}>
                   {!show ? 'Read More' : 'Collapse'}
                 </Text>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
         </>
@@ -310,10 +306,21 @@ const FarmFeedCard = ({ activeFarm, status, content, timestamp, loading }) => {
 
 FarmFeedCard.propTypes = {
   activeFarm: PropTypes.object,
-  status: PropTypes.any,
-  content: PropTypes.any,
+  content: PropTypes.shape({
+    feed: PropTypes.shape({
+      summary: PropTypes.shape({
+        replace: PropTypes.func
+      })
+    }),
+    task: PropTypes.shape({
+      title: PropTypes.any
+    }),
+    title: PropTypes.any
+  }),
+  loading: PropTypes.bool,
+  status: PropTypes.string,
   timestamp: PropTypes.any,
-  loading: PropTypes.bool
+  title: PropTypes.any
 }
 
 export default FarmFeedCard

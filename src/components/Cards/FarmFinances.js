@@ -15,8 +15,9 @@ import PropTypes from 'prop-types'
 import Graph from 'components/Utils/Graph'
 import { FaCircle } from 'react-icons/fa'
 import useWallet from 'context/wallet'
+import { getFormattedMoney } from 'helpers/misc'
 
-const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
+const FarmFinances = ({ activities, tasks, scheduledTasks, farm }) => {
   const { totalAmount } = useWallet()
 
   return (
@@ -67,6 +68,7 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
               <Box
                 w={{ base: '100%', xl: '200%' }}
                 as={Graph}
+                farm={farm}
                 activities={activities}
                 tasks={tasks}
                 scheduledTasks={scheduledTasks}
@@ -152,7 +154,10 @@ const FarmFinances = ({ activities, tasks, scheduledTasks }) => {
                           : 'gray.400'
                       }}
                     >
-                      {totalAmount(_activity, tasks, scheduledTasks)?.total}
+                      {getFormattedMoney(
+                        farm?.order?.acreage *
+                          totalAmount(_activity, tasks, scheduledTasks)?.total
+                      )}
                     </Heading>
                   </Flex>
                 )

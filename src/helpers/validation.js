@@ -1,15 +1,7 @@
+/* eslint-disable no-console */
 import * as Yup from 'yup'
 import validator from 'validator'
 
-Yup.addMethod(Yup.object, 'atLeastOneOf', function (list) {
-  return this.test({
-    name: 'atLeastOneOf',
-    message: 'one of these must be provided at least',
-    exclusive: true,
-    params: { keys: list.join(', ') },
-    test: value => value == null || list.some(f => !!value[f])
-  })
-})
 const fileValidation = (size, allowed) =>
   Yup.mixed()
     .required('No file selected!')
@@ -106,13 +98,47 @@ export const BankDetailsSchema = Yup.object()
     currency: Yup.string().required('This field is required*'),
     swiftCode: Yup.string().required('This field is required*'),
     accountName: Yup.string().required('This field is required*'),
-    accountNumber: Yup.number(),
+    accountNumber: Yup.number().test(
+      'atLeastOneShouldBeProvided',
+      'at least one of accountNumber or iban should be provided',
+      function (value) {
+        const { iban } = this.parent
+        if (!value && !iban) {
+          return false
+        }
+
+        return true
+      }
+    ),
     branchAddress: Yup.string().required('This field is required*'),
-    iban: Yup.string(),
-    sortCode: Yup.string(),
+    iban: Yup.string().test(
+      'atLeastOneShouldBeProvided',
+      'at least one of accountNumber or iban should be provided',
+      function (value) {
+        const { accountNumber } = this.parent
+        if (!value && !accountNumber) {
+          return false
+        }
+
+        return true
+      }
+    ),
+    sortCode: Yup.string().required('This field is required*'),
     homeAddress: Yup.string().required('This field is required*')
   })
-  .atLeastOneOf(['iban', 'accountNumber'])
+  .test(
+    'atLeastOneShouldBeProvided',
+    'at least one of accountNumber or iban should be provided',
+    function (value) {
+      const { iban, accountNumber } = value
+
+      if (!iban && !accountNumber) {
+        return false
+      }
+
+      return true
+    }
+  )
 
 Yup.addMethod(Yup.array, 'unique', function (message, path) {
   return this.test('unique', message, function (list) {

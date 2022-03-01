@@ -383,7 +383,7 @@ export const StartFarmContextProvider = ({ children }) => {
       }
 
       if (paymentOption === Constants.paymentOptions[0]) {
-        // Paystack
+        // Paystack k
 
         const result = await initiatePaystackPayment(data)
         window.onbeforeunload = null

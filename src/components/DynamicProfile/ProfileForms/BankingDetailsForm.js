@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
@@ -5,6 +6,7 @@ import { Box, useToast, Heading, Button, Grid, Flex } from '@chakra-ui/react'
 import CustomInput from 'components/Form/CustomInput'
 import CustomSelect from 'components/Form/CustomSelect'
 import Currencies from 'currencies.json'
+import { isEmpty } from 'lodash'
 
 import useAuth from 'context/auth'
 import useApi from 'context/api'
@@ -12,12 +14,14 @@ import useApi from 'context/api'
 import { BankDetailsSchema } from 'helpers/validation'
 import { objDiff } from 'helpers/misc'
 import Constants from 'constant'
+import { useQueryClient } from 'react-query'
 
 const BankingDetailsForm = ({ bankDetails }) => {
   const { isAuthenticated } = useAuth()
   const { user } = isAuthenticated()
   const { createBankDetails, updateBankDetails } = useApi()
   const toast = useToast()
+  const queryClient = useQueryClient()
   const formik = useFormik({
     initialValues: {
       bankName: bankDetails?.bankName || '',
@@ -52,20 +56,24 @@ const BankingDetailsForm = ({ bankDetails }) => {
         }
 
         toast({
+          isClosable: true,
           title: 'Profile successfully updated.',
           description: res.message,
           status: 'success',
           duration: 5000,
-          position: 'top-right'
+          position: 'top-right',
+          onCloseComplete: () => {
+            queryClient.invalidateQueries('banking_details')
+          }
         })
-        window.location.reload()
       } catch (error) {
         toast({
+          isClosable: true,
           status: 'error',
           duration: 5000,
           position: 'top-right',
           title: 'Error occured',
-          description: error.message
+          description: error?.data?.message || error?.message
         })
         setSubmitting(false)
       }
@@ -81,6 +89,8 @@ const BankingDetailsForm = ({ bankDetails }) => {
     handleSubmit,
     isSubmitting
   } = formik
+
+  console.log(errors)
 
   return (
     <form onSubmit={handleSubmit}>
@@ -219,6 +229,7 @@ const BankingDetailsForm = ({ bankDetails }) => {
               placeholder='Enter your bank swift code'
             />
             <CustomInput
+              isRequired
               type='text'
               name='sortCode'
               onBlur={handleBlur}
@@ -252,6 +263,7 @@ const BankingDetailsForm = ({ bankDetails }) => {
               ml={{ md: 4 }}
               colorScheme='linear'
               isLoading={isSubmitting}
+              isDisabled={!isEmpty(errors) || isSubmitting}
               w={{ base: '100%', md: 40 }}
             >
               Save
