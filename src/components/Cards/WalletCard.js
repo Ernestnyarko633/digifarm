@@ -177,7 +177,7 @@ const WalletCard = ({ acreage, price, farm }) => {
             <ExpenditureCard
               bg='yellow.light'
               amount={getFormattedMoney(
-                farm?.order?.cost *
+                farm?.order?.acreage *
                   farmExpense(
                     myFarmActivities?.data,
                     tasks?.data,
