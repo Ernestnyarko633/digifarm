@@ -24,8 +24,6 @@ const Wallet = () => {
     activities
   } = state
 
-  console.log(farmfeeds, 'feeds')
-
   return (
     <Layout>
       <FarmWalletEmptyState>

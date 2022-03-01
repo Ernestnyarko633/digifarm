@@ -20,8 +20,6 @@ export default function FarmDocumentCard({
 }) {
   const { handleModalClick } = useComponent()
 
-  console.log(ScheduledTasks, digitalFarmerFarm, 'valiies')
-
   const thisData = {
     title,
     amount,

@@ -48,8 +48,6 @@ export default function Individual({
   const [toggleText, setToggleText] = useState(false)
   const [reload, setReload] = useState(0)
 
-  console.log(ScheduledTasks, 'actives')
-
   const triggerReload = () => {
     setReload(prevState => prevState + 1)
   }

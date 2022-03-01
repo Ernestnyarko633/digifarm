@@ -99,8 +99,6 @@ export default function DocumentActivityReceiptsCard({
     }
   }
 
-  console.log(data, 'datadata')
-
   return (
     <Box
       w={{ base: '100%', md: '687px' }}
