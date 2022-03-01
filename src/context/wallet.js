@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Status } from 'helpers/misc'
@@ -6,7 +7,9 @@ const WalletContext = createContext()
 export const WalletContextProvider = ({ children }) => {
   const totalAmount = (activity = {}, tasks = [], scheduledTasks = []) => {
     let totaledAmount = 0
-    let activity_tasks = tasks?.filter(task => task.activity === activity._id)
+    let activity_tasks = tasks?.filter(
+      task => task.activity?._id === activity._id
+    )
 
     if (activity_tasks) {
       activity_tasks.forEach(task => {
@@ -18,7 +21,7 @@ export const WalletContextProvider = ({ children }) => {
       let currentExpense = 0
       let completed_scheduled_tasks = scheduledTasks.filter(
         scheduled_task =>
-          activity._id === scheduled_task?.task?.activity &&
+          activity._id === scheduled_task?.task?.activity?._id &&
           scheduled_task.status === Status.COMPLETED
       )
 
