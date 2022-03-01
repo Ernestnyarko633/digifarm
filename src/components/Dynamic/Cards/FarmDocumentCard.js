@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
@@ -19,13 +20,15 @@ export default function FarmDocumentCard({
 }) {
   const { handleModalClick } = useComponent()
 
+  console.log(ScheduledTasks, 'valiies')
+
   const thisData = {
     title,
     amount,
     digitalFarmerFarm,
-    farmfeeds: farmfeeds.filter(feed => __activityID === feed?.task?.activity),
+    farmfeeds: farmfeeds.filter(feed => __activityID === feed?._id),
     ScheduledTasks: ScheduledTasks.filter(
-      _task => __activityID === _task.task.activity
+      _task => __activityID === _task?.task?.activity?._id
     ),
     viewDoc
   }
