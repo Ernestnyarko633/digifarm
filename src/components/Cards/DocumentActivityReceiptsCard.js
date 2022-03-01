@@ -178,7 +178,9 @@ export default function DocumentActivityReceiptsCard({
               </Box>
               <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>
-                  {_key?.task?.budget * digitalFarmerFarm?.order?.acreage}
+                  {getFormattedMoney(
+                    _key?.task?.budget * digitalFarmerFarm?.order?.acreage
+                  )}
                 </Heading>
               </Box>
               <Flex w='25%'>
