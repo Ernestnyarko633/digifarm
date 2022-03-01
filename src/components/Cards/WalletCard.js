@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Divider, Icon } from '@chakra-ui/react'
@@ -38,7 +39,16 @@ const WalletCard = ({ acreage, price, farm }) => {
     isLoading: tasksIsLoading,
     error: tasksHasError,
     refetch: tasksRefetch
-  } = useQuery('tasks', () => getAllTasks())
+  } = useQuery(
+    ['tasks' + farm?.order?.product?._id, farm?.order?.product?._id],
+    async () =>
+      farm?.order?.product?._id &&
+      (await getAllTasks({
+        farm: farm?.order?.product?._id
+      }))
+  )
+
+  console.log(tasks, 'tasks')
 
   const {
     data: ScheduledTasks,
