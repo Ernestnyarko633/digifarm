@@ -153,7 +153,9 @@ export default function Individual({
                         _task => _task?.activity?._id === _activity?._id
                       )?.length + 1
                     }
-                    amount={totalAmount(_activity)}
+                    amount={
+                      digitalFarmerFarm?.order?.acreage * totalAmount(_activity)
+                    }
                   />
                 )
               })}
