@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { Box, Flex, Heading, Text, Button } from '@chakra-ui/react'
@@ -98,6 +99,8 @@ export default function DocumentActivityReceiptsCard({
     }
   }
 
+  console.log(data, 'datadata')
+
   return (
     <Box
       w={{ base: '100%', md: '687px' }}
@@ -152,7 +155,7 @@ export default function DocumentActivityReceiptsCard({
             </Text>
           </Box>
         </Flex>
-        {data?.ScheduledTasks?.map((_key, index) => {
+        {data?.map((_key, index) => {
           return (
             <Flex
               key={_key._id}
@@ -177,7 +180,7 @@ export default function DocumentActivityReceiptsCard({
               </Box>
               <Box w='25%'>
                 <Heading textAlign='left' fontSize='lg'>
-                  {_key?.task?.budget}
+                  {_key?.task?.budget * digitalFarmerFarm?.order?.acreage}
                 </Heading>
               </Box>
               <Flex w='25%'>
