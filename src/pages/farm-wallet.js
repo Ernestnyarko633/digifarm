@@ -90,7 +90,10 @@ const FarmWallet = () => {
                       farm={farm}
                       acreage={farm?.order?.acreage}
                       name={farm?.name}
-                      price={farm?.order?.product?.pricePerAcre}
+                      price={
+                        farm?.order?.product?.pricePerAcre *
+                        farm?.order?.acreage
+                      }
                     />
                   </>
                 )

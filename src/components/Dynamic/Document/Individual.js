@@ -84,7 +84,9 @@ export default function Individual({
 
   const totalAmount = __activity => {
     let totaledAmount = 0
-    let tempTasks = tasks?.filter(_task => _task.activity === __activity._id)
+    let tempTasks = tasks?.filter(
+      _task => _task.activity?._id === __activity._id
+    )
     if (tempTasks) {
       tempTasks.forEach(_task => {
         totaledAmount = totaledAmount + _task?.budget
@@ -145,15 +147,17 @@ export default function Individual({
                     title={_activity?.title}
                     ScheduledTasks={ScheduledTasks.filter(
                       _completedTask =>
-                        _activity._id === _completedTask?.task?.activity &&
+                        _activity?._id === _completedTask?.task?.activity &&
                         _completedTask.status === Status.COMPLETED
                     )}
                     tasksNumber={
                       tasks?.filter(
-                        _task => _task.activity._id === _activity._id
+                        _task => _task?.activity?._id === _activity?._id
                       )?.length + 1
                     }
-                    amount={totalAmount(_activity)}
+                    amount={
+                      digitalFarmerFarm?.order?.acreage * totalAmount(_activity)
+                    }
                   />
                 )
               })}
