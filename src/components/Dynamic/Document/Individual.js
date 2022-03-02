@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Box, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react'
 import Button from 'components/Button'
 import React, { useEffect, useState } from 'react'
@@ -147,8 +148,9 @@ export default function Individual({
                     title={_activity?.title}
                     ScheduledTasks={ScheduledTasks.filter(
                       _completedTask =>
-                        _activity?._id === _completedTask?.task?.activity &&
-                        _completedTask.status === Status.COMPLETED
+                        _activity?._id ===
+                          _completedTask?.task?.activity?._id &&
+                        _completedTask?.status === Status?.COMPLETED
                     )}
                     tasksNumber={
                       tasks?.filter(
