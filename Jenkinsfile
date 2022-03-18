@@ -69,25 +69,27 @@ node {
                 * Deploy to production or staging environment when the job is 
                 * triggered by either master of dev branch
                 */
+                def url =  "https://digitalfarmer.completefarmer.com"
+                // chose kubernetes context to us
+                sh 'kubectl config use-context eks_cf-frontend-eks-cluster'
+                sh 'helm lint ./src/cf-helm/'
                 if (env.BRANCH_NAME == 'master') {
-                    echo 'Deploying to Production Environment...'
-                    sh 'helm lint ./src/cf-helm/'
-                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=dashboards"
-                    slackSend(color: 'good', message: "Successfully deployed Digital Farmer Dashboard to production environment View deployed changes at https://digitalfarmer.completefarmer.com")
+                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=dashboards"   
                 } else if (env.BRANCH_NAME == 'dev') {
-                    echo 'Deploying to Staging Environment'
-                    sh 'helm lint ./src/cf-helm/'
+                    url = "https://digitalfarmer-test.completefarmer.com"
                     sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=dashboards-stage"
-                    slackSend(color: 'good', message: "Successfully deployed Digital Farmer Dashboard to staging environment View deployed changes at https://digitalfarmer-test.completefarmer.com")
                 }
-                // Remove dangling images
+                //Send teams and slack notification
+                slackSend(color: 'good', message: "DigiFarmer dashboard deployed at ${url}")
+                office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", status: 'Success', message: "DigiFarmer dashboard deployed at ${url}"
+                //Remove dangling images
                 sh 'docker system prune -f'
             }
         }catch(err){
-            slackSend(color: '#F01717', message: "${err}")
-            // Remove dangling images
-            sh 'docker system prune -f'
-            error 'Error occured in pipeline'
+           sh 'docker system prune -f'
+           slackSend(color: '#F01717', message: "${err}")
+           office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", message: "${err}"
+           error "Build Failed ${err}"
         }
     }
     
