@@ -63,8 +63,8 @@ node {
             
                 }
             }
-    
-            stage('Deploy To Production or Staging') {
+            def deploy_stage_title = env.BRANCH_NAME == 'dev' ? 'Staging' : 'Production'
+            stage("Deploy To ${deploy_stage_title} Environment") {
                 /**
                 * Deploy to production or staging environment when the job is 
                 * triggered by either master of dev branch
