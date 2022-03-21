@@ -20,7 +20,8 @@ const StartFarmContext = createContext({})
 
 export const StartFarmContextProvider = ({ children }) => {
   const queryClient = useQueryClient()
-  const [paymentOption, setPaymentOption] = useState(dpo)
+  // const [paymentOption, setPaymentOption] = useState(dpo)
+  const [paymentOption, setPaymentOption] = useState(undefined)
   const [wantCycle, setWantCycle] = React.useState('No')
   const [selectedFarm, setSelectedFarm] = useState(
     JSON.parse(sessionStorage.getItem('selected_farm'))
