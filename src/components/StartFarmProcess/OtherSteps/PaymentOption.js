@@ -66,7 +66,12 @@ const PaymentOption = ({ farm }) => {
               description='Please note that bank transfer will take at most 2 weeks before money is transferred'
               notice='Contact support for any help'
               selected={paymentOption === Constants.paymentOptions[2]}
-              onClick={() => setPaymentOption(Constants.paymentOptions[2])}
+              onClick={e => {
+                return (
+                  e.preventDefault() &&
+                  setPaymentOption(Constants.paymentOptions[2])
+                )
+              }}
               dropDown
             />
             {convertedAmount < PAYSTACK_LIMIT && (

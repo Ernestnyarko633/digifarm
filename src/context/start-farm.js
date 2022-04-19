@@ -14,13 +14,14 @@ import useExternal from './external'
 import Constants from 'constant'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
-const dpo = Constants.paymentOptions[2]
+// const dpo = Constants.paymentOptions[2]
 
 const StartFarmContext = createContext({})
 
 export const StartFarmContextProvider = ({ children }) => {
   const queryClient = useQueryClient()
-  const [paymentOption, setPaymentOption] = useState(dpo)
+  // const [paymentOption, setPaymentOption] = useState(dpo)
+  const [paymentOption, setPaymentOption] = useState(undefined)
   const [wantCycle, setWantCycle] = React.useState('No')
   const [selectedFarm, setSelectedFarm] = useState(
     JSON.parse(sessionStorage.getItem('selected_farm'))
