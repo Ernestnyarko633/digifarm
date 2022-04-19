@@ -14,7 +14,7 @@ import useExternal from './external'
 import Constants from 'constant'
 
 const dcc = Constants.countries.find(c => c.id === 'US')
-const dpo = Constants.paymentOptions[2]
+// const dpo = Constants.paymentOptions[2]
 
 const StartFarmContext = createContext({})
 
