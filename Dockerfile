@@ -26,6 +26,19 @@ RUN yarn global add postcss-cli@7.1.1 --silent
 ARG REACT_APP_ENVIRONMENT
 ENV REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}
 
+RUN yarn build
+
+# production environment
+FROM nginx:stable-alpine
+
+COPY ./.nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+## Remove default nginx index page
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy from the stahg 1
+COPY --from=builder /home/node/app/build /usr/share/nginx/html
+
 EXPOSE 80
 
-CMD ["yarn", "start"]
+CMD ["nginx", "-g", "daemon off;"]
