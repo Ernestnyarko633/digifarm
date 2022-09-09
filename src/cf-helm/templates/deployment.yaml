@@ -24,7 +24,7 @@ spec:
           image: {{ .Values.repository }}/{{ .Values.registry }}:{{ .Values.tag }}
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 3000
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
