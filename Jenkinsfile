@@ -74,10 +74,10 @@ node {
                 sh 'kubectl config use-context eks_cf-frontend-eks-cluster'
                 sh 'helm lint ./src/cf-helm/'
                 if (env.BRANCH_NAME == 'master') {
-                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=dashboards"   
+                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=auth"   
                 } else if (env.BRANCH_NAME == 'dev') {
                     url = "https://digitalfarmer-test.completefarmer.com"
-                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=dashboards-stage"
+                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=auth-stage"
                 }
                 //Send teams and slack notification
                 slackSend(color: 'good', message: "DigiFarmer dashboard deployed at ${url}")
