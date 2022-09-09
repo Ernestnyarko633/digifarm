@@ -26,6 +26,6 @@ RUN yarn global add postcss-cli@7.1.1 --silent
 ARG REACT_APP_ENVIRONMENT
 ENV REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["yarn", "start"]
