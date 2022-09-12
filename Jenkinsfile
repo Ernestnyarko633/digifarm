@@ -50,7 +50,9 @@ node {
                 }
                 /* This builds the actual image; synonymous to
                 * docker build on the command line */
-                app = docker.build("749165515165.dkr.ecr.us-east-2.amazonaws.com/cf-server", "--build-arg REACT_APP_ENVIRONMENT=${run_environment} .")
+                lock('EnvironmentTagging'){
+                    app = docker.build("749165515165.dkr.ecr.us-east-2.amazonaws.com/cf-server", "--build-arg REACT_APP_ENVIRONMENT=${run_environment} .")
+                }
             }
 
             stage('Push image') {
