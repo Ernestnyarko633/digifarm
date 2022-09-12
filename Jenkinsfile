@@ -43,14 +43,15 @@ node {
                 * Choose deployment environment variable for run command in dockerfile
                 * based on branch triggering the build process
                 */
-                def run_environment = 'PROD'
-            
-                if (env.BRANCH_NAME == 'dev') {
-                    run_environment = 'DEV'
-                }
-                /* This builds the actual image; synonymous to
-                * docker build on the command line */
                 lock('EnvironmentTagging'){
+                    def run_environment = 'PROD'
+            
+                    if (env.BRANCH_NAME == 'dev') {
+                        run_environment = 'DEV'
+                    }
+                    /* This builds the actual image; synonymous to
+                    * docker build on the command line */
+                
                     app = docker.build("749165515165.dkr.ecr.us-east-2.amazonaws.com/cf-server", "--build-arg REACT_APP_ENVIRONMENT=${run_environment} .")
                 }
             }
