@@ -74,7 +74,7 @@ node {
                 */
                 def url =  "https://digitalfarmer.completefarmer.com"
                 // chose kubernetes context to us
-                sh 'kubectl config use-context eks_cf-frontend-eks-cluster'
+                sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V1}"
                 sh 'helm lint ./src/cf-helm/'
                 if (env.BRANCH_NAME == 'master') {
                     sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=auth"   
