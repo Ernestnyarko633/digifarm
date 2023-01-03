@@ -74,9 +74,9 @@ node {
                 switch(env.BRANCH_NAME) {
                     case 'dev':
                         deploy_title = 'Staging'
-                        ns = 'auth-stage'
+                        ns = 'staging'
                         url = "https://digitalfarmer-test.completefarmer.com" 
-                        sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V1}"
+                        sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V2}"
                     break
                     case 'master':
                         deploy_title = 'Production'
