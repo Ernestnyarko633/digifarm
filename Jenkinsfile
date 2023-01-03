@@ -74,21 +74,18 @@ node {
                 switch(env.BRANCH_NAME) {
                     case 'dev':
                         deploy_title = 'Staging'
-                        ns = 'auth-stage'
+                        ns = 'staging'
                         url = "https://digitalfarmer-test.completefarmer.com" 
-                        sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V1}"
                     break
                     case 'master':
                         deploy_title = 'Production'
-                        ns = 'auth'
+                        ns = 'production'
                         url = "https://digitalfarmer.completefarmer.com"
-                        sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V1}"
                     break
                     case 'demo':
                         deploy_title = 'Demo'
                         ns = 'demo'
                         url = "https://digitalfarmer-demo.completefarmer.com"
-                        sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V2}"
                     break
                 }
             
@@ -97,7 +94,7 @@ node {
                     * Deploy to production or staging environment when the job is 
                     * triggered by either master of dev branch
                     */
-                    
+                    sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V2}"
                     sh 'helm lint ./src/cf-helm/'
                     sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=${ns}"   
                     //Send teams and slack notification
