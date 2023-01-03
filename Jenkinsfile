@@ -7,7 +7,6 @@
 node {
     def app
     // initiate build for dev or master branch onley
-    if (env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master'){
         try{
             stage('Clone repository') {
                 /* Let's make sure we have the repository cloned to our workspace */
@@ -37,60 +36,90 @@ node {
                     }
                 }
             }
-
-            stage('Build image') {
-                /**
-                * Choose deployment environment variable for run command in dockerfile
-                * based on branch triggering the build process
-                */
-                def run_environment = 'PROD'
+            if (env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'demo'){
+                stage('Build image') {
+                    /**
+                    * Choose deployment environment variable for run command in dockerfile
+                    * based on branch triggering the build process
+                    */
+                    lock('EnvironmentTagging'){
+                        def run_environment = 'PROD'
             
-                if (env.BRANCH_NAME == 'dev') {
-                    run_environment = 'DEV'
+                        if (env.BRANCH_NAME == 'dev') {
+                            run_environment = 'DEV'
+                        } else if (env.BRANCH_NAME == 'demo') {
+                            run_environment = 'DEMO'
+                        }
+                        /* This builds the actual image; synonymous to
+                        * docker build on the command line */
+                        app = docker.build("749165515165.dkr.ecr.us-east-2.amazonaws.com/cf-server", "--build-arg REACT_APP_ENVIRONMENT=${run_environment} .")
+                    }
                 }
-                /* This builds the actual image; synonymous to
-                * docker build on the command line */
-                app = docker.build("749165515165.dkr.ecr.us-east-2.amazonaws.com/cf-server", "--build-arg REACT_APP_ENVIRONMENT=${run_environment} .")
-            }
 
-            stage('Push image') {
-                /* Finally, we'll push the image with tag of the current build number
-                * Pushing multiple tags is cheap, as all the layers are reused.
-                */
-                docker.withRegistry('https://749165515165.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:cf-aws-credentials') {
-                    app.push("digital-farmer-dashboard-build-${env.BUILD_NUMBER}")
-                    app.push("digital-farmer-dashboard-latest")
+                stage('Push image') {
+                    /* Finally, we'll push the image with tag of the current build number
+                    * Pushing multiple tags is cheap, as all the layers are reused.
+                    */
+                    docker.withRegistry('https://749165515165.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:cf-aws-credentials') {
+                        app.push("digital-farmer-dashboard-build-${env.BUILD_NUMBER}")
+                        app.push("digital-farmer-dashboard-latest")
             
+                    }
                 }
-            }
-            def deploy_stage_title = env.BRANCH_NAME == 'dev' ? 'Staging' : 'Production'
-            stage("Deploy To ${deploy_stage_title} Environment") {
-                /**
-                * Deploy to production or staging environment when the job is 
-                * triggered by either master of dev branch
-                */
-                def url =  "https://digitalfarmer.completefarmer.com"
-                // chose kubernetes context to us
-                sh 'kubectl config use-context eks_cf-frontend-eks-cluster'
-                sh 'helm lint ./src/cf-helm/'
-                if (env.BRANCH_NAME == 'master') {
-                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=auth"   
-                } else if (env.BRANCH_NAME == 'dev') {
-                    url = "https://digitalfarmer-test.completefarmer.com"
-                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=auth-stage"
+
+                def deploy_title = ''
+                def ns = ''
+                def url = ''
+            
+                switch(env.BRANCH_NAME) {
+                    case 'dev':
+                        deploy_title = 'Staging'
+                        ns = 'staging'
+                        url = "https://digitalfarmer-test.completefarmer.com" 
+                    break
+                    case 'master':
+                        deploy_title = 'Production'
+                        ns = 'production'
+                        url = "https://digitalfarmer.completefarmer.com"
+                    break
+                    case 'demo':
+                        deploy_title = 'Demo'
+                        ns = 'demo'
+                        url = "https://digitalfarmer-demo.completefarmer.com"
+                    break
                 }
-                //Send teams and slack notification
-                slackSend(color: 'good', message: "DigiFarmer dashboard deployed at ${url}")
-                office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", status: 'Success', message: "DigiFarmer dashboard deployed at ${url}"
-                //Remove dangling images
-                sh 'docker system prune -f'
+            
+                stage("Deploy To ${deploy_title} Environment") {
+                    /**
+                    * Deploy to production or staging environment when the job is 
+                    * triggered by either master of dev branch
+                    */
+                    sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V2}"
+                    sh 'helm lint ./src/cf-helm/'
+                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=${ns}"   
+                    //Send teams and slack notification
+                    slackSend(color: 'good', message: "DigiFarmer dashboard deployed at ${url}")
+                    office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", status: 'Success', message: "DigiFarmer dashboard deployed at ${url}"
+                   
+                }
             }
         }catch(err){
-           sh 'docker system prune -f'
            slackSend(color: '#F01717', message: "${err}")
            office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", message: "${err}"
            error "Build Failed ${err}"
+        } finally{
+            if (env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'demo'){
+                def envName = env.BRANCH_NAME == 'dev' ? 'staging' : 'production'
+                if (env.BRANCH_NAME == 'demo') {
+                    envName = 'testing'
+                }
+                if (currentBuild.currentResult == 'SUCCESS'){
+                    jiraSendDeploymentInfo environmentId: "${envName}", environmentName: "${envName}", environmentType: "${envName}", state: "successful"
+                }
+            }
+            //Remove dangling images
+            sh 'docker system prune -f'
         }
-    }
+
     
 }
