@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cf-digital-farmer-dashboard
+  labels:
+    app.kubernetes.io/name: frontend-service
+    app.kubernetes.io/instance: wordpress-abcxzy
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: cf-microservices
+    app.kubernetes.io/managed-by: helm
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: digital-farmer-dashboard
+  template:
+    metadata:
+      labels:
+        app: digital-farmer-dashboard
+    spec:
+      containers:
+        - name: cf-digital-farmer-dashboard
+          image: {{ .Values.repository }}/{{ .Values.registry }}:{{ .Values.tag }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+              memory: "500Mi"
+              cpu: "1000m"
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: digital-farmer-dashboard-auto-scaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cf-digital-farmer-dashboard
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
