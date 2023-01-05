@@ -61,31 +61,33 @@ node {
                     * Pushing multiple tags is cheap, as all the layers are reused.
                     */
                     docker.withRegistry('https://749165515165.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:cf-aws-credentials') {
-                        app.push("digital-farmer-dashboard-build-${env.BUILD_NUMBER}")
                         app.push("digital-farmer-dashboard-latest")
-            
                     }
                 }
 
                 def deploy_title = ''
                 def ns = ''
                 def url = ''
-            
+                def charts = ''
+
                 switch(env.BRANCH_NAME) {
                     case 'dev':
                         deploy_title = 'Staging'
                         ns = 'staging'
                         url = "https://digitalfarmer-test.completefarmer.com" 
+                        charts = "./src/helm-charts/"
                     break
                     case 'master':
                         deploy_title = 'Production'
                         ns = 'production'
                         url = "https://digitalfarmer.completefarmer.com"
+                        charts = "./src/cf-helm/"
                     break
                     case 'demo':
                         deploy_title = 'Demo'
                         ns = 'demo'
                         url = "https://digitalfarmer-demo.completefarmer.com"
+                        charts = "./src/helm-charts/"
                     break
                 }
             
@@ -96,7 +98,7 @@ node {
                     */
                     sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V2}"
                     sh 'helm lint ./src/cf-helm/'
-                    sh "helm upgrade --install --wait --timeout 120s --recreate-pods --set image.tag=digital-farmer-dashboard-build-${env.BUILD_NUMBER} cf-digital-farmer-dashboard ./src/cf-helm/ -n=${ns}"   
+                    sh "helm upgrade --install --wait --timeout 360s --recreate-pods cf-digital-farmer-dashboard ${charts} -n=${ns}"   
                     //Send teams and slack notification
                     slackSend(color: 'good', message: "DigiFarmer dashboard deployed at ${url}")
                     office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", status: 'Success', message: "DigiFarmer dashboard deployed at ${url}"
