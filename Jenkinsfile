@@ -98,7 +98,7 @@ node {
                     */
                     sh "kubectl config use-context ${env.FRONTEND_CLUSTER_CONTEXT_V2}"
                     sh 'helm lint ./src/cf-helm/'
-                    sh "helm upgrade --install --wait --timeout 360s --recreate-pods cf-digital-farmer-dashboard ${charts} -n=${ns}"   
+                    sh "helm upgrade --install --wait --timeout 360s --force cf-digital-farmer-dashboard ${charts} -n=${ns}"   
                     //Send teams and slack notification
                     slackSend(color: 'good', message: "DigiFarmer dashboard deployed at ${url}")
                     office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", status: 'Success', message: "DigiFarmer dashboard deployed at ${url}"
