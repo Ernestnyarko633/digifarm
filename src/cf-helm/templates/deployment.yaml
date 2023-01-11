@@ -16,6 +16,8 @@ spec:
       app: digital-farmer-dashboard
   template:
     metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         app: digital-farmer-dashboard
     spec:
