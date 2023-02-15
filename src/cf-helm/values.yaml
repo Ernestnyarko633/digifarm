@@ -1,4 +1,4 @@
 replicaCount: 1
 repository: 749165515165.dkr.ecr.us-east-2.amazonaws.com
 registry: cf-server
-tag: digital-farmer-dashboard-latest
+tag: digital-farmer-dashboard-prod-latest

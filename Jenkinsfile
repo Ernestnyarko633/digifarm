@@ -60,8 +60,19 @@ node {
                     /* Finally, we'll push the image with tag of the current build number
                     * Pushing multiple tags is cheap, as all the layers are reused.
                     */
+                    def tag = "digital-farmer-dashboard-prod-latest"
+                    
+                    if (env.BRANCH_NAME == 'demo'){
+                        tag = "digital-farmer-dashboard-demo-latest"
+                    } else if(env.BRANCH_NAME == 'dev'){
+                        tag = "digital-farmer-dashboard-dev-latest"
+                    }
+                   
+                    if (env.BRANCH_NAME == 'demo' || env.BRANCH_NAME == 'dev'){
+                        sh "sed -i 's/IMAGE_TAG/${tag}/' src/helm-charts/values.yaml"
+                    }
                     docker.withRegistry('https://749165515165.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:cf-aws-credentials') {
-                        app.push("digital-farmer-dashboard-latest")
+                        app.push(tag)
                     }
                 }
 
