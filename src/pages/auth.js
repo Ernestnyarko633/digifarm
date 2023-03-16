@@ -76,6 +76,7 @@ const Auth = ({
       }
     }
     return () => (mounted = false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noUser, to, token, reload])
 
   return (
