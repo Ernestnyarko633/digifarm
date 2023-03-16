@@ -77,6 +77,8 @@ const FarmCard = ({ farm, id }) => {
     }
   }
 
+  console.log(farm, 'farm')
+
   return (
     <Box
       rounded='xl'

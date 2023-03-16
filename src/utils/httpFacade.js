@@ -1,6 +1,11 @@
 import axios from 'axios'
 import QueryString from 'query-string'
 
+// Define the maximum number of retries
+const MAX_RETRIES = 3
+
+// Define the delay between retries in milliseconds
+const RETRY_DELAY = 5000
 class HttpFacade {
   constructor() {
     this.http = axios.create({
@@ -8,6 +13,8 @@ class HttpFacade {
         'Content-Type': 'application/json'
       }
     })
+
+    this.http.defaults.withCredentials = true
 
     this.http.interceptors.request.use(
       function (config) {
@@ -25,6 +32,41 @@ class HttpFacade {
         return response
       },
       function (error) {
+        return Promise.reject(error.response)
+      }
+    )
+
+    this.http.interceptors.response.use(
+      response => response,
+      async error => {
+        const isUnauthorized = error?.response?.status === 401
+        const isForbidden = error?.response.status === 403
+
+        const retries = error.config.retries || 0
+        // If the error is a 429 error
+        if (isUnauthorized && retries < MAX_RETRIES) {
+          // Get the number of retries so far
+
+          // If we haven't reached the maximum number of retries
+          // Wait for the specified delay
+
+          // eslint-disable-next-line no-promise-executor-return
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
+
+          // Clone the request config to prevent modifying the original request
+          const config = {
+            ...(error.config || {})
+          }
+
+          // Increment the number of retries
+          config.retries = retries + 1
+
+          // Retry the request
+          return this.http(config)
+        }
+        if (isUnauthorized || isForbidden) {
+          window.location.href = '/logout'
+        }
         return Promise.reject(error.response)
       }
     )

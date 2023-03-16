@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
   const isAuthenticated = () => {
     const _cft = window.sessionStorage.getItem('_cft')
     const _cfu = window.sessionStorage.getItem('_cfu')
-    if (_cft && _cfu) {
+    if (_cfu) {
       return { token: _cft, user: JSON.parse(_cfu) }
     } else {
       return false
