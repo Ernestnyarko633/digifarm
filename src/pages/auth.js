@@ -32,9 +32,6 @@ const Auth = ({
 
   const noUser = !result || (result && !result?.user)
 
-  // eslint-disable-next-line no-console
-  console.log(result, 'result')
-
   useEffect(() => {
     let mounted = true
     if (mounted) {
@@ -53,8 +50,6 @@ const Auth = ({
               // fetch user data
               const { data: user } = await getUser()
               // store user data
-              // eslint-disable-next-line no-console
-              console.log(user, 'user')
               store({ user })
             } catch (err) {
               if (err) {
