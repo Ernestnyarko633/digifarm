@@ -7,6 +7,7 @@ import { replaceURI } from 'helpers/misc'
 import FetchCard from 'components/FetchCard'
 import useAuth from 'context/auth'
 import useApi from 'context/api'
+import { useCallback } from 'react'
 
 const Auth = ({
   history: { replace },
@@ -26,15 +27,23 @@ const Auth = ({
 
   const triggerReload = () => setReload(prevState => prevState + 1)
 
+  const authentic = useCallback(() => isAuthenticated(), [isAuthenticated])
+  const result = authentic()
+
+  const noUser = !result || (result && !result?.user)
+
+  // eslint-disable-next-line no-console
+  console.log(result, 'result')
+
   useEffect(() => {
     let mounted = true
     if (mounted) {
       // Check if user is authenticated and redirect to db
-      if (isAuthenticated()) {
+      if (!noUser) {
         replace(JSON.parse(to || null) || '/dashboard')
       } else {
         // Check to see if a token exist then use token to fetch user data else return user to auth service app
-        if (token) {
+        if (noUser) {
           // store token in session storage for immediate use
           store({ token })
           // Delay for half a seconds to make sure that token is stored
@@ -44,6 +53,8 @@ const Auth = ({
               // fetch user data
               const { data: user } = await getUser()
               // store user data
+              // eslint-disable-next-line no-console
+              console.log(user, 'user')
               store({ user })
             } catch (err) {
               if (err) {
@@ -65,7 +76,7 @@ const Auth = ({
       }
     }
     return () => (mounted = false)
-  }, [store, getUser, isAuthenticated, replace, token, to, reload])
+  }, [noUser, to, token, reload])
 
   return (
     <FetchCard

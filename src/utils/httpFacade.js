@@ -9,6 +9,8 @@ class HttpFacade {
       }
     })
 
+    this.http.defaults.withCredentials = true
+
     this.http.interceptors.request.use(
       function (config) {
         const token = window.sessionStorage.getItem('_cft')
