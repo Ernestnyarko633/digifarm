@@ -71,7 +71,7 @@ node {
                     if (env.BRANCH_NAME == 'demo' || env.BRANCH_NAME == 'dev'){
                         sh "sed -i 's/IMAGE_TAG/${tag}/' src/helm-charts/values.yaml"
                     }
-                    docker.withRegistry('263926175602.dkr.ecr.us-west-2.amazonaws.com/cf-server', 'ecr:us-east-2:cf-aws-credentials') {
+                    docker.withRegistry('263926175602.dkr.ecr.us-west-2.amazonaws.com/cf-server', 'ecr:us-west-2:cf-aws-credentials') {
                         app.push(tag)
                     }
                 }
