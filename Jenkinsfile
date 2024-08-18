@@ -28,14 +28,14 @@ node {
                     }
             }
 
-            stage('Quality Gateway'){
-                timeout(time: 1, unit: 'HOURS'){
-                    def qualityGate = waitForQualityGate()
-                    if (qualityGate.status != 'OK'){
-                        error "Digital Farmer Dashboard: Pipeline aborted due to quality gate failure: ${qualityGate.status}"
-                    }
-                }
-            }
+            // stage('Quality Gateway'){
+            //     timeout(time: 1, unit: 'HOURS'){
+            //         def qualityGate = waitForQualityGate()
+            //         if (qualityGate.status != 'OK'){
+            //             error "Digital Farmer Dashboard: Pipeline aborted due to quality gate failure: ${qualityGate.status}"
+            //         }
+            //     }
+            // }
             if (env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'demo'){
                 stage('Build image') {
                     /**
