@@ -52,7 +52,7 @@ node {
                         }
                         /* This builds the actual image; synonymous to
                         * docker build on the command line */
-                        app = docker.build("749165515165.dkr.ecr.us-east-2.amazonaws.com/cf-server", "--build-arg REACT_APP_ENVIRONMENT=${run_environment} .")
+                        app = docker.build("263926175602.dkr.ecr.us-west-2.amazonaws.com/cf-server", "--build-arg REACT_APP_ENVIRONMENT=${run_environment} .")
                     }
                 }
 
@@ -71,7 +71,7 @@ node {
                     if (env.BRANCH_NAME == 'demo' || env.BRANCH_NAME == 'dev'){
                         sh "sed -i 's/IMAGE_TAG/${tag}/' src/helm-charts/values.yaml"
                     }
-                    docker.withRegistry('https://749165515165.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:cf-aws-credentials') {
+                    docker.withRegistry('263926175602.dkr.ecr.us-west-2.amazonaws.com/cf-server', 'ecr:us-east-2:cf-aws-credentials') {
                         app.push(tag)
                     }
                 }
