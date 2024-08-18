@@ -1,4 +1,4 @@
 replicaCount: 1
-repository: 749165515165.dkr.ecr.us-east-2.amazonaws.com
+repository: 263926175602.dkr.ecr.us-west-2.amazonaws.com
 registry: cf-server
 tag: IMAGE_TAG
