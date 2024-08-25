@@ -18,15 +18,15 @@ node {
         
             }
 
-            stage('SonarQube Analysis'){
-                withSonarQubeEnv('Sonarqube'){
-                    sh "sonar-scanner \
-                        -Dsonar.projectKey=cf-digital-farmer-dashboard \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=${env.SONARQUBE_URL} \
-                        -Dsonar.login=${env.SONAR_API_LOGIN}"
-                    }
-            }
+            // stage('SonarQube Analysis'){
+            //     withSonarQubeEnv('Sonarqube'){
+            //         sh "sonar-scanner \
+            //             -Dsonar.projectKey=cf-digital-farmer-dashboard \
+            //             -Dsonar.sources=. \
+            //             -Dsonar.host.url=${env.SONARQUBE_URL} \
+            //             -Dsonar.login=${env.SONAR_API_LOGIN}"
+            //         }
+            // }
 
             // stage('Quality Gateway'){
             //     timeout(time: 1, unit: 'HOURS'){
