@@ -1,0 +1,67 @@
+name: CI/CD Pipeline for Digifarm
+
+on:
+  push:
+    branches:
+      - master  # Change to your default branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: yarn install --silent
+
+      - name: Build the application
+        run: yarn build
+
+      - name: Build Docker image
+        run: |
+          docker build -t your-docker-repo/digifarm:latest .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}  # Set this in your repo secrets
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Set this in your repo secrets
+
+      - name: Push Docker image
+        run: |
+          docker push your-docker-repo/digifarm:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # Ensure the build job runs before this job
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          kubectl config use-context your-cluster-context  # Set your cluster context
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/digifarm-deployment digifarm=your-docker-repo/digifarm:latest
+          kubectl rollout status deployment/digifarm-deployment
+
+      - name: Clean up
+        run: |
+          echo "Deployment completed."
+
